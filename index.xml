@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DGraph Blog </title>
+    <link>http://replace-this-with-your-hugo-site.com/</link>
+    <language>en-us</language>
+    <author></author>
+    <rights>(C) 2016</rights>
+    <updated>2016-04-18 14:37:08 &#43;1000 AEST</updated>
+
+    
+      
+        <item>
+          <title>hello world</title>
+          <link>http://replace-this-with-your-hugo-site.com/post/hello-world/</link>
+          <pubDate>Mon, 18 Apr 2016 14:37:08 AEST</pubDate>
+          <author></author>
+          <guid>http://replace-this-with-your-hugo-site.com/post/hello-world/</guid>
+          <description>&lt;p&gt;Hello, World!&lt;/p&gt;
+</description>
+        </item>
+      
+    
+
+  </channel>
+</rss>
