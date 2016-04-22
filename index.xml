@@ -19,10 +19,10 @@
           <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about DGraph, what it is and why it was created.&lt;/p&gt;
 
 &lt;p&gt;Before I explain what&amp;rsquo;s DGraph, let&amp;rsquo;s start with a basic understanding of graphs.
-A graph is a mathematical structure used to model pairwise relationship between entities.
+A graph is a mathematical structure used to model a pairwise relationship between entities.
 A graph is thus composed of nodes connected by edges.
 Each node represents an entity (a person, place, thing, etc.), and each edge represents the relationship between two nodes.
-Some popular graphs that we all know about are the &lt;a href=&#34;https://en.wikipedia.org/wiki/Social_graph&#34;&gt;Facebook Social Graph&lt;/a&gt;, and the &lt;a href=&#34;https://en.wikipedia.org/wiki/Knowledge_Graph&#34;&gt;Google Knowledge Graph&lt;/a&gt;.&lt;/p&gt;
+Some popular graphs that we all know about are the &lt;a href=&#34;https://en.wikipedia.org/wiki/Social_graph&#34;&gt;Facebook Social Graph&lt;/a&gt; and the &lt;a href=&#34;https://en.wikipedia.org/wiki/Knowledge_Graph&#34;&gt;Google Knowledge Graph&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;A graph database is a database that uses graph structures with nodes and edges to represent, store and serve data.&lt;/p&gt;
 
@@ -30,11 +30,11 @@ Some popular graphs that we all know about are the &lt;a href=&#34;https://en.wi
 Google, Facebook, Twitter, eBay, LinkedIn, Amazon, Dropbox, Pinterest &amp;ndash; pick a company you are familiar with.
 If they&amp;rsquo;re doing something smart, chances are they&amp;rsquo;re probably using a graph database.
 Even very simple web apps have much to gain from graph databases.
-In the past, I&amp;rsquo;ve built a graph based REST framework, and using that &lt;a href=&#34;https://mrjn.xyz/post/Porting-To-Gocrud/&#34;&gt;cut down the code in half&lt;/a&gt;.&lt;/p&gt;
+In the past, I&amp;rsquo;ve built a graph based REST framework and using that &lt;a href=&#34;https://mrjn.xyz/post/Porting-To-Gocrud/&#34;&gt;cut down the code in half&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;So now that we understand graphs, let&amp;rsquo;s talk about DGraph.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;DGraph is an open source, low latency, high throughput, native and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;DGraph is an open source, low-latency, high throughput, native and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;To understand why it was created, let&amp;rsquo;s rewind a few years back to 2011.&lt;/p&gt;
 
@@ -51,23 +51,23 @@ You know, the boxed snippets that sometimes show up at the top of the search res
 &lt;p&gt;There were multiple custom built backends, each serving a One Box.
 A search query hitting &lt;em&gt;&lt;a href=&#34;https://www.google.com&#34;&gt;www.google.com&lt;/a&gt;&lt;/em&gt; would be sent iteratively through each of these One Box backends to check if any of them has a response.
 When one of the backends responds, the One Box data is retrieved and rendered on the top of the search results page.
-This is how that well formatted box with just the right information shows up below the search bar, thus saving you a few clicks.&lt;/p&gt;
+This is how that well-formatted box with just the right information shows up below the search bar, thus saving you a few clicks.&lt;/p&gt;
 
 &lt;p&gt;As good as it sounded, One Boxes had several inefficiencies and missed opportunities.&lt;/p&gt;
 
 &lt;p&gt;For starters, each One Box was custom built by a separate team that was responsible for running and maintaining it.
-As a result there was no particular sharing of the framework used to build the One Box.&lt;/p&gt;
+As a result, there was no particular sharing of the framework used to build the One Box.&lt;/p&gt;
 
 &lt;p&gt;This also meant that there was no single standard for the data format used by the One Boxes.
 Each One Box kept its data in its very own data structure, and no common querying language.
-Thus there didn&amp;rsquo;t exist an opportunity to share data amongst the boxes, to respond to more interesting queries that required an intersection of diverse data feeds.&lt;/p&gt;
+Thus, there didn&amp;rsquo;t exist an opportunity to share data amongst the boxes, to respond to more interesting queries that required an intersection of diverse data feeds.&lt;/p&gt;
 
 &lt;p&gt;A good example of this would be the ability to &lt;em&gt;recommend events based on the weather&lt;/em&gt; to a tourist exploring NYC &amp;ndash; that couldn&amp;rsquo;t easily be done with the existing system.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/nyc.jpg&#34; alt=&#34;NYC in rain&#34; /&gt;
 &lt;em&gt;Courtesy: &lt;a href=&#34;https://flic.kr/p/azztBd&#34;&gt;Several Seconds&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;This motivated me to start a project to standardize the data structures, and eventually serve them all using a single backend.
+&lt;p&gt;This motivated me to start a project to standardize the data structures and eventually serve them all using a single backend.
 Using the vast expertise of Metaweb team, we chose a data normalization structure that was also used by Knowledge Graph, the RDF Triples.
 By reconciling all the various entities from the different data feeds, we could start to reuse the data.&lt;/p&gt;
 
@@ -103,11 +103,11 @@ Assuming you have this data (&lt;em&gt;hey Facebook!&lt;/em&gt;) and keeping thi
 &lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/sushi.jpg&#34; alt=&#34;Sushi&#34; /&gt;
 &lt;em&gt;Courtesy: &lt;a href=&#34;https://flic.kr/p/nLkbkQ&#34;&gt;Yannig Van de Wouwer&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;First you find all the people living in SF, and then secondly, intersect that list with all the people who eat Sushi.&lt;/p&gt;
+&lt;p&gt;First, you find all the people living in SF, and then secondly, intersect that list with all the people who eat Sushi.&lt;/p&gt;
 
 &lt;p&gt;As you can imagine, the intermediate step here has a &lt;em&gt;large fan-out&lt;/em&gt;, i.e. there&amp;rsquo;re over a million results.
 If you were to shard the data by &lt;em&gt;entities&lt;/em&gt; (people), you&amp;rsquo;d end up broadcasting to all the servers in the cluster.
-Thus this query would be affected by even a single slow machine in the cluster.&lt;/p&gt;
+Thus, this query would be affected by even a single slow machine in the cluster.&lt;/p&gt;
 
 &lt;p&gt;Do that for every query, and it would spike the 95%-ile latency numbers up dramatically, &lt;em&gt;higher latency being worse&lt;/em&gt;.&lt;/p&gt;
 
@@ -123,7 +123,7 @@ In fact, the above query would run in 2 network calls, irrespective of the clust
 &lt;p&gt;DGraph is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
 This means being able to run on a laptop as well as on a big cluster of hundreds of machines serving thousands of queries per second.&lt;/p&gt;
 
-&lt;p&gt;Additionally it would also have to survive machine failures and partial datacenter collapses.
+&lt;p&gt;Additionally, it would also have to survive machine failures and partial data center collapses.
 The data stored would have to be automatically replicated with no single point of failure, and be able to move around the cluster to better distribute traffic.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;This is the big vision which led to DGraph.&lt;/strong&gt; And I&amp;rsquo;m &lt;a href=&#34;http://dgraph.io/&#34;&gt;fortunate to have a team&lt;/a&gt; that believes in and shares this vision with me.&lt;/p&gt;
@@ -138,18 +138,18 @@ The data stored would have to be automatically replicated with no single point o
 &lt;li&gt;serve web apps via &lt;a href=&#34;https://facebook.github.io/graphql/&#34;&gt;GraphQL&lt;/a&gt;, a full feature graph query language by Facebook.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We&amp;rsquo;ll be reporting some performance numbers for DGraph in our next few posts, to give you an idea for what you can expect from the system.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll be reporting some performance numbers for DGraph in our next few posts, to give you an idea of what you can expect from the system.&lt;/p&gt;
 
 &lt;hr /&gt;
 
 &lt;p&gt;If you or your company plan to use a graph database, you can &lt;a href=&#34;http://dgraph.io&#34;&gt;see our live demo here&lt;/a&gt;.
-We have big dreams for DGraph, and if deep and complex open source distributed systems interest you, note that &lt;a href=&#34;http://dgraph.io&#34;&gt;we&amp;rsquo;re hiring&lt;/a&gt;!
-So, check out our &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34;&gt;Github repository&lt;/a&gt;.
+We have big dreams for DGraph, and if deep and complex open source distributed systems interest you, &lt;a href=&#34;http://dgraph.io&#34;&gt;come join us. We&amp;rsquo;re hiring!&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Check out our &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34;&gt;Github repository&lt;/a&gt;.
 Then find us hanging out at &lt;a href=&#34;https://discuss.dgraph.io&#34;&gt;discuss.dgraph.io&lt;/a&gt; or &lt;a href=&#34;https://gitter.im/dgraph-io/dgraph&#34;&gt;Gitter&lt;/a&gt;, and come talk to us.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;- Written by &lt;a href=&#34;https://twitter.com/manishrjain&#34;&gt;Manish R Jain&lt;/a&gt;&lt;/em&gt;. Thanks to &lt;a href=&#34;https://twitter.com/koppula&#34;&gt;Prashanth Koppula&lt;/a&gt; and the team for proof reading.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;- Written by &lt;a href=&#34;https://twitter.com/manishrjain&#34;&gt;Manish R Jain&lt;/a&gt;&lt;/em&gt;. Thanks to &lt;a href=&#34;https://twitter.com/koppula&#34;&gt;Prashanth Koppula&lt;/a&gt; and the team for proofreading.
+&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 </description>
         </item>
       
