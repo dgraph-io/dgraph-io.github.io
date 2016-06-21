@@ -7,8 +7,236 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 18 Apr 2016 14:37:08 +1000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jun 2016 10:20:32 +0530</lastBuildDate>
     <atom:link href="http://blog.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>How much can you handle?</title>
+      <link>http://blog.dgraph.io/post/performance-throughput-latency/</link>
+      <pubDate>Tue, 21 Jun 2016 10:20:32 +0530</pubDate>
+      
+      <guid>http://blog.dgraph.io/post/performance-throughput-latency/</guid>
+      <description>
+
+&lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server.&lt;/p&gt;
+
+&lt;h2 id=&#34;about-the-dataset&#34;&gt;About the Dataset&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Freebase&#34;&gt;Freebase&lt;/a&gt; is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
+Currently, it has &lt;a href=&#34;https://developers.google.com/freebase/&#34;&gt;1.9 Billion RDF N-Triples&lt;/a&gt; worth 250GB of uncompressed data.
+On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
+It is an ideal data set to test the performance of Dgraph.
+We decided not to use the entire data set as it wasn&amp;rsquo;t necessary for our goal here.&lt;/p&gt;
+
+&lt;p&gt;Given our love for movies, we narrowed it down to the film data.
+We ran some scripts and filtered in the movie data only.
+All the data and scripts are present in &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/tree/master/data&#34;&gt;our benchmarks repository&lt;/a&gt;.
+There are two million nodes, which represent directors, actors, films and all the other objects in the database.
+Moreover, 21 million edges (including 4M edges for names) are representing the relationships between actors, films, directors and all the other nodes in the database.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Some interesting information about this data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# film.film --{film.film.starring}--&amp;gt; [mediator] --{film.performance.actor}--&amp;gt; film.actor
+# Film --&amp;gt; Mediator
+$ zgrep &amp;quot;&amp;lt;film.film.starring&amp;gt;&amp;quot; rdf-films.gz | wc -l
+1397647
+
+# Mediator --&amp;gt; Actor
+$ zgrep &amp;quot;&amp;lt;film.performance.actor&amp;gt;&amp;quot; rdf-films.gz | wc -l
+1396420
+
+# Film --&amp;gt; Director
+$ zgrep &amp;quot;&amp;lt;film.film.directed_by&amp;gt;&amp;quot; rdf-films.gz | wc -l
+242212
+
+# Director --&amp;gt; Film
+$ zgrep &amp;quot;&amp;lt;film.director.film&amp;gt;&amp;quot; rdf-films.gz | wc -l
+245274
+
+# Film --&amp;gt; Initial Release Date
+$ zgrep &amp;quot;&amp;lt;film.film.initial_release_date&amp;gt;&amp;quot; rdf-films.gz | wc -l
+240858
+
+# Film --&amp;gt; Genre
+$ zgrep &amp;quot;&amp;lt;film.film.genre&amp;gt;&amp;quot; rdf-films.gz | wc -l
+548152
+
+# Genre --&amp;gt; Film
+$ zgrep &amp;quot;&amp;lt;film.film_genre.films_in_this_genre&amp;gt;&amp;quot; rdf-films.gz | wc -l
+546698
+
+# Generated language names from names freebase rdf data.
+$ zcat langnames.gz | awk &#39;{print $1}&#39; | uniq | sort | uniq | wc -l
+55
+
+# Total number of countries.
+$ zgrep &amp;quot;&amp;lt;film.film.country&amp;gt;&amp;quot; rdf-films.gz | awk &#39;{print $3}&#39; | uniq | sort | uniq | wc -l
+304
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;This data set contains information about ~480K actors, ~100K directors and ~240K films.
+Some example of entries in the dataset are :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;m.0102j2vq&amp;gt; &amp;lt;film.actor.film&amp;gt; &amp;lt;m.011kyqsq&amp;gt; .
+&amp;lt;m.0102xz6t&amp;gt; &amp;lt;film.performance.film&amp;gt; &amp;lt;m.0kv00q&amp;gt; .
+&amp;lt;m.050llt&amp;gt; &amp;lt;type.object.name&amp;gt; “Aishwarya Rai Bachchan”@hr .
+&amp;lt;m.0bxtg&amp;gt; &amp;lt;type.object.name&amp;gt; “Tom Hanks”@es .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;terminology&#34;&gt;Terminology&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Throughput: Number of queries served by the server per second and received by the client&lt;/li&gt;
+&lt;li&gt;Latency: Difference between the time when the server received the request and the time it finished processing the request&lt;/li&gt;
+&lt;li&gt;95 percentile latency: The worst case latency which 95 percentage of users that query the database face&lt;/li&gt;
+&lt;li&gt;50 percentile latency: The worst case latency which half the users that query the database face&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;All the testing was done on GCE instances. Each machine had 30GB of SSD and at least 7.5 GB of RAM. The number of cores varied depending on the experiments performed.&lt;/p&gt;
+
+&lt;p&gt;The tests were run for 1-minute intervals during which all the parallel connections made requests to the database.
+This was repeated ten times and throughput, mean latency, 95th percentile latency, 50th percentile latency were measured.
+Note that for user-facing systems, measuring percentile latency is better than mean latency as the average can be skewed by outliers.&lt;/p&gt;
+
+&lt;p&gt;In a multi-node cluster set up, the queries were distributed among each node in a round-robin fashion.
+Note that no single machine contains all the data to answer these queries, in a multi-node cluster.
+They still have to communicate with each other to respond to the queries.&lt;/p&gt;
+
+&lt;h2 id=&#34;variables&#34;&gt;Variables&lt;/h2&gt;
+
+&lt;p&gt;The parameters that were varied were:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;A number of parallel connections to the database. In Go, this equated to the number of goroutines a client would have. Each goroutine would run in an infinite loop, querying the database via a blocking function.&lt;/li&gt;
+&lt;li&gt;Number of cores per server&lt;/li&gt;
+&lt;li&gt;Number of servers in the cluster&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This gave us an idea of what to expect from the system and would help in predicting the configuration required to handle a given load.&lt;/p&gt;
+
+&lt;h2 id=&#34;queries&#34;&gt;Queries&lt;/h2&gt;
+
+&lt;p&gt;We ran broadly 2 categories of queries.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For each actor (478,936 actors), get their name, the films they acted in, and those films&amp;rsquo; names.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  me ( _xid_ : XID ) {
+    type.object.name.en
+    film.actor.film {
+      film.performance.film {
+        type.object.name.en
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  me ( _xid_ : XID ) {
+    type.object.name.en
+    film.director.film {
+      film.film.genre {
+        type.object.name.en
+      }
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;During each iteration, either an actor or a director category was chosen randomly.
+Furthermore, for that category, an actor or director was chosen randomly; their &lt;code&gt;XID&lt;/code&gt; filled in in the query template.&lt;/p&gt;
+
+&lt;h2 id=&#34;performance&#34;&gt;Performance&lt;/h2&gt;
+
+&lt;p&gt;Let us look at some graphs obtained by varying the machine specs and the number of nodes in the cluster under different loads.&lt;/p&gt;
+
+&lt;h3 id=&#34;vary-the-number-of-cores-in-a-single-instance&#34;&gt;Vary the number of cores in a single instance&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_thru.jpg&#34; alt=&#34;Throughput on varying number of cores&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_lat_50.jpg&#34; alt=&#34;50 percentile latency on varying number of cores&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_lat_95.jpg&#34; alt=&#34;95 percentile latency on varying number of cores&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_lat_mean.jpg&#34; alt=&#34;mean latency on varying number of cores&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;With the same number of cores, when we increase the number of connections, i.e. load on the system, the throughput as well as the latency increase.&lt;/li&gt;
+&lt;li&gt;Throughput increases till some point and then flattens out. This is the point where the computational capacity is being utilized almost fully.&lt;/li&gt;
+&lt;li&gt;As expected, the latency increases almost linearly with the number of connections.&lt;/li&gt;
+&lt;li&gt;When we increase the number of cores, the latency decreases and the throughput increases.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;vary-number-of-instances&#34;&gt;Vary number of instances&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/topo_thru.jpg&#34; alt=&#34;Throughput on varying number of instances&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/dist_lat_50.jpg&#34; alt=&#34;50 percentile latency on varying number of instances&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/dist_lat_95.jpg&#34; alt=&#34;95 percentile latency on varying number of instances&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/dist_lat_mean.jpg&#34; alt=&#34;mean latency on varying number of instances&#34; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;When we increase the number of parallel connections, the throughput increases, but then flattens out. This is the point where the computational capacity is being utilized almost fully.&lt;/li&gt;
+&lt;li&gt;The latency increases almost linearly with the number of connections.&lt;/li&gt;
+&lt;li&gt;Latency in the case of a single instance is observed to be the equal to (or a bit lower than) that of distributed configurations as the former doesn’t require any network calls. However, as the number of requests/load increase, the cumulative computational power comes into play and overshadows the latency incurred due to network calls. Hence, the latency reduces in the distributed version under higher loads.&lt;/li&gt;
+&lt;li&gt;On comparing across the one, two and five node clusters, we can see that the latency, as well as the throughput, are better for configurations with a higher number of nodes, i.e., when there is more computational capacity at disposal. The throughput increases as we have greater computational power and can handle more queries.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;From the above experiments, we can see a relationship between the throughput, latency and the overall computational power of the cluster.
+The graphs show that the throughput increases as the computational power increases.
+Which can be achieved either by increasing the number of cores on each server or the number of nodes in the cluster.&lt;/p&gt;
+
+&lt;p&gt;The latency increases as the amount of load on the database increases.
+However, the rate of the increase differs based on how much computational power we have available.&lt;/p&gt;
+
+&lt;p&gt;This experiment also shows that there is a limit on how much computational power a single node can have, and once we reach that limit, scaling horizontally is the right option.
+Not only that, but it also proves that scaling horizontally improves the performance.
+Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.&lt;/p&gt;
+
+&lt;p&gt;Based on this experiment, our recommendation for running Dgraph would be:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use as many cores as possible&lt;/li&gt;
+&lt;li&gt;Have the servers geographically close-by so that network latency is reduced&lt;/li&gt;
+&lt;li&gt;Distribute the data among servers and query them in a round-robin fashion for greater throughput&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These might seem pretty obvious recommendations for a distributed system (duh!), but this experiment proves that the underlying design of Dgraph is scalable.
+Hope this helped you get a sense of what sort of performance you could expect out of Dgraph!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
+The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0&#34;&gt;available for download here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;If you or your company plan to use a graph database, you can &lt;a href=&#34;http://dgraph.io&#34;&gt;see our live demo here&lt;/a&gt;.
+If deep and complex open source distributed systems interest you, &lt;a href=&#34;http://dgraph.io&#34;&gt;join us. We are hiring!&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Check out our &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34;&gt;Github repository&lt;/a&gt;.
+Then find us on &lt;a href=&#34;https://discuss.dgraph.io&#34;&gt;discuss.dgraph.io&lt;/a&gt; or &lt;a href=&#34;http://slack.dgraph.io&#34;&gt;Slack&lt;/a&gt;, and come talk to us.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;- Written by &lt;a href=&#34;https://twitter.com/ashwin_rrr&#34;&gt;Ashwin Ramesh&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Hello, World!</title>
