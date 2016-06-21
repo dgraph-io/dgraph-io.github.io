@@ -15,8 +15,8 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="http://blog.dgraph.io//index.xml">
 
     
-    <title>Can you really scale? - Dgraph Blog</title>
-    <meta property='og:title' content="Can you really scale? - Dgraph Blog">
+    <title>Can it really scale? - Dgraph Blog</title>
+    <meta property='og:title' content="Can it really scale? - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
@@ -43,8 +43,8 @@
 
         <meta itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" content="http://blog.dgraph.io/"/>
         <meta itemprop="dateModified" content="2016-06-21T10:20:32&#43;05:30">
-        <meta itemprop="headline" content="Can you really scale?">
-        <meta itemprop="description" content="In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server.
+        <meta itemprop="headline" content="Can it really scale?">
+        <meta itemprop="description" content="In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: Can it really scale?
 ">
         <meta itemprop="url" content="http://blog.dgraph.io/post/performance-throughput-latency/">
         <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
@@ -68,15 +68,15 @@
 
         <header class="article-header">
           <time itemprop="datePublished" pubdate="pubdate" datetime="2016-06-21T10:20:32&#43;05:30">Tue, Jun 21, 2016</time>
-          <h1 class="article-title">Can you really scale?</h1>
+          <h1 class="article-title">Can it really scale?</h1>
         </header>
 
         <div class="article-body" itemprop="articleBody">
           
 
-<p>In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server.</p>
+<p>In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
 
-<h2 id="about-the-dataset">About the Dataset</h2>
+<h2 id="the-dataset">The Dataset</h2>
 
 <p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
@@ -274,8 +274,9 @@ Hence, having more replicas, distributing the dataset optimally across machines 
 <li>Distribute the data among servers and query them in a round-robin fashion for greater throughput</li>
 </ul>
 
-<p>These might seem pretty obvious recommendations for a distributed system (duh!), but this experiment proves that the underlying design of Dgraph is scalable.
-Hope this helped you get a sense of what sort of performance you could expect out of Dgraph!</p>
+<p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of Dgraph is scalable.</strong></p>
+
+<p>Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!</p>
 
 <p><em>This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
 The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0">available for download here</a>.</em></p>
@@ -299,10 +300,10 @@ Then find us on <a href="https://discuss.dgraph.io">discuss.dgraph.io</a> or <a 
           
 
           <div class="section share">
-            <a href="http://www.facebook.com/sharer.php?src=bm&u=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&t=Can%20you%20really%20scale%3f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
-            <a href="http://twitter.com/intent/tweet?url=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&text=Can%20you%20really%20scale%3f&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
+            <a href="http://www.facebook.com/sharer.php?src=bm&u=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&t=Can%20it%20really%20scale%3f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
+            <a href="http://twitter.com/intent/tweet?url=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&text=Can%20it%20really%20scale%3f&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
             <a href="https://plus.google.com/share?url=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
-            <a href="http://getpocket.com/edit?url=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&title=Can%20you%20really%20scale%3f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
+            <a href="http://getpocket.com/edit?url=http%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&title=Can%20it%20really%20scale%3f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
           </div>
 
           

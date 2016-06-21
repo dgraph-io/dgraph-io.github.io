@@ -11,16 +11,16 @@
     <atom:link href="http://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Can you really scale?</title>
+      <title>Can it really scale?</title>
       <link>http://blog.dgraph.io/post/performance-throughput-latency/</link>
       <pubDate>Tue, 21 Jun 2016 10:20:32 +0530</pubDate>
       
       <guid>http://blog.dgraph.io/post/performance-throughput-latency/</guid>
       <description>
 
-&lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server.&lt;/p&gt;
+&lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;about-the-dataset&#34;&gt;About the Dataset&lt;/h2&gt;
+&lt;h2 id=&#34;the-dataset&#34;&gt;The Dataset&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Freebase&#34;&gt;Freebase&lt;/a&gt; is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has &lt;a href=&#34;https://developers.google.com/freebase/&#34;&gt;1.9 Billion RDF N-Triples&lt;/a&gt; worth 250GB of uncompressed data.
@@ -218,8 +218,9 @@ Hence, having more replicas, distributing the dataset optimally across machines 
 &lt;li&gt;Distribute the data among servers and query them in a round-robin fashion for greater throughput&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;These might seem pretty obvious recommendations for a distributed system (duh!), but this experiment proves that the underlying design of Dgraph is scalable.
-Hope this helped you get a sense of what sort of performance you could expect out of Dgraph!&lt;/p&gt;
+&lt;p&gt;These might seem pretty obvious recommendations for a distributed system, but &lt;strong&gt;this experiment proves that the underlying design of Dgraph is scalable.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
 The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0&#34;&gt;available for download here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
