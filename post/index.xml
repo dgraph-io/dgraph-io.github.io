@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>DGraph Blog </title>
+    <title>Posts on Dgraph Blog</title>
     <link>http://blog.dgraph.io/post/</link>
+    <description>Recent content in Posts on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author></author>
-    <rights>(C) 2016</rights>
-    <updated>2016-04-18 14:37:08 &#43;1000 AEST</updated>
-
+    <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 18 Apr 2016 14:37:08 +1000</lastBuildDate>
+    <atom:link href="http://blog.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    <item>
+      <title>Hello, World!</title>
+      <link>http://blog.dgraph.io/post/hello-world/</link>
+      <pubDate>Mon, 18 Apr 2016 14:37:08 +1000</pubDate>
       
-        <item>
-          <title>Hello, World!</title>
-          <link>http://blog.dgraph.io/post/hello-world/</link>
-          <pubDate>Mon, 18 Apr 2016 14:37:08 AEST</pubDate>
-          <author></author>
-          <guid>http://blog.dgraph.io/post/hello-world/</guid>
-          <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about DGraph, what it is and why it was created.&lt;/p&gt;
+      <guid>http://blog.dgraph.io/post/hello-world/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about Dgraph, what it is and why it was created.&lt;/p&gt;
 
-&lt;p&gt;Before I explain what&amp;rsquo;s DGraph, let&amp;rsquo;s start with a basic understanding of graphs.
+&lt;p&gt;Before I explain what&amp;rsquo;s Dgraph, let&amp;rsquo;s start with a basic understanding of graphs.
 A graph is a mathematical structure used to model a pairwise relationship between entities.
 A graph is thus composed of nodes connected by edges.
 Each node represents an entity (a person, place, thing, etc.), and each edge represents the relationship between two nodes.
@@ -32,9 +32,9 @@ If they&amp;rsquo;re doing something smart, chances are they&amp;rsquo;re probab
 Even very simple web apps have much to gain from graph databases.
 In the past, I&amp;rsquo;ve built a graph based REST framework and using that &lt;a href=&#34;https://mrjn.xyz/post/Porting-To-Gocrud/&#34;&gt;cut down the code in half&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;So now that we understand graphs, let&amp;rsquo;s talk about DGraph.&lt;/p&gt;
+&lt;p&gt;So now that we understand graphs, let&amp;rsquo;s talk about Dgraph.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;DGraph is an open source, low-latency, high throughput, native and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dgraph is an open source, low-latency, high throughput, native and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;To understand why it was created, let&amp;rsquo;s rewind a few years back to 2011.&lt;/p&gt;
 
@@ -113,22 +113,22 @@ Thus, this query would be affected by even a single slow machine in the cluster.
 
 &lt;hr /&gt;
 
-&lt;p&gt;&lt;strong&gt;DGraph, on the other hand, is a native graph database&lt;/strong&gt; in the sense that the data is handled directly by DGraph, and not given off to another database layer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dgraph, on the other hand, is a native graph database&lt;/strong&gt; in the sense that the data is handled directly by Dgraph, and not given off to another database layer.&lt;/p&gt;
 
 &lt;p&gt;This allows us to shard and relocate the data better, to minimize the number of network calls required per query.
 In fact, the above query would run in 2 network calls, irrespective of the cluster size.&lt;/p&gt;
 
 &lt;p&gt;The number of network calls being &lt;em&gt;directly proportional to the complexity of the query&lt;/em&gt;, not the number of intermediate or final results.&lt;/p&gt;
 
-&lt;p&gt;DGraph is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
+&lt;p&gt;Dgraph is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
 This means being able to run on a laptop as well as on a big cluster of hundreds of machines serving thousands of queries per second.&lt;/p&gt;
 
 &lt;p&gt;Additionally, it would also have to survive machine failures and partial data center collapses.
 The data stored would have to be automatically replicated with no single point of failure, and be able to move around the cluster to better distribute traffic.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;This is the big vision which led to DGraph.&lt;/strong&gt; And I&amp;rsquo;m &lt;a href=&#34;http://dgraph.io/&#34;&gt;fortunate to have a team&lt;/a&gt; that believes in and shares this vision with me.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is the big vision which led to Dgraph.&lt;/strong&gt; And I&amp;rsquo;m &lt;a href=&#34;http://dgraph.io/&#34;&gt;fortunate to have a team&lt;/a&gt; that believes in and shares this vision with me.&lt;/p&gt;
 
-&lt;p&gt;Apart from use with diverse social and knowledge graphs, DGraph can also be used to:&lt;/p&gt;
+&lt;p&gt;Apart from use with diverse social and knowledge graphs, Dgraph can also be used to:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;build real-time recommendation engines,&lt;/li&gt;
@@ -138,22 +138,20 @@ The data stored would have to be automatically replicated with no single point o
 &lt;li&gt;serve web apps via &lt;a href=&#34;https://facebook.github.io/graphql/&#34;&gt;GraphQL&lt;/a&gt;, a full feature graph query language by Facebook.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We&amp;rsquo;ll be reporting some performance numbers for DGraph in our next few posts, to give you an idea of what you can expect from the system.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll be reporting some performance numbers for Dgraph in our next few posts, to give you an idea of what you can expect from the system.&lt;/p&gt;
 
 &lt;hr /&gt;
 
 &lt;p&gt;If you or your company plan to use a graph database, you can &lt;a href=&#34;http://dgraph.io&#34;&gt;see our live demo here&lt;/a&gt;.
-We have big dreams for DGraph, and if deep and complex open source distributed systems interest you, &lt;a href=&#34;http://dgraph.io&#34;&gt;come join us. We&amp;rsquo;re hiring!&lt;/a&gt;&lt;/p&gt;
+We have big dreams for Dgraph, and if deep and complex open source distributed systems interest you, &lt;a href=&#34;http://dgraph.io&#34;&gt;come join us. We&amp;rsquo;re hiring!&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Check out our &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34;&gt;Github repository&lt;/a&gt;.
-Then find us hanging out at &lt;a href=&#34;https://discuss.dgraph.io&#34;&gt;discuss.dgraph.io&lt;/a&gt; or &lt;a href=&#34;https://gitter.im/dgraph-io/dgraph&#34;&gt;Gitter&lt;/a&gt;, and come talk to us.&lt;/p&gt;
+Then find us hanging out at &lt;a href=&#34;https://discuss.dgraph.io&#34;&gt;discuss.dgraph.io&lt;/a&gt; or &lt;a href=&#34;http://slack.dgraph.io&#34;&gt;Slack&lt;/a&gt;, and come talk to us.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;- Written by &lt;a href=&#34;https://twitter.com/manishrjain&#34;&gt;Manish R Jain&lt;/a&gt;&lt;/em&gt;. Thanks to &lt;a href=&#34;https://twitter.com/koppula&#34;&gt;Prashanth Koppula&lt;/a&gt; and the team for proofreading.
 &lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 </description>
-        </item>
-      
+    </item>
     
-
   </channel>
 </rss>
