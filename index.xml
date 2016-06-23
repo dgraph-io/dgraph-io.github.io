@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dgraph Blog</title>
-    <link>http://blog.dgraph.io/</link>
+    <link>http://open.dgraph.io/</link>
     <description>Recent content on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
     <lastBuildDate>Tue, 21 Jun 2016 10:20:32 +0530</lastBuildDate>
-    <atom:link href="http://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Can it really scale?</title>
-      <link>http://blog.dgraph.io/post/performance-throughput-latency/</link>
+      <link>http://open.dgraph.io/post/performance-throughput-latency/</link>
       <pubDate>Tue, 21 Jun 2016 10:20:32 +0530</pubDate>
       
-      <guid>http://blog.dgraph.io/post/performance-throughput-latency/</guid>
+      <guid>http://open.dgraph.io/post/performance-throughput-latency/</guid>
       <description>
 
 &lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;&lt;/p&gt;
@@ -165,13 +165,13 @@ Furthermore, for that category, an actor or director was chosen randomly; their 
 
 &lt;h3 id=&#34;vary-the-number-of-cores-in-a-single-instance&#34;&gt;Vary the number of cores in a single instance&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_thru.jpg&#34; alt=&#34;Throughput on varying number of cores&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/cores_thru.jpg&#34; alt=&#34;Throughput on varying number of cores&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_lat_50.jpg&#34; alt=&#34;50 percentile latency on varying number of cores&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/cores_lat_50.jpg&#34; alt=&#34;50 percentile latency on varying number of cores&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_lat_95.jpg&#34; alt=&#34;95 percentile latency on varying number of cores&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/cores_lat_95.jpg&#34; alt=&#34;95 percentile latency on varying number of cores&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/cores_lat_mean.jpg&#34; alt=&#34;mean latency on varying number of cores&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/cores_lat_mean.jpg&#34; alt=&#34;mean latency on varying number of cores&#34; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;With the same number of cores, when we increase the number of connections, i.e. load on the system, the throughput as well as the latency increase.&lt;/li&gt;
@@ -182,13 +182,13 @@ Furthermore, for that category, an actor or director was chosen randomly; their 
 
 &lt;h3 id=&#34;vary-number-of-instances&#34;&gt;Vary number of instances&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/topo_thru.jpg&#34; alt=&#34;Throughput on varying number of instances&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/topo_thru.jpg&#34; alt=&#34;Throughput on varying number of instances&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/dist_lat_50.jpg&#34; alt=&#34;50 percentile latency on varying number of instances&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/dist_lat_50.jpg&#34; alt=&#34;50 percentile latency on varying number of instances&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/dist_lat_95.jpg&#34; alt=&#34;95 percentile latency on varying number of instances&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/dist_lat_95.jpg&#34; alt=&#34;95 percentile latency on varying number of instances&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/dist_lat_mean.jpg&#34; alt=&#34;mean latency on varying number of instances&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/dist_lat_mean.jpg&#34; alt=&#34;mean latency on varying number of instances&#34; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;When we increase the number of parallel connections, the throughput increases, but then flattens out. This is the point where the computational capacity is being utilized almost fully.&lt;/li&gt;
@@ -261,10 +261,10 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
     
     <item>
       <title>Hello, World!</title>
-      <link>http://blog.dgraph.io/post/hello-world/</link>
+      <link>http://open.dgraph.io/post/hello-world/</link>
       <pubDate>Mon, 18 Apr 2016 14:37:08 +1000</pubDate>
       
-      <guid>http://blog.dgraph.io/post/hello-world/</guid>
+      <guid>http://open.dgraph.io/post/hello-world/</guid>
       <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about Dgraph, what it is and why it was created.&lt;/p&gt;
 
 &lt;p&gt;Before I explain what&amp;rsquo;s Dgraph, let&amp;rsquo;s start with a basic understanding of graphs.
@@ -315,7 +315,7 @@ Thus, there didn&amp;rsquo;t exist an opportunity to share data amongst the boxe
 &lt;p&gt;A good example of this would be the ability to &lt;em&gt;recommend events based on the weather&lt;/em&gt; to a tourist exploring NYC &amp;ndash; that couldn&amp;rsquo;t easily be done with the existing system.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/nyc.jpg&#34; alt=&#34;NYC in rain&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/nyc.jpg&#34; alt=&#34;NYC in rain&#34; /&gt;
 &lt;em&gt;Courtesy: &lt;a href=&#34;https://flic.kr/p/azztBd&#34;&gt;Several Seconds&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;This motivated me to start a project to standardize the data structures and eventually serve them all using a single backend.
@@ -351,7 +351,7 @@ This meant having many network calls should the intermediate number of results b
 &lt;p&gt;For example, say you wanted to find &lt;strong&gt;[People living in SF who eat Sushi]&lt;/strong&gt;.
 Assuming you have this data (&lt;em&gt;hey Facebook!&lt;/em&gt;) and keeping things simple, this requires 2 steps.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/sushi.jpg&#34; alt=&#34;Sushi&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/sushi.jpg&#34; alt=&#34;Sushi&#34; /&gt;
 &lt;em&gt;Courtesy: &lt;a href=&#34;https://flic.kr/p/nLkbkQ&#34;&gt;Yannig Van de Wouwer&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;First, you find all the people living in SF, and then secondly, intersect that list with all the people who eat Sushi.&lt;/p&gt;

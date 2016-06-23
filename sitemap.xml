@@ -2,17 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.dgraph.io/</loc>
+    <loc>http://open.dgraph.io/</loc>
     <lastmod>2016-06-21T10:20:32+05:30</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.dgraph.io/post/performance-throughput-latency/</loc>
+    <loc>http://open.dgraph.io/post/performance-throughput-latency/</loc>
     <lastmod>2016-06-21T10:20:32+05:30</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.dgraph.io/post/hello-world/</loc>
+    <loc>http://open.dgraph.io/post/hello-world/</loc>
     <lastmod>2016-04-18T14:37:08+10:00</lastmod>
   </url>
   
