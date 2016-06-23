@@ -227,13 +227,33 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
 
 &lt;hr /&gt;
 
-&lt;p&gt;If you or your company plan to use a graph database, you can &lt;a href=&#34;http://dgraph.io&#34;&gt;see our live demo here&lt;/a&gt;.
-If deep and complex open source distributed systems interest you, &lt;a href=&#34;http://dgraph.io&#34;&gt;join us. We are hiring!&lt;/a&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+  &lt;tr&gt;
+  &lt;th&gt;&lt;/th&gt;
+  &lt;th&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td&gt;See our live demo.&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Star us on Github.&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ask us questions.&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-&lt;p&gt;Check out our &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34;&gt;Github repository&lt;/a&gt;.
-Then find us on &lt;a href=&#34;https://discuss.dgraph.io&#34;&gt;discuss.dgraph.io&lt;/a&gt; or &lt;a href=&#34;http://slack.dgraph.io&#34;&gt;Slack&lt;/a&gt;, and come talk to us.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;- Written by &lt;a href=&#34;https://twitter.com/ashwin_rrr&#34;&gt;Ashwin Ramesh&lt;/a&gt;. Edited by &lt;a href=&#34;https://twitter.com/manishrjain&#34;&gt;Manish Jain&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 </description>
@@ -291,7 +311,9 @@ As a result, there was no particular sharing of the framework used to build the 
 Each One Box kept its data in its very own data structure, and no common querying language.
 Thus, there didn&amp;rsquo;t exist an opportunity to share data amongst the boxes, to respond to more interesting queries that required an intersection of diverse data feeds.&lt;/p&gt;
 
+&lt;blockquote&gt;
 &lt;p&gt;A good example of this would be the ability to &lt;em&gt;recommend events based on the weather&lt;/em&gt; to a tourist exploring NYC &amp;ndash; that couldn&amp;rsquo;t easily be done with the existing system.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://blog.dgraph.io/images/nyc.jpg&#34; alt=&#34;NYC in rain&#34; /&gt;
 &lt;em&gt;Courtesy: &lt;a href=&#34;https://flic.kr/p/azztBd&#34;&gt;Several Seconds&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
@@ -371,14 +393,35 @@ The data stored would have to be automatically replicated with no single point o
 
 &lt;hr /&gt;
 
-&lt;p&gt;If you or your company plan to use a graph database, you can &lt;a href=&#34;http://dgraph.io&#34;&gt;see our live demo here&lt;/a&gt;.
-We have big dreams for Dgraph, and if deep and complex open source distributed systems interest you, &lt;a href=&#34;http://dgraph.io&#34;&gt;come join us. We&amp;rsquo;re hiring!&lt;/a&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+  &lt;tr&gt;
+  &lt;th&gt;&lt;/th&gt;
+  &lt;th&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td&gt;See our live demo.&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Star us on Github.&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ask us questions.&lt;/td&gt;
+    &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-&lt;p&gt;Check out our &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34;&gt;Github repository&lt;/a&gt;.
-Then find us hanging out at &lt;a href=&#34;https://discuss.dgraph.io&#34;&gt;discuss.dgraph.io&lt;/a&gt; or &lt;a href=&#34;http://slack.dgraph.io&#34;&gt;Slack&lt;/a&gt;, and come talk to us.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;- Written by &lt;a href=&#34;https://twitter.com/manishrjain&#34;&gt;Manish R Jain&lt;/a&gt;&lt;/em&gt;. Thanks to &lt;a href=&#34;https://twitter.com/koppula&#34;&gt;Prashanth Koppula&lt;/a&gt; and the team for proofreading.
-&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 </description>
     </item>
     

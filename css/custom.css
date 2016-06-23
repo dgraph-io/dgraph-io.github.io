@@ -1,3 +1,47 @@
-article.single .article-body {
-  max-width: 80%;
+.blog-article .image {
+    height: 24rem;
+    margin-bottom: 20px;
+}
+
+.article-content pre{
+    margin-left:0;
+    margin-right:0;
+    max-width: 100%;
+}
+
+.article__item .image {
+    height: 24rem;
+}
+
+.article__item a {
+    color: black;
+}
+
+.article__item a:hover {
+    color: #f96315;
+}
+
+h3.article__titile {
+    color: black;
+}
+
+.article-author__title {
+    float: right;
+}
+
+
+table thead th {
+  border-bottom: 1px solid #e1d9d4;
+}
+
+#page-header iframe{
+  position: absolute;
+  margin-left: 15px;
+  top: 50px;
+}
+
+@media screen and (max-width: 989px){
+  #page-header iframe {
+    top: 35px
+  }
 }
