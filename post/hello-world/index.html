@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.17-DEV" />  
+      <meta name="generator" content="Hugo 0.16" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -46,13 +46,7 @@
     <meta property="og:image" content="http://open.dgraph.io/images/default.jpg">  
 
     
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">  
-
-    
-    <link rel="stylesheet" href="http://open.dgraph.io/css/styles.css">
-    <link rel="stylesheet" href="http://open.dgraph.io/css/custom.css">
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://open.dgraph.io/index.xml">  
-
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
     
     <script type="text/javascript" src="/js/modernizr.min.js"></script>
     
@@ -369,7 +363,7 @@
       <div class="row">
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
-          <div class="image" style="background-image: url(http://open.dgraph.io/images/default.jpg);"></div>
+          <img class="opening__image" src="http://open.dgraph.io/images/default.jpg">
           <div class="article-content"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about Dgraph, what it is and why it was created.</p>
 
 <p>Before I explain what&rsquo;s Dgraph, let&rsquo;s start with a basic understanding of graphs.
@@ -563,7 +557,12 @@ The data stored would have to be automatically replicated with no single point o
             </div>
           </div>
     </footer>
-    <div id='discourse-comments'></div>
+
+    <div class="container">
+      <div class="row">
+        <div id='discourse-comments'></div>
+      </div>
+    </div>
   </div>
       <div class="page-footer__wrapper">
       <footer id="page-footer" class="page-footer">
