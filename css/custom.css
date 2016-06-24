@@ -40,11 +40,16 @@ h3.article__titile {
 
 .article-author__title {
     float: right;
+    font-weight: 500;
+    color: #217bc1;
 }
 
-
-table thead th {
+.engage table thead th {
   border-bottom: 1px solid #e1d9d4;
+}
+
+.engage table thead th {
+  padding: .3em .5em;
 }
 
 #page-header iframe{
@@ -58,3 +63,13 @@ table thead th {
     top: 35px
   }
 }
+
+.engage p {
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.engage table {
+  margin-top: 0;
+}
+

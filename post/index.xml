@@ -227,35 +227,223 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
 
 &lt;hr /&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-  &lt;tr&gt;
-  &lt;th&gt;&lt;/th&gt;
-  &lt;th&gt;&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-  &lt;tr&gt;
-    &lt;td&gt;See our live demo.&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Star us on Github.&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Ask us questions.&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
 
 
 &lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Wisemonk: A slackbot to move discussions from Slack to Discourse</title>
+      <link>http://open.dgraph.io/post/wisemonk/</link>
+      <pubDate>Wed, 15 Jun 2016 11:39:27 +1000</pubDate>
+      
+      <guid>http://open.dgraph.io/post/wisemonk/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;Then there was the fact that we had so many channels and direct messages and group chats.
+It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
+&lt;em&gt;— &lt;a href=&#34;https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/&#34;&gt;Dave Teare, Curing Our Slack Addiction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;the-beginning&#34;&gt;The Beginning&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;— Manish Jain&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Sitting in a Japanese restaurant, waiting for my lunch, this is the line that hit me hard.
+I’d experienced this exact thing in my previous company.&lt;/p&gt;
+
+&lt;p&gt;Every block of time dedicated to coding was either interrupted by pings on the chat system, or a consistent feeling that you’re missing out.
+Away from the desk, phones would start ringing every evening.
+And they’d ring some more on the weekends, Sunday evenings in particular.
+We were always doing something — the feeling was like being on &lt;em&gt;unpaid pager duty&lt;/em&gt;.
+People are talking, and if I’m not around to show my presence, it would mean I’m not working.
+But what was getting done, I wasn’t so clear about.&lt;/p&gt;
+
+&lt;p&gt;So, when we started exploring options for both internal and external communication for Dgraph, we wanted to do things differently.
+We’d focus on asynchronous communication, so people can take their time before jumping in.
+People can reply when they get to it — this might be hours later.
+And there’ll be an incentive to modify your reply as more things become clear to you or you find better words to express yourself.
+Something better than Email, but not so distracting as Slack.
+The winner came out to be Discourse by Jeff Atwood and his team(edit: not Discord, another chat app).&lt;/p&gt;
+
+&lt;p&gt;Having run it for over two months, we couldn’t have been happier.
+Discourse sits somewhere between emails and real-time chat systems.
+You feel like you’re having a real-time conversation.
+But it won’t interrupt you in the middle of a 3-hour block of time you’ve set for distraction-free coding.
+Discourse has become such an integral part of our company that we abandoned making decisions in meetings entirely.
+All decisions happen over discourse, so everyone has a chance to voice their opinions and suggestions at their pace.
+And others can embark on fact-finding and put figures together to support or deny arguments.
+I’ve seen a lot smarter discussions, and hence decisions happening over our Discourse forum than over any other medium.&lt;/p&gt;
+
+&lt;p&gt;Don’t get me wrong.
+&lt;strong&gt;We still need Slack&lt;/strong&gt; for casual chit chat and team bonding.
+But, Slack is an addiction.
+You write one thing, someone replies; then someone else jumps in; and the result is an hour-long frenzy, where everyone feels like they’ve contributed a lot.
+But a few hours later, you can’t pinpoint what changed.&lt;/p&gt;
+
+&lt;p&gt;Most useful discussions require a bit more time and thought.
+More than when someone else is typing while you’re in the middle of your sentence.&lt;/p&gt;
+
+&lt;p&gt;This is what lead to Wisemonk.
+This bot would push the conversation away from Slack into Discourse.
+And this has to happen just when the team is getting sucked into the frenzy.
+&lt;strong&gt;Before it’s too late&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;how-we-built-it&#34;&gt;How we built it&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;— Pawan Rawal&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Wisemonk makes use of the Slack RTM API.
+We make good use of the concurrency features in Go.
+For each Slack channel passed in channels flag, we initialise an instance of type Counter.
+The counter keeps track of the messages and other states for a Slack channel.
+Each counter has a buffered channel (called &lt;code&gt;messages&lt;/code&gt;) to which Slack messages are sent.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cmap := make(map[string]*Counter)
+for _, cid := range schannels {
+  wg.Add(1)
+  c := &amp;amp;Counter{channelId: cid}
+  c.messages = make(chan *slack.Msg, 500)
+  cmap[cid] = c
+  go c.checkOrIncr(rtm, wg, memmap)
+}
+go listen(rtm)
+wg.Wait()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The listen function which runs as a goroutine gives us access to the messages sent on Slack.
+We use this library to authenticate with and get messages from Slack.
+Then the listen function passes messages on the relevant Go channel.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;case *slack.MessageEvent:
+  if sm, ok := msg.Data.(*slack.MessageEvent); ok {
+  // Putting the message on the Counter it belongs to
+  m := sm.Msg
+  if c, ok := cmap[m.Channel]; ok {
+    c.messages &amp;lt;- &amp;amp;m
+  }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;code&gt;checkOrIncr&lt;/code&gt; method which runs as a goroutine for every counter keeps a count of the number of messages exchanged in a given interval.
+Below is the basic version of the method.
+It runs a never ending &lt;code&gt;for&lt;/code&gt; loop.
+Now every time a message is received on the messages channel of the counter instance, it adds the message.
+NewTicker function from the time package provides us with a Ticker, which sends the time on a channel with the period specified.
+So every 10 seconds we get a time value and check if the count of messages exchanged increases the &lt;code&gt;maxmsg&lt;/code&gt; that we passed as a flag.
+If it does, then we send a warning to the relevant Slack channel.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func (c *Counter) checkOrIncr(rtm *slack.RTM, wg sync.WaitGroup, memmap map[string]string) {
+   defer wg.Done()
+   ticker := time.NewTicker(time.Second * 10)
+   for {
+       select {
+       case msg := &amp;lt;-c.messages:
+           c.Increment(msg, memmap)
+       case &amp;lt;-ticker.C:
+           count := c.Count()
+           if count &amp;gt;= *maxmsg {
+               go sendMessage(c, rtm)
+           }
+       }
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once the basic functionality was in place, we added integration with discourse.
+Wisemonk stores the last n messages exchanged, creates a discourse topic with the messages when they exceed the max count and shares the URL with us on Slack.&lt;/p&gt;
+
+&lt;p&gt;You can create a discourse topic on demand too and get the URL for it. This makes shifting conversations to Discourse super easy.&lt;/p&gt;
+
+&lt;p&gt;For the weekends or in the evenings when you want to have a casual chat and don’t want to be interrupted by Wisemonk, you could ask him to meditate, and it won’t disturb you for a while.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;wisemonk-in-action&#34;&gt;Wisemonk in Action&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/wisemonk-in-action.png&#34; alt=&#34;Wisemonk alerting us when we talk too much&#34; /&gt;
+&lt;em&gt;Wisemonk alerting us when we talk too much&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/wisemonk-creating-topic.png&#34; alt=&#34;Asking wisemonk to create a topic&#34; /&gt;
+&lt;em&gt;Asking wisemonk to create a topic&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/wisemonk-meditating.png&#34; alt=&#34;Asking wisemonk to meditate&#34; /&gt;
+&lt;em&gt;Asking wisemonk to meditate&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;parting-thoughts&#34;&gt;Parting Thoughts&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/dgraph-io/wisemonk#install&#34;&gt;Setting up wisemonk&lt;/a&gt; is super easy and we have found that it has enhanced our productivity a lot.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s open source and &lt;a href=&#34;https://github.com/dgraph-io/wisemonk&#34;&gt;available at Github&lt;/a&gt;, so feel free to contribute to it. We would love to hear about your usage of Wisemonk.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Yoda guides actions. Wisemonk guides conversations. Image courtesy: &lt;a href=&#34;http://www.wired.com/wp-content/uploads/2015/08/Yoda-featured1.jpg&#34;&gt;wired.com&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
 </description>
     </item>
     
@@ -393,32 +581,35 @@ The data stored would have to be automatically replicated with no single point o
 
 &lt;hr /&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-  &lt;tr&gt;
-  &lt;th&gt;&lt;/th&gt;
-  &lt;th&gt;&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-  &lt;tr&gt;
-    &lt;td&gt;See our live demo.&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Star us on Github.&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Ask us questions.&lt;/td&gt;
-    &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
 
 
 &lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
