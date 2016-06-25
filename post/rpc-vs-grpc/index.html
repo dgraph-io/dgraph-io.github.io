@@ -36,14 +36,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="http://open.dgraph.io/index.xml">    
 
     
-    <title>Wisemonk: A slackbot to move discussions from Slack to Discourse - Dgraph Blog</title>
-    <meta property='og:title' content="Wisemonk: A slackbot to move discussions from Slack to Discourse - Dgraph Blog">
+    <title>Custom encoding: Implementation in net/rpc vs grpc and why we switched - Dgraph Blog</title>
+    <meta property='og:title' content="Custom encoding: Implementation in net/rpc vs grpc and why we switched - Dgraph Blog">
     <meta property="og:type" content="article">
         
 
-    <meta property="og:url" content="http://open.dgraph.io/post/wisemonk/">
+    <meta property="og:url" content="http://open.dgraph.io/post/rpc-vs-grpc/">
     
-    <meta property="og:image" content="http://open.dgraph.io/images/yoda.jpg">  
+    <meta property="og:image" content="http://open.dgraph.io/images/martian-encoding.jpg">  
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -339,13 +339,13 @@
       <div class="row">
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
           <header class="page-intro__header">
-            <div class="article__meta"><span class="article__meta-item article__date">Wed, Jun 15, 2016</span></div>
-            <h1 class="page-intro__title page-intro__title--blog">Wisemonk: A slackbot to move discussions from Slack to Discourse</h1>
+            <div class="article__meta"><span class="article__meta-item article__date">Sat, Jun 25, 2016</span></div>
+            <h1 class="page-intro__title page-intro__title--blog">Custom encoding: Implementation in net/rpc vs grpc and why we switched</h1>
           </header>
           <div class="page-intro__footer">
               <div class="share">
                 <ul class="share__list">
-                  <li class="share__item"><a href="https://twitter.com/share?text=Wisemonk%3a%20A%20slackbot%20to%20move%20discussions%20from%20Slack%20to%20Discourse&amp;url=http%3a%2f%2fopen.dgraph.io%2fpost%2fwisemonk%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Custom%20encoding%3a%20Implementation%20in%20net%2frpc%20vs%20grpc%20and%20why%20we%20switched&amp;url=http%3a%2f%2fopen.dgraph.io%2fpost%2frpc-vs-grpc%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -363,150 +363,556 @@
       <div class="row">
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
-          <img class="opening__image" src="http://open.dgraph.io/images/yoda.jpg">
+          <img class="opening__image" src="http://open.dgraph.io/images/martian-encoding.jpg">
           <div class="article-content">
 
+<p>At Dgraph, we aim to build a low latency, distributed graph database.
+This means our data is distributed among nodes in the cluster.
+Executing a query means multiple nodes are communicating with each other.
+To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p>
+
 <blockquote>
-<p>Then there was the fact that we had so many channels and direct messages and group chats.
-It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
-<em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
+<p>What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+The only memory needed to access your data is that of the buffer.</p>
 </blockquote>
 
-<h1 id="the-beginning">The Beginning</h1>
+<p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
 
-<p><em>— Manish Jain</em></p>
+<p>Dgraph responses can contain millions of entities and binary blob values.
+And the fact that Flatbuffers doesn&rsquo;t need to recreate the entire information in language specific data structures is very helpful for both memory and speed.</p>
 
-<p>Sitting in a Japanese restaurant, waiting for my lunch, this is the line that hit me hard.
-I’d experienced this exact thing in my previous company.</p>
+<p>Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
+So, our goal was to implement communication using RPC over custom encoding utilizing Flatbuffers.</p>
 
-<p>Every block of time dedicated to coding was either interrupted by pings on the chat system, or a consistent feeling that you’re missing out.
-Away from the desk, phones would start ringing every evening.
-And they’d ring some more on the weekends, Sunday evenings in particular.
-We were always doing something — the feeling was like being on <em>unpaid pager duty</em>.
-People are talking, and if I’m not around to show my presence, it would mean I’m not working.
-But what was getting done, I wasn’t so clear about.</p>
+<h1 id="go-net-rpc">Go net/rpc</h1>
 
-<p>So, when we started exploring options for both internal and external communication for Dgraph, we wanted to do things differently.
-We’d focus on asynchronous communication, so people can take their time before jumping in.
-People can reply when they get to it — this might be hours later.
-And there’ll be an incentive to modify your reply as more things become clear to you or you find better words to express yourself.
-Something better than Email, but not so distracting as Slack.
-The winner came out to be Discourse by Jeff Atwood and his team(edit: not Discord, another chat app).</p>
+<p>Our first approach was to use Go language library <code>net/rpc</code> and implement custom encoding in it.</p>
 
-<p>Having run it for over two months, we couldn’t have been happier.
-Discourse sits somewhere between emails and real-time chat systems.
-You feel like you’re having a real-time conversation.
-But it won’t interrupt you in the middle of a 3-hour block of time you’ve set for distraction-free coding.
-Discourse has become such an integral part of our company that we abandoned making decisions in meetings entirely.
-All decisions happen over discourse, so everyone has a chance to voice their opinions and suggestions at their pace.
-And others can embark on fact-finding and put figures together to support or deny arguments.
-I’ve seen a lot smarter discussions, and hence decisions happening over our Discourse forum than over any other medium.</p>
+<p>Helper function to deal with writing and parsing header for the payload:</p>
 
-<p>Don’t get me wrong.
-<strong>We still need Slack</strong> for casual chit chat and team bonding.
-But, Slack is an addiction.
-You write one thing, someone replies; then someone else jumps in; and the result is an hour-long frenzy, where everyone feels like they’ve contributed a lot.
-But a few hours later, you can’t pinpoint what changed.</p>
+<pre><code>/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-<p>Most useful discussions require a bit more time and thought.
-More than when someone else is typing while you’re in the middle of your sentence.</p>
+package conn
 
-<p>This is what lead to Wisemonk.
-This bot would push the conversation away from Slack into Discourse.
-And this has to happen just when the team is getting sucked into the frenzy.
-<strong>Before it’s too late</strong></p>
+import (
+    &quot;bytes&quot;
+    &quot;encoding/binary&quot;
+    &quot;fmt&quot;
+    &quot;io&quot;
 
-<hr />
+    &quot;github.com/dgraph-io/dgraph/x&quot;
+)
 
-<h1 id="how-we-built-it">How we built it</h1>
-
-<p><em>— Pawan Rawal</em></p>
-
-<p>Wisemonk makes use of the Slack RTM API.
-We make good use of the concurrency features in Go.
-For each Slack channel passed in channels flag, we initialise an instance of type Counter.
-The counter keeps track of the messages and other states for a Slack channel.
-Each counter has a buffered channel (called <code>messages</code>) to which Slack messages are sent.</p>
-
-<pre><code>cmap := make(map[string]*Counter)
-for _, cid := range schannels {
-  wg.Add(1)
-  c := &amp;Counter{channelId: cid}
-  c.messages = make(chan *slack.Msg, 500)
-  cmap[cid] = c
-  go c.checkOrIncr(rtm, wg, memmap)
+type Query struct {
+    Data []byte
 }
-go listen(rtm)
-wg.Wait()
-</code></pre>
 
-<p>The listen function which runs as a goroutine gives us access to the messages sent on Slack.
-We use this library to authenticate with and get messages from Slack.
-Then the listen function passes messages on the relevant Go channel.</p>
+type Reply struct {
+    Data []byte
+}
 
-<pre><code>case *slack.MessageEvent:
-  if sm, ok := msg.Data.(*slack.MessageEvent); ok {
-  // Putting the message on the Counter it belongs to
-  m := sm.Msg
-  if c, ok := cmap[m.Channel]; ok {
-    c.messages &lt;- &amp;m
-  }
-</code></pre>
+func writeHeader(rwc io.ReadWriteCloser, seq uint64,
+    method string, data []byte) error {
 
-<p>The <code>checkOrIncr</code> method which runs as a goroutine for every counter keeps a count of the number of messages exchanged in a given interval.
-Below is the basic version of the method.
-It runs a never ending <code>for</code> loop.
-Now every time a message is received on the messages channel of the counter instance, it adds the message.
-NewTicker function from the time package provides us with a Ticker, which sends the time on a channel with the period specified.
-So every 10 seconds we get a time value and check if the count of messages exchanged increases the <code>maxmsg</code> that we passed as a flag.
-If it does, then we send a warning to the relevant Slack channel.</p>
+    var bh bytes.Buffer
+    var rerr error
 
-<pre><code>func (c *Counter) checkOrIncr(rtm *slack.RTM, wg sync.WaitGroup, memmap map[string]string) {
-   defer wg.Done()
-   ticker := time.NewTicker(time.Second * 10)
-   for {
-       select {
-       case msg := &lt;-c.messages:
-           c.Increment(msg, memmap)
-       case &lt;-ticker.C:
-           count := c.Count()
-           if count &gt;= *maxmsg {
-               go sendMessage(c, rtm)
-           }
-       }
-   }
+    // In package x: func SetError(prev *error, n error)
+    x.SetError(&amp;rerr, binary.Write(&amp;bh, binary.LittleEndian, seq))
+    x.SetError(&amp;rerr, binary.Write(&amp;bh, binary.LittleEndian, int32(len(method))))
+    x.SetError(&amp;rerr, binary.Write(&amp;bh, binary.LittleEndian, int32(len(data))))
+    _, err := bh.Write([]byte(method))
+    x.SetError(&amp;rerr, err)
+    if rerr != nil {
+        return rerr
+    }
+    _, err = rwc.Write(bh.Bytes())
+    return err
+}
+
+func parseHeader(rwc io.ReadWriteCloser, seq *uint64,
+    method *string, plen *int32) error {
+
+    var err error
+    var sz int32
+    x.SetError(&amp;err, binary.Read(rwc, binary.LittleEndian, seq))
+    x.SetError(&amp;err, binary.Read(rwc, binary.LittleEndian, &amp;sz))
+    x.SetError(&amp;err, binary.Read(rwc, binary.LittleEndian, plen))
+    if err != nil {
+        return err
+    }
+
+    buf := make([]byte, sz)
+    n, err := rwc.Read(buf)
+    if err != nil {
+        return err
+    }
+    if n != int(sz) {
+        return fmt.Errorf(&quot;Expected: %v. Got: %v\n&quot;, sz, n)
+    }
+    *method = string(buf)
+    return nil
 }
 </code></pre>
 
-<p>Once the basic functionality was in place, we added integration with discourse.
-Wisemonk stores the last n messages exchanged, creates a discourse topic with the messages when they exceed the max count and shares the URL with us on Slack.</p>
+<p>Code at server to read requests and write responses:</p>
 
-<p>You can create a discourse topic on demand too and get the URL for it. This makes shifting conversations to Discourse super easy.</p>
+<pre><code>/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-<p>For the weekends or in the evenings when you want to have a casual chat and don’t want to be interrupted by Wisemonk, you could ask him to meditate, and it won’t disturb you for a while.</p>
+package conn
+
+import (
+    &quot;io&quot;
+    &quot;log&quot;
+    &quot;net/rpc&quot;
+)
+
+type ServerCodec struct {
+    Rwc        io.ReadWriteCloser
+    payloadLen int32
+}
+
+func (c *ServerCodec) ReadRequestHeader(r *rpc.Request) error {
+    return parseHeader(c.Rwc, &amp;r.Seq, &amp;r.ServiceMethod, &amp;c.payloadLen)
+}
+
+func (c *ServerCodec) ReadRequestBody(data interface{}) error {
+    b := make([]byte, c.payloadLen)
+    _, err := io.ReadFull(c.Rwc, b)
+    if err != nil {
+        return err
+    }
+
+    if data == nil {
+        // If data is nil, discard this request.
+        return nil
+    }
+    query := data.(*Query)
+    query.Data = b
+    return nil
+}
+
+func (c *ServerCodec) WriteResponse(resp *rpc.Response,
+    data interface{}) error {
+
+    if len(resp.Error) &gt; 0 {
+        log.Fatal(&quot;Response has error: &quot; + resp.Error)
+    }
+    if data == nil {
+        log.Fatal(&quot;Worker write response data is nil&quot;)
+    }
+    reply, ok := data.(*Reply)
+    if !ok {
+        log.Fatal(&quot;Unable to convert to reply&quot;)
+    }
+
+    if err := writeHeader(c.Rwc, resp.Seq,
+        resp.ServiceMethod, reply.Data); err != nil {
+        return err
+    }
+
+    _, err := c.Rwc.Write(reply.Data)
+    return err
+}
+
+func (c *ServerCodec) Close() error {
+    return c.Rwc.Close()
+}
+</code></pre>
+
+<p>Similarly, the code at the client to read requests and write responses:</p>
+
+<pre><code>/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package conn
+
+import (
+    &quot;errors&quot;
+    &quot;fmt&quot;
+    &quot;io&quot;
+    &quot;log&quot;
+    &quot;net/rpc&quot;
+)
+
+type ClientCodec struct {
+    Rwc        io.ReadWriteCloser
+    payloadLen int32
+}
+
+func (c *ClientCodec) WriteRequest(r *rpc.Request, body interface{}) error {
+    if body == nil {
+        return fmt.Errorf(&quot;Nil request body from client.&quot;)
+    }
+
+    query := body.(*Query)
+    if err := writeHeader(c.Rwc, r.Seq, r.ServiceMethod, query.Data); err != nil {
+        return err
+    }
+    n, err := c.Rwc.Write(query.Data)
+    if n != len(query.Data) {
+        return errors.New(&quot;Unable to write payload.&quot;)
+    }
+    return err
+}
+
+func (c *ClientCodec) ReadResponseHeader(r *rpc.Response) error {
+    if len(r.Error) &gt; 0 {
+        log.Fatal(&quot;client got response error: &quot; + r.Error)
+    }
+    if err := parseHeader(c.Rwc, &amp;r.Seq,
+        &amp;r.ServiceMethod, &amp;c.payloadLen); err != nil {
+        return err
+    }
+    return nil
+}
+
+func (c *ClientCodec) ReadResponseBody(body interface{}) error {
+    buf := make([]byte, c.payloadLen)
+    _, err := io.ReadFull(c.Rwc, buf)
+    reply := body.(*Reply)
+    reply.Data = buf
+    return err
+}
+
+func (c *ClientCodec) Close() error {
+    return c.Rwc.Close()
+}
+</code></pre>
+
+<p>Also, each server should be able to send multiple requests in parallel.
+So, we built a connection pool to create, store and reuse multiple connections:</p>
+
+<pre><code>/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package conn
+
+import (
+    &quot;net&quot;
+    &quot;net/rpc&quot;
+    &quot;strings&quot;
+    &quot;time&quot;
+
+    &quot;github.com/dgraph-io/dgraph/x&quot;
+)
+
+var glog = x.Log(&quot;conn&quot;) // In package x: func Log(p string) *logrus.Entry
+
+type Pool struct {
+    clients chan *rpc.Client
+    Addr    string
+}
+
+func NewPool(addr string, maxCap int) *Pool {
+    p := new(Pool)
+    p.Addr = addr
+    p.clients = make(chan *rpc.Client, maxCap)
+    client, err := p.dialNew()
+    if err != nil {
+        glog.Fatal(err)
+        return nil
+    }
+    p.clients &lt;- client
+    return p
+}
+
+func (p *Pool) dialNew() (*rpc.Client, error) {
+    d := &amp;net.Dialer{
+        Timeout: 3 * time.Minute,
+    }
+    var nconn net.Conn
+    var err error
+    // This loop will retry for 10 minutes before giving up.
+    for i := 0; i &lt; 60; i++ {
+        nconn, err = d.Dial(&quot;tcp&quot;, p.Addr)
+        if err == nil {
+            break
+        }
+        if !strings.Contains(err.Error(), &quot;refused&quot;) {
+            break
+        }
+
+        glog.WithField(&quot;error&quot;, err).WithField(&quot;addr&quot;, p.Addr).
+            Info(&quot;Retrying connection...&quot;)
+        time.Sleep(10 * time.Second)
+    }
+    if err != nil {
+        return nil, err
+    }
+    cc := &amp;ClientCodec{
+        Rwc: nconn,
+    }
+    return rpc.NewClientWithCodec(cc), nil
+}
+
+func (p *Pool) Call(serviceMethod string, args interface{},
+    reply interface{}) error {
+
+    client, err := p.get()
+    if err != nil {
+        return err
+    }
+    if err = client.Call(serviceMethod, args, reply); err != nil {
+        return err
+    }
+
+    select {
+    case p.clients &lt;- client:
+        return nil
+    default:
+        return client.Close()
+    }
+}
+
+func (p *Pool) get() (*rpc.Client, error) {
+    select {
+    case client := &lt;-p.clients:
+        return client, nil
+    default:
+        return p.dialNew()
+    }
+}
+
+func (p *Pool) Close() error {
+    // We're not doing a clean exit here. A clean exit here would require
+    // synchronization, which seems unnecessary for now. But, we should
+    // add one if required later.
+    return nil
+}
+</code></pre>
+
+<p>This worked well.
+And both v0.2 and v0.3 of Dgraph were using this code for the nodes to communicate with each other.</p>
 
 <hr />
 
-<h1 id="wisemonk-in-action">Wisemonk in Action</h1>
+<h1 id="the-switch">The Switch</h1>
 
-<p><img src="/images/wisemonk-in-action.png" alt="Wisemonk alerting us when we talk too much" />
-<em>Wisemonk alerting us when we talk too much</em></p>
+<p><img src="/images/martian-receiving.jpg" alt="" /></p>
 
-<p><img src="/images/wisemonk-creating-topic.png" alt="Asking wisemonk to create a topic" />
-<em>Asking wisemonk to create a topic</em></p>
+<p>At Dgraph, we spend Fridays learning and improving.
+This means reading books, papers, articles, watching talks.
+And we came across a great talk by Jeff Dean of Google: <a href="https://discuss.dgraph.io/t/jeff-deans-talk-about-rapid-response-times/83">Rapid Response Times</a></p>
 
-<p><img src="/images/wisemonk-meditating.png" alt="Asking wisemonk to meditate" />
-<em>Asking wisemonk to meditate</em></p>
+<p>As I mentioned above, we care a lot about query latency.
+After watching it a couple of times from two different conferences, the prime learning from his talk was:</p>
+
+<ul>
+<li>Send request to the first replica, telling it that it&rsquo;s going to send it to a second one.</li>
+<li>2 ms later, send the request to the second one, telling it that it&rsquo;s already sent to the first one.</li>
+<li>When one of them starts processing the request, it sends a cancellation request directly to its peer.</li>
+<li>If the peer hasn&rsquo;t started processing the request, it would just cancel the request.</li>
+<li>In a rare case, both of them process it and overall do twice the work.</li>
+<li>Overall, your latencies improve due to this method.</li>
+</ul>
+
+<p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
+So, when he gives a suggestion, you take it seriously.</p>
+
+<p>At v0.4, we&rsquo;re not doing replication yet. So, we can&rsquo;t send queries to multiple servers in parallel.
+However, that&rsquo;s how the system is going to look like a few minor releases down the lane.</p>
+
+<p>So, we started thinking about how we could change our custom encoding based RPC implementation to achieve something like this.
+Around the same time, we were looking for a way to figure out slow rpcs on servers.
+<a href="https://forum.golangbridge.org/t/equivalent-of-rpcz-at-google/2609">Dave Cheney&rsquo;s response</a> pointed us to <a href="http://www.grpc.io/">grpc.io</a>.</p>
+
+<p>While I had considered Google built <code>grpc</code> in the past, I&rsquo;d rejected it understanding that it requires you to use Protocol Buffers; but we&rsquo;d already chosen to go with Flatbuffers.
+But when <a href="https://www.youtube.com/watch?v=sZx3oZt7LVg">Sameer Ajmani&rsquo;s talk</a> pointed that <code>grpc</code> is essentially a rewrite of Google internal Stubby from ground up, that got me to dig deeper.
+<code>grpc</code> came with <code>net/context</code> which could easily do what Jeff Dean had talked about.
+Also, it can help see live rpcs and track the slowest ones.</p>
+
+<p>Overall, there was a lot of advantages to switching to <code>grpc</code>.
+But, we didn&rsquo;t want to give up the performance benefits of Flatbuffers.</p>
+
+<p>So, digging deeper, we found that <code>grpc</code> did support custom encoding. And we implemented it.
+This is the whole equivalent code implemented in <code>grpc</code>:</p>
+
+<pre><code>/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package worker
+
+import (
+    &quot;log&quot;
+
+    &quot;google.golang.org/grpc&quot;
+)
+
+type PayloadCodec struct{}
+
+func (cb *PayloadCodec) Marshal(v interface{}) ([]byte, error) {
+    p, ok := v.(*Payload)
+    if !ok {
+        log.Fatalf(&quot;Invalid type of struct: %+v&quot;, v)
+    }
+    return p.Data, nil
+}
+
+func (cb *PayloadCodec) Unmarshal(data []byte, v interface{}) error {
+    p, ok := v.(*Payload)
+    if !ok {
+        log.Fatalf(&quot;Invalid type of struct: %+v&quot;, v)
+    }
+    p.Data = data
+    return nil
+}
+
+func (cb *PayloadCodec) String() string {
+    return &quot;worker.PayloadCodec&quot;
+}
+
+type Pool struct {
+    conns chan *grpc.ClientConn
+    Addr  string
+}
+
+func NewPool(addr string, maxCap int) *Pool {
+    p := new(Pool)
+    p.Addr = addr
+    p.conns = make(chan *grpc.ClientConn, maxCap)
+    conn, err := p.dialNew()
+    if err != nil {
+        glog.Fatal(err)
+        return nil
+    }
+    p.conns &lt;- conn
+    return p
+}
+
+func (p *Pool) dialNew() (*grpc.ClientConn, error) {
+    return grpc.Dial(p.Addr, grpc.WithInsecure(), grpc.WithInsecure(),
+        grpc.WithCodec(&amp;PayloadCodec{}))
+}
+
+func (p *Pool) Get() (*grpc.ClientConn, error) {
+    select {
+    case conn := &lt;-p.conns:
+        return conn, nil
+    default:
+        return p.dialNew()
+    }
+}
+
+func (p *Pool) Put(conn *grpc.ClientConn) error {
+    select {
+    case p.conns &lt;- conn:
+        return nil
+    default:
+        return conn.Close()
+    }
+}
+</code></pre>
+
+<p>And this is the proto file with Payload and <code>service</code>:</p>
+
+<pre><code>syntax = &quot;proto3&quot;;
+
+package worker;
+
+message Payload {
+    bytes Data = 1;
+}
+
+service Worker {
+    rpc Hello (Payload) returns (Payload) {}
+    rpc GetOrAssign (Payload) returns (Payload) {}
+    rpc Mutate (Payload) returns (Payload) {}
+    rpc ServeTask (Payload) returns (Payload) {}
+}
+</code></pre>
 
 <hr />
 
-<h1 id="parting-thoughts">Parting Thoughts</h1>
+<h1 id="conclusion">Conclusion</h1>
 
-<p><strong><a href="https://github.com/dgraph-io/wisemonk#install">Setting up wisemonk</a> is super easy and we have found that it has enhanced our productivity a lot.</strong></p>
+<p>So, turns out, <code>grpc</code> not only does custom encoding, but it also leads to</p>
 
-<p>It&rsquo;s open source and <a href="https://github.com/dgraph-io/wisemonk">available at Github</a>, so feel free to contribute to it. We would love to hear about your usage of Wisemonk.</p>
+<ul>
+<li>smaller code footprint.</li>
+<li><a href="https://godoc.org/golang.org/x/net/context">net/context</a>, which in turn allows client to cancel pending rpc requests to servers, among many other benefits.</li>
+<li><a href="https://godoc.org/golang.org/x/net/trace">net/trace</a>, which allows tracing of rpcs and long-lived objects.</li>
+</ul>
 
-<p><em>Yoda guides actions. Wisemonk guides conversations. Image courtesy: <a href="http://www.wired.com/wp-content/uploads/2015/08/Yoda-featured1.jpg">wired.com</a></em></p>
+<p>For more, read the <a href="https://github.com/dgraph-io/dgraph/commit/c4629b907702748694712637cbef1fb2c1f15d07">pull request which made this change</a> across our code base.
+Hope you find this useful.</p>
+
+<p>Also read:</p>
+
+<ul>
+<li>Research paper on <a href="https://www.google.com.au/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwipuJ3rjsPNAhWEopQKHeeZBkMQFggiMAE&amp;url=http%3A%2F%2Fresearch.google.com%2Fpeople%2Fjeff%2FBerkeley-Latency-Mar2012.pdf&amp;usg=AFQjCNGnP9v7v9xN93MM6KPVJ7FcML6LvQ&amp;bvm=bv.125596728,d.dGo">Rapid Response Times</a> by Jeff Dean.</li>
+<li>Blog post on <a href="https://blog.golang.org/context">Go Concurrency Patterns: Context</a> by Sameer Ajmani.</li>
+<li>Slides on <a href="https://talks.golang.org/2014/gotham-context.slide#1">Cancellation, Context and Plumbing</a> by Sameer Ajmani.</li>
+</ul>
+
+<p><em>Images courtesy: <a href="http://www.foxmovies.com/movies/the-martian">The Martian</a></em></p>
 
 <hr />
 
@@ -550,32 +956,10 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
               <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
               
   <div class="article-author">
-    <figure class="article-author__figure"><img src="/images/pawan.png" alt="Pawan Rawal" class="article-author__image"></figure>
-    <div class="article-author__bio">
-      <h4 class="article-author__name">Pawan Rawal</h4>
-      <p class="article-author__title">Author</p>
-      <nav class="social__nav article-author__social">
-        <ul class="social__list social__list--inline">
-          <li class="social__item social__item--inline"><a href="https://www.linkedin.com/in/pawanrawal1" class="social__link">
-              <svg class="icon social__icon social__icon--linkedin">
-                <use xlink:href="#icon-linkedin" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
-              </svg></a></li>
-          <li class="social__item social__item--inline"><a href="https://twitter.com/pawan_rawal" class="social__link">
-              <svg class="icon social__icon social__icon--twitter">
-                <use xlink:href="#icon-twitter" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
-              </svg></a></li>
-        </ul>
-      </nav>
-      <p>After graduating from IIT Delhi in 2014, Pawan worked in various startups understanding how the web works. His interest in distributed systems and application of concepts in Computer Science to solve real world problems led him to Dgraph. In his free time, he likes to travel, do yoga, read and cook.</p>
-    </div>
-  </div>
-
-              
-  <div class="article-author">
     <figure class="article-author__figure"><img src="/images/team-manish.jpg" alt="Manish Rai Jain" class="article-author__image"></figure>
     <div class="article-author__bio">
       <h4 class="article-author__name">Manish Rai Jain</h4>
-      <p class="article-author__title">Editor</p>
+      <p class="article-author__title">Author</p>
       <nav class="social__nav article-author__social">
         <ul class="social__list social__list--inline">
           <li class="social__item social__item--inline"><a href="https://au.linkedin.com/in/manishrjain" class="social__link">
@@ -593,6 +977,7 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
     </div>
   </div>
 
+              
               </div>
             </div>
           </div>
@@ -668,7 +1053,7 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>-
     
   <script type="text/javascript">
-    DiscourseEmbed = { discourseUrl: 'https://discuss.dgraph.io/',discourseEmbedUrl: 'http:\/\/open.dgraph.io\/post\/wisemonk\/' };
+    DiscourseEmbed = { discourseUrl: 'https://discuss.dgraph.io/',discourseEmbedUrl: 'http:\/\/open.dgraph.io\/post\/rpc-vs-grpc\/' };
     (function() {
       var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
       d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';

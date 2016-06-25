@@ -7,8 +7,599 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 21 Jun 2016 10:20:32 +0530</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jun 2016 19:06:45 +1000</lastBuildDate>
     <atom:link href="http://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Custom encoding: Implementation in net/rpc vs grpc and why we switched</title>
+      <link>http://open.dgraph.io/post/rpc-vs-grpc/</link>
+      <pubDate>Sat, 25 Jun 2016 19:06:45 +1000</pubDate>
+      
+      <guid>http://open.dgraph.io/post/rpc-vs-grpc/</guid>
+      <description>
+
+&lt;p&gt;At Dgraph, we aim to build a low latency, distributed graph database.
+This means our data is distributed among nodes in the cluster.
+Executing a query means multiple nodes are communicating with each other.
+To keep our latency of communication low, we use a new form of serialization library called &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+The only memory needed to access your data is that of the buffer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;How is Flatbuffers better than &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt;&lt;/strong&gt;? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.&lt;/p&gt;
+
+&lt;p&gt;Dgraph responses can contain millions of entities and binary blob values.
+And the fact that Flatbuffers doesn&amp;rsquo;t need to recreate the entire information in language specific data structures is very helpful for both memory and speed.&lt;/p&gt;
+
+&lt;p&gt;Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
+So, our goal was to implement communication using RPC over custom encoding utilizing Flatbuffers.&lt;/p&gt;
+
+&lt;h1 id=&#34;go-net-rpc&#34;&gt;Go net/rpc&lt;/h1&gt;
+
+&lt;p&gt;Our first approach was to use Go language library &lt;code&gt;net/rpc&lt;/code&gt; and implement custom encoding in it.&lt;/p&gt;
+
+&lt;p&gt;Helper function to deal with writing and parsing header for the payload:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &amp;quot;License&amp;quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &amp;quot;AS IS&amp;quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package conn
+
+import (
+    &amp;quot;bytes&amp;quot;
+    &amp;quot;encoding/binary&amp;quot;
+    &amp;quot;fmt&amp;quot;
+    &amp;quot;io&amp;quot;
+
+    &amp;quot;github.com/dgraph-io/dgraph/x&amp;quot;
+)
+
+type Query struct {
+    Data []byte
+}
+
+type Reply struct {
+    Data []byte
+}
+
+func writeHeader(rwc io.ReadWriteCloser, seq uint64,
+    method string, data []byte) error {
+
+    var bh bytes.Buffer
+    var rerr error
+
+    // In package x: func SetError(prev *error, n error)
+    x.SetError(&amp;amp;rerr, binary.Write(&amp;amp;bh, binary.LittleEndian, seq))
+    x.SetError(&amp;amp;rerr, binary.Write(&amp;amp;bh, binary.LittleEndian, int32(len(method))))
+    x.SetError(&amp;amp;rerr, binary.Write(&amp;amp;bh, binary.LittleEndian, int32(len(data))))
+    _, err := bh.Write([]byte(method))
+    x.SetError(&amp;amp;rerr, err)
+    if rerr != nil {
+        return rerr
+    }
+    _, err = rwc.Write(bh.Bytes())
+    return err
+}
+
+func parseHeader(rwc io.ReadWriteCloser, seq *uint64,
+    method *string, plen *int32) error {
+
+    var err error
+    var sz int32
+    x.SetError(&amp;amp;err, binary.Read(rwc, binary.LittleEndian, seq))
+    x.SetError(&amp;amp;err, binary.Read(rwc, binary.LittleEndian, &amp;amp;sz))
+    x.SetError(&amp;amp;err, binary.Read(rwc, binary.LittleEndian, plen))
+    if err != nil {
+        return err
+    }
+
+    buf := make([]byte, sz)
+    n, err := rwc.Read(buf)
+    if err != nil {
+        return err
+    }
+    if n != int(sz) {
+        return fmt.Errorf(&amp;quot;Expected: %v. Got: %v\n&amp;quot;, sz, n)
+    }
+    *method = string(buf)
+    return nil
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Code at server to read requests and write responses:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &amp;quot;License&amp;quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &amp;quot;AS IS&amp;quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package conn
+
+import (
+    &amp;quot;io&amp;quot;
+    &amp;quot;log&amp;quot;
+    &amp;quot;net/rpc&amp;quot;
+)
+
+type ServerCodec struct {
+    Rwc        io.ReadWriteCloser
+    payloadLen int32
+}
+
+func (c *ServerCodec) ReadRequestHeader(r *rpc.Request) error {
+    return parseHeader(c.Rwc, &amp;amp;r.Seq, &amp;amp;r.ServiceMethod, &amp;amp;c.payloadLen)
+}
+
+func (c *ServerCodec) ReadRequestBody(data interface{}) error {
+    b := make([]byte, c.payloadLen)
+    _, err := io.ReadFull(c.Rwc, b)
+    if err != nil {
+        return err
+    }
+
+    if data == nil {
+        // If data is nil, discard this request.
+        return nil
+    }
+    query := data.(*Query)
+    query.Data = b
+    return nil
+}
+
+func (c *ServerCodec) WriteResponse(resp *rpc.Response,
+    data interface{}) error {
+
+    if len(resp.Error) &amp;gt; 0 {
+        log.Fatal(&amp;quot;Response has error: &amp;quot; + resp.Error)
+    }
+    if data == nil {
+        log.Fatal(&amp;quot;Worker write response data is nil&amp;quot;)
+    }
+    reply, ok := data.(*Reply)
+    if !ok {
+        log.Fatal(&amp;quot;Unable to convert to reply&amp;quot;)
+    }
+
+    if err := writeHeader(c.Rwc, resp.Seq,
+        resp.ServiceMethod, reply.Data); err != nil {
+        return err
+    }
+
+    _, err := c.Rwc.Write(reply.Data)
+    return err
+}
+
+func (c *ServerCodec) Close() error {
+    return c.Rwc.Close()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Similarly, the code at the client to read requests and write responses:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &amp;quot;License&amp;quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &amp;quot;AS IS&amp;quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package conn
+
+import (
+    &amp;quot;errors&amp;quot;
+    &amp;quot;fmt&amp;quot;
+    &amp;quot;io&amp;quot;
+    &amp;quot;log&amp;quot;
+    &amp;quot;net/rpc&amp;quot;
+)
+
+type ClientCodec struct {
+    Rwc        io.ReadWriteCloser
+    payloadLen int32
+}
+
+func (c *ClientCodec) WriteRequest(r *rpc.Request, body interface{}) error {
+    if body == nil {
+        return fmt.Errorf(&amp;quot;Nil request body from client.&amp;quot;)
+    }
+
+    query := body.(*Query)
+    if err := writeHeader(c.Rwc, r.Seq, r.ServiceMethod, query.Data); err != nil {
+        return err
+    }
+    n, err := c.Rwc.Write(query.Data)
+    if n != len(query.Data) {
+        return errors.New(&amp;quot;Unable to write payload.&amp;quot;)
+    }
+    return err
+}
+
+func (c *ClientCodec) ReadResponseHeader(r *rpc.Response) error {
+    if len(r.Error) &amp;gt; 0 {
+        log.Fatal(&amp;quot;client got response error: &amp;quot; + r.Error)
+    }
+    if err := parseHeader(c.Rwc, &amp;amp;r.Seq,
+        &amp;amp;r.ServiceMethod, &amp;amp;c.payloadLen); err != nil {
+        return err
+    }
+    return nil
+}
+
+func (c *ClientCodec) ReadResponseBody(body interface{}) error {
+    buf := make([]byte, c.payloadLen)
+    _, err := io.ReadFull(c.Rwc, buf)
+    reply := body.(*Reply)
+    reply.Data = buf
+    return err
+}
+
+func (c *ClientCodec) Close() error {
+    return c.Rwc.Close()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Also, each server should be able to send multiple requests in parallel.
+So, we built a connection pool to create, store and reuse multiple connections:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &amp;quot;License&amp;quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &amp;quot;AS IS&amp;quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package conn
+
+import (
+    &amp;quot;net&amp;quot;
+    &amp;quot;net/rpc&amp;quot;
+    &amp;quot;strings&amp;quot;
+    &amp;quot;time&amp;quot;
+
+    &amp;quot;github.com/dgraph-io/dgraph/x&amp;quot;
+)
+
+var glog = x.Log(&amp;quot;conn&amp;quot;) // In package x: func Log(p string) *logrus.Entry
+
+type Pool struct {
+    clients chan *rpc.Client
+    Addr    string
+}
+
+func NewPool(addr string, maxCap int) *Pool {
+    p := new(Pool)
+    p.Addr = addr
+    p.clients = make(chan *rpc.Client, maxCap)
+    client, err := p.dialNew()
+    if err != nil {
+        glog.Fatal(err)
+        return nil
+    }
+    p.clients &amp;lt;- client
+    return p
+}
+
+func (p *Pool) dialNew() (*rpc.Client, error) {
+    d := &amp;amp;net.Dialer{
+        Timeout: 3 * time.Minute,
+    }
+    var nconn net.Conn
+    var err error
+    // This loop will retry for 10 minutes before giving up.
+    for i := 0; i &amp;lt; 60; i++ {
+        nconn, err = d.Dial(&amp;quot;tcp&amp;quot;, p.Addr)
+        if err == nil {
+            break
+        }
+        if !strings.Contains(err.Error(), &amp;quot;refused&amp;quot;) {
+            break
+        }
+
+        glog.WithField(&amp;quot;error&amp;quot;, err).WithField(&amp;quot;addr&amp;quot;, p.Addr).
+            Info(&amp;quot;Retrying connection...&amp;quot;)
+        time.Sleep(10 * time.Second)
+    }
+    if err != nil {
+        return nil, err
+    }
+    cc := &amp;amp;ClientCodec{
+        Rwc: nconn,
+    }
+    return rpc.NewClientWithCodec(cc), nil
+}
+
+func (p *Pool) Call(serviceMethod string, args interface{},
+    reply interface{}) error {
+
+    client, err := p.get()
+    if err != nil {
+        return err
+    }
+    if err = client.Call(serviceMethod, args, reply); err != nil {
+        return err
+    }
+
+    select {
+    case p.clients &amp;lt;- client:
+        return nil
+    default:
+        return client.Close()
+    }
+}
+
+func (p *Pool) get() (*rpc.Client, error) {
+    select {
+    case client := &amp;lt;-p.clients:
+        return client, nil
+    default:
+        return p.dialNew()
+    }
+}
+
+func (p *Pool) Close() error {
+    // We&#39;re not doing a clean exit here. A clean exit here would require
+    // synchronization, which seems unnecessary for now. But, we should
+    // add one if required later.
+    return nil
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This worked well.
+And both v0.2 and v0.3 of Dgraph were using this code for the nodes to communicate with each other.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;the-switch&#34;&gt;The Switch&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://open.dgraph.io/images/martian-receiving.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At Dgraph, we spend Fridays learning and improving.
+This means reading books, papers, articles, watching talks.
+And we came across a great talk by Jeff Dean of Google: &lt;a href=&#34;https://discuss.dgraph.io/t/jeff-deans-talk-about-rapid-response-times/83&#34;&gt;Rapid Response Times&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As I mentioned above, we care a lot about query latency.
+After watching it a couple of times from two different conferences, the prime learning from his talk was:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Send request to the first replica, telling it that it&amp;rsquo;s going to send it to a second one.&lt;/li&gt;
+&lt;li&gt;2 ms later, send the request to the second one, telling it that it&amp;rsquo;s already sent to the first one.&lt;/li&gt;
+&lt;li&gt;When one of them starts processing the request, it sends a cancellation request directly to its peer.&lt;/li&gt;
+&lt;li&gt;If the peer hasn&amp;rsquo;t started processing the request, it would just cancel the request.&lt;/li&gt;
+&lt;li&gt;In a rare case, both of them process it and overall do twice the work.&lt;/li&gt;
+&lt;li&gt;Overall, your latencies improve due to this method.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)&#34;&gt;Jeff Dean&lt;/a&gt; has an impressive track record at Google. He&amp;rsquo;s behind almost every distributed system in production at Google.
+So, when he gives a suggestion, you take it seriously.&lt;/p&gt;
+
+&lt;p&gt;At v0.4, we&amp;rsquo;re not doing replication yet. So, we can&amp;rsquo;t send queries to multiple servers in parallel.
+However, that&amp;rsquo;s how the system is going to look like a few minor releases down the lane.&lt;/p&gt;
+
+&lt;p&gt;So, we started thinking about how we could change our custom encoding based RPC implementation to achieve something like this.
+Around the same time, we were looking for a way to figure out slow rpcs on servers.
+&lt;a href=&#34;https://forum.golangbridge.org/t/equivalent-of-rpcz-at-google/2609&#34;&gt;Dave Cheney&amp;rsquo;s response&lt;/a&gt; pointed us to &lt;a href=&#34;http://www.grpc.io/&#34;&gt;grpc.io&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;While I had considered Google built &lt;code&gt;grpc&lt;/code&gt; in the past, I&amp;rsquo;d rejected it understanding that it requires you to use Protocol Buffers; but we&amp;rsquo;d already chosen to go with Flatbuffers.
+But when &lt;a href=&#34;https://www.youtube.com/watch?v=sZx3oZt7LVg&#34;&gt;Sameer Ajmani&amp;rsquo;s talk&lt;/a&gt; pointed that &lt;code&gt;grpc&lt;/code&gt; is essentially a rewrite of Google internal Stubby from ground up, that got me to dig deeper.
+&lt;code&gt;grpc&lt;/code&gt; came with &lt;code&gt;net/context&lt;/code&gt; which could easily do what Jeff Dean had talked about.
+Also, it can help see live rpcs and track the slowest ones.&lt;/p&gt;
+
+&lt;p&gt;Overall, there was a lot of advantages to switching to &lt;code&gt;grpc&lt;/code&gt;.
+But, we didn&amp;rsquo;t want to give up the performance benefits of Flatbuffers.&lt;/p&gt;
+
+&lt;p&gt;So, digging deeper, we found that &lt;code&gt;grpc&lt;/code&gt; did support custom encoding. And we implemented it.
+This is the whole equivalent code implemented in &lt;code&gt;grpc&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/*
+ * Copyright 2016 DGraph Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &amp;quot;License&amp;quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &amp;quot;AS IS&amp;quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package worker
+
+import (
+    &amp;quot;log&amp;quot;
+
+    &amp;quot;google.golang.org/grpc&amp;quot;
+)
+
+type PayloadCodec struct{}
+
+func (cb *PayloadCodec) Marshal(v interface{}) ([]byte, error) {
+    p, ok := v.(*Payload)
+    if !ok {
+        log.Fatalf(&amp;quot;Invalid type of struct: %+v&amp;quot;, v)
+    }
+    return p.Data, nil
+}
+
+func (cb *PayloadCodec) Unmarshal(data []byte, v interface{}) error {
+    p, ok := v.(*Payload)
+    if !ok {
+        log.Fatalf(&amp;quot;Invalid type of struct: %+v&amp;quot;, v)
+    }
+    p.Data = data
+    return nil
+}
+
+func (cb *PayloadCodec) String() string {
+    return &amp;quot;worker.PayloadCodec&amp;quot;
+}
+
+type Pool struct {
+    conns chan *grpc.ClientConn
+    Addr  string
+}
+
+func NewPool(addr string, maxCap int) *Pool {
+    p := new(Pool)
+    p.Addr = addr
+    p.conns = make(chan *grpc.ClientConn, maxCap)
+    conn, err := p.dialNew()
+    if err != nil {
+        glog.Fatal(err)
+        return nil
+    }
+    p.conns &amp;lt;- conn
+    return p
+}
+
+func (p *Pool) dialNew() (*grpc.ClientConn, error) {
+    return grpc.Dial(p.Addr, grpc.WithInsecure(), grpc.WithInsecure(),
+        grpc.WithCodec(&amp;amp;PayloadCodec{}))
+}
+
+func (p *Pool) Get() (*grpc.ClientConn, error) {
+    select {
+    case conn := &amp;lt;-p.conns:
+        return conn, nil
+    default:
+        return p.dialNew()
+    }
+}
+
+func (p *Pool) Put(conn *grpc.ClientConn) error {
+    select {
+    case p.conns &amp;lt;- conn:
+        return nil
+    default:
+        return conn.Close()
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And this is the proto file with Payload and &lt;code&gt;service&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;syntax = &amp;quot;proto3&amp;quot;;
+
+package worker;
+
+message Payload {
+    bytes Data = 1;
+}
+
+service Worker {
+    rpc Hello (Payload) returns (Payload) {}
+    rpc GetOrAssign (Payload) returns (Payload) {}
+    rpc Mutate (Payload) returns (Payload) {}
+    rpc ServeTask (Payload) returns (Payload) {}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;So, turns out, &lt;code&gt;grpc&lt;/code&gt; not only does custom encoding, but it also leads to&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;smaller code footprint.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://godoc.org/golang.org/x/net/context&#34;&gt;net/context&lt;/a&gt;, which in turn allows client to cancel pending rpc requests to servers, among many other benefits.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://godoc.org/golang.org/x/net/trace&#34;&gt;net/trace&lt;/a&gt;, which allows tracing of rpcs and long-lived objects.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For more, read the &lt;a href=&#34;https://github.com/dgraph-io/dgraph/commit/c4629b907702748694712637cbef1fb2c1f15d07&#34;&gt;pull request which made this change&lt;/a&gt; across our code base.
+Hope you find this useful.&lt;/p&gt;
+
+&lt;p&gt;Also read:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Research paper on &lt;a href=&#34;https://www.google.com.au/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=2&amp;amp;cad=rja&amp;amp;uact=8&amp;amp;ved=0ahUKEwipuJ3rjsPNAhWEopQKHeeZBkMQFggiMAE&amp;amp;url=http%3A%2F%2Fresearch.google.com%2Fpeople%2Fjeff%2FBerkeley-Latency-Mar2012.pdf&amp;amp;usg=AFQjCNGnP9v7v9xN93MM6KPVJ7FcML6LvQ&amp;amp;bvm=bv.125596728,d.dGo&#34;&gt;Rapid Response Times&lt;/a&gt; by Jeff Dean.&lt;/li&gt;
+&lt;li&gt;Blog post on &lt;a href=&#34;https://blog.golang.org/context&#34;&gt;Go Concurrency Patterns: Context&lt;/a&gt; by Sameer Ajmani.&lt;/li&gt;
+&lt;li&gt;Slides on &lt;a href=&#34;https://talks.golang.org/2014/gotham-context.slide#1&#34;&gt;Cancellation, Context and Plumbing&lt;/a&gt; by Sameer Ajmani.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Images courtesy: &lt;a href=&#34;http://www.foxmovies.com/movies/the-martian&#34;&gt;The Martian&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;http://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+</description>
+    </item>
     
     <item>
       <title>Can it really scale?</title>
