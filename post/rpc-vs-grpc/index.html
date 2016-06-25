@@ -750,7 +750,7 @@ This means reading books, papers, articles, watching talks.
 And we came across a great talk by Jeff Dean of Google: <a href="https://discuss.dgraph.io/t/jeff-deans-talk-about-rapid-response-times/83">Rapid Response Times</a></p>
 
 <p>As I mentioned above, we care a lot about query latency.
-After watching it a couple of times from two different conferences, the prime learning from his talk was:</p>
+After watching it a couple of times from two different conferences, the prime learning I gathered from his talk was:</p>
 
 <ul>
 <li>Send request to the first replica, telling it that it&rsquo;s going to send it to a second one.</li>
@@ -758,7 +758,7 @@ After watching it a couple of times from two different conferences, the prime le
 <li>When one of them starts processing the request, it sends a cancellation request directly to its peer.</li>
 <li>If the peer hasn&rsquo;t started processing the request, it would just cancel the request.</li>
 <li>In a rare case, both of them process it and overall do twice the work.</li>
-<li>Overall, your latencies improve due to this method.</li>
+<li>Overall, your latencies improve considerably due to this method.</li>
 </ul>
 
 <p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
