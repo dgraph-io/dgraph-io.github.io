@@ -2,27 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://open.dgraph.io/</loc>
+    <loc>https://open.dgraph.io/</loc>
     <lastmod>2016-06-25T19:06:45+10:00</lastmod>
   </url>
   
   <url>
-    <loc>http://open.dgraph.io/post/rpc-vs-grpc/</loc>
+    <loc>https://open.dgraph.io/post/rpc-vs-grpc/</loc>
     <lastmod>2016-06-25T19:06:45+10:00</lastmod>
   </url>
   
   <url>
-    <loc>http://open.dgraph.io/post/performance-throughput-latency/</loc>
+    <loc>https://open.dgraph.io/post/performance-throughput-latency/</loc>
     <lastmod>2016-06-21T10:20:32+05:30</lastmod>
   </url>
   
   <url>
-    <loc>http://open.dgraph.io/post/wisemonk/</loc>
+    <loc>https://open.dgraph.io/post/wisemonk/</loc>
     <lastmod>2016-06-15T11:39:27+10:00</lastmod>
   </url>
   
   <url>
-    <loc>http://open.dgraph.io/post/hello-world/</loc>
+    <loc>https://open.dgraph.io/post/hello-world/</loc>
     <lastmod>2016-04-18T14:37:08+10:00</lastmod>
   </url>
   
