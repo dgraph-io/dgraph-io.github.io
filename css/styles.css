@@ -1,4 +1,4 @@
-/* Author: Danijel Grabež */
+/* Author: Danijel GrabeÅ¾ */
 /* ======================================================================
       ________________    
      / ______________ \   
@@ -9,7 +9,7 @@
        \ \ \___,__ _/     
         \ \      __             Front-end & Design:
          \ \ __ / /             Superawesome team [dudes@sprawsm.com]
-          \ ____ /              Danijel Grabež [danijel@sprawsm.com]
+          \ ____ /              Danijel GrabeÅ¾ [danijel@sprawsm.com]
 
  * ====================================================================== */
 /* ===========================================================
@@ -1316,6 +1316,9 @@ a:active {
           transform: translateX(5px);
   fill: #d64d05;
 }
+.link-alias:hover {
+  cursor: alias;
+}
 b,
 strong {
   font-weight: 700;
@@ -1684,7 +1687,7 @@ hr {
   }
 }
 .dg-features__list {
-  margin: 0;
+  margin: 25px 0 0;
   padding: 0;
   zoom: 1;
 }
@@ -1698,7 +1701,7 @@ hr {
 }
 @media screen and (min-width: 767px) {
   .dg-features__list {
-    margin: 0 -15px;
+    margin: 60px -15px 0;
   }
 }
 .dg-features__item {
@@ -1744,6 +1747,10 @@ hr {
 .usage {
   position: relative;
   z-index: 5;
+}
+.usage .section-header {
+  position: relative;
+  z-index: 6;
 }
 .usage-carousel__nav {
   zoom: 1;
@@ -2165,7 +2172,7 @@ hr {
     font-size: 18px;
     font-size: 1.125rem;
     line-height: 1.7;
-    color: #999;
+    color: #a4958c;
   }
 }
 .job-offer__requirements {
@@ -2532,6 +2539,20 @@ hr {
 .article-author__name {
   font-size: 18px;
   font-size: 1.125rem;
+}
+.article-author__title {
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: #a4958c;
+}
+.article-author__title:before {
+  content: '•';
+  color: #a4958c;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .article-author__social {
   margin-top: 5px;
@@ -3000,14 +3021,22 @@ hr {
 .cta__more-link--discourse:before {
   background-image: url('../images/png-icons/icon-discourse.png');
 }
+.cta__more-link--slack:before {
+  background-image: url('../images/png-icons/icon-slack.png');
+}
 .cta__more-link--blog:before {
   background-image: url('../images/png-icons/icon-dgraph.png');
 }
 .cta__more-link--email:before {
   background-image: url('../images/png-icons/icon-email.png');
 }
+.cta__more-link--wiki:before {
+  background-image: url('../images/png-icons/icon-wiki.png');
+}
 .cta__next {
-  margin-top: 60px;
+  margin-top: 50px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
 }
 @media screen and (min-width: 989px) {
   .cta__next {
@@ -3072,6 +3101,14 @@ hr {
 }
 .cta-wrapper {
   padding-bottom: 80px;
+}
+.cta-wrapper--career .cta__next {
+  margin-top: 80px;
+}
+@media screen and (max-width: 989px) {
+  .cta-wrapper--career .cta__next {
+    margin-top: 50px;
+  }
 }
 /* ===========================================
    Social links styling
@@ -3694,6 +3731,16 @@ img[data-src] {
     padding: 0;
   }
 }
+.page-nav__list iframe {
+  position: relative;
+  top: 5px;
+}
+@media screen and (max-width: 989px) {
+  .page-nav__list iframe {
+    top: 0;
+    margin: 15px 0 0;
+  }
+}
 .page-nav__item {
   margin: 0;
   padding: 0 10px;
@@ -3737,14 +3784,12 @@ img[data-src] {
     border: none;
   }
 }
-.page-nav iframe {
-  position: relative;
-  top: 3px;
+.github-star--mobile {
+  text-align: right;
 }
-@media screen and (max-width: 989px) {
-  .page-nav iframe {
-    top: 0;
-    margin: 15px 0 0;
+@media screen and (min-width: 989px) {
+  .github-star--mobile {
+    display: none;
   }
 }
 .is-visible {
@@ -3974,6 +4019,11 @@ img[data-src] {
 }
 .page-intro--homepage .page-intro__lead {
   text-align: left;
+}
+@media screen and (min-width: 1169px) {
+  .page-intro--homepage .page-intro__lead {
+    width: 80%;
+  }
 }
 .page-intro--blog-article {
   margin-bottom: 60px;

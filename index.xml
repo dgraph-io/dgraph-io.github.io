@@ -7,8 +7,169 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 14 Jul 2016 16:16:14 +1000</lastBuildDate>
+    <lastBuildDate>Thu, 21 Jul 2016 11:53:04 +1000</lastBuildDate>
     <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Gru: Open source solution for better technical interviews</title>
+      <link>https://open.dgraph.io/post/gru/</link>
+      <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
+      
+      <guid>https://open.dgraph.io/post/gru/</guid>
+      <description>
+
+&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;On a scale of 0.0 to 5.0, only terrible candidates received less than 2.0. And only in very rare cases did someone receives above 4.0. Anything above 3.0 was a pretty solid YES for hire. But how the interviewers scored a candidate was very subjective. There was no standardized training for interviewers on how to interview. Some people tend to give higher scores; some tend to give lower scores. So, the hiring committee had been asked to take the interviewer&amp;rsquo;s previous scoring patterns into account, along with how much evidence and conviction they had presented in the feedback form.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;It was duct tape on a broken system.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;It&amp;rsquo;s not an issue specific to Google. Many tech companies follow some variance of the same approach. Two phone screens + five onsite technical interviews, followed by feedback presented to a committee which then decided if the candidate should be hired or not.&lt;/p&gt;
+
+&lt;p&gt;Except that the interviewers have no particular training in judging other people. Most would ask one question; which would get dragged on for the entire length of the interview. If the candidate did well on that question, they might ask another one. So, if the candidate messes up that first question, there&amp;rsquo;s no coming back, mostly even including the rest of the interviews (unless you do exceptionally well in the rest).&lt;/p&gt;
+
+&lt;p&gt;Also, given the inflow of smart young engineers flowing into the valley, the questions are generic enough to be answered by &lt;em&gt;anyone&lt;/em&gt;. So, these drill down to basic computer science concepts &amp;ndash; graphs, trees, sorting, and other algorithms. The candidate is expected to come up with a solution and code it up on a whiteboard within the allocated time under pressure.&lt;/p&gt;
+
+&lt;p&gt;Not surprisingly, &lt;strong&gt;experienced professionals tend to do worse at these interviews than fresh grads&lt;/strong&gt;. Very few professional tech problem can be coded up in 20 mins. Over years of coding, they lose the practice of solving simple problems under time pressure, instead focusing on deeper, harder design problems.&lt;/p&gt;
+
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.&lt;/p&gt;&amp;mdash; Max Howell (@mxcl) &lt;a href=&#34;https://twitter.com/mxcl/status/608682016205344768&#34;&gt;June 10, 2015&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;I&amp;rsquo;m convinced that the existing technical interview system is expensive and broken.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Without any objective measurement, judging the smarts, skills and experience of an engineer is just handwaving.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Triplebyte recently &lt;a href=&#34;http://blog.triplebyte.com/three-hundred-programming-interviews-in-thirty-days&#34;&gt;came up with a post about hiring&lt;/a&gt;. I found it instantly interesting. With a lot of data, they found a higher correlation between a quiz and successful candidates; and a lower one between coding questions and successful candidates.
+This got us thinking.
+&lt;strong&gt;If we wanted to design an objective interviewing system, we should design a quiz.&lt;/strong&gt;
+It would have multiple benefits:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A single question wouldn&amp;rsquo;t dictate the entire interview. If the candidate is stuck, they can just skip the question.&lt;/li&gt;
+&lt;li&gt;Focus on different aspects of systems and algorithms, with multiple questions from each. Looking at a final report would make it clear where the strengths and weaknesses of the candidate lie.&lt;/li&gt;
+&lt;li&gt;Give us an objective score, which we can then use to compare them against other candidates.&lt;/li&gt;
+&lt;li&gt;Generate a common repository of interview questions, which can ascertain that any leaked questions can&amp;rsquo;t be asked again, and new ones can be added collectively by engineers.&lt;/li&gt;
+&lt;li&gt;Cut down on engineers&amp;rsquo; time spent on interviewing significantly. That in itself is a huge benefit about this system. &lt;strong&gt;Any human interaction can then focus on the cultural fit&lt;/strong&gt;, which I think is equally important to technical skills.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And we did exactly this. We painstakingly and after much cross-examination came up with 30 or so quiz questions in the house. These questions test various aspects of algorithms, concurrency and server interaction.&lt;/p&gt;
+
+&lt;p&gt;Over the past months, we have had 20 candidates take our quiz. It&amp;rsquo;s a small number, but it&amp;rsquo;s still telling. The following graph shows how the candidates fared.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/score.png&#34; alt=&#34;Graph representing scores of different candidates&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that the red dots represent the score (y-axis left), and the green dots represent the time taken (y-axis right). Candidates with experience in big companies are tagged as such - GB for Googlers who primarily worked on backend/infrastructure projects, GO for Googlers who worked on other projects, Microsoft and Amazon. Every other company whose name we didn&amp;rsquo;t recognize (startup/smaller company) is tagged as OC.&lt;/p&gt;
+
+&lt;p&gt;What we can learn from this:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;At Dgraph, we have an affinity for Googlers!&lt;/li&gt;
+&lt;li&gt;The performance of Googlers on our quiz varied quite a lot. But Googlers with backend experience performed not only great but the best out of all candidates.&lt;/li&gt;
+&lt;li&gt;Googlers from other fields didn&amp;rsquo;t fare so well. This goes to show that there&amp;rsquo;s quite a significant difference in skills and experience of Googlers from different groups.&lt;/li&gt;
+&lt;li&gt;Note also that there&amp;rsquo;s a selection bias here because our quiz includes questions about concurrency and distributed systems. Folks with frontend experience don&amp;rsquo;t deal with these problems on a regular basis and hence didn&amp;rsquo;t do so well; which in a way is a validation that the quiz system worked as intended.&lt;/li&gt;
+&lt;li&gt;Worst scorers tend to take more time than the best. In fact, all 4 top scorers finished approximately under 50 mins, at least 10 mins before the test ended, because they ran out of questions to answer. In fact, the top scoring candidate finished the quiz in half the time!&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;So, we decided to improve upon this basic quiz and converted it to an adaptive test.&lt;/strong&gt;
+Based on Triplebyte&amp;rsquo;s and our experience, we know that best candidates take less time to solve the quiz.
+We hypothesize if the best performers were allowed to answer more questions in the same fixed time, their score would have been significantly better.&lt;/p&gt;
+
+&lt;p&gt;So, instead of showing a fixed number of questions to be answered in a given maximum time duration, we fix the time and let the candidates answer as many questions as they can in an hour.
+And if they&amp;rsquo;re performing well, we show them harder questions carrying higher scores (and vice-versa).
+This system would make the difference between an okay candidate and a stellar candidate much more evident.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In fact, the best candidates would become outliers.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This inspiration is what &lt;a href=&#34;https://github.com/dgraph-io/gru&#34;&gt;lead to Gru&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;gru-finding-the-right-minions&#34;&gt;Gru: Finding the right minions&lt;/h2&gt;
+
+&lt;p&gt;Gru is an open-source, adaptive quiz system written entirely in Go. Gru server has a simple design and is very easy to setup. It doesn&amp;rsquo;t require maintaining a database. Questions and candidate information are stored and read from files. All the communication between the client and the server is encrypted.&lt;/p&gt;
+
+&lt;p&gt;Engineers collectively come up with questions from different areas and put them in a YAML formatted file. They tag them as &lt;code&gt;easy&lt;/code&gt;, &lt;code&gt;medium&lt;/code&gt;, &lt;code&gt;hard&lt;/code&gt;. You can add more tags to define the field, for, e.g., &lt;code&gt;concurrency&lt;/code&gt;, &lt;code&gt;graph&lt;/code&gt;, &lt;code&gt;sorting&lt;/code&gt;, &lt;code&gt;searching&lt;/code&gt;, etc. Each question has it&amp;rsquo;s own positive and negative scores, generally determined based on their complexity, uniqueness, or statistical probability of anyone getting it right, etc. Here&amp;rsquo;s an example from our demo quiz.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;- id: spacecraftmars
+  str: Which year did we first land a spacecraft on Mars?
+  correct: [spacecraftmars-1976]
+  opt:
+  - uid: spacecraftmars-2001
+    str: 2001
+  - uid: spacecraftmars-1976
+    str: 1976
+  - uid: spacecraftmars-1981
+    str: 1981
+  - uid: spacecraftmars-2013
+    str: 2013
+  positive: 5
+  negative: 2.5
+  tags: [medium,demo,mars]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Gru client runs on the command line and makes use of &lt;a href=&#34;https://github.com/gizak/termui&#34;&gt;termui&lt;/a&gt; for displaying the questions. The score of the candidate is always visible to them, providing real-time feedback on how they are doing during the test.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/gru_screenshot.png&#34; alt=&#34;Screenshot of the Gru client in action&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to get your hands dirty, we have a server running with some demo questions. The binaries for both Gru server and Gru client &lt;a href=&#34;https://github.com/dgraph-io/gru/releases&#34;&gt;are released here&lt;/a&gt;. To take the demo quiz, download the gruclient binary for your platform and just run it. It would automatically connect to our Gru server, and test your knowledge about humankind&amp;rsquo;s space missions.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;You could start running Gru at your company for free. For more details on how Gru works and how to host it, please visit &lt;a href=&#34;https://wiki.dgraph.io/Gru&#34;&gt;Gru wiki&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let us know what you think about it and how we could improve it further on our discuss forum. If you find any issues with Gru, &lt;a href=&#34;https://github.com/dgraph-io/gru/issues&#34;&gt;file a bug&lt;/a&gt;. Hope you like Gru and looking forward to a world with better technical interviews.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Gru Links
+- &lt;a href=&#34;https://github.com/dgraph-io/gru&#34;&gt;Github repository&lt;/a&gt;
+- &lt;a href=&#34;https://wiki.dgraph.io/Gru&#34;&gt;Gru Wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Other posts I&amp;rsquo;ve written about interview process:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://medium.com/@manishrjain/technical-interviews-open-ended-design-questions-ea7fff3486a7#.d6y5gyjys&#34;&gt;Technical Interviews&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.quora.com/Why-cant-I-get-a-job-at-some-tech-giants-despite-doing-well-at-interviews/answer/Manish-Rai-Jain?srid=5tVr&#34;&gt;Why can&amp;rsquo;t I get a job despite doing well in interviews?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+</description>
+    </item>
     
     <item>
       <title>Releasing v0.4</title>
