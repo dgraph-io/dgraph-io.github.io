@@ -4,7 +4,6 @@ html,body
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
-	overflow-x: hidden;
 }
 
 .article-content pre{
@@ -20,6 +19,11 @@ html,body
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 20px;
+}
+
+.page-intro--blog-article {
+	margin-top: 0px;
+	padding-top: 100px;
 }
 
 .page-content--blog-article .opening__image {
@@ -69,13 +73,14 @@ h3.article__titile {
 
 #page-header {
 	background-color: white;
+	height: 72px;
 	width: 100%;
 	border-bottom: 1px solid #f0f0f0;
 	position: fixed;
 }
 
 .page-intro,.page-content--blog {
-	margin-top: 150px;
+	padding-top: 100px;
 }
 
 .page-logo {
@@ -88,4 +93,12 @@ h3.article__titile {
 
 ul.page-nav__list {
 	top: -15px;
+}
+
+#page-nav-button {
+	top: 12px;
+}
+
+.page-footer__wrapper:before {
+	width: 100%;
 }
