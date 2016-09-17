@@ -556,7 +556,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  2000  733481 ns/op 200241 B/op 5523 allo
 BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allocs/op # Gogo protobuf
 </code></pre>
 
-<p>Note that Gogo protobuf has support only for Go as of now. However, if you are using some other language, this isn&rsquo;t a problem. Gogo protobuf is backward compatible with Golang protobuf. Our Python and Java clients (using Golang protobuf) can still interact with the server, hence making Gogo a safe choice.</p>
+<p>Note that Gogo protobuf has support only for Go as of now. However, if you are using some other language, this isn&rsquo;t a problem. Gogo protobuf is backward compatible with Golang protobuf. Our Python and Java clients can still interact with the server (which does marshaling using Gogo), hence making Gogo a safe choice.</p>
 
 <h2 id="recommendations">Recommendations</h2>
 
