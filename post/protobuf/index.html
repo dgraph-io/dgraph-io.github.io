@@ -375,7 +375,7 @@
 
 <h2 id="how-to-use-protocol-buffers">How to use Protocol Buffers</h2>
 
-<p>To use protocol buffers, you define the message (data structures that form the basis of communication) in a <code>.proto</code> file and then compile it using the protocol buffer <a href="https://github.com/google/protobuf/releases">compiler</a>. For communication, we use <a href="http://www.grpc.io/">gRPC</a> which is an open-source RPC framework by Google. gRPC requires services to be defined in the same <code>.proto</code> file. Using gRPC allows us to communicate in binary format over TCP which is faster than retrieving JSON formatted results over HTTP.</p>
+<p>To use protocol buffers, you define the message (data structures that form the basis of communication) in a <code>.proto</code> file and then compile it using the protocol buffer <a href="https://github.com/google/protobuf/releases">compiler</a>. For communication, we use <a href="http://www.grpc.io/">gRPC</a> which is an open-source RPC framework by Google. gRPC requires services to be defined in the same <code>.proto</code> file. Using gRPC allows us to communicate in binary format which is faster than retrieving JSON formatted results over HTTP.</p>
 
 <pre><code>// The Node object which can have other children node and properties.
 
@@ -561,9 +561,9 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 
 <ul>
 <li>If you are interacting with the Dgraph from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON over HTTP.</li>
-<li>If you are interacting with Dgraph through one of our language drivers, we recommend you do it using gRPC and protocol buffers over TCP.</li>
-<li>If you are using Go with gRPC over TCP, you will automatically be using the faster Gogo protobuf.</li>
-<li>Overall, <strong>fastest way to query Dgraph is via a Go client communicating over gRPC over TCP.</strong></li>
+<li>If you are interacting with Dgraph through one of our language drivers, we recommend you do it using gRPC and protocol buffers.</li>
+<li>If you are using Go client with gRPC, you will automatically be using the faster Gogo protobuf.</li>
+<li>Overall, <strong>fastest way to query Dgraph is via a Go client communicating over gRPC.</strong></li>
 </ul>
 
 <p>We would love to hear about your interaction with the Dgraph server.</p>
