@@ -18,13 +18,13 @@
       <guid>https://open.dgraph.io/post/protobuf/</guid>
       <description>
 
-&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt; we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;
+&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt;, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;
 
 &lt;p&gt;Dgraph v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt; for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the &lt;a href=&#34;https://github.com/google/protobuf#protobuf-runtime-installation&#34;&gt;modern languages&lt;/a&gt; and could encode recursive data structures efficiently.&lt;/p&gt;
 
 &lt;h2 id=&#34;how-to-use-protocol-buffers&#34;&gt;How to use Protocol Buffers&lt;/h2&gt;
 
-&lt;p&gt;To use protocol buffers, you define the message (data structures that form the basis of communication) in a &lt;code&gt;.proto&lt;/code&gt; file and then compile it using the protocol buffer &lt;a href=&#34;https://github.com/google/protobuf/releases&#34;&gt;compiler&lt;/a&gt;. For communication, we use &lt;a href=&#34;http://www.grpc.io/&#34;&gt;gRPC&lt;/a&gt; which is an open-source RPC framework by Google. gRPC requires services to be defined in the same &lt;code&gt;.proto&lt;/code&gt; file. Using gRPC allows us to communicate in binary format which is faster than retrieving JSON formatted results over HTTP.&lt;/p&gt;
+&lt;p&gt;To use protocol buffers, you define the message (data structures that form the basis of communication) in a &lt;code&gt;.proto&lt;/code&gt; file and then compile it using the protocol buffer &lt;a href=&#34;https://github.com/google/protobuf/releases&#34;&gt;compiler&lt;/a&gt;. For communication, we use &lt;a href=&#34;http://www.grpc.io/&#34;&gt;gRPC&lt;/a&gt; which is an open-source RPC framework by Google. gRPC requires services to be defined in the same &lt;code&gt;.proto&lt;/code&gt; file. Using gRPC allows us to communicate in binary format which is faster than retrieving JSON formatted results.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;// The Node object which can have other children node and properties.
 
@@ -57,8 +57,8 @@ service Dgraph {
 
 &lt;h2 id=&#34;benchmarks&#34;&gt;Benchmarks&lt;/h2&gt;
 
-&lt;p&gt;In Go, you can easily measure how your algorithm does (in terms of time and space) by writing benchmarks. Go benchmarks are unique in that they&amp;rsquo;d iterate over the test code &lt;code&gt;b.N&lt;/code&gt; number of times, where b.N is adjusted until the benchmark function lasts long enough to be timed reliably.
-To test how our implementation was doing against our JSON implementation we wrote benchmarks for it. First, let&amp;rsquo;s understand what a benchmark is and how can we interpret its results.&lt;/p&gt;
+&lt;p&gt;In Go, you can easily measure how your algorithm does (in terms of time and space) by writing benchmarks. Go benchmarks are unique in that they&amp;rsquo;d iterate over the test code &lt;code&gt;b.N&lt;/code&gt; number of times, where &lt;code&gt;b.N&lt;/code&gt; is adjusted until the benchmark function lasts long enough to be timed reliably.
+To test how our implementation was doing against our JSON implementation we wrote benchmarks for it. But first, let&amp;rsquo;s understand what a benchmark is and how can we interpret its results.&lt;/p&gt;
 
 &lt;p&gt;Let&amp;rsquo;s write a simple function, which just adds integers to a list.&lt;/p&gt;
 
@@ -83,7 +83,8 @@ To test how our implementation was doing against our JSON implementation we wrot
 &lt;p&gt;We can run the above benchmark using &lt;code&gt;go test -bench=.&lt;/code&gt; Here, Go benchmark would repeatedly call the function with different values for &lt;code&gt;b.N&lt;/code&gt; until it can be timed reliably.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ go test -bench=.
-BenchmarkAddToList-4     200000           8153 ns/op          22624 B/op             7 allocs/op
+
+BenchmarkAddToList-4  200000  8153 ns/op  22624 B/op  7 allocs/op
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Here&amp;rsquo;s what the output means:&lt;/p&gt;
@@ -99,7 +100,7 @@ BenchmarkAddToList-4     200000           8153 ns/op          22624 B/op        
 &lt;p&gt;If we change the line which initializes the slice to
 &lt;code&gt;list := make([]int, 1000)&lt;/code&gt; and run the benchmarks again, we get better results:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;BenchmarkAddToList-4      200000           6100 ns/op         16384 B/op             1 allocs/op
+&lt;pre&gt;&lt;code&gt;BenchmarkAddToList-4  200000  6100 ns/op  16384 B/op  1 allocs/op
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&amp;rsquo;t have to reallocate it when we append elements.&lt;/p&gt;
@@ -179,16 +180,16 @@ func benchmarkToJson(file string, b *testing.B) {
 
 &lt;p&gt;This is how the final benchmark results compare for a query which returns 1000 entities in the result.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;BenchmarkToJSON_1000_Director-2   500      2512808 ns/op     560427 B/op        9682 allocs/op
-BenchmarkToPB_1000_Director-2    2000      1338410 ns/op     196743 B/op        3052 allocs/op
+&lt;pre&gt;&lt;code&gt;BenchmarkToJSON_1000_Director-2  500  2512808 ns/op  560427 B/op  9682 allocs/op
+BenchmarkToPB_1000_Director-2   2000  1338410 ns/op  196743 B/op  3052 allocs/op
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The benchmarks show that ToPB method is almost &lt;strong&gt;2x faster&lt;/strong&gt; than ToJSON as it takes much lesser nanoseconds per operation. The bytes allocated per operation show that ToPB &lt;strong&gt;allocates 65% less memory&lt;/strong&gt; compared to ToJSON. You could find more information about those benchmarks and what we changed to get here in our &lt;a href=&#34;https://github.com/dgraph-io/dgraph/blob/master/query/benchmark/README.txt&#34;&gt;README&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h4 id=&#34;unmarshalling&#34;&gt;Unmarshalling&lt;/h4&gt;
 
-&lt;pre&gt;&lt;code&gt;BenchmarkToJSONUnmarshal_1000_Director-4    1000   1279297 ns/op   403746 B/op   5144 allocs/op
-BenchmarkToPBUnmarshal_1000_Director-4      3000    489585 ns/op   202256 B/op   5522 allocs/op
+&lt;pre&gt;&lt;code&gt;BenchmarkToJSONUnmarshal_1000_Director-4  1000  1279297 ns/op  403746 B/op  5144 allocs/op
+BenchmarkToPBUnmarshal_1000_Director-4    3000   489585 ns/op  202256 B/op  5522 allocs/op
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We can see that unmarshalling on the client would also be &lt;strong&gt;2.6x faster&lt;/strong&gt; for protocol buffers compared to JSON. ToPB &lt;strong&gt;allocates 50% less memory&lt;/strong&gt; compared to ToJSON.&lt;/p&gt;
@@ -209,7 +210,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 &lt;h2 id=&#34;recommendations&#34;&gt;Recommendations&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;If you are interacting with the Dgraph from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON over HTTP.&lt;/li&gt;
+&lt;li&gt;If you are interacting with the Dgraph from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON.&lt;/li&gt;
 &lt;li&gt;If you are interacting with Dgraph through one of our language drivers, we recommend you do it using gRPC and protocol buffers.&lt;/li&gt;
 &lt;li&gt;If you are using Go client with gRPC, you will automatically be using the faster Gogo protobuf.&lt;/li&gt;
 &lt;li&gt;Overall, &lt;strong&gt;fastest way to query Dgraph is via a Go client communicating over gRPC.&lt;/strong&gt;&lt;/li&gt;
