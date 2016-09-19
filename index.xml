@@ -98,12 +98,12 @@ BenchmarkAddToList-4  200000  8153 ns/op  22624 B/op  7 allocs/op
 &lt;/ul&gt;
 
 &lt;p&gt;If we change the line which initializes the slice to
-&lt;code&gt;list := make([]int, 1000)&lt;/code&gt; and run the benchmarks again, we get better results:&lt;/p&gt;
+&lt;code&gt;list := make([]int, 0, 1000)&lt;/code&gt; and run the benchmarks again, we get better results:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;BenchmarkAddToList-4  200000  6100 ns/op  16384 B/op  1 allocs/op
+&lt;pre&gt;&lt;code&gt;BenchmarkAddToList-4  1000000  1618 ns/op  0 B/op  0 allocs/op
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&amp;rsquo;t have to reallocate it when we append elements.&lt;/p&gt;
+&lt;p&gt;The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&amp;rsquo;t have to reallocate it when we append elements. Also the B/op reduced because the list is not initialized with 0 for all its elements.&lt;/p&gt;
 
 &lt;h2 id=&#34;benchmarking-topb-against-tojson&#34;&gt;Benchmarking ToPB against ToJSON&lt;/h2&gt;
 
