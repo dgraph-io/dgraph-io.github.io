@@ -7,8 +7,155 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 12 Sep 2016 10:54:15 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 04 Oct 2016 11:59:57 +0530</lastBuildDate>
     <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Golang: Run multiple services on one port</title>
+      <link>https://open.dgraph.io/post/cmux/</link>
+      <pubDate>Tue, 04 Oct 2016 11:59:57 +0530</pubDate>
+      
+      <guid>https://open.dgraph.io/post/cmux/</guid>
+      <description>&lt;p&gt;Ever faced the problem of having multiple ports in an application, one for each service?
+In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.&lt;/p&gt;
+
+&lt;p&gt;At Dgraph, we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
+But now we just use one port for all the outside facing services and one for internal server communications.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/soheilhy/cmux&#34;&gt;Cmux&lt;/a&gt; is a connection multipling library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their &lt;a href=&#34;https://godoc.org/github.com/soheilhy/cmux&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let us jump into the three simple steps with some code sample and get this working in a jiffy.&lt;/p&gt;
+
+&lt;p&gt;First setup the different services as you would usually do. In our case we setup a gRPC service and an HTTP handler function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Setup gRPC server.
+type grpcServer struct{}
+
+func (s *grpcServer) Query(ctx context.Context,
+  req *graph.Request) (*graph.Response, error) {
+  .
+  .
+  .
+}
+
+// Handler function for http/https queries.
+func queryHandler(w http.ResponseWriter, r *http.Request) {
+  addCorsHeaders(w)
+  .
+  .
+  .
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
+Later we&amp;rsquo;ll multiplex a single TCP listener into multiple listeners.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Wrapper functions to start serving different services.
+
+func serveGRPC(l net.Listener) {
+  s := grpc.NewServer(grpc.CustomCodec(&amp;amp;query.Codec{}))
+  graph.RegisterDgraphServer(s, &amp;amp;grpcServer{})
+  if err := s.Serve(l); err != nil {
+    log.Fatalf(&amp;quot;While serving gRpc request: %v&amp;quot;, err)
+  }
+}
+
+func serveHTTP(l net.Listener) {
+  if err := http.Serve(l, nil); err != nil {
+    log.Fatalf(&amp;quot;While serving http request: %v&amp;quot;, err)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Third, create a listener object and multiplex it using a cmux matcher.
+It&amp;rsquo;ll read the header bytes of exchanges and figure out which service to trigger by giving us a new sub-listener (We just call it that, though it&amp;rsquo;s actually just net.Listener) for every match.
+We then call the services that we wrote earlier with these corresponding sub-listeners.
+Look at the following code sample to get a better hang of the above-mentioned steps.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;func setupServer() {
+  go worker.RunServer(*workerPort) // For internal communication.
+
+  // Create a listener at the desired port.
+  l, err := net.Listen(&amp;quot;tcp&amp;quot;, fmt.Sprintf(&amp;quot;:%d&amp;quot;, *port))
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  // Create a cmux object.
+  tcpm := cmux.New(l)
+
+  // Declare the match for different services required.
+  httpl := tcpm.Match(cmux.HTTP1Fast())
+  grpcl := tcpm.MatchWithWriters(
+    cmux.HTTP2MatchHeaderFieldSendSettings(&amp;quot;content-type&amp;quot;, &amp;quot;application/grpc&amp;quot;))
+  http2 := tcpm.Match(cmux.HTTP2())
+
+  // Link the endpoint to the handler function.
+  http.HandleFunc(&amp;quot;/query&amp;quot;, queryHandler)
+
+  // Initilize the servers by passing in the custom listeners (sub-listeners).
+  go serveGRPC(grpcl)
+  go serveHTTP(httpl)
+  go serveHTTP(http2)
+
+  // Close the listener when done.
+  go func() {
+    &amp;lt;-closeCh
+    // Stops listening further but already accepted connections are not closed.
+    l.Close()
+  }()
+
+  log.Println(&amp;quot;grpc server started.&amp;quot;)
+  log.Println(&amp;quot;http server started.&amp;quot;)
+  log.Println(&amp;quot;Server listening on port&amp;quot;, *port)
+
+  // Start cmux serving.
+  if err := tcpm.Serve(); !strings.Contains(err.Error(),
+    &amp;quot;use of closed network connection&amp;quot;) {
+    log.Fatal(err)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So, there we have it. A single port to cater to many services that you might be using.&lt;/p&gt;
+
+&lt;p&gt;Hope you had fun with this post and learnt something new. Thanks for reading and do let us know your thoughts and how it works out for you.&lt;/p&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg&#34;&gt;Mars 2020, Artist Concept Instrument&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Dgraph: JSON vs. Binary clients</title>
