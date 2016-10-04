@@ -94,7 +94,7 @@ Look at the following code sample to get a better hang of the above-mentioned st
   // Link the endpoint to the handler function.
   http.HandleFunc(&amp;quot;/query&amp;quot;, queryHandler)
 
-  // Initilize the servers by passing in the custom listeners (sub-listeners).
+  // Initialize the servers by passing in the custom listeners (sub-listeners).
   go serveGRPC(grpcl)
   go serveHTTP(httpl)
   go serveHTTP(http2)
