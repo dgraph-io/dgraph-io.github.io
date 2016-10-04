@@ -22,7 +22,7 @@ In this post, I&amp;rsquo;m going to brief about how to run multiple services vi
 &lt;p&gt;At Dgraph, we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;https://github.com/soheilhy/cmux&#34;&gt;Cmux&lt;/a&gt; is a connection multipling library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their &lt;a href=&#34;https://godoc.org/github.com/soheilhy/cmux&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/soheilhy/cmux&#34;&gt;Cmux&lt;/a&gt; is a connection multiplexing library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their &lt;a href=&#34;https://godoc.org/github.com/soheilhy/cmux&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Let us jump into the three simple steps with some code sample and get this working in a jiffy.&lt;/p&gt;
 

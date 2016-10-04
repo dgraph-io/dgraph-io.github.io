@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.17-DEV" />  
+      <meta name="generator" content="Hugo 0.16" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -373,7 +373,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 <p>At Dgraph, we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.</p>
 
-<p><a href="https://github.com/soheilhy/cmux">Cmux</a> is a connection multipling library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their <a href="https://godoc.org/github.com/soheilhy/cmux">godoc</a>.</p>
+<p><a href="https://github.com/soheilhy/cmux">Cmux</a> is a connection multiplexing library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their <a href="https://godoc.org/github.com/soheilhy/cmux">godoc</a>.</p>
 
 <p>Let us jump into the three simple steps with some code sample and get this working in a jiffy.</p>
 
