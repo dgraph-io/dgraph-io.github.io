@@ -36,14 +36,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://open.dgraph.io/index.xml">    
 
     
-    <title>Wisemonk: A slackbot to move discussions from Slack to Discourse - Dgraph Blog</title>
-    <meta property='og:title' content="Wisemonk: A slackbot to move discussions from Slack to Discourse - Dgraph Blog">
+    <title>Dgraph hugo blog theme - Dgraph Blog</title>
+    <meta property='og:title' content="Dgraph hugo blog theme - Dgraph Blog">
     <meta property="og:type" content="article">
         
 
-    <meta property="og:url" content="https://open.dgraph.io/post/wisemonk/">
+    <meta property="og:url" content="https://open.dgraph.io/post/hugo/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/yoda.jpg">  
+      
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -339,16 +339,16 @@
       <div class="row">
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
           <header class="page-intro__header">
-          <div class="article__meta"><span class="article__meta-item article__date">Wed, Jun 15, 2016 by Pawan Rawal
+          <div class="article__meta"><span class="article__meta-item article__date">Thu, Oct 6, 2016 by Pawan Rawal
 
 
 </span></div>
-            <h1 class="page-intro__title page-intro__title--blog">Wisemonk: A slackbot to move discussions from Slack to Discourse</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Dgraph hugo blog theme</h1>
           </header>
           <div class="page-intro__footer">
               <div class="share">
                 <ul class="share__list">
-                  <li class="share__item"><a href="https://twitter.com/share?text=Wisemonk%3a%20A%20slackbot%20to%20move%20discussions%20from%20Slack%20to%20Discourse&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fwisemonk%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Dgraph%20hugo%20blog%20theme&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fhugo%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -366,152 +366,10 @@
       <div class="row">
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/yoda.jpg">
-          <div class="article-content">
+          <img class="opening__image" src="https://open.dgraph.io/images/default.jpg">
+          <div class="article-content"><p>We at Dgraph love <a href="https://gohugo.io/">Hugo</a> and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.</p>
 
-<blockquote>
-<p>Then there was the fact that we had so many channels and direct messages and group chats.
-It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
-<em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
-</blockquote>
-
-<h1 id="the-beginning">The Beginning</h1>
-
-<p><em>— Manish Jain</em></p>
-
-<p>Sitting in a Japanese restaurant, waiting for my lunch, this is the line that hit me hard.
-I’d experienced this exact thing in my previous company.</p>
-
-<p>Every block of time dedicated to coding was either interrupted by pings on the chat system, or a consistent feeling that you’re missing out.
-Away from the desk, phones would start ringing every evening.
-And they’d ring some more on the weekends, Sunday evenings in particular.
-We were always doing something — the feeling was like being on <em>unpaid pager duty</em>.
-People are talking, and if I’m not around to show my presence, it would mean I’m not working.
-But what was getting done, I wasn’t so clear about.</p>
-
-<p>So, when we started exploring options for both internal and external communication for Dgraph, we wanted to do things differently.
-We’d focus on asynchronous communication, so people can take their time before jumping in.
-People can reply when they get to it — this might be hours later.
-And there’ll be an incentive to modify your reply as more things become clear to you or you find better words to express yourself.
-Something better than Email, but not so distracting as Slack.
-The winner came out to be Discourse by Jeff Atwood and his team(edit: not Discord, another chat app).</p>
-
-<p>Having run it for over two months, we couldn’t have been happier.
-Discourse sits somewhere between emails and real-time chat systems.
-You feel like you’re having a real-time conversation.
-But it won’t interrupt you in the middle of a 3-hour block of time you’ve set for distraction-free coding.
-Discourse has become such an integral part of our company that we abandoned making decisions in meetings entirely.
-All decisions happen over discourse, so everyone has a chance to voice their opinions and suggestions at their pace.
-And others can embark on fact-finding and put figures together to support or deny arguments.
-I’ve seen a lot smarter discussions, and hence decisions happening over our Discourse forum than over any other medium.</p>
-
-<p>Don’t get me wrong.
-<strong>We still need Slack</strong> for casual chit chat and team bonding.
-But, Slack is an addiction.
-You write one thing, someone replies; then someone else jumps in; and the result is an hour-long frenzy, where everyone feels like they’ve contributed a lot.
-But a few hours later, you can’t pinpoint what changed.</p>
-
-<p>Most useful discussions require a bit more time and thought.
-More than when someone else is typing while you’re in the middle of your sentence.</p>
-
-<p>This is what lead to Wisemonk.
-This bot would push the conversation away from Slack into Discourse.
-And this has to happen just when the team is getting sucked into the frenzy.
-<strong>Before it’s too late</strong></p>
-
-<hr />
-
-<h1 id="how-we-built-it">How we built it</h1>
-
-<p><em>— Pawan Rawal</em></p>
-
-<p>Wisemonk makes use of the Slack RTM API.
-We make good use of the concurrency features in Go.
-For each Slack channel passed in channels flag, we initialise an instance of type Counter.
-The counter keeps track of the messages and other states for a Slack channel.
-Each counter has a buffered channel (called <code>messages</code>) to which Slack messages are sent.</p>
-
-<pre><code>cmap := make(map[string]*Counter)
-for _, cid := range schannels {
-  wg.Add(1)
-  c := &amp;Counter{channelId: cid}
-  c.messages = make(chan *slack.Msg, 500)
-  cmap[cid] = c
-  go c.checkOrIncr(rtm, wg, memmap)
-}
-go listen(rtm)
-wg.Wait()
-</code></pre>
-
-<p>The listen function which runs as a goroutine gives us access to the messages sent on Slack.
-We use this library to authenticate with and get messages from Slack.
-Then the listen function passes messages on the relevant Go channel.</p>
-
-<pre><code>case *slack.MessageEvent:
-  if sm, ok := msg.Data.(*slack.MessageEvent); ok {
-  // Putting the message on the Counter it belongs to
-  m := sm.Msg
-  if c, ok := cmap[m.Channel]; ok {
-    c.messages &lt;- &amp;m
-  }
-</code></pre>
-
-<p>The <code>checkOrIncr</code> method which runs as a goroutine for every counter keeps a count of the number of messages exchanged in a given interval.
-Below is the basic version of the method.
-It runs a never ending <code>for</code> loop.
-Now every time a message is received on the messages channel of the counter instance, it adds the message.
-NewTicker function from the time package provides us with a Ticker, which sends the time on a channel with the period specified.
-So every 10 seconds we get a time value and check if the count of messages exchanged increases the <code>maxmsg</code> that we passed as a flag.
-If it does, then we send a warning to the relevant Slack channel.</p>
-
-<pre><code>func (c *Counter) checkOrIncr(rtm *slack.RTM, wg sync.WaitGroup, memmap map[string]string) {
-   defer wg.Done()
-   ticker := time.NewTicker(time.Second * 10)
-   for {
-       select {
-       case msg := &lt;-c.messages:
-           c.Increment(msg, memmap)
-       case &lt;-ticker.C:
-           count := c.Count()
-           if count &gt;= *maxmsg {
-               go sendMessage(c, rtm)
-           }
-       }
-   }
-}
-</code></pre>
-
-<p>Once the basic functionality was in place, we added integration with discourse.
-Wisemonk stores the last n messages exchanged, creates a discourse topic with the messages when they exceed the max count and shares the URL with us on Slack.</p>
-
-<p>You can create a discourse topic on demand too and get the URL for it. This makes shifting conversations to Discourse super easy.</p>
-
-<p>For the weekends or in the evenings when you want to have a casual chat and don’t want to be interrupted by Wisemonk, you could ask him to meditate, and it won’t disturb you for a while.</p>
-
-<hr />
-
-<h1 id="wisemonk-in-action">Wisemonk in Action</h1>
-
-<p><img src="/images/wisemonk-in-action.png" alt="Wisemonk alerting us when we talk too much" />
-<em>Wisemonk alerting us when we talk too much</em></p>
-
-<p><img src="/images/wisemonk-creating-topic.png" alt="Asking wisemonk to create a topic" />
-<em>Asking wisemonk to create a topic</em></p>
-
-<p><img src="/images/wisemonk-meditating.png" alt="Asking wisemonk to meditate" />
-<em>Asking wisemonk to meditate</em></p>
-
-<hr />
-
-<h1 id="parting-thoughts">Parting Thoughts</h1>
-
-<p><strong><a href="https://github.com/dgraph-io/wisemonk#install">Setting up wisemonk</a> is super easy and we have found that it has enhanced our productivity a lot.</strong></p>
-
-<p>It&rsquo;s open source and <a href="https://github.com/dgraph-io/wisemonk">available at Github</a>, so feel free to contribute to it. We would love to hear about your usage of Wisemonk.</p>
-
-<p><em>Yoda guides actions. Wisemonk guides conversations. Image courtesy: <a href="http://www.wired.com/wp-content/uploads/2015/08/Yoda-featured1.jpg">wired.com</a></em></p>
-
-<hr />
+<p>So we got a theme designed which fit well with our website and used the screen estate well. It&rsquo;s now available at <a href="http://themes.gohugo.io/hugo-dgraph-theme/">Dgraph theme</a>. The theme is responsive, supports syntax highlighting for code and <a href="https://www.discourse.org/">discourse</a> for comments. If your project is open source, you can also link to Github. We would encourage you to try out the theme and let us know your experiences with it.</p>
 
 <div class="engage">
   <p>We are building an open source, scalable and distributed graph database.</p>
@@ -576,29 +434,6 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
 
 
               
-<div class="article-author">
-	<figure class="article-author__figure"><img src="/images/team-manish.jpg" alt="Manish Rai Jain" class="article-author__image"></figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Manish Rai Jain
-			<span class="article-author__title">Editor</span>
-		</h4>
-		<nav class="social__nav article-author__social">
-			<ul class="social__list social__list--inline">
-				<li class="social__item social__item--inline"><a href="https://au.linkedin.com/in/manishrjain" class="social__link">
-						<svg class="icon social__icon social__icon--linkedin">
-							<use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-						</svg></a></li>
-						<li class="social__item social__item--inline"><a href="https://twitter.com/manishrjain" class="social__link">
-								<svg class="icon social__icon social__icon--twitter">
-									<use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-								</svg></a></li>
-			</ul>
-		</nav>
-		<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
-		<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
-	</div>
-</div>
-
 
               </div>
             </div>
@@ -677,7 +512,7 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
   <script type="text/javascript">hljs.initHighlightingOnLoad();</script>-
     
   <script type="text/javascript">
-    DiscourseEmbed = { discourseUrl: 'https://discuss.dgraph.io/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/wisemonk\/' };
+    DiscourseEmbed = { discourseUrl: 'https://discuss.dgraph.io/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/hugo\/' };
     (function() {
       var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
       d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';

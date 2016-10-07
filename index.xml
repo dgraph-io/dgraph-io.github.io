@@ -7,8 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 04 Oct 2016 11:59:57 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 06 Oct 2016 16:56:08 +0530</lastBuildDate>
     <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dgraph hugo blog theme</title>
+      <link>https://open.dgraph.io/post/hugo/</link>
+      <pubDate>Thu, 06 Oct 2016 16:56:08 +0530</pubDate>
+      
+      <guid>https://open.dgraph.io/post/hugo/</guid>
+      <description>&lt;p&gt;We at Dgraph love &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and use it for our blog. It&amp;rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.&lt;/p&gt;
+
+&lt;p&gt;So we got a theme designed which fit well with our website and used the screen estate well. It&amp;rsquo;s now available at &lt;a href=&#34;http://themes.gohugo.io/hugo-dgraph-theme/&#34;&gt;Dgraph theme&lt;/a&gt;. The theme is responsive, supports syntax highlighting for code and &lt;a href=&#34;https://www.discourse.org/&#34;&gt;discourse&lt;/a&gt; for comments. If your project is open source, you can also link to Github. We would encourage you to try out the theme and let us know your experiences with it.&lt;/p&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+</description>
+    </item>
     
     <item>
       <title>Golang: Run multiple services on one port</title>
@@ -134,11 +177,11 @@ Look at the following code sample to get a better hang of the above-mentioned st
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -379,11 +422,11 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -542,11 +585,11 @@ This system would make the difference between an okay candidate and a stellar ca
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -711,11 +754,11 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -1306,11 +1349,11 @@ Hope you find this useful.&lt;/p&gt;
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -1556,11 +1599,11 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -1743,11 +1786,11 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
@@ -1910,11 +1953,11 @@ The data stored would have to be automatically replicated with no single point o
     &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;http://dgraph.io&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io#jobs&#34; target=&#34;_blank&#34;&gt;http://dgraph.io#jobs&lt;/a&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;Star us on Github.&lt;/td&gt;
