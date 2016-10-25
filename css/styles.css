@@ -343,7 +343,7 @@ textarea {
 @media only screen and (min-width: 1169px) {
   .container,
   .container-full {
-    width: 80%;
+    width: 1170px;
   }
 }
 .col-1,
@@ -4118,4 +4118,35 @@ img[data-src] {
 }
 .hljs-strong {
   font-weight: bold;
+}
+/* ===========================================
+   Pagination styling
+   =========================================== */
+.paginator{
+  position: relative;
+  text-align: center;
+}
+.paginator__gray {
+  color: #a4958c;
+}
+.paginator__gray:hover {
+  color: #a4958c;
+}
+.paginator__left {
+  position: absolute;
+  left: 0px;
+}
+.paginator__right {
+  position: absolute;
+  right: 0px;
+}
+.paginator__pages {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+}
+.paginator__selected {
+  background-color: #ffe8e1;
+  border-radius: 100%;
+  text-align: center;
 }
