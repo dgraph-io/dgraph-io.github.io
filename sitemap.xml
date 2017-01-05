@@ -2,11 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://open.dgraph.io/</loc>
-    <lastmod>2017-01-05T20:00:00+11:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://open.dgraph.io/post/v0.7-release/</loc>
     <lastmod>2017-01-05T20:00:00+11:00</lastmod>
   </url>
