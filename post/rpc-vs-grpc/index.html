@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.16" />  
+      <meta name="generator" content="Hugo 0.18.1" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,17 +378,13 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/martian-encoding.jpg">
-          <div class="article-content">
-
-<p>At Dgraph, we aim to build a low latency, distributed graph database.
+          <div class="article-content"><p>At Dgraph, we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p>
+To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
 
-<blockquote>
-<p>What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-The only memory needed to access your data is that of the buffer.</p>
-</blockquote>
+&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+&gt; The only memory needed to access your data is that of the buffer.</p>
 
 <p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
 
@@ -958,9 +954,7 @@ Hope you find this useful.</p>
     </tr>
     </tbody>
   </table>
-</div>
-
-</div>
+</div></div>
         </div>
       </div>
     </div>

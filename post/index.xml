@@ -2,13 +2,241 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Dgraph Blog</title>
-    <link>https://open.dgraph.io/post/</link>
+    <link>https://open.dgraph.io/post/index.xml</link>
     <description>Recent content in Posts on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 06 Oct 2016 16:56:08 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 05 Jan 2017 20:00:00 +1100</lastBuildDate>
     <atom:link href="https://open.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Releasing Dgraph v0.7.1</title>
+      <link>https://open.dgraph.io/post/v0.7-release/</link>
+      <pubDate>Thu, 05 Jan 2017 20:00:00 +1100</pubDate>
+      
+      <guid>https://open.dgraph.io/post/v0.7-release/</guid>
+      <description>&lt;p&gt;Dgraph team is super excited to present v0.7.1 of Dgraph. This version is the biggest step we&amp;rsquo;ve taken towards our production aim of v1.0.
+We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned&lt;/strong&gt; in our &lt;a href=&#34;https://github.com/dgraph-io/dgraph/issues/1&#34;&gt;product roadmap&lt;/a&gt;, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;Today, I&amp;rsquo;m going to talk about these new features, and what you can expect from Dgraph.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note: This is going to be a long blog post. If you just want to try out Dgraph, you can jump straight to our &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;5 step tutorial to get started with Dgraph&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;speed&#34;&gt;Speed&lt;/h3&gt;
+
+&lt;p&gt;Dgraph v0.7.1 is the &lt;em&gt;fastest&lt;/em&gt; version of Dgraph we&amp;rsquo;ve ever released. Live data loading is now so fast that we realized we no longer needed a separate offline batch data loader. So, we removed all that complexity and just wrote a simple script to send mutation queries to live Dgraph via GRPC.&lt;/p&gt;
+
+&lt;p&gt;You can read more about loading and querying performance &lt;a href=&#34;https://wiki.dgraph.io/Performance&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;data-persistence-sharding-high-availability-and-crash-resilience&#34;&gt;Data Persistence, Sharding, High Availability, and Crash Resilience&lt;/h3&gt;
+
+&lt;p&gt;Dgraph has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without loosing any data or dropping any queries.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ve implemented RAFT, a distributed consensus algorithm within Dgraph, to handle such failures. Any writes that happen to go through a group of servers and are only acknowledged to the client once they&amp;rsquo;ve been applied to a majority of servers in the group. Thus, even if some of these servers crash, the data can be accessed, updated and queries can flow without the user getting affected.&lt;/p&gt;
+
+&lt;p&gt;Also, new servers can be introduced into an existing cluster by providing the IP address of any healthy server in the cluster. They will automatically pick up the other members, pull in data shards from healthy nodes, join the groups and become part of the cluster.&lt;/p&gt;
+
+&lt;p&gt;Such functionality has never been an aim for graph databases in the past. But we strongly believe that graph databases can be run as the primary databases; not just add-ons. To that effect, it&amp;rsquo;s important that they be able to survive machine crashes and avoid data loss.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This functionality makes Dgraph the most production ready graph database in the market.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You can read more about running multiple instances of Dgraph, sharding and distributing data in a cluster &lt;a href=&#34;https://wiki.dgraph.io/Deploy&#34;&gt;here&lt;/a&gt;. In fact, we created a small video to show you how Dgraph can recover from crashes without losing any data directly after a load.
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+    &lt;iframe src=&#34;//www.youtube.com/embed/dzTEXxF0TGs?rel=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen=&#34;&#34; frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;backups&#34;&gt;Backups&lt;/h3&gt;
+
+&lt;p&gt;Dgraph believes in standards. We heartily use the existing RDF NQuad standard for data input. Now, we&amp;rsquo;re making it easy to export data from Dgraph to other systems, by exporting our backups in RDF NQuad format. This makes it easy to feed Dgraph data into other systems, upgrade Dgraph versions or to switch over to another graph database. You can read more about backup &lt;a href=&#34;https://wik.dgraph.io/Deploy#Backup&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;indexing&#34;&gt;Indexing&lt;/h3&gt;
+
+&lt;p&gt;Dgraph can now index various scalar values to allow sorting,  term matching, and inequality filters. We support these value types: &lt;code&gt;int&lt;/code&gt;, &lt;code&gt;float&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;, &lt;code&gt;date&lt;/code&gt;, &lt;code&gt;datetime&lt;/code&gt;, &lt;code&gt;geo&lt;/code&gt;, &lt;code&gt;uid&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;String values get tokenized using ICU, and allow &lt;code&gt;allof&lt;/code&gt; and &lt;code&gt;anyof&lt;/code&gt; functions.
+&lt;code&gt;geo&lt;/code&gt; values allow for geo-indexing and support the geo functions mentioned below. &lt;code&gt;uid&lt;/code&gt; value is a way to indicate that the predicate edge points to another entity node.
+This is useful to generate edges in reverse direction automatically. The rest support sorting, equality and inequality functions.&lt;/p&gt;
+
+&lt;p&gt;If you want to generate the index for a particular predicate, mention it&amp;rsquo;s type and specify the &lt;code&gt;@index&lt;/code&gt; keyword.
+Similarly, to generate reverses for a uid predicate, you can specify the &lt;code&gt;@reverse&lt;/code&gt; keyword.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an example schema file for freebase film data:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;scalar (
+  film.director.film             : uid    @ reverse
+  film.film.genre                : uid    @ reverse
+  film.film.initial_release_date : date   @ index
+  film.film.rating               : uid    @ reverse
+  loc                            : geo    @ index
+  type.object.name.en            : string @ index
+  type.object.name.hi            : string @ index
+  type.object.name.ta            : string @ index
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can read more about Dgraph schema &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Schema&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&#34;reverse-edges&#34;&gt;Reverse Edges&lt;/h4&gt;
+
+&lt;p&gt;Each graph edge is unidirectional. But a lot of times, you need to have both the forward and backward edges. For those cases, Dgraph now provides a &lt;code&gt;@reverse&lt;/code&gt; keyword, which can be applied to predicates of &lt;code&gt;uid&lt;/code&gt; type. This would trigger automatic generation of the reverse edges, to allow querying in the reverse direction.&lt;/p&gt;
+
+&lt;p&gt;You can read more about reverse edges &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Reverse_Edges&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
+
+&lt;p&gt;You can now sort the results by any indexed predicate (except string and geo, of course). For, e.g., you can now get a list of films directed by Steven Spielberg sorted by initial release date.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  me(_xid_: m.06pj8) {
+    type.object.name.en
+    film.director.film(order: film.film.initial_release_date) {
+      type.object.name.en
+      film.film.initial_release_date
+    }
+  }
+}
+
+# To sort in descending order, just use orderdesc instead of order.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can read more about sorting &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Sorting&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
+
+&lt;p&gt;Functions are a great way to provide functionality with a simple and clear interface. Dgraph functions can be used as both starting points to queries and as filters.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a list of functions we introduced in v0.7.1:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;anyof(predicate, &amp;quot;space separated list of terms&amp;quot;)&lt;/code&gt; : Entities whose value for the predicate has any of the terms specified.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;allof(predicate, &amp;quot;space separated list of terms&amp;quot;)&lt;/code&gt; : Entities whose value for the predicate has all of the terms specified.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;leq(predicate, &amp;quot;value&amp;quot;)&lt;/code&gt;                           : Entities whose value for the predicate is less than or equal to specified value.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;geq(predicate, &amp;quot;value&amp;quot;)&lt;/code&gt;                           : Entities whose value for the predicate is greater than or equal to specified value.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Both &lt;code&gt;anyof&lt;/code&gt; and &lt;code&gt;allof&lt;/code&gt; functions work based on an index generated by tokenizing string values. We use ICU, which has vast support for human languages and is used by major projects like Google Web Search, Chrome, Mac OSX, Lucene, etc.&lt;/p&gt;
+
+&lt;p&gt;Upcoming in v0.7.2:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eq(predicate, &amp;quot;value&amp;quot;)&lt;/code&gt;: Entities whose value for predicate is equal to specified value.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;le(predicate, &amp;quot;value&amp;quot;)&lt;/code&gt;: Entities whose value for predicate is less than specified value.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ge(predicate, &amp;quot;value&amp;quot;)&lt;/code&gt;: Entities whose value for predicate is greater than specified value.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To enable these functions, a &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Schema&#34;&gt;schema providing the scalar type&lt;/a&gt; for the predicates should be provided. For e.g.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;scalar(
+  name          : string @ index # anyof, allof
+  age           : int    @ index # leq, geq
+  date_of_birth : date   @ index # leq, geq
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can read more about functions &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Functions&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id=&#34;geospatial-functions&#34;&gt;Geospatial functions&lt;/h4&gt;
+
+&lt;p&gt;Geospatial queries are important to build location-aware search and recommendations. Being able to find the nearby restaurants who serve sushi, or bars in the city which play Jazz, or friends who are visiting your neighborhood is pretty crucial to such use cases. We couldn&amp;rsquo;t imagine building a database without providing full-fledged support for geo queries, and in v0.7.1, we added geo indexing.&lt;/p&gt;
+
+&lt;p&gt;Dgraph now supports four geospatial functions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;near(predicate, geo-location)&lt;/code&gt;      : Finds all entities lying within a specified distance from a point.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;within(predicate, geo-polygon)&lt;/code&gt;     : Finds all entities lying within a specified region.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;contains(predicate, geo-location)&lt;/code&gt;  : Finds all enclosures for a specified point or region.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;intersects(predicate, geo-polygon)&lt;/code&gt; : Finds all entities which intersect a specified region.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ curl localhost:8080/query -XPOST -d $&#39;
+{
+  tourist( near(&amp;quot;loc&amp;quot;, &amp;quot;{\&#39;type\&#39;:\&#39;Point\&#39;, \&#39;coordinates\&#39;: [-122.469829, 37.771935]}&amp;quot;, &amp;quot;1000&amp;quot; ) ) {
+    name
+  }
+}&#39; | python -m json.tool | grep name
+
+            &amp;quot;name&amp;quot;: &amp;quot;Steinhart Aquarium&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Spreckels Temple of Music&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Pioneer Log Cabin&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Conservatory of Flowers&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;De Young Museum&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Chinese Pavillion&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Japanese Tea Garden&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Peace Lantern&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;San Francisco Botanical Garden&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Morrison Planetarium&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;California Academy of Sciences&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Hamon Tower&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;National AIDS Memorial Grove&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;La Rose des Vents&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Strawberry Hill&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Buddha&amp;quot;
+            &amp;quot;name&amp;quot;: &amp;quot;Rose Garden&amp;quot;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can read more about Geolocation functionality &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Geolocation&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;filtering&#34;&gt;Filtering&lt;/h3&gt;
+
+&lt;p&gt;Dgraph now supports pretty advanced and complex filtering operations. We do both &amp;amp;&amp;amp; (and) and || (or) filters, using round brackets to specify the right sequence. For e.g., &lt;code&gt;(A || (B &amp;amp;&amp;amp; C))&lt;/code&gt;, as demonstrated in the following query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  me(_xid_: m.06pj8) {
+    type.object.name.en
+    film.director.film @filter(
+      allof(&amp;quot;type.object.name.en&amp;quot;, &amp;quot;jones indiana&amp;quot;) ||
+      (anyof(&amp;quot;type.object.name.en&amp;quot;, &amp;quot;jurassic&amp;quot;) &amp;amp;&amp;amp; anyof(&amp;quot;type.object.name.en&amp;quot;, &amp;quot;park&amp;quot;)))  {
+      type.object.name.en
+      film.film.initial_release_date
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With that, I&amp;rsquo;ll finish the blog post. &lt;strong&gt;If you found these interesting, try out the &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;5 step tutorial to get started with Dgraph&lt;/a&gt;.&lt;/strong&gt; Let us know what you think!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? Talk to us. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Dgraph hugo blog theme</title>
@@ -62,7 +290,8 @@
       
       <guid>https://open.dgraph.io/post/cmux/</guid>
       <description>&lt;p&gt;Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.&lt;/p&gt;
+In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.
+&lt;/p&gt;
 
 &lt;p&gt;At Dgraph, we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.&lt;/p&gt;
@@ -198,8 +427,7 @@ Look at the following code sample to get a better hang of the above-mentioned st
 &lt;/div&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg&#34;&gt;Mars 2020, Artist Concept Instrument&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg&#34;&gt;Mars 2020, Artist Concept Instrument&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -208,9 +436,9 @@ Look at the following code sample to get a better hang of the above-mentioned st
       <pubDate>Mon, 12 Sep 2016 10:54:15 +0530</pubDate>
       
       <guid>https://open.dgraph.io/post/protobuf/</guid>
-      <description>
+      <description>&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt;, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;
 
-&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt;, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;Dgraph v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt; for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the &lt;a href=&#34;https://github.com/google/protobuf#protobuf-runtime-installation&#34;&gt;modern languages&lt;/a&gt; and could encode recursive data structures efficiently.&lt;/p&gt;
 
@@ -443,8 +671,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 &lt;/div&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/&#34;&gt;View From Gemini XI, 850 Miles Above the Earth&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/&#34;&gt;View From Gemini XI, 850 Miles Above the Earth&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -453,11 +680,10 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
       <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/gru/</guid>
-      <description>
+      <description>&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;
+&lt;/p&gt;
 
 &lt;p&gt;The system in place was methodical. On a scale of 0.0 to 5.0, only terrible candidates received less than 2.0. And only in very rare cases did someone receives above 4.0. Anything above 3.0 was a pretty solid YES for hire. But how the interviewers scored a candidate was very subjective. There was no standardized training for interviewers on how to interview. Some people tend to give higher scores; some tend to give lower scores. So, the hiring committee had been asked to take the interviewer&amp;rsquo;s previous scoring patterns into account, along with how much evidence and conviction they had presented in the feedback form.&lt;/p&gt;
 
@@ -603,9 +829,7 @@ This system would make the difference between an okay candidate and a stellar ca
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
-&lt;/div&gt;
-
-</description>
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -614,9 +838,9 @@ This system would make the difference between an okay candidate and a stellar ca
       <pubDate>Thu, 14 Jul 2016 16:16:14 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/v0.4-release/</guid>
-      <description>
+      <description>&lt;p&gt;Thanks for your feedback over the last couple of months. This release addresses some of the main pain points of using Dgraph.&lt;/p&gt;
 
-&lt;p&gt;Thanks for your feedback over the last couple of months. This release addresses some of the main pain points of using Dgraph.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
 
@@ -777,8 +1001,7 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
 
 &lt;p&gt;&lt;em&gt;Thanks &lt;a href=&#34;https://twitter.com/mholt6&#34;&gt;Matt Holt&lt;/a&gt; from the Caddy team, for the inspiration to have &lt;code&gt;https://get.dgraph.io&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/cygnus-cargo-craft-released-from-space-station/&#34;&gt;Cygnus Cargo Craft Released From Space Station&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/cygnus-cargo-craft-released-from-space-station/&#34;&gt;Cygnus Cargo Craft Released From Space Station&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -787,17 +1010,13 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
       <pubDate>Sat, 25 Jun 2016 19:06:45 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/rpc-vs-grpc/</guid>
-      <description>
-
-&lt;p&gt;At Dgraph, we aim to build a low latency, distributed graph database.
+      <description>&lt;p&gt;At Dgraph, we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt;.&lt;/p&gt;
+To keep our latency of communication low, we use a new form of serialization library called &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt;.
 
-&lt;blockquote&gt;
-&lt;p&gt;What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-The only memory needed to access your data is that of the buffer.&lt;/p&gt;
-&lt;/blockquote&gt;
+&amp;gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+&amp;gt; The only memory needed to access your data is that of the buffer.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;How is Flatbuffers better than &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt;&lt;/strong&gt;? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.&lt;/p&gt;
 
@@ -1367,9 +1586,7 @@ Hope you find this useful.&lt;/p&gt;
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
-&lt;/div&gt;
-
-</description>
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -1378,9 +1595,8 @@ Hope you find this useful.&lt;/p&gt;
       <pubDate>Tue, 21 Jun 2016 10:20:32 +0530</pubDate>
       
       <guid>https://open.dgraph.io/post/performance-throughput-latency/</guid>
-      <description>
-
-&lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;&lt;/p&gt;
+      <description>&lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;
+&lt;/p&gt;
 
 &lt;h2 id=&#34;the-dataset&#34;&gt;The Dataset&lt;/h2&gt;
 
@@ -1620,8 +1836,7 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
 &lt;/div&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -1630,13 +1845,13 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
       <pubDate>Wed, 15 Jun 2016 11:39:27 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/wisemonk/</guid>
-      <description>
-
-&lt;blockquote&gt;
+      <description>&lt;blockquote&gt;
 &lt;p&gt;Then there was the fact that we had so many channels and direct messages and group chats.
 It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
 &lt;em&gt;— &lt;a href=&#34;https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/&#34;&gt;Dave Teare, Curing Our Slack Addiction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;the-beginning&#34;&gt;The Beginning&lt;/h1&gt;
 
@@ -1804,9 +2019,7 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
-&lt;/div&gt;
-
-</description>
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -1815,7 +2028,8 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
       <pubDate>Mon, 18 Apr 2016 14:37:08 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/hello-world/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about Dgraph, what it is and why it was created.&lt;/p&gt;
+      <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about Dgraph, what it is and why it was created.
+&lt;/p&gt;
 
 &lt;p&gt;Before I explain what&amp;rsquo;s Dgraph, let&amp;rsquo;s start with a basic understanding of graphs.
 A graph is a mathematical structure used to model a pairwise relationship between entities.
@@ -1974,8 +2188,7 @@ The data stored would have to be automatically replicated with no single point o
 &lt;/div&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
