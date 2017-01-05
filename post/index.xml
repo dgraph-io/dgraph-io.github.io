@@ -16,10 +16,10 @@
       <pubDate>Thu, 05 Jan 2017 20:00:00 +1100</pubDate>
       
       <guid>https://open.dgraph.io/post/v0.7-release/</guid>
-      <description>&lt;p&gt;Dgraph team is super excited to present v0.7.1 of Dgraph. This version is the biggest step we&amp;rsquo;ve taken towards our production aim of v1.0.
-We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned&lt;/strong&gt; in our &lt;a href=&#34;https://github.com/dgraph-io/dgraph/issues/1&#34;&gt;product roadmap&lt;/a&gt;, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.&lt;/p&gt;
+      <description>
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Dgraph team is super excited to present v0.7.1 of Dgraph. This version is the biggest step we&amp;rsquo;ve taken towards our production aim of v1.0.
+We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned&lt;/strong&gt; in our &lt;a href=&#34;https://github.com/dgraph-io/dgraph/issues/1&#34;&gt;product roadmap&lt;/a&gt;, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.&lt;/p&gt;
 
 &lt;p&gt;Today, I&amp;rsquo;m going to talk about these new features, and what you can expect from Dgraph.&lt;/p&gt;
 
@@ -234,8 +234,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
   &lt;/table&gt;
 &lt;/div&gt;
 
-
-&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? Talk to us. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;</description>
+</description>
     </item>
     
     <item>
