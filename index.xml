@@ -209,7 +209,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -218,6 +218,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -236,10 +240,8 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
-&lt;/div&gt;
-
-
-&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? Talk to us. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;</description>
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -252,8 +254,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 
 &lt;p&gt;So we got a theme designed which fit well with our website and used the screen estate well. It&amp;rsquo;s now available at &lt;a href=&#34;http://themes.gohugo.io/hugo-dgraph-theme/&#34;&gt;Dgraph theme&lt;/a&gt;. The theme is responsive, supports syntax highlighting for code and &lt;a href=&#34;https://www.discourse.org/&#34;&gt;discourse&lt;/a&gt; for comments. If your project is open source, you can also link to Github. We would encourage you to try out the theme and let us know your experiences with it.&lt;/p&gt;
 
+&lt;hr /&gt;
+
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -262,6 +266,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -280,6 +288,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 
@@ -401,7 +410,7 @@ Look at the following code sample to get a better hang of the above-mentioned st
 &lt;p&gt;Hope you had fun with this post and learnt something new. Thanks for reading and do let us know your thoughts and how it works out for you.&lt;/p&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -410,6 +419,10 @@ Look at the following code sample to get a better hang of the above-mentioned st
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -428,6 +441,7 @@ Look at the following code sample to get a better hang of the above-mentioned st
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 
@@ -645,7 +659,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -654,6 +668,10 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -672,6 +690,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 
@@ -806,7 +825,7 @@ This system would make the difference between an okay candidate and a stellar ca
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -815,6 +834,10 @@ This system would make the difference between an okay candidate and a stellar ca
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -833,6 +856,7 @@ This system would make the difference between an okay candidate and a stellar ca
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;</description>
     </item>
     
@@ -973,7 +997,7 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -982,6 +1006,10 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -1000,6 +1028,7 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 
@@ -1563,7 +1592,7 @@ Hope you find this useful.&lt;/p&gt;
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -1572,6 +1601,10 @@ Hope you find this useful.&lt;/p&gt;
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -1590,6 +1623,7 @@ Hope you find this useful.&lt;/p&gt;
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;</description>
     </item>
     
@@ -1810,7 +1844,7 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -1819,6 +1853,10 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -1837,6 +1875,7 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 
@@ -1996,7 +2035,7 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -2005,6 +2044,10 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -2023,6 +2066,7 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;</description>
     </item>
     
@@ -2162,7 +2206,7 @@ The data stored would have to be automatically replicated with no single point o
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
-  &lt;p&gt;We are building an open source, scalable and distributed graph database.&lt;/p&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;
@@ -2171,6 +2215,10 @@ The data stored would have to be automatically replicated with no single point o
     &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;See our live demo.&lt;/td&gt;
       &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
@@ -2189,6 +2237,7 @@ The data stored would have to be automatically replicated with no single point o
     &lt;/tr&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 
