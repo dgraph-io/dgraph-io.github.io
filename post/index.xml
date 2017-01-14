@@ -778,6 +778,8 @@ This system would make the difference between an okay candidate and a stellar ca
 
 &lt;h2 id=&#34;gru-finding-the-right-minions&#34;&gt;Gru: Finding the right minions&lt;/h2&gt;
 
+&lt;p&gt;&lt;strong&gt;Update: Gru&amp;rsquo;s design has changed significantly since this blog post. It has a browser based frontend, and uses Dgraph as backend. Over 200 candidates have taken Dgraph screening quiz using this new version of Gru.&lt;/strong&gt;&lt;/p&gt;
+
 &lt;p&gt;Gru is an open-source, adaptive quiz system written entirely in Go. Gru server has a simple design and is very easy to setup. It doesn&amp;rsquo;t require maintaining a database. Questions and candidate information are stored and read from files. All the communication between the client and the server is encrypted.&lt;/p&gt;
 
 &lt;p&gt;Engineers collectively come up with questions from different areas and put them in a YAML formatted file. They tag them as &lt;code&gt;easy&lt;/code&gt;, &lt;code&gt;medium&lt;/code&gt;, &lt;code&gt;hard&lt;/code&gt;. You can add more tags to define the field, for, e.g., &lt;code&gt;concurrency&lt;/code&gt;, &lt;code&gt;graph&lt;/code&gt;, &lt;code&gt;sorting&lt;/code&gt;, &lt;code&gt;searching&lt;/code&gt;, etc. Each question has it&amp;rsquo;s own positive and negative scores, generally determined based on their complexity, uniqueness, or statistical probability of anyone getting it right, etc. Here&amp;rsquo;s an example from our demo quiz.&lt;/p&gt;
