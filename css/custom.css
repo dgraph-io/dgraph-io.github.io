@@ -110,3 +110,10 @@ ul.page-nav__list {
         width: 80%;
     }
 }
+
+.article-content a {
+  text-decoration: none;
+  color: #333333;
+  border-bottom: 2px solid #fac5a8;
+}
+

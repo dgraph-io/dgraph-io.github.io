@@ -33,7 +33,7 @@ We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned
 
 &lt;h3 id=&#34;data-persistence-sharding-high-availability-and-crash-resilience&#34;&gt;Data Persistence, Sharding, High Availability, and Crash Resilience&lt;/h3&gt;
 
-&lt;p&gt;Dgraph has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without loosing any data or dropping any queries.&lt;/p&gt;
+&lt;p&gt;Dgraph has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without losing any data or dropping any queries.&lt;/p&gt;
 
 &lt;p&gt;We&amp;rsquo;ve implemented RAFT, a distributed consensus algorithm within Dgraph, to handle such failures. Any writes that happen to go through a group of servers and are only acknowledged to the client once they&amp;rsquo;ve been applied to a majority of servers in the group. Thus, even if some of these servers crash, the data can be accessed, updated and queries can flow without the user getting affected.&lt;/p&gt;
 
@@ -63,7 +63,7 @@ We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned
 &lt;code&gt;geo&lt;/code&gt; values allow for geo-indexing and support the geo functions mentioned below. &lt;code&gt;uid&lt;/code&gt; value is a way to indicate that the predicate edge points to another entity node.
 This is useful to generate edges in reverse direction automatically. The rest support sorting, equality and inequality functions.&lt;/p&gt;
 
-&lt;p&gt;If you want to generate the index for a particular predicate, mention it&amp;rsquo;s type and specify the &lt;code&gt;@index&lt;/code&gt; keyword.
+&lt;p&gt;If you want to generate the index for a particular predicate, mention its type and specify the &lt;code&gt;@index&lt;/code&gt; keyword.
 Similarly, to generate reverses for a uid predicate, you can specify the &lt;code&gt;@reverse&lt;/code&gt; keyword.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s an example schema file for freebase film data:&lt;/p&gt;
@@ -90,7 +90,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 
 &lt;h3 id=&#34;sorting&#34;&gt;Sorting&lt;/h3&gt;
 
-&lt;p&gt;You can now sort the results by any indexed predicate (except string and geo, of course). For, e.g., you can now get a list of films directed by Steven Spielberg sorted by initial release date.&lt;/p&gt;
+&lt;p&gt;You can now sort the results by any indexed predicate (except string and geo, of course). For example, you can now get a list of films directed by Steven Spielberg sorted by initial release date.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
   me(_xid_: m.06pj8) {
