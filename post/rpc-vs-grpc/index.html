@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.17-DEV" />  
+      <meta name="generator" content="Hugo 0.16-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -400,7 +400,7 @@ And the fact that Flatbuffers doesn&rsquo;t need to recreate the entire informat
 <p>Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
 So, our goal was to implement communication using RPC over custom encoding utilizing Flatbuffers.</p>
 
-<h1 id="go-net-rpc">Go net/rpc</h1>
+<h1 id="go-net-rpc:e35a72baca2f52297d7ca989d9e396dc">Go net/rpc</h1>
 
 <p>Our first approach was to use Go language library <code>net/rpc</code> and implement custom encoding in it.</p>
 
@@ -758,7 +758,7 @@ And both v0.2 and v0.3 of <a href="https://github.com/dgraph-io/dgraph" target="
 
 <hr />
 
-<h1 id="the-switch">The Switch</h1>
+<h1 id="the-switch:e35a72baca2f52297d7ca989d9e396dc">The Switch</h1>
 
 <p><img src="/images/martian-receiving.jpg" alt="" /></p>
 
@@ -779,7 +779,7 @@ After watching it a couple of times from two different conferences, the prime le
 <li>Overall, your latencies improve considerably due to this method.</li>
 </ul>
 
-<p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
+<p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist">Jeff Dean</a>) has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
 So, when he gives a suggestion, you take it seriously.</p>
 
 <p>At v0.4, we&rsquo;re not doing replication yet. So, we can&rsquo;t send queries to multiple servers in parallel.
@@ -909,7 +909,7 @@ service Worker {
 
 <hr />
 
-<h1 id="conclusion">Conclusion</h1>
+<h1 id="conclusion:e35a72baca2f52297d7ca989d9e396dc">Conclusion</h1>
 
 <p>So, turns out, <code>grpc</code> not only does custom encoding, but it also leads to</p>
 
@@ -934,7 +934,7 @@ Hope you find this useful.</p>
 
 <hr />
 
-<div class="engage">
+<p><div class="engage">
   <p>We are building a distributed graph database designed for production environment.</p>
   <table>
     <thead>
@@ -969,7 +969,7 @@ Hope you find this useful.</p>
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
 <br/>
-
+</p>
 </div>
         </div>
       </div>

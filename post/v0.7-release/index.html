@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.17-DEV" />  
+      <meta name="generator" content="Hugo 0.16-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -391,7 +391,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
 <p><strong>Note: This is going to be a long blog post. If you just want to try out <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , you can jump straight to our <a href="https://wiki.dgraph.io/Get_Started">5 step tutorial to get started with Dgraph</a>.</strong></p>
 
-<h3 id="speed">Speed</h3>
+<h3 id="speed:dd2b8c71202e827dfaf0f20517452ebc">Speed</h3>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  v0.7.1 is the <em>fastest</em> version of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
@@ -400,7 +400,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
 
 <p>You can read more about loading and querying performance <a href="https://wiki.dgraph.io/Performance">here</a>.</p>
 
-<h3 id="data-persistence-sharding-high-availability-and-crash-resilience">Data Persistence, Sharding, High Availability, and Crash Resilience</h3>
+<h3 id="data-persistence-sharding-high-availability-and-crash-resilience:dd2b8c71202e827dfaf0f20517452ebc">Data Persistence, Sharding, High Availability, and Crash Resilience</h3>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without losing any data or dropping any queries.</p>
@@ -425,7 +425,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
 </div>
 </p>
 
-<h3 id="backups">Backups</h3>
+<h3 id="backups:dd2b8c71202e827dfaf0f20517452ebc">Backups</h3>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  believes in standards. We heartily use the existing RDF NQuad standard for data input. Now, we&rsquo;re making it easy to export data from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
@@ -433,7 +433,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
  data into other systems, upgrade <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  versions or to switch over to another graph database. You can read more about backup <a href="https://wik.dgraph.io/Deploy#Backup">here</a>.</p>
 
-<h3 id="indexing">Indexing</h3>
+<h3 id="indexing:dd2b8c71202e827dfaf0f20517452ebc">Indexing</h3>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  can now index various scalar values to allow sorting,  term matching, and inequality filters. We support these value types: <code>int</code>, <code>float</code>, <code>string</code>, <code>bool</code>, <code>date</code>, <code>datetime</code>, <code>geo</code>, <code>uid</code>.</p>
@@ -462,14 +462,14 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 <p>You can read more about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  schema <a href="https://wiki.dgraph.io/Query_Language#Schema">here</a>.</p>
 
-<h4 id="reverse-edges">Reverse Edges</h4>
+<h4 id="reverse-edges:dd2b8c71202e827dfaf0f20517452ebc">Reverse Edges</h4>
 
 <p>Each graph edge is unidirectional. But a lot of times, you need to have both the forward and backward edges. For those cases, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  now provides a <code>@reverse</code> keyword, which can be applied to predicates of <code>uid</code> type. This would trigger automatic generation of the reverse edges, to allow querying in the reverse direction.</p>
 
 <p>You can read more about reverse edges <a href="https://wiki.dgraph.io/Query_Language#Reverse_Edges">here</a>.</p>
 
-<h3 id="sorting">Sorting</h3>
+<h3 id="sorting:dd2b8c71202e827dfaf0f20517452ebc">Sorting</h3>
 
 <p>You can now sort the results by any indexed predicate (except string and geo, of course). For example, you can now get a list of films directed by Steven Spielberg sorted by initial release date.</p>
 
@@ -488,7 +488,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 
 <p>You can read more about sorting <a href="https://wiki.dgraph.io/Query_Language#Sorting">here</a>.</p>
 
-<h3 id="functions">Functions</h3>
+<h3 id="functions:dd2b8c71202e827dfaf0f20517452ebc">Functions</h3>
 
 <p>Functions are a great way to provide functionality with a simple and clear interface. <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  functions can be used as both starting points to queries and as filters.</p>
@@ -523,7 +523,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 
 <p>You can read more about functions <a href="https://wiki.dgraph.io/Query_Language#Functions">here</a>.</p>
 
-<h4 id="geospatial-functions">Geospatial functions</h4>
+<h4 id="geospatial-functions:dd2b8c71202e827dfaf0f20517452ebc">Geospatial functions</h4>
 
 <p>Geospatial queries are important to build location-aware search and recommendations. Being able to find the nearby restaurants who serve sushi, or bars in the city which play Jazz, or friends who are visiting your neighborhood is pretty crucial to such use cases. We couldn&rsquo;t imagine building a database without providing full-fledged support for geo queries, and in v0.7.1, we added geo indexing.</p>
 
@@ -566,7 +566,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 
 <p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
 
-<h3 id="filtering">Filtering</h3>
+<h3 id="filtering:dd2b8c71202e827dfaf0f20517452ebc">Filtering</h3>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  now supports pretty advanced and complex filtering operations. We do both &amp;&amp; (and) and || (or) filters, using round brackets to specify the right sequence. For e.g., <code>(A || (B &amp;&amp; C))</code>, as demonstrated in the following query.</p>
@@ -594,7 +594,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 
 <hr />
 
-<div class="engage">
+<p><div class="engage">
   <p>We are building a distributed graph database designed for production environment.</p>
   <table>
     <thead>
@@ -629,7 +629,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
 <br/>
-
+</p>
 </div>
         </div>
       </div>
