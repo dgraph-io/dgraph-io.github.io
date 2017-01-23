@@ -350,8 +350,8 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;p&gt;These are the principles which guide us towards building Dgraph. And we&amp;rsquo;re glad that in a short period, we&amp;rsquo;ve been able to achieve many of these. Now we leave it to you, our users to &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;try out Dgraph&lt;/a&gt;, and let us know what you think.&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;I&amp;rsquo;ll be giving a talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
- at Gophercon India on 24-25th Feb. So, if you&amp;rsquo;re interested in learning about it, come find me.&lt;/p&gt;
+&lt;p&gt;Manish will be giving a talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ at Gophercon India on 24-25th Feb. So, if you&amp;rsquo;re interested in learning about it, talk to him.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; We are not Neo4j experts and are happy to &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;accept feedback&lt;/a&gt; about any improvements to the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go&#34;&gt;loader&lt;/a&gt; or the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go&#34;&gt;benchmark tests&lt;/a&gt; to get better results for Neo4j.&lt;/p&gt;
