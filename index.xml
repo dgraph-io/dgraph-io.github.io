@@ -32,7 +32,7 @@
 &lt;h3 id=&#34;set-up&#34;&gt;Set up&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Thinkpad T460 laptop running Intel Core i7, with 16 GB RAM and SSD storage.&lt;/li&gt;
+&lt;li&gt;Thinkpad T460 laptop running Ubuntu Linux, Intel Core i7, with 16 GB RAM and SSD storage.&lt;/li&gt;
 &lt;li&gt;Neo4j v3.1.0&lt;/li&gt;
 &lt;li&gt;Dgraph from master branch (commit: 100c104a)&lt;/li&gt;
 &lt;/ul&gt;
@@ -72,7 +72,7 @@
 
 &lt;h3 id=&#34;2-querying&#34;&gt;2. Querying&lt;/h3&gt;
 
-&lt;p&gt;We would have ideally liked to load up the entire 21 million RDF dataset so that we could compare the performance of both databases at scale. But given the difficulties we faced loading large amounts of data into Neo4j, we resorted to a subset dataset of 1.3 million N-Quads containing only certain types of entities and relationships. After a &lt;em&gt;painful&lt;/em&gt; process, we converted our data into &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/tree/master/data/neo4j&#34;&gt;five CSV files&lt;/a&gt;, one for each type of entity (film, director, and genre) and two for the relationships between them; so that we could do some queries. We loaded these files into Neo4j using their import tool and moved onto doing some query benchmarking.&lt;/p&gt;
+&lt;p&gt;We would have ideally liked to load up the entire 21 million RDF dataset so that we could compare the performance of both databases at scale. But given the difficulties we faced loading large amounts of data into Neo4j, we resorted to a subset dataset of 1.3 million N-Quads containing only certain types of entities and relationships. After a &lt;em&gt;painful&lt;/em&gt; process, we converted our data into &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/tree/master/data/neo4j&#34;&gt;five CSV files&lt;/a&gt;, one for each type of entity (film, director, and genre) and two for the relationships between them; so that we could do some queries. We loaded these files into Neo4j using their import tool.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;./neo4j start
 ./neo4j-admin import --database film.db --id-type string --nodes:Film $DATA/films.csv --nodes:Genre $DATA/genres.csv --nodes:Director $DATA/directors.csv --relationships:GENRE $DATA/filmgenre.csv --relationships:FILMS $DATA/directorfilm.csv
@@ -107,7 +107,7 @@ dgraph --schema ~/work/src/github.com/dgraph-io/benchmarks/data/goldendata.schem
 dgraphloader -r ~/work/src/github.com/dgraph-io/benchmarks/data/neo4j/neo.rdf.gz
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;With data loaded up into both the databases, we did some &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go&#34;&gt;benchmarking&lt;/a&gt; for simple and some complex queries. The results didn&amp;rsquo;t surprise us.&lt;/p&gt;
+&lt;p&gt;With data loaded up into both the databases, we &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go&#34;&gt;benchmarked&lt;/a&gt; both simple and complex queries. The results didn&amp;rsquo;t surprise us.&lt;/p&gt;
 
 &lt;h4 id=&#34;benchmarking-process&#34;&gt;Benchmarking process&lt;/h4&gt;
 
@@ -181,7 +181,7 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;p&gt;&lt;em&gt;Query caching on for Neo4j&lt;/em&gt;
 &lt;img src=&#34;https://open.dgraph.io/images/read-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Neo4j does pretty aggressive query result caching. Dgraph, in contrast, does none. With Dgraph, we wanted to build a database that would perform well on arbitrarily complex queries and without resorting to caching queries or results. Caching is cheap and misleading when it comes to testing database performance. User queries are not predictable, and data is not static; so doing query caching would make a database performance look better than what it is and become a hindrance to achieving consistent 95th-percentile query latency.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Our thoughts:&lt;/strong&gt; &lt;em&gt;Neo4j does pretty aggressive query result caching. Dgraph, in contrast, does none. With Dgraph, we wanted to build a database that would perform well on arbitrarily complex queries and without resorting to caching queries or results. Caching is cheap and misleading when it comes to testing database performance. User queries are not predictable, and data is not static; so doing query caching would make a database performance look better than what it is and become a hindrance to achieving consistent 95th-percentile query latency.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Queries to Dgraph took the same amount of time, as expected in the both cases. But, Neo4j query latency was at least &lt;em&gt;halved&lt;/em&gt;. In particular, queries with filters had the biggest performance gain. That&amp;rsquo;s not surprising given all the subsequent runs are just returning results from the query cache. &lt;strong&gt;Thence, Neo4j latency was better than Dgraph with query caching turned on, and worse when off.&lt;/strong&gt;&lt;/p&gt;
 
@@ -196,14 +196,14 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;p&gt;&lt;strong&gt;For intertwined reads and writes, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  is at least 3x to 6x faster.&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;We can see that Neo4j is even slower with query caching on because they have to do the extra work of cache invalidation on writes. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the performance benefits show in the numbers.&lt;/p&gt;
+&lt;p&gt;We can see that Neo4j is even slower with query caching on because they have to do the extra work of cache invalidation on writes. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the &lt;strong&gt;performance benefits show in the numbers.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Not just that, Neo4j takes up &lt;strong&gt;much more memory&lt;/strong&gt;. At the start of the benchmarks &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  consumed around 20 MB which increased to 600 MB at the end. In comparison, Neo4j was already consuming 550 MB at the start which increased to 3.2 GB at the end of the benchmarks.&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
- consumes 5x lesser memory compared to Neo4j and is at least 3x faster when it comes to the combination of reads and writes with no query caching.&lt;/p&gt;
+ consumes 5x lesser memory compared to Neo4j and is at least 3x faster for intertwined reads and writes.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h3 id=&#34;3-issues-faced&#34;&gt;3. Issues faced&lt;/h3&gt;
@@ -296,12 +296,6 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;/tr&gt;
 
 &lt;tr&gt;
-&lt;td&gt;Aggregation queries&lt;/td&gt;
-&lt;td&gt;No&lt;/td&gt;
-&lt;td&gt;Supports count(), sum(), avg(), distinct and other aggregation queries&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
 &lt;td&gt;Order by, limit, skip and filter queries&lt;/td&gt;
 &lt;td&gt;Yes&lt;/td&gt;
 &lt;td&gt;Yes&lt;/td&gt;
@@ -311,6 +305,12 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;td&gt;Authorization and authentication&lt;/td&gt;
 &lt;td&gt;SSL/TLS and auth token based security (support by v1.0)&lt;/td&gt;
 &lt;td&gt;Supports basic user authentication and authorization&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Aggregation queries&lt;/td&gt;
+&lt;td&gt;Work in progress (support by v1.0)&lt;/td&gt;
+&lt;td&gt;Supports count(), sum(), avg(), distinct and other aggregation queries&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;tr&gt;
@@ -343,7 +343,7 @@ go test -v -bench=Neo -benchtime=10s .
 
 &lt;p&gt;While &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  runs very well on our (Linux) Thinkpads, it is designed to be a graph database for production. As such, it allows the ability to shard and distribute data over many servers. Consistency and fault tolerance are baked deep into &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
-, to the point where even our tests need to start a &lt;a href=&#34;https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go#L2715&#34;&gt;single-node Raft cluster&lt;/a&gt;. All the writes, irrespective of which replica they end up on, can be read back instantaneously, i.e. linearizable (work in progress, ETA v0.8). A few server crashes or losses would not affect the end-user queries, making the system highly-available.&lt;/p&gt;
+, to the point where even our tests need to start a &lt;a href=&#34;https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go#L2715&#34;&gt;single-node Raft cluster&lt;/a&gt;. All the writes, irrespective of which replica they end up on, can be read back instantaneously, i.e. linearizable (work in progress, ETA v0.8). A few server crashes would not lose data or affect the end-user queries, making the system highly-available.&lt;/p&gt;
 
 &lt;p&gt;Such features have traditionally been a talk for NoSQL databases or Spanner, not for graph databases. But, we think any production system, on which the entire application stack is based, &lt;strong&gt;must stay up, perform and scale well.&lt;/strong&gt; The system must be able to utilize the server running it well, process a lot of queries per second, and provide a consistent latency.&lt;/p&gt;
 
@@ -360,7 +360,7 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;hr /&gt;
 
 &lt;p&gt;Manish will be giving a talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
- at Gophercon India on 24-25th Feb. So, if you&amp;rsquo;re interested in learning about it, talk to him.&lt;/p&gt;
+ at Gophercon India on 24-25th Feb. If you&amp;rsquo;re attending the conference, find him to talk about all things Dgraph.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; We are not Neo4j experts and are happy to &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;accept feedback&lt;/a&gt; about any improvements to the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go&#34;&gt;loader&lt;/a&gt; or the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go&#34;&gt;benchmark tests&lt;/a&gt; to get better results for Neo4j.&lt;/p&gt;
 
