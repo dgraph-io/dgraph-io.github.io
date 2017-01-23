@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.18.1" />  
+      <meta name="generator" content="Hugo 0.17-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,10 +378,11 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/gru.jpg">
-          <div class="article-content"><p>Candidate <strong>REJECTED</strong>.</p>
+          <div class="article-content">
 
-<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn&rsquo;t.</em>
-</p>
+<p>Candidate <strong>REJECTED</strong>.</p>
+
+<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn&rsquo;t.</em></p>
 
 <p>The system in place was methodical. On a scale of 0.0 to 5.0, only terrible candidates received less than 2.0. And only in very rare cases did someone receives above 4.0. Anything above 3.0 was a pretty solid YES for hire. But how the interviewers scored a candidate was very subjective. There was no standardized training for interviewers on how to interview. Some people tend to give higher scores; some tend to give lower scores. So, the hiring committee had been asked to take the interviewer&rsquo;s previous scoring patterns into account, along with how much evidence and conviction they had presented in the feedback form.</p>
 
@@ -430,7 +431,8 @@ It would have multiple benefits:</p>
 <p>What we can learn from this:</p>
 
 <ul>
-<li>At Dgraph, we have an affinity for Googlers!</li>
+<li>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, we have an affinity for Googlers!</li>
 <li>The performance of Googlers on our quiz varied quite a lot. Googlers with backend experience performed not only great but the best out of all candidates.</li>
 <li>Googlers from other fields didn&rsquo;t fare so well. This goes to show that there&rsquo;s quite a significant difference in skills and experience of Googlers working on different projects.</li>
 <li>Note also that there&rsquo;s a selection bias here because our quiz includes questions about concurrency and distributed systems. Folks with frontend experience don&rsquo;t deal with these problems on a regular basis and hence didn&rsquo;t do so well; which in a way is a validation that the quiz system worked as intended.</li>
@@ -453,7 +455,9 @@ This system would make the difference between an okay candidate and a stellar ca
 
 <h2 id="gru-finding-the-right-minions">Gru: Finding the right minions</h2>
 
-<p><strong>Update: Gru&rsquo;s design has changed significantly since this blog post. It has a browser based frontend, and uses Dgraph as backend. Over 200 candidates have taken Dgraph screening quiz using this new version of Gru.</strong></p>
+<p><strong>Update: Gru&rsquo;s design has changed significantly since this blog post. It has a browser based frontend, and uses <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ as backend. Over 200 candidates have taken <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ screening quiz using this new version of Gru.</strong></p>
 
 <p>Gru is an open-source, adaptive quiz system written entirely in Go. Gru server has a simple design and is very easy to setup. It doesn&rsquo;t require maintaining a database. Questions and candidate information are stored and read from files. All the communication between the client and the server is encrypted.</p>
 
@@ -534,7 +538,10 @@ This system would make the difference between an okay candidate and a stellar ca
     </tbody>
   </table>
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
-</div></div>
+</div>
+<br/>
+
+</div>
         </div>
       </div>
     </div>
@@ -690,6 +697,7 @@ $(document.links).filter(function() {
   <script>window.jQuery || document.write('<script src="assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 
   
+  <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
   
   <script async defer src="https://buttons.github.io/buttons.js"></script>

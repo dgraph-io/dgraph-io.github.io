@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.18.1" />  
+      <meta name="generator" content="Hugo 0.17-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,15 +378,18 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/lander.jpg">
-          <div class="article-content"><p>In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em>
-</p>
+          <div class="article-content">
+
+<p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
 
 <h2 id="the-dataset">The Dataset</h2>
 
 <p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
 On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
-It is an ideal data set to test the performance of Dgraph.
+It is an ideal data set to test the performance of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+.
 We decided not to use the entire data set as it wasn&rsquo;t necessary for our goal here.</p>
 
 <p>Given our love for movies, we narrowed it down to the film data.
@@ -571,7 +574,8 @@ However, the rate of the increase differs based on how much computational power 
 Not only that, but it also proves that scaling horizontally improves the performance.
 Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.</p>
 
-<p>Based on this experiment, our recommendation for running Dgraph would be:</p>
+<p>Based on this experiment, our recommendation for running <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ would be:</p>
 
 <ul>
 <li>Use as many cores as possible</li>
@@ -579,7 +583,8 @@ Hence, having more replicas, distributing the dataset optimally across machines 
 <li>Distribute the data among servers and query them in a round-robin fashion for greater throughput</li>
 </ul>
 
-<p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of Dgraph is scalable.</strong></p>
+<p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ is scalable.</strong></p>
 
 <p>Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!</p>
 
@@ -622,9 +627,11 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
   </table>
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
+<br/>
 
 
-<p><em>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></em></p></div>
+<p><em>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></em></p>
+</div>
         </div>
       </div>
     </div>
@@ -818,6 +825,7 @@ $(document.links).filter(function() {
   <script>window.jQuery || document.write('<script src="assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 
   
+  <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
   
   <script async defer src="https://buttons.github.io/buttons.js"></script>

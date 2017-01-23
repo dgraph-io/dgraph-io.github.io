@@ -2,13 +2,405 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Dgraph Blog</title>
-    <link>https://open.dgraph.io/post/index.xml</link>
+    <link>https://open.dgraph.io/post/</link>
     <description>Recent content in Posts on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 05 Jan 2017 20:00:00 +1100</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jan 2017 18:07:44 +1100</lastBuildDate>
     <atom:link href="https://open.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Neo4j vs Dgraph - The numbers speak for themselves</title>
+      <link>https://open.dgraph.io/post/benchmark-neo4j/</link>
+      <pubDate>Thu, 12 Jan 2017 18:07:44 +1100</pubDate>
+      
+      <guid>https://open.dgraph.io/post/benchmark-neo4j/</guid>
+      <description>
+
+&lt;p&gt;As &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;. We have divided this post into five parts:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Loading data&lt;/li&gt;
+&lt;li&gt;Querying&lt;/li&gt;
+&lt;li&gt;Issues faced&lt;/li&gt;
+&lt;li&gt;Features&lt;/li&gt;
+&lt;li&gt;Principles behind Dgraph&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;set-up&#34;&gt;Set up&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Thinkpad T460 laptop running Intel Core i7, with 16 GB RAM and SSD storage.&lt;/li&gt;
+&lt;li&gt;Neo4j v3.1.0&lt;/li&gt;
+&lt;li&gt;Dgraph from master branch (commit: 100c104a)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;1-loading-data&#34;&gt;1. Loading Data&lt;/h3&gt;
+
+&lt;p&gt;We wanted to load a dense graph data set involving real world data. We at &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ have been using the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz&#34;&gt;Freebase film data&lt;/a&gt; for our development and testing. We feel this data is highly interconnected and makes a good use case for storing in a graph database.&lt;/p&gt;
+
+&lt;p&gt;The first problem we faced was that Neo4j doesn&amp;rsquo;t accept data in RDF format directly &lt;sup&gt;
+    &lt;a class=&#34;internal&#34; href=&#34;#1&#34;&gt;3.1&lt;/a&gt;
+&lt;/sup&gt;
+. The &lt;a href=&#34;https://neo4j.com/developer/guide-import-csv/#_super_fast_batch_importer_for_huge_datasets&#34;&gt;loader&lt;/a&gt; for Neo4j accepts data in CSV format which is essentially what SQL tables have. In our 21 million dataset, we have 50 distinct types of entities and 132 types of relationships between these entities. If we were to try and convert it to CSV format, we would end up with 100s of CSV files. One file for each type of entity, and one file per relationship between two types of entities. While this is okay for relational data, this doesn&amp;rsquo;t work for graph data sets, where each entity can be of multiple types, and relationships between entities are fluid.&lt;/p&gt;
+
+&lt;p&gt;So, we looked into the next best option to load graph data into Neo4j. We wrote a &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go&#34;&gt;small program&lt;/a&gt; similar to the Dgraphloader which reads N-Quads, batches them and tries to load them concurrently into Neo4j. This program used &lt;a href=&#34;https://neo4j.com/blog/neo4j-3-0-milestone-1-release/&#34;&gt;Bolt&lt;/a&gt;, a new protocol by Neo4j. It is the fastest way we could find to load RDF data into Neo4j. In the video below, you can see a comparison of loading 1.1 million N-Quads on &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ vs. Neo4j.&lt;/p&gt;
+
+&lt;p&gt;Note that we only used 20 concurrent connections and batched 200 N-Quads for each request because Neo4j doesn&amp;rsquo;t work well if we increase either the number of connections or N-Quads per connection beyond this. In fact, that&amp;rsquo;s a sure way to make Neo4j data corrupt and hang the system &lt;sup&gt;
+    &lt;a class=&#34;internal&#34; href=&#34;#2&#34;&gt;3.2&lt;/a&gt;
+&lt;/sup&gt;
+. For Dgraph, we typically send 1000 N-Quads per request and have 500 concurrent connections.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
+    &lt;iframe src=&#34;//www.youtube.com/embed/S_DsEMnawwU?rel=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen=&#34;&#34; frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;br/&gt;&lt;/p&gt;
+
+&lt;p&gt;With the golden data set of 1.1 million N-Quads, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ outperformed Neo4j 46.7k to 280 N-Quads per second. In fact, the Neo4j loader process &lt;em&gt;never finished&lt;/em&gt; (we killed it after a considerable wait).&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is 160x faster than Neo4j for loading graph data.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;2-querying&#34;&gt;2. Querying&lt;/h3&gt;
+
+&lt;p&gt;We would have ideally liked to load up the entire 21 million RDF dataset so that we could compare the performance of both databases at scale. But given the difficulties we faced loading large amounts of data into Neo4j, we resorted to a subset dataset of 1.3 million N-Quads containing only certain types of entities and relationships. After a &lt;em&gt;painful&lt;/em&gt; process, we converted our data into &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/tree/master/data/neo4j&#34;&gt;five CSV files&lt;/a&gt;, one for each type of entity (film, director, and genre) and two for the relationships between them; so that we could do some queries. We loaded these files into Neo4j using their import tool and moved onto doing some query benchmarking.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;./neo4j start
+./neo4j-admin import --database film.db --id-type string --nodes:Film $DATA/films.csv --nodes:Genre $DATA/genres.csv --nodes:Director $DATA/directors.csv --relationships:GENRE $DATA/filmgenre.csv --relationships:FILMS $DATA/directorfilm.csv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then we created some indexes in Neo4j for the best query performance.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE INDEX ON :Director(directorId)
+CREATE INDEX ON :Director(name)
+CREATE INDEX ON :Film(release_date)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We tested Neo4j twice. Once with query caching turned off, and then with query caching turned on. &lt;strong&gt;Generally, it does not make sense to benchmark queries with caching turned on, but we decided to set it because that&amp;rsquo;s the default behavior Neo4j users see.&lt;/strong&gt; You can set it by modifying the following variable in &lt;code&gt;conf/neo4j.conf&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dbms.query_cache_size=0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Dgraph does not do any query caching. We loaded an equivalent &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/neo.rdf.gz&#34;&gt;data set&lt;/a&gt; into &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ using the following schema and the commands below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;scalar (
+    type.object.name.en: string @index
+    film.film.initial_release_date: date @index
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The schema file specifies creation of an index on the two predicates.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Start Dgraph with a schema which specifies the predicates to index.
+dgraph --schema ~/work/src/github.com/dgraph-io/benchmarks/data/goldendata.schema
+# Load the data
+dgraphloader -r ~/work/src/github.com/dgraph-io/benchmarks/data/neo4j/neo.rdf.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With data loaded up into both the databases, we did some &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go&#34;&gt;benchmarking&lt;/a&gt; for simple and some complex queries. The results didn&amp;rsquo;t surprise us.&lt;/p&gt;
+
+&lt;h4 id=&#34;benchmarking-process&#34;&gt;Benchmarking process&lt;/h4&gt;
+
+&lt;p&gt;The benchmarks for Neo4j and &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ were run separately so that both processes could utilize full CPU and RAM resources. Each sub-benchmark was run for 10s so that sufficient iterations could be run. We also monitored the memory usage for both the processes using a simple shell script.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;go test -v -bench=Dgraph -benchtime=10s .
+go test -v -bench=Neo -benchtime=10s .
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;queries&#34;&gt;Queries&lt;/h4&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;Id&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;SQ&lt;/td&gt;
+&lt;td&gt;Get all films and genres of &lt;strong&gt;films directed by Steven Spielberg.&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;SQM&lt;/td&gt;
+&lt;td&gt;Runs the query above and changes the name of one of the films.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;GS1Q&lt;/td&gt;
+&lt;td&gt;Search for directors with name Steven Spielberg and get &lt;strong&gt;their films sorted by release date&lt;/strong&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;GS1QM&lt;/td&gt;
+&lt;td&gt;Runs the query above and also changes the name of one of the films.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;GS2Q&lt;/td&gt;
+&lt;td&gt;Search for directors with name Steven Spielberg and only their films &lt;strong&gt;released after 1984-08&lt;/strong&gt; sorted by release date.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;GS2QM&lt;/td&gt;
+&lt;td&gt;Runs the query above and also changes the name of one of the films.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;GS3Q&lt;/td&gt;
+&lt;td&gt;Search for directors with name Steven Spielberg and only their movies &lt;strong&gt;released between 1984-08 and 2000&lt;/strong&gt; sorted by release date.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;GS3QM&lt;/td&gt;
+&lt;td&gt;Runs the query above and also changes the name of one of the films.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; If the test id has a &lt;code&gt;P&lt;/code&gt; suffix, it was run in parallel.&lt;/p&gt;
+
+&lt;h4 id=&#34;read-only-benchmarks&#34;&gt;Read-only benchmarks&lt;/h4&gt;
+
+&lt;p&gt;&lt;em&gt;Query caching turned off for Neo4j&lt;/em&gt;
+&lt;img src=&#34;https://open.dgraph.io/images/read-no-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Query caching on for Neo4j&lt;/em&gt;
+&lt;img src=&#34;https://open.dgraph.io/images/read-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Neo4j does pretty aggressive query result caching. Dgraph, in contrast, does none. With Dgraph, we wanted to build a database that would perform well on arbitrarily complex queries and without resorting to caching queries or results. Caching is cheap and misleading when it comes to testing database performance. User queries are not predictable, and data is not static; so doing query caching would make a database performance look better than what it is and become a hindrance to achieving consistent 95th-percentile query latency.&lt;/p&gt;
+
+&lt;p&gt;Queries to Dgraph took the same amount of time, as expected in the both cases. But, Neo4j query latency was at least &lt;em&gt;halved&lt;/em&gt;. In particular, queries with filters had the biggest performance gain. That&amp;rsquo;s not surprising given all the subsequent runs are just returning results from the query cache. &lt;strong&gt;Thence, Neo4j latency was better than Dgraph with query caching turned on, and worse when off.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;read-write-benchmarks&#34;&gt;Read-write benchmarks&lt;/h4&gt;
+
+&lt;p&gt;&lt;em&gt;Query caching turned off for Neo4j&lt;/em&gt;
+&lt;img src=&#34;https://open.dgraph.io/images/read-write-no-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Query caching on for Neo4j&lt;/em&gt;
+&lt;img src=&#34;https://open.dgraph.io/images/read-write-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;For intertwined reads and writes, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is at least 3x to 6x faster.&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can see that Neo4j is even slower with query caching on because they have to do the extra work of cache invalidation on writes. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the performance benefits show in the numbers.&lt;/p&gt;
+
+&lt;p&gt;Not just that, Neo4j takes up &lt;strong&gt;much more memory&lt;/strong&gt;. At the start of the benchmarks &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ consumed around 20 MB which increased to 600 MB at the end. In comparison, Neo4j was already consuming 550 MB at the start which increased to 3.2 GB at the end of the benchmarks.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ consumes 5x lesser memory compared to Neo4j and is at least 3x faster when it comes to the combination of reads and writes with no query caching.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;3-issues-faced&#34;&gt;3. Issues faced&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;div id=&#34;1&#34;&gt;&lt;/div&gt;We couldn&amp;rsquo;t find a convenient way to load large amount of interconnected graph data into Neo4j apart from breaking it into CSV files. We had to write a loader which could concurrently load RDF data into Neo4j.&lt;/li&gt;
+&lt;li&gt;&lt;div id=&#34;2&#34;&gt;&lt;/div&gt;We hit data corruption issues on sending more than 20 requests concurrently, which the database could not recover from. In comparison, we typically send 500 concurrent requests to &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, each request batching 1000 N-Quads.&lt;/li&gt;
+&lt;li&gt;While loading data concurrently and opening 100 connections, Neo4j started returning bad connection error because it hit the limit of maximum open file descriptors which was set to 1024 (the default). We have never witnessed such a problem with Dgraph.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;4-features&#34;&gt;4. Features&lt;/h3&gt;
+
+&lt;p&gt;We talked about performance and issues. Now, let&amp;rsquo;s see how does Dgraph compare against Neo4j regarding features.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Dgraph&lt;/th&gt;
+&lt;th&gt;Neo4j&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Production Features&lt;/td&gt;
+&lt;td&gt;Highly available, Consistent, Fault tolerant&lt;/td&gt;
+&lt;td&gt;Single server architecture&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Distributed&lt;/td&gt;
+&lt;td&gt;Yes. Data sharded and replicated across servers, using consensus for writes.&lt;/td&gt;
+&lt;td&gt;No. Only distributed query caching&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Horizontal Scalability&lt;/td&gt;
+&lt;td&gt;Yes. Add servers to cluster on the fly to distribute data better.&lt;/td&gt;
+&lt;td&gt;No. Supports only full data replicas&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Transactional Model&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://www.bailis.org/blog/linearizability-versus-serializability/&#34;&gt;Linearizability&lt;/a&gt; aka Atomic Consistency&lt;/td&gt;
+&lt;td&gt;ACID transactions&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Backups&lt;/td&gt;
+&lt;td&gt;Hot backups in RDF format available using the HTTP interface&lt;/td&gt;
+&lt;td&gt;Hot full and incremental backups available only as part of paid enterprise edition&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;HTTP API for queries and mutations&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Communication using clients over binary protocol&lt;/td&gt;
+&lt;td&gt;Yes, using grpc&lt;/td&gt;
+&lt;td&gt;Yes, using bolt protocol&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Bulk loading of graph data&lt;/td&gt;
+&lt;td&gt;Yes, can load arbitrarily connected RDF data using dgraphloader&lt;/td&gt;
+&lt;td&gt;Only supports loading relational data in CSV format using the loader&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Schema&lt;/td&gt;
+&lt;td&gt;Optional (supports int, float, string, bool, date, datetime and geo types)&lt;/td&gt;
+&lt;td&gt;Optional (supports byte, short, int, long, float, double, char and string types)&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Geospatial Queries&lt;/td&gt;
+&lt;td&gt;Yes. Supports near, within, contains, intersects&lt;/td&gt;
+&lt;td&gt;No. Not part of core database&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Query language&lt;/td&gt;
+&lt;td&gt;GraphQL like which responds in JSON&lt;/td&gt;
+&lt;td&gt;Cypher&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Aggregation queries&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;Supports count(), sum(), avg(), distinct and other aggregation queries&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Order by, limit, skip and filter queries&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Authorization and authentication&lt;/td&gt;
+&lt;td&gt;SSL/TLS and auth token based security (support by v1.0)&lt;/td&gt;
+&lt;td&gt;Supports basic user authentication and authorization&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Access Control Lists&lt;/td&gt;
+&lt;td&gt;Work in progress (support by v1.0)&lt;/td&gt;
+&lt;td&gt;Available based on roles as part of enterprise edition&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Support for plugins and user defined functions&lt;/td&gt;
+&lt;td&gt;Work in progress (support by v1.0)&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;Browser interface for visualization&lt;/td&gt;
+&lt;td&gt;Work in progress (support by v1.0)&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Dgraph (2016) is a lot younger project than Neo4j (2007), so reaching feature parity quickly was a tough job. &lt;strong&gt;Dgraph supports most of the functionality that one &lt;em&gt;needs&lt;/em&gt; to get the job done; though it doesn&amp;rsquo;t have all the functionality one might &lt;em&gt;want&lt;/em&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;5-principles-behind-dgraph&#34;&gt;5. Principles behind Dgraph&lt;/h3&gt;
+
+&lt;p&gt;While &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ runs very well on our (Linux) Thinkpads, it is designed to be a graph database for production. As such, it allows the ability to shard and distribute data over many servers. Consistency and fault tolerance are baked deep into &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, to the point where even our tests need to start a &lt;a href=&#34;https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go#L2715&#34;&gt;single-node Raft cluster&lt;/a&gt;. All the writes, irrespective of which replica they end up on, can be read back instantaneously, i.e. linearizable (work in progress, ETA v0.8). A few server crashes or losses would not affect the end-user queries, making the system highly-available.&lt;/p&gt;
+
+&lt;p&gt;Such features have traditionally been a talk for NoSQL databases or Spanner, not for graph databases. But, we think any production system, on which the entire application stack is based, &lt;strong&gt;must stay up, perform and scale well.&lt;/strong&gt; The system must be able to utilize the server running it well, process a lot of queries per second, and provide a consistent latency.&lt;/p&gt;
+
+&lt;p&gt;Also, given we&amp;rsquo;re building a graph database, the system should be able to handle &lt;strong&gt;arbitrarily dense interconnected data and complex queries.&lt;/strong&gt; It should not be confined by pre-optimization of certain edges, or other tricks to make queries run fast.&lt;/p&gt;
+
+&lt;p&gt;Finally, running and maintaining such a system should be easy to the engineers. And that&amp;rsquo;s only possible if the system is &lt;strong&gt;as simple as it can be,&lt;/strong&gt; and every piece of complexity introduced to the system is carefully weighted.&lt;/p&gt;
+
+&lt;p&gt;These are the principles which guide us towards building Dgraph. And we&amp;rsquo;re glad that in a short period, we&amp;rsquo;ve been able to achieve many of these. Now we leave it to you, our users to &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;try out Dgraph&lt;/a&gt;, and let us know what you think.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I&amp;rsquo;ll be giving a talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ at Gophercon India on 24-25th Feb. So, if you&amp;rsquo;re interested in learning about it, come find me.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; We are not Neo4j experts and are happy to &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;accept feedback&lt;/a&gt; about any improvements to the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go&#34;&gt;loader&lt;/a&gt; or the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go&#34;&gt;benchmark tests&lt;/a&gt; to get better results for Neo4j.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;If you haven&amp;rsquo;t already tried &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, try out the &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;5 step tutorial to get started with Dgraph&lt;/a&gt;.&lt;/strong&gt; Let us know what you think!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+  &lt;p&gt;We are building a distributed graph database designed for production environment.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;br/&gt;
+
+
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/goddard/2016/hubble-gazes-at-a-cosmic-megamaser&#34;&gt;Hubble Gazes at a Cosmic Megamaser&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Releasing Dgraph v0.7.1</title>
@@ -16,36 +408,48 @@
       <pubDate>Thu, 05 Jan 2017 20:00:00 +1100</pubDate>
       
       <guid>https://open.dgraph.io/post/v0.7-release/</guid>
-      <description>&lt;p&gt;Dgraph team is super excited to present v0.7.1 of Dgraph. This version is the biggest step we&amp;rsquo;ve taken towards our production aim of v1.0.
+      <description>
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ team is super excited to present v0.7.1 of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+. This version is the biggest step we&amp;rsquo;ve taken towards our production aim of v1.0.
 We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned&lt;/strong&gt; in our &lt;a href=&#34;https://github.com/dgraph-io/dgraph/issues/1&#34;&gt;product roadmap&lt;/a&gt;, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Today, I&amp;rsquo;m going to talk about these new features, and what you can expect from &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/p&gt;
 
-&lt;p&gt;Today, I&amp;rsquo;m going to talk about these new features, and what you can expect from Dgraph.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note: This is going to be a long blog post. If you just want to try out Dgraph, you can jump straight to our &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;5 step tutorial to get started with Dgraph&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note: This is going to be a long blog post. If you just want to try out &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, you can jump straight to our &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;5 step tutorial to get started with Dgraph&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;speed&#34;&gt;Speed&lt;/h3&gt;
 
-&lt;p&gt;Dgraph v0.7.1 is the &lt;em&gt;fastest&lt;/em&gt; version of Dgraph we&amp;rsquo;ve ever released. Live data loading is now so fast that we realized we no longer needed a separate offline batch data loader. So, we removed all that complexity and just wrote a simple script to send mutation queries to live Dgraph via GRPC.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ v0.7.1 is the &lt;em&gt;fastest&lt;/em&gt; version of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ we&amp;rsquo;ve ever released. Live data loading is now so fast that we realized we no longer needed a separate offline batch data loader. So, we removed all that complexity and just wrote a simple script to send mutation queries to live &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ via GRPC.&lt;/p&gt;
 
 &lt;p&gt;You can read more about loading and querying performance &lt;a href=&#34;https://wiki.dgraph.io/Performance&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&#34;data-persistence-sharding-high-availability-and-crash-resilience&#34;&gt;Data Persistence, Sharding, High Availability, and Crash Resilience&lt;/h3&gt;
 
-&lt;p&gt;Dgraph has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without losing any data or dropping any queries.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without losing any data or dropping any queries.&lt;/p&gt;
 
-&lt;p&gt;We&amp;rsquo;ve implemented RAFT, a distributed consensus algorithm within Dgraph, to handle such failures. Any writes that happen to go through a group of servers and are only acknowledged to the client once they&amp;rsquo;ve been applied to a majority of servers in the group. Thus, even if some of these servers crash, the data can be accessed, updated and queries can flow without the user getting affected.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ve implemented RAFT, a distributed consensus algorithm within &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, to handle such failures. Any writes that happen to go through a group of servers and are only acknowledged to the client once they&amp;rsquo;ve been applied to a majority of servers in the group. Thus, even if some of these servers crash, the data can be accessed, updated and queries can flow without the user getting affected.&lt;/p&gt;
 
 &lt;p&gt;Also, new servers can be introduced into an existing cluster by providing the IP address of any healthy server in the cluster. They will automatically pick up the other members, pull in data shards from healthy nodes, join the groups and become part of the cluster.&lt;/p&gt;
 
 &lt;p&gt;Such functionality has never been an aim for graph databases in the past. But we strongly believe that graph databases can be run as the primary databases; not just add-ons. To that effect, it&amp;rsquo;s important that they be able to survive machine crashes and avoid data loss.&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;This functionality makes Dgraph the most production ready graph database in the market.&lt;/p&gt;
+&lt;p&gt;This functionality makes &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ the most production ready graph database in the market.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;You can read more about running multiple instances of Dgraph, sharding and distributing data in a cluster &lt;a href=&#34;https://wiki.dgraph.io/Deploy&#34;&gt;here&lt;/a&gt;. In fact, we created a small video to show you how Dgraph can recover from crashes without losing any data directly after a load.
+&lt;p&gt;You can read more about running multiple instances of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, sharding and distributing data in a cluster &lt;a href=&#34;https://wiki.dgraph.io/Deploy&#34;&gt;here&lt;/a&gt;. In fact, we created a small video to show you how &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ can recover from crashes without losing any data directly after a load.
 &lt;div style=&#34;position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;&#34;&gt;
     &lt;iframe src=&#34;//www.youtube.com/embed/dzTEXxF0TGs?rel=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%;&#34; allowfullscreen=&#34;&#34; frameborder=&#34;0&#34;&gt;&lt;/iframe&gt;
 &lt;/div&gt;
@@ -53,11 +457,16 @@ We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned
 
 &lt;h3 id=&#34;backups&#34;&gt;Backups&lt;/h3&gt;
 
-&lt;p&gt;Dgraph believes in standards. We heartily use the existing RDF NQuad standard for data input. Now, we&amp;rsquo;re making it easy to export data from Dgraph to other systems, by exporting our backups in RDF NQuad format. This makes it easy to feed Dgraph data into other systems, upgrade Dgraph versions or to switch over to another graph database. You can read more about backup &lt;a href=&#34;https://wik.dgraph.io/Deploy#Backup&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ believes in standards. We heartily use the existing RDF NQuad standard for data input. Now, we&amp;rsquo;re making it easy to export data from &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ to other systems, by exporting our backups in RDF NQuad format. This makes it easy to feed &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ data into other systems, upgrade &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ versions or to switch over to another graph database. You can read more about backup &lt;a href=&#34;https://wik.dgraph.io/Deploy#Backup&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&#34;indexing&#34;&gt;Indexing&lt;/h3&gt;
 
-&lt;p&gt;Dgraph can now index various scalar values to allow sorting,  term matching, and inequality filters. We support these value types: &lt;code&gt;int&lt;/code&gt;, &lt;code&gt;float&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;, &lt;code&gt;date&lt;/code&gt;, &lt;code&gt;datetime&lt;/code&gt;, &lt;code&gt;geo&lt;/code&gt;, &lt;code&gt;uid&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ can now index various scalar values to allow sorting,  term matching, and inequality filters. We support these value types: &lt;code&gt;int&lt;/code&gt;, &lt;code&gt;float&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;, &lt;code&gt;date&lt;/code&gt;, &lt;code&gt;datetime&lt;/code&gt;, &lt;code&gt;geo&lt;/code&gt;, &lt;code&gt;uid&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;String values get tokenized using ICU, and allow &lt;code&gt;allof&lt;/code&gt; and &lt;code&gt;anyof&lt;/code&gt; functions.
 &lt;code&gt;geo&lt;/code&gt; values allow for geo-indexing and support the geo functions mentioned below. &lt;code&gt;uid&lt;/code&gt; value is a way to indicate that the predicate edge points to another entity node.
@@ -80,11 +489,13 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 )
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;You can read more about Dgraph schema &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Schema&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can read more about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ schema &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Schema&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h4 id=&#34;reverse-edges&#34;&gt;Reverse Edges&lt;/h4&gt;
 
-&lt;p&gt;Each graph edge is unidirectional. But a lot of times, you need to have both the forward and backward edges. For those cases, Dgraph now provides a &lt;code&gt;@reverse&lt;/code&gt; keyword, which can be applied to predicates of &lt;code&gt;uid&lt;/code&gt; type. This would trigger automatic generation of the reverse edges, to allow querying in the reverse direction.&lt;/p&gt;
+&lt;p&gt;Each graph edge is unidirectional. But a lot of times, you need to have both the forward and backward edges. For those cases, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ now provides a &lt;code&gt;@reverse&lt;/code&gt; keyword, which can be applied to predicates of &lt;code&gt;uid&lt;/code&gt; type. This would trigger automatic generation of the reverse edges, to allow querying in the reverse direction.&lt;/p&gt;
 
 &lt;p&gt;You can read more about reverse edges &lt;a href=&#34;https://wiki.dgraph.io/Query_Language#Reverse_Edges&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -109,7 +520,8 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 
 &lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
 
-&lt;p&gt;Functions are a great way to provide functionality with a simple and clear interface. Dgraph functions can be used as both starting points to queries and as filters.&lt;/p&gt;
+&lt;p&gt;Functions are a great way to provide functionality with a simple and clear interface. &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ functions can be used as both starting points to queries and as filters.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s a list of functions we introduced in v0.7.1:&lt;/p&gt;
 
@@ -145,7 +557,8 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 
 &lt;p&gt;Geospatial queries are important to build location-aware search and recommendations. Being able to find the nearby restaurants who serve sushi, or bars in the city which play Jazz, or friends who are visiting your neighborhood is pretty crucial to such use cases. We couldn&amp;rsquo;t imagine building a database without providing full-fledged support for geo queries, and in v0.7.1, we added geo indexing.&lt;/p&gt;
 
-&lt;p&gt;Dgraph now supports four geospatial functions:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ now supports four geospatial functions:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;near(predicate, geo-location)&lt;/code&gt;      : Finds all entities lying within a specified distance from a point.&lt;/li&gt;
@@ -185,7 +598,8 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 
 &lt;h3 id=&#34;filtering&#34;&gt;Filtering&lt;/h3&gt;
 
-&lt;p&gt;Dgraph now supports pretty advanced and complex filtering operations. We do both &amp;amp;&amp;amp; (and) and || (or) filters, using round brackets to specify the right sequence. For e.g., &lt;code&gt;(A || (B &amp;amp;&amp;amp; C))&lt;/code&gt;, as demonstrated in the following query.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ now supports pretty advanced and complex filtering operations. We do both &amp;amp;&amp;amp; (and) and || (or) filters, using round brackets to specify the right sequence. For e.g., &lt;code&gt;(A || (B &amp;amp;&amp;amp; C))&lt;/code&gt;, as demonstrated in the following query.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
   me(_xid_: m.06pj8) {
@@ -203,7 +617,9 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
 &lt;p&gt;With that, I&amp;rsquo;ll finish the blog post. &lt;strong&gt;If you found these interesting, try out the &lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34;&gt;5 step tutorial to get started with Dgraph&lt;/a&gt;.&lt;/strong&gt; Let us know what you think!&lt;/p&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;I&amp;rsquo;ll be giving a talk about Dgraph at Go Meetup in Sydney on 19th Jan and in Gophercon India on 24-25th Feb. So, come talk to me about Dgraph.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ll be giving a talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ at Go Meetup in Sydney on 19th Jan and in Gophercon India on 24-25th Feb. So, come talk to me about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;hr /&gt;
@@ -241,7 +657,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     &lt;/tbody&gt;
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;
+&lt;br/&gt;
+
+</description>
     </item>
     
     <item>
@@ -250,7 +669,8 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
       <pubDate>Thu, 06 Oct 2016 16:56:08 +0530</pubDate>
       
       <guid>https://open.dgraph.io/post/hugo/</guid>
-      <description>&lt;p&gt;We at Dgraph love &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and use it for our blog. It&amp;rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.&lt;/p&gt;
+      <description>&lt;p&gt;We at &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ love &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and use it for our blog. It&amp;rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.&lt;/p&gt;
 
 &lt;p&gt;So we got a theme designed which fit well with our website and used the screen estate well. It&amp;rsquo;s now available at &lt;a href=&#34;http://themes.gohugo.io/hugo-dgraph-theme/&#34;&gt;Dgraph theme&lt;/a&gt;. The theme is responsive, supports syntax highlighting for code and &lt;a href=&#34;https://www.discourse.org/&#34;&gt;discourse&lt;/a&gt; for comments. If your project is open source, you can also link to Github. We would encourage you to try out the theme and let us know your experiences with it.&lt;/p&gt;
 
@@ -290,6 +710,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;br/&gt;
 
 
 &lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://www.nasa.gov/image-feature/jpl/pia20027/infrared-echoes-of-a-black-hole-eating-a-star/&#34;&gt;Infrared Echoes of a Black Hole Eating a Star&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
@@ -303,10 +724,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
       
       <guid>https://open.dgraph.io/post/cmux/</guid>
       <description>&lt;p&gt;Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.
-&lt;/p&gt;
+In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.&lt;/p&gt;
 
-&lt;p&gt;At Dgraph, we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
+&lt;p&gt;At &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/soheilhy/cmux&#34;&gt;Cmux&lt;/a&gt; is a connection multiplexing library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their &lt;a href=&#34;https://godoc.org/github.com/soheilhy/cmux&#34;&gt;godoc&lt;/a&gt;.&lt;/p&gt;
@@ -443,9 +864,11 @@ Look at the following code sample to get a better hang of the above-mentioned st
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;br/&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg&#34;&gt;Mars 2020, Artist Concept Instrument&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg&#34;&gt;Mars 2020, Artist Concept Instrument&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -454,11 +877,12 @@ Look at the following code sample to get a better hang of the above-mentioned st
       <pubDate>Mon, 12 Sep 2016 10:54:15 +0530</pubDate>
       
       <guid>https://open.dgraph.io/post/protobuf/</guid>
-      <description>&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt;, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;
+      <description>
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt;, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;
 
-&lt;p&gt;Dgraph v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt; for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the &lt;a href=&#34;https://github.com/google/protobuf#protobuf-runtime-installation&#34;&gt;modern languages&lt;/a&gt; and could encode recursive data structures efficiently.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt; for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the &lt;a href=&#34;https://github.com/google/protobuf#protobuf-runtime-installation&#34;&gt;modern languages&lt;/a&gt; and could encode recursive data structures efficiently.&lt;/p&gt;
 
 &lt;h2 id=&#34;how-to-use-protocol-buffers&#34;&gt;How to use Protocol Buffers&lt;/h2&gt;
 
@@ -484,7 +908,9 @@ message Response {
     // and other fields
 }
 
-// Dgraph service used for communication between the Dgraph server and client over gRPC.
+// &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ service used for communication between the &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ server and client over gRPC.
 
 service Dgraph {
     rpc Query (Request) returns (Response) {}
@@ -648,13 +1074,17 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 &lt;h2 id=&#34;recommendations&#34;&gt;Recommendations&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;If you are interacting with the Dgraph from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON.&lt;/li&gt;
-&lt;li&gt;If you are interacting with Dgraph through one of our language drivers, we recommend you do it using gRPC and protocol buffers.&lt;/li&gt;
+&lt;li&gt;If you are interacting with the &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON.&lt;/li&gt;
+&lt;li&gt;If you are interacting with &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ through one of our language drivers, we recommend you do it using gRPC and protocol buffers.&lt;/li&gt;
 &lt;li&gt;If you are using Go client with gRPC, you will automatically be using the faster Gogo protobuf.&lt;/li&gt;
-&lt;li&gt;Overall, &lt;strong&gt;fastest way to query Dgraph is via a Go client communicating over gRPC.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Overall, &lt;strong&gt;fastest way to query &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is via a Go client communicating over gRPC.&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We would love to hear about your interaction with the Dgraph server.&lt;/p&gt;
+&lt;p&gt;We would love to hear about your interaction with the &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ server.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -692,9 +1122,11 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;br/&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/&#34;&gt;View From Gemini XI, 850 Miles Above the Earth&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/&#34;&gt;View From Gemini XI, 850 Miles Above the Earth&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -703,10 +1135,11 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
       <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/gru/</guid>
-      <description>&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
+      <description>
 
-&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;
-&lt;/p&gt;
+&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;The system in place was methodical. On a scale of 0.0 to 5.0, only terrible candidates received less than 2.0. And only in very rare cases did someone receives above 4.0. Anything above 3.0 was a pretty solid YES for hire. But how the interviewers scored a candidate was very subjective. There was no standardized training for interviewers on how to interview. Some people tend to give higher scores; some tend to give lower scores. So, the hiring committee had been asked to take the interviewer&amp;rsquo;s previous scoring patterns into account, along with how much evidence and conviction they had presented in the feedback form.&lt;/p&gt;
 
@@ -755,7 +1188,8 @@ It would have multiple benefits:&lt;/p&gt;
 &lt;p&gt;What we can learn from this:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;At Dgraph, we have an affinity for Googlers!&lt;/li&gt;
+&lt;li&gt;At &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, we have an affinity for Googlers!&lt;/li&gt;
 &lt;li&gt;The performance of Googlers on our quiz varied quite a lot. Googlers with backend experience performed not only great but the best out of all candidates.&lt;/li&gt;
 &lt;li&gt;Googlers from other fields didn&amp;rsquo;t fare so well. This goes to show that there&amp;rsquo;s quite a significant difference in skills and experience of Googlers working on different projects.&lt;/li&gt;
 &lt;li&gt;Note also that there&amp;rsquo;s a selection bias here because our quiz includes questions about concurrency and distributed systems. Folks with frontend experience don&amp;rsquo;t deal with these problems on a regular basis and hence didn&amp;rsquo;t do so well; which in a way is a validation that the quiz system worked as intended.&lt;/li&gt;
@@ -778,7 +1212,9 @@ This system would make the difference between an okay candidate and a stellar ca
 
 &lt;h2 id=&#34;gru-finding-the-right-minions&#34;&gt;Gru: Finding the right minions&lt;/h2&gt;
 
-&lt;p&gt;&lt;strong&gt;Update: Gru&amp;rsquo;s design has changed significantly since this blog post. It has a browser based frontend, and uses Dgraph as backend. Over 200 candidates have taken Dgraph screening quiz using this new version of Gru.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update: Gru&amp;rsquo;s design has changed significantly since this blog post. It has a browser based frontend, and uses &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ as backend. Over 200 candidates have taken &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ screening quiz using this new version of Gru.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Gru is an open-source, adaptive quiz system written entirely in Go. Gru server has a simple design and is very easy to setup. It doesn&amp;rsquo;t require maintaining a database. Questions and candidate information are stored and read from files. All the communication between the client and the server is encrypted.&lt;/p&gt;
 
@@ -859,7 +1295,10 @@ This system would make the difference between an okay candidate and a stellar ca
     &lt;/tbody&gt;
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;
+&lt;br/&gt;
+
+</description>
     </item>
     
     <item>
@@ -868,18 +1307,24 @@ This system would make the difference between an okay candidate and a stellar ca
       <pubDate>Thu, 14 Jul 2016 16:16:14 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/v0.4-release/</guid>
-      <description>&lt;p&gt;Thanks for your feedback over the last couple of months. This release addresses some of the main pain points of using Dgraph.&lt;/p&gt;
+      <description>
 
-&lt;p&gt;&lt;/p&gt;
+&lt;p&gt;Thanks for your feedback over the last couple of months. This release addresses some of the main pain points of using &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/p&gt;
 
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
 
-&lt;p&gt;Dgraph uses &lt;a href=&#34;http://rocksdb.org/&#34;&gt;RocksDB&lt;/a&gt;, which doesn&amp;rsquo;t have a native Go interface.
-To use RocksDB via Go, Cgo is required, which makes doing a simple &lt;code&gt;go get&lt;/code&gt; installation of Dgraph hard.
-You first need to download, compile and install RocksDB, before installing Dgraph.
-While &lt;code&gt;go get&lt;/code&gt; would still require more manual steps, starting this version only contributors to Dgraph would have to do that.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ uses &lt;a href=&#34;http://rocksdb.org/&#34;&gt;RocksDB&lt;/a&gt;, which doesn&amp;rsquo;t have a native Go interface.
+To use RocksDB via Go, Cgo is required, which makes doing a simple &lt;code&gt;go get&lt;/code&gt; installation of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ hard.
+You first need to download, compile and install RocksDB, before installing &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.
+While &lt;code&gt;go get&lt;/code&gt; would still require more manual steps, starting this version only contributors to &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ would have to do that.&lt;/p&gt;
 
-&lt;p&gt;We have embedded RocksDB into Dgraph binary and generated binaries for both Linux and Mac.
+&lt;p&gt;We have embedded RocksDB into &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ binary and generated binaries for both Linux and Mac.
 Now, most users can just choose one of these two options:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ curl https://get.dgraph.io | bash
@@ -894,11 +1339,13 @@ $ sudo tar -C /usr/local/bin -xzf dgraph-linux-amd64-VERSION.tar.gz
 $ sudo tar -C /usr/local/bin -xzf dgraph-darwin-amd64-VERSION.tar.gz
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;That&amp;rsquo;s it! These simple steps give you everything that you need to install Dgraph.&lt;/p&gt;
+&lt;p&gt;That&amp;rsquo;s it! These simple steps give you everything that you need to install &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/p&gt;
 
 &lt;h2 id=&#34;documentation&#34;&gt;Documentation&lt;/h2&gt;
 
-&lt;p&gt;Dgraph is a small team of enthusiastic developers, who like to code more than they like to write docs.
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is a small team of enthusiastic developers, who like to code more than they like to write docs.
 Even when the team writes documentation, it gets stale very quickly.
 Honestly, that&amp;rsquo;s not a story unique to us. It&amp;rsquo;s a common problem affecting many projects.&lt;/p&gt;
 
@@ -912,9 +1359,11 @@ Each of these allowed search engines to easily index them while providing a lot 
 &lt;/ul&gt;
 
 &lt;p&gt;I run Arch Linux on my desktop and laptop, and love it&amp;rsquo;s thorough up to date documentation.
-So, I couldn&amp;rsquo;t be more excited about building something similar for Dgraph.&lt;/p&gt;
+So, I couldn&amp;rsquo;t be more excited about building something similar for &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/p&gt;
 
-&lt;p&gt;So, after last 3 weeks of &lt;em&gt;no-coding-only-documentation&lt;/em&gt; effort, &lt;strong&gt;presenting &lt;a href=&#34;https://wiki.dgraph.io&#34;&gt;wiki.dgraph.io&lt;/a&gt;, the official source of Dgraph documentation&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;So, after last 3 weeks of &lt;em&gt;no-coding-only-documentation&lt;/em&gt; effort, &lt;strong&gt;presenting &lt;a href=&#34;https://wiki.dgraph.io&#34;&gt;wiki.dgraph.io&lt;/a&gt;, the official source of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ documentation&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Just like Arch and Gentoo, it&amp;rsquo;s using MediaWiki software, which most people use on a daily basis (Thanks, Wikipedia).&lt;/p&gt;
 
@@ -922,15 +1371,18 @@ So, I couldn&amp;rsquo;t be more excited about building something similar for Dg
 So if a user spots an error, they have everything they need to fix it.
 If the fix is more complicated, writing a note stating that this article or section is out of date is sufficient to get the team and more importantly, other users notified; so they can take appropriate action.&lt;/p&gt;
 
-&lt;p&gt;And Dgraph community welcomed the change! We already have contributions to wiki from community members on various pages.
+&lt;p&gt;And &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ community welcomed the change! We already have contributions to wiki from community members on various pages.
 They keep us accountable and help maintain the quality of the documentation.
 So, check it out, and if you find any issues or need more clarity in some section, log in, and edit the page. It&amp;rsquo;s that simple.&lt;/p&gt;
 
-&lt;p&gt;Btw, if you installed Dgraph above, this is the page you&amp;rsquo;re looking for: &lt;a href=&#34;https://wiki.dgraph.io/Beginners_Guide&#34;&gt;https://wiki.dgraph.io/Beginners_Guide&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Btw, if you installed &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ above, this is the page you&amp;rsquo;re looking for: &lt;a href=&#34;https://wiki.dgraph.io/Beginners_Guide&#34;&gt;https://wiki.dgraph.io/Beginners_Guide&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;clients&#34;&gt;Clients&lt;/h2&gt;
 
-&lt;p&gt;In v0.3, we released a Go client for Dgraph.
+&lt;p&gt;In v0.3, we released a Go client for &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.
 Thanks to our enthusiastic community, we got contributions for other languages. Now we have client code for both &lt;strong&gt;Java&lt;/strong&gt; and &lt;strong&gt;Python&lt;/strong&gt;.
 Thanks &lt;a href=&#34;https://github.com/bitmalloc&#34;&gt;@bitmalloc&lt;/a&gt; and &lt;a href=&#34;https://github.com/mohitranka&#34;&gt;@mohitranka&lt;/a&gt;!&lt;/p&gt;
 
@@ -953,8 +1405,10 @@ Stubby could provide amazing debugging information about each request to the ser
 
 &lt;p&gt;So, after thorough effort, I was able to replace most of the &lt;code&gt;logrus.Log&lt;/code&gt; statements to use &lt;a href=&#34;https://godoc.org/golang.org/x/net/context&#34;&gt;context&lt;/a&gt; and &lt;a href=&#34;https://godoc.org/golang.org/x/net/trace&#34;&gt;trace&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Thanks to these, you can now easily debug live queries running on Dgraph.
-In fact, you can see all this in action on one of our demo Dgraph instance &lt;a href=&#34;http://dgraph.xyz/debug/requests?fam=Dgraph&amp;amp;b=0&amp;amp;exp=1&#34;&gt;via /debug/requests&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Thanks to these, you can now easily debug live queries running on &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.
+In fact, you can see all this in action on one of our demo &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ instance &lt;a href=&#34;http://dgraph.xyz/debug/requests?fam=Dgraph&amp;amp;b=0&amp;amp;exp=1&#34;&gt;via /debug/requests&lt;/a&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;2016/07/14 06:54:55.615143    0.003184    Query
 06:54:55.615157     .    14    ... Query received: { me(_xid_: m.0bxtg) { type.object.name.en film.actor.film { film.performance.film { type.object.name.en type.object.name.ru } } } }
@@ -1032,11 +1486,13 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;br/&gt;
 
 
 &lt;p&gt;&lt;em&gt;Thanks &lt;a href=&#34;https://twitter.com/mholt6&#34;&gt;Matt Holt&lt;/a&gt; from the Caddy team, for the inspiration to have &lt;code&gt;https://get.dgraph.io&lt;/code&gt;.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/cygnus-cargo-craft-released-from-space-station/&#34;&gt;Cygnus Cargo Craft Released From Space Station&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/cygnus-cargo-craft-released-from-space-station/&#34;&gt;Cygnus Cargo Craft Released From Space Station&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -1045,17 +1501,23 @@ In fact, you can see all this in action on one of our demo Dgraph instance &lt;a
       <pubDate>Sat, 25 Jun 2016 19:06:45 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/rpc-vs-grpc/</guid>
-      <description>&lt;p&gt;At Dgraph, we aim to build a low latency, distributed graph database.
+      <description>
+
+&lt;p&gt;At &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt;.
+To keep our latency of communication low, we use a new form of serialization library called &lt;a href=&#34;https://google.github.io/flatbuffers/&#34;&gt;Flatbuffers&lt;/a&gt;.&lt;/p&gt;
 
-&amp;gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&amp;gt; The only memory needed to access your data is that of the buffer.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+The only memory needed to access your data is that of the buffer.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;&lt;strong&gt;How is Flatbuffers better than &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt;&lt;/strong&gt;? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.&lt;/p&gt;
 
-&lt;p&gt;Dgraph responses can contain millions of entities and binary blob values.
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ responses can contain millions of entities and binary blob values.
 And the fact that Flatbuffers doesn&amp;rsquo;t need to recreate the entire information in language specific data structures is very helpful for both memory and speed.&lt;/p&gt;
 
 &lt;p&gt;Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
@@ -1414,7 +1876,8 @@ func (p *Pool) Close() error {
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This worked well.
-And both v0.2 and v0.3 of Dgraph were using this code for the nodes to communicate with each other.&lt;/p&gt;
+And both v0.2 and v0.3 of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ were using this code for the nodes to communicate with each other.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -1422,7 +1885,8 @@ And both v0.2 and v0.3 of Dgraph were using this code for the nodes to communica
 
 &lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/martian-receiving.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;At Dgraph, we spend Fridays learning and improving.
+&lt;p&gt;At &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, we spend Fridays learning and improving.
 This means reading books, papers, articles, watching talks.
 And we came across a great talk by Jeff Dean of Google: &lt;a href=&#34;https://discuss.dgraph.io/t/jeff-deans-talk-about-rapid-response-times/83&#34;&gt;Rapid Response Times&lt;/a&gt;&lt;/p&gt;
 
@@ -1626,7 +2090,10 @@ Hope you find this useful.&lt;/p&gt;
     &lt;/tbody&gt;
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;
+&lt;br/&gt;
+
+</description>
     </item>
     
     <item>
@@ -1635,15 +2102,18 @@ Hope you find this useful.&lt;/p&gt;
       <pubDate>Tue, 21 Jun 2016 10:20:32 +0530</pubDate>
       
       <guid>https://open.dgraph.io/post/performance-throughput-latency/</guid>
-      <description>&lt;p&gt;In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;
-&lt;/p&gt;
+      <description>
+
+&lt;p&gt;In this post, we’ll look at how &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;the-dataset&#34;&gt;The Dataset&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Freebase&#34;&gt;Freebase&lt;/a&gt; is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has &lt;a href=&#34;https://developers.google.com/freebase/&#34;&gt;1.9 Billion RDF N-Triples&lt;/a&gt; worth 250GB of uncompressed data.
 On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
-It is an ideal data set to test the performance of Dgraph.
+It is an ideal data set to test the performance of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.
 We decided not to use the entire data set as it wasn&amp;rsquo;t necessary for our goal here.&lt;/p&gt;
 
 &lt;p&gt;Given our love for movies, we narrowed it down to the film data.
@@ -1828,7 +2298,8 @@ However, the rate of the increase differs based on how much computational power 
 Not only that, but it also proves that scaling horizontally improves the performance.
 Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.&lt;/p&gt;
 
-&lt;p&gt;Based on this experiment, our recommendation for running Dgraph would be:&lt;/p&gt;
+&lt;p&gt;Based on this experiment, our recommendation for running &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ would be:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Use as many cores as possible&lt;/li&gt;
@@ -1836,7 +2307,8 @@ Hence, having more replicas, distributing the dataset optimally across machines 
 &lt;li&gt;Distribute the data among servers and query them in a round-robin fashion for greater throughput&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;These might seem pretty obvious recommendations for a distributed system, but &lt;strong&gt;this experiment proves that the underlying design of Dgraph is scalable.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;These might seem pretty obvious recommendations for a distributed system, but &lt;strong&gt;this experiment proves that the underlying design of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is scalable.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!&lt;/p&gt;
 
@@ -1879,9 +2351,11 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;br/&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -1890,13 +2364,13 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
       <pubDate>Wed, 15 Jun 2016 11:39:27 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/wisemonk/</guid>
-      <description>&lt;blockquote&gt;
+      <description>
+
+&lt;blockquote&gt;
 &lt;p&gt;Then there was the fact that we had so many channels and direct messages and group chats.
 It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
 &lt;em&gt;— &lt;a href=&#34;https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/&#34;&gt;Dave Teare, Curing Our Slack Addiction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-
-&lt;p&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;the-beginning&#34;&gt;The Beginning&lt;/h1&gt;
 
@@ -1912,7 +2386,8 @@ We were always doing something — the feeling was like being on &lt;em&gt;u
 People are talking, and if I’m not around to show my presence, it would mean I’m not working.
 But what was getting done, I wasn’t so clear about.&lt;/p&gt;
 
-&lt;p&gt;So, when we started exploring options for both internal and external communication for Dgraph, we wanted to do things differently.
+&lt;p&gt;So, when we started exploring options for both internal and external communication for &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, we wanted to do things differently.
 We’d focus on asynchronous communication, so people can take their time before jumping in.
 People can reply when they get to it — this might be hours later.
 And there’ll be an incentive to modify your reply as more things become clear to you or you find better words to express yourself.
@@ -2069,7 +2544,10 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
     &lt;/tbody&gt;
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;
+&lt;br/&gt;
+
+</description>
     </item>
     
     <item>
@@ -2078,10 +2556,11 @@ Wisemonk stores the last n messages exchanged, creates a discourse topic with th
       <pubDate>Mon, 18 Apr 2016 14:37:08 +1000</pubDate>
       
       <guid>https://open.dgraph.io/post/hello-world/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about Dgraph, what it is and why it was created.
-&lt;/p&gt;
+      <description>&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m very excited&lt;/strong&gt; to use this first post to talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, what it is and why it was created.&lt;/p&gt;
 
-&lt;p&gt;Before I explain what&amp;rsquo;s Dgraph, let&amp;rsquo;s start with a basic understanding of graphs.
+&lt;p&gt;Before I explain what&amp;rsquo;s &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, let&amp;rsquo;s start with a basic understanding of graphs.
 A graph is a mathematical structure used to model a pairwise relationship between entities.
 A graph is thus composed of nodes connected by edges.
 Each node represents an entity (a person, place, thing, etc.), and each edge represents the relationship between two nodes.
@@ -2095,9 +2574,11 @@ If they&amp;rsquo;re doing something smart, chances are they&amp;rsquo;re probab
 Even very simple web apps have much to gain from graph databases.
 In the past, I&amp;rsquo;ve built a graph based REST framework and using that &lt;a href=&#34;https://mrjn.xyz/post/Porting-To-Gocrud/&#34;&gt;cut down the code in half&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;So now that we understand graphs, let&amp;rsquo;s talk about Dgraph.&lt;/p&gt;
+&lt;p&gt;So now that we understand graphs, let&amp;rsquo;s talk about &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Dgraph is an open source, low-latency, high throughput, native and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is an open source, low-latency, high throughput, native and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;To understand why it was created, let&amp;rsquo;s rewind a few years back to 2011.&lt;/p&gt;
 
@@ -2178,22 +2659,27 @@ Thus, this query would be affected by even a single slow machine in the cluster.
 
 &lt;hr /&gt;
 
-&lt;p&gt;&lt;strong&gt;Dgraph, on the other hand, is a native graph database&lt;/strong&gt; in the sense that the data is handled directly by Dgraph, and not given off to another database layer.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, on the other hand, is a native graph database&lt;/strong&gt; in the sense that the data is handled directly by &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+, and not given off to another database layer.&lt;/p&gt;
 
 &lt;p&gt;This allows us to shard and relocate the data better, to minimize the number of network calls required per query.
 In fact, the above query would run in 2 network calls, irrespective of the cluster size.&lt;/p&gt;
 
 &lt;p&gt;The number of network calls being &lt;em&gt;directly proportional to the complexity of the query&lt;/em&gt;, not the number of intermediate or final results.&lt;/p&gt;
 
-&lt;p&gt;Dgraph is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
 This means being able to run on a laptop as well as on a big cluster of hundreds of machines serving thousands of queries per second.&lt;/p&gt;
 
 &lt;p&gt;Additionally, it would also have to survive machine failures and partial data center collapses.
 The data stored would have to be automatically replicated with no single point of failure, and be able to move around the cluster to better distribute traffic.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;This is the big vision which led to Dgraph.&lt;/strong&gt; And I&amp;rsquo;m &lt;a href=&#34;http://dgraph.io/&#34;&gt;fortunate to have a team&lt;/a&gt; that believes in and shares this vision with me.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;This is the big vision which led to &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+.&lt;/strong&gt; And I&amp;rsquo;m &lt;a href=&#34;http://dgraph.io/&#34;&gt;fortunate to have a team&lt;/a&gt; that believes in and shares this vision with me.&lt;/p&gt;
 
-&lt;p&gt;Apart from use with diverse social and knowledge graphs, Dgraph can also be used to:&lt;/p&gt;
+&lt;p&gt;Apart from use with diverse social and knowledge graphs, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ can also be used to:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;build real-time recommendation engines,&lt;/li&gt;
@@ -2203,7 +2689,8 @@ The data stored would have to be automatically replicated with no single point o
 &lt;li&gt;serve web apps via &lt;a href=&#34;https://facebook.github.io/graphql/&#34;&gt;GraphQL&lt;/a&gt;, a full feature graph query language by Facebook.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;We&amp;rsquo;ll be reporting some performance numbers for Dgraph in our next few posts, to give you an idea of what you can expect from the system.&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;ll be reporting some performance numbers for &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ in our next few posts, to give you an idea of what you can expect from the system.&lt;/p&gt;
 
 &lt;hr /&gt;
 
@@ -2241,9 +2728,11 @@ The data stored would have to be automatically replicated with no single point o
   &lt;/table&gt;
 	&lt;p&gt;&lt;strong&gt;Does your product have over a million users? Are you interested in trying out Dgraph? &lt;a href=&#34;mailto:contact@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;. If selected, we&amp;rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;br/&gt;
 
 
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://go.nasa.gov/1VlGVXx&#34;&gt;Mars Rover Curiosity in Buckskin Selfie&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
     </item>
     
   </channel>

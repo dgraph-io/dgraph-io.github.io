@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.18.1" />  
+      <meta name="generator" content="Hugo 0.17-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,10 +378,11 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/default.jpg">
-          <div class="article-content"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about Dgraph, what it is and why it was created.
-</p>
+          <div class="article-content"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, what it is and why it was created.</p>
 
-<p>Before I explain what&rsquo;s Dgraph, let&rsquo;s start with a basic understanding of graphs.
+<p>Before I explain what&rsquo;s <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, let&rsquo;s start with a basic understanding of graphs.
 A graph is a mathematical structure used to model a pairwise relationship between entities.
 A graph is thus composed of nodes connected by edges.
 Each node represents an entity (a person, place, thing, etc.), and each edge represents the relationship between two nodes.
@@ -395,9 +396,11 @@ If they&rsquo;re doing something smart, chances are they&rsquo;re probably using
 Even very simple web apps have much to gain from graph databases.
 In the past, I&rsquo;ve built a graph based REST framework and using that <a href="https://mrjn.xyz/post/Porting-To-Gocrud/">cut down the code in half</a>.</p>
 
-<p>So now that we understand graphs, let&rsquo;s talk about Dgraph.</p>
+<p>So now that we understand graphs, let&rsquo;s talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+.</p>
 
-<p><strong>Dgraph is an open source, low-latency, high throughput, native and distributed graph database.</strong></p>
+<p><strong><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ is an open source, low-latency, high throughput, native and distributed graph database.</strong></p>
 
 <p>To understand why it was created, let&rsquo;s rewind a few years back to 2011.</p>
 
@@ -478,22 +481,27 @@ Thus, this query would be affected by even a single slow machine in the cluster.
 
 <hr />
 
-<p><strong>Dgraph, on the other hand, is a native graph database</strong> in the sense that the data is handled directly by Dgraph, and not given off to another database layer.</p>
+<p><strong><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, on the other hand, is a native graph database</strong> in the sense that the data is handled directly by <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, and not given off to another database layer.</p>
 
 <p>This allows us to shard and relocate the data better, to minimize the number of network calls required per query.
 In fact, the above query would run in 2 network calls, irrespective of the cluster size.</p>
 
 <p>The number of network calls being <em>directly proportional to the complexity of the query</em>, not the number of intermediate or final results.</p>
 
-<p>Dgraph is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
+<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
 This means being able to run on a laptop as well as on a big cluster of hundreds of machines serving thousands of queries per second.</p>
 
 <p>Additionally, it would also have to survive machine failures and partial data center collapses.
 The data stored would have to be automatically replicated with no single point of failure, and be able to move around the cluster to better distribute traffic.</p>
 
-<p><strong>This is the big vision which led to Dgraph.</strong> And I&rsquo;m <a href="http://dgraph.io/">fortunate to have a team</a> that believes in and shares this vision with me.</p>
+<p><strong>This is the big vision which led to <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+.</strong> And I&rsquo;m <a href="http://dgraph.io/">fortunate to have a team</a> that believes in and shares this vision with me.</p>
 
-<p>Apart from use with diverse social and knowledge graphs, Dgraph can also be used to:</p>
+<p>Apart from use with diverse social and knowledge graphs, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ can also be used to:</p>
 
 <ul>
 <li>build real-time recommendation engines,</li>
@@ -503,7 +511,8 @@ The data stored would have to be automatically replicated with no single point o
 <li>serve web apps via <a href="https://facebook.github.io/graphql/">GraphQL</a>, a full feature graph query language by Facebook.</li>
 </ul>
 
-<p>We&rsquo;ll be reporting some performance numbers for Dgraph in our next few posts, to give you an idea of what you can expect from the system.</p>
+<p>We&rsquo;ll be reporting some performance numbers for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ in our next few posts, to give you an idea of what you can expect from the system.</p>
 
 <hr />
 
@@ -541,9 +550,11 @@ The data stored would have to be automatically replicated with no single point o
   </table>
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
+<br/>
 
 
-<p><em>Top image: <a href="http://go.nasa.gov/1VlGVXx">Mars Rover Curiosity in Buckskin Selfie</a></em></p></div>
+<p><em>Top image: <a href="http://go.nasa.gov/1VlGVXx">Mars Rover Curiosity in Buckskin Selfie</a></em></p>
+</div>
         </div>
       </div>
     </div>
@@ -699,6 +710,7 @@ $(document.links).filter(function() {
   <script>window.jQuery || document.write('<script src="assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 
   
+  <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
   
   <script async defer src="https://buttons.github.io/buttons.js"></script>

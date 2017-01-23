@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.18.1" />  
+      <meta name="generator" content="Hugo 0.17-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,17 +378,23 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/martian-encoding.jpg">
-          <div class="article-content"><p>At Dgraph, we aim to build a low latency, distributed graph database.
+          <div class="article-content">
+
+<p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
+To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p>
 
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer.</p>
+<blockquote>
+<p>What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+The only memory needed to access your data is that of the buffer.</p>
+</blockquote>
 
 <p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
 
-<p>Dgraph responses can contain millions of entities and binary blob values.
+<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ responses can contain millions of entities and binary blob values.
 And the fact that Flatbuffers doesn&rsquo;t need to recreate the entire information in language specific data structures is very helpful for both memory and speed.</p>
 
 <p>Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
@@ -747,7 +753,8 @@ func (p *Pool) Close() error {
 </code></pre>
 
 <p>This worked well.
-And both v0.2 and v0.3 of Dgraph were using this code for the nodes to communicate with each other.</p>
+And both v0.2 and v0.3 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ were using this code for the nodes to communicate with each other.</p>
 
 <hr />
 
@@ -755,7 +762,8 @@ And both v0.2 and v0.3 of Dgraph were using this code for the nodes to communica
 
 <p><img src="/images/martian-receiving.jpg" alt="" /></p>
 
-<p>At Dgraph, we spend Fridays learning and improving.
+<p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, we spend Fridays learning and improving.
 This means reading books, papers, articles, watching talks.
 And we came across a great talk by Jeff Dean of Google: <a href="https://discuss.dgraph.io/t/jeff-deans-talk-about-rapid-response-times/83">Rapid Response Times</a></p>
 
@@ -959,7 +967,10 @@ Hope you find this useful.</p>
     </tbody>
   </table>
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
-</div></div>
+</div>
+<br/>
+
+</div>
         </div>
       </div>
     </div>
@@ -1115,6 +1126,7 @@ $(document.links).filter(function() {
   <script>window.jQuery || document.write('<script src="assets/js/jquery-1.11.2.min.js"><\/script>')</script>
 
   
+  <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
   
   <script async defer src="https://buttons.github.io/buttons.js"></script>
