@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.16-DEV" />  
+      <meta name="generator" content="Hugo 0.18.1" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,18 +378,14 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/martian-encoding.jpg">
-          <div class="article-content">
-
-<p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+          <div class="article-content"><p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p>
+To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
 
-<blockquote>
-<p>What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-The only memory needed to access your data is that of the buffer.</p>
-</blockquote>
+&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+&gt; The only memory needed to access your data is that of the buffer.</p>
 
 <p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
 
@@ -400,7 +396,7 @@ And the fact that Flatbuffers doesn&rsquo;t need to recreate the entire informat
 <p>Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
 So, our goal was to implement communication using RPC over custom encoding utilizing Flatbuffers.</p>
 
-<h1 id="go-net-rpc:e35a72baca2f52297d7ca989d9e396dc">Go net/rpc</h1>
+<h1 id="go-net-rpc">Go net/rpc</h1>
 
 <p>Our first approach was to use Go language library <code>net/rpc</code> and implement custom encoding in it.</p>
 
@@ -758,7 +754,7 @@ And both v0.2 and v0.3 of <a href="https://github.com/dgraph-io/dgraph" target="
 
 <hr />
 
-<h1 id="the-switch:e35a72baca2f52297d7ca989d9e396dc">The Switch</h1>
+<h1 id="the-switch">The Switch</h1>
 
 <p><img src="/images/martian-receiving.jpg" alt="" /></p>
 
@@ -779,7 +775,7 @@ After watching it a couple of times from two different conferences, the prime le
 <li>Overall, your latencies improve considerably due to this method.</li>
 </ul>
 
-<p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist">Jeff Dean</a>) has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
+<p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
 So, when he gives a suggestion, you take it seriously.</p>
 
 <p>At v0.4, we&rsquo;re not doing replication yet. So, we can&rsquo;t send queries to multiple servers in parallel.
@@ -909,7 +905,7 @@ service Worker {
 
 <hr />
 
-<h1 id="conclusion:e35a72baca2f52297d7ca989d9e396dc">Conclusion</h1>
+<h1 id="conclusion">Conclusion</h1>
 
 <p>So, turns out, <code>grpc</code> not only does custom encoding, but it also leads to</p>
 
@@ -934,7 +930,7 @@ Hope you find this useful.</p>
 
 <hr />
 
-<p><div class="engage">
+<div class="engage">
   <p>We are building a distributed graph database designed for production environment.</p>
   <table>
     <thead>
@@ -968,9 +964,7 @@ Hope you find this useful.</p>
   </table>
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
-<br/>
-</p>
-</div>
+<br/></div>
         </div>
       </div>
     </div>

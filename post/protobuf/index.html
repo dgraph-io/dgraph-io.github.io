@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.16-DEV" />  
+      <meta name="generator" content="Hugo 0.18.1" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,14 +378,14 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/geminiview.jpg">
-          <div class="article-content">
+          <div class="article-content"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
 
-<p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
+<p></p>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use <a href="https://google.github.io/flatbuffers/">Flatbuffers</a> for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the <a href="https://github.com/google/protobuf#protobuf-runtime-installation">modern languages</a> and could encode recursive data structures efficiently.</p>
 
-<h2 id="how-to-use-protocol-buffers:4314c429f5a86d899570cb09b13470a2">How to use Protocol Buffers</h2>
+<h2 id="how-to-use-protocol-buffers">How to use Protocol Buffers</h2>
 
 <p>To use protocol buffers, you define the message (data structures that form the basis of communication) in a <code>.proto</code> file and then compile it using the protocol buffer <a href="https://github.com/google/protobuf/releases">compiler</a>. For communication, we use <a href="http://www.grpc.io/">gRPC</a> which is an open-source RPC framework by Google. gRPC requires services to be defined in the same <code>.proto</code> file. Using gRPC allows us to communicate in binary format which is faster than retrieving JSON formatted results.</p>
 
@@ -420,7 +420,7 @@ service Dgraph {
 
 <p>You can find the full <code>.proto</code> file <a href="https://github.com/dgraph-io/dgraph/blob/master/query/graph/graphresponse.proto">here</a>. The <code>.proto</code> file can be used to generate the corresponding Go code using the <code>protoc</code> compiler and the runtime library.</p>
 
-<h2 id="benchmarks:4314c429f5a86d899570cb09b13470a2">Benchmarks</h2>
+<h2 id="benchmarks">Benchmarks</h2>
 
 <p>In Go, you can easily measure how your algorithm does (in terms of time and space) by writing benchmarks. Go benchmarks are unique in that they&rsquo;d iterate over the test code <code>b.N</code> number of times, where <code>b.N</code> is adjusted until the benchmark function lasts long enough to be timed reliably.
 To test how our implementation was doing against our JSON implementation we wrote benchmarks for it. But first, let&rsquo;s understand what a benchmark is and how can we interpret its results.</p>
@@ -470,7 +470,7 @@ BenchmarkAddToList-4  200000  8153 ns/op  22624 B/op  7 allocs/op
 
 <p>The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&rsquo;t have to reallocate it when we append elements. Also the B/op reduced because the list is not initialized with 0 for all its elements.</p>
 
-<h2 id="benchmarking-topb-against-tojson:4314c429f5a86d899570cb09b13470a2">Benchmarking ToPB against ToJSON</h2>
+<h2 id="benchmarking-topb-against-tojson">Benchmarking ToPB against ToJSON</h2>
 
 <p>After implementing serialization using the protocol buffers, to get exact metrics we wrote benchmark tests for our ToJson and ToProtocolBuffer methods. These methods convert the internal SubGraph data structure to a byte array which is transferred over the network. Benchmark tests are an excellent way to compare different implementations or to measure if new code leads to any improvements.</p>
 
@@ -541,7 +541,7 @@ func benchmarkToJson(file string, b *testing.B) {
 
 <p>Using these benchmark tests we were able to improve our metrics by over 50% by switching over to <code>[]byte</code> from <code>{}interface</code> for <code>ObjectValue</code> as part of <a href="https://github.com/dgraph-io/dgraph/pull/86">this change</a>. Later when we shifted to Gogo Protobuf, we compared these benchmarks again with the previous ones to confirm improvement.</p>
 
-<h4 id="marshalling:4314c429f5a86d899570cb09b13470a2">Marshalling</h4>
+<h4 id="marshalling">Marshalling</h4>
 
 <p>This is how the final benchmark results compare for a query which returns 1000 entities in the result.</p>
 
@@ -551,7 +551,7 @@ BenchmarkToPB_1000_Director-2   2000  1338410 ns/op  196743 B/op  3052 allocs/op
 
 <p>The benchmarks show that ToPB method is almost <strong>2x faster</strong> than ToJSON as it takes much lesser nanoseconds per operation. The bytes allocated per operation show that ToPB <strong>allocates 65% less memory</strong> compared to ToJSON. You could find more information about those benchmarks and what we changed to get here in our <a href="https://github.com/dgraph-io/dgraph/blob/master/query/benchmark/README.txt">README</a>.</p>
 
-<h4 id="unmarshalling:4314c429f5a86d899570cb09b13470a2">Unmarshalling</h4>
+<h4 id="unmarshalling">Unmarshalling</h4>
 
 <pre><code>BenchmarkToJSONUnmarshal_1000_Director-4  1000  1279297 ns/op  403746 B/op  5144 allocs/op
 BenchmarkToPBUnmarshal_1000_Director-4    3000   489585 ns/op  202256 B/op  5522 allocs/op
@@ -559,7 +559,7 @@ BenchmarkToPBUnmarshal_1000_Director-4    3000   489585 ns/op  202256 B/op  5522
 
 <p>We can see that unmarshalling on the client would also be <strong>2.6x faster</strong> for protocol buffers compared to JSON. ToPB <strong>allocates 50% less memory</strong> compared to ToJSON.</p>
 
-<h3 id="golang-protobuf-vs-gogo-protobuf:4314c429f5a86d899570cb09b13470a2">Golang protobuf vs. Gogo protobuf</h3>
+<h3 id="golang-protobuf-vs-gogo-protobuf">Golang protobuf vs. Gogo protobuf</h3>
 
 <p>If both your server and client are written in Go, then we recommend <a href="https://github.com/gogo/protobuf">Gogo Protobuf</a> instead of <a href="https://github.com/golang/protobuf">Golang Protobuf</a> as the runtime library. Gogo has <strong>2.3x faster marshaling while allocating 80% fewer bytes</strong> per operation and <strong>1.5x faster unmarshalling</strong> compared to Golang protobuf as shown in the benchmarks below.</p>
 
@@ -572,7 +572,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 
 <p>Note that Gogo protobuf has support only for Go as of now. However, if you are using some other language, this isn&rsquo;t a problem. Gogo protobuf is backward compatible with Golang protobuf. Our Python and Java clients can still interact with the server (which does marshaling using Gogo), hence making Gogo a safe choice.</p>
 
-<h2 id="recommendations:4314c429f5a86d899570cb09b13470a2">Recommendations</h2>
+<h2 id="recommendations">Recommendations</h2>
 
 <ul>
 <li>If you are interacting with the <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
@@ -589,7 +589,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 
 <hr />
 
-<p><div class="engage">
+<div class="engage">
   <p>We are building a distributed graph database designed for production environment.</p>
   <table>
     <thead>
@@ -624,10 +624,9 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
 <br/>
-</p>
 
-<p><em>Top image: <a href="http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/">View From Gemini XI, 850 Miles Above the Earth</a></em></p>
-</div>
+
+<p><em>Top image: <a href="http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/">View From Gemini XI, 850 Miles Above the Earth</a></em></p></div>
         </div>
       </div>
     </div>
