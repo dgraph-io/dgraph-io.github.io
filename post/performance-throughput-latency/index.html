@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.16-DEV" />  
+      <meta name="generator" content="Hugo 0.17-DEV" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -383,7 +383,7 @@
 <p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
 
-<h2 id="the-dataset:fc29bcd170549ae33fc98ee382f030d3">The Dataset</h2>
+<h2 id="the-dataset">The Dataset</h2>
 
 <p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
@@ -451,7 +451,7 @@ Some example of entries in the dataset are :</p>
 &lt;m.0bxtg&gt; &lt;type.object.name&gt; “Tom Hanks”@es .
 </code></pre>
 
-<h2 id="terminology:fc29bcd170549ae33fc98ee382f030d3">Terminology</h2>
+<h2 id="terminology">Terminology</h2>
 
 <ul>
 <li>Throughput: Number of queries served by the server per second and received by the client</li>
@@ -460,7 +460,7 @@ Some example of entries in the dataset are :</p>
 <li>50 percentile latency: The worst case latency which half the users that query the database face</li>
 </ul>
 
-<h2 id="setup:fc29bcd170549ae33fc98ee382f030d3">Setup</h2>
+<h2 id="setup">Setup</h2>
 
 <p>All the testing was done on GCE instances. Each machine had 30GB of SSD and at least 7.5 GB of RAM. The number of cores varied depending on the experiments performed.</p>
 
@@ -472,7 +472,7 @@ Note that for user-facing systems, measuring percentile latency is better than m
 Note that no single machine contains all the data to answer these queries, in a multi-node cluster.
 They still have to communicate with each other to respond to the queries.</p>
 
-<h2 id="variables:fc29bcd170549ae33fc98ee382f030d3">Variables</h2>
+<h2 id="variables">Variables</h2>
 
 <p>The parameters that were varied were:</p>
 
@@ -484,7 +484,7 @@ They still have to communicate with each other to respond to the queries.</p>
 
 <p>This gave us an idea of what to expect from the system and would help in predicting the configuration required to handle a given load.</p>
 
-<h2 id="queries:fc29bcd170549ae33fc98ee382f030d3">Queries</h2>
+<h2 id="queries">Queries</h2>
 
 <p>We ran broadly 2 categories of queries.</p>
 
@@ -523,11 +523,11 @@ They still have to communicate with each other to respond to the queries.</p>
 <p>During each iteration, either an actor or a director category was chosen randomly.
 Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
 
-<h2 id="performance:fc29bcd170549ae33fc98ee382f030d3">Performance</h2>
+<h2 id="performance">Performance</h2>
 
 <p>Let us look at some graphs obtained by varying the machine specs and the number of nodes in the cluster under different loads.</p>
 
-<h3 id="vary-the-number-of-cores-in-a-single-instance:fc29bcd170549ae33fc98ee382f030d3">Vary the number of cores in a single instance</h3>
+<h3 id="vary-the-number-of-cores-in-a-single-instance">Vary the number of cores in a single instance</h3>
 
 <p><img src="/images/cores_thru.jpg" alt="Throughput on varying number of cores" /></p>
 
@@ -544,7 +544,7 @@ Furthermore, for that category, an actor or director was chosen randomly; their 
 <li>When we increase the number of cores, the latency decreases and the throughput increases.</li>
 </ul>
 
-<h3 id="vary-number-of-instances:fc29bcd170549ae33fc98ee382f030d3">Vary number of instances</h3>
+<h3 id="vary-number-of-instances">Vary number of instances</h3>
 
 <p><img src="/images/topo_thru.jpg" alt="Throughput on varying number of instances" /></p>
 
@@ -561,7 +561,7 @@ Furthermore, for that category, an actor or director was chosen randomly; their 
 <li>On comparing across the one, two and five node clusters, we can see that the latency, as well as the throughput, are better for configurations with a higher number of nodes, i.e., when there is more computational capacity at disposal. The throughput increases as we have greater computational power and can handle more queries.</li>
 </ul>
 
-<h2 id="conclusion:fc29bcd170549ae33fc98ee382f030d3">Conclusion</h2>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>From the above experiments, we can see a relationship between the throughput, latency and the overall computational power of the cluster.
 The graphs show that the throughput increases as the computational power increases.
@@ -593,7 +593,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 
 <hr />
 
-<p><div class="engage">
+<div class="engage">
   <p>We are building a distributed graph database designed for production environment.</p>
   <table>
     <thead>
@@ -628,7 +628,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
 </div>
 <br/>
-</p>
+
 
 <p><em>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></em></p>
 </div>
