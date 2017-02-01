@@ -194,7 +194,7 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;p&gt;&lt;strong&gt;For intertwined reads and writes, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  is at least 3x to 6x faster.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;We can see that Neo4j is &lt;strong&gt;even slower with query caching on&lt;/strong&gt; because they have to do the extra work of cache invalidation on writes &lt;em&gt;(why does a query plan cache get invalidated on a write?)&lt;/em&gt;. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the &lt;strong&gt;performance benefits show in the numbers.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We can see that Neo4j is &lt;strong&gt;even slower with query caching on&lt;/strong&gt; because they have to do the extra work of cache invalidation on writes. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the &lt;strong&gt;performance benefits show in the numbers.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;Not just that, Neo4j takes up &lt;strong&gt;much more memory&lt;/strong&gt;. At the start of the benchmarks &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  consumed around 20 MB which increased to 600 MB at the end. In comparison, Neo4j was already consuming 550 MB at the start which increased to 3.2 GB at the end of the benchmarks.&lt;/p&gt;

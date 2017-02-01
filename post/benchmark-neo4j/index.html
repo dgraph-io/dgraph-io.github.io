@@ -556,7 +556,7 @@ go test -v -bench=Neo -benchtime=10s .
 <p><strong>For intertwined reads and writes, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is at least 3x to 6x faster.</strong></p>
 
-<p>We can see that Neo4j is <strong>even slower with query caching on</strong> because they have to do the extra work of cache invalidation on writes <em>(why does a query plan cache get invalidated on a write?)</em>. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the <strong>performance benefits show in the numbers.</strong></p>
+<p>We can see that Neo4j is <strong>even slower with query caching on</strong> because they have to do the extra work of cache invalidation on writes. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the <strong>performance benefits show in the numbers.</strong></p>
 
 <p>Not just that, Neo4j takes up <strong>much more memory</strong>. At the start of the benchmarks <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  consumed around 20 MB which increased to 600 MB at the end. In comparison, Neo4j was already consuming 550 MB at the start which increased to 3.2 GB at the end of the benchmarks.</p>
