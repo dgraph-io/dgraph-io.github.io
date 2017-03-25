@@ -37,7 +37,7 @@
 
 &lt;p&gt;Selling enterprise version and support would lead us to the path of revenue.&lt;/p&gt;
 
-&lt;p&gt;But, what about competition? How do we deal with the threat many big companies provide on a daily basis? The threat of commercializing competing services and enterprise features without paying anything back towards the development of the open source version. There is also the looming cautionary tale of &lt;a href=&#34;https://rethinkdb.com/blog/rethinkdb-shutdown/&#34;&gt;RethinkDB ceasing&lt;/a&gt; to develop their database, due to lack of revenue.&lt;/p&gt;
+&lt;p&gt;But, what about competition? How do we deal with the threat many big companies provide on a daily basis? The threat of duplicate commercial services and enterprise features built by them and others without paying anything back towards the development of the open source version. There is also the looming cautionary tale of &lt;a href=&#34;https://rethinkdb.com/blog/rethinkdb-shutdown/&#34;&gt;RethinkDB ceasing&lt;/a&gt; to develop their database, due to lack of revenue.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;We need to balance the benefits of open source to the community, against making the company building Dgraph profitable, while also keeping future competition at bay.&lt;/strong&gt;&lt;/p&gt;
 
