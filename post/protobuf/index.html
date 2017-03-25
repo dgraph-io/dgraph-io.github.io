@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.17-DEV" />  
+      <meta name="generator" content="Hugo 0.18.1" />  
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -378,9 +378,9 @@
         <div class="col-12 col-desktop-10 push-desktop-1 col-hd-8 push-hd-2">
 
           <img class="opening__image" src="https://open.dgraph.io/images/geminiview.jpg">
-          <div class="article-content">
+          <div class="article-content"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
 
-<p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
+<p></p>
 
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use <a href="https://google.github.io/flatbuffers/">Flatbuffers</a> for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the <a href="https://github.com/google/protobuf#protobuf-runtime-installation">modern languages</a> and could encode recursive data structures efficiently.</p>
@@ -590,7 +590,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 <hr />
 
 <div class="engage">
-  <p>We are building a distributed graph database designed for production environment.</p>
+	<p><strong>We are building an open source, real time, horizontally scalable and distributed graph database.</strong></p>
   <table>
     <thead>
     <tr>
@@ -621,13 +621,12 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
     </tr>
     </tbody>
   </table>
-	<p><strong>Does your product have over a million users? Are you interested in trying out Dgraph? <a href="mailto:contact@dgraph.io">Talk to us</a>. If selected, we&rsquo;ll set up a Dgraph cluster, run and maintain it for you free of charge.</strong></p>
+	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
 </div>
 <br/>
 
 
-<p><em>Top image: <a href="http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/">View From Gemini XI, 850 Miles Above the Earth</a></em></p>
-</div>
+<p><em>Top image: <a href="http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/">View From Gemini XI, 850 Miles Above the Earth</a></em></p></div>
         </div>
       </div>
     </div>

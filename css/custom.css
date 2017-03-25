@@ -4,6 +4,10 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
+    font-size: 15px;
+    font-family: "Lato", sans-serif;
+    color: #3a3a3a !important;
+    line-height: 1.6;
 }
 
 .article-content pre {
@@ -119,3 +123,41 @@ ul.page-nav__list {
   border-bottom: 2px solid #fac5a8;
 }
 
+.article-content p{
+    line-height: 1.6;
+}
+
+table tbody td {
+    color: #3a3a3a;
+}
+
+.article__meta .share {
+    margin-top: 5px;
+}
+
+.share__item {
+    margin-right: 10px;
+}
+
+.page-intro__header {
+    border-bottom: 2px solid #e1d9d4;
+    padding-bottom: 10px;
+}
+
+.page-intro--blog-article {
+    margin-bottom: 20px;
+}
+
+.page-intro__title--blog {
+    font-size: 30x;
+}
+
+.engage {
+    font-size: 13px;
+}
+
+.engage table {
+    line-height: 0.7;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
