@@ -7,8 +7,641 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Sun, 26 Mar 2017 07:30:00 +1100</lastBuildDate>
+    <lastBuildDate>Mon, 10 Apr 2017 12:10:00 +0200</lastBuildDate>
     <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>String matching in Dgraph v0.7.4</title>
+      <link>https://open.dgraph.io/post/string-matching/</link>
+      <pubDate>Mon, 10 Apr 2017 12:10:00 +0200</pubDate>
+      
+      <guid>https://open.dgraph.io/post/string-matching/</guid>
+      <description>&lt;p&gt;The recent release of Dgraph is packed with new features and improvements.
+Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
+All of these changes make Dgraph an excellent tool for working with multilingual applications.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;values-in-many-languages&#34;&gt;Values in Many Languages&lt;/h3&gt;
+
+&lt;p&gt;We&amp;rsquo;re working hard to keep the query language easy to use and clean.
+Dgraph, in v0.7.4, adopted and extended the language tag syntax from the RDF N-Quads standard.
+It is intuitive, well-known, and was partially supported in previous versions (during data loading).&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start from the beginning - the data.
+Dgraph uses RDF N-Quads for data loading and backup.
+String literals in N-Quads may be followed by the &lt;code&gt;@&lt;/code&gt; sign and language tag, e.g. &lt;code&gt;&amp;quot;badger&amp;quot;@en&lt;/code&gt; or &lt;code&gt;&amp;quot;Dachs&amp;quot;@de&lt;/code&gt;.
+Multiple such literals may be used as a value for a single entity/attribute pair.&lt;/p&gt;
+
+&lt;p&gt;When querying for a predicate with multiple values, the user is able to use the &lt;code&gt;@lang&lt;/code&gt; notation known from RDF N-Quads.
+Many languages can be specified in a list of preference, e.g. &lt;code&gt;@en:de&lt;/code&gt; denotes that preferred language is English, but if such a value is not present, a value in German should be returned.&lt;/p&gt;
+
+&lt;p&gt;Language can also be specified in functions, which is important especially for full text search.&lt;/p&gt;
+
+&lt;h3 id=&#34;example-data&#34;&gt;Example Data&lt;/h3&gt;
+
+&lt;p&gt;The dataset used in all examples is the &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz&#34;&gt;Freebase film data&lt;/a&gt;.
+As this post is string-oriented, queries are focused on movie titles in multiple languages, and no other information is retrieved.
+As we don&amp;rsquo;t have information about type of &lt;code&gt;name&lt;/code&gt;, we use filtering to select only the movie titles, and to limit the number of results a bit - &lt;code&gt;@filter(gt(count(genre), 1))&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The schema for &lt;code&gt;name&lt;/code&gt; field is very simple - it defines 3 types of indexes:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;curl localhost:8080/query -XPOST -d $&#39;
+mutation {
+  schema {
+    name: string @index(term, fulltext, exact) .
+  }
+}&#39; | python -m json.tool | less
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;term&lt;/code&gt; index is used for term matching with the &lt;code&gt;allofterms&lt;/code&gt; and &lt;code&gt;anyofterms&lt;/code&gt; functions.
+Note that it was the only string index available in previous releases of Dgraph.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;fulltext&lt;/code&gt; index uses matching with language specific stemming and stopwords.
+One thing worth noting is, that values indexed with &lt;code&gt;fulltext&lt;/code&gt; are processed according to their&amp;rsquo;s language (if they are tagged). If values are untagged, English is used as a default language.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;exact&lt;/code&gt; index is used for regular expression matching.&lt;/p&gt;
+
+&lt;h3 id=&#34;full-text-search-fts&#34;&gt;Full Text Search (FTS)&lt;/h3&gt;
+
+&lt;h5 id=&#34;very-short-introduction-to-natural-language-processing-nlp&#34;&gt;Very Short Introduction to Natural Language Processing (NLP)&lt;/h5&gt;
+
+&lt;p&gt;By definition (from &lt;a href=&#34;https://en.wikipedia.org/wiki/Full-text_search&#34;&gt;Wikipedia&lt;/a&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This may sound trivial, but it&amp;rsquo;s not.
+Searching for exact form of the word is not always satisfying for the user.
+For example, nouns can be singular or plural, verbs have grammatical tenses, etc., and the user may be interested in all values related to the word in any inflected or derived form.&lt;/p&gt;
+
+&lt;p&gt;The simple but powerful idea is to find a method, that can transform all the forms of a word to some common base.
+This process is called &lt;strong&gt;stemming&lt;/strong&gt;.
+For many natural languages (including English) stemmers may be implemented using a set of well known grammatical rules.
+There are also languages (like Polish) where a dictionary based approach is required (i.e. inflected form -&amp;gt; stem mapping).&lt;/p&gt;
+
+&lt;p&gt;Only for languages with well known grammatical rules are stemmers are widely available.&lt;/p&gt;
+
+&lt;p&gt;Another problem with search are the words that are common, like &lt;code&gt;the&lt;/code&gt;, &lt;code&gt;is&lt;/code&gt;, or &lt;code&gt;at&lt;/code&gt;.
+In most cases, searching for them gives an enormous amount of results which are useless.
+Those words are called &lt;strong&gt;stop words&lt;/strong&gt;.
+Again, stop words are language specific.
+The common method of handling those words is just to remove them from the search.&lt;/p&gt;
+
+&lt;h5 id=&#34;dgraph-fts-nlp-processing&#34;&gt;Dgraph FTS/NLP Processing&lt;/h5&gt;
+
+&lt;p&gt;The following steps are applied to both data (while indexing), and the query pattern:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Tokenization - text is divided into words.&lt;/li&gt;
+&lt;li&gt;Normalization - all letters are transformed to lowercase. &lt;a href=&#34;http://unicode.org/reports/tr15/&#34;&gt;Unicode Normalization&lt;/a&gt; is applied.&lt;/li&gt;
+&lt;li&gt;Stop words are removed.&lt;/li&gt;
+&lt;li&gt;Stemming is applied.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Since stop words contain inflected forms, they are removed before stemming.&lt;/p&gt;
+
+&lt;h5 id=&#34;full-text-search-functions&#34;&gt;Full Text Search Functions&lt;/h5&gt;
+
+&lt;p&gt;There are two new functions that provide basic support for full text search:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;alloftext&lt;/code&gt; - searches for values that contain all the specified words (using NLP).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;anyoftext&lt;/code&gt; - searches for values that contain one or more of the specified tokens (using NLP).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&#34;examples&#34;&gt;Examples&lt;/h5&gt;
+
+&lt;p&gt;Let&amp;rsquo;s query for &lt;code&gt;white or maybe black&lt;/code&gt;, using the term matching function &lt;code&gt;allofterms&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;a2c60948e744862d6b1a13236ada9dd9&#34; data-initial=&#34;{
+  movie(func:allofterms(name@en, &amp;#34;white or maybe black&amp;#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:allofterms(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+The query gives no results.
+It may be worth trying less strict match with &lt;code&gt;alloftext&lt;/code&gt; function:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;5d5001b78c162fe12067167cabc9bab5&#34; data-initial=&#34;{
+  movie(func:alloftext(name@en, &amp;#34;white or maybe black&amp;#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Query returns 59 results.
+This example shows that removing a stop word may help in some cases.&lt;/p&gt;
+
+&lt;p&gt;In context of NLP, English is quite easy - there are no diacritics, and inflection is rather simple.
+So let&amp;rsquo;s try similar query in German:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;ae14be08ee0c46175f71b7918ee1dcd0&#34; data-initial=&#34;{
+  movie(func:allofterms(name@de, &amp;#34;weiss oder vielleicht schwarz&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:allofterms(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Again, the query doesn&amp;rsquo;t return any results.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s try the NLP-enabled version of this query:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;3ae8ed3ca59fc7f3927a4ca09377ab47&#34; data-initial=&#34;{
+  movie(func:alloftext(name@de, &amp;#34;weiss oder vielleicht schwarz&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:alloftext(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This returns 4 results.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s worth noting the inflected forms of &lt;code&gt;schwarz&lt;/code&gt; - &lt;code&gt;schwarzes&lt;/code&gt; and &lt;code&gt;Schwartze&lt;/code&gt;.
+Also the &lt;code&gt;Wei\u00dfer&lt;/code&gt; is interesting - &lt;code&gt;\u00df&lt;/code&gt; is the escaped Unicode value of &lt;a href=&#34;https://en.wikipedia.org/wiki/%C3%9F&#34;&gt;grapheme &lt;code&gt;ß&lt;/code&gt;&lt;/a&gt;.
+&lt;code&gt;weiss&lt;/code&gt; matched &lt;code&gt;Weißer&lt;/code&gt; - the form is inflected, and grapheme equivalency is preserved.
+Like in the English example, the stop word (&lt;code&gt;oder&lt;/code&gt;) is ignored.&lt;/p&gt;
+
+&lt;h5 id=&#34;gotchas&#34;&gt;Gotchas&lt;/h5&gt;
+
+&lt;p&gt;In some cases, natural language processing can lead to surprising results.
+Let&amp;rsquo;s search for the answer to the famous question: &lt;code&gt;To be, or not to be?&lt;/code&gt;:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;aadb70fa6d64fde240a20a76965babec&#34; data-initial=&#34;{
+  movie(func:alloftext(name@en, &amp;#34;To be, or not to be?&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:alloftext(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The query gives no results, while the term matching query:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;dd1fdb51dcb706bd6314b6e67b0d9118&#34; data-initial=&#34;{
+  movie(func:allofterms(name@en, &amp;#34;To be, or not to be?&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:allofterms(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;gives two results:&lt;/p&gt;
+
+&lt;p&gt;What happened? &lt;code&gt;To be, or not to be?&lt;/code&gt; consists of stop words only.
+After FTS/NLP processing, there are no movies that match the query.&lt;/p&gt;
+
+&lt;h3 id=&#34;regular-expressions-regexp&#34;&gt;Regular Expressions (regexp)&lt;/h3&gt;
+
+&lt;p&gt;Regular expressions are extremely useful for creating sophisticated matchers.&lt;/p&gt;
+
+&lt;p&gt;For example, all titles starting with a word containing &lt;code&gt;night&lt;/code&gt; but not &lt;code&gt;knight&lt;/code&gt; may be matched using following query:&lt;/p&gt;
+
+
+
+&lt;div class=&#34;runnable&#34; data-checksum=&#34;8734f0b7c65b1d74a521a67d4a77522c&#34; data-initial=&#34;{
+  movie(func:regexp(name, &amp;#34;^[a-zA-z]*[^Kk ]?[Nn]ight&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+&#34;&gt;
+  &lt;div class=&#34;container&#34;&gt;
+    &lt;div class=&#34;row row-no-padding&#34;&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
+                
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
+            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;topbar&#34;&gt;
+            &lt;div class=&#34;row&#34;&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                Response
+              &lt;/div&gt;
+              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
+                &lt;div class=&#34;actions pull-right&#34;&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There are 502 results in the test dataset.&lt;/p&gt;
+
+&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;Dgraph supports extensive, and useful methods of string matching.&lt;/p&gt;
+
+&lt;p&gt;Natural language processing, employed for full text search, may be the best choice for lookup based on users input.
+If more strict matching is required, term matching should give good results.
+And to get the most precise results of complicated text searches, regular expressions can be used.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+	&lt;p&gt;&lt;strong&gt;We are building an open source, real time, horizontally scalable and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+	&lt;strong&gt;We&#39;re starting to support enterprises in deploying Dgraph in production. &lt;a href=&#34;mailto:manish@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;, if you want us to help you try out Dgraph at your organization.&lt;/strong&gt;
+&lt;/div&gt;
+&lt;br/&gt;
+
+
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/jpl/pia21572/the-splitting-of-the-dunes&#34;&gt;The Splitting of the Dunes&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Building a long lasting company around open-source</title>
