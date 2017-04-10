@@ -11,7 +11,7 @@
     <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>String matching in Dgraph v0.7.4</title>
+      <title>String matching in Dgraph v0.7.5</title>
       <link>https://open.dgraph.io/post/string-matching/</link>
       <pubDate>Mon, 10 Apr 2017 12:10:00 +0200</pubDate>
       
@@ -25,7 +25,7 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 &lt;h3 id=&#34;values-in-many-languages&#34;&gt;Values in Many Languages&lt;/h3&gt;
 
 &lt;p&gt;We&amp;rsquo;re working hard to keep the query language easy to use and clean.
-Dgraph, in v0.7.4, adopted and extended the language tag syntax from the RDF N-Quads standard.
+Dgraph, in v0.7.5, adopted and extended the language tag syntax from the RDF N-Quads standard.
 It is intuitive, well-known, and was partially supported in previous versions (during data loading).&lt;/p&gt;
 
 &lt;p&gt;Let&amp;rsquo;s start from the beginning - the data.
