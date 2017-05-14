@@ -427,6 +427,9 @@ less reliance on RAM and more reliance on ever faster and cheaper SSDs.&lt;/p&gt
 
 &lt;p&gt;So try out &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; in your project, and let us know your experience.&lt;/p&gt;
 
+&lt;p&gt;&lt;em&gt;P.S. Special thanks to &lt;a href=&#34;https://research.google.com/pubs/SanjayGhemawat.html&#34;&gt;Sanjay Ghemawat&lt;/a&gt; and
+&lt;a href=&#34;http://pages.cs.wisc.edu/~ll/&#34;&gt;Lanyue Lu&lt;/a&gt; for responding to my questions about design choices.&lt;/em&gt;&lt;/p&gt;
+
 &lt;hr /&gt;
 
 &lt;div class=&#34;engage&#34;&gt;
