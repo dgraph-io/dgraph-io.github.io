@@ -72,6 +72,11 @@
   </url>
   
   <url>
+    <loc>https://open.dgraph.io/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://open.dgraph.io/</loc>
     <lastmod>2017-05-14T20:18:15+10:00</lastmod>
     <priority>0</priority>
@@ -80,6 +85,11 @@
   <url>
     <loc>https://open.dgraph.io/post/</loc>
     <lastmod>2017-05-14T20:18:15+10:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://open.dgraph.io/tags/</loc>
     <priority>0</priority>
   </url>
   

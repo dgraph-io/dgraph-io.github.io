@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.19" />
+      <meta name="generator" content="Hugo 0.20.2" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-05-14%2020%3a42%3a13.159214278%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-05-14%2020%3a42%3a13.159258717%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-05-15%2009%3a49%3a35.206877678%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-05-15%2009%3a49%3a35.206935615%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -410,9 +410,9 @@ compared to RocksDB, with <a href="https://github.com/dgraph-io/badger">Badger</
 side, <a href="https://github.com/dgraph-io/badger">Badger</a> is currently slower for range key-value iteration, but that has a lot of room for
 optimization.</p>
 
-<h1 id="background-and-motivation">Background and Motivation</h1>
+<h2 id="background-and-motivation">Background and Motivation</h2>
 
-<h2 id="word-about-rocksdb">Word about RocksDB</h2>
+<h3 id="word-about-rocksdb">Word about RocksDB</h3>
 
 <p>RocksDB is the most popular and probably the most efficient key-value store in the market. It originated
 in Google as SSTable which formed the basis for Bigtable, then got released as LevelDB. Facebook
@@ -424,7 +424,7 @@ production at Facebook and many other companies.</p>
 solid piece of technology, and it works. The biggest issue with using RocksDB is that it is written in <code>C++</code>;
 requiring the use of Cgo to be called via Go.</p>
 
-<h2 id="cgo-the-necessary-evil">Cgo: The necessary evil</h2>
+<h3 id="cgo-the-necessary-evil">Cgo: The necessary evil</h3>
 
 <p>At Dgraph, we have been using RocksDB via Cgo since we started. And we&rsquo;ve faced many issues over
 time due to this dependency. <a href="https://dave.cheney.net/2016/01/18/cgo-is-not-go">Cgo is not Go</a>, but
@@ -450,7 +450,7 @@ all by now, but I can&rsquo;t be sure. Go memory profiler would never tell you. 
 complains about Dgraph taking up more memory or crashing due to OOM, it makes me nervous that this
 is a memory leak issue.</p>
 
-<h2 id="huge-undertaking">Huge undertaking</h2>
+<h3 id="huge-undertaking">Huge undertaking</h3>
 
 <p>Everyone I told about our woes with Cgo, told me that we should just work on fixing those issues.
 Writing a key-value store which can provide the same performance as RocksDB is a huge undertaking, not
@@ -483,7 +483,7 @@ I couldn&rsquo;t fully dedicate time to coding either.  <a href="https://github.
 activity, and one of the team members&rsquo; part-time contributions. Work started end January, and now I
 think it&rsquo;s in a good state to be trialed by the Go community.</p>
 
-<h1 id="lsm-trees">LSM trees</h1>
+<h2 id="lsm-trees">LSM trees</h2>
 
 <p>Before we delve into <a href="https://github.com/dgraph-io/badger">Badger</a>, let&rsquo;s understand key-value store
 designs. They play an important role in data-intensive applications including databases. Key-value
@@ -529,7 +529,7 @@ Pro</a> can provide 440K random read
 operations per second, with 4KB block size. Thus, an LSM-tree that performs a large number of
 sequential writes to reduce later random reads is wasting bandwidth needlessly.</p>
 
-<h1 id="badger">Badger</h1>
+<h2 id="badger">Badger</h2>
 
 <p><strong><a href="https://github.com/dgraph-io/badger">Badger</a> is a simple, efficient, and persistent key-value store.</strong>  Inspired by the simplicity of
 LevelDB, it provides <code>Get</code>, <code>Set</code>, <code>Delete</code>, and <code>Iterate</code> functions. On top of it, it adds
@@ -542,7 +542,7 @@ write-ahead log called the <em>value log</em>. Keys tend to be smaller than valu
 much smaller LSM trees. When required, the values are directly read from the log stored on SSD,
 utilizing its vastly superior random read performance.</p>
 
-<h2 id="guiding-principles">Guiding principles</h2>
+<h3 id="guiding-principles">Guiding principles</h3>
 
 <p>These are the guiding principles that decide the design, what goes in and what doesn&rsquo;t in Badger.</p>
 
@@ -553,7 +553,7 @@ utilizing its vastly superior random read performance.</p>
 <li>SSD-centric design.</li>
 </ul>
 
-<h2 id="key-value-separation">Key-Value separation</h2>
+<h3 id="key-value-separation">Key-Value separation</h3>
 
 <p>The major performance cost of LSM-trees is the compaction process. During compactions, multiple
 files are read into memory, sorted, and written back. Sorting is essential for efficient retrieval,
@@ -567,7 +567,7 @@ values along with the keys, the amount of data that needs to be compacted grows 
 <em>delta encoding</em> for keys to reduce the effective size even further. Assuming 16 bytes per key
 and 16 bytes per value pointer, <strong>a single 64MB file can store two million key-value pairs.</strong></p>
 
-<h2 id="write-amplification">Write Amplification</h2>
+<h3 id="write-amplification">Write Amplification</h3>
 
 <p>Thus, the LSM tree generated by <a href="https://github.com/dgraph-io/badger">Badger</a> is much smaller than
 that of RocksDB. This smaller LSM-tree reduces the number of levels, and hence number of compactions
@@ -578,7 +578,7 @@ in value log. Assuming 1KB value and 16 byte keys, the effective write amplifica
 <p>You can see the performance gains of this approach compared to RocksDB as the value size increases;
 where loading data to <a href="https://github.com/dgraph-io/badger">Badger</a> takes factors less time (see Benchmarks below).</p>
 
-<h2 id="read-amplification">Read Amplification</h2>
+<h3 id="read-amplification">Read Amplification</h3>
 
 <p>As mentioned above, the size of LSM tree generated by <a href="https://github.com/dgraph-io/badger">Badger</a> is much smaller. Each file at each
 level stores lots more keys than typical LSM trees. Thus, for the same amount of data, fewer levels
@@ -595,7 +595,7 @@ this setup is a mere 1.7G, which can easily fit into RAM.  This is what causes
 faster, and <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-only iteration to be blazingly
 faster than RocksDB.</p>
 
-<h2 id="crash-resilience">Crash resilience</h2>
+<h3 id="crash-resilience">Crash resilience</h3>
 
 <p>LSM trees write all the updates in memory first in memtables. Once they fill up, memtables get
 swapped over to immutable memtables, which eventually get written out to files in level zero on
@@ -614,7 +614,7 @@ memtable. Effectively, the latest memtable which made its way to disk would have
 before which all the updates have already made their way to disk. Thus, we can replay from this
 pointer onwards, and reapply all the updates to LSM tree to get all our updates back.</p>
 
-<h2 id="overall-size">Overall size</h2>
+<h3 id="overall-size">Overall size</h3>
 
 <p>RocksDB applies block compression to reduce the size of LSM tree. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree is much smaller in
 comparison and can be stored in RAM entirely, so it doesn&rsquo;t need to do any compression on the tree. However,
@@ -634,7 +634,7 @@ this adds more work for LSM tree; so shouldn&rsquo;t be run when loading a huge 
 required to only trigger this garbage collection to run during periods of little client
 activity.</p>
 
-<h2 id="pricing">Pricing</h2>
+<h3 id="pricing">Pricing</h3>
 
 <p>But, given the fact that SSDs are getting cheaper and cheaper, using extra space in SSD is
 almost nothing compared to having to store and serve a major chunk of LSM tree from memory. Consider this:</p>
@@ -656,9 +656,9 @@ LSM tree can fit into memory.</li>
 cheaper. <strong>That&rsquo;s a whopping 86% saving.</strong></li>
 </ul>
 
-<h1 id="benchmarks">Benchmarks</h1>
+<h2 id="benchmarks">Benchmarks</h2>
 
-<h2 id="setup">Setup</h2>
+<h3 id="setup">Setup</h3>
 
 <p>We rented a storage optimized <a href="https://aws.amazon.com/ec2/instance-types/">i3.large
 instance</a> from Amazon AWS, which provides 450GB NVMe
@@ -710,7 +710,7 @@ file</a>. The
 charts and their data is <a href="https://docs.google.com/a/dgraph.io/spreadsheets/d/1x8LUw_85g8Jo9jFtbAwuXrLm_DB1SOG8QCTSjXj8Hk0/edit?usp=sharing">viewable
 here</a>.</p>
 
-<h2 id="results">Results</h2>
+<h3 id="results">Results</h3>
 
 <p>In the following benchmarks, we measured 4 things:</p>
 
@@ -758,9 +758,9 @@ iteration (latency is shown by the almost invisible red bar). This is quite usef
 cases we have at Dgraph, where we iterate over the keys, run filters and only retrieve values for a
 much smaller subset of keys.</p>
 
-<h1 id="further-work">Further work</h1>
+<h2 id="further-work">Further work</h2>
 
-<h2 id="speed-of-range-iteration">Speed of range iteration</h2>
+<h3 id="speed-of-range-iteration">Speed of range iteration</h3>
 
 <p>While <a href="https://github.com/dgraph-io/badger">Badger</a> can do key-only iteration blazingly fast, things slow down when it
 also needs to do value lookups. Theoretically, this shouldn&rsquo;t be the case. Amazon&rsquo;s i3.large disk
@@ -771,19 +771,19 @@ able to iterate 100K key-value pairs per second, in other terms six million key-
 random read requests even close to this limit, and the key-value iteration suffers as a result.
 There&rsquo;s a lot of room for optimization in this space.</p>
 
-<h2 id="speed-of-compactions">Speed of compactions</h2>
+<h3 id="speed-of-compactions">Speed of compactions</h3>
 
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> is currently slower when it comes to running
 compactions compared to RocksDB. Due to this, for a dataset purely containing smaller values, it is
 slower to load data to <a href="https://github.com/dgraph-io/badger">Badger</a>. This needs more optimization.</p>
 
-<h2 id="lsm-tree-compression">LSM tree compression</h2>
+<h3 id="lsm-tree-compression">LSM tree compression</h3>
 
 <p>Again in a dataset purely containing smaller values, the size of LSM tree would be significantly
 larger than RocksDB because <a href="https://github.com/dgraph-io/badger">Badger</a> doesn&rsquo;t run compression on LSM tree. This should be easy to add
 on if needed, and would make a great first-time contributor project.</p>
 
-<h2 id="b-tree-approach">B+ tree approach</h2>
+<h3 id="b-tree-approach">B+ tree approach</h3>
 
 <p><sup>1</sup> Recent improvements to SSDs might make B+-trees a viable option.
 Since WiscKey paper was written, SSDs have made huge gains in random write performance. A new
@@ -792,7 +792,7 @@ pointers in the B+-tree. This would trade LSM tree read-sort-merge sequential wr
 many random writes per key update and might achieve the same write throughput as LSM for a much
 simpler design.</p>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>We have built an efficient key-value store, which can compete in performance against top of the line
 key-value stores in market. It is currently rough around the edges, but provides a solid platform
@@ -992,7 +992,7 @@ speed of 265,00 kmph relative to Earth.</em></p>
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-05-14%2020%3a42%3a13.160972146%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-05-15%2009%3a49%3a35.20974682%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
     </script>

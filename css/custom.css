@@ -161,3 +161,18 @@ table tbody td {
     font-size: 13px;
     margin-bottom: 10px;
 }
+
+/* make code oneliners bold */
+
+pre code {
+  font-weight: 400;
+}
+
+code {
+  font-weight: 600;
+}
+
+/* override hljs background color which conflicts with our style */
+.hljs {
+  background-color: inherit;
+}
