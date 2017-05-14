@@ -7,8 +7,470 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 10 Apr 2017 12:10:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 14 May 2017 20:18:15 +1000</lastBuildDate>
     <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Introducing Badger: A fast key-value store written natively in Go</title>
+      <link>https://open.dgraph.io/post/badger/</link>
+      <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
+      
+      <guid>https://open.dgraph.io/post/badger/</guid>
+      <description>
+
+&lt;p&gt;We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
+natively in Go language.  It is based upon &lt;a href=&#34;https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf&#34;&gt;WiscKey paper included in USENIX FAST
+2016&lt;/a&gt;. This design is
+highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both
+the sequential and the random performance of SSDs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;We call it &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;.&lt;/strong&gt; Based on benchmarks, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is at least &lt;strong&gt;3.5x faster than RocksDB&lt;/strong&gt; when
+doing random reads.  For value sizes between 128B to 16KB, data loading is 0.86x - 14x faster
+compared to RocksDB, with &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; gaining significant ground as value size increases. On the flip
+side, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is currently slower for range key-value iteration, but that has a lot of room for
+optimization.&lt;/p&gt;
+
+&lt;h1 id=&#34;background-and-motivation&#34;&gt;Background and Motivation&lt;/h1&gt;
+
+&lt;h2 id=&#34;word-about-rocksdb&#34;&gt;Word about RocksDB&lt;/h2&gt;
+
+&lt;p&gt;RocksDB is the most popular and probably the most efficient key-value store in the market. It originated
+in Google as SSTable which formed the basis for Bigtable, then got released as LevelDB. Facebook
+then improved LevelDB to add concurrency and optimizations for SSDs and released that as
+RocksDB. Work on RocksDB has been continuously going on for many years now, and it&amp;rsquo;s used in
+production at Facebook and many other companies.&lt;/p&gt;
+
+&lt;p&gt;So naturally, if you need a key-value store, you&amp;rsquo;d gravitate towards RocksDB. It&amp;rsquo;s a
+solid piece of technology, and it works. The biggest issue with using RocksDB is that it is written in &lt;code&gt;C++&lt;/code&gt;;
+requiring the use of Cgo to be called via Go.&lt;/p&gt;
+
+&lt;h2 id=&#34;cgo-the-necessary-evil&#34;&gt;Cgo: The necessary evil&lt;/h2&gt;
+
+&lt;p&gt;At Dgraph, we have been using RocksDB via Cgo since we started. And we&amp;rsquo;ve faced many issues over
+time due to this dependency. &lt;a href=&#34;https://dave.cheney.net/2016/01/18/cgo-is-not-go&#34;&gt;Cgo is not Go&lt;/a&gt;, but
+when there are better libraries in C++ than Go, Cgo is a necessary evil.&lt;/p&gt;
+
+&lt;p&gt;The problem is, Go CPU profiler doesn&amp;rsquo;t see beyond Cgo calls. Go memory profiler takes it one step
+further. Forget about giving you memory usage breakdown in Cgo space, Go memory profiler fails to
+even notice the presence of Cgo code. Any memory used by Cgo would not even make it to the memory
+profiler. Other tools like Go race detector, don&amp;rsquo;t work either.&lt;/p&gt;
+
+&lt;p&gt;Cgo has caused us &lt;code&gt;pthread_create&lt;/code&gt; issues in Go1.4, and then again in Go1.5, due to a bug
+regression. Lightweight goroutines become expensive pthreads when Cgo is involved, and we had to
+modify how we were writing data to RocksDB to avoid assigning too many goroutines.&lt;/p&gt;
+
+&lt;p&gt;Cgo has caused us memory leaks. Who owns and manages memory when making calls is just not clear.
+Go, and C are at the opposite spectrums. &lt;strong&gt;One doesn&amp;rsquo;t let you free memory, the other
+requires it.&lt;/strong&gt; So, you make a Go call, but then forget to &lt;code&gt;Free()&lt;/code&gt;, and nothing breaks. &lt;em&gt;Except much later.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Cgo has given us a unmaintainable code. Cgo makes code ugly. The Cgo layer between RocksDB was the one piece of code no one in the team wanted to touch.&lt;/p&gt;
+
+&lt;p&gt;Surely, we fixed the memory leaks in our API usage over time. In fact, I &lt;em&gt;think&lt;/em&gt; we have fixed them
+all by now, but I can&amp;rsquo;t be sure. Go memory profiler would never tell you. And every time someone
+complains about Dgraph taking up more memory or crashing due to OOM, it makes me nervous that this
+is a memory leak issue.&lt;/p&gt;
+
+&lt;h2 id=&#34;huge-undertaking&#34;&gt;Huge undertaking&lt;/h2&gt;
+
+&lt;p&gt;Everyone I told about our woes with Cgo, told me that we should just work on fixing those issues.
+Writing a key-value store which can provide the same performance as RocksDB is a huge undertaking, not
+worth our effort. Even my team wasn&amp;rsquo;t sure. I had my doubts as well.&lt;/p&gt;
+
+&lt;p&gt;I have great respect for any piece of technology which has been iterated upon by the smartest
+engineers on the face of the planet for years. RocksDB is that. And if I was writing Dgraph in C++,
+I&amp;rsquo;d happily use it.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;But, I just hate ugly code.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And I hate recurring bugs. No amount of effort would have ensured that we would no longer have any
+more issues with using RocksDB via Cgo. I wanted a clean slate, and my profiler tools back. Building
+a key-value store in Go from scratch was the only way to achieve it.&lt;/p&gt;
+
+&lt;p&gt;I looked around. The existing key-value stores written in Go didn&amp;rsquo;t even come close to RocksDB&amp;rsquo;s
+performance. And that&amp;rsquo;s a deal breaker. &lt;strong&gt;You don&amp;rsquo;t trade performance for cleanliness. You demand
+both.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;So, I decided we will replace our dependency on RocksDB, but given this isn&amp;rsquo;t a priority for Dgraph,
+none of the team members should work on it. This would be a side project that only I will
+undertake. I started reading up about B+ and LSM trees, recent improvements to their design, and
+came across WiscKey paper. It had great promising ideas. I decided to spend a month away from core
+Dgraph, building &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;That&amp;rsquo;s not how it went.&lt;/em&gt; I couldn&amp;rsquo;t spend a month away from Dgraph. Between all the founder duties,
+I couldn&amp;rsquo;t fully dedicate time to coding either.  &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; developed during my spurts of coding
+activity, and one of the team members&amp;rsquo; part-time contributions. Work started end January, and now I
+think it&amp;rsquo;s in a good state to be trialed by the Go community.&lt;/p&gt;
+
+&lt;h1 id=&#34;lsm-trees&#34;&gt;LSM trees&lt;/h1&gt;
+
+&lt;p&gt;Before we delve into &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;, let&amp;rsquo;s understand key-value store
+designs. They play an important role in data-intensive applications including databases. Key-value
+stores allow efficient updates, point lookups and range queries.&lt;/p&gt;
+
+&lt;p&gt;There are two popular types of implementations: Log-structured merge (LSM) tree based, and B+ tree
+based. The main advantage LSM trees have is that all the foreground writes happen in memory, and all
+background writes maintain sequential access patterns. Thus they achieve a very high write
+thoughput. On the other hand, small updates on B+-trees involve repeated random disk writes, and
+hence are unable to maintain high throughput write workload&lt;sup&gt;1&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;To deliver high write performance, LSM-trees batch key-value pairs and write them sequentially.
+Then, to enable efficient lookups, LSM-trees continuously read, sort and write key-value pairs in
+the background. This is known as a &lt;code&gt;compaction&lt;/code&gt;. LSM-trees do this over many levels, each level
+holding a factor more data than the previous, typically &lt;code&gt;size of Li+1 = 10 x size of Li&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Within a single
+level, the key-values get written into files of fixed size, in a sorted order. Except level zero,
+all other levels have zero overlaps between keys stored in files at the same level.&lt;/p&gt;
+
+&lt;p&gt;Each level has a maximum capacity. As a level &lt;code&gt;Li&lt;/code&gt; fills up, its data gets merged with data from
+lower level &lt;code&gt;Li+1&lt;/code&gt; and files in &lt;code&gt;Li&lt;/code&gt; deleted to make space for more incoming data. As data flows
+from level zero to level one, two, and so on, the same data is re-written multiple times throughout
+its lifetime. Each key update causes many writes until data eventually settles.
+This constitutes &lt;em&gt;write amplification&lt;/em&gt;. For a 7 level LSM tree, with 10x size increase factor, this
+can be 60; 10 for each transition from L1-&amp;gt;L2, L2-&amp;gt;L3, and so on, ignoring L0 due to special
+handling.&lt;/p&gt;
+
+&lt;p&gt;Conversely, to read a key from LSM tree, all the levels need to be checked. If present in multiple
+levels, the version of key at level closer to zero is picked (this version is more up to date).
+Thus, a single key lookup causes many reads over files, this constitutes &lt;em&gt;read amplification&lt;/em&gt;. WiscKey
+paper estimates this to be 336 for a 1-KB key-value pair.&lt;/p&gt;
+
+&lt;p&gt;LSMs were designed around hard drives. In HDDs, random I/Os are over 100x slower than sequential
+ones. Thus, running compactions to continually sort keys and enable efficient lookups is an
+excellent trade-off.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/nvme-ssd-960pro.jpg&#34; alt=&#34;NVMe SSD Samsung 960 pro&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However, SSDs are fundamentally different from HDDs. The difference between their sequential and
+random reads are not nearly as large as HDDs. In fact, top of the line SSDs like &lt;a href=&#34;http://www.anandtech.com/show/10754/samsung-960-pro-ssd-review&#34;&gt;Samsung 960
+Pro&lt;/a&gt; can provide 440K random read
+operations per second, with 4KB block size. Thus, an LSM-tree that performs a large number of
+sequential writes to reduce later random reads is wasting bandwidth needlessly.&lt;/p&gt;
+
+&lt;h1 id=&#34;badger&#34;&gt;Badger&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is a simple, efficient, and persistent key-value store.&lt;/strong&gt;  Inspired by the simplicity of
+LevelDB, it provides &lt;code&gt;Get&lt;/code&gt;, &lt;code&gt;Set&lt;/code&gt;, &lt;code&gt;Delete&lt;/code&gt;, and &lt;code&gt;Iterate&lt;/code&gt; functions. On top of it, it adds
+&lt;code&gt;CompareAndSet&lt;/code&gt; and &lt;code&gt;CompareAndDelete&lt;/code&gt; atomic operations (&lt;a href=&#34;https://godoc.org/github.com/dgraph-io/badger&#34;&gt;see GoDoc&lt;/a&gt;). It does not aim to be a database and hence
+does not provide transactions, versioning or snapshots.  Those things can be easily built on top of
+&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; separates keys from values. The keys are stored in LSM tree, while the values are stored in a
+write-ahead log called the &lt;em&gt;value log&lt;/em&gt;. Keys tend to be smaller than values. Thus this set up produces
+much smaller LSM trees. When required, the values are directly read from the log stored on SSD,
+utilizing its vastly superior random read performance.&lt;/p&gt;
+
+&lt;h2 id=&#34;guiding-principles&#34;&gt;Guiding principles&lt;/h2&gt;
+
+&lt;p&gt;These are the guiding principles that decide the design, what goes in and what doesn&amp;rsquo;t in Badger.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Write it natively in Go language.&lt;/li&gt;
+&lt;li&gt;Use the latest research to build the fastest key-value store.&lt;/li&gt;
+&lt;li&gt;Keep it simple, stupid.&lt;/li&gt;
+&lt;li&gt;SSD-centric design.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;key-value-separation&#34;&gt;Key-Value separation&lt;/h2&gt;
+
+&lt;p&gt;The major performance cost of LSM-trees is the compaction process. During compactions, multiple
+files are read into memory, sorted, and written back. Sorting is essential for efficient retrieval,
+for both key lookups and range iterations. With sorting, the key lookups would only require accessing at most one file per level (excluding level zero, where we&amp;rsquo;d need to check all the files).
+Iterations would result in sequential access to multiple files.&lt;/p&gt;
+
+&lt;p&gt;Each file is of fixed size, to enhance caching. Values tend to be larger than keys. When you store
+values along with the keys, the amount of data that needs to be compacted grows significantly.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;, only a pointer to the value in the value log is stored alongside the key. &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; employs
+&lt;em&gt;delta encoding&lt;/em&gt; for keys to reduce the effective size even further. Assuming 16 bytes per key
+and 16 bytes per value pointer, &lt;strong&gt;a single 64MB file can store two million key-value pairs.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;write-amplification&#34;&gt;Write Amplification&lt;/h2&gt;
+
+&lt;p&gt;Thus, the LSM tree generated by &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is much smaller than
+that of RocksDB. This smaller LSM-tree reduces the number of levels, and hence number of compactions
+required to achieve stability. Also, values are not moved along with keys, because they&amp;rsquo;re elsewhere
+in value log. Assuming 1KB value and 16 byte keys, the effective write amplification per level is &lt;code&gt;(10*16 +
+1024)/(16 + 1024) ~ 1.14&lt;/code&gt;, a much smaller fraction.&lt;/p&gt;
+
+&lt;p&gt;You can see the performance gains of this approach compared to RocksDB as the value size increases;
+where loading data to &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; takes factors less time (see Benchmarks below).&lt;/p&gt;
+
+&lt;h2 id=&#34;read-amplification&#34;&gt;Read Amplification&lt;/h2&gt;
+
+&lt;p&gt;As mentioned above, the size of LSM tree generated by &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is much smaller. Each file at each
+level stores lots more keys than typical LSM trees. Thus, for the same amount of data, fewer levels
+get filled up. A typical key lookup requires reading all files in level zero, and one file per level
+from level one and onwards. With &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;, filling fewer levels means, fewer files need to be read to
+lookup a key. Once key (along with value pointer) is fetched, the value can be fetched by doing
+random read in value log stored on SSD.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, during benchmarking, we found that &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s LSM
+tree is so small, it can easily fit in RAM. For 1KB values and 75 million 22 byte keys, the raw size
+of the entire dataset is 72 GB. &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s LSM tree size for
+this setup is a mere 1.7G, which can easily fit into RAM.  This is what causes
+&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s random key lookup performance to be at least 3.5x
+faster, and &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s key-only iteration to be blazingly
+faster than RocksDB.&lt;/p&gt;
+
+&lt;h2 id=&#34;crash-resilience&#34;&gt;Crash resilience&lt;/h2&gt;
+
+&lt;p&gt;LSM trees write all the updates in memory first in memtables. Once they fill up, memtables get
+swapped over to immutable memtables, which eventually get written out to files in level zero on
+disk.&lt;/p&gt;
+
+&lt;p&gt;In the case of a crash, all the recent updates still in memory tables would be lost.
+Key-value stores deal with this issue, by first writing all the updates in a write-ahead log. &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;
+has a write-ahead log, it&amp;rsquo;s called value log.&lt;/p&gt;
+
+&lt;p&gt;Just like a typical write-ahead log, before any update is applied to LSM tree, it gets written to
+value log first. In the case of a crash, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; would iterate over the recent updates in value log, and
+apply them back to the LSM tree.&lt;/p&gt;
+
+&lt;p&gt;Instead of iterating over the entire value log, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; puts a pointer to the latest value in each
+memtable. Effectively, the latest memtable which made its way to disk would have a value pointer,
+before which all the updates have already made their way to disk. Thus, we can replay from this
+pointer onwards, and reapply all the updates to LSM tree to get all our updates back.&lt;/p&gt;
+
+&lt;h2 id=&#34;overall-size&#34;&gt;Overall size&lt;/h2&gt;
+
+&lt;p&gt;RocksDB applies block compression to reduce the size of LSM tree. &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s LSM tree is much smaller in
+comparison and can be stored in RAM entirely, so it doesn&amp;rsquo;t need to do any compression on the tree. However,
+the size of value log can grow quite quickly.  Each update is a new entry in the value log, and
+therefore multiple updates for the same key take up space multiple times.&lt;/p&gt;
+
+&lt;p&gt;To deal with this, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; does two things. It allows compressing values in value log. Instead of
+compressing multiple key-values together, we only compress each key-value individually. This
+provides the best possible random read performance. The client can set it so compression is
+only done if the key-value size is over an adjustable threshold, set by default to 1KB.&lt;/p&gt;
+
+&lt;p&gt;Secondly, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; runs value garbage collection. This runs periodically and samples a 100MB size of a
+randomly selected value log file. It checks if at least a significant chunk of it should be
+discarded, due to newer updates in later logs. If so, the valid key-value pairs would be appended to
+the log, the older file discarded, and the value pointers updated in the LSM tree. The downside is,
+this adds more work for LSM tree; so shouldn&amp;rsquo;t be run when loading a huge data set. More work is
+required to only trigger this garbage collection to run during periods of little client
+activity.&lt;/p&gt;
+
+&lt;h2 id=&#34;pricing&#34;&gt;Pricing&lt;/h2&gt;
+
+&lt;p&gt;But, given the fact that SSDs are getting cheaper and cheaper, using extra space in SSD is
+almost nothing compared to having to store and serve a major chunk of LSM tree from memory. Consider this:&lt;/p&gt;
+
+&lt;p&gt;For 1KB values, 75 million 16 byte keys, RocksDB&amp;rsquo;s LSM tree is 50GB in size. &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s value log is
+74GB (without value compression), and LSM tree is 1.7GB. Extrapolating it three times, we get 225 million
+keys, RocksDB size of 150GB and &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; size of 222GB value log, and 5.1GB LSM tree.&lt;/p&gt;
+
+&lt;p&gt;Using Amazon AWS US East (Ohio) datacenter:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To achieve a random read performance equivalent of &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; (at least 3.5x faster), RocksDB would need to
+be run on an &lt;code&gt;r3.4xlarge&lt;/code&gt; instance, which provides 122 GB of RAM for &lt;code&gt;$1.33&lt;/code&gt; per hour; so most of its
+LSM tree can fit into memory.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; can be run on the cheapest storage optimized instance &lt;code&gt;i3.large&lt;/code&gt;, which provides 475GB NVMe SSD
+(&lt;a href=&#34;https://linux.die.net/man/1/fio&#34;&gt;&lt;code&gt;fio&lt;/code&gt;&lt;/a&gt; test: 100K IOPS for 4KB block size), with 15.25GB RAM for &lt;code&gt;$0.156&lt;/code&gt; per hour.&lt;/li&gt;
+&lt;li&gt;The cost of running &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is thus, &lt;strong&gt;8.5x cheaper&lt;/strong&gt; than running RocksDB on EC2, on-demand.&lt;/li&gt;
+&lt;li&gt;Going 1-year term all upfront payment, this is $6182 for RocksDB v/s $870 for &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;, still 7.1x
+cheaper. &lt;strong&gt;That&amp;rsquo;s a whopping 86% saving.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;benchmarks&#34;&gt;Benchmarks&lt;/h1&gt;
+
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;We rented a storage optimized &lt;a href=&#34;https://aws.amazon.com/ec2/instance-types/&#34;&gt;i3.large
+instance&lt;/a&gt; from Amazon AWS, which provides 450GB NVMe
+SSD storage, 2 virtual cores along with 15.25GB RAM. This instance provides local SSD, which we
+tested via &lt;a href=&#34;https://linux.die.net/man/1/fio&#34;&gt;&lt;code&gt;fio&lt;/code&gt;&lt;/a&gt; to sustain close to 100K random read IOPS for 4KB
+block sizes.&lt;/p&gt;
+
+&lt;p&gt;The data sets were chosen to generate sizes too big to fit entirely in RAM, in either RocksDB
+or &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Value size&lt;/th&gt;
+&lt;th&gt;Number of keys (each key = 22B)&lt;/th&gt;
+&lt;th&gt;Raw data size&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;128B&lt;/td&gt;
+&lt;td&gt;250M&lt;/td&gt;
+&lt;td&gt;35GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;1024B&lt;/td&gt;
+&lt;td&gt;75M&lt;/td&gt;
+&lt;td&gt;73GB&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;16KB&lt;/td&gt;
+&lt;td&gt;5M&lt;/td&gt;
+&lt;td&gt;76GB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We then loaded data one by one, first in RocksDB then in &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;, never running the loaders
+concurrently. This gave us the data loading times and output sizes. For random &lt;code&gt;Get&lt;/code&gt; and &lt;code&gt;Iterate&lt;/code&gt;,
+we used Go benchmark tests and ran them for 3 minutes, going down to 1 minute for 16KB values.&lt;/p&gt;
+
+&lt;p&gt;All the code for benchmarking is available &lt;a href=&#34;https://github.com/dgraph-io/badger-bench&#34;&gt;in this
+repo&lt;/a&gt;. All the commands ran and
+their measurements recorded are available in &lt;a href=&#34;https://github.com/dgraph-io/badger-bench/blob/master/BENCH.md&#34;&gt;this log
+file&lt;/a&gt;. The
+charts and their data is &lt;a href=&#34;https://docs.google.com/a/dgraph.io/spreadsheets/d/1x8LUw_85g8Jo9jFtbAwuXrLm_DB1SOG8QCTSjXj8Hk0/edit?usp=sharing&#34;&gt;viewable
+here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;results&#34;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;In the following benchmarks, we measured 4 things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Data loading performance&lt;/li&gt;
+&lt;li&gt;Output size&lt;/li&gt;
+&lt;li&gt;Random key lookup performance (&lt;code&gt;Get&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Sorted range iteration performance (&lt;code&gt;Iterate&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All the 4 measurements are visualized in the following charts.
+&lt;img src=&#34;https://open.dgraph.io/images/badger-benchmarks.png&#34; alt=&#34;[Badger](https://github.com/dgraph-io/badger) benchmarks&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Data loading performance:&lt;/strong&gt; &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s key-value separation design shows huge performance gains as
+value sizes increase. For value sizes of 1KB and 16KB, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; achieves 4.5x and 11.7x more
+throughput than RocksDB. For smaller values, like 16 bytes not shown here, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; can be 2-3x
+slower, due to slower compactions (see further work).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Store size:&lt;/strong&gt; &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; generates much smaller LSM tree, but a larger value size log. The size of
+&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s LSM tree is proportional only to the number of keys, not values. Thus, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s LSM
+tree decreases in size as we progress from 128B to 16KB. In all three scenarios, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; produced an
+LSM tree which could fit entirely in RAM of the target server.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Random read latency:&lt;/strong&gt; &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s &lt;code&gt;Get&lt;/code&gt; latency is only 18% to 27% of RocksDB&amp;rsquo;s &lt;code&gt;Get&lt;/code&gt;
+latency. &lt;strong&gt;In our opinion, this is the biggest win of this design.&lt;/strong&gt; This happens because &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s
+entire LSM tree can fit into RAM, significantly decreasing the amount of time it takes to find the
+right tables, check their bloom filters, pick the right blocks and retrieve the key. Value retrieval is then
+a single SSD &lt;code&gt;file.pread&lt;/code&gt; away.&lt;/p&gt;
+
+&lt;p&gt;In contrast, RocksDB can&amp;rsquo;t fit the entire tree in memory. Even assuming it can keep the table index
+and bloom filters in memory, it would need to fetch the entire blocks from disk, decompress them,
+then do key-value retrieval (&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s smaller LSM tree avoids
+the need for compression). This obviously takes longer, and given lack of data access locality,
+caching isn&amp;rsquo;t as effective.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Range iteration latency:&lt;/strong&gt;  &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s range iteration is
+significantly slower than RocksDB&amp;rsquo;s range iteration, when values are also retrieved from SSD. &lt;em&gt;We
+didn&amp;rsquo;t expect this, and still don&amp;rsquo;t quite understand it.&lt;/em&gt; We expected some slowdown due to the need
+to do IOPS on SSD, while RocksDB does purely serial reads. But, given the 100K IOPS &lt;code&gt;i3.large&lt;/code&gt;
+instance is capable of, we didn&amp;rsquo;t even come close to using that bandwidth, despite pre-fetching.
+This needs further work and investigation.&lt;/p&gt;
+
+&lt;p&gt;On the other end of the spectrum, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s key-only iteration is blazingly faster than RocksDB or key-value
+iteration (latency is shown by the almost invisible red bar). This is quite useful in certain use
+cases we have at Dgraph, where we iterate over the keys, run filters and only retrieve values for a
+much smaller subset of keys.&lt;/p&gt;
+
+&lt;h1 id=&#34;further-work&#34;&gt;Further work&lt;/h1&gt;
+
+&lt;h2 id=&#34;speed-of-range-iteration&#34;&gt;Speed of range iteration&lt;/h2&gt;
+
+&lt;p&gt;While &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; can do key-only iteration blazingly fast, things slow down when it
+also needs to do value lookups. Theoretically, this shouldn&amp;rsquo;t be the case. Amazon&amp;rsquo;s i3.large disk
+optimized instance can do 100,000 4KB block random reads per second. Based on this, we should be
+able to iterate 100K key-value pairs per second, in other terms six million key-value pairs per minute.&lt;/p&gt;
+
+&lt;p&gt;However, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s current implementation doesn&amp;rsquo;t produce SSD
+random read requests even close to this limit, and the key-value iteration suffers as a result.
+There&amp;rsquo;s a lot of room for optimization in this space.&lt;/p&gt;
+
+&lt;h2 id=&#34;speed-of-compactions&#34;&gt;Speed of compactions&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is currently slower when it comes to running
+compactions compared to RocksDB. Due to this, for a dataset purely containing smaller values, it is
+slower to load data to &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;. This needs more optimization.&lt;/p&gt;
+
+&lt;h2 id=&#34;lsm-tree-compression&#34;&gt;LSM tree compression&lt;/h2&gt;
+
+&lt;p&gt;Again in a dataset purely containing smaller values, the size of LSM tree would be significantly
+larger than RocksDB because &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; doesn&amp;rsquo;t run compression on LSM tree. This should be easy to add
+on if needed, and would make a great first-time contributor project.&lt;/p&gt;
+
+&lt;h2 id=&#34;b-tree-approach&#34;&gt;B+ tree approach&lt;/h2&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Recent improvements to SSDs might make B+-trees a viable option.
+Since WiscKey paper was written, SSDs have made huge gains in random write performance. A new
+interesting direction would be to combine the value log approach, and keep only keys and value
+pointers in the B+-tree. This would trade LSM tree read-sort-merge sequential write compactions with
+many random writes per key update and might achieve the same write throughput as LSM for a much
+simpler design.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;We have built an efficient key-value store, which can compete in performance against top of the line
+key-value stores in market. It is currently rough around the edges, but provides a solid platform
+for any industrial application, be it data storage or building another database.&lt;/p&gt;
+
+&lt;p&gt;We will be replacing Dgraph&amp;rsquo;s dependency on RocksDB soon with
+&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;; making our builds easier, faster, making Dgraph
+cross-platform and paving the way for embeddable Dgraph. The biggest win of using
+&lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; is &lt;strong&gt;a performant Go native key-value store.&lt;/strong&gt; The
+nice side-effects are &lt;strong&gt;~4 times faster &lt;code&gt;Get&lt;/code&gt; and a potential 86% reduction in AWS bills,&lt;/strong&gt; due to
+less reliance on RAM and more reliance on ever faster and cheaper SSDs.&lt;/p&gt;
+
+&lt;p&gt;So try out &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; in your project, and let us know your experience.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+	&lt;p&gt;&lt;strong&gt;We are building an open source, real time, horizontally scalable and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+	&lt;strong&gt;We&#39;re starting to support enterprises in deploying Dgraph in production. &lt;a href=&#34;mailto:manish@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;, if you want us to help you try out Dgraph at your organization.&lt;/strong&gt;
+&lt;/div&gt;
+&lt;br/&gt;
+
+
+&lt;p&gt;&lt;em&gt;Top image: Juno spacecraft is the &lt;a href=&#34;http://www.livescience.com/32655-whats-the-fastest-spacecraft-ever.html&#34;&gt;fastest moving human made
+object&lt;/a&gt;, traveling at a
+speed of 265,00 kmph relative to Earth.&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>String matching in Dgraph v0.7.5</title>
@@ -123,60 +585,164 @@ The common method of handling those words is just to remove them from the search
     name@it
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:allofterms(name@en, &amp;#34;white or maybe black&amp;#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:allofterms(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
     name@en
     name@de
     name@it
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:allofterms(name@en, &amp;#34;white or maybe black&amp;#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:allofterms(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:allofterms(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 The query gives no results.
 It may be worth trying less strict match with &lt;code&gt;alloftext&lt;/code&gt; function:&lt;/p&gt;
 
@@ -189,60 +755,164 @@ It may be worth trying less strict match with &lt;code&gt;alloftext&lt;/code&gt;
     name@it
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:alloftext(name@en, &amp;#34;white or maybe black&amp;#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
     name@en
     name@de
     name@it
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:alloftext(name@en, &amp;#34;white or maybe black&amp;#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 
 &lt;p&gt;Query returns 59 results.
 This example shows that removing a stop word may help in some cases.&lt;/p&gt;
@@ -259,60 +929,164 @@ So let&amp;rsquo;s try similar query in German:&lt;/p&gt;
 	name@it
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:allofterms(name@de, &amp;#34;weiss oder vielleicht schwarz&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:allofterms(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
 	name@de
 	name@en
 	name@it
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:allofterms(name@de, &amp;#34;weiss oder vielleicht schwarz&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:allofterms(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:allofterms(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 
 &lt;p&gt;Again, the query doesn&amp;rsquo;t return any results.&lt;/p&gt;
 
@@ -327,60 +1101,164 @@ So let&amp;rsquo;s try similar query in German:&lt;/p&gt;
 	name@it
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:alloftext(name@de, &amp;#34;weiss oder vielleicht schwarz&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:alloftext(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
 	name@de
 	name@en
 	name@it
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:alloftext(name@de, &amp;#34;weiss oder vielleicht schwarz&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:alloftext(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:alloftext(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 
 &lt;p&gt;This returns 4 results.&lt;/p&gt;
 
@@ -401,58 +1279,154 @@ Let&amp;rsquo;s search for the answer to the famous question: &lt;code&gt;To be,
 	name@en
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:alloftext(name@en, &amp;#34;To be, or not to be?&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:alloftext(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
 	name@en
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:alloftext(name@en, &amp;#34;To be, or not to be?&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:alloftext(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:alloftext(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 
 &lt;p&gt;The query gives no results, while the term matching query:&lt;/p&gt;
 
@@ -463,58 +1437,154 @@ Let&amp;rsquo;s search for the answer to the famous question: &lt;code&gt;To be,
 	name@en
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:allofterms(name@en, &amp;#34;To be, or not to be?&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:allofterms(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
 	name@en
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:allofterms(name@en, &amp;#34;To be, or not to be?&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:allofterms(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:allofterms(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 
 &lt;p&gt;gives two results:&lt;/p&gt;
 
@@ -536,60 +1606,164 @@ After FTS/NLP processing, there are no movies that match the query.&lt;/p&gt;
 	name@it
   }
 }
-&#34;&gt;
-  &lt;div class=&#34;container&#34;&gt;
-    &lt;div class=&#34;row row-no-padding&#34;&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
+&#34; data-current=&#34;{
+  movie(func:regexp(name, &amp;#34;^[a-zA-z]*[^Kk ]?[Nn]ight&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+&#34; data-dirty=&#34;false&#34;&gt;
+  &lt;div class=&#34;container-fluid&#34;&gt;
+    &lt;div class=&#34;row&#34;&gt;
+      &lt;div class=&#34;runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
         &lt;div class=&#34;runnable-pane&#34;&gt;
           &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-3&#34;&gt;
-                
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-9&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-refresh&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
-                  &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+
+            &lt;div class=&#34;normal-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-10&#34;&gt;
+                  &lt;nav class=&#34;nav-languages&#34;&gt;
+                    &lt;a class=&#34;language active&#34; data-action=&#34;nav-lang&#34; data-target=&#34;query&#34; href=&#34;#&#34;&gt;Query&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;curl&#34; href=&#34;#&#34;&gt;Curl&lt;/a&gt;
+                    &lt;a class=&#34;language&#34; data-action=&#34;nav-lang&#34; data-target=&#34;java&#34; href=&#34;#&#34;&gt;Java&lt;/a&gt;
+                  &lt;/nav&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;col-2&#34;&gt;
+                  &lt;div class=&#34;actions pull-right&#34;&gt;
+                    &lt;a class=&#34;code-btn&#34; data-action=&#34;run&#34; href=&#34;#&#34;&gt;Run&lt;/a&gt;
+                  &lt;/div&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
+
+            &lt;div class=&#34;editing-header&#34;&gt;
+              &lt;div class=&#34;row&#34;&gt;
+                &lt;div class=&#34;col-12&#34;&gt;
+                  &lt;span class=&#34;pane-title&#34;&gt;
+                    Editing query...
+                  &lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
           &lt;/div&gt;
+
           &lt;div class=&#34;runnable-content runnable-code&#34;&gt;
-            &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;curl localhost:8080/query -XPOST -d &#39;&lt;div class=&#34;query-editable&#34; spellcheck=&#34;false&#34; contenteditable=&#34;true&#34;&gt;{
+            &lt;div class=&#34;runnable-tab-content active&#34; data-tab=&#34;query&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34;&gt;&lt;span class=&#34;query-content&#34;&gt;{
   movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
   }
 }
-&lt;/div&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;edit&#34;&gt;
+              &lt;textarea class=&#34;query-content-editable&#34;&gt;{
+  movie(func:regexp(name, &amp;#34;^[a-zA-z]*[^Kk ]?[Nn]ight&amp;#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+&lt;/textarea&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;curl&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;curl localhost:8080/query -XPOST -d &#39;
+&lt;span class=&#34;query-content&#34;&gt;{
+  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+&lt;/span&gt;&#39; | python -m json.tool | less&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
+
+            &lt;div class=&#34;runnable-tab-content&#34; data-tab=&#34;java&#34;&gt;
+              &lt;pre&gt;&lt;code class=&#34;no-copy&#34; tabindex=&#34;-1&#34;&gt;import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance(&#34;localhost&#34;, 8080);
+    final DgraphResult result = dgraphClient.query(&#34;&lt;span class=&#34;query-content java&#34;&gt;{
+  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+&lt;/span&gt;&#34;);
+    System.out.println(result.toJsonObject().toString());
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;div class=&#34;col-12 col-sm-12 col-md-12 col-lg-6&#34;&gt;
-        &lt;div class=&#34;runnable-pane&#34;&gt;
-          &lt;div class=&#34;topbar&#34;&gt;
-            &lt;div class=&#34;row&#34;&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                Response
-              &lt;/div&gt;
-              &lt;div class=&#34;col-12 col-sm-6&#34;&gt;
-                &lt;div class=&#34;actions pull-right&#34;&gt;
-                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;div class=&#34;edit-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;reset&#34; href=&#34;#&#34;&gt;Reset&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;discard&#34; href=&#34;#&#34;&gt;Discard&lt;/a&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;save&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-save&#34;&gt;&lt;/i&gt; Save&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;normal-actions&#34;&gt;
+                  &lt;a class=&#34;code-btn&#34; data-action=&#34;edit&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-edit&#34;&gt;&lt;/i&gt; Edit query&lt;/a&gt;
+                  &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-code&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
                 &lt;/div&gt;
               &lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
-            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&#34;runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding&#34;&gt;
+        &lt;div class=&#34;runnable-pane&#34;&gt;
+          &lt;div class=&#34;row topbar&#34;&gt;
+            &lt;div class=&#34;col-12&#34;&gt;
+              &lt;span class=&#34;pane-title&#34;&gt;
+                Response
+              &lt;/span&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
+
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+            &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
+          &lt;/div&gt;
+
+          &lt;div class=&#34;row footer&#34;&gt;
+            &lt;div class=&#34;col-12 col-sm-8&#34;&gt;
+              &lt;div class=&#34;latency-info hidden&#34;&gt;
+                &lt;div class=&#34;stat server-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Server latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt; &lt;i class=&#34;fa fa-question-circle server-latency-tooltip-trigger&#34; data-toggle=&#34;tooltip&#34; data-placement=&#34;bottom&#34; data-html=&#34;true&#34; title=&#34;Latency information&#34; data-animation=&#34;false&#34;&gt;&lt;/i&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;stat network-latency&#34;&gt;
+                  &lt;span class=&#34;label&#34;&gt;Network latency:&lt;/span&gt; &lt;span class=&#34;number&#34;&gt;&lt;/span&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;col-12 col-sm-4&#34;&gt;
+              &lt;div class=&#34;actions pull-right&#34;&gt;
+                &lt;a class=&#34;code-btn hidden-sm-down&#34; data-action=&#34;expand&#34; href=&#34;#&#34;&gt;&lt;i class=&#34;fa fa-expand&#34;&gt;&lt;/i&gt;&lt;/a&gt;
+                &lt;span class=&#34;code-btn&#34; data-action=&#34;copy-output&#34; href=&#34;#&#34;&gt;Copy&lt;/span&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+
 
 &lt;p&gt;There are 502 results in the test dataset.&lt;/p&gt;
 

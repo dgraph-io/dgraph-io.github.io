@@ -3,25 +3,25 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.19" />  
+      <meta name="generator" content="Hugo 0.19" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-touch-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-touch-icon-76x76.png">  
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-touch-icon-76x76.png">
 
     <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114.png">
     <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-touch-icon-120x120.png">
     <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-touch-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon-180x180.png">  
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon-180x180.png">
 
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
     <link rel="icon" type="image/png" href="/assets/favicons/favicon-194x194.png" sizes="194x194">
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">  
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
 
     <link rel="manifest" href="assets/images/favicons/manifest.json">
     <link rel="mask-icon" href="assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
@@ -29,22 +29,22 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
     <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">  
+    <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="https://open.dgraph.io/css/styles.css">
     <link rel="stylesheet" href="https://open.dgraph.io/css/custom.css">
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://open.dgraph.io/index.xml">    
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://open.dgraph.io/index.xml">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
     <title>String matching in Dgraph v0.7.5 - Dgraph Blog</title>
     <meta property='og:title' content="String matching in Dgraph v0.7.5 - Dgraph Blog">
     <meta property="og:type" content="article">
-        
+    
 
     <meta property="og:url" content="https://open.dgraph.io/post/string-matching/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/splitting-dunes.jpg">  
+    <meta property="og:image" content="https://open.dgraph.io/images/splitting-dunes.jpg">
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -54,12 +54,22 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/theme.css?2017-04-10%2017%3a57%3a15.129071137%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-05-14%2020%3a26%3a04.364294192%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-05-14%2020%3a26%3a04.364313917%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+    
   </head>
 
 
@@ -493,60 +503,164 @@ The common method of handling those words is just to remove them from the search
     name@it
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:allofterms(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:allofterms(name@en, "white or maybe black")) @filter(gt(count(genre), 1)) {
     name@en
     name@de
     name@it
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:allofterms(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:allofterms(name@en, "white or maybe black")) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:allofterms(name@en, "white or maybe black")) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 The query gives no results.
 It may be worth trying less strict match with <code>alloftext</code> function:</p>
 
@@ -559,60 +673,164 @@ It may be worth trying less strict match with <code>alloftext</code> function:</
     name@it
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:alloftext(name@en, "white or maybe black")) @filter(gt(count(genre), 1)) {
     name@en
     name@de
     name@it
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:alloftext(name@en, "white or maybe black")) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:alloftext(name@en, "white or maybe black")) @filter(gt(count(genre), 1)) {
+    name@en
+    name@de
+    name@it
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <p>Query returns 59 results.
 This example shows that removing a stop word may help in some cases.</p>
@@ -629,60 +847,164 @@ So let&rsquo;s try similar query in German:</p>
 	name@it
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:allofterms(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:allofterms(name@de, "weiss oder vielleicht schwarz")) @filter(gt(count(genre), 1)) {
 	name@de
 	name@en
 	name@it
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:allofterms(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:allofterms(name@de, "weiss oder vielleicht schwarz")) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:allofterms(name@de, "weiss oder vielleicht schwarz")) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <p>Again, the query doesn&rsquo;t return any results.</p>
 
@@ -697,60 +1019,164 @@ So let&rsquo;s try similar query in German:</p>
 	name@it
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:alloftext(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:alloftext(name@de, "weiss oder vielleicht schwarz")) @filter(gt(count(genre), 1)) {
 	name@de
 	name@en
 	name@it
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:alloftext(name@de, &#34;weiss oder vielleicht schwarz&#34;)) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:alloftext(name@de, "weiss oder vielleicht schwarz")) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:alloftext(name@de, "weiss oder vielleicht schwarz")) @filter(gt(count(genre), 1)) {
+	name@de
+	name@en
+	name@it
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <p>This returns 4 results.</p>
 
@@ -771,58 +1197,154 @@ Let&rsquo;s search for the answer to the famous question: <code>To be, or not to
 	name@en
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:alloftext(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:alloftext(name@en, "To be, or not to be?")) @filter(gt(count(genre), 1)) {
 	name@en
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:alloftext(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:alloftext(name@en, "To be, or not to be?")) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:alloftext(name@en, "To be, or not to be?")) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <p>The query gives no results, while the term matching query:</p>
 
@@ -833,58 +1355,154 @@ Let&rsquo;s search for the answer to the famous question: <code>To be, or not to
 	name@en
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:allofterms(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:allofterms(name@en, "To be, or not to be?")) @filter(gt(count(genre), 1)) {
 	name@en
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:allofterms(name@en, &#34;To be, or not to be?&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:allofterms(name@en, "To be, or not to be?")) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:allofterms(name@en, "To be, or not to be?")) @filter(gt(count(genre), 1)) {
+	name@en
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <p>gives two results:</p>
 
@@ -906,60 +1524,164 @@ After FTS/NLP processing, there are no movies that match the query.</p>
 	name@it
   }
 }
-">
-  <div class="container">
-    <div class="row row-no-padding">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+" data-current="{
+  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+" data-dirty="false">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="runnable-col runnable-col-code col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
         <div class="runnable-pane">
           <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-3">
-                
-              </div>
-              <div class="col-12 col-sm-9">
-                <div class="actions pull-right">
-                  <a class="code-btn" data-action="reset" href="#"><i class="fa fa-refresh"></i></a>
-                  <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
-                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
-                  <a class="code-btn" data-action="run" href="#">Run</a>
+
+            <div class="normal-header">
+              <div class="row">
+                <div class="col-10">
+                  <nav class="nav-languages">
+                    <a class="language active" data-action="nav-lang" data-target="query" href="#">Query</a>
+                    <a class="language" data-action="nav-lang" data-target="curl" href="#">Curl</a>
+                    <a class="language" data-action="nav-lang" data-target="java" href="#">Java</a>
+                  </nav>
+                </div>
+                <div class="col-2">
+                  <div class="actions pull-right">
+                    <a class="code-btn" data-action="run" href="#">Run</a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="editing-header">
+              <div class="row">
+                <div class="col-12">
+                  <span class="pane-title">
+                    Editing query...
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
           <div class="runnable-content runnable-code">
-            <pre><code class="no-copy">curl localhost:8080/query -XPOST -d '<div class="query-editable" spellcheck="false" contenteditable="true">{
+            <div class="runnable-tab-content active" data-tab="query">
+              <pre><code class="no-copy"><span class="query-content">{
   movie(func:regexp(name, "^[a-zA-z]*[^Kk ]?[Nn]ight")) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
   }
 }
-</div>' | python -m json.tool | less</code></pre>
+</span></code></pre>
+
+            </div>
+
+            <div class="runnable-tab-content" data-tab="edit">
+              <textarea class="query-content-editable">{
+  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+</textarea>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="curl">
+              <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
+<span class="query-content">{
+  movie(func:regexp(name, "^[a-zA-z]*[^Kk ]?[Nn]ight")) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+</span>' | python -m json.tool | less</code></pre>
+            </div>
+
+            <div class="runnable-tab-content" data-tab="java">
+              <pre><code class="no-copy" tabindex="-1">import io.dgraph.client.DgraphClient;
+import io.dgraph.client.GrpcDgraphClient;
+import io.dgraph.client.DgraphResult;
+
+public class DgraphMain {
+  public static void main(final String[] args) {
+    final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
+    final DgraphResult result = dgraphClient.query("<span class="query-content java">{
+  movie(func:regexp(name, "^[a-zA-z]*[^Kk ]?[Nn]ight")) @filter(gt(count(genre), 1)) {
+	name@en
+	name@de
+	name@it
+  }
+}
+</span>");
+    System.out.println(result.toJsonObject().toString());
+  }
+}</code></pre>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-        <div class="runnable-pane">
-          <div class="topbar">
-            <div class="row">
-              <div class="col-12 col-sm-6">
-                Response
-              </div>
-              <div class="col-12 col-sm-6">
-                <div class="actions pull-right">
-                  <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+
+          <div class="row footer">
+            <div class="col-12">
+              <div class="actions pull-right">
+                <div class="edit-actions">
+                  <a class="code-btn" data-action="reset" href="#">Reset</a>
+                  <a class="code-btn" data-action="discard" href="#">Discard</a>
+                  <a class="code-btn" data-action="save" href="#"><i class="fa fa-save"></i> Save</a>
+                </div>
+                <div class="normal-actions">
+                  <a class="code-btn" data-action="edit" href="#"><i class="fa fa-edit"></i> Edit query</a>
+                  <span class="code-btn" data-action="copy-code" href="#">Copy</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
-            <pre class="output-container empty"><code class="output"></code></pre>
+        </div>
+      </div>
+
+      <div class="runnable-col runnable-col-output col-12 col-sm-12 col-md-12 col-lg-6 nopadding">
+        <div class="runnable-pane">
+          <div class="row topbar">
+            <div class="col-12">
+              <span class="pane-title">
+                Response
+              </span>
+            </div>
           </div>
+
+          <div class="runnable-content runnable-output" style="background: url('https://open.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+            <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
+          </div>
+
+          <div class="row footer">
+            <div class="col-12 col-sm-8">
+              <div class="latency-info hidden">
+                <div class="stat server-latency">
+                  <span class="label">Server latency:</span> <span class="number"></span> <i class="fa fa-question-circle server-latency-tooltip-trigger" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Latency information" data-animation="false"></i>
+                </div>
+                <div class="stat network-latency">
+                  <span class="label">Network latency:</span> <span class="number"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-4">
+              <div class="actions pull-right">
+                <a class="code-btn hidden-sm-down" data-action="expand" href="#"><i class="fa fa-expand"></i></a>
+                <span class="code-btn" data-action="copy-output" href="#">Copy</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <p>There are 502 results in the test dataset.</p>
 
@@ -1152,7 +1874,7 @@ Programming is his greatest passion but he also likes trekking, skiing, cross co
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/dgraph.js?2017-04-10%2017%3a57%3a15.129723728%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-05-14%2020%3a26%3a04.367207496%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
     </script>
@@ -1174,6 +1896,7 @@ $(document.links).filter(function() {
 </script>
 </body>
 </html>
+
   
 
   
