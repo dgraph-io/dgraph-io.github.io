@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://open.dgraph.io/post/goget/</loc>
+    <lastmod>2017-05-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://open.dgraph.io/post/badger/</loc>
     <lastmod>2017-05-14T20:18:15+10:00</lastmod>
   </url>
@@ -72,24 +77,14 @@
   </url>
   
   <url>
-    <loc>https://open.dgraph.io/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://open.dgraph.io/</loc>
-    <lastmod>2017-05-14T20:18:15+10:00</lastmod>
+    <lastmod>2017-05-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://open.dgraph.io/post/</loc>
-    <lastmod>2017-05-14T20:18:15+10:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://open.dgraph.io/tags/</loc>
+    <lastmod>2017-05-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
