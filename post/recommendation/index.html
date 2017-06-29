@@ -37,14 +37,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Can it really scale? - Dgraph Blog</title>
-    <meta property='og:title' content="Can it really scale? - Dgraph Blog">
+    <title>Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog</title>
+    <meta property='og:title' content="Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://open.dgraph.io/post/performance-throughput-latency/">
+    <meta property="og:url" content="https://open.dgraph.io/post/recommendation/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/lander.jpg">
+    <meta property="og:image" content="https://open.dgraph.io/images/falcon.png">
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-06-29%2017%3a54%3a33.509344869%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-06-29%2017%3a54%3a33.509397426%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-06-29%2017%3a54%3a33.497907709%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-06-29%2017%3a54%3a33.49795434%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -366,7 +366,7 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Tue, Jun 21, 2016
+                  Thu, Jun 29, 2017
                  by
                 Ashwin Ramesh
 
@@ -375,7 +375,7 @@
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Can%20it%20really%20scale%3f&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fperformance-throughput-latency%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Build%20a%20Realtime%20Recommendation%20Engine%3a%20Part%201&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2frecommendation%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -383,7 +383,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Can it really scale?</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Build a Realtime Recommendation Engine: Part 1</h1>
           </header>
         </div>
       </div>
@@ -395,218 +395,559 @@
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/lander.jpg">
-          <div class="article-content"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em>
-</p>
+          <img class="opening__image" src="https://open.dgraph.io/images/falcon.png">
+          <div class="article-content">
 
-<h2 id="the-dataset">The Dataset</h2>
+<h2 id="preface">Preface</h2>
 
-<p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
-Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
-On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
-It is an ideal data set to test the performance of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.
-We decided not to use the entire data set as it wasn&rsquo;t necessary for our goal here.</p>
+<p>In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user
+data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the
+user.</p>
 
-<p>Given our love for movies, we narrowed it down to the film data.
-We ran some scripts and filtered in the movie data only.
-All the data and scripts are present in <a href="https://github.com/dgraph-io/benchmarks/tree/master/data">our benchmarks repository</a>.
-There are two million nodes, which represent directors, actors, films and all the other objects in the database.
-Moreover, 21 million edges (including 4M edges for names) are representing the relationships between actors, films, directors and all the other nodes in the database.</p>
+<p>That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you
+don&rsquo;t even realize them.</p>
 
-<hr />
+<p><em>You wake up and open Facebook,</em> which shows you a feed of articles that it
+has chosen for you based on your viewing history.</p>
 
-<p>Some interesting information about this data:</p>
+<p><em>Want to buy something?</em> Amazon would recommend
+you things to purchase based on what you&rsquo;ve viewed in the recent past.</p>
 
-<pre><code># film.film --{film.film.starring}--&gt; [mediator] --{film.performance.actor}--&gt; film.actor
-# Film --&gt; Mediator
-$ zgrep &quot;&lt;film.film.starring&gt;&quot; rdf-films.gz | wc -l
-1397647
+<p><em>Want to relax and unwind with a movie?</em> Netflix would recommend you what to watch based on your
+interests.</p>
 
-# Mediator --&gt; Actor
-$ zgrep &quot;&lt;film.performance.actor&gt;&quot; rdf-films.gz | wc -l
-1396420
+<p><em>No time to watch a full movie?</em> YouTube would recommend you smaller chunk videos.</p>
 
-# Film --&gt; Director
-$ zgrep &quot;&lt;film.film.directed_by&gt;&quot; rdf-films.gz | wc -l
-242212
+<p><em>Want to listen to music instead?</em> Spotify would generate a weekly discovery list of songs just for
+you.</p>
 
-# Director --&gt; Film
-$ zgrep &quot;&lt;film.director.film&gt;&quot; rdf-films.gz | wc -l
-245274
+<p>All this makes you wonder: <strong>Should recommendations be part of your application?</strong> While competing
+against Netflix might be hard, in this two-part series, we&rsquo;ll explain the basics of a recommendation
+engine. We&rsquo;ll show how you can build recommendations via two approaches: Content-based filtering and
+Collaborative filtering. And, how you can use Dgraph to bring recommendations to your app without breaking a
+sweat.</p>
 
-# Film --&gt; Initial Release Date
-$ zgrep &quot;&lt;film.film.initial_release_date&gt;&quot; rdf-films.gz | wc -l
-240858
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 
-# Film --&gt; Genre
-$ zgrep &quot;&lt;film.film.genre&gt;&quot; rdf-films.gz | wc -l
-548152
+<p>For this, we&rsquo;ll make use of Dgraph&rsquo;s query variables. To learn more about variables, head over to
+<a href="https://tour.dgraph.io/blocksvars/1/">Dgraph tour</a> &mdash; <em>if you are new to Dgraph variables, you
+really should check them out first before diving in here.</em></p>
 
-# Genre --&gt; Film
-$ zgrep &quot;&lt;film.film_genre.films_in_this_genre&gt;&quot; rdf-films.gz | wc -l
-546698
+<p>Let&rsquo;s first check out how recommendation systems work, and then we&rsquo;ll look at the support Dgraph queries offer.  We&rsquo;ll use two sample datasets.  One about movies and ratings (<a href="https://grouplens.org/datasets/movielens/100k/">Movielens</a>) and the other is part of <a href="https://archive.org/download/stackexchange/lifehacks.stackexchange.com.7z">Stack Exchange&rsquo;s data archive</a> &mdash; we&rsquo;ll just use the Lifehacks dataset here, but watch out for a coming series of posts where we show how to load all of Stack Overflow into Dgraph and run the entire website completely off Dgraph.</p>
 
-# Generated language names from names freebase rdf data.
-$ zcat langnames.gz | awk '{print $1}' | uniq | sort | uniq | wc -l
-55
+<h2 id="recommendation-systems">Recommendation Systems</h2>
 
-# Total number of countries.
-$ zgrep &quot;&lt;film.film.country&gt;&quot; rdf-films.gz | awk '{print $3}' | uniq | sort | uniq | wc -l
-304
-</code></pre>
+<p>Making Recommendations is a subtle art.  There are a number of approaches and a production worthy recommendation system might depend on data, weighting of various features, global user behaviour and maybe recent behaviour of the user we are recommending for.</p>
 
-<hr />
+<p>Rather than just inventing recommendation queries, let&rsquo;s start somewhere more grounded.  For this post, we started with the Stanford University MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.  Part of the course is on recommender systems.  We&rsquo;ll show how the theory in the <em>&ldquo;Recommendation Systems&rdquo;</em> chapter of the <a href="http://www.mmds.org">text</a> can be translated into practice using Dgraph. We&rsquo;ll also talk about other approaches and how to run one at scale.</p>
 
-<p>This data set contains information about ~480K actors, ~100K directors and ~240K films.
-Some example of entries in the dataset are :</p>
+<h3 id="making-recommendations">Making Recommendations</h3>
 
-<pre><code>&lt;m.0102j2vq&gt; &lt;film.actor.film&gt; &lt;m.011kyqsq&gt; .
-&lt;m.0102xz6t&gt; &lt;film.performance.film&gt; &lt;m.0kv00q&gt; .
-&lt;m.050llt&gt; &lt;type.object.name&gt; “Aishwarya Rai Bachchan”@hr .
-&lt;m.0bxtg&gt; &lt;type.object.name&gt; “Tom Hanks”@es .
-</code></pre>
+<p>Making recommendations is about taking past benaviour and preferences and trying to predict a preference for some unknown.  For example, later in the post, we&rsquo;ll talk about movie recommendations.  For this, we know what a user has watched and how they rated movies; how then can we predict what unwatched movies they&rsquo;ll enjoy.</p>
 
-<h2 id="terminology">Terminology</h2>
-
-<ul>
-<li>Throughput: Number of queries served by the server per second and received by the client</li>
-<li>Latency: Difference between the time when the server received the request and the time it finished processing the request</li>
-<li>95 percentile latency: The worst case latency which 95 percentage of users that query the database face</li>
-<li>50 percentile latency: The worst case latency which half the users that query the database face</li>
-</ul>
-
-<h2 id="setup">Setup</h2>
-
-<p>All the testing was done on GCE instances. Each machine had 30GB of SSD and at least 7.5 GB of RAM. The number of cores varied depending on the experiments performed.</p>
-
-<p>The tests were run for 1-minute intervals during which all the parallel connections made requests to the database.
-This was repeated ten times and throughput, mean latency, 95th percentile latency, 50th percentile latency were measured.
-Note that for user-facing systems, measuring percentile latency is better than mean latency as the average can be skewed by outliers.</p>
-
-<p>In a multi-node cluster set up, the queries were distributed among each node in a round-robin fashion.
-Note that no single machine contains all the data to answer these queries, in a multi-node cluster.
-They still have to communicate with each other to respond to the queries.</p>
-
-<h2 id="variables">Variables</h2>
-
-<p>The parameters that were varied were:</p>
+<p>As briefly mentioned before, broadly speaking, there are two basic approaches:</p>
 
 <ol>
-<li>A number of parallel connections to the database. In Go, this equated to the number of goroutines a client would have. Each goroutine would run in an infinite loop, querying the database via a blocking function.</li>
-<li>Number of cores per server</li>
-<li>Number of servers in the cluster</li>
+<li><p><strong>Content-based:</strong> Such systems base a recommendation on the properties of an item. Two items that have similar properties are deemed similar; the more properties shared, the more similar. For example, if a user likes movies with certain actors or directors, we can
+recommend other movies involving the same people.</p></li>
+
+<li><p><strong>Collaborative filtering:</strong> Such systems base recommendations on the relationship between users and items, and similarity to other users. Users are similar if they have relationships to items in common; the more items in common, the more similar.  For example, if many similar users enjoyed a particular movie, that might be a good one to recommend.</p></li>
 </ol>
 
-<p>This gave us an idea of what to expect from the system and would help in predicting the configuration required to handle a given load.</p>
+<p>There are also classification algorithms based on machine learning.  We&rsquo;ll focus here on how far we can get with Dgraph queries alone.  Machine learning or other algorithms could also be run over the Dgraph output.</p>
 
-<h2 id="queries">Queries</h2>
+<h3 id="interpreting-the-data-for-recommendations">Interpreting the Data for Recommendations</h3>
 
-<p>We ran broadly 2 categories of queries.</p>
+<p>Our Stanford reference text represents data as a sparse matrix.  So for our movie data set, we might think of the user&rsquo;s ratings of movies as:</p>
 
-<ul>
-<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>The Matrix</th>
+<th>Toy Story</th>
+<th>Jurassic Park</th>
+<th>Forrest Gump</th>
+<th>Braveheart</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A</td>
+<td>5</td>
+<td>4</td>
+<td>4</td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>B</td>
+<td></td>
+<td>3</td>
+<td>4</td>
+<td></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>C</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td>2</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+
+<p>The movies also have other properties such as genres, not shown here.  We&rsquo;ve stored it all as a graph, which in itself is a nice way to store a sparse matrix.</p>
+
+<p>The matrix (that&rsquo;s the matrix above, not <em>&ldquo;<a href="https://en.wikipedia.org/wiki/The_Matrix">The Matrix</a>&ldquo;</em>) is missing values because users haven&rsquo;t seen all movies &mdash; in fact, for the real dataset it&rsquo;s much sparser because users have each only rated a tiny percentage of the movies.</p>
+
+<p>The challenge of recommendation is to predict values for the missing ratings.  Will user A enjoy Braveheart because it&rsquo;s an action movie and thus similar to movies they enjoyed? (content based filtering)</p>
+
+<p>But maybe they won&rsquo;t enjoy it because they might have something in common with user B who seems to share similar ratings (collaborative filtering).</p>
+
+<p>Maybe user A just gives high ratings and isn&rsquo;t very discriminating &mdash; sometimes benaviour rather than rating can be a better predictor. We&rsquo;ll need to combine a number of approaches.</p>
+
+<p>The theory boils down to finding functions that serve as measures of similarity or distance.  For example, in content-based filtering, the function would take two movies and output a score (the distance or similarity).  If we start with a movie and apply the function repeatedly to it and all other movies, we can find the most similar movies.</p>
+
+<p>We&rsquo;ll look at some distance measures below as we apply them in queries, but for any of them we&rsquo;ll need to propagate values through our query, so let&rsquo;s look at how that works in Dgraph and then try out some recommendation queries.</p>
+
+<h2 id="variable-propagation">Variable Propagation</h2>
+
+<p>A Dgraph <a href="https://docs.dgraph.io/query-language/#value-variables">value variable</a> is a mapping from graph nodes to values that have been computed for the nodes during the query.  Value variables can be passed around the query, aggregated etc.  Value variables also sum over paths as we move deeper into a query tree.</p>
+
+<p>Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.</p>
+
+<p>We call this <strong>variable propagation.</strong></p>
+
+<p>Say you had a query:</p>
 
 <pre><code>{
-  me ( _xid_ : XID ) {
-    type.object.name.en
-    film.actor.film {
-      film.performance.film {
-        type.object.name.en
+  var(id: &lt;...P...&gt;) {
+    myscore as math(1)          # A
+    friends {                   # B
+      friends {                 # C
+        fscore as math(myscore)
       }
     }
+  }
+
+  closeFriends(id: var(fscore), orderdesc: var(fscore)) {
+    name
+    var(score)
   }
 }
 </code></pre>
 
-<ul>
-<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
-</ul>
+<p>At line A, nodes are assigned a score of <code>1</code> (which in this case we&rsquo;ll assume is the single node <code>P</code>).
+Traversing the <code>friend</code> edge twice reaches the friends of friends.  The variable <code>myscore</code> gets
+propagated, such that the value inside the block marked C is the sum of values from all paths from A to C.</p>
+
+<p>Here&rsquo;s how that propagation looks in a graph.</p>
+
+<p><img src="/images/vartransform.png" alt="Variable propagation" /></p>
+
+<p><strong>In short, the value that a node receives is equal to the sum of values of all its parent nodes.</strong>
+This propagation is useful when we want to normalize a sum across users, find the number of paths
+between some nodes or accumulate a sum as we move through the graph.</p>
+
+<h2 id="movielens">Movielens</h2>
+
+<p>Let&rsquo;s start with the <a href="https://grouplens.org/datasets/movielens/100k/">ML-100k</a> dataset of
+100,000 ratings from 1000 users on 1700 movies. We converted the dataset to RDF (the dataset and
+script can be found at
+<a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">github</a>) and loaded it into
+Dgraph.</p>
+
+<p>It&rsquo;s about users and movies and user&rsquo;s ratings of movies.  So a user (a node in the graph) has a name and a gender and a <code>rated</code> edge to a movie.  The <code>rated</code> edge has a facet <code>rating</code> that tells us the users numeric 0&ndash;5 rating of the movie.</p>
+
+<p><img src="/images/movilensschema.png" alt="Movielens schema" /></p>
+
+<h2 id="content-based-filtering">Content-based filtering</h2>
+
+<p>Content-based filtering ranks items as similar or not based on their properties.  There are a number of measures we could use.  Our reference text from Stanford talks about <strong>Jaccard</strong> and <strong>Cosine</strong> distances.</p>
+
+<h3 id="jaccard-distance">Jaccard Distance</h3>
+
+<p>Let&rsquo;s try some measure functions based on Jaccard distance.  For two sets A and B the Jaccard distance is given by</p>
+
+<p>$$1-\frac{|A\cap B|}{| A\cup B |}$$</p>
+
+<p>That&rsquo;s the ratio of the size of the set intersection to the size of the union.  So if items have many properties in common (compared to how many properties each has) then the items are similar.  For our movie example, let&rsquo;s take $A$ and $B$ as the genre sets for each movie.  We can then express our difference function as:</p>
+
+<p>$$d(M_1, M_2) = 1-\frac{|M_1.\mathcal{genres} \cap M_2.\mathcal{genres}|}{| M_1.\mathcal{genres}\cup M_2.\mathcal{genres} |}$$</p>
+
+<p>The closer the result is to 0, the closer the movies &mdash; if the number of genres in common is more, the second term is close to 1, if movies have few genres in common, the second term is closer to 0.</p>
+
+<p>For movie a $M_1$, we picked &ldquo;The Shawshank Redemption&rdquo; with unique ID <code>0x30d80</code>, and translated Jaccard distance to this query.</p>
 
 <pre><code>{
-  me ( _xid_ : XID ) {
-    type.object.name.en
-    film.director.film {
-      film.film.genre {
-        type.object.name.en
+  # Count the genres for every movie that has been rated
+  var(func: has(~rated)) {
+    M2_num_genres as count(genre)
+  }
+
+
+  # Calculate a Jaccard distance score for every movie that shares
+  # at least 1 genre with the given movie.
+  var(id: 0x30d80) {    # M1
+    norm as math(1)               # 1
+    M1_num_genres as count(genre) # 2
+    M1genres as genre {           # 3
+      ~genre {
+        # M2 -- movies reached here share a genre with the initial movie
+        # normalize the count to account for multiple paths
+        M1_num_genres_norm as math(M1_num_genres / norm)      # 4
+        num_genres as count(genre @filter(var(M1genres))) # 5
+        distance as math( 1 - ( num_genres / (M1_num_genres_norm + M2_num_genres - num_genres) )) # 6
       }
     }
+  }
+
+  # Sort and return closest movies.
+  similarMovies(id:var(distance), orderasc: var(distance), first: 10) { # 7
+    name
+    var(distance)
   }
 }
 </code></pre>
 
-<p>During each iteration, either an actor or a director category was chosen randomly.
-Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
+<p>The query works as follows.</p>
 
-<h2 id="performance">Performance</h2>
+<ol>
+<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
+<li>Count the number of genres for movie $M_1$.</li>
+<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
+<li>We may have reached this $M_2$ via multiple genre paths and the count of genres set at <code># 2</code> would have accumulated for each path, so normalize back to the original count.</li>
+<li>Find the number of intersecting genres.</li>
+<li>Apply the Jaccard distance formula &mdash; <code>distance</code> is thus a map for each $M_2$ to the Jaccard distance between $M_1$ and $M_2$.</li>
+<li>Filter out the movies that were closest (had lowest distance)</li>
+</ol>
 
-<p>Let us look at some graphs obtained by varying the machine specs and the number of nodes in the cluster under different loads.</p>
+<p>Here&rsquo;s the results we got for &ldquo;The Shawshank Redemption&rdquo;</p>
 
-<h3 id="vary-the-number-of-cores-in-a-single-instance">Vary the number of cores in a single instance</h3>
+<pre><code>{
+    &quot;similarMovies&quot;: [
+        {
+            &quot;name&quot;: &quot;Miracle on 34th Street (1994)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Postman, The (1997)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Mat' i syn (1997)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Winter Guest, The (1997)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Chamber, The (1996)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Picnic (1955)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Nell (1994)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Dead Man Walking (1995)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Blue Angel, The (Blaue Engel, Der) (1930)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        }
+    ]
+}
+</code></pre>
 
-<p><img src="/images/cores_thru.jpg" alt="Throughput on varying number of cores" /></p>
+<p>Ouch, there&rsquo;s a bunch of movies with distance 0.  That means all those movies share exactly the same genre set with &ldquo;The Shawshank Redemption&rdquo;, so we can&rsquo;t discriminate between them.  Let&rsquo;s test another movie.  With &ldquo;Toy Story&rdquo; we get.</p>
 
-<p><img src="/images/cores_lat_50.jpg" alt="50 percentile latency on varying number of cores" /></p>
+<pre><code>{
+    &quot;similarMovies&quot;: [
+        {
+            &quot;name&quot;: &quot;Aladdin and the King of Thieves (1996)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Toy Story (1995)&quot;,
+            &quot;var(distance)&quot;: 0.0
+        },
+        {
+            &quot;name&quot;: &quot;Aladdin (1992)&quot;,
+            &quot;var(distance)&quot;: 0.25
+        },
+        {
+            &quot;name&quot;: &quot;Goofy Movie, A (1995)&quot;,
+            &quot;var(distance)&quot;: 0.25
+        },
+        {
+            &quot;name&quot;: &quot;Flintstones, The (1994)&quot;,
+            &quot;var(distance)&quot;: 0.333333
+        }
+    ]
+}
+</code></pre>
 
-<p><img src="/images/cores_lat_95.jpg" alt="95 percentile latency on varying number of cores" /></p>
+<p>That&rsquo;s better.  At least similar movies have similar genres. But still, the Jaccard distance function isn&rsquo;t good enough because it can&rsquo;t discriminate a difference between many movies.  Our reference text suggests the same distance function but for data that also has actors and directors, which we don&rsquo;t.</p>
 
-<p><img src="/images/cores_lat_mean.jpg" alt="mean latency on varying number of cores" /></p>
+<p>As it stands, the Jaccard distance might not be so appropriate because the only items we have to compare are the genres, since the Jaccard distance doesn&rsquo;t take into account the magnitude of the ratings.  So let&rsquo;s play around with it and see how some variations come out.</p>
 
-<ul>
-<li>With the same number of cores, when we increase the number of connections, i.e. load on the system, the throughput as well as the latency increase.</li>
-<li>Throughput increases till some point and then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
-<li>As expected, the latency increases almost linearly with the number of connections.</li>
-<li>When we increase the number of cores, the latency decreases and the throughput increases.</li>
-</ul>
+<h3 id="jaccard-distance-variation">Jaccard Distance Variation</h3>
 
-<h3 id="vary-number-of-instances">Vary number of instances</h3>
+<p>The size of the intersection of the genres seems a reasonable start, but how to bring the magnitude of the ratings into it?  If we are to use the ratings, then the average rating might be appropriate.  Let&rsquo;s try the number of genres in common plus an average rating.  Given a movie $M_1$ we&rsquo;ll find the similarity to all other movies $M_2$ as</p>
 
-<p><img src="/images/topo_thru.jpg" alt="Throughput on varying number of instances" /></p>
+<p>$$d(M_1, M_2) = |M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_2.\overline{\mathcal{rating}}$$</p>
 
-<p><img src="/images/dist_lat_50.jpg" alt="50 percentile latency on varying number of instances" /></p>
+<p>Here&rsquo;s the Dgraph query for movie $M_1$ having unique ID <code>0x30d72</code>, that&rsquo;s &ldquo;Star Wars&rdquo;.</p>
 
-<p><img src="/images/dist_lat_95.jpg" alt="95 percentile latency on varying number of instances" /></p>
+<pre><code>{
+  # M1 -- Star Wars by its unique ID
+  var(id: 0x30d72) {
+    g as genre
+  }
 
-<p><img src="/images/dist_lat_mean.jpg" alt="mean latency on varying number of instances" /></p>
+  # Calculate the average rating for every movie
+  var(func: has(rated)) {
+    allmovies as rated @facets(a as rating) {
+      c as count(~rated)
+      avg as math(a / c)
+    }
+  }
 
-<ul>
-<li>When we increase the number of parallel connections, the throughput increases, but then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
-<li>The latency increases almost linearly with the number of connections.</li>
-<li>Latency in the case of a single instance is observed to be the equal to (or a bit lower than) that of distributed configurations as the former doesn’t require any network calls. However, as the number of requests/load increase, the cumulative computational power comes into play and overshadows the latency incurred due to network calls. Hence, the latency reduces in the distributed version under higher loads.</li>
-<li>On comparing across the one, two and five node clusters, we can see that the latency, as well as the throughput, are better for configurations with a higher number of nodes, i.e., when there is more computational capacity at disposal. The throughput increases as we have greater computational power and can handle more queries.</li>
-</ul>
+  # Give every movie a score
+  var(id: var(allmovies)) {
+    x as count(genre @filter(var(g)))
+    score as math(avg + x)
+  }
 
-<h2 id="conclusion">Conclusion</h2>
+  # Return the top 10 movies
+  fin(id: var(score), orderdesc: var(score), first: 10) {
+    name
+    var(score)
+  }
+}
+</code></pre>
 
-<p>From the above experiments, we can see a relationship between the throughput, latency and the overall computational power of the cluster.
-The graphs show that the throughput increases as the computational power increases.
-Which can be achieved either by increasing the number of cores on each server or the number of nodes in the cluster.</p>
+<p><strong>In terms of variable propagation, the important part is the calculation of average rating.</strong>  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.</p>
 
-<p>The latency increases as the amount of load on the database increases.
-However, the rate of the increase differs based on how much computational power we have available.</p>
+<p><img src="/images/facetsumming.png" alt="Facet summing" /></p>
 
-<p>This experiment also shows that there is a limit on how much computational power a single node can have, and once we reach that limit, scaling horizontally is the right option.
-Not only that, but it also proves that scaling horizontally improves the performance.
-Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.</p>
+<p>Running the query we get the following results.</p>
 
-<p>Based on this experiment, our recommendation for running <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- would be:</p>
+<pre><code>{
+    &quot;fin&quot;: [
+        {
+            &quot;name&quot;: &quot;Star Wars (1977)&quot;,
+            &quot;var(score)&quot;: 9.358491
+        },
+        {
+            &quot;name&quot;: &quot;Empire Strikes Back, The (1980)&quot;,
+            &quot;var(score)&quot;: 9.20436
+        },
+        {
+            &quot;name&quot;: &quot;Return of the Jedi (1983)&quot;,
+            &quot;var(score)&quot;: 9.00789
+        },
+        {
+            &quot;name&quot;: &quot;African Queen, The (1951)&quot;,
+            &quot;var(score)&quot;: 8.184211
+        },
+        {
+            &quot;name&quot;: &quot;Starship Troopers (1997)&quot;,
+            &quot;var(score)&quot;: 7.232227
+        },
+        {
+            &quot;name&quot;: &quot;Princess Bride, The (1987)&quot;,
+            &quot;var(score)&quot;: 7.17284
+        },
+        {
+            &quot;name&quot;: &quot;Star Kid (1997)&quot;,
+            &quot;var(score)&quot;: 7.0
+        },
+        {
+            &quot;name&quot;: &quot;Aliens (1986)&quot;,
+            &quot;var(score)&quot;: 6.947183
+        },
+        {
+            &quot;name&quot;: &quot;Star Trek: The Wrath of Khan (1982)&quot;,
+            &quot;var(score)&quot;: 6.815574
+        },
+        {
+            &quot;name&quot;: &quot;Men in Black (1997)&quot;,
+            &quot;var(score)&quot;: 6.745875
+        }
+    ]
+}
+</code></pre>
 
-<ul>
-<li>Use as many cores as possible</li>
-<li>Have the servers geographically close-by so that network latency is reduced</li>
-<li>Distribute the data among servers and query them in a round-robin fashion for greater throughput</li>
-</ul>
+<p><em>Note that we didn&rsquo;t filter out &ldquo;Star Wars&rdquo; and thankfully it came back as the first result.</em>  Looks like a pretty good distance function, especially given the top three results, but it&rsquo;s probably biased.  &ldquo;Star Wars&rdquo; is highly rated on average, and so we got back other highly rated movies with intersecting genres.  If we searched for a movie that wasn&rsquo;t highly rated on average, the measure would still prefer highly rated movies with intersecting genres.</p>
 
-<p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is scalable.</strong></p>
+<p>That might be fine.  If a user likes certain genres, then maybe highly rated movie in those genres are good recommendations. Maybe it&rsquo;s better to normalize the result so that two movies come out as more similar if they have genres in common and similar average ratings.  That&rsquo;s what cosine distance does.</p>
 
-<p>Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!</p>
+<h3 id="cosine-distance">Cosine Distance</h3>
 
-<p><em>This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
-The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0">available for download here</a>.</em></p>
+<p>Cosine distance treats our movies as vectors in an n-dimensional space.  The similarity of the movies is then a measure of the difference in angle between the vectors.  The smaller the angle between two vectors, the more similar the movies.  For our movie example, we can express that as follows.</p>
+
+<p>If we treat our movies as vectors</p>
+
+<p>$$x_1 &hellip; x_n$$ and $$y_1 &hellip; y_n$$</p>
+
+<p>the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.</p>
+
+<p><img src="/images/cosine_diff.png" alt="cosine difference" /></p>
+
+<!--
+what's wrong with this???
+$$\frac{\sum_{i=1}^n{x_iy_i}}{\sqrt{\sum_{i=1}^n{x_i^2}}\cdot \sqrt{\sum_{i=1}^n{x_i^2}}}$$
+If I paste it into http://www.hostmath.com/ I get what I want
+-->
+
+<p>In our case the $x$&rsquo;s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
+
+<p><img src="/images/cosine_diff_movies.png" alt="cosine difference" /></p>
+
+<!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} -->
+
+<p>That factors in both the intersecting genres as well as the similarity of the average ratings.</p>
+
+<p>As a single Dgraph query, that looks like this.</p>
+
+<pre><code>{
+  # Calculate the average rating of every movie
+  var(func: has(rated)) {
+    rated @facets(r as rating) {
+      c as count(~rated)
+      M2_avg_rating as math(r / c)
+      M2_num_gen as count(genre)
+    }
+  }
+
+  # Calculate a cosine difference score for every movie that shares
+  # at least 1 genre with M1
+  var(id: 0x30d80) {    # movie M1
+    norm as math(1)     # 1
+
+    # Find the average rating for M1
+    M1_num_ratings as count(~rated)
+    ~rated @facets(B as rating)
+    M1_ratings_sum as sum(var(B))
+    M1_avg_rating as math(M1_ratings_sum / M1_num_ratings) # 2
+    M1_num_gen as count(genre)                             # 3
+
+    M1_genres as genre {
+      ~genre { # 4
+        # M2 -- movies reached here share a genre with the initial movie
+
+        # normalize the M1 count and average to account for multiple paths
+        M1_norm_avg as math(M1_avg_rating / norm)
+        num_genN as math(M1_num_gen/norm)              # 5
+        genint as count(genre @filter(var(M1_genres))) # 6
+
+        score as math((genint + (M1_norm_avg * M2_avg_rating)) / 
+          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) * 
+          sqrt(M2_num_gen + (M2_avg_rating*M2_avg_rating))))    # 7
+
+      }
+    }
+  }
+
+  similarMovies(id:var(score), first:20, orderdesc: var(score)) { # 8
+    name
+    var(score)
+  }
+}
+</code></pre>
+
+<p>The query works as follows.</p>
+
+<ol>
+<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
+<li>Find the average rating for movie $M_1$.</li>
+<li>Count the genres for $M_1$.</li>
+<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
+<li>We may have reached this $M_2$ via multiple genre paths and the values from <code># 2</code> and <code># 3</code> would have accumulated for each path, so normalize back to the originals.</li>
+<li>Find the number of intersecting genres.</li>
+<li>Apply the cosine distance formula &mdash; <code>score</code> is thus a map for each $M_2$ to the cosine distance between $M_1$ and $M_2$.</li>
+<li>Filter out the movies that were closest (had cosine closer to 1, and thus lowest angle)</li>
+</ol>
+
+<p>We searched again for the &ldquo;The Shawshank Redemption&rdquo; and got these results.</p>
+
+<pre><code>{
+    &quot;similarMovies&quot;: [
+        {
+            &quot;name&quot;: &quot;Shawshank Redemption, The (1994)&quot;,
+            &quot;var(score)&quot;: 1.0
+        },
+        {
+            &quot;name&quot;: &quot;Anna (1996)&quot;,
+            &quot;var(score)&quot;: 0.999997
+        },
+        {
+            &quot;name&quot;: &quot;Some Mother's Son (1996)&quot;,
+            &quot;var(score)&quot;: 0.999997
+        },
+        {
+            &quot;name&quot;: &quot;12 Angry Men (1957)&quot;,
+            &quot;var(score)&quot;: 0.999988
+        },
+        {
+            &quot;name&quot;: &quot;Bitter Sugar (Azucar Amargo) (1996)&quot;,
+            &quot;var(score)&quot;: 0.999985
+        },
+        {
+            &quot;name&quot;: &quot;Citizen Kane (1941)&quot;,
+            &quot;var(score)&quot;: 0.999971
+        },
+        {
+            &quot;name&quot;: &quot;To Kill a Mockingbird (1962)&quot;,
+            &quot;var(score)&quot;: 0.999971
+        },
+        {
+            &quot;name&quot;: &quot;One Flew Over the Cuckoo's Nest (1975)&quot;,
+            &quot;var(score)&quot;: 0.999971
+        },
+        {
+            &quot;name&quot;: &quot;Pather Panchali (1955)&quot;,
+            &quot;var(score)&quot;: 0.999965
+        },
+        {
+            &quot;name&quot;: &quot;Good Will Hunting (1997)&quot;,
+            &quot;var(score)&quot;: 0.999958
+        }
+    ]
+}
+</code></pre>
+
+<p>We didn&rsquo;t filter out &ldquo;The Shawshank Redemption&rdquo; and thus it comes back as the top result &mdash; it has an angle of 0 with itself.  Following that the query returns the results that cosine difference calculates as most similar.</p>
+
+<p><em>With that, we conclude this post.</em> In this post, we showcased Jaccard distance, a variation of Jaccard, and finally Cosine
+distance. That&rsquo;s three content-based filtering distance metrics and queries for them in Dgraph.  The variables and math function in Dgraph allow us to encode the metrics directly in the query.</p>
+
+<p>In the next post, we&rsquo;ll take a look at collaborative filtering.  We&rsquo;ll also look at making recommendations for Stack Overflow and how to build a scalable recommendation engine for big graphs.</p>
 
 <hr />
 
@@ -647,7 +988,8 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 <br/>
 
 
-<p><em>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></em></p></div>
+<p><em>Top image: <a href="http://www.spacex.com/media-gallery/detail/149441/9516">FALCON 9 FIRST STAGE LANDING</a></em></p>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -711,12 +1053,12 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 	<div class="article-author">
 	<figure class="article-author__figure">
 		
-	<img src="/images/team-manish.jpg" class="article-author__image">
+	<img src="/images/michael.jpg" class="article-author__image">
 
 
 	</figure>
 	<div class="article-author__bio">
-		<h4 class="article-author__name">Manish Rai Jain
+		<h4 class="article-author__name">Michael Compton
 
 
 			<span class="article-author__title">Editor</span>
@@ -724,24 +1066,9 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 		
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
-        <li class="social__item social__item--inline">
-            <a href="https://au.linkedin.com/in/manishrjain" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="social__item social__item--inline">
-            <a href="https://twitter.com/manishrjain" class="social__link">
-                <svg class="icon social__icon social__icon--twitter">
-                    <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
     </ul>
 </nav>
-<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
-<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
+<p>Michael did undergrad computer science at ANU in Canberra and a Ph.D. at Cambridge in the U.K.  He's worked for a number of years with graph databases.  He likes sport and hanging out with his family.</p>
 
 
 	</div>
@@ -786,7 +1113,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/performance-throughput-latency/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/recommendation/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -825,7 +1152,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-06-29%2017%3a54%3a33.510345081%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-06-29%2017%3a54%3a33.500355021%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
     </script>
@@ -860,7 +1187,7 @@ $(document.links).filter(function() {
 
   
   <script type="text/javascript">
-DiscourseEmbed = { discourseUrl: 'https:\/\/discuss.dgraph.io\/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/performance-throughput-latency\/' };
+DiscourseEmbed = { discourseUrl: 'https:\/\/discuss.dgraph.io\/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/recommendation\/' };
     (function() {
       var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
       d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
