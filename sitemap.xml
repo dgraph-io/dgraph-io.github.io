@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://open.dgraph.io/post/recommendation2/</loc>
+    <lastmod>2017-06-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://open.dgraph.io/post/recommendation/</loc>
     <lastmod>2017-06-29T00:00:00+00:00</lastmod>
   </url>
@@ -83,13 +88,13 @@
   
   <url>
     <loc>https://open.dgraph.io/</loc>
-    <lastmod>2017-06-29T00:00:00+00:00</lastmod>
+    <lastmod>2017-06-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://open.dgraph.io/post/</loc>
-    <lastmod>2017-06-29T00:00:00+00:00</lastmod>
+    <lastmod>2017-06-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

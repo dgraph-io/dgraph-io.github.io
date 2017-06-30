@@ -7,8 +7,638 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 29 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Jun 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://open.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Build a Realtime Recommendation Engine: Part 2</title>
+      <link>https://open.dgraph.io/post/recommendation2/</link>
+      <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://open.dgraph.io/post/recommendation2/</guid>
+      <description>
+
+&lt;p&gt;&lt;em&gt;This is part 2 of a two-part series on recommendations using Dgraph.  Check our &lt;a href=&#34;https://open.dgraph.io/post/recommendation/&#34;&gt;part 1 here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users.  There&amp;rsquo;s a whole field of theory and practice in recommendation engines that we touched on, talking about &lt;strong&gt;content-based&lt;/strong&gt; (based on properties of objects) and &lt;strong&gt;collaborative&lt;/strong&gt; (based on similar users) filtering techniques based on a chapter from Stanford MOOC &lt;a href=&#34;https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about&#34;&gt;Minning Massive Datasets&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We dug deeper into content-based filtering and showed how &lt;em&gt;Jaccard&lt;/em&gt; distance and &lt;em&gt;Cosine&lt;/em&gt; distance can be encoded directly in Dgraph queries using Dgraph&amp;rsquo;s variables and math functions.&lt;/p&gt;
+
+&lt;p&gt;This time we&amp;rsquo;ll look into collaborative filtering and hybrid recommendations in Dgraph queries.  Then we&amp;rsquo;ll look at how to build a real-time scalable recommendation engine for big graphs.&lt;/p&gt;
+
+&lt;p&gt;To start with, we&amp;rsquo;ll continue with our &lt;a href=&#34;https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k&#34;&gt;movie data&lt;/a&gt; from last time and then start looking at recommendations over Stack Exchange data.  We&amp;rsquo;ll keep it small in this post and use &lt;a href=&#34;https://lifehacks.stackexchange.com/&#34;&gt;Lifehacks&lt;/a&gt; data, but watch out for upcoming posts on loading all of Stack Overflow (2 Billion edges) into Dgraph and running the website and a recommendation engine with Dgraph as the backend.&lt;/p&gt;
+
+&lt;script type=&#34;text/x-mathjax-config&#34;&gt;
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [[&#39;$&#39;,&#39;$&#39;], [&#39;\\(&#39;,&#39;\\)&#39;]]}
+});
+&lt;/script&gt;
+&lt;script type=&#34;text/javascript&#34; async
+  src=&#34;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML&#34;&gt;
+&lt;/script&gt;
+
+&lt;h2 id=&#34;collaborative-filtering&#34;&gt;Collaborative filtering&lt;/h2&gt;
+
+&lt;p&gt;Content-based filtering measures the similarity of objects based on their properties.
+&lt;strong&gt;Rather than trying to find similar items, collaborative filtering works by finding similar users and then recommending items that similar users have rated highly.&lt;/strong&gt;  In the movie example from &lt;a href=&#34;https://open.dgraph.io/post/recommendation/&#34;&gt;part 1&lt;/a&gt;, for a given user we first find the set of users that are similar, find movies those users rated highly and recommend some that our user hasn&amp;rsquo;t seen.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Let&amp;rsquo;s say we are trying to recommend movies to Bob.&lt;/em&gt; If Bob and Alice have rated a movie highly and they
+do this repeatedly for many movies, they are similar. The more movies they have in common this way,
+the more similar Bob and Alice are. Once we have more similar users like Alice, we need to find those movies that
+these users have rated highly. We then remove the movies that Bob has seen, leaving movies we should recommend to Bob.&lt;/p&gt;
+
+&lt;p&gt;If we represent the movies that user $U_i$ and user $U_j$ have in common as&lt;/p&gt;
+
+&lt;p&gt;$$M_{(u_i,u_j)}$$&lt;/p&gt;
+
+&lt;p&gt;and write $R_{U_i}$ for a user&amp;rsquo;s rating function, then we can represent a distance (or similarity) score between two users as an average of their scores for the movies they both rated.&lt;/p&gt;
+
+&lt;!--$$\frac{\sum{R_{U_i}(M_{(u_i,u_j)})} + \sum{R_{U_j}(M_{(u_i,u_j)})}}{|M_{(u_i,u_j)}|}$$--&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/collab_diff1.png&#34; alt=&#34;collaborative distance 1&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is how the query would look in Dgraph.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  var(id:2) {                             # 1
+    a as math(1)
+    seen as rated @facets(r as rating) {  # 2
+      ~rated @facets(sr as rating) {      # 3
+        user_score as math((sr + r)/a)    # 4
+      }
+    }
+  }
+
+  var(id:var(user_score), first:30, orderdesc: var(user_score)) {  # 5
+    norm as math(1)
+    rated @filter(not var(seen)) @facets(ur as rating) {           # 6
+      fscore as math(ur/norm)                                      # 7
+    }
+  }
+
+  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
+    name
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Note that this query is slightly different from the
+formula in MOOC chapter, because although we can write cosine distance for content-based filtering
+directly in the query language, the language does not yet support cosine distance when it
+involves more than 1 traversal. However, this can be tackled by retrieving the subgraph from Dgraph,
+doing the computation and writing the similarity scores back to Dgraph for further processing.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Let us look at what different parts of the query do.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Start with a user whose id is 2 (our Bob)&lt;/li&gt;
+&lt;li&gt;Get all the movies that this user has rated and their ratings&lt;/li&gt;
+&lt;li&gt;Get all the users who have rated these movies and the corresponding ratings given by them (the Alices)&lt;/li&gt;
+&lt;li&gt;Calculate the similarity to those users according to our metric&lt;/li&gt;
+&lt;li&gt;Take the top 10 users based on the score calculated in the last step (the similar users)&lt;/li&gt;
+&lt;li&gt;Get the ratings by the similar users for movies not seen by the user 2&lt;/li&gt;
+&lt;li&gt;Normalize the rating as sum of all the ratings divided by number of ratings&lt;/li&gt;
+&lt;li&gt;Get the top 10 movies based on the score calculated in the last step&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Recommendation&amp;quot;: [
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Cop Land (1997)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Endless Summer 2, The (1994)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Twelve Monkeys (1995)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Little Buddha (1993)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Reality Bites (1994)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Beautician and the Beast, The (1997)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;This Is Spinal Tap (1984)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Miracle on 34th Street (1994)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Back to the Future (1985)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Brothers McMullen, The (1995)&amp;quot;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;collaborative-filtering-only-with-high-scores&#34;&gt;Collaborative filtering, only with high scores&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Let&amp;rsquo;s make an improvement.&lt;/em&gt; Consider the case when user A rated &lt;code&gt;movie-a&lt;/code&gt; 1, user B rated &lt;code&gt;movie-a&lt;/code&gt; 5, user A rated &lt;code&gt;movie-b&lt;/code&gt; 3 and user C rated &lt;code&gt;movie-b&lt;/code&gt; 3. Based on the average score for common movies, both user B and C will have a score of 3. But intuitively, we can say that user C is more similar to A than B. One way to avoid this would be by considering only the &lt;em&gt;good&lt;/em&gt; ratings which we can define as &amp;gt;= 3.&lt;/p&gt;
+
+&lt;p&gt;So we can add a filter when we&amp;rsquo;re getting the ratings as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Collaborative filtering
+{
+  var(id:2) {  # 1
+    a as math(1)
+    seen as rated @facets(r as rating) @facets(ge(rating, 3)) { # 2
+      ~rated @facets(sr as rating) @facets(ge(rating, 3)) {     # 3
+        user_score as math((sr + r)/a) # 4
+      }
+    }
+  }
+
+  var(id:var(user_score), first:30, orderdesc: var(user_score)) { # 5
+    norm as math(1)
+    rated @filter(not var(seen)) @facets(ur as rating) {          # 6
+      fscore as math(ur/norm) # 7
+    }
+  }
+
+  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
+    name
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;Recommendation&amp;quot;: [
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Fish Called Wanda, A (1988)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Big Sleep, The (1946)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Babe (1995)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Richard III (1995)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Real Genius (1985)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Cool Hand Luke (1967)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Mr. Holland&#39;s Opus (1995)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Johnny Mnemonic (1995)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;His Girl Friday (1940)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;East of Eden (1955)&amp;quot;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s try and test how well this is working.  We don&amp;rsquo;t have any live users to test on, but one measure can be how well it predicts the known data.  &lt;em&gt;We removed the following 5 movies that user 2 rated as 5 and ran the query
+to predict the ratings.&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        {
+          &amp;quot;_uid_&amp;quot;: &amp;quot;0x30e5d&amp;quot;,
+          &amp;quot;name&amp;quot;: &amp;quot;Secrets &amp;amp; Lies (1996)&amp;quot;
+        },
+        {
+          &amp;quot;_uid_&amp;quot;: &amp;quot;0x30e6e&amp;quot;,
+          &amp;quot;name&amp;quot;: &amp;quot;L.A. Confidential (1997)&amp;quot;
+        },
+        {
+          &amp;quot;_uid_&amp;quot;: &amp;quot;0x30e77&amp;quot;,
+          &amp;quot;name&amp;quot;: &amp;quot;Wings of the Dove, The (1997)&amp;quot;
+        },
+        {
+          &amp;quot;_uid_&amp;quot;: &amp;quot;0x30e79&amp;quot;,
+          &amp;quot;name&amp;quot;: &amp;quot;Titanic (1997)&amp;quot;
+        },
+        {
+          &amp;quot;_uid_&amp;quot;: &amp;quot;0x30e7c&amp;quot;,
+          &amp;quot;name&amp;quot;: &amp;quot;As Good As It Gets (1997)&amp;quot;
+        }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The predicted ratings are:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        {
+          &amp;quot;name&amp;quot;: &amp;quot;Secrets &amp;amp; Lies (1996)&amp;quot;,
+          &amp;quot;var(fscore)&amp;quot;: 5
+        },
+        {
+          &amp;quot;name&amp;quot;: &amp;quot;L.A. Confidential (1997)&amp;quot;,
+          &amp;quot;var(fscore)&amp;quot;: 3
+        },
+        {
+          &amp;quot;name&amp;quot;: &amp;quot;Wings of the Dove, The (1997)&amp;quot;,
+          &amp;quot;var(fscore)&amp;quot;: 5
+        },
+        {
+          &amp;quot;name&amp;quot;: &amp;quot;Titanic (1997)&amp;quot;,
+          &amp;quot;var(fscore)&amp;quot;: 3.833333
+        },
+        {
+          &amp;quot;name&amp;quot;: &amp;quot;As Good As It Gets (1997)&amp;quot;,
+          &amp;quot;var(fscore)&amp;quot;: 4.666667
+        }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So 2 of the movies got 5 rating, one got 4.66, one 3.83, and one 3. &lt;em&gt;Not bad for a single query!&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;collaborative-filtering-with-penalty&#34;&gt;Collaborative filtering, with penalty&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Let&amp;rsquo;s tweak it some more.&lt;/em&gt;  If the ratings by two users vary too, much they might not be as similar. For example, taking a straight average, ratings of 3 and 3 by the two users look the same as 5 and 1.  So lets penalize each user by the difference in rating &amp;mdash; as the rating difference grows the penalty increases.&lt;/p&gt;
+
+&lt;p&gt;In the query below we multiply the average by:&lt;/p&gt;
+
+&lt;p&gt;$$1 - {(\frac{sr-r}{5*a})}^2$$&lt;/p&gt;
+
+&lt;p&gt;If the difference between ratings is small, the multiple will be closer to 1.  If the difference is larger, the multiple will be closer to 0, reducing the user&amp;rsquo;s similarity.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  var(id:2) {  # 1
+    a as math(1)
+    seen as rated @facets(r as rating) @facets(ge(rating, 3)) { # 2
+      ~rated @facets(sr as rating) @facets(ge(rating, 3)) {     # 3
+        user_score as math(
+        (sr + r)/a *
+        (1 -  pow((sr-r)/(5*a),
+        2))) # 4
+      }
+    }
+  }
+
+  var(id:var(user_score), first:30, orderdesc: var(user_score)) { #5
+    norm as math(1)
+    rated @filter(not var(seen)) @facets(ur as rating) { # 6
+      fscore as math(ur/norm) # 7
+    }
+  }
+
+  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
+    var(fscore)
+    name
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Predicated ratings for the ones that were removed from the dataset are:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;        {
+            &amp;quot;name&amp;quot;: &amp;quot;Secrets &amp;amp; Lies (1996)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 5.0
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;L.A. Confidential (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 2.75
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Wings of the Dove, The (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 5.0
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Titanic (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 4.0
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;As Good As It Gets (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 4.666667
+        },
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The scores got closer to the removed actual scores, probably indicating that we removed some users from the similar users who didn&amp;rsquo;t vote highly for this movie.  &amp;ldquo;L.A. Confidential&amp;rdquo; was a bit of an outlier, going back slightly, indicating that we removed some users who enjoyed this one.&lt;/p&gt;
+
+&lt;h2 id=&#34;hybrid-filtering&#34;&gt;Hybrid filtering&lt;/h2&gt;
+
+&lt;p&gt;Content-based filtering found similar movies, based on a given movie.  Collaborative filtering found similar users and gave a recommendation of movies the similar users rated highly.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Hybrid filtering is when we combine the collaborative and content-based approaches into a single recommendation algorithm.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For our hybrid filtering, we&amp;rsquo;ll assign a score to each genre as the number of movies watched by user 2 in that genre. Then, after we&amp;rsquo;ve found the similar users, we&amp;rsquo;ll give a boost to the ratings of movies based on the genres that user 2 watches most.  That&amp;rsquo;s collaborative filtering to get the similar users and the movies they enjoy, and then content-based filtering to help order those movies based on genres.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  var(id:2) {  # 1
+    rated @groupby(genre) {
+      gc as count(_uid_)
+    }
+
+    a as math(1)
+    seen as rated @facets(r as rating) @facets(ge(rating, 3)) { # 2
+      ~rated @facets(sr as rating) @facets(ge(rating, 3)) {   # 3
+        user_score as math((sr + r)/a) # 4
+      }
+    }
+  }
+
+  var(id:var(user_score), first:30, orderdesc: var(user_score)) { #5
+    norm as math(1)
+    rated @filter(not var(seen)) @facets(ur as rating) { # 6
+      genre {
+        q as math(gc)   # 6.1
+      }
+      x as sum(var(q))  # 6.2
+      fscore as math((1+(x/100))*ur/norm) # 7
+    }
+  }
+
+  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
+    var(fscore)
+    name
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This time, at step &lt;code&gt;#1&lt;/code&gt; the query gets a count of how many times our user has rated movies in each genre using Dgraph&amp;rsquo;s &lt;code&gt;groupby&lt;/code&gt;, so &lt;code&gt;gc&lt;/code&gt; will relate genres to number of movies rated in that genre.  Then, before calculating the score for each movie at step &lt;code&gt;#7&lt;/code&gt;, the query gives each genre in the movie a score, step &lt;code&gt;6.1&lt;/code&gt;, and sums a total score, step &lt;code&gt;6.2&lt;/code&gt;.  At step &lt;code&gt;#7&lt;/code&gt; each movie&amp;rsquo;s average score is multiplied by $1+\frac{x}{100}$.&lt;/p&gt;
+
+&lt;p&gt;If a movie contains genres our user doesn&amp;rsquo;t watch so much, $\frac{x}{100}$ will be small and the movie won&amp;rsquo;t get much of a boost.  If it contains genres our user often rates movies of, then $x$ will be larger and thus $1+\frac{x}{100}$ will give a bigger bonus.&lt;/p&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;Recommendation&amp;quot;: [
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Bound (1996)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 8.15
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Wings of the Dove, The (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 7.75
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Kiss the Girls (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 7.45
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Legends of the Fall (1994)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 7.4
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Jane Eyre (1996)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 7.25
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Crying Game, The (1992)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 7.065
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;To Catch a Thief (1955)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 6.95
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;American President, The (1995)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 6.857143
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;Sirens (1994)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 6.813333
+        },
+        {
+            &amp;quot;name&amp;quot;: &amp;quot;As Good As It Gets (1997)&amp;quot;,
+            &amp;quot;var(fscore)&amp;quot;: 6.813333
+        }
+    ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With the collaborative filtering queries, the scores for the test movies were high, but so were many other movies that the similar users enjoyed.  The hybrid approach skews the result back more towards the genres that our user watches most. In the results, two of the 5-star rated movies (&lt;code&gt;Wings of the Dove, The (1997)&lt;/code&gt; and &lt;code&gt;As Good As It Gets (1997)&lt;/code&gt;) showed up in the top 10.&lt;/p&gt;
+
+&lt;h2 id=&#34;scaling-recommendations&#34;&gt;Scaling recommendations&lt;/h2&gt;
+
+&lt;p&gt;If you look carefully at the last query, you can see that the graph size explodes very easily.
+Say you rated 50 movies and those movies were rated by 20000 other people on average, you touch 1M nodes every time
+you want to run this recommendation query.  If we are running many of these queries for different users or as the graph grows, this could get too much.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;rsquo;s look at how we can make this efficient by storing intermediate results back. In general,
+people rate a movie less frequently than they view recommendations. Thus, the frequency of rating
+updates is less than the frequency of generating recommendations.  So if we can calculate the
+similarity scores only when a user rates a movie, and store it back to Dgraph; we can retrieve the
+recommended movies cheaply by using this stored similarity score between users.&lt;/p&gt;
+
+&lt;p&gt;For this, we can run the first part of the query, which calculates the similar users and store the top scores in an edge connecting
+the users. Now, when we want to do recommendation, we can directly get the top similar users and then just have to do the 2nd part
+of the query which is getting the average ratings for the movies that these similar users rated.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/newedge.png&#34; alt=&#34;Edge creation with score&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that this would require some extra code in the application which creates these edges when an
+update happens but can make the recommendation query highly performant even for extremely large
+datasets.  Typically user similarity scores are generated as a batch process. With this approach, we
+can generate these scores incrementally, triggered by user actions; which would also improve the
+freshness of the recommendations.&lt;/p&gt;
+
+&lt;h2 id=&#34;stack-overflow&#34;&gt;Stack Overflow&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s look at a different kind of dataset which has users, posts (questions, answers, comments),
+upvotes, downvotes, etc. This has around 450k triples in it and was obtained from Lifehacks Stack Exchange forum.&lt;/p&gt;
+
+&lt;p&gt;Say we want to recommend what a user should read based on their upvotes. This is similar to the
+collaborative filtering we saw in the last section.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Find similar users who have upvoted the same content.&lt;/li&gt;
+&lt;li&gt;Then find the content similar users have upvoted but the given user has not interacted with.&lt;/li&gt;
+&lt;li&gt;Then, to order the content we can see how many of the similar users have upvoted the content.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s take a look at the schema for a part of the data that is of interest to us.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/soSchema.png&#34; alt=&#34;Stack Overflow schema&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The query to do collaborative filtering on this dataset is as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Recommend similar questions to read based on upvote.
+{
+  user as var(func: eq(DisplayName, &amp;quot;Mooseman&amp;quot;)) { # 1
+    a as math(1)
+    ~Author { # 2
+      seen as ~Upvote { # 3
+        Upvote {    # 4
+          Author {  # 5
+            sc as math(a)
+          }
+        }
+      }
+    }
+  }
+
+  var(id: var(sc), orderdesc: var(sc), first: 50) @filter(not var(user)) {  # 6
+    b as math(1)
+    ~Author { # 7
+      ~Upvote @filter(not var(seen) and eq(Type, &amp;quot;Question&amp;quot;)) { # 8
+        fsc as math(b)
+      }
+    }
+  }
+
+  topQ(id: var(fsc), orderdesc: var(fsc), first: 10) {  # 9
+    Title {
+      Text
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at what the numbered lines in the query represent:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Start with a user whose name is &lt;code&gt;Mooseman&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Traverse the &lt;code&gt;~Author&lt;/code&gt; edge which leads to the votes he has created&lt;/li&gt;
+&lt;li&gt;Traverse the &lt;code&gt;~Upvote&lt;/code&gt; edge which leads us to the posts he has upvoted&lt;/li&gt;
+&lt;li&gt;Traverse the &lt;code&gt;Upvote&lt;/code&gt; edge to get all the upvotes on these posts&lt;/li&gt;
+&lt;li&gt;Traverse the &lt;code&gt;Author&lt;/code&gt; edge to get the users who created these upvotes and store the number of paths between the starting user and this user in a variable &lt;code&gt;sc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pick the top 50 users by the score we calculated&lt;/li&gt;
+&lt;li&gt;Get the upvotes created by these users&lt;/li&gt;
+&lt;li&gt;Get the posts which are of type question not seen by &lt;code&gt;Mooseman&lt;/code&gt; and assign them a score which is the number of upvotes by these top (similar) users. This score is store in variable &lt;code&gt;fsc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Use the score we calculated in &lt;code&gt;fsc&lt;/code&gt; to get the top 10 questions&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;topQ&amp;quot;: [
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How can I keep my cat off my keyboard?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How do I stop my earphones from getting tangled&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;Ηow can I keep my jeans&#39; zippers from unzipping on their own?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How can I work out my girlfriend&#39;s ring size, without asking her or using a ring?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How can I improvise a magnifying glass?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;Sleeping in a noisy environment&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How can I black out a bright bedroom at night?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How do I stop cars from tailgating?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;Driving into garage where there is little room for error?&amp;quot;
+        }
+      ]
+    },
+    {
+      &amp;quot;Title&amp;quot;: [
+        {
+          &amp;quot;Text&amp;quot;: &amp;quot;How can I boost my wifi range?&amp;quot;
+        }
+      ]
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To make this recommendation scalable, we can create an edge between the most similar users
+when an update (in this case, an upvote) happens. Then, when a user logs in, we can cheaply compute
+their recommendations using these edges directly.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;With that, we conclude this post.&lt;/em&gt; In this post, we showed how collaborative filtering based on similar users can be encoded in Dgraph queries.  We showed a couple of approaches so you can get a flavour of the kind of flexibility Dgraph allows. We also combined content-based and collaborative approaches into a hybrid recommendation system that found similar users and then ranked movies with genres our user enjoyed.&lt;/p&gt;
+
+&lt;p&gt;Content-based filtering can be useful when recommending to users who have rated few movies. This is how websites bootstrap recommendation when you join, for example, by asking for your 5 favourite movies and then showing movies that are similar to them. Then, as you start rating movies, a switch to collaborative filtering utilizes user similarity and starts to improve recommendations further.&lt;/p&gt;
+
+&lt;p&gt;We can&amp;rsquo;t tell you what metrics will work best in your case &amp;mdash; that&amp;rsquo;ll be based on your data and users and a fair amount of thinking and experimenting.  But what we&amp;rsquo;ve done here is to show you how you can translate your ideas into reality using Dgraph. &lt;em&gt;Hope this gets you started on the path to adding a recommendation system in your application.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;coming-up&#34;&gt;Coming up&lt;/h3&gt;
+
+&lt;p&gt;Watch out for an upcoming series of posts where we explore how typical web apps can benefit from Dgraph.  We&amp;rsquo;ll show how we loaded all the data from the &lt;a href=&#34;https://archive.org/details/stackexchange&#34;&gt;Stack Overflow data dumps&lt;/a&gt;, which is more than 2 billion edges, into Dgraph and run Stack Overflow with Dgraph as the sole backend DB.  We&amp;rsquo;ll explore the tradeoffs that are made in doing this in SQL vs a graph database and we&amp;rsquo;ll look at the recommendation engine we&amp;rsquo;re building on top of all that Stack Overflow data.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;div class=&#34;engage&#34;&gt;
+	&lt;p&gt;&lt;strong&gt;We are building an open source, real time, horizontally scalable and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
+  &lt;table&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;See our live demo.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Star us on Github.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Ask us questions.&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+	&lt;strong&gt;We&#39;re starting to support enterprises in deploying Dgraph in production. &lt;a href=&#34;mailto:manish@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;, if you want us to help you try out Dgraph at your organization.&lt;/strong&gt;
+&lt;/div&gt;
+&lt;br/&gt;
+
+
+&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://3c1703fe8d.site.internapcdn.net/newman/gfx/news/2017/1-amazingspace.jpg&#34;&gt;A stunning view of the Falcon 9 rocket just before landing on a barge&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Build a Realtime Recommendation Engine: Part 1</title>
@@ -4982,196 +5612,6 @@ The full report is &lt;a href=&#34;https://www.dropbox.com/s/7h4ytak39r2pdun/Ash
 
 
 &lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;http://mars.nasa.gov/images/PIA14840.jpg&#34;&gt;Mars Rover Landing via Nasa&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Wisemonk: A slackbot to move discussions from Slack to Discourse</title>
-      <link>https://open.dgraph.io/post/wisemonk/</link>
-      <pubDate>Wed, 15 Jun 2016 11:39:27 +1000</pubDate>
-      
-      <guid>https://open.dgraph.io/post/wisemonk/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;Then there was the fact that we had so many channels and direct messages and group chats.
-It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
-&lt;em&gt;— &lt;a href=&#34;https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/&#34;&gt;Dave Teare, Curing Our Slack Addiction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;the-beginning&#34;&gt;The Beginning&lt;/h1&gt;
-
-&lt;p&gt;&lt;em&gt;— Manish Jain&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Sitting in a Japanese restaurant, waiting for my lunch, this is the line that hit me hard.
-I’d experienced this exact thing in my previous company.&lt;/p&gt;
-
-&lt;p&gt;Every block of time dedicated to coding was either interrupted by pings on the chat system, or a consistent feeling that you’re missing out.
-Away from the desk, phones would start ringing every evening.
-And they’d ring some more on the weekends, Sunday evenings in particular.
-We were always doing something — the feeling was like being on &lt;em&gt;unpaid pager duty&lt;/em&gt;.
-People are talking, and if I’m not around to show my presence, it would mean I’m not working.
-But what was getting done, I wasn’t so clear about.&lt;/p&gt;
-
-&lt;p&gt;So, when we started exploring options for both internal and external communication for &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
-, we wanted to do things differently.
-We’d focus on asynchronous communication, so people can take their time before jumping in.
-People can reply when they get to it — this might be hours later.
-And there’ll be an incentive to modify your reply as more things become clear to you or you find better words to express yourself.
-Something better than Email, but not so distracting as Slack.
-The winner came out to be Discourse by Jeff Atwood and his team(edit: not Discord, another chat app).&lt;/p&gt;
-
-&lt;p&gt;Having run it for over two months, we couldn’t have been happier.
-Discourse sits somewhere between emails and real-time chat systems.
-You feel like you’re having a real-time conversation.
-But it won’t interrupt you in the middle of a 3-hour block of time you’ve set for distraction-free coding.
-Discourse has become such an integral part of our company that we abandoned making decisions in meetings entirely.
-All decisions happen over discourse, so everyone has a chance to voice their opinions and suggestions at their pace.
-And others can embark on fact-finding and put figures together to support or deny arguments.
-I’ve seen a lot smarter discussions, and hence decisions happening over our Discourse forum than over any other medium.&lt;/p&gt;
-
-&lt;p&gt;Don’t get me wrong.
-&lt;strong&gt;We still need Slack&lt;/strong&gt; for casual chit chat and team bonding.
-But, Slack is an addiction.
-You write one thing, someone replies; then someone else jumps in; and the result is an hour-long frenzy, where everyone feels like they’ve contributed a lot.
-But a few hours later, you can’t pinpoint what changed.&lt;/p&gt;
-
-&lt;p&gt;Most useful discussions require a bit more time and thought.
-More than when someone else is typing while you’re in the middle of your sentence.&lt;/p&gt;
-
-&lt;p&gt;This is what lead to Wisemonk.
-This bot would push the conversation away from Slack into Discourse.
-And this has to happen just when the team is getting sucked into the frenzy.
-&lt;strong&gt;Before it’s too late&lt;/strong&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;how-we-built-it&#34;&gt;How we built it&lt;/h1&gt;
-
-&lt;p&gt;&lt;em&gt;— Pawan Rawal&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Wisemonk makes use of the Slack RTM API.
-We make good use of the concurrency features in Go.
-For each Slack channel passed in channels flag, we initialise an instance of type Counter.
-The counter keeps track of the messages and other states for a Slack channel.
-Each counter has a buffered channel (called &lt;code&gt;messages&lt;/code&gt;) to which Slack messages are sent.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cmap := make(map[string]*Counter)
-for _, cid := range schannels {
-  wg.Add(1)
-  c := &amp;amp;Counter{channelId: cid}
-  c.messages = make(chan *slack.Msg, 500)
-  cmap[cid] = c
-  go c.checkOrIncr(rtm, wg, memmap)
-}
-go listen(rtm)
-wg.Wait()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The listen function which runs as a goroutine gives us access to the messages sent on Slack.
-We use this library to authenticate with and get messages from Slack.
-Then the listen function passes messages on the relevant Go channel.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;case *slack.MessageEvent:
-  if sm, ok := msg.Data.(*slack.MessageEvent); ok {
-  // Putting the message on the Counter it belongs to
-  m := sm.Msg
-  if c, ok := cmap[m.Channel]; ok {
-    c.messages &amp;lt;- &amp;amp;m
-  }
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The &lt;code&gt;checkOrIncr&lt;/code&gt; method which runs as a goroutine for every counter keeps a count of the number of messages exchanged in a given interval.
-Below is the basic version of the method.
-It runs a never ending &lt;code&gt;for&lt;/code&gt; loop.
-Now every time a message is received on the messages channel of the counter instance, it adds the message.
-NewTicker function from the time package provides us with a Ticker, which sends the time on a channel with the period specified.
-So every 10 seconds we get a time value and check if the count of messages exchanged increases the &lt;code&gt;maxmsg&lt;/code&gt; that we passed as a flag.
-If it does, then we send a warning to the relevant Slack channel.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;func (c *Counter) checkOrIncr(rtm *slack.RTM, wg sync.WaitGroup, memmap map[string]string) {
-   defer wg.Done()
-   ticker := time.NewTicker(time.Second * 10)
-   for {
-       select {
-       case msg := &amp;lt;-c.messages:
-           c.Increment(msg, memmap)
-       case &amp;lt;-ticker.C:
-           count := c.Count()
-           if count &amp;gt;= *maxmsg {
-               go sendMessage(c, rtm)
-           }
-       }
-   }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Once the basic functionality was in place, we added integration with discourse.
-Wisemonk stores the last n messages exchanged, creates a discourse topic with the messages when they exceed the max count and shares the URL with us on Slack.&lt;/p&gt;
-
-&lt;p&gt;You can create a discourse topic on demand too and get the URL for it. This makes shifting conversations to Discourse super easy.&lt;/p&gt;
-
-&lt;p&gt;For the weekends or in the evenings when you want to have a casual chat and don’t want to be interrupted by Wisemonk, you could ask him to meditate, and it won’t disturb you for a while.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;wisemonk-in-action&#34;&gt;Wisemonk in Action&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/wisemonk-in-action.png&#34; alt=&#34;Wisemonk alerting us when we talk too much&#34; /&gt;
-&lt;em&gt;Wisemonk alerting us when we talk too much&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/wisemonk-creating-topic.png&#34; alt=&#34;Asking wisemonk to create a topic&#34; /&gt;
-&lt;em&gt;Asking wisemonk to create a topic&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/wisemonk-meditating.png&#34; alt=&#34;Asking wisemonk to meditate&#34; /&gt;
-&lt;em&gt;Asking wisemonk to meditate&lt;/em&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;parting-thoughts&#34;&gt;Parting Thoughts&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://github.com/dgraph-io/wisemonk#install&#34;&gt;Setting up wisemonk&lt;/a&gt; is super easy and we have found that it has enhanced our productivity a lot.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;It&amp;rsquo;s open source and &lt;a href=&#34;https://github.com/dgraph-io/wisemonk&#34;&gt;available at Github&lt;/a&gt;, so feel free to contribute to it. We would love to hear about your usage of Wisemonk.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Yoda guides actions. Wisemonk guides conversations. Image courtesy: &lt;a href=&#34;http://www.wired.com/wp-content/uploads/2015/08/Yoda-featured1.jpg&#34;&gt;wired.com&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&#34;engage&#34;&gt;
-	&lt;p&gt;&lt;strong&gt;We are building an open source, real time, horizontally scalable and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
-  &lt;table&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-    &lt;th&gt;&lt;/th&gt;
-    &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://wiki.dgraph.io/Get_Started&#34; target=&#34;_blank&#34;&gt;https://wiki.dgraph.io/Get_Started&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;We are hiring. Join us!&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io/careers.html&#34; target=&#34;_blank&#34;&gt;https://dgraph.io/careers.html&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Star us on Github.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Ask us questions.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-	&lt;strong&gt;We&#39;re starting to support enterprises in deploying Dgraph in production. &lt;a href=&#34;mailto:manish@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;, if you want us to help you try out Dgraph at your organization.&lt;/strong&gt;
-&lt;/div&gt;
-&lt;br/&gt;</description>
     </item>
     
   </channel>
