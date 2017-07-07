@@ -60,7 +60,7 @@ these users have rated highly. We then remove the movies that Bob has seen, leav
 &lt;p&gt;This is how the query would look in Dgraph.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
-  var(id:2) {                             # 1
+  var(func: uid(2)) {                             # 1
     a as math(1)
     seen as rated @facets(r as rating) {  # 2
       ~rated @facets(sr as rating) {      # 3
@@ -69,14 +69,14 @@ these users have rated highly. We then remove the movies that Bob has seen, leav
     }
   }
 
-  var(id:var(user_score), first:30, orderdesc: var(user_score)) {  # 5
+  var(func: uid(user_score), first:30, orderdesc: val(user_score)) {  # 5
     norm as math(1)
-    rated @filter(not var(seen)) @facets(ur as rating) {           # 6
+    rated @filter(not uid(seen)) @facets(ur as rating) {           # 6
       fscore as math(ur/norm)                                      # 7
     }
   }
 
-  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
+  Recommendation(func: uid(fscore), orderdesc: val(fscore), first: 10) { # 8
     name
   }
 }
@@ -106,34 +106,34 @@ doing the computation and writing the similarity scores back to Dgraph for furth
 &lt;pre&gt;&lt;code&gt;{
   &amp;quot;Recommendation&amp;quot;: [
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Cop Land (1997)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Hercules (1997)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Endless Summer 2, The (1994)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;How to Be a Player (1997)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Twelve Monkeys (1995)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Othello (1995)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Little Buddha (1993)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;U Turn (1997)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Reality Bites (1994)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Edge, The (1997)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Beautician and the Beast, The (1997)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Arrival, The (1996)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;This Is Spinal Tap (1984)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Outlaw, The (1943)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Miracle on 34th Street (1994)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Con Air (1997)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Back to the Future (1985)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;As Good As It Gets (1997)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Brothers McMullen, The (1995)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;From Dusk Till Dawn (1996)&amp;quot;
     }
   ]
 }
@@ -147,7 +147,7 @@ doing the computation and writing the similarity scores back to Dgraph for furth
 
 &lt;pre&gt;&lt;code&gt;# Collaborative filtering
 {
-  var(id:2) {  # 1
+  var(func: uid(2)) {  # 1
     a as math(1)
     seen as rated @facets(r as rating) @facets(ge(rating, 3)) { # 2
       ~rated @facets(sr as rating) @facets(ge(rating, 3)) {     # 3
@@ -156,14 +156,14 @@ doing the computation and writing the similarity scores back to Dgraph for furth
     }
   }
 
-  var(id:var(user_score), first:30, orderdesc: var(user_score)) { # 5
+  var(func: uid(user_score), first:30, orderdesc: val(user_score)) { # 5
     norm as math(1)
-    rated @filter(not var(seen)) @facets(ur as rating) {          # 6
+    rated @filter(not uid(seen)) @facets(ur as rating) {          # 6
       fscore as math(ur/norm) # 7
     }
   }
 
-  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
+  Recommendation(func: uid(fscore), orderdesc: val(fscore), first: 10) { # 8
     name
   }
 }
@@ -174,34 +174,34 @@ doing the computation and writing the similarity scores back to Dgraph for furth
 &lt;pre&gt;&lt;code&gt;{
   &amp;quot;Recommendation&amp;quot;: [
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Fish Called Wanda, A (1988)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Thinner (1996)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Big Sleep, The (1946)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Tales from the Hood (1995)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Babe (1995)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Michael (1996)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Hour of the Pig, The (1993)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Basic Instinct (1992)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Wild Bunch, The (1969)&amp;quot;
+    },
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Bound (1996)&amp;quot;
     },
     {
       &amp;quot;name&amp;quot;: &amp;quot;Richard III (1995)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Real Genius (1985)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Spitfire Grill, The (1996)&amp;quot;
     },
     {
-      &amp;quot;name&amp;quot;: &amp;quot;Cool Hand Luke (1967)&amp;quot;
-    },
-    {
-      &amp;quot;name&amp;quot;: &amp;quot;Mr. Holland&#39;s Opus (1995)&amp;quot;
-    },
-    {
-      &amp;quot;name&amp;quot;: &amp;quot;Johnny Mnemonic (1995)&amp;quot;
-    },
-    {
-      &amp;quot;name&amp;quot;: &amp;quot;His Girl Friday (1940)&amp;quot;
-    },
-    {
-      &amp;quot;name&amp;quot;: &amp;quot;East of Eden (1955)&amp;quot;
+      &amp;quot;name&amp;quot;: &amp;quot;Garden of Finzi-Contini, The (Giardino dei Finzi-Contini, Il) (1970)&amp;quot;
     }
   ]
 }
@@ -269,7 +269,7 @@ to predict the ratings.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;If the difference between ratings is small, the multiple will be closer to 1.  If the difference is larger, the multiple will be closer to 0, reducing the user&amp;rsquo;s similarity.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
-  var(id:2) {  # 1
+  var(func: uid(2)) {  # 1
     a as math(1)
     seen as rated @facets(r as rating) @facets(ge(rating, 3)) { # 2
       ~rated @facets(sr as rating) @facets(ge(rating, 3)) {     # 3
@@ -281,15 +281,15 @@ to predict the ratings.&lt;/em&gt;&lt;/p&gt;
     }
   }
 
-  var(id:var(user_score), first:30, orderdesc: var(user_score)) { #5
+  var(func: uid(user_score), first:30, orderdesc: val(user_score)) { #5
     norm as math(1)
-    rated @filter(not var(seen)) @facets(ur as rating) { # 6
+    rated @filter(not uid(seen)) @facets(ur as rating) { # 6
       fscore as math(ur/norm) # 7
     }
   }
 
-  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
-    var(fscore)
+  Recommendation(func: uid(fscore), orderdesc: val(fscore), first: 10) { # 8
+    val(fscore)
     name
   }
 }
@@ -330,7 +330,7 @@ to predict the ratings.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;For our hybrid filtering, we&amp;rsquo;ll assign a score to each genre as the number of movies watched by user 2 in that genre. Then, after we&amp;rsquo;ve found the similar users, we&amp;rsquo;ll give a boost to the ratings of movies based on the genres that user 2 watches most.  That&amp;rsquo;s collaborative filtering to get the similar users and the movies they enjoy, and then content-based filtering to help order those movies based on genres.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
-  var(id:2) {  # 1
+  var(func: uid(2)) {  # 1
     rated @groupby(genre) {
       gc as count(_uid_)
     }
@@ -343,19 +343,19 @@ to predict the ratings.&lt;/em&gt;&lt;/p&gt;
     }
   }
 
-  var(id:var(user_score), first:30, orderdesc: var(user_score)) { #5
+  var(func: uid(user_score), first:30, orderdesc: val(user_score)) { #5
     norm as math(1)
-    rated @filter(not var(seen)) @facets(ur as rating) { # 6
+    rated @filter(not uid(seen)) @facets(ur as rating) { # 6
       genre {
         q as math(gc)   # 6.1
       }
-      x as sum(var(q))  # 6.2
+      x as sum(val(q))  # 6.2
       fscore as math((1+(x/100))*ur/norm) # 7
     }
   }
 
-  Recommendation(id:var(fscore), orderdesc: var(fscore), first: 10) { # 8
-    var(fscore)
+  Recommendation(func: uid(fscore), orderdesc: val(fscore), first: 10) { # 8
+    val(fscore)
     name
   }
 }
@@ -474,16 +474,16 @@ collaborative filtering we saw in the last section.&lt;/p&gt;
     }
   }
 
-  var(id: var(sc), orderdesc: var(sc), first: 50) @filter(not var(user)) {  # 6
+  var(func: uid(sc), orderdesc: val(sc), first: 50) @filter(not uid(user)) {  # 6
     b as math(1)
     ~Author { # 7
-      ~Upvote @filter(not var(seen) and eq(Type, &amp;quot;Question&amp;quot;)) { # 8
+      ~Upvote @filter(not uid(seen) and eq(Type, &amp;quot;Question&amp;quot;)) { # 8
         fsc as math(b)
       }
     }
   }
 
-  topQ(id: var(fsc), orderdesc: var(fsc), first: 10) {  # 9
+  topQ(func: uid(fsc), orderdesc: val(fsc), first: 10) {  # 9
     Title {
       Text
     }
@@ -779,12 +779,12 @@ recommend other movies involving the same people.&lt;/p&gt;&lt;/li&gt;
 
 &lt;p&gt;Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.&lt;/p&gt;
 
-&lt;p&gt;We call this &lt;strong&gt;variable propagation.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We call this &lt;strong&gt;variable propagation.&lt;/strong&gt;  Note that the queries in this post we built for our master branch for the upcoming v0.8 release.&lt;/p&gt;
 
 &lt;p&gt;Say you had a query:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
-  var(id: &amp;lt;...P...&amp;gt;) {
+  var(func: uid(&amp;lt;...P...&amp;gt;)) {
     myscore as math(1)          # A
     friends {                   # B
       friends {                 # C
@@ -793,9 +793,9 @@ recommend other movies involving the same people.&lt;/p&gt;&lt;/li&gt;
     }
   }
 
-  closeFriends(id: var(fscore), orderdesc: var(fscore)) {
+  closeFriends(func: uid(fscore), orderdesc: val(fscore)) {
     name
-    var(score)
+    val(score)
   }
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -851,7 +851,7 @@ Dgraph.&lt;/p&gt;
 
   # Calculate a Jaccard distance score for every movie that shares
   # at least 1 genre with the given movie.
-  var(id: 0x30d80) {    # M1
+  var(func: uid(0x30d80)) {    # M1
     norm as math(1)               # 1
     M1_num_genres as count(genre) # 2
     M1genres as genre {           # 3
@@ -859,16 +859,16 @@ Dgraph.&lt;/p&gt;
         # M2 -- movies reached here share a genre with the initial movie
         # normalize the count to account for multiple paths
         M1_num_genres_norm as math(M1_num_genres / norm)      # 4
-        num_genres as count(genre @filter(var(M1genres))) # 5
+        num_genres as count(genre @filter(uid(M1genres))) # 5
         distance as math( 1 - ( num_genres / (M1_num_genres_norm + M2_num_genres - num_genres) )) # 6
       }
     }
   }
 
   # Sort and return closest movies.
-  similarMovies(id:var(distance), orderasc: var(distance), first: 10) { # 7
+  similarMovies(func: uid(distance), orderasc: val(distance), first: 10) { # 7
     name
-    var(distance)
+    val(distance)
   }
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -975,7 +975,7 @@ Dgraph.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{
   # M1 -- Star Wars by its unique ID
-  var(id: 0x30d72) {
+  var(func: uid(0x30d72)) {
     g as genre
   }
 
@@ -988,15 +988,15 @@ Dgraph.&lt;/p&gt;
   }
 
   # Give every movie a score
-  var(id: var(allmovies)) {
-    x as count(genre @filter(var(g)))
+  var(func: uid(allmovies)) {
+    x as count(genre @filter(uid(g)))
     score as math(avg + x)
   }
 
   # Return the top 10 movies
-  fin(id: var(score), orderdesc: var(score), first: 10) {
+  fin(func: uid(score), orderdesc: val(score), first: 10) {
     name
-    var(score)
+    val(score)
   }
 }
 &lt;/code&gt;&lt;/pre&gt;
@@ -1097,13 +1097,13 @@ If I paste it into http://www.hostmath.com/ I get what I want
 
   # Calculate a cosine difference score for every movie that shares
   # at least 1 genre with M1
-  var(id: 0x30d80) {    # movie M1
+  var(func: uid(0x30d80)) {    # movie M1
     norm as math(1)     # 1
 
     # Find the average rating for M1
     M1_num_ratings as count(~rated)
     ~rated @facets(B as rating)
-    M1_ratings_sum as sum(var(B))
+    M1_ratings_sum as sum(val(B))
     M1_avg_rating as math(M1_ratings_sum / M1_num_ratings) # 2
     M1_num_gen as count(genre)                             # 3
 
@@ -1114,19 +1114,19 @@ If I paste it into http://www.hostmath.com/ I get what I want
         # normalize the M1 count and average to account for multiple paths
         M1_norm_avg as math(M1_avg_rating / norm)
         num_genN as math(M1_num_gen/norm)              # 5
-        genint as count(genre @filter(var(M1_genres))) # 6
+        genint as count(genre @filter(uid(M1_genres))) # 6
 
-        score as math((genint + (M1_norm_avg * M2_avg_rating)) / 
-          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) * 
+        score as math((genint + (M1_norm_avg * M2_avg_rating)) /
+          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) *
           sqrt(M2_num_gen + (M2_avg_rating*M2_avg_rating))))    # 7
 
       }
     }
   }
 
-  similarMovies(id:var(score), first:20, orderdesc: var(score)) { # 8
+  similarMovies(func: uid(score), first:20, orderdesc: val(score)) { # 8
     name
-    var(score)
+    val(score)
   }
 }
 &lt;/code&gt;&lt;/pre&gt;

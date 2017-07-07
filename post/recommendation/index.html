@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-06-30%2018%3a40%3a52.152673254%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-06-30%2018%3a40%3a52.152708408%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-07%2011%3a52%3a14.039494729%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-07%2011%3a52%3a14.039576722%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -529,12 +529,12 @@ recommend other movies involving the same people.</p></li>
 
 <p>Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.</p>
 
-<p>We call this <strong>variable propagation.</strong></p>
+<p>We call this <strong>variable propagation.</strong>  Note that the queries in this post we built for our master branch for the upcoming v0.8 release.</p>
 
 <p>Say you had a query:</p>
 
 <pre><code>{
-  var(id: &lt;...P...&gt;) {
+  var(func: uid(&lt;...P...&gt;)) {
     myscore as math(1)          # A
     friends {                   # B
       friends {                 # C
@@ -543,9 +543,9 @@ recommend other movies involving the same people.</p></li>
     }
   }
 
-  closeFriends(id: var(fscore), orderdesc: var(fscore)) {
+  closeFriends(func: uid(fscore), orderdesc: val(fscore)) {
     name
-    var(score)
+    val(score)
   }
 }
 </code></pre>
@@ -601,7 +601,7 @@ Dgraph.</p>
 
   # Calculate a Jaccard distance score for every movie that shares
   # at least 1 genre with the given movie.
-  var(id: 0x30d80) {    # M1
+  var(func: uid(0x30d80)) {    # M1
     norm as math(1)               # 1
     M1_num_genres as count(genre) # 2
     M1genres as genre {           # 3
@@ -609,16 +609,16 @@ Dgraph.</p>
         # M2 -- movies reached here share a genre with the initial movie
         # normalize the count to account for multiple paths
         M1_num_genres_norm as math(M1_num_genres / norm)      # 4
-        num_genres as count(genre @filter(var(M1genres))) # 5
+        num_genres as count(genre @filter(uid(M1genres))) # 5
         distance as math( 1 - ( num_genres / (M1_num_genres_norm + M2_num_genres - num_genres) )) # 6
       }
     }
   }
 
   # Sort and return closest movies.
-  similarMovies(id:var(distance), orderasc: var(distance), first: 10) { # 7
+  similarMovies(func: uid(distance), orderasc: val(distance), first: 10) { # 7
     name
-    var(distance)
+    val(distance)
   }
 }
 </code></pre>
@@ -725,7 +725,7 @@ Dgraph.</p>
 
 <pre><code>{
   # M1 -- Star Wars by its unique ID
-  var(id: 0x30d72) {
+  var(func: uid(0x30d72)) {
     g as genre
   }
 
@@ -738,15 +738,15 @@ Dgraph.</p>
   }
 
   # Give every movie a score
-  var(id: var(allmovies)) {
-    x as count(genre @filter(var(g)))
+  var(func: uid(allmovies)) {
+    x as count(genre @filter(uid(g)))
     score as math(avg + x)
   }
 
   # Return the top 10 movies
-  fin(id: var(score), orderdesc: var(score), first: 10) {
+  fin(func: uid(score), orderdesc: val(score), first: 10) {
     name
-    var(score)
+    val(score)
   }
 }
 </code></pre>
@@ -847,13 +847,13 @@ If I paste it into http://www.hostmath.com/ I get what I want
 
   # Calculate a cosine difference score for every movie that shares
   # at least 1 genre with M1
-  var(id: 0x30d80) {    # movie M1
+  var(func: uid(0x30d80)) {    # movie M1
     norm as math(1)     # 1
 
     # Find the average rating for M1
     M1_num_ratings as count(~rated)
     ~rated @facets(B as rating)
-    M1_ratings_sum as sum(var(B))
+    M1_ratings_sum as sum(val(B))
     M1_avg_rating as math(M1_ratings_sum / M1_num_ratings) # 2
     M1_num_gen as count(genre)                             # 3
 
@@ -864,19 +864,19 @@ If I paste it into http://www.hostmath.com/ I get what I want
         # normalize the M1 count and average to account for multiple paths
         M1_norm_avg as math(M1_avg_rating / norm)
         num_genN as math(M1_num_gen/norm)              # 5
-        genint as count(genre @filter(var(M1_genres))) # 6
+        genint as count(genre @filter(uid(M1_genres))) # 6
 
-        score as math((genint + (M1_norm_avg * M2_avg_rating)) / 
-          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) * 
+        score as math((genint + (M1_norm_avg * M2_avg_rating)) /
+          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) *
           sqrt(M2_num_gen + (M2_avg_rating*M2_avg_rating))))    # 7
 
       }
     }
   }
 
-  similarMovies(id:var(score), first:20, orderdesc: var(score)) { # 8
+  similarMovies(func: uid(score), first:20, orderdesc: val(score)) { # 8
     name
-    var(score)
+    val(score)
   }
 }
 </code></pre>
@@ -1152,7 +1152,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-06-30%2018%3a40%3a52.153559875%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-07%2011%3a52%3a14.04314961%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
     </script>
