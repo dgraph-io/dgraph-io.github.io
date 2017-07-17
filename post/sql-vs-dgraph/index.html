@@ -37,14 +37,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Dgraph: JSON vs. Binary clients - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph: JSON vs. Binary clients - Dgraph Blog">
+    <title>SQL is slowing you down - Dgraph Blog</title>
+    <meta property='og:title' content="SQL is slowing you down - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://open.dgraph.io/post/protobuf/">
+    <meta property="og:url" content="https://open.dgraph.io/post/sql-vs-dgraph/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/geminiview.jpg">
+    <meta property="og:image" content="https://open.dgraph.io/images/reddragonmars.jpg">
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-07-17%2016%3a43%3a54.361230274%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-17%2016%3a43%3a54.361295368%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-17%2016%3a43%3a54.350911779%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-17%2016%3a43%3a54.350956322%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -366,16 +366,16 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Mon, Sep 12, 2016
+                  Mon, Jul 17, 2017
                  by
-                Pawan Rawal
+                Manish Rai Jain
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Dgraph%3a%20JSON%20vs.%20Binary%20clients&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fprotobuf%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=SQL%20is%20slowing%20you%20down&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fsql-vs-dgraph%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -383,7 +383,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Dgraph: JSON vs. Binary clients</h1>
+            <h1 class="page-intro__title page-intro__title--blog">SQL is slowing you down</h1>
           </header>
         </div>
       </div>
@@ -395,215 +395,731 @@
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/geminiview.jpg">
-          <div class="article-content"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
+          <img class="opening__image" src="https://open.dgraph.io/images/reddragonmars.jpg">
+          <div class="article-content">
 
-<p></p>
+<p><em>When writing this post, I was hesitant. SQL is so important that every one who
+has a degree in CS (or not) is technically a SQL developer.  Complaining about
+SQL is a good way to lose friends and get trolled. I don&rsquo;t want to say that you
+should stop using SQL, or that SQL is bad or doesn&rsquo;t perform, but I also don&rsquo;t
+agree that SQL should be an obvious choice for developers. This post sheds
+light on why I think a graph database like Dgraph is a better choice for
+developers today.</em></p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use <a href="https://google.github.io/flatbuffers/">Flatbuffers</a> for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the <a href="https://github.com/google/protobuf#protobuf-runtime-installation">modern languages</a> and could encode recursive data structures efficiently.</p>
+<p>We have been taught, conditioned, trained to use SQL all our lives as engineers.
+It was there in schools, there when we went to college. It was being used at the
+company that we joined. It was such a common interview question that it no
+longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from.
+MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the
+same year). PostgreSQL was released one year later. In contrast, MariaDB was
+released in 2009.</p>
 
-<h2 id="how-to-use-protocol-buffers">How to use Protocol Buffers</h2>
+<p>What&rsquo;s amazing about SQL is its sheer simplicity. <em>Select something where
+something, order by something, limit by some number.</em> This query probably
+represents most DB queries run on the planet. You can achieve the same thing
+with a single bash command over CSV files. <em>I joke that SQL DBs are a sort of
+glorified CSV file servers.</em></p>
 
-<p>To use protocol buffers, you define the message (data structures that form the basis of communication) in a <code>.proto</code> file and then compile it using the protocol buffer <a href="https://github.com/google/protobuf/releases">compiler</a>. For communication, we use <a href="http://www.grpc.io/">gRPC</a> which is an open-source RPC framework by Google. gRPC requires services to be defined in the same <code>.proto</code> file. Using gRPC allows us to communicate in binary format which is faster than retrieving JSON formatted results.</p>
+<p>But, that&rsquo;s also where lies its weakness. Its sheer simplicity. <strong>Because SQL
+does fewer things, application developers need to write more logic.</strong></p>
 
-<pre><code>// The Node object which can have other children node and properties.
+<h3 id="issues-with-sql">Issues with SQL</h3>
 
-message Node {
-    uint64 uid = 1;
-    string xid = 2;
-    string attribute = 3;
-    repeated Property properties = 4;
-    repeated Node children = 5; // Each node can have multiple children
+<p><strong>SQL is flat.</strong> It does joins, but <em>nobody I know runs them in production at scale.</em> SQL
+joins are slow under high traffic. In fact, companies go to lengths to
+avoid doing a join in production. Their tables are littered with pre-computed
+counts and data duplication to avoid touching two tables to run one
+query. So, for all practical purposes, you can say that <strong>SQL doesn&rsquo;t do
+joins.</strong></p>
+
+<p><strong>SQL doesn&rsquo;t do recursion.</strong> Most web applications need that. Take Stack
+Overflow for e.g. You start with a question, then retrieve its answers, tags,
+comments.  Then comments on answers, then upvotes, downvotes. Then, the author
+and editors of the question, the answers, the comments. It&rsquo;s a lot of recursions.
+All that retrieval logic needs to be baked into the backend.</p>
+
+<p><strong>SQL enforces strict schema.</strong> Modern development is a very iterative process.
+You build one feature, then build another one on top, then another on the side.
+And that requires frequent changes to columns or column types.  This
+becomes particularly hard in a live system with SQL which enforces strict
+schemas. Not only would modifying a column type require rewriting the entire table,
+which would block everything including <em>select</em> during this move;
+the older code would not work with an <em>altered</em> table, requiring you to potentially
+restart the system. This <em>ugliness</em> is just something that most teams have
+learned to live with (and not question).</p>
+
+<h3 id="the-alternative">The alternative</h3>
+
+<p><strong>Dgraph does joins.</strong> Being a graph database, join is a <em>first-class</em> citizen
+in Dgraph. It&rsquo;s optimized for expanding, intersecting and combining results from
+multiple entity types <em>very fast</em>. In fact, the internal mechanisms are exactly
+how search engines work.</p>
+
+<p><strong>Dgraph does recursions.</strong> Recursion is essentially an edge traversal.
+Traversing edges is very integral to Dgraph. Expanding out from a node is an
+O(1) time complexity operation, a look up in hash map, or a single
+read from disk.</p>
+
+<p><strong>Dgraph supports flexible schema.</strong> Dgraph separates storage layer from schema
+layer. A developer can choose how much schema enforcement they want. Modifying
+data types do not require data rewrite; and because (the equivalent of)
+<em>tables</em> are sparse in a graph database, one does not need to fit everything
+into predefined columns, or deal with <code>NULL</code>s.</p>
+
+<h3 id="stack-overflow">Stack Overflow</h3>
+
+<p>To put something concrete up for discussion, we&rsquo;ll see how data gets arranged in
+SQL and compare that with how it would be arranged in Dgraph. Folks at Stack
+Exchange generously provide <a href="https://archive.org/details/stackexchange">dumps of their
+data</a>, and <a href="https://ia800500.us.archive.org/22/items/stackexchange/readme.txt">the
+schema</a> that
+they use run the site over SQL.</p>
+
+<p>We&rsquo;ll pick the schema that they use to store and
+serve the data that millions of developers browse through every day, and compare
+that against how it would be if Dgraph were the underlying database instead of
+SQL.</p>
+
+<p><strong>Let&rsquo;s start with the User schema,</strong> and see how SQL would compare with Dgraph.</p>
+
+<p><strong>User</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Dgraph</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Reputation</td>
+<td>Reputation</td>
+</tr>
+
+<tr>
+<td>CreationDate</td>
+<td>CreationDate</td>
+</tr>
+
+<tr>
+<td>DisplayName</td>
+<td>DisplayName</td>
+</tr>
+
+<tr>
+<td>LastAccessDate</td>
+<td>LastAccessDate</td>
+</tr>
+
+<tr>
+<td>Location</td>
+<td>Location</td>
+</tr>
+
+<tr>
+<td>AboutMe</td>
+<td>AboutMe</td>
+</tr>
+
+<tr>
+<td>Age</td>
+<td>Age</td>
+</tr>
+
+<tr>
+<td>Views</td>
+<td>Views</td>
+</tr>
+
+<tr>
+<td>UpVotes</td>
+<td></td>
+</tr>
+
+<tr>
+<td>DownVotes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p>Here we have user&rsquo;s reputation, creation date, display name, last access date,
+location, about, age (<em>not date of birth?</em>) and views (not tracking every single
+page access, just a counter). All those are base data, i.e. new and unique data
+that we must store.</p>
+
+<p>Then, the table has counts of upvotes and downvotes. But, those are being stored
+elsewhere in <code>Vote</code> table. These fields here are pre-computed counts to avoid
+doing joins with <code>Vote</code> table when querying for a user.</p>
+
+<p>Dgraph doesn&rsquo;t need to store these. It can do counts and sorts on them via
+queries efficiently.</p>
+
+<p><strong>Let&rsquo;s look at the Versioning and Post table,</strong> where most of the action happens.
+These tables store the questions, answers, tags, ownership, and authorship
+information.</p>
+
+<p><strong>Versioning</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Dgraph</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>TypeId</td>
+<td>Type</td>
+</tr>
+
+<tr>
+<td>PostId</td>
+<td>Post (point to Post)</td>
+</tr>
+
+<tr>
+<td>CreationDate</td>
+<td>CreationDate</td>
+</tr>
+
+<tr>
+<td>Author</td>
+<td>Author</td>
+</tr>
+
+<tr>
+<td>Text</td>
+<td>Text</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Post</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Dgraph</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>TypeId</td>
+<td>Type</td>
+</tr>
+
+<tr>
+<td>ParentId</td>
+<td>Has.Answer</td>
+</tr>
+
+<tr>
+<td>AcceptedAnswerId</td>
+<td>Chosen.Answer</td>
+</tr>
+
+<tr>
+<td>Title (duplicate of versioning)</td>
+<td>Title (point to Version)</td>
+</tr>
+
+<tr>
+<td>Body  (duplicate of versioning)</td>
+<td>Body  (point to Version)</td>
+</tr>
+
+<tr>
+<td>Tags  (duplicate of versioning)</td>
+<td>Tags  (point to Version)</td>
+</tr>
+
+<tr>
+<td>OwnerUserId</td>
+<td>Owner (point to User)</td>
+</tr>
+
+<tr>
+<td>Score</td>
+<td>Score</td>
+</tr>
+
+<tr>
+<td>LastEditorUserId</td>
+<td></td>
+</tr>
+
+<tr>
+<td>LastEditDate</td>
+<td></td>
+</tr>
+
+<tr>
+<td>LastActivityDate</td>
+<td></td>
+</tr>
+
+<tr>
+<td>CommentCount</td>
+<td></td>
+</tr>
+
+<tr>
+<td>AnswerCount</td>
+<td></td>
+</tr>
+
+<tr>
+<td>FavoriteCount</td>
+<td></td>
+</tr>
+
+<tr>
+<td>CreationDate</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p>Version table is pretty straightforward. It stores type, post id, creation date,
+author, and text. Instead of storing ids, Dgraph creates a relationship
+from Version to Post.</p>
+
+<p>Post table is the interesting one, and <em>shows how much data duplication needed
+to happen to avoid joins.</em> We have the text of title, body, and tags from the latest
+version stored in this table. In fact, the latest version isn&rsquo;t even written.
+Version only gets created when a user modifies the title, body or tags. And
+because of this requirement to proxy for Version table, Post table stores last
+editor, last edit date, which would become the author and creation date
+respectively when moved to Version table.</p>
+
+<p>All these fields are unnecessary in Dgraph. Dgraph can directly store an edge to
+the Version node which contains the text of title and body. We chose to store
+tags differently. For each tag, we create a node and create an edge between the
+post and the tag. This allows us to run aggregations over tags, and find the
+most popular and most related tags easily.</p>
+
+<p>Then, we have pre-computed counts of comments, answers, and favorites. Dgraph can
+generate all this at query time efficiently; using them to do sorting as well.
+So, they don&rsquo;t need to be pre-computed in Dgraph.</p>
+
+<p>CreationDate and LastActivityDate are both redundant information, that can be
+deduced by doing recursion. They form good candidates for optimization later on,
+but are not needed and hence are not present in Dgraph.</p>
+
+<p><strong>Comment, Vote</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Dgraph</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>PostId (Vote/Comment -&gt; Post)</td>
+<td>(New edge from Post -&gt; Vote/Comment)</td>
+</tr>
+
+<tr>
+<td>Timestamp</td>
+<td>Timestamp</td>
+</tr>
+
+<tr>
+<td>Author</td>
+<td>Author</td>
+</tr>
+
+<tr>
+<td>VoteType (for Vote)</td>
+<td>Score (for both Vote and Comment)</td>
+</tr>
+
+<tr>
+<td>Text     (for Comment)</td>
+<td>Text  (for Comment)</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Finally, we have the comment and vote tables.</strong> Because SQL doesn&rsquo;t store
+lists of things in a single row, you must create another table and point it back
+to the original row.  A post contains comments. But in SQL, it&rsquo;s the reverse. A
+comment table row points to the post.  This is such a common hack that it&rsquo;s no
+longer considered one.</p>
+
+<p>In Dgraph, a Post has an edge to the vote or comment, not the other way round.</p>
+
+<p><strong>This is how the final Dgraph schema looks.</strong> It&rsquo;s a lot simpler than SQL.</p>
+
+<p><img src="/images/schema.png" alt="Dgraph Schema" /></p>
+
+<p><em>In fact, SQL schema complexity increases rapidly as the relationships among
+data increase.</em> Each relationship would inadvertently require joins, which would
+then need to be avoided by duplicating more information across tables. All this
+adds a significant amount of application logic to deal with.</p>
+
+<p><strong>Conversely, in a graph database like Dgraph, schema is a pretty close
+representation of your mind map.</strong></p>
+
+<h3 id="queries">Queries</h3>
+
+<p>In the previous section, we saw that Dgraph schema is a lot simpler than the
+equivalent SQL schema. In this section, we&rsquo;ll see why that is the case, and how
+Dgraph&rsquo;s GraphQL inspired query language makes it easy to render various
+Stack Overflow (referred to as SO) components.</p>
+
+<p><em>Disclaimer: While reading the queries, note that these queries are just our
+approximations of how SO works. We don&rsquo;t work there, and thence, certain things
+like ranking formulas are just put together to represent the power of the query
+language. It&rsquo;s not what SO uses.</em></p>
+
+<p><strong>Let&rsquo;s start with the home page.</strong> We want to render 100 questions, and
+all the associated meta information that SO shows.</p>
+
+<p><strong>Question Div</strong></p>
+
+<p>This is the corresponding query fragment to retrieve the data to render one question div.</p>
+
+<p><img src="/images/homepage-question.png" alt="Home page question" /></p>
+
+<pre><code>_uid_  # Unique identifier
+
+UpvoteCount: count(Upvote)      # Counts the number of Upvote edges.
+DownvoteCount: count(Downvote)  # Counts the number of Downvote edges.
+AnswerCount: count(Has.Answer)  # Counts the number of Answer edges.
+
+ViewCount  # Retrieves the ViewCount property stored.
+
+Title { # Title points to Version node.
+  Text  # Retrieves the text of the title.
 }
 
-message Request {
-    string query = 1;
-    // and other fields
+Owner { # Owner of the question, points to the User node.
+  DisplayName  # User's display name, reputation, and identifier.
+  Reputation
+  _uid_
 }
 
-message Response {
-    Node n = 1;
-    // and other fields
+Tag {  # Points to multiple Tag nodes.
+  TagName: Tag.Text  # Retrieves the text of the tag.
 }
 
-// <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- service used for communication between the <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- server and client over gRPC.
-
-service Dgraph {
-    rpc Query (Request) returns (Response) {}
-}
-</code></pre>
-
-<p>You can find the full <code>.proto</code> file <a href="https://github.com/dgraph-io/dgraph/blob/master/query/graph/graphresponse.proto">here</a>. The <code>.proto</code> file can be used to generate the corresponding Go code using the <code>protoc</code> compiler and the runtime library.</p>
-
-<h2 id="benchmarks">Benchmarks</h2>
-
-<p>In Go, you can easily measure how your algorithm does (in terms of time and space) by writing benchmarks. Go benchmarks are unique in that they&rsquo;d iterate over the test code <code>b.N</code> number of times, where <code>b.N</code> is adjusted until the benchmark function lasts long enough to be timed reliably.
-To test how our implementation was doing against our JSON implementation we wrote benchmarks for it. But first, let&rsquo;s understand what a benchmark is and how can we interpret its results.</p>
-
-<p>Let&rsquo;s write a simple function, which just adds integers to a list.</p>
-
-<pre><code>func addToList() {
-    list := make([]int, 10)
-    for i := 0; i &lt; 1000; i++ {
-        list = append(list, i)
-    }
+Has.Answer(orderdesc: Timestamp, first: 1) {  # Picks the most recent answer.
+  Timestamp  # Retrieves Timestamp of the Answer.
+  Owner {    # Retrieves the Owner of that Answer.
+    DisplayName  # Retrieves display name, reputation, and identifier.
+    Reputation
+    _uid_
+  }
 }
 </code></pre>
 
-<p>Here&rsquo;s benchmarking code:</p>
+<p>Now that we have the question fragment let&rsquo;s see how to retrieve a list of
+questions depending upon the various tabs that SO shows.</p>
 
-<pre><code>func BenchmarkAddToList(b *testing.B) {
-    b.ReportAllocs()
-    for i := 0; i &lt; b.N; i++ {
-        addToList()
-    }
+<p><strong>Latest 100 questions</strong></p>
+
+<pre><code># All nodes of type question, in descending order by Timestamp, limit by 100.
+questions(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 100) {
+  ${questionFragment}
 }
 </code></pre>
 
-<p>We can run the above benchmark using <code>go test -bench=.</code> Here, Go benchmark would repeatedly call the function with different values for <code>b.N</code> until it can be timed reliably.</p>
+<p><strong>Top 100 hot questions</strong></p>
 
-<pre><code>$ go test -bench=.
+<p><img src="/images/homepage-hot-questions.png" alt="Home page hot questions" /></p>
 
-BenchmarkAddToList-4  200000  8153 ns/op  22624 B/op  7 allocs/op
-</code></pre>
+<pre><code># Get the latest 1000 questions.
+var(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 1000) {
+  Has.Answer {            # Get their answers
+    uv as count(Upvote)   # Count the Upvote edges.
+    dv as count(Downvote) # Count the number of Downvote edges.
+  }
+  ac as count(Has.Answer) # Count the number of Answers.
+  cc as count(Comment)    # Count the number of Comments.
 
-<p>Here&rsquo;s what the output means:</p>
+  uv1 as sum(var(uv))     # Sum up all Upvotes across all Answers.
+  dv1 as sum(var(dv))     # Sum up all Downvotes across all Answers.
 
-<ul>
-<li>200000 is the number of times the benchmark loop ran.</li>
-<li>8153 ns/op represents the time it took on average for an iteration of the loop to finish.</li>
-<li>22624 B/op is the number of bytes allocated per iteration.</li>
-<li>7 allocs/op is the number of distinct memory allocations per iteration.</li>
-<li>Note that we get B/op and allocs/op only if we call b.ReportAllocs() as part of the benchmark.</li>
-</ul>
-
-<p>If we change the line which initializes the slice to
-<code>list := make([]int, 0, 1000)</code> and run the benchmarks again, we get better results:</p>
-
-<pre><code>BenchmarkAddToList-4  1000000  1618 ns/op  0 B/op  0 allocs/op
-</code></pre>
-
-<p>The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&rsquo;t have to reallocate it when we append elements. Also the B/op reduced because the list is not initialized with 0 for all its elements.</p>
-
-<h2 id="benchmarking-topb-against-tojson">Benchmarking ToPB against ToJSON</h2>
-
-<p>After implementing serialization using the protocol buffers, to get exact metrics we wrote benchmark tests for our ToJson and ToProtocolBuffer methods. These methods convert the internal SubGraph data structure to a byte array which is transferred over the network. Benchmark tests are an excellent way to compare different implementations or to measure if new code leads to any improvements.</p>
-
-<pre><code>// Benchmark test for ToProtocolBuffer method.
-
-func benchmarkToPB(file string, b *testing.B) {
-    b.ReportAllocs()
-    var sg SubGraph
-    var l Latency
-
-    // Reading the SubGraph data structure from a file.
-    f, err := ioutil.ReadFile(file)
-    if err != nil {
-        b.Error(err)
-    }
-
-    buf := bytes.NewBuffer(f)
-    dec := gob.NewDecoder(buf)
-    err = dec.Decode(&amp;sg)
-    if err != nil {
-        b.Error(err)
-    }
-
-    b.ResetTimer()
-    // Running the benchmark tests.
-    for i := 0; i &lt; b.N; i++ {
-        pb, err := sg.ToProtocolBuffer(&amp;l)
-        if err != nil {
-            b.Fatal(err)
-        }
-        r := new(graph.Response)
-        r.N = pb
-        var c Codec
-        if _, err = c.Marshal(r); err != nil {
-            b.Fatal(err)
-        }
-    }
+  # Put together a rough formula to calculate a final score per question.
+  score as math(0.7 + ac * 0.2  + (uv1 - dv1) * 0.4 + (cc) * 0.4)
 }
 
-// Benchmark test for ToJSON
-func benchmarkToJson(file string, b *testing.B) {
-    b.ReportAllocs()
-    var sg SubGraph
-    var l Latency
-
-    f, err := ioutil.ReadFile(file)
-    if err != nil {
-        b.Error(err)
-    }
-
-    buf := bytes.NewBuffer(f)
-    dec := gob.NewDecoder(buf)
-    err = dec.Decode(&amp;sg)
-    if err != nil {
-        b.Error(err)
-    }
-
-    b.ResetTimer()
-    for i := 0; i &lt; b.N; i++ {
-        if _, err := sg.ToJSON(&amp;l); err != nil {
-            b.Fatal(err)
-        }
-    }
+# Order the 1000 questions in descending order of score, pick the first 100.
+questions(id: var(score), orderdesc: var(score), first: 100) {
+  ${questionFragment}
 }
 </code></pre>
 
-<p>You can find the complete benchmark tests <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go">here</a>. There are some differences in the algorithm that converts the internal Subgraph structure to JSON/Protocol Buffers. You can have a look at the code responsible for this <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query.go">here</a>.</p>
+<p><strong>Top Tags</strong></p>
 
-<p>Using these benchmark tests we were able to improve our metrics by over 50% by switching over to <code>[]byte</code> from <code>{}interface</code> for <code>ObjectValue</code> as part of <a href="https://github.com/dgraph-io/dgraph/pull/86">this change</a>. Later when we shifted to Gogo Protobuf, we compared these benchmarks again with the previous ones to confirm improvement.</p>
+<p><img src="/images/homepage-toptags.png" alt="Top tags" /></p>
 
-<h4 id="marshalling">Marshalling</h4>
+<p>To get the most frequently used tags, we can run this query.</p>
 
-<p>This is how the final benchmark results compare for a query which returns 1000 entities in the result.</p>
+<pre><code>t as var(func: eq(Type, &quot;Tag&quot;)) {  # Retrieve all tags. Assign it to variable t.
+  c as count(~Tag)  # For each tag, count the number of incoming edges.
+                    # This gives us the number of times each tag is used.
+}
 
-<pre><code>BenchmarkToJSON_1000_Director-2  500  2512808 ns/op  560427 B/op  9682 allocs/op
-BenchmarkToPB_1000_Director-2   2000  1338410 ns/op  196743 B/op  3052 allocs/op
+# For all tags in t, order them by count c and pick the first 10.
+# This gives us the ten most popular tags.
+topTags(id: var(t), orderdesc: var(c), first: 10) {
+  _uid_
+  TagName: Tag.Text      # Retrieve the text of the tag.
+  QuestionCount: var(c)  # Reusing variable c, retrieve the number of times tag is used.
+      # Note that only questions have tags. Hence we use QuestionCount alias.
+}
 </code></pre>
 
-<p>The benchmarks show that ToPB method is almost <strong>2x faster</strong> than ToJSON as it takes much lesser nanoseconds per operation. The bytes allocated per operation show that ToPB <strong>allocates 65% less memory</strong> compared to ToJSON. You could find more information about those benchmarks and what we changed to get here in our <a href="https://github.com/dgraph-io/dgraph/blob/master/query/benchmark/README.txt">README</a>.</p>
+<p>Depending upon the number of tags, this query might be a tad slow. The most
+popular tags don&rsquo;t change that often. So, this is a good candidate for caching
+in application. But, even so, the amount of application code that needs to go in
+to generate the list of most popular tags is very little (run the query, cache
+the results).</p>
 
-<h4 id="unmarshalling">Unmarshalling</h4>
+<p><img src="/images/question.png" alt="Question" /></p>
 
-<pre><code>BenchmarkToJSONUnmarshal_1000_Director-4  1000  1279297 ns/op  403746 B/op  5144 allocs/op
-BenchmarkToPBUnmarshal_1000_Director-4    3000   489585 ns/op  202256 B/op  5522 allocs/op
+<p><strong>Now let&rsquo;s see how to render the question page.</strong> This is one complex page, with
+many components, touching almost all the tables in SQL. We&rsquo;ll see how we can get
+all the information in a single query to Dgraph.</p>
+
+<p>Before we dig into the question query, let&rsquo;s create a bunch of reusable
+fragments.</p>
+
+<p><strong>Version Fragment</strong></p>
+
+<pre><code>Author {       # Retrieve Author node.
+  DisplayName  # Retrieve their display name, reputation, and identifier.
+  Reputation
+  _uid_
+}
+Type  # Retrieve type, text and timestamp of Version.
+Text
+Timestamp
 </code></pre>
 
-<p>We can see that unmarshalling on the client would also be <strong>2.6x faster</strong> for protocol buffers compared to JSON. ToPB <strong>allocates 50% less memory</strong> compared to ToJSON.</p>
+<p><strong>Comment Fragment</strong></p>
 
-<h3 id="golang-protobuf-vs-gogo-protobuf">Golang protobuf vs. Gogo protobuf</h3>
-
-<p>If both your server and client are written in Go, then we recommend <a href="https://github.com/gogo/protobuf">Gogo Protobuf</a> instead of <a href="https://github.com/golang/protobuf">Golang Protobuf</a> as the runtime library. Gogo has <strong>2.3x faster marshaling while allocating 80% fewer bytes</strong> per operation and <strong>1.5x faster unmarshalling</strong> compared to Golang protobuf as shown in the benchmarks below.</p>
-
-<pre><code>BenchmarkToPBMarshal_1000_Director-4    3000  360545 ns/op 226504 B/op   22 allocs/op # Golang protobuf
-BenchmarkToPBMarshal_1000_Director-4    10000 156820 ns/op 49152 B/op     1 allocs/op # Gogo protobuf
-
-BenchmarkToPBUnmarshal_1000_Director-4  2000  733481 ns/op 200241 B/op 5523 allocs/op # Golang protobuf
-BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allocs/op # Gogo protobuf
+<pre><code>_uid_
+Author {       # Retrive Author node.
+  _uid_        # Retrieve their display name and identifier.
+  DisplayName
+}
+Text  # Retrieve Text, Score and Timestamp of Comment (no versioning here).
+Score
+Timestamp
 </code></pre>
 
-<p>Note that Gogo protobuf has support only for Go as of now. However, if you are using some other language, this isn&rsquo;t a problem. Gogo protobuf is backward compatible with Golang protobuf. Our Python and Java clients can still interact with the server (which does marshaling using Gogo), hence making Gogo a safe choice.</p>
+<p><strong>Answer Fragment</strong></p>
 
-<h2 id="recommendations">Recommendations</h2>
+<pre><code># Answer is represented as a Post node.
+_uid_
 
-<ul>
-<li>If you are interacting with the <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON.</li>
-<li>If you are interacting with <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- through one of our language drivers, we recommend you do it using gRPC and protocol buffers.</li>
-<li>If you are using Go client with gRPC, you will automatically be using the faster Gogo protobuf.</li>
-<li>Overall, <strong>fastest way to query <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is via a Go client communicating over gRPC.</strong></li>
-</ul>
+Body {  # Retieve body Version node.
+  Text  # Retrieve text of Body.
+}
 
-<p>We would love to hear about your interaction with the <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- server.</p>
+# This is used for &quot;answered x time ago.&quot;
+Owner {        # Retrieve owner User node.
+  DisplayName  # Retrieve their display name, reputation, and identifier.
+  Reputation
+  _uid_
+}
+
+Timestamp  # Retrieve timestamp and type of Post.
+Type
+
+UpvoteCount: count(Upvote)     # Count the number of Upvote and Downvote edges.
+DownvoteCount: count(Downvote)
+
+# Post edge takes us from Version -&gt; Post. ~Post is the reverse of that, taking us from Post -&gt; Version. We order the Version nodes in desc order of Timestamp and pick the first 1. In other words, pick the latest Version of Answer.
+# This is used for &quot;edited x time ago.&quot;
+History: ~Post(orderdesc: Timestamp, first: 1) {
+  ${HistoryFragment}
+}
+
+# These are comments on answer. Question also have comments which are retrieved in the query below.
+Comment {             # Get the Comment nodes.
+  ${CommentFragment}  # Retrieve further details per Comment using fragment above.
+}
+</code></pre>
+
+<p><strong>Question</strong></p>
+
+<pre><code>{
+  var (id: ${questionUID}) {  # Retrieve the question node.
+    Has.Answer {              # Retrieve the answers.
+      uv as count(Upvote)     # Count the number of Upvote and Downvote edges.
+      dv as count(Downvote)
+      answer_score as math(uv - dv)  # Calculate an score per answer based on votes.
+    }
+  }
+
+  question(id: ${questionUID}) {  # Retrieve the question node.
+    _uid_
+    Title {  # Retrieve the title Version node.
+      Text   # Retrieve the text of the title.
+    }
+    Body {   # Retrieve the body Version node.
+      Text   # Retrieve the text of the body.
+    }
+    Owner {        # Retrieve the owner of the question.
+      DisplayName  # Retrieve their display name, reputation, and identifier.
+      Reputation
+      _uid_
+    }
+
+    ViewCount  # Retrieve some question properties.
+    Timestamp
+    Type
+
+    UpvoteCount: count(Upvote)  # Count the number of Upvote and Downvote edges on question.
+    DownvoteCount: count(Downvote)
+
+    questionTags as Tag {  # Retrieve the question Tag nodes.
+      TagName: Tag.Text    # Retrieve their text.
+    }
+
+    AnswerCount: count(Has.Answer)  # Count the number of answers.
+
+    Has.Answer(orderdesc: var(answer_score)) {  # Retrieve the Answer nodes, and order them by the score calculated above.
+      ${AnswerFragment}  # Retrieve answer details using fragment above.
+    }
+
+    Comment {  # Retrieve Comment nodes.
+      ${CommentFragment}  # Retrieve comment details using fragment above.
+    }
+
+    History: ~Post(orderdesc: Timestamp, first: 1) {  # Just like in Answer, retrieve the latest Version of question.
+      ${HistoryFragment}  # Retrieve Version details using fragment above.
+    }
+  }
+
+  # In the following query block, we use the tags of this question, to get related questions, and some minimal details about them; essentially title and vote counts.
+  tags(id: var(questionTags)) {
+    relatedQuestions: ~Tag(first: 10) {
+      _uid_
+      Title {
+        Text
+      }
+      UpvoteCount: count(Upvote)
+      DownvoteCount: count(Downvote)
+    }
+  }
+}
+</code></pre>
+
+<p>If the query above looks complex, don&rsquo;t worry about it. Just read the comments, and get a sense for how we retrieve each piece of data that we need to render on the page. SO question page as mentioned before is pretty complex requiring recursions to retrieve all details of questions, comments, votes, owner, last editor. Similarly, we need answers, their comments, votes, owner, last editor. On top of that, we can sort the answers displayed by a score generated from vote counts. We can even limit the number of comments displayed if required.</p>
+
+<p>With SQL DB, all of this logic would have needed to be baked into the application. But, with Dgraph, the query language is so powerful that it can all be generated right within the database: doing recursions, computing counts, putting them to generate scores and then sort by these scores. This cuts down heavily on the application code, letting a developer focus on the feature set and the best way to render the data. And <strong>that&rsquo;s powerful!</strong></p>
+
+<p><strong>Full Text Search</strong></p>
+
+<p>Dgraph also supports regular expression and full-text search in many languages.
+You can create an index on string edges, to achieve this. In this case, we
+created a full-text index on the <code>Text</code> edge.</p>
+
+<p><code>Text: string @index(fulltext) .</code> line from schema.txt.</p>
+
+<pre><code>{
+  var(func: anyoftext(Text, &quot;${searchQuery}&quot;)) @cascade {
+  # All Version nodes which have any of the text in search query.
+    p as Post {  # Retrieve their Post, assign it to variable p.
+
+      # Pick the latest Version of the Post and check that it does have the search query. This is a bit of a shuffle and can be avoided by having a direct link from Post to its latest version.
+      ~Post(orderdesc: Timestamp, first: 1) @filter(anyoftext(Text, &quot;${searchQuery}&quot;))
+    }
+  }
+
+  # Pick the first 25 such posts.
+  posts(id: var(p), first: 25) {
+    _uid_
+
+    Type
+
+    question: ~Has.Answer {  # If this post is an answer, retrieve the question by traversing the Has.Answer edge in reverse.
+      _uid_
+      Title {
+        Text
+      }
+    }
+
+    Title { # Title Version would be present if this Post if Question.
+      Text
+    }
+    Body {  # Body Version would be present if this Post is Answer.
+      Text
+    }
+
+    # The rest of the fields are as explained before, and are from the perspective of the question Post node.
+    Owner {
+      DisplayName
+      Reputation
+      _uid_
+    }
+    Tag {
+      TagName: Tag.Text
+    }
+    Chosen.Answer {
+      Owner {
+        DisplayName
+        Reputation
+        _uid_
+      }
+      Timestamp
+    }
+    UpvoteCount: count(Upvote)
+    DownvoteCount: count(Downvote)
+    AnswerCount: count(Has.Answer)
+    ViewCount
+    Timestamp
+  }
+}
+</code></pre>
+
+<h3 id="summary">Summary</h3>
+
+<p>In this post, we showed you how a SQL schema compares against the equivalent
+schema in Dgraph, basing our analysis on Stack Overflow data. We then picked
+pages from Stack Overflow and showed you queries to retrieve all the data
+necessary to render those pages.</p>
+
+<p>As you can see, Dgraph schema is significantly simpler than SQL, utilizing zero
+or little schema hacks, pre-computation or duplication of data. Also,
+Dgraph query language is way more powerful than SQL, handling most of the
+complexity of recursive data retrieval, ranking and sorting within the database,
+allowing the application to focus solely on the feature set and rendering of
+data.</p>
+
+<p>Dgraph being a graph database provides sparsely populated fields and easy schema
+manipulation, which allows developers to modify data types as they iterate over
+their application, removing the need to do complex <em>upgrades</em> of the entire system.</p>
+
+<p>Not only that, Dgraph makes it a lot faster for developers to iterate.
+Modifying Dgraph queries is a lot cheaper operation for a developer,
+than modifying the backend code; and Dgraph provides a nice UI to allow for
+this.</p>
+
+<p>Finally, Dgraph supports regular expressions, term matching, full-text search
+and equality matching for string types. All Dgraph edges are unidirectional, but
+Dgraph allows you to specify creating reverses automatically, to aid in data
+retrieval. It also supports indexing various other data types, like int, float,
+datetime, etc.; very useful to build applications today.</p>
+
+<h3 id="links">Links</h3>
+
+<p>All the data generation, querying and rendering code is located at <a href="https://github.com/dgraph-io/graphoverflow">Dgraph&rsquo;s Graph Overflow repository</a>. Graph overflow site is still a work in progress, and we&rsquo;ll put it up at dgraph.io soon.</p>
 
 <hr />
 
@@ -644,7 +1160,8 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 <br/>
 
 
-<p><em>Top image: <a href="http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/">View From Gemini XI, 850 Miles Above the Earth</a></em></p></div>
+<p><em>Top image: <a href="http://www.spacex.com/dragon">Dragon</a> is a next-generation spacecraft designed to take humans to Mars.</em></p>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -669,56 +1186,17 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/pawan.png" class="article-author__image">
+	<img src="/images/team-manish.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Pawan Rawal
+    <h4 class="article-author__name">Manish Rai Jain
 
 
       <span class="article-author__title">Author</span>
     </h4>
     
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-        <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/pawanrawal1" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="social__item social__item--inline">
-            <a href="https://twitter.com/pawan_rawal" class="social__link">
-                <svg class="icon social__icon social__icon--twitter">
-                    <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-    </ul>
-</nav>
-<p>After graduating from IIT Delhi in 2014, Pawan worked in various startups understanding how the web works. His interest in distributed systems and application of concepts in Computer Science to solve real world problems led him to Dgraph. In his free time, he likes to travel, do yoga, read and cook.</p>
-
-
-  </div>
-</div>
-
-              
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/team-manish.jpg" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Manish Rai Jain
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
@@ -741,9 +1219,10 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
-	</div>
+  </div>
 </div>
 
+              
               </div>
             </div>
           </div>
@@ -783,7 +1262,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/protobuf/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/sql-vs-dgraph/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -822,7 +1301,7 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-07-17%2016%3a43%3a54.363592802%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-17%2016%3a43%3a54.352202097%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
     </script>
@@ -857,7 +1336,7 @@ $(document.links).filter(function() {
 
   
   <script type="text/javascript">
-DiscourseEmbed = { discourseUrl: 'https:\/\/discuss.dgraph.io\/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/protobuf\/' };
+DiscourseEmbed = { discourseUrl: 'https:\/\/discuss.dgraph.io\/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/sql-vs-dgraph\/' };
     (function() {
       var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
       d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
