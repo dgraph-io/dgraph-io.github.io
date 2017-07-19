@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a24%3a40.996112368%20-0700%20PDT" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a24%3a40.996158126%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a35%3a37.622629713%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a35%3a37.622685071%20-0700%20PDT" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -694,7 +694,7 @@ tables are flushed, before we close value log, and so on.</p>
 here</a>. The code
 is under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license, so
 feel free to copy the code and use it in your project. You can see the class in
-<a href="https://github.com/dgraph-io/badger/blob/master/kv.go#L171">action here</a>. Look
+<a href="https://github.com/dgraph-io/badger/blob/master/kv.go#L253-L315">action here</a>. Look
 for <code>closer.Register</code> and <code>closer.Get</code> to track how we create multiple such
 <code>LevelCloser</code>s and use them to maintain a strict opening and closing order
 between the various stages.</p>
@@ -883,7 +883,7 @@ between the various stages.</p>
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a24%3a40.997334902%20-0700%20PDT"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a35%3a37.623830138%20-0700%20PDT"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
