@@ -18,9 +18,11 @@
       <pubDate>Wed, 19 Jul 2017 15:24:00 -0700</pubDate>
       
       <guid>https://open.dgraph.io/post/signal-and-wait/</guid>
-      <description>One of the common use case in Go is to start a few goroutines to do some work. These goroutines block listening in on a channel, waiting for more work to arrive. At some point, you want to signal these goroutines to stop accepting more work and exit, so you can cleanly shut down the program.
-This is how the code might look:
-func doWork(chanWork chan *work) { for w := range chanWork { do(w) } } func main() { chanWork := make(chan *work, 100) for i := 0; i &amp;lt; N; i++ { go doWork(chanWork) } // Push work to chanWork.</description>
+      <description>&lt;p&gt;One of the common use case in Go is to start a few goroutines to do some
+work. These goroutines block listening in on a channel, waiting for more work to
+arrive. At some point, you want to signal these goroutines to stop accepting
+more work and exit, so you can cleanly shut down the program.
+&lt;/p&gt;</description>
     </item>
     
     <item>

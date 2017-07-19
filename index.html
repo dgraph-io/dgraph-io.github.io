@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a35%3a37.637345996%20-0700%20PDT" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a35%3a37.637366499%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a47%3a26.946161056%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a47%3a26.94619419%20-0700%20PDT" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -113,9 +113,11 @@
         <h3 class="article__title">Orchestrating signal and wait in Go</h3>
         <img class="opening__image" src="https://open.dgraph.io/images/spacex-stages.jpg">
     </a>
-    <p class="article__summary">One of the common use case in Go is to start a few goroutines to do some work. These goroutines block listening in on a channel, waiting for more work to arrive. At some point, you want to signal these goroutines to stop accepting more work and exit, so you can cleanly shut down the program.
-This is how the code might look:
-func doWork(chanWork chan *work) { for w := range chanWork { do(w) } } func main() { chanWork := make(chan *work, 100) for i := 0; i &lt; N; i++ { go doWork(chanWork) } // Push work to chanWork.</p>
+    <p class="article__summary"><p>One of the common use case in Go is to start a few goroutines to do some
+work. These goroutines block listening in on a channel, waiting for more work to
+arrive. At some point, you want to signal these goroutines to stop accepting
+more work and exit, so you can cleanly shut down the program.
+</p></p>
 </li>
 
           
@@ -292,7 +294,7 @@ All this goes to show how much people enjoy Go native libraries.</p>
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a35%3a37.638777822%20-0700%20PDT"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a47%3a26.947390972%20-0700%20PDT"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
