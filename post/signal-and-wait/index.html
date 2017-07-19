@@ -37,14 +37,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog</title>
-    <meta property='og:title' content="Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog">
+    <title>Orchestrating signal and wait in Go - Dgraph Blog</title>
+    <meta property='og:title' content="Orchestrating signal and wait in Go - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://open.dgraph.io/post/recommendation/">
+    <meta property="og:url" content="https://open.dgraph.io/post/signal-and-wait/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/falcon.png">
+    <meta property="og:image" content="https://open.dgraph.io/images/spacex-stages.jpg">
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a24%3a40.996347051%20-0700%20PDT" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a24%3a40.996380813%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a24%3a40.996112368%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a24%3a40.996158126%20-0700%20PDT" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -366,16 +366,16 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Jun 29, 2017
+                  Wed, Jul 19, 2017
                  by
-                Ashwin Ramesh
+                Manish Rai Jain
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Build%20a%20Realtime%20Recommendation%20Engine%3a%20Part%201&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2frecommendation%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Orchestrating%20signal%20and%20wait%20in%20Go&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fsignal-and-wait%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -383,7 +383,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Build a Realtime Recommendation Engine: Part 1</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Orchestrating signal and wait in Go</h1>
           </header>
         </div>
       </div>
@@ -395,559 +395,313 @@
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/falcon.png">
-          <div class="article-content">
+          <img class="opening__image" src="https://open.dgraph.io/images/spacex-stages.jpg">
+          <div class="article-content"><p>One of the common use case in Go is to start a few goroutines to do some
+work. These goroutines block listening in on a channel, waiting for more work to
+arrive. At some point, you want to signal these goroutines to stop accepting
+more work and exit, so you can cleanly shut down the program.</p>
 
-<h2 id="preface">Preface</h2>
+<p>This is how the code might look:</p>
 
-<p>In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user
-data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the
-user.</p>
+<pre><code>func doWork(chanWork chan *work) {
+  for w := range chanWork {
+    do(w)
+  }
+}
 
-<p>That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you
-don&rsquo;t even realize them.</p>
+func main() {
+  chanWork := make(chan *work, 100)
+  for i := 0; i &lt; N; i++ {
+    go doWork(chanWork)
+  }
 
-<p><em>You wake up and open Facebook,</em> which shows you a feed of articles that it
-has chosen for you based on your viewing history.</p>
+  // Push work to chanWork.
+  chanWork &lt;- w
 
-<p><em>Want to buy something?</em> Amazon would recommend
-you things to purchase based on what you&rsquo;ve viewed in the recent past.</p>
+  // All work is done, now stop.
+  close(chanWork)
+}
+</code></pre>
 
-<p><em>Want to relax and unwind with a movie?</em> Netflix would recommend you what to watch based on your
-interests.</p>
+<p>This code looks reasonable, <strong>with one caveat.</strong> Once you close the chanWork
+channel, the main exits immediately. Closing the channel only acts as a
+signal. You want the program to wait as well.</p>
 
-<p><em>No time to watch a full movie?</em> YouTube would recommend you smaller chunk videos.</p>
+<p>Using <code>sync.WaitGroup</code> allows the goroutines to cleanly exit before exiting the main
+program, like so:</p>
 
-<p><em>Want to listen to music instead?</em> Spotify would generate a weekly discovery list of songs just for
-you.</p>
+<pre><code>func doWork(chanWork chan *work, wg *sync.WaitGroup) {
+  defer wg.Done()
+  ...
+}
 
-<p>All this makes you wonder: <strong>Should recommendations be part of your application?</strong> While competing
-against Netflix might be hard, in this two-part series, we&rsquo;ll explain the basics of a recommendation
-engine. We&rsquo;ll show how you can build recommendations via two approaches: Content-based filtering and
-Collaborative filtering. And, how you can use Dgraph to bring recommendations to your app without breaking a
-sweat.</p>
+func main() {
+  var wg sync.WaitGroup
+  chanWork := make(chan *work, 100)
+  for i := 0; i &lt; N; i++ {
+    wg.Add(1)
+    go doWork(chanWork, &amp;wg)
+  }
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-});
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+  // Push work to chanWork.
+  chanWork &lt;- w
 
-<p>For this, we&rsquo;ll make use of Dgraph&rsquo;s query variables. To learn more about variables, head over to
-<a href="https://tour.dgraph.io/blocksvars/1/">Dgraph tour</a> &mdash; <em>if you are new to Dgraph variables, you
-really should check them out first before diving in here.</em></p>
+  // All work is done, now stop.
+  close(chanWork)
 
-<p>Let&rsquo;s first check out how recommendation systems work, and then we&rsquo;ll look at the support Dgraph queries offer.  We&rsquo;ll use two sample datasets.  One about movies and ratings (<a href="https://grouplens.org/datasets/movielens/100k/">Movielens</a>) and the other is part of <a href="https://archive.org/download/stackexchange/lifehacks.stackexchange.com.7z">Stack Exchange&rsquo;s data archive</a> &mdash; we&rsquo;ll just use the Lifehacks dataset here, but watch out for a coming series of posts where we show how to load all of Stack Overflow into Dgraph and run the entire website completely off Dgraph.</p>
+  // Now wait.
+  wg.Wait()
+}
+</code></pre>
 
-<h2 id="recommendation-systems">Recommendation Systems</h2>
+<p>For a Go programmer, this is pretty basic so far. And that&rsquo;s because we had
+access to the channel, which controls when the goroutine should exit.</p>
 
-<p>Making Recommendations is a subtle art.  There are a number of approaches and a production worthy recommendation system might depend on data, weighting of various features, global user behaviour and maybe recent behaviour of the user we are recommending for.</p>
+<p>What happens in case we don&rsquo;t have access to this channel? For, e.g., if we want to run
+some execution periodically, we&rsquo;ll have this situation:</p>
 
-<p>Rather than just inventing recommendation queries, let&rsquo;s start somewhere more grounded.  For this post, we started with the Stanford University MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.  Part of the course is on recommender systems.  We&rsquo;ll show how the theory in the <em>&ldquo;Recommendation Systems&rdquo;</em> chapter of the <a href="http://www.mmds.org">text</a> can be translated into practice using Dgraph. We&rsquo;ll also talk about other approaches and how to run one at scale.</p>
+<pre><code>func doWorkPeriodically(wg *sync.WaitGroup) {
+  defer wg.Done()
+  timeChan := time.Tick(time.Second)
 
-<h3 id="making-recommendations">Making Recommendations</h3>
+  for _ := range timeChan {
+    do()  // some work
+  }
+}
+</code></pre>
 
-<p>Making recommendations is about taking past benaviour and preferences and trying to predict a preference for some unknown.  For example, later in the post, we&rsquo;ll talk about movie recommendations.  For this, we know what a user has watched and how they rated movies; how then can we predict what unwatched movies they&rsquo;ll enjoy.</p>
+<p>In this case, we need a way to signal the goroutine to stop doing the work.
+Say we use a signal channel like so:</p>
 
-<p>As briefly mentioned before, broadly speaking, there are two basic approaches:</p>
+<pre><code>func doWorkPeriodically(wg *sync.WaitGroup, signal chan struct{}) {
+  defer wg.Done()
+  timeChan := time.Tick(time.Second)
 
-<ol>
-<li><p><strong>Content-based:</strong> Such systems base a recommendation on the properties of an item. Two items that have similar properties are deemed similar; the more properties shared, the more similar. For example, if a user likes movies with certain actors or directors, we can
-recommend other movies involving the same people.</p></li>
-
-<li><p><strong>Collaborative filtering:</strong> Such systems base recommendations on the relationship between users and items, and similarity to other users. Users are similar if they have relationships to items in common; the more items in common, the more similar.  For example, if many similar users enjoyed a particular movie, that might be a good one to recommend.</p></li>
-</ol>
-
-<p>There are also classification algorithms based on machine learning.  We&rsquo;ll focus here on how far we can get with Dgraph queries alone.  Machine learning or other algorithms could also be run over the Dgraph output.</p>
-
-<h3 id="interpreting-the-data-for-recommendations">Interpreting the Data for Recommendations</h3>
-
-<p>Our Stanford reference text represents data as a sparse matrix.  So for our movie data set, we might think of the user&rsquo;s ratings of movies as:</p>
-
-<table>
-<thead>
-<tr>
-<th>User</th>
-<th>The Matrix</th>
-<th>Toy Story</th>
-<th>Jurassic Park</th>
-<th>Forrest Gump</th>
-<th>Braveheart</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>A</td>
-<td>5</td>
-<td>4</td>
-<td>4</td>
-<td></td>
-<td></td>
-</tr>
-
-<tr>
-<td>B</td>
-<td></td>
-<td>3</td>
-<td>4</td>
-<td></td>
-<td>1</td>
-</tr>
-
-<tr>
-<td>C</td>
-<td>1</td>
-<td></td>
-<td></td>
-<td>2</td>
-<td>5</td>
-</tr>
-</tbody>
-</table>
-
-<p>The movies also have other properties such as genres, not shown here.  We&rsquo;ve stored it all as a graph, which in itself is a nice way to store a sparse matrix.</p>
-
-<p>The matrix (that&rsquo;s the matrix above, not <em>&ldquo;<a href="https://en.wikipedia.org/wiki/The_Matrix">The Matrix</a>&ldquo;</em>) is missing values because users haven&rsquo;t seen all movies &mdash; in fact, for the real dataset it&rsquo;s much sparser because users have each only rated a tiny percentage of the movies.</p>
-
-<p>The challenge of recommendation is to predict values for the missing ratings.  Will user A enjoy Braveheart because it&rsquo;s an action movie and thus similar to movies they enjoyed? (content based filtering)</p>
-
-<p>But maybe they won&rsquo;t enjoy it because they might have something in common with user B who seems to share similar ratings (collaborative filtering).</p>
-
-<p>Maybe user A just gives high ratings and isn&rsquo;t very discriminating &mdash; sometimes benaviour rather than rating can be a better predictor. We&rsquo;ll need to combine a number of approaches.</p>
-
-<p>The theory boils down to finding functions that serve as measures of similarity or distance.  For example, in content-based filtering, the function would take two movies and output a score (the distance or similarity).  If we start with a movie and apply the function repeatedly to it and all other movies, we can find the most similar movies.</p>
-
-<p>We&rsquo;ll look at some distance measures below as we apply them in queries, but for any of them we&rsquo;ll need to propagate values through our query, so let&rsquo;s look at how that works in Dgraph and then try out some recommendation queries.</p>
-
-<h2 id="variable-propagation">Variable Propagation</h2>
-
-<p>A Dgraph <a href="https://docs.dgraph.io/query-language/#value-variables">value variable</a> is a mapping from graph nodes to values that have been computed for the nodes during the query.  Value variables can be passed around the query, aggregated etc.  Value variables also sum over paths as we move deeper into a query tree.</p>
-
-<p>Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.</p>
-
-<p>We call this <strong>variable propagation.</strong>  Note that the queries in this post we built for our master branch for the upcoming v0.8 release.</p>
-
-<p>Say you had a query:</p>
-
-<pre><code>{
-  var(func: uid(&lt;...P...&gt;)) {
-    myscore as math(1)          # A
-    friends {                   # B
-      friends {                 # C
-        fscore as math(myscore)
-      }
+  for {
+    select {
+      case &lt;- timeChan:
+        do() // some work
+      case &lt;- signal:
+        return
     }
   }
+}
 
-  closeFriends(func: uid(fscore), orderdesc: val(fscore)) {
-    name
-    val(score)
-  }
+func main() {
+  signal := make(chan struct{}, 1)
+
+  ...
+
+  signal &lt;- struct{}{}  // To signal the goroutine to stop.
+  wg.Wait() // Wait for goroutine to exit.
 }
 </code></pre>
 
-<p>At line A, nodes are assigned a score of <code>1</code> (which in this case we&rsquo;ll assume is the single node <code>P</code>).
-Traversing the <code>friend</code> edge twice reaches the friends of friends.  The variable <code>myscore</code> gets
-propagated, such that the value inside the block marked C is the sum of values from all paths from A to C.</p>
+<p>This code above would indicate to the goroutine to stop doing the work. And also
+wait for it so <code>main</code> can exit cleanly.</p>
 
-<p>Here&rsquo;s how that propagation looks in a graph.</p>
+<p>All nice and good so far. Now, <strong>what if we have multiple different such goroutines, and
+we need to signal and wait on them in some order.</strong> For, e.g., we might have a
+pipeline of sorts, with multiple stages, each dependent on the previous <code>A -&gt; B
+-&gt; C</code>. In this case, we need to signal and wait on <code>A</code>, before we do that for
+<code>B</code> and then <code>C</code>.</p>
 
-<p><img src="/images/vartransform.png" alt="Variable propagation" /></p>
+<p>With the above code, this would be cumbersome. You&rsquo;d need multiple signal
+channels, one for each stage; and similarly, multiple waits, one for each stage.
+Would be nice to encapsulate this in a class. That&rsquo;s what we have done in
+<a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
 
-<p><strong>In short, the value that a node receives is equal to the sum of values of all its parent nodes.</strong>
-This propagation is useful when we want to normalize a sum across users, find the number of paths
-between some nodes or accumulate a sum as we move through the graph.</p>
+<pre><code>type LevelCloser struct {
+    Name    string
+    running int32
+    nomore  int32
+    closed  chan struct{}
+    waiting sync.WaitGroup
+}
 
-<h2 id="movielens">Movielens</h2>
+func (lc *LevelCloser) Signal() {
+    if !atomic.CompareAndSwapInt32(&amp;lc.nomore, 0, 1) {
+        // fmt.Printf(&quot;Level %q already got signal\n&quot;, lc.Name)
+        return
+    }
+    running := int(atomic.LoadInt32(&amp;lc.running))
+    // fmt.Printf(&quot;Sending signal to %d registered with name %q\n&quot;,
+                  running, lc.Name)
+    for i := 0; i &lt; running; i++ {
+        lc.closed &lt;- struct{}{}
+    }
+}
 
-<p>Let&rsquo;s start with the <a href="https://grouplens.org/datasets/movielens/100k/">ML-100k</a> dataset of
-100,000 ratings from 1000 users on 1700 movies. We converted the dataset to RDF (the dataset and
-script can be found at
-<a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">github</a>) and loaded it into
-Dgraph.</p>
+func (lc *LevelCloser) HasBeenClosed() &lt;-chan struct{} {
+	return lc.closed
+}
 
-<p>It&rsquo;s about users and movies and user&rsquo;s ratings of movies.  So a user (a node in the graph) has a name and a gender and a <code>rated</code> edge to a movie.  The <code>rated</code> edge has a facet <code>rating</code> that tells us the users numeric 0&ndash;5 rating of the movie.</p>
+func (lc *LevelCloser) Done() {
+    if atomic.LoadInt32(&amp;lc.running) &lt;= 0 {
+        return
+    }
 
-<p><img src="/images/movilensschema.png" alt="Movielens schema" /></p>
+    running := atomic.AddInt32(&amp;lc.running, -1)
+    if running == 0 {
+        lc.waiting.Done()
+    }
+}
 
-<h2 id="content-based-filtering">Content-based filtering</h2>
+func (lc *LevelCloser) Wait() {
+    lc.waiting.Wait()
+}
+</code></pre>
 
-<p>Content-based filtering ranks items as similar or not based on their properties.  There are a number of measures we could use.  Our reference text from Stanford talks about <strong>Jaccard</strong> and <strong>Cosine</strong> distances.</p>
+<p>It&rsquo;s a simple class with some basic APIs. The way you&rsquo;d use it is like this:</p>
 
-<h3 id="jaccard-distance">Jaccard Distance</h3>
+<pre><code>func doWorkPeriodically(lc *LevelCloser) {
+  defer lc.Done()
+  timeChan := time.Tick(time.Second)
 
-<p>Let&rsquo;s try some measure functions based on Jaccard distance.  For two sets A and B the Jaccard distance is given by</p>
-
-<p>$$1-\frac{|A\cap B|}{| A\cup B |}$$</p>
-
-<p>That&rsquo;s the ratio of the size of the set intersection to the size of the union.  So if items have many properties in common (compared to how many properties each has) then the items are similar.  For our movie example, let&rsquo;s take $A$ and $B$ as the genre sets for each movie.  We can then express our difference function as:</p>
-
-<p>$$d(M_1, M_2) = 1-\frac{|M_1.\mathcal{genres} \cap M_2.\mathcal{genres}|}{| M_1.\mathcal{genres}\cup M_2.\mathcal{genres} |}$$</p>
-
-<p>The closer the result is to 0, the closer the movies &mdash; if the number of genres in common is more, the second term is close to 1, if movies have few genres in common, the second term is closer to 0.</p>
-
-<p>For movie a $M_1$, we picked &ldquo;The Shawshank Redemption&rdquo; with unique ID <code>0x30d80</code>, and translated Jaccard distance to this query.</p>
-
-<pre><code>{
-  # Count the genres for every movie that has been rated
-  var(func: has(~rated)) {
-    M2_num_genres as count(genre)
-  }
-
-
-  # Calculate a Jaccard distance score for every movie that shares
-  # at least 1 genre with the given movie.
-  var(func: uid(0x30d80)) {    # M1
-    norm as math(1)               # 1
-    M1_num_genres as count(genre) # 2
-    M1genres as genre {           # 3
-      ~genre {
-        # M2 -- movies reached here share a genre with the initial movie
-        # normalize the count to account for multiple paths
-        M1_num_genres_norm as math(M1_num_genres / norm)      # 4
-        num_genres as count(genre @filter(uid(M1genres))) # 5
-        distance as math( 1 - ( num_genres / (M1_num_genres_norm + M2_num_genres - num_genres) )) # 6
-      }
+  for {
+    select {
+      case &lt;- timeChan:
+        do() // some work
+      case &lt;- lc.HasBeenClosed():
+        return
     }
   }
+}
 
-  # Sort and return closest movies.
-  similarMovies(func: uid(distance), orderasc: val(distance), first: 10) { # 7
-    name
-    val(distance)
+func main() {
+  lc := &amp;LevelCloser{
+    Name: name,
+    closed: make(chan struct{}, 10),
+    running: 1,
   }
+  lc.waiting.Add(1)
+
+  doWorkPeriodically(lc)
+
+  lc.Signal()
+  lc.Wait()
 }
 </code></pre>
 
-<p>The query works as follows.</p>
+<p>Finally, to make it work for multiple stages, dependent or not, we wrap it up
+into one <code>Closer</code> class.</p>
 
-<ol>
-<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-<li>Count the number of genres for movie $M_1$.</li>
-<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
-<li>We may have reached this $M_2$ via multiple genre paths and the count of genres set at <code># 2</code> would have accumulated for each path, so normalize back to the original count.</li>
-<li>Find the number of intersecting genres.</li>
-<li>Apply the Jaccard distance formula &mdash; <code>distance</code> is thus a map for each $M_2$ to the Jaccard distance between $M_1$ and $M_2$.</li>
-<li>Filter out the movies that were closest (had lowest distance)</li>
-</ol>
+<pre><code>type Closer struct {
+    sync.RWMutex
+    levels map[string]*LevelCloser
+}
 
-<p>Here&rsquo;s the results we got for &ldquo;The Shawshank Redemption&rdquo;</p>
+func NewCloser() *Closer {
+    return &amp;Closer{
+        levels: make(map[string]*LevelCloser),
+    }
+}
 
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Miracle on 34th Street (1994)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Postman, The (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Mat' i syn (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Winter Guest, The (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Chamber, The (1996)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Picnic (1955)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Nell (1994)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Dead Man Walking (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Blue Angel, The (Blaue Engel, Der) (1930)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        }
-    ]
+func (c *Closer) Register(name string) *LevelCloser {
+    c.Lock()
+    defer c.Unlock()
+
+    lc, has := c.levels[name]
+    if !has {
+        lc = &amp;LevelCloser{Name: name, closed: make(chan struct{}, 10)}
+        lc.waiting.Add(1)
+        c.levels[name] = lc
+    }
+
+    AssertTruef(atomic.LoadInt32(&amp;lc.nomore) == 0, &quot;Can't register with closer after signal.&quot;)
+    atomic.AddInt32(&amp;lc.running, 1)
+    return lc
+}
+
+func (c *Closer) Get(name string) *LevelCloser {
+    c.RLock()
+    defer c.RUnlock()
+
+    lc, has := c.levels[name]
+    if !has {
+        log.Fatalf(&quot;%q not present in Closer&quot;, name)
+        return nil
+    }
+    return lc
 }
 </code></pre>
 
-<p>Ouch, there&rsquo;s a bunch of movies with distance 0.  That means all those movies share exactly the same genre set with &ldquo;The Shawshank Redemption&rdquo;, so we can&rsquo;t discriminate between them.  Let&rsquo;s test another movie.  With &ldquo;Toy Story&rdquo; we get.</p>
+<p>Using this wrapper class, you can just create one <code>Closer</code> object, and use that
+to create and maintain all <code>LevelCloser</code>s. This way, you can retrieve, and signal all
+the <code>LevelCloser</code>s individually in order, or just have <code>Closer</code> signal all of
+them, and then wait for all of them.</p>
 
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Aladdin and the King of Thieves (1996)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Toy Story (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Aladdin (1992)&quot;,
-            &quot;var(distance)&quot;: 0.25
-        },
-        {
-            &quot;name&quot;: &quot;Goofy Movie, A (1995)&quot;,
-            &quot;var(distance)&quot;: 0.25
-        },
-        {
-            &quot;name&quot;: &quot;Flintstones, The (1994)&quot;,
-            &quot;var(distance)&quot;: 0.333333
-        }
-    ]
+<pre><code>func (c *Closer) SignalAll() {
+    c.RLock()
+    defer c.RUnlock()
+
+    for _, l := range c.levels {
+        l.Signal()
+    }
+}
+
+func (c *Closer) WaitForAll() {
+    c.RLock()
+    defer c.RUnlock()
+
+    for _, l := range c.levels {
+        l.Wait()
+    }
 }
 </code></pre>
 
-<p>That&rsquo;s better.  At least similar movies have similar genres. But still, the Jaccard distance function isn&rsquo;t good enough because it can&rsquo;t discriminate a difference between many movies.  Our reference text suggests the same distance function but for data that also has actors and directors, which we don&rsquo;t.</p>
+<p>This is how you&rsquo;d use this class:</p>
 
-<p>As it stands, the Jaccard distance might not be so appropriate because the only items we have to compare are the genres, since the Jaccard distance doesn&rsquo;t take into account the magnitude of the ratings.  So let&rsquo;s play around with it and see how some variations come out.</p>
-
-<h3 id="jaccard-distance-variation">Jaccard Distance Variation</h3>
-
-<p>The size of the intersection of the genres seems a reasonable start, but how to bring the magnitude of the ratings into it?  If we are to use the ratings, then the average rating might be appropriate.  Let&rsquo;s try the number of genres in common plus an average rating.  Given a movie $M_1$ we&rsquo;ll find the similarity to all other movies $M_2$ as</p>
-
-<p>$$d(M_1, M_2) = |M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_2.\overline{\mathcal{rating}}$$</p>
-
-<p>Here&rsquo;s the Dgraph query for movie $M_1$ having unique ID <code>0x30d72</code>, that&rsquo;s &ldquo;Star Wars&rdquo;.</p>
-
-<pre><code>{
-  # M1 -- Star Wars by its unique ID
-  var(func: uid(0x30d72)) {
-    g as genre
-  }
-
-  # Calculate the average rating for every movie
-  var(func: has(rated)) {
-    allmovies as rated @facets(a as rating) {
-      c as count(~rated)
-      avg as math(a / c)
+<pre><code>func stageA(lc *LevelCloser) {
+  defer lc.Done()
+  for {
+    select {
+      case &lt;- someChan:
+      case &lt;- lc.HasBeenClosed():
+        return
     }
   }
+}
 
-  # Give every movie a score
-  var(func: uid(allmovies)) {
-    x as count(genre @filter(uid(g)))
-    score as math(avg + x)
-  }
+func stageB(lc *LevelCloser) {
+  ...
+}
 
-  # Return the top 10 movies
-  fin(func: uid(score), orderdesc: val(score), first: 10) {
-    name
-    val(score)
-  }
+func main() {
+  closer := NewCloser()
+  lc := closer.Register(&quot;stage-a&quot;)
+  go stageA(lc)
+
+  lc := closer.Register(&quot;stage-b&quot;)
+  go stageB(lc)
+
+  ...
+
+  lc = closer.Get(&quot;stage-b&quot;)
+  lc.SignalAndWait()
+
+  closer.SignalAll()
+  closer.WaitAll()
 }
 </code></pre>
 
-<p><strong>In terms of variable propagation, the important part is the calculation of average rating.</strong>  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.</p>
+<p>This class is being used by <a href="https://github.com/dgraph-io/badger">Badger</a>, and
+it significantly simplifies the various asynchronous activities going on
+internally. We can ensure that our writes are all committed before in-memory
+tables are flushed, before we close value log, and so on.</p>
 
-<p><img src="/images/facetsumming.png" alt="Facet summing" /></p>
+<p>You can see the entire <a href="https://github.com/dgraph-io/badger/blob/master/y/y.go#L67-L170">code
+here</a>. The code
+is under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license, so
+feel free to copy the code and use it in your project. You can see the class in
+<a href="https://github.com/dgraph-io/badger/blob/master/kv.go#L171">action here</a>. Look
+for <code>closer.Register</code> and <code>closer.Get</code> to track how we create multiple such
+<code>LevelCloser</code>s and use them to maintain a strict opening and closing order
+between the various stages.</p>
 
-<p>Running the query we get the following results.</p>
-
-<pre><code>{
-    &quot;fin&quot;: [
-        {
-            &quot;name&quot;: &quot;Star Wars (1977)&quot;,
-            &quot;var(score)&quot;: 9.358491
-        },
-        {
-            &quot;name&quot;: &quot;Empire Strikes Back, The (1980)&quot;,
-            &quot;var(score)&quot;: 9.20436
-        },
-        {
-            &quot;name&quot;: &quot;Return of the Jedi (1983)&quot;,
-            &quot;var(score)&quot;: 9.00789
-        },
-        {
-            &quot;name&quot;: &quot;African Queen, The (1951)&quot;,
-            &quot;var(score)&quot;: 8.184211
-        },
-        {
-            &quot;name&quot;: &quot;Starship Troopers (1997)&quot;,
-            &quot;var(score)&quot;: 7.232227
-        },
-        {
-            &quot;name&quot;: &quot;Princess Bride, The (1987)&quot;,
-            &quot;var(score)&quot;: 7.17284
-        },
-        {
-            &quot;name&quot;: &quot;Star Kid (1997)&quot;,
-            &quot;var(score)&quot;: 7.0
-        },
-        {
-            &quot;name&quot;: &quot;Aliens (1986)&quot;,
-            &quot;var(score)&quot;: 6.947183
-        },
-        {
-            &quot;name&quot;: &quot;Star Trek: The Wrath of Khan (1982)&quot;,
-            &quot;var(score)&quot;: 6.815574
-        },
-        {
-            &quot;name&quot;: &quot;Men in Black (1997)&quot;,
-            &quot;var(score)&quot;: 6.745875
-        }
-    ]
-}
-</code></pre>
-
-<p><em>Note that we didn&rsquo;t filter out &ldquo;Star Wars&rdquo; and thankfully it came back as the first result.</em>  Looks like a pretty good distance function, especially given the top three results, but it&rsquo;s probably biased.  &ldquo;Star Wars&rdquo; is highly rated on average, and so we got back other highly rated movies with intersecting genres.  If we searched for a movie that wasn&rsquo;t highly rated on average, the measure would still prefer highly rated movies with intersecting genres.</p>
-
-<p>That might be fine.  If a user likes certain genres, then maybe highly rated movie in those genres are good recommendations. Maybe it&rsquo;s better to normalize the result so that two movies come out as more similar if they have genres in common and similar average ratings.  That&rsquo;s what cosine distance does.</p>
-
-<h3 id="cosine-distance">Cosine Distance</h3>
-
-<p>Cosine distance treats our movies as vectors in an n-dimensional space.  The similarity of the movies is then a measure of the difference in angle between the vectors.  The smaller the angle between two vectors, the more similar the movies.  For our movie example, we can express that as follows.</p>
-
-<p>If we treat our movies as vectors</p>
-
-<p>$$x_1 &hellip; x_n$$ and $$y_1 &hellip; y_n$$</p>
-
-<p>the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.</p>
-
-<p><img src="/images/cosine_diff.png" alt="cosine difference" /></p>
-
-<!--
-what's wrong with this???
-$$\frac{\sum_{i=1}^n{x_iy_i}}{\sqrt{\sum_{i=1}^n{x_i^2}}\cdot \sqrt{\sum_{i=1}^n{x_i^2}}}$$
-If I paste it into http://www.hostmath.com/ I get what I want
--->
-
-<p>In our case the $x$&rsquo;s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
-
-<p><img src="/images/cosine_diff_movies.png" alt="cosine difference" /></p>
-
-<!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} -->
-
-<p>That factors in both the intersecting genres as well as the similarity of the average ratings.</p>
-
-<p>As a single Dgraph query, that looks like this.</p>
-
-<pre><code>{
-  # Calculate the average rating of every movie
-  var(func: has(rated)) {
-    rated @facets(r as rating) {
-      c as count(~rated)
-      M2_avg_rating as math(r / c)
-      M2_num_gen as count(genre)
-    }
-  }
-
-  # Calculate a cosine difference score for every movie that shares
-  # at least 1 genre with M1
-  var(func: uid(0x30d80)) {    # movie M1
-    norm as math(1)     # 1
-
-    # Find the average rating for M1
-    M1_num_ratings as count(~rated)
-    ~rated @facets(B as rating)
-    M1_ratings_sum as sum(val(B))
-    M1_avg_rating as math(M1_ratings_sum / M1_num_ratings) # 2
-    M1_num_gen as count(genre)                             # 3
-
-    M1_genres as genre {
-      ~genre { # 4
-        # M2 -- movies reached here share a genre with the initial movie
-
-        # normalize the M1 count and average to account for multiple paths
-        M1_norm_avg as math(M1_avg_rating / norm)
-        num_genN as math(M1_num_gen/norm)              # 5
-        genint as count(genre @filter(uid(M1_genres))) # 6
-
-        score as math((genint + (M1_norm_avg * M2_avg_rating)) /
-          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) *
-          sqrt(M2_num_gen + (M2_avg_rating*M2_avg_rating))))    # 7
-
-      }
-    }
-  }
-
-  similarMovies(func: uid(score), first:20, orderdesc: val(score)) { # 8
-    name
-    val(score)
-  }
-}
-</code></pre>
-
-<p>The query works as follows.</p>
-
-<ol>
-<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-<li>Find the average rating for movie $M_1$.</li>
-<li>Count the genres for $M_1$.</li>
-<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
-<li>We may have reached this $M_2$ via multiple genre paths and the values from <code># 2</code> and <code># 3</code> would have accumulated for each path, so normalize back to the originals.</li>
-<li>Find the number of intersecting genres.</li>
-<li>Apply the cosine distance formula &mdash; <code>score</code> is thus a map for each $M_2$ to the cosine distance between $M_1$ and $M_2$.</li>
-<li>Filter out the movies that were closest (had cosine closer to 1, and thus lowest angle)</li>
-</ol>
-
-<p>We searched again for the &ldquo;The Shawshank Redemption&rdquo; and got these results.</p>
-
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Shawshank Redemption, The (1994)&quot;,
-            &quot;var(score)&quot;: 1.0
-        },
-        {
-            &quot;name&quot;: &quot;Anna (1996)&quot;,
-            &quot;var(score)&quot;: 0.999997
-        },
-        {
-            &quot;name&quot;: &quot;Some Mother's Son (1996)&quot;,
-            &quot;var(score)&quot;: 0.999997
-        },
-        {
-            &quot;name&quot;: &quot;12 Angry Men (1957)&quot;,
-            &quot;var(score)&quot;: 0.999988
-        },
-        {
-            &quot;name&quot;: &quot;Bitter Sugar (Azucar Amargo) (1996)&quot;,
-            &quot;var(score)&quot;: 0.999985
-        },
-        {
-            &quot;name&quot;: &quot;Citizen Kane (1941)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;To Kill a Mockingbird (1962)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;One Flew Over the Cuckoo's Nest (1975)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;Pather Panchali (1955)&quot;,
-            &quot;var(score)&quot;: 0.999965
-        },
-        {
-            &quot;name&quot;: &quot;Good Will Hunting (1997)&quot;,
-            &quot;var(score)&quot;: 0.999958
-        }
-    ]
-}
-</code></pre>
-
-<p>We didn&rsquo;t filter out &ldquo;The Shawshank Redemption&rdquo; and thus it comes back as the top result &mdash; it has an angle of 0 with itself.  Following that the query returns the results that cosine difference calculates as most similar.</p>
-
-<p><em>With that, we conclude this post.</em> In this post, we showcased Jaccard distance, a variation of Jaccard, and finally Cosine
-distance. That&rsquo;s three content-based filtering distance metrics and queries for them in Dgraph.  The variables and math function in Dgraph allow us to encode the metrics directly in the query.</p>
-
-<p>In the next post, we&rsquo;ll take a look at collaborative filtering.  We&rsquo;ll also look at making recommendations for Stack Overflow and how to build a scalable recommendation engine for big graphs.</p>
+<p>Hope you found this useful! Check out other posts to see how
+<a href="https://github.com/dgraph-io/dgraph">Dgraph</a> and
+<a href="https://github.com/dgraph-io/badger">Badger</a> can add value to your projects.</p>
 
 <hr />
 
@@ -988,7 +742,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 <br/>
 
 
-<p><em>Top image: <a href="http://www.spacex.com/media-gallery/detail/149441/9516">FALCON 9 FIRST STAGE LANDING</a></em></p>
+<p><em>Top image: Various stages of a <a href="http://www.spacex.com/news/2015/06/24/why-and-how-landing-rockets">SpaceX rocket launch</a>.</em></p>
 </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
@@ -1014,12 +768,12 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/ashwin.jpg" class="article-author__image">
+	<img src="/images/team-manish.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Ashwin Ramesh
+    <h4 class="article-author__name">Manish Rai Jain
 
 
       <span class="article-author__title">Author</span>
@@ -1028,14 +782,14 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/ashwin95r" class="social__link">
+            <a href="https://au.linkedin.com/in/manishrjain" class="social__link">
                 <svg class="icon social__icon social__icon--linkedin">
                     <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
             </a>
         </li>
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/ashwin_rrr" class="social__link">
+            <a href="https://twitter.com/manishrjain" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -1043,37 +797,14 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
         </li>
     </ul>
 </nav>
-<p>Ashwin did his undergrad in computer science at IIT Madras and likes working on distributed systems. He likes working out, hiking, swimming and everything adventurous. Loves travelling to new places and trying out new food.</p>
+<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
+<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
   </div>
 </div>
 
               
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/michael.jpg" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Michael Compton
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-    </ul>
-</nav>
-<p>Michael did undergrad computer science at ANU in Canberra and a Ph.D. at Cambridge in the U.K.  He's worked for a number of years with graph databases.  He likes sport and hanging out with his family.</p>
-
-
-	</div>
-</div>
-
               </div>
             </div>
           </div>
@@ -1113,7 +844,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/recommendation/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/signal-and-wait/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1152,7 +883,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a24%3a40.997690466%20-0700%20PDT"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a24%3a40.997334902%20-0700%20PDT"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -1207,7 +938,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/open.dgraph.io\/post\/recommendation\/"
+  discourseEmbedUrl: "https:\/\/open.dgraph.io\/post\/signal-and-wait\/"
 };
 (function() {
   var d = document.createElement("script");

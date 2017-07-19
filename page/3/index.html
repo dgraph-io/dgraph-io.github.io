@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-07-18%2015%3a23%3a16.349298695%20-0700%20PDT" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-18%2015%3a23%3a16.349331284%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-19%2015%3a24%3a41.010772631%20-0700%20PDT" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-19%2015%3a24%3a41.010800835%20-0700%20PDT" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -100,6 +100,22 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
+          
+          
+          
+            <li class="article__item">
+  <div class="article__meta"><span class="article__meta-item article__date">
+  	Thu, Oct 6, 2016 by Pawan Rawal
+
+
+  	<span></div>
+    <a href="https://open.dgraph.io/post/hugo/" class="clearfix">
+        <h3 class="article__title">Dgraph hugo blog theme</h3>
+        <img class="opening__image" src="https://open.dgraph.io/images/blackholestar.jpg">
+    </a>
+    <p class="article__summary">We at Dgraph love Hugo and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.</p>
+</li>
+
           
           
           
@@ -172,29 +188,6 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 .</p>
 
 <p></p></p>
-</li>
-
-          
-          
-          
-            <li class="article__item">
-  <div class="article__meta"><span class="article__meta-item article__date">
-  	Sat, Jun 25, 2016 by Manish Rai Jain
-
-
-  	<span></div>
-    <a href="https://open.dgraph.io/post/rpc-vs-grpc/" class="clearfix">
-        <h3 class="article__title">Custom encoding: Go implementation in net/rpc vs grpc and why we switched</h3>
-        <img class="opening__image" src="https://open.dgraph.io/images/martian-encoding.jpg">
-    </a>
-    <p class="article__summary"><p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, we aim to build a low latency, distributed graph database.
-This means our data is distributed among nodes in the cluster.
-Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
-
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer.</p></p>
 </li>
 
           
@@ -303,25 +296,43 @@ To keep our latency of communication low, we use a new form of serialization lib
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-07-18%2015%3a23%3a16.350724074%20-0700%20PDT"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-19%2015%3a24%3a41.01167603%20-0700%20PDT"></script>
     <script>
     hljs.initHighlightingOnLoad();
-    </script>
+</script>
 
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-75364122-1', 'auto');
-ga('send', 'pageview');
+if (window.location.host.indexOf("dgraph.io") > -1) {
+  (function(i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    (i[r] =
+      i[r] ||
+      function() {
+        (i[r].q = i[r].q || []).push(arguments);
+      }), (i[r].l = 1 * new Date());
+    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "//www.google-analytics.com/analytics.js",
+    "ga"
+  );
+  ga("create", "UA-75364122-1", "auto");
+  ga("send", "pageview");
+}
 </script>
 
 
 <script>
-$(document.links).filter(function() {
-  return this.hostname != window.location.hostname;
-}).attr('target', '_blank');
+$(document.links)
+  .filter(function() {
+    return this.hostname != window.location.hostname;
+  })
+  .attr("target", "_blank");
 </script>
 </body>
 </html>
@@ -337,12 +348,9 @@ $(document.links).filter(function() {
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   
   <script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-  </script>
+  hljs.initHighlightingOnLoad();
+</script>
   
   
   <script id="dsq-count-scr" src="//skgamingtest.disqus.com/count.js" async></script>
-
-  
-  <script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date; e=o.createElement(i);r=o.getElementsByTagName(i)[0]; e.src='//www.google-analytics.com/analytics.js'; r.parentNode.insertBefore(e,r)}(window,document,'script','ga')); ga('create','UA-XXXXX-X');ga('send','pageview');</script>
 </html>
