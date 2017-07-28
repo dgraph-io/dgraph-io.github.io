@@ -37,14 +37,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Building a long lasting company around open-source - Dgraph Blog</title>
-    <meta property='og:title' content="Building a long lasting company around open-source - Dgraph Blog">
+    <title>Building apps with Dgraph&#39;s Go client - Dgraph Blog</title>
+    <meta property='og:title' content="Building apps with Dgraph&#39;s Go client - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://open.dgraph.io/post/licensing/">
+    <meta property="og:url" content="https://open.dgraph.io/post/client0.8.0/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/peoplelandingonmars.jpg">
+    <meta property="og:image" content="https://open.dgraph.io/images/spaceXdragondocking.jpg">
 
     
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
@@ -54,8 +54,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-07-28%2011%3a35%3a06.530410059%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-28%2011%3a35%3a06.530479485%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-07-28%2011%3a35%3a06.518899969%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-07-28%2011%3a35%3a06.518932539%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -366,16 +366,16 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Sun, Mar 26, 2017
+                  Fri, Jul 28, 2017
                  by
-                Manish Rai Jain
+                Michael Compton
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Building%20a%20long%20lasting%20company%20around%20open-source&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2flicensing%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Building%20apps%20with%20Dgraph%27s%20Go%20client&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fclient0.8.0%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -383,7 +383,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Building a long lasting company around open-source</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Building apps with Dgraph&#39;s Go client</h1>
           </header>
         </div>
       </div>
@@ -395,70 +395,407 @@
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/peoplelandingonmars.jpg">
+          <img class="opening__image" src="https://open.dgraph.io/images/spaceXdragondocking.jpg">
           <div class="article-content">
 
-<p>Dgraph started with the idea that every startup should be able to have the same level of technology as run by big giants. We designed Dgraph from ground-up to allow data sharding, horizontal scalability, consistent replication, and a fast and distributed architecture.</p>
+<p>We&rsquo;ve just released v0.8 and it contains lots of <a href="https://github.com/dgraph-io/dgraph/releases/tag/v0.8.0">new features and improvements</a>.  The Go client saw some nice improvements, so this post will walk you through the client interface and demonstrate some example code.</p>
 
-<p>We also dream that graph database would no longer run as a secondary database. By building a truly robust piece of technology, we can have our users run only one database, which allows arbitrarily complex queries while providing rock solid performance.</p>
+<p>The <a href="https://godoc.org/github.com/dgraph-io/dgraph/client">GoDoc</a> already contains all the specs and small examples of how to use the client.  This post will take you on a guided tour and with examples that are more on the scale of a real app.</p>
 
-<p>We have always thought of Dgraph as a company, where we can work for the next ten years. So, instead of hacking our way to market, we invest in good design, aggressive refactoring and a culture of logic and reasoning based decisions. <strong>But, running a company takes more than clean code and good culture. It requires a functioning business model, which can make a profit.</strong></p>
-
-<p>Profit allows providing highly competitive salaries. Competitive salaries make the company attractive to great engineers. Great engineers build and enhance great products.</p>
-
-<p>To that extent, we&rsquo;ve started working towards a closed-source enterprise version of Dgraph. This version would contain many features useful to companies, namely:</p>
+<p>There are basically three ways to use the client:</p>
 
 <ul>
-<li>Cluster management and monitoring</li>
-<li>User authentication</li>
-<li>Access control lists</li>
-<li>Data encryption, and more</li>
+<li>queries,</li>
+<li>request based mutations, and</li>
+<li>batched mutations.</li>
 </ul>
 
-<p>Selling enterprise version and support would lead us to the path of revenue.</p>
+<p>Of course you can mix those up in a single client session, but to give each its own treatment, I&rsquo;ll deal with each separately here.  This post will walk you through <a href="https://github.com/dgraph-io/dgraph/tree/master/wiki/resources/examples/goclient/">three programs available in our github</a>, a few hundred lines each, that demonstrate interactions in those three modes.  The examples also show how concurrent goroutines can safely use the client.</p>
 
-<p>But, what about competition? How do we deal with the threat many big companies provide on a daily basis? The threat of duplicate commercial services and enterprise features built by them and others without paying anything back towards the development of the open source version. There is also the looming cautionary tale of <a href="https://rethinkdb.com/blog/rethinkdb-shutdown/">RethinkDB ceasing</a> to develop their database, due to lack of revenue.</p>
+<p><a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/dgraphloader">dgraphloader</a> uses the client interface to batch updates it reads from gzipped RDF files.  It will save you from writing code to read RDF into Dgraph, and it&rsquo;s another good example of how to use the client interface.</p>
 
-<p><strong>We need to balance the benefits of open source to the community, against making the company building Dgraph profitable, while also keeping future competition at bay.</strong></p>
+<p>Before reading the rest of the post, you might like to watch this introductory video on using the Go client.</p>
 
-<h3 id="the-change">The change</h3>
 
-<p>One of the ideas was to move the distributed aspect of Dgraph to the enterprise version; like <a href="https://www.influxdata.com/update-on-influxdb-clustering-high-availability-and-monetization/">many</a> <a href="https://neo4j.com/licensing/">others</a> <a href="https://www.mysql.com/products/enterprise/scalability.html">are</a> <a href="https://www.datastax.com/products/datastax-enterprise-graph">doing</a>. The argument goes that by making distributed aspect closed-source, the open source offering would have restricted usage for companies growing fast; and they&rsquo;ll be forced to pay.</p>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/pq2o_IHgbww" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0"></iframe>
+ </div>
 
-<p><ul><em>But, it doesn&rsquo;t feel right!</em></ul> Many users love Dgraph because of it provides scalability without question. This goes against our inception idea that every startup should have the same level of technology run by big giants.</p>
 
-<blockquote>
-<p>The &ldquo;D&rdquo; in Dgraph stands for distributed; we want to make sure that everyone gets it: big company, small company, pre-revenue, post-revenue, or one guy in a garage.</p>
-</blockquote>
+<p><em>We&rsquo;re developing more tutorials and presentations on our <a href="https://www.youtube.com/channel/UCghE41LR8nkKFlR3IFTRO4w">YouTube channel</a></em></p>
 
-<p>We don&rsquo;t want companies to <em>have to</em> pay us just to deal with more query traffic. That should be free. Instead, we want to build features which are so useful to enterprises that <strong>they feel they can save a lot of expensive developer time by using our services.</strong>
-So, after talking to other open source vendors and top open source lawyers, we came to this solution:</p>
+<h2 id="getting-started">Getting Started</h2>
 
-<p><strong>Relicense the open-source version to GNU AGPLv3 (from Apache 2.0), while keeping the client libraries under Apache 2.0.</strong></p>
+<p>These shouldn&rsquo;t be your first Go programs, so let&rsquo;s assume that you have <code>$GOPATH</code> setup and thus you can go get the version 0.8 release branch</p>
 
-<p>Known as the <em>GPL of the web</em>, GNU Affero General Public License mandates that any modifications made to the source code must be released under the same license. This applies not just to downloadable binaries, but also to code run in the cloud. You can read <a href="https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)">more about it here</a>.</p>
+<pre><code>go get -u -v github.com/dgraph-io/dgraph/client
 
-<h3 id="what-does-this-mean-for-you">What does this mean for you?</h3>
+cd $GOPATH/src/github.com/dgraph-io/dgraph &amp;&amp; git checkout release/v0.8.0
+</code></pre>
 
-<p><em>Largely no change.</em></p>
+<p>or work with the master branch.</p>
 
-<p>Most users of Dgraph would never need to modify the server code themselves anyway. We are going to keep the client libraries under Apache 2.0; which would allow users to continue using Dgraph (via client libraries) without any restrictions or mandates on their own codebase. In general terms, any work built on top of Dgraph wouldn&rsquo;t be considered derivative work, as long as Dgraph server code wasn&rsquo;t modified.</p>
+<h2 id="fundamental-types">Fundamental types</h2>
 
-<p>So, if you&rsquo;re a user of Dgraph, nothing changes. If you modify Dgraph server code, you will have to release that modification back to the community under GNU AGPLv3. Thus, the entire Dgraph community would benefit from the contributions made to the server code by other individuals or companies.</p>
+<p>A graph is about nodes and edges, so no surprises that the two fundamental graph types in the client are <code>client.Node</code> and <code>client.Edge</code>.</p>
 
-<p><strong>This simple change ensures that only Dgraph Labs owns the rights to add proprietary features within Dgraph server code, which in turn allows us to charge for our services and make revenue.</strong></p>
+<p>The other two main types are <code>client.Dgraph</code>, which is the connection to the Dgraph backend, and <code>client.Req</code> which stores mutations and queries to be sent to the backend.</p>
 
-<p>Users of MongoDB would <a href="https://www.mongodb.com/community/licensing">instantly recognize</a> this licensing system. In fact, we were heavily influenced by them. MongoDB is one of the most successful databases and provided a great validation for this new direction we&rsquo;re taking.</p>
+<h2 id="starting-the-client">Starting the client</h2>
 
-<h3 id="living-breathing-open-source">Living, breathing Open-source</h3>
+<p>The client takes a slice of grpc connections to the Dgraph database.  This can be a single connection, multiple connections to the one server, or connections to multiple servers if connecting to a cluster.  The client will spread your requests and batches across the given connections.  All connections from the client to Dgraph are to the ports given at <code>--grpc_port</code> when the Dgraph instances were started (default 9080).</p>
 
-<p>While there is a talk of money, Dgraph still lives and breathes like an open-source company. In fact, by relicensing our code base under GNU AGPLv3, we can continue providing the distributed aspect of Dgraph under open source license; which gives us great pleasure.</p>
+<p>Start a single connection by dialing the Dgraph backend (check out dgraphloader <a href="https://github.com/dgraph-io/dgraph/blob/release/v0.8.0/cmd/dgraphloader/main.go#L182-L204"><code>setupConnection()</code></a> to see how to enable TLS).</p>
 
-<p>Graph market is heating up. Every other day, we hear about products ranging from a graph plugin to a graph layer to a graph engine to a graph database. Given the desire to not only serve data but also understand it, there&rsquo;s a need for graphs in companies; and people realize that.</p>
+<pre><code>conn, err := grpc.Dial(dgraph-grpc-address, grpc.WithInsecure())
+if err != nil {
+    log.Fatal(err)
+}
+defer conn.Close()
+</code></pre>
 
-<p>With Dgraph, we think we&rsquo;re in the right spot at the right time, ready to provide a graph database that scales with your business. And we&rsquo;ll continue to do it in a way that benefits the entire community.</p>
+<p>Then put either the single connection or multiple connections into a slice when starting the client.</p>
 
-<p><strong>If you have any questions or concerns about this switch, please feel free to reach out to me at <a href="mailto:manish@dgraph.io">manish@dgraph.io</a>.</strong></p>
+<p>The client stores maps of blank-node-name -&gt; <code>Node</code> and <a href="https://docs.dgraph.io/query-language/#external-ids">XID</a> -&gt; <code>Node</code>, so you can do quick look ups while using the client.  The following places these maps in a temporary directory, to be deleted when the program exits, but you can also keep the directory to persist the maps across multiple sessions (check out dgraphloader option <code>--c</code> to see how you could persist XID maps across multiple loads of RDF data).</p>
+
+<pre><code>clientDir, err := ioutil.TempDir(&quot;&quot;, &quot;client_&quot;)
+if err != nil {
+    log.Fatal(err)
+}
+defer os.RemoveAll(clientDir)
+</code></pre>
+
+<p>For batching, the client builds multiple batches concurrently which it submits to the backend as the batches fill.  Set the batch options with the <code>BatchMutationOptions</code> type, or supply the defaults.</p>
+
+<pre><code>dgraphClient := client.NewDgraphClient(connections, client.DefaultOptions, clientDir)
+defer dgraphClient.Close()
+</code></pre>
+
+<p>That starts a client and all interaction with Dgraph goes through the started client.</p>
+
+<h2 id="queries-through-the-go-client">Queries through the Go client</h2>
+
+<p>When we built our <a href="https://tour.dgraph.io/">tour</a>, we needed a dataset that was complex enough to teach the whole query language, small enough to load quickly and engaging enough that people could relate immediately to the data.  The dataset of <a href="https://github.com/dgraph-io/benchmarks/tree/master/data">21 million</a> edges about movies and actors was about right, but we wanted to take a subset, so loading it didn&rsquo;t break the flow of the tour.  Because it&rsquo;s a graph, we couldn&rsquo;t just grab part of the input file, so we crawled it.</p>
+
+<p><a href="https://github.com/dgraph-io/dgraph/tree/master/wiki/resources/examples/goclient/crawlerRDF">Here&rsquo;s a program</a> that does just that.</p>
+
+<p>The 21million data is all about movies, directors and actors.  Here&rsquo;s a conceptual view of some of what the dataset contains.</p>
+
+<p><img src="/images/movies-schema.png" alt="Movies Schema" /></p>
+
+<p>Directors are linked to their films with <code>director.film</code>.  Films have an <code>initial_release_date</code> a <code>genre</code> and are linked to performances by <code>starring</code>.  Performances tell us about an actor playing a character.  Actors are linked to their roles and thus movies.  Actors, directors, movies and genres all have a <code>name</code>.  I drew the actors and directors overlapping because some people are both actors and directors.  The data doesn&rsquo;t contain typing information for directors etc.  We know, however, that a node represents a director when it has the <code>director.film</code> edge, or an actor when it has <code>actor.film</code>.</p>
+
+<p>Most of the queries I&rsquo;d thought of for the tour were about directors, so I decided to make the crawl based around directors.  For each director the crawl sees, it grabs all their movies and pushes any director the actors in those movies have worked for onto the queue of directors to visit.  That way the crawl will finish with each director and movie it&rsquo;s seen completed, but won&rsquo;t complete all movies for every actor it encounters.</p>
+
+<h3 id="query">Query</h3>
+
+<p>Queries in the client are pretty straight forward.  There are two options:</p>
+
+<ul>
+<li>A stand alone query, which is added to a request <code>req</code> with <code>req.SetQuery(&lt;query-string&gt;)</code>.  And,</li>
+<li>A query with embedded variables, which is added to a request <code>req</code> with <code>req.SetQueryWithVariables(&lt;query-string&gt;,&lt;map[string]string&gt;)</code>.  The query will contain variables <code>$a</code>, <code>$b</code>, etc and the map will have keys mapping the variables to values.  If a query is used multiple times, it&rsquo;s generally easier to just update the map then to manipulate a raw string (the example program has examples of both).</li>
+</ul>
+
+<p>For example</p>
+
+<pre><code>directorsMoviesTemplate = `{
+  movies(func: uid($a)) {
+    movie: director.film {
+      _uid_
+      EnglishName: name@en
+      GermanName: name@de
+      ItalianName: name@it
+      starring {
+        performance.actor {
+          _uid_
+          name@en
+        }
+        performance.character {
+          _uid_
+          name@en
+        }
+      }
+      genre {
+        _uid_
+        name@en
+      }
+      ~director.film {
+        _uid_
+        name@en
+      }
+      initial_release_date
+    }
+  }
+}`
+directorMoviesMap = make(map[string]string)
+
+...
+
+req := client.Req{}
+directorMoviesMap[&quot;$a&quot;] = &lt;some director UID&gt;
+
+req.SetQueryWithVariables(directorsMoviesTemplate, directorMoviesMap)
+</code></pre>
+
+<p>sets up a request with a query for all a director&rsquo;s movies.  That&rsquo;s then run with</p>
+
+<pre><code>resp, err := dgraphClient.Run(context.Background(), &amp;req)
+</code></pre>
+
+<p>Note that the query uses <code>name@en</code>, <code>name@de</code> and <code>name@it</code>.  Version 0.8 introduced new <a href="https://docs.dgraph.io/query-language/#language-support">language preference</a> rules, and a query for <code>name</code> won&rsquo;t work if there is no untagged name &mdash; <code>name@.</code> would return a name in some language if <code>name</code> didn&rsquo;t exist.</p>
+
+<p>If there were mutations in the request too, those would be run first.</p>
+
+<p>The question with a query is what to do with the response <code>resp</code>.  It&rsquo;s got latency information <code>resp.L</code>, assigned nodes <code>resp.AssignedUids</code> (if the query string contained a mutation with blank nodes), <code>resp.Schema</code> if there was a schema query and <code>resp.N</code>, a Slice of <a href="https://github.com/dgraph-io/dgraph/blob/master/protos/graphresponse.proto">protos.Node</a> representing the nodes returned by the query.  The response can be printed with</p>
+
+<pre><code>fmt.Printf(&quot;Raw Response: %+v\n&quot;, proto.MarshalTextString(resp))
+</code></pre>
+
+<p>And you&rsquo;ll see that each <code>protos.Node</code> has an <code>attribute</code>, the edge that lead to this node, a slice of <code>properties</code>, the scalar edges out of this node, and a slice of <code>children</code>, the edges out to other nodes.  Here&rsquo;s a small part of such a print for director Peter Jackson&rsquo;s movies.</p>
+
+<pre><code>Raw Response: n: &lt;
+  attribute: &quot;_root_&quot;
+  children: &lt;
+    attribute: &quot;movies&quot;
+    children: &lt;
+      attribute: &quot;movie&quot;
+      properties: &lt;
+        prop: &quot;_uid_&quot;
+        value: &lt;
+          uid_val: 1891953090925962368
+        &gt;
+      &gt;
+      properties: &lt;
+        prop: &quot;EnglishName&quot;
+        value: &lt;
+          str_val: &quot;The Hobbit: The Battle of the Five Armies&quot;
+        &gt;
+      &gt;
+      properties: &lt;
+        prop: &quot;GermanName&quot;
+        value: &lt;
+          str_val: &quot;Der Hobbit - Hin und zur\303\274ck&quot;
+        &gt;
+      &gt;
+      properties: &lt;
+        prop: &quot;ItalianName&quot;
+        value: &lt;
+          str_val: &quot;Lo Hobbit - La battaglia delle cinque armate&quot;
+        &gt;
+      &gt;
+      properties: &lt;
+        prop: &quot;initial_release_date&quot;
+        value: &lt;
+          str_val: &quot;2014-12-10T00:00:00Z&quot;
+        &gt;
+      &gt;
+      children: &lt;
+        attribute: &quot;starring&quot;
+        children: &lt;
+          attribute: &quot;performance.actor&quot;
+          properties: &lt;
+            prop: &quot;_uid_&quot;
+            value: &lt;
+              uid_val: 1834782200806344758
+            &gt;
+          &gt;
+          properties: &lt;
+            prop: &quot;name@en&quot;
+            value: &lt;
+              str_val: &quot;Benedict Cumberbatch&quot;
+            &gt;
+          &gt;
+        &gt;
+        children: &lt;
+          attribute: &quot;performance.character&quot;
+          properties: &lt;
+            prop: &quot;_uid_&quot;
+            value: &lt;
+              uid_val: 151357
+            &gt;
+          &gt;
+          properties: &lt;
+            prop: &quot;name@en&quot;
+            value: &lt;
+              str_val: &quot;The Necromancer&quot;
+            &gt;
+          &gt;
+        &gt;
+      &gt;
+...
+...
+</code></pre>
+
+<h3 id="unmarshal">Unmarshal</h3>
+
+<p>You can walk around the response programmatically &mdash; check functions <a href="https://github.com/dgraph-io/dgraph/tree/release/v0.8.0/wiki/resources/examples/goclient/crawlerRDF/crawler.go#L250-L264"><code>printNode()</code></a> and <a href="https://github.com/dgraph-io/dgraph/tree/release/v0.8.0/wiki/resources/examples/goclient/crawlerRDF/crawler.go#L453-L512"><code>visitActor()</code></a> for examples of that.  But one of the best new features of the client in version 0.8 is <code>client.Unmarshal()</code>.  It works just like <code>json.Unmarshal()</code> in the standard libs to unpack directly into a struct.</p>
+
+<p>Here are some structures representing the types in our movie graph.</p>
+
+<pre><code>type movie struct {
+    ReleaseDate time.Time      `dgraph:&quot;initial_release_date&quot;` // Often just use the edge name and a reasonable type.
+    ID          uint64         `dgraph:&quot;_uid_&quot;`                // _uid_ is extracted to uint64 just like any other edge.
+    Name        string         `dgraph:&quot;EnglishName&quot;`          // If there is an alias on the edge, use the alias.
+    NameDE      string         `dgraph:&quot;GermanName&quot;`
+    NameIT      string         `dgraph:&quot;ItalianName&quot;`
+    Genre       []genre        `dgraph:&quot;genre&quot;`          // The struct types can be nested.  As long as the tags match up, all is well.
+    Starring    []*performance `dgraph:&quot;starring&quot;`       // Pointers to structures are fine too - that might save copying structures later.
+    Director    []*director    `dgraph:&quot;~director.film&quot;` // reverse edges work just like forward edges.
+}
+
+type performance struct {
+    Actor     *actor     `dgraph:&quot;performance.actor&quot;`
+    Character *character `dgraph:&quot;performance.character&quot;`
+}
+
+type movieQuery struct {
+    Root []movie `dgraph:&quot;movie&quot;`
+}
+</code></pre>
+
+<p>Now give Unmarshal a struct with tags matching the edges in the query (note how these tags match the query above) and the bit of a query response you want and, bang, the whole query result in the type that makes sense in your program, nice!</p>
+
+<pre><code>var movs movieQuery
+err = client.Unmarshal(resp.N[0].Children, &amp;movs)
+</code></pre>
+
+<p>So model your data with types that make sense, write queries that extract out the data you need and Dgraph does the rest.</p>
+
+<p>From here the example program uses those data structures to write out the crawled information to a file.</p>
+
+<h2 id="request-based-mutations-in-the-go-client">Request-based mutations in the Go client</h2>
+
+<p>The previous example shows how to query and unmarshal results in the Go client.  It wrote results to a file.  That&rsquo;s the sort of interaction you&rsquo;d need to query an existing store and send the results somewhere.  To get the data into Dgraph in the first place the client allows you to build and run mutations.</p>
+
+<p>Instead of running a crawl that&rsquo;s written to a file, how about a crawler that queries from one Dgraph store and builds mutations based on that data that it commits to another Dgraph.</p>
+
+<p><a href="https://github.com/dgraph-io/dgraph/tree/master/wiki/resources/examples/goclient/crawlermutations">Here&rsquo;s a program</a> that does just that.</p>
+
+<p>The code&rsquo;s got similar ideas to the last example, but it&rsquo;s stepped the interaction up a notch.  Firstly, there&rsquo;s two clients: one for the source (only queried) and one for the target (only written to).  Secondly, for both those clients, the example allows for multiple grpc connections; for example, if the source and target are clusters.  Thirdly, there&rsquo;s multiple connections, so to make use of that it runs concurrent crawlers in goroutines.</p>
+
+<h3 id="adding-edges">Adding edges</h3>
+
+<p>Function <a href="https://github.com/dgraph-io/dgraph/tree/release/v0.8.0/wiki/resources/examples/goclient/crawlermutations/crawler.go#L319-L509"><code>visitMovie()</code></a> is the interesting one for a discussion about mutations.  First it queries data for a movie from the source and unmarshals the result into the movie struct from the previous example.  From there it builds a mutation for the edges representing the movie and submits that to the target.</p>
+
+<p>A graph is about nodes and edges between nodes, so that&rsquo;s what we&rsquo;ve got to build to make a graph.</p>
+
+<p>First, a new request</p>
+
+<pre><code>req := client.Req{}
+</code></pre>
+
+<p>then make a node</p>
+
+<pre><code>mnode, err := target.NodeBlank(&quot;&quot;)
+</code></pre>
+
+<p>then attach edges to the node.  This one adds a scalar edge for the English name.</p>
+
+<pre><code>e = mnode.Edge(&quot;name@en&quot;)
+err = e.SetValueString(m.Name)
+if err != nil {
+  ...
+}
+err = req.Set(e)
+if err != nil {
+  ...
+}
+</code></pre>
+
+<p>after <code>Set()</code>, the edge has been added into the request and it&rsquo;s safe to reuse <code>e</code>.  So, once the code has a node for a genre <code>gnode</code>, it then connects the two nodes with another edge.</p>
+
+<pre><code>e = mnode.ConnectTo(&quot;genre&quot;, gnode)
+err = req.Set(e)
+</code></pre>
+
+<p><code>visitMovie()</code> continues in this fashion adding edges to the request for the movie name, release date, genres, directors and all the actors and characters.  If it fails at some point, <code>req</code> is discarded and none of the edges are added to the store, so we don&rsquo;t get half completed movies in our result.  If it successfully adds all the edges it runs the mutation.</p>
+
+<pre><code>resp, err := target.Run(context.Background(), &amp;req)
+</code></pre>
+
+<p>And all the edges are committed to the store.</p>
+
+<p>Deleting edges works in the same way.  Build the edge, then instead of adding to the request with <code>req.Set()</code>, add with <code>req.Delete()</code>.</p>
+
+<h2 id="batching-updates-in-the-go-client">Batching updates in the Go client</h2>
+
+<p>Just a few weeks back we wrote a series of posts about recommendation engines in Dgraph.  Our sample data, in text files, and the Go program that turned that into RDF is <a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">here</a>.</p>
+
+<p>Instead of writing RDF and then using dgraphloader to load into Dgraph, we can use the client to write directly to Dgraph.  Dgraph isn&rsquo;t really an RDF database.  It&rsquo;s a graph database &mdash; a graph is just about nodes and edges (and maybe facets on the edges).  dgraphloader is a helper app that loads RDF because there&rsquo;s lots of RDF data around and it&rsquo;s a standard format.  In this example we&rsquo;ll skip the intermediate format and go straight from source data to Dgraph.</p>
+
+<p><a href="https://github.com/dgraph-io/dgraph/tree/master/wiki/resources/examples/goclient/movielensbatch">Here&rsquo;s a program</a> that reads the text input files and submits batched mutations to Dgraph.</p>
+
+<h3 id="batches">Batches</h3>
+
+<p>Four goroutines parse the input files.  Those goroutines create edges just like in the previous example.  But rather than submitting to Dgraph with a request, the edges are added to with</p>
+
+<pre><code>err := dgraphClient.BatchSet(e)
+</code></pre>
+
+<p>The client gathers the submitted edges into batches, which are submitted when full.  Set up the batching by starting the client with a <code>BatchMutationOptions</code> struct.</p>
+
+<pre><code>bmOpts := client.BatchMutationOptions{
+  Size:          *numRdf,       // number of edges in each batch
+  Pending:       *concurrent,   // number of concurrent batches to build
+  PrintCounters: true,          // if you want the client to print running stats
+}
+</code></pre>
+
+<p>The client controls which edges are in which batches and when the batches are submitted to the Dgraph server.  There&rsquo;s no guarantee that sequential calls to <code>BatchSet()</code> will put edges in the same batch, nor that the order edges are submitted will be the same as the order that mutations reach the database.  Make sure you finish with</p>
+
+<pre><code>dgraphClient.BatchFlush()
+</code></pre>
+
+<p>to flush out all the buffers.</p>
+
+<h3 id="node-maps">Node maps</h3>
+
+<p>That&rsquo;s all pretty standard batch updates.  The fun thing here is the client-side, blank-node maps.  As the movie file is parsed, each movie needs to be linked with genres from the genres file.  As the ratings file is parsed, users from the users file need to be linked to movies from the movies file.  We could build a set of data structures to record all this and then read back out of those structures so we ensure that the graph nodes for genres, movies and users link up correctly.</p>
+
+<p>However, reading from a source and matching up nodes like this is such a common pattern in data uploading that we&rsquo;ve built the client to take care of it.  A call to</p>
+
+<pre><code>node, err := dgraphClient.NodeBlank(&lt;node-identifier&gt;)
+</code></pre>
+
+<p>reserves a <code>Node</code> in the graph and keeps track (client side) of which identifier relates to which <code>Node</code>.  In the input data, users are given ID numbers, movies have ID numbers and so do genres.  Those IDs aren&rsquo;t important after we&rsquo;ve loaded the data.  The IDs just need to be used to make the right links between users and their ratings of movies.  We can&rsquo;t just use the numbers to keep track because there will be a user 10 and a movie 10.  Instead, the program asks for blank nodes with labels like <code>movie10</code>.  For example, when it links a movie to a genre, it does so with this pattern</p>
+
+<pre><code>m, err := dgraphClient.NodeBlank(&quot;movie10&quot;)
+...
+g, err := dgraphClient.NodeBlank(&quot;genre3&quot;)
+...
+e = m.ConnectTo(&quot;genre&quot;, g)
+dgraphClient.BatchSet(e)
+</code></pre>
+
+<p>That will give a <code>genre</code> edge connecting the <code>Node</code> for movie 10 to the <code>Node</code> for genre 3.</p>
+
+<p>It doesn&rsquo;t matter which goroutine gets there first, or what order the edges are committed.  The gorouting parsing the ratings data might read movie 10 before the goroutine reading the movie data gets there, or it might happen the other way around.  The batch containing the mutation for a user&rsquo;s rating of movie 10 might hit the database before the edges with the movie&rsquo;s name and genre get there or even before the user&rsquo;s other data is stored.  Doesn&rsquo;t matter.  The client guarantees that it will hook the nodes up correctly because we consistently called <code>NodeBlank(&quot;movie10&quot;)</code> every time we wanted to add an edge involving movie 10.</p>
+
+<p>It gives the code the freedom to read the data in any order and still link up the nodes correctly without any bookkeeping.  So our goroutines don&rsquo;t even need to know about the other goroutines let alone share data or synchronize.</p>
+
+<p>Compare that with the previous example that had to use mutexes to protect shared data between goroutines.  In that instance we needed some bookkeeping to control the crawl and record what we&rsquo;d seen, but often a client program only needs to read data and add nodes so the pattern from this batch example will be simpler.</p>
+
+<h4 id="external-ids">External IDs</h4>
+
+<p>Here we are storing blank nodes, meaning that the names picked on the client side to identify them during loading aren&rsquo;t persisted in the store.  If the nodes had identifiers that were important outside of Dgraph, we&rsquo;d do much the same thing, but with what we call <a href="https://docs.dgraph.io/query-language/#external-ids">external IDs, or XIDs</a>.</p>
+
+<p>For example, IMDB gives each movie a unique URL.  For &ldquo;Toy Story&rdquo; it&rsquo;s <a href="http://www.imdb.com/title/tt0114709/">http://www.imdb.com/title/tt0114709/</a>.  If you are from the RDF or linked data communities, you might recognize that as a URI.  If our input data used that, or if we needed such external keys for movies, genres and actors (e.g. Tom Hanks gets <a href="http://www.imdb.com/name/nm0000158">http://www.imdb.com/name/nm0000158</a>, while genre comedy gets <a href="http://www.imdb.com/genre/comedy">http://www.imdb.com/genre/comedy</a>).  Then we could load with</p>
+
+<pre><code>m, err := c.NodeXid(&quot;http://www.imdb.com/title/tt0114709/&quot;, true)
+</code></pre>
+
+<p>and the client would give a consistent map to the right node every time the XID for &ldquo;Toy Story&rdquo; was used, and, with the <code>true</code> flag, the client persists an edge (<code>xid</code>) in the store linking the node to its XID.</p>
+
+<h2 id="now-you-write-some-code">Now you write some code</h2>
+
+<p>Well, now you&rsquo;ve got the <a href="https://docs.dgraph.io/clients/#go">docs</a>, the <a href="https://godoc.org/github.com/dgraph-io/dgraph/client">GoDocs</a> with examples for everything in the interface, and <a href="https://github.com/dgraph-io/dgraph/tree/master/wiki/resources/examples/goclient">three larger examples</a> showing how to use the go client in real programs.</p>
+
+<p>Time to load up your favorite editor and start writing your Dgraph app.</p>
+
+<ul>
+<li>Need more help?  Ask us on <a href="https://discuss.dgraph.io/">Discuss</a> or <a href="https://slack.dgraph.io/">Slack</a>.</li>
+<li>Not using Go?  Not a problem!  Your app will access Dgraph at the HTTP query endpoint and parse the resulting JSON.  Watch out for upcoming examples.</li>
+</ul>
 
 <hr />
 
@@ -499,7 +836,7 @@ So, after talking to other open source vendors and top open source lawyers, we c
 <br/>
 
 
-<p><em>Top image: <a href="http://www.spacex.com/media-gallery/detail/144751/7441">People landing on Mars via SpaceX</a></em></p>
+<p><em>Top image: <a href="https://images.nasa.gov/#/details-iss047e050978.html">SpaceX Dragon Spacecraft Grappled by SSRMS</a></em></p>
 </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
@@ -525,12 +862,12 @@ So, after talking to other open source vendors and top open source lawyers, we c
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/team-manish.jpg" class="article-author__image">
+	<img src="/images/michael.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Manish Rai Jain
+    <h4 class="article-author__name">Michael Compton
 
 
       <span class="article-author__title">Author</span>
@@ -538,24 +875,9 @@ So, after talking to other open source vendors and top open source lawyers, we c
     
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
-        <li class="social__item social__item--inline">
-            <a href="https://au.linkedin.com/in/manishrjain" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="social__item social__item--inline">
-            <a href="https://twitter.com/manishrjain" class="social__link">
-                <svg class="icon social__icon social__icon--twitter">
-                    <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
     </ul>
 </nav>
-<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
-<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
+<p>Michael did undergrad computer science at ANU in Canberra and a Ph.D. at Cambridge in the U.K.  He's worked for a number of years with graph databases.  He likes sport and hanging out with his family.</p>
 
 
   </div>
@@ -601,7 +923,7 @@ So, after talking to other open source vendors and top open source lawyers, we c
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/licensing/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/client0.8.0/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -640,7 +962,7 @@ So, after talking to other open source vendors and top open source lawyers, we c
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-07-28%2011%3a35%3a06.531516487%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-07-28%2011%3a35%3a06.520676509%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
     </script>
@@ -675,7 +997,7 @@ $(document.links).filter(function() {
 
   
   <script type="text/javascript">
-DiscourseEmbed = { discourseUrl: 'https:\/\/discuss.dgraph.io\/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/licensing\/' };
+DiscourseEmbed = { discourseUrl: 'https:\/\/discuss.dgraph.io\/',discourseEmbedUrl: 'https:\/\/open.dgraph.io\/post\/client0.8.0\/' };
     (function() {
       var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
       d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
