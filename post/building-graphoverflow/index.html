@@ -37,13 +37,13 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Dgraph hugo blog theme - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph hugo blog theme - Dgraph Blog">
+    <title>Building Stack Overflow Clone with Dgraph, and React - Dgraph Blog</title>
+    <meta property='og:title' content="Building Stack Overflow Clone with Dgraph, and React - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://open.dgraph.io/post/hugo/">
-    <meta property="og:image" content="https://open.dgraph.io/images/blackholestar.jpg">
+    <meta property="og:url" content="https://open.dgraph.io/post/building-graphoverflow/">
+    <meta property="og:image" content="https://open.dgraph.io/images/graphoverflow-node-cover.jpg">
     
 
     
@@ -52,12 +52,13 @@
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://open.dgraph.io/images/blackholestar.jpg"/>
+        <meta name="twitter:image" content="https://open.dgraph.io/images/graphoverflow-node-cover.jpg"/>
       
     
 
-    <meta name="twitter:title" content="Dgraph hugo blog theme"/>
-    <meta name="twitter:description" content="We at Dgraph love Hugo and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog."/>
+    <meta name="twitter:title" content="Building Stack Overflow Clone with Dgraph, and React"/>
+    <meta name="twitter:description" content="I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built Graphoverflow and share the best practices I learned for using Dgraph to build a modern web application.
+"/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -68,8 +69,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-08-02%2013%3a54%3a13.642962223%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-02%2013%3a54%3a13.643019474%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-08-02%2013%3a54%3a13.622379174%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-02%2013%3a54%3a13.62245692%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -380,16 +381,16 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Oct 6, 2016
+                  Wed, Aug 2, 2017
                  by
-                Pawan Rawal
+                Sung Won Cho
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Dgraph%20hugo%20blog%20theme&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fhugo%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Building%20Stack%20Overflow%20Clone%20with%20Dgraph%2c%20and%20React&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fbuilding-graphoverflow%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -397,7 +398,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Dgraph hugo blog theme</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Building Stack Overflow Clone with Dgraph, and React</h1>
           </header>
         </div>
       </div>
@@ -409,53 +410,350 @@
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/blackholestar.jpg">
-          <div class="article-content"><p>We at <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- love <a href="https://gohugo.io/">Hugo</a> and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.</p>
+          <img class="opening__image" src="https://open.dgraph.io/images/graphoverflow-node-cover.jpg">
+          <div class="article-content"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.
+</p>
 
-<p>So we got a theme designed which fit well with our website and used the screen estate well. It&rsquo;s now available at <a href="http://themes.gohugo.io/hugo-dgraph-theme/">Dgraph theme</a>. The theme is responsive, supports syntax highlighting for code and <a href="https://www.discourse.org/">discourse</a> for comments. If your project is open source, you can also link to Github. We would encourage you to try out the theme and let us know your experiences with it.</p>
+<p>As you can see in the <a href="https://graphoverflow.dgraph.io">live demo</a>, <em>Graphoverflow</em> implements all core functionalities of Stack Overflow. Through the web interface, you can create, read, update, and delete questions, answers, comments. You can also cast upvotes and downvotes. In addition, it is smart enough to recommend you questions to read based on <a href="https://en.wikipedia.org/wiki/Collaborative_filtering">collaborative filtering</a>. In many ways, <em>Graphoverflow</em> successfully embodies many important features that most modern web applications depend on: CRUD operations, and user authentication and authorization. As <a href="https://github.com/dgraph-io/graphoverflow">the source code</a> shows, all this is achieved by using Dgraph as the primary and only data storage.</p>
+
+<p>Looking back the past three weeks of building <em>Graphoverflow</em>, I feel that the journey was unexpectedly simple and straightforward. I have never built anything using a graph database in my entire life. Therefore when I started building this application I knew I was set out for a bumpy ride. However, the intuitive query language of Dgraph did the heavy lifting out of the box, and I did not have to struggle too much. <em>Graphoverflow</em> is not a simple application by any means, as it needs to retrieve and render a large amount of data with complex relationships, and has a built-in recommendation system. However, a quick analysis of the code base reveals that I only had to write 700 LOC (20%) on the server side, and 2800 LOC (80%) on the client side to ship it. The simplicity of the code base clearly demonstrates that, with Dgraph, you can end up with a lot less complex application code for your non-trivial requirements.</p>
+
+<h2 id="the-query-language-was-the-key">The Query Language Was The Key</h2>
+
+<p>I believe that <em>Graphoverflow</em> owes its simple code base and the fast iteration cycle to Dgraph&rsquo;s homebred query language, <a href="https://docs.dgraph.io/query-language/"><em>Graphql+-</em></a>. To me, the biggest benefit of the query language was that I was able to retrieve complex data by writing a single, and intuitive tree-like structure. I could spend less time worrying about what tables to create or join together to store and fetch the data that the frontend required. Instead, I could simply focus on polishing my front-end components, while relying on Dgraph&rsquo;s flexible schema system and its powerful query language.</p>
+
+<p><img src="/images/graphoverflow-question.png" alt="" /></p>
+
+<p>The inner workings of the question page shown above can shed lights on Dgraph&rsquo;s ability to retrieve complex data in a straightforward way. In order to render this page on the front-end, I needed to fetch <code>question</code>, and all of its <code>answers</code>. For all of them, I needed to fetch the total number of <code>upvotes</code> and <code>downvotes</code>, <code>viewCounts</code>, its <code>history</code>, <code>comments</code>, and those comments&rsquo; respective <code>scores</code>. Not only that but also I needed to fetch 30 <code>related questions</code> based on the tags attached to the displayed question. These data have complex schemas and interdependent relationships with one another. The queries I wrote, on the other hand, felt very straightforward to me.</p>
+
+<pre><code>{
+  question(func: uid(0xa421) {
+    Title {
+      Text
+    }
+    Body {
+      Text
+    }
+    ViewCount
+    UpvoteCount: count(Upvote)
+    DownvoteCount: count(Downvote)
+
+    Comment {
+      ...
+    }
+
+    Has.Answer {
+      Comment {
+        ...
+      }
+      ...
+    }
+    ...
+  }
+}
+</code></pre>
+
+<p>The above is the query responsible for fetching the <code>question</code>, its <code>answers</code>, and their relevant properties and children such as <code>comments</code>. GraphQL+- is comprised of the root node and its nested blocks, and when executed it returns a result in a subgraph format. A query can have multiple root nodes, and you can see the whole query <a href="https://github.com/dgraph-io/graphoverflow/blob/master/app/client/src/queries/Question.js#L131">here on GitHub</a>. In short, the above query returns a result shaped like the following code block. We can see that starting from the root node, <code>question</code>, Dgraph finds and returns all the children nodes represented by nested blocks.</p>
+
+<pre><code class="language-js">{
+  &quot;question&quot;: [
+    {
+      &quot;Timestamp&quot;: &quot;2015-10-06T15:34:33.75Z&quot;,
+      &quot;Title&quot;: [
+        {
+          &quot;Text&quot;: &quot;How can I keep my cat off my keyboard?&quot;
+        }
+      ]
+      &quot;Body&quot;: [
+        {
+          &quot;Text&quot;: &quot;...&quot;
+        }
+      ],
+      &quot;ViewCount&quot;: 21767,
+      &quot;UpvoteCount&quot;: 169,
+      &quot;DownvoteCount&quot;: 2,
+      &quot;Comment&quot;: [ { ... }, ... ],
+      &quot;Has.Answer&quot;: [
+        {
+          &quot;Comment&quot;: [ { ... }, ... ],
+          ...
+        },
+        ...
+      ],
+    }
+  ]
+}
+</code></pre>
+
+<h2 id="using-in-react">Using in React</h2>
+
+<p>To query Dgraph and use the result in a React application, we can use the component lifecycle method provided by React. When a component responsible for displaying the question mounts to the DOM, <em>Graphoverflow</em> sends a query to Dgraph and displays a loading screen for a short while until the result arrives. Therefore, it handles the data fetching in the <a href="https://facebook.github.io/react/docs/react-component.html#componentdidmount"><code>compnentDidMount</code></a> lifecycle method which is invoked immediately after a component mounts. The simplified code looks like the following:</p>
+
+<pre><code class="language-js">import React from 'react';
+import { runQuery } from &quot;../lib/helpers&quot;;
+import { getQuestionQuery } from &quot;../queries/Question&quot;;
+
+class Question extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      questionLoaded: false,
+      question: {}
+    };
+  }
+
+  componentDidMount() {
+    const questionUID = this.props.match.params.uid;
+    const query = getQuestionQuery(questionUID);
+
+    runQuery(query).then(res =&gt; {
+      const question = res.question[0];
+      this.setState({ question, questionsLoaded: true });
+    })
+  }
+
+  ...
+}
+</code></pre>
+
+<p>Three things need to happen in <code>componentDidMount</code>: constructing a query for the question, sending the query to the server, storing the result so that it can be rendered. Let us look at this simple process step-by-step.</p>
+
+<ul>
+<li>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</li>
+</ul>
+
+<pre><code class="language-js">  function getQuestionQuery(questionUID) {
+    return `
+      question(func: uid(${questionUID})) {
+        ...
+      }
+    `;
+  }
+</code></pre>
+
+<ul>
+<li>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</li>
+</ul>
+
+<pre><code class="language-js">import request from &quot;superagent&quot;;
+
+function runQuery(queryText) {
+  const endpointBaseURL = 'http://localhost:3030';
+
+  return request.post(`${endpointBaseURL}/query`).send(queryText).then(res =&gt; {
+    return JSON.parse(res.text);
+  });
+}
+</code></pre>
+
+<ul>
+<li>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component&rsquo;s state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</li>
+</ul>
+
+<p>Having completed the above process in <code>componentDidMount</code>, now we can render the question page. Here is what <code>render</code> method of <code>Question</code> component looks like in a simplified way.</p>
+
+<pre><code class="language-js">render() {
+  const {
+    question,
+    questionLoaded,
+  } = this.state;
+
+  if (!questionLoaded) {
+    return &lt;Loading /&gt;;
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;QuestionLayout question={question} /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+
+<p>Once I got the hang of the query language, it felt very natural using Dgraph with React simply because there was nothing new or paradigm-shifting. The process described above is exactly how I would use PostgreSQL or MongoDB in a purely client-side rendered Single Page Application.</p>
+
+<p>The mechanism described here can be adapted to support more advanced use cases such as server-side rendering; we can move the whole process into a static method of the component that returns a promise, and call it on the server side and delay the render until a response is fetched and promise resolved. We can even integrate Redux with ease so that the app state can be rehydrated on the client side.</p>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<p>Through building <em>Graphoverflow</em>, I have come up with some practices that I believe will help keep your code base maintainable and save time. Those are based on my collective lessons from numerous trial, errors, and redesign attempts. Often a lack of documented practices are the biggest barrier hindering us from dipping our unfamiliar technologies and cultivating their benefits. The following practices will help you instantly get started with building fast modern web applications with Dgraph and React.</p>
+
+<h3 id="organize-your-queries-along-with-your-components">Organize Your Queries Along With Your Components</h3>
+
+<p>It is a good idea to couple together a component and all queries that component relies on for data. The reason is that you need to know the shape of JSON response from Dgraph server in order to render your components. And the shape of the response can vary for mainly two reasons. Names of predicates can change because a query can use an <a href="https://docs.dgraph.io/query-language/#alias">alias</a>. Alternatively, a nested block in a query might be omitted either by need or an error. Those situations can suddenly take away fields that your React component assumes are present. If you have a chain of attribute getters and one of those attributes is missing, you will end up chaining a getter on an <code>undefined</code>. Prior to React 16, such scenario can <a href="https://facebook.github.io/react/blog/2017/07/26/error-handling-in-react-16.html#behavior-in-react-15-and-earlier">lead to cryptic error messages</a> that are hard to debug.</p>
+
+<p>Here is an example of how a change in Dgraph response can cause an error in your React application. The query for the question page includes the following:</p>
+
+<pre><code>{
+  question(func: uid(0xa421) {
+    Title {
+      Text
+    }
+    ...
+  }
+}
+</code></pre>
+
+<p>In the <code>Question</code> component, <em>Graphoverflow</em> renders the title while assuming the result has the shape of <code>{ question: { title: [ { text } ], ... } }</code>:</p>
+
+<pre><code class="language-js">class Question extends React.Component {
+  ...
+  render() {
+    ...
+
+    return (
+      ...
+      &lt;h1 className=&quot;post-title&quot;&gt;{post.Title[0].Text}&lt;/h1&gt;
+      ...
+    );
+  }
+}
+</code></pre>
+
+<p>If we change the query to the following, the component will not work anymore because <code>post.Title</code> will be <code>undefined</code>.</p>
+
+<pre><code>{
+  question(func: uid(0xa421) {
+    question_title as Title {
+      Text
+    }
+    ...
+  }
+}
+</code></pre>
+
+<p>I recommend the following directory structure in your project to mitigate such issue, and keep your code base maintainable.</p>
+
+<pre><code>your_project
+├── components
+│   ├── EditPost.js
+│   ├── Home.js
+│   └── Question.js
+├── queries
+│   ├── EditPost.js
+│   ├── Home.js
+│   └── Question.js
+...
+</code></pre>
+
+<p>Within your component, import needed queries from the corresponding query file. This way, we can easily iterate on queries for your components in a reliable manner. Your queries will evolve as your requirements change. It is clean and reassuring to have a separate, go-to file to see all the queries that your component is relying on. It keeps possible errors in check and makes debugging feasible in case of an error.</p>
+
+<h3 id="use-functions-to-dynamically-construct-queries">Use Functions to Dynamically Construct Queries</h3>
+
+<p>When your query needs to be built dynamically, write a function that takes values and returns a query string using those values. In other words, make a factory to dynamically generate queries rather than doing string interpolation directly in your component. Previously we have seen an example of such function that generates a query for a specific question:</p>
+
+<pre><code class="language-js">function getQuestionQuery(questionUID) {
+  return `
+    question(func: uid(${questionUID})) {
+      ...
+    }
+  `;
+}
+</code></pre>
+
+<p>Many occasions will arise in which you need to generate a query dynamically. Most common cases are fetching a single resource by its unique identifier, or posting information while performing <a href="https://docs.dgraph.io/query-language/#mutations">mutations</a>. In such occasions, simply export functions like the example above from the appropriate query file that you have established following the previous best practice. Doing so allows you to keep all the queries in a single file in a clean way.</p>
+
+<h3 id="use-fragments-for-repeated-structures">Use Fragments for Repeated Structures</h3>
+
+<p>If queries for one of your components exhibits repeated structures, consider extracting them as fragments that can be reused. Doing so will allow us to avoid the mismatch between the shape of Dgraph response and your React component&rsquo;s expectation of it, a common pitfall that we already identified above.</p>
+
+<p><img src="/images/graphoverflow-node-cover.png" alt="" /></p>
+
+<p>As we can see from the picture, the <code>Home</code> component of <em>Graphoverflow</em> can fetch questions according to three different criteria: &lsquo;Recommended&rsquo;, &lsquo;Most Recent&rsquo;, and &lsquo;Hot&rsquo;. While these criteria fetch questions of different ilks, the returned fields for the questions must be consistent because a single React component is responsible for rendering a question item, no matter what criteria is used to fetch them.</p>
+
+<pre><code class="language-js">import React from &quot;react&quot;;
+
+const QuestionItem = ({ question, history }) =&gt; {
+  return (
+    &lt;li&gt;
+      ...
+      {question.AnswerCount}
+      ...
+      {question.ViewCount}
+      ...
+      &lt;Link to={questionLink} className=&quot;question-title&quot;&gt;
+        {JSON.stringify(question.Title[0].Text)}
+      &lt;/Link&gt;
+    &lt;/li&gt;
+  );
+}
+</code></pre>
+
+<p>There are three different queries in <code>queries/Home.js</code>, all fetching data required for rendering <code>QuestionItem</code> while following different criteria.</p>
+
+<pre><code class="language-js">export const recommendedQuestionQuery = `{
+  ...
+  questions(...) {
+    _uid_
+    Title {
+      Text
+    }
+    ...
+  }
+}`;
+export const hotQuestionQuery = `{
+  ...
+  questions(...) {
+    _uid_
+    Title {
+      Text
+    }
+    ...
+  }
+}`;
+export const recentQuestionQuery = `{
+  ...
+  questions(...) {
+    _uid_
+    Title {
+      Text
+    }
+    ...
+  }
+}`;
+</code></pre>
+
+<p>If we happen to under-fetch a field for <code>questions</code> in one of these queries, the data for our React component will be incomplete, causing run-time errors. Therefore, it is much more sensible to abstract out the common parts as a &lsquo;fragment.&rsquo; Doing so can eliminate the chance of errors in the future iterations.</p>
+
+<pre><code class="language-js">const questionFragment = `
+_uid_
+Title {
+  Text
+}
+...
+`;
+export const recommendedQuestionQuery = `{
+  ...
+  questions(...) {
+    ${questionFragment}
+  }
+}`;
+export const hotQuestionQuery = `{
+  ...
+  questions(...) {
+    ${questionFragment}
+  }
+}`;
+export const recentQuestionQuery = `{
+  ...
+  questions(...) {
+    ${questionFragment}
+  }
+}`;
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Building an application with Dgraph left me with a strange aftertaste. Usually, a new technology inevitably leaves a feeling of ennui, after the excitement of trying out something new eventually subsides. Yet this time, I felt something quite different. Perhaps it was a taste of delight, a hint at something exciting in the making.</p>
+
+<p>As a young developer I often find myself in a vain pursuit of the newest and the shiniest piece of technology. In that hedonistic treadmill I time and again stumbled upon many burgeoning technologies proclaiming to be the fastest, the newest, the most game-changing. Perhaps all those claims are justified in their own unique ways, but for the most part it feels that they are merely clamoring for attention. In contrast, Dgraph seems to make a persuasive case with its well-designed query language alone.</p>
+
+<p>Dgraph has proven to work seamlessly with React, and its rich and intuitive query language allowed me to make and ship a Stack Overflow clone in a matter of weeks without a previous experience. The ease of iteration, coupled with the performance, indicates that Dgraph is a valuable addition to our tool belts for building modern web applications.</p>
 
 <hr />
 
-<div class="engage">
-	<p><strong>We are building an open source, real time, horizontally scalable and distributed graph database.</strong></p>
-  <table>
-    <thead>
-    <tr>
-    <th></th>
-    <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Get started with Dgraph.</td>
-      <td><a href="https://docs.dgraph.io" target="_blank">https://docs.dgraph.io</a></td>
-    </tr>
-    <tr>
-      <td>See our live demo.</td>
-      <td><a href="https://dgraph.io" target="_blank">https://dgraph.io</a></td>
-    </tr>
-    <tr>
-      <td>We are hiring. Join us!</td>
-      <td><a href="https://dgraph.io/careers.html" target="_blank">https://dgraph.io/careers.html</a></td>
-    </tr>
-    <tr>
-      <td>Star us on Github.</td>
-      <td><a href="https://github.com/dgraph-io/dgraph" target="_blank">https://github.com/dgraph-io/dgraph</a></td>
-    </tr>
-    <tr>
-      <td>Ask us questions.</td>
-      <td><a href="https://discuss.dgraph.io" target="_blank">https://discuss.dgraph.io</a></td>
-    </tr>
-    </tbody>
-  </table>
-	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
-</div>
-<br/>
-
-
-<p><em>Top image: <a href="http://www.nasa.gov/image-feature/jpl/pia20027/infrared-echoes-of-a-black-hole-eating-a-star/">Infrared Echoes of a Black Hole Eating a Star</a></em></p>
-</div>
+<p><em>You can try Graphoverflow on <a href="https://graphoverflow.dgraph.io">https://graphoverflow.dgraph.io</a> and view its source code on <a href="https://github.com/dgraph-io/graphoverflow">https://github.com/dgraph-io/graphoverflow</a>.</em></p></div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -480,12 +778,12 @@
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/pawan.png" class="article-author__image">
+	<img src="/images/sung.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Pawan Rawal
+    <h4 class="article-author__name">Sung Won Cho
 
 
       <span class="article-author__title">Author</span>
@@ -494,14 +792,14 @@
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/pawanrawal1" class="social__link">
+            <a href="https://au.linkedin.com/in/sungwoncho" class="social__link">
                 <svg class="icon social__icon social__icon--linkedin">
                     <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
             </a>
         </li>
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/pawan_rawal" class="social__link">
+            <a href="https://twitter.com/mikeswcho" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -509,7 +807,7 @@
         </li>
     </ul>
 </nav>
-<p>After graduating from IIT Delhi in 2014, Pawan worked in various startups understanding how the web works. His interest in distributed systems and application of concepts in Computer Science to solve real world problems led him to Dgraph. In his free time, he likes to travel, do yoga, read and cook.</p>
+<p>Sung builds products used by thousands of people. He also knows martial arts.</p>
 
 
   </div>
@@ -555,7 +853,7 @@
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/hugo/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/building-graphoverflow/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -594,7 +892,7 @@
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-08-02%2013%3a54%3a13.644109268%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-08-02%2013%3a54%3a13.625543854%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -649,7 +947,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/open.dgraph.io\/post\/hugo\/"
+  discourseEmbedUrl: "https:\/\/open.dgraph.io\/post\/building-graphoverflow\/"
 };
 (function() {
   var d = document.createElement("script");

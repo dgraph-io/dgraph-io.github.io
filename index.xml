@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Fri, 28 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 02 Aug 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Building Stack Overflow Clone with Dgraph, and React</title>
+      <link>https://open.dgraph.io/post/building-graphoverflow/</link>
+      <pubDate>Wed, 02 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://open.dgraph.io/post/building-graphoverflow/</guid>
+      <description>&lt;p&gt;I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built &lt;em&gt;Graphoverflow&lt;/em&gt; and share the best practices I learned for using Dgraph to build a modern web application.
+&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Building apps with Dgraph&#39;s Go client</title>
