@@ -69,8 +69,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-08-02%2013%3a54%3a13.622379174%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-02%2013%3a54%3a13.62245692%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-08-02%2018%3a35%3a02.769807464%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-02%2018%3a35%3a02.771200231%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -416,7 +416,31 @@
 
 <p>As you can see in the <a href="https://graphoverflow.dgraph.io">live demo</a>, <em>Graphoverflow</em> implements all core functionalities of Stack Overflow. Through the web interface, you can create, read, update, and delete questions, answers, comments. You can also cast upvotes and downvotes. In addition, it is smart enough to recommend you questions to read based on <a href="https://en.wikipedia.org/wiki/Collaborative_filtering">collaborative filtering</a>. In many ways, <em>Graphoverflow</em> successfully embodies many important features that most modern web applications depend on: CRUD operations, and user authentication and authorization. As <a href="https://github.com/dgraph-io/graphoverflow">the source code</a> shows, all this is achieved by using Dgraph as the primary and only data storage.</p>
 
-<p>Looking back the past three weeks of building <em>Graphoverflow</em>, I feel that the journey was unexpectedly simple and straightforward. I have never built anything using a graph database in my entire life. Therefore when I started building this application I knew I was set out for a bumpy ride. However, the intuitive query language of Dgraph did the heavy lifting out of the box, and I did not have to struggle too much. <em>Graphoverflow</em> is not a simple application by any means, as it needs to retrieve and render a large amount of data with complex relationships, and has a built-in recommendation system. However, a quick analysis of the code base reveals that I only had to write 700 LOC (20%) on the server side, and 2800 LOC (80%) on the client side to ship it. The simplicity of the code base clearly demonstrates that, with Dgraph, you can end up with a lot less complex application code for your non-trivial requirements.</p>
+<p>Looking back the past three weeks of building <em>Graphoverflow</em>, I feel that the journey was unexpectedly simple and straightforward. I have never built anything using a graph database in my entire life. Therefore when I started building this application I knew I was set out for a bumpy ride. However, the intuitive query language of Dgraph did the heavy lifting out of the box, and I did not have to struggle too much. <em>Graphoverflow</em> is not a simple application by any means, as it needs to retrieve and render a large amount of data with complex relationships, and has a built-in recommendation system. However, a quick analysis of the code base reveals that I only had to write 700 LOC (18%) on the server side, and 3300 LOC (82%) on the client side to ship it, excluding</p>
+
+<pre><code class="language-bash"># Server side
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+JavaScript                       7             94             21            654
+JSON                             1              0              0             39
+-------------------------------------------------------------------------------
+SUM:                             8             94             21            693
+-------------------------------------------------------------------------------
+
+
+# Client side
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+JavaScript                      62            391             74           2880
+Sass                            17             91              1            461
+-------------------------------------------------------------------------------
+SUM:                            79            482             75           3341
+-------------------------------------------------------------------------------
+</code></pre>
+
+<p>The simplicity of the code base clearly demonstrates that, with Dgraph, you can end up with a lot less complex application code for your non-trivial requirements.</p>
 
 <h2 id="the-query-language-was-the-key">The Query Language Was The Key</h2>
 
@@ -577,7 +601,7 @@ function runQuery(queryText) {
 
 <h2 id="best-practices">Best Practices</h2>
 
-<p>Through building <em>Graphoverflow</em>, I have come up with some practices that I believe will help keep your code base maintainable and save time. Those are based on my collective lessons from numerous trial, errors, and redesign attempts. Often a lack of documented practices are the biggest barrier hindering us from dipping our unfamiliar technologies and cultivating their benefits. The following practices will help you instantly get started with building fast modern web applications with Dgraph and React.</p>
+<p>Through building <em>Graphoverflow</em>, I have come up with some practices that I believe will help keep your code base maintainable and save time. Those are based on my collective lessons from numerous trial, errors, and redesign attempts. Often a lack of documented practices is the biggest barrier hindering us from dipping our unfamiliar technologies and cultivating their benefits. The following practices will help you instantly get started with building fast modern web applications with Dgraph and React.</p>
 
 <h3 id="organize-your-queries-along-with-your-components">Organize Your Queries Along With Your Components</h3>
 
@@ -623,7 +647,7 @@ function runQuery(queryText) {
 }
 </code></pre>
 
-<p>I recommend the following directory structure in your project to mitigate such issue, and keep your code base maintainable.</p>
+<p>Your queries will evolve as your requirements change. Iterating on your query can be error-prone if the queries are scattered in a random manner without a formal structure. Therefore I recommend the following directory structure in your project to mitigate such issue and keep your code base maintainable.</p>
 
 <pre><code>your_project
 ├── components
@@ -637,7 +661,7 @@ function runQuery(queryText) {
 ...
 </code></pre>
 
-<p>Within your component, import needed queries from the corresponding query file. This way, we can easily iterate on queries for your components in a reliable manner. Your queries will evolve as your requirements change. It is clean and reassuring to have a separate, go-to file to see all the queries that your component is relying on. It keeps possible errors in check and makes debugging feasible in case of an error.</p>
+<p>Within your component, import needed queries from the corresponding query file. This way, we can easily iterate on queries for your components in a reliable manner. It is clean and reassuring to have a separate, go-to file to see all the queries that your component is relying on. It keeps possible errors in check and makes debugging feasible in case of an error.</p>
 
 <h3 id="use-functions-to-dynamically-construct-queries">Use Functions to Dynamically Construct Queries</h3>
 
@@ -747,13 +771,52 @@ export const recentQuestionQuery = `{
 
 <p>Building an application with Dgraph left me with a strange aftertaste. Usually, a new technology inevitably leaves a feeling of ennui, after the excitement of trying out something new eventually subsides. Yet this time, I felt something quite different. Perhaps it was a taste of delight, a hint at something exciting in the making.</p>
 
-<p>As a young developer I often find myself in a vain pursuit of the newest and the shiniest piece of technology. In that hedonistic treadmill I time and again stumbled upon many burgeoning technologies proclaiming to be the fastest, the newest, the most game-changing. Perhaps all those claims are justified in their own unique ways, but for the most part it feels that they are merely clamoring for attention. In contrast, Dgraph seems to make a persuasive case with its well-designed query language alone.</p>
+<p>As a young developer, I often find myself in a vain pursuit of the newest and the shiniest piece of technology. In that hedonistic treadmill, I time and again stumbled upon many burgeoning technologies proclaiming to be the fastest, the newest, the most game-changing. Perhaps all those claims are justified in their own unique ways, but for the most part, it feels that they are merely clamoring for attention. In contrast, Dgraph seems to make a persuasive case with its well-designed query language alone.</p>
 
 <p>Dgraph has proven to work seamlessly with React, and its rich and intuitive query language allowed me to make and ship a Stack Overflow clone in a matter of weeks without a previous experience. The ease of iteration, coupled with the performance, indicates that Dgraph is a valuable addition to our tool belts for building modern web applications.</p>
 
 <hr />
 
-<p><em>You can try Graphoverflow on <a href="https://graphoverflow.dgraph.io">https://graphoverflow.dgraph.io</a> and view its source code on <a href="https://github.com/dgraph-io/graphoverflow">https://github.com/dgraph-io/graphoverflow</a>.</em></p></div>
+<div class="engage">
+	<p><strong>We are building an open source, real time, horizontally scalable and distributed graph database.</strong></p>
+  <table>
+    <thead>
+    <tr>
+    <th></th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Get started with Dgraph.</td>
+      <td><a href="https://docs.dgraph.io" target="_blank">https://docs.dgraph.io</a></td>
+    </tr>
+    <tr>
+      <td>See our live demo.</td>
+      <td><a href="https://dgraph.io" target="_blank">https://dgraph.io</a></td>
+    </tr>
+    <tr>
+      <td>We are hiring. Join us!</td>
+      <td><a href="https://dgraph.io/careers.html" target="_blank">https://dgraph.io/careers.html</a></td>
+    </tr>
+    <tr>
+      <td>Star us on Github.</td>
+      <td><a href="https://github.com/dgraph-io/dgraph" target="_blank">https://github.com/dgraph-io/dgraph</a></td>
+    </tr>
+    <tr>
+      <td>Ask us questions.</td>
+      <td><a href="https://discuss.dgraph.io" target="_blank">https://discuss.dgraph.io</a></td>
+    </tr>
+    </tbody>
+  </table>
+	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
+</div>
+<br/>
+
+
+<p><em>You can try Graphoverflow on <a href="https://graphoverflow.dgraph.io">https://graphoverflow.dgraph.io</a> and view its source code on <a href="https://github.com/dgraph-io/graphoverflow">https://github.com/dgraph-io/graphoverflow</a>.</em></p>
+
+<p><em>Top image: <a href="https://images.nasa.gov/#/details-iss042e021664.html">International Space Station Night Europe</a></em></p></div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -892,7 +955,7 @@ export const recentQuestionQuery = `{
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-08-02%2013%3a54%3a13.625543854%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-08-02%2018%3a35%3a02.772890882%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
