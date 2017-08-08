@@ -37,30 +37,26 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Releasing Dgraph v0.7.1 - Dgraph Blog</title>
-    <meta property='og:title' content="Releasing Dgraph v0.7.1 - Dgraph Blog">
+    <title>Scale the shit out of this! - Dgraph Blog</title>
+    <meta property='og:title' content="Scale the shit out of this! - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://open.dgraph.io/post/v0.7-release/">
+    <meta property="og:url" content="https://open.dgraph.io/post/scaling-dgraph/">
     
-    <meta property="og:image" content="https://open.dgraph.io/images/routeplan.jpg">
+    <meta property="og:image" content="https://open.dgraph.io/images/science.jpg">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://open.dgraph.io/images/routeplan.jpg"/>
+        <meta name="twitter:image" content="https://open.dgraph.io/images/science.jpg"/>
       
     
 
-    <meta name="twitter:title" content="Releasing Dgraph v0.7.1"/>
-    <meta name="twitter:description" content="Dgraph
- team is super excited to present v0.7.1 of Dgraph
-. This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented 90% of all the features we had planned in our product roadmap, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.
-
-"/>
+    <meta name="twitter:title" content="Scale the shit out of this!"/>
+    <meta name="twitter:description" content="Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
+Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph, which is around 2 billion edges. With full-text search, reverses and other indices (insert link), this jumps between 6 - 8 billion edges; which poses unique challenges."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -71,8 +67,8 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-08-08%2019%3a21%3a11.614937523%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-08%2019%3a21%3a11.614957088%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-08-08%2019%3a21%3a11.610369625%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-08%2019%3a21%3a11.610396219%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -383,7 +379,7 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Jan 5, 2017
+                  Tue, Aug 8, 2017
                  by
                 Manish Rai Jain
 
@@ -392,7 +388,7 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Releasing%20Dgraph%20v0.7.1&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fv0.7-release%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Scale%20the%20shit%20out%20of%20this%21&amp;url=https%3a%2f%2fopen.dgraph.io%2fpost%2fscaling-dgraph%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -400,7 +396,7 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Releasing Dgraph v0.7.1</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Scale the shit out of this!</h1>
           </header>
         </div>
       </div>
@@ -412,220 +408,117 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://open.dgraph.io/images/routeplan.jpg">
-          <div class="article-content"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-. This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
+          <img class="opening__image" src="https://open.dgraph.io/images/science.jpg">
+          <div class="article-content">
 
-<p></p>
+<p>Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.</p>
 
-<p>Today, I&rsquo;m going to talk about these new features, and what you can expect from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</p>
+<p>Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph, which is around 2 billion edges. With full-text search, reverses and other indices (insert link), this jumps between 6 - 8 billion edges; which poses unique challenges.</p>
 
-<p><strong>Note: This is going to be a long blog post. If you just want to try out <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, you can jump straight to our <a href="https://wiki.dgraph.io/Get_Started">5 step tutorial to get started with Dgraph</a>.</strong></p>
+<p>Trying to load up this data has been an interesting journey in problem-solving.  Every step of the way we made our best judgment to come up with a good solution &ndash; sometimes they stuck, other times they didn&rsquo;t, only to be replaced by another solution.</p>
 
-<h3 id="speed">Speed</h3>
+<p>To give you an idea of how we store data, we convert all outgoing edges from a node, sharing the same predicate into a single key-value pair. The value is typically a sorted list of integers, what we refer to as posting list. Computer Science graduates familiar with Information Retrieval problem would instantly recognize this as <a href="https://nlp.stanford.edu/IR-book/html/htmledition/an-example-information-retrieval-problem-1.html">an inverted index</a>.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- v0.7.1 is the <em>fastest</em> version of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- we&rsquo;ve ever released. Live data loading is now so fast that we realized we no longer needed a separate offline batch data loader. So, we removed all that complexity and just wrote a simple script to send mutation queries to live <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- via GRPC.</p>
+<p><img src="/images/posting list.png" alt="Inverted Index" /></p>
 
-<p>You can read more about loading and querying performance <a href="https://wiki.dgraph.io/Performance">here</a>.</p>
+<p>While typical search engines have the luxury to create these posting lists once using a map-reduce; in Dgraph, we need to update these in real time as mutations flow.  But for every new mutation to this posting list, we don&rsquo;t rewrite this posting list. That&rsquo;d be computationally expensive. Instead, we store these mutations in a layer above the list; and on some trigger, we merge this layer and regenerate the sorted integer list.</p>
 
-<h3 id="data-persistence-sharding-high-availability-and-crash-resilience">Data Persistence, Sharding, High Availability, and Crash Resilience</h3>
+<p>If a posting list has a mutation, we consider it <em>dirty</em>. We have a dirty channel, which we push the corresponding key to, after every successful mutation. A few goroutines would pick keys from this channel and <em>sync them to disk</em>. This sync step includes regenerating the posting list, followed by a write to the underlying key-value store.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without losing any data or dropping any queries.</p>
+<h2 id="stuck-write-throughput">Stuck write throughput</h2>
 
-<p>We&rsquo;ve implemented RAFT, a distributed consensus algorithm within <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, to handle such failures. Any writes that happen to go through a group of servers and are only acknowledged to the client once they&rsquo;ve been applied to a majority of servers in the group. Thus, even if some of these servers crash, the data can be accessed, updated and queries can flow without the user getting affected.</p>
+<p><img src="/images/houston-we-have-a-problem.jpg" alt="Houston, we have a problem" /></p>
 
-<p>Also, new servers can be introduced into an existing cluster by providing the IP address of any healthy server in the cluster. They will automatically pick up the other members, pull in data shards from healthy nodes, join the groups and become part of the cluster.</p>
+<p><strong>The problem we hit</strong> was during loading. When we started loading the data, we saw our write throughput was getting stuck on around 50-60K updates per second. The system was definitely capable of doing more than that.</p>
 
-<p>Such functionality has never been an aim for graph databases in the past. But we strongly believe that graph databases can be run as the primary databases; not just add-ons. To that effect, it&rsquo;s important that they be able to survive machine crashes and avoid data loss.</p>
+<p>After debugging, we realized that we were waiting too long for posting lists.</p>
 
-<blockquote>
-<p>This functionality makes <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- the most production ready graph database in the market.</p>
-</blockquote>
+<p>See, when you do a sync to disk, you need to block access to this posting list: you regenerate the value (which could be expensive), then write it to disk, and then delete the value from memory. Then, when someone accesses this PL again, they fetch the value from the key-value store.</p>
 
-<p>You can read more about running multiple instances of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, sharding and distributing data in a cluster <a href="https://wiki.dgraph.io/Deploy">here</a>. In fact, we created a small video to show you how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- can recover from crashes without losing any data directly after a load.
-<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
-    <iframe src="//www.youtube.com/embed/dzTEXxF0TGs?rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="" frameborder="0"></iframe>
-</div>
-</p>
+<p>The pre-mature optimization behind delete was to save memory, but clearly, it could be avoided. We still wrote to disk, but stopped deleting the value from memory; so the next guy has it ready for more operations.</p>
 
-<h3 id="backups">Backups</h3>
+<p><strong>Things got better.</strong> But, we were still waiting too long on popular posting lists. After some head scratching, the culprit turned out to be the dirty channel.  For every mutation, we were pushing this key to the dirty channel. And then these goroutines would trigger a sync to disk. For popular lists, we were doing this too frequently. Every mutation would in effect trigger a sync to disk, via the dirty channel. This was not good.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- believes in standards. We heartily use the existing RDF NQuad standard for data input. Now, we&rsquo;re making it easy to export data from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- to other systems, by exporting our backups in RDF NQuad format. This makes it easy to feed <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- data into other systems, upgrade <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- versions or to switch over to another graph database. You can read more about backup <a href="https://wik.dgraph.io/Deploy#Backup">here</a>.</p>
+<p>We needed a way to delay the push to dirty channel. So, we introduced a goroutine and a local channel. This goroutine would listen on this channel, and we&rsquo;ll push to this channel on every successful mutation. When the goroutine receives something on the channel, it will sleep for five seconds. On awake, it would check if there was something new on the channel. If so, it would repeat the loop of sleeping. If not, it would push to the global dirty channel.</p>
 
-<h3 id="indexing">Indexing</h3>
+<p><strong>This was a nifty idea but crumbled as soon as we ran it.</strong>
+<img src="/images/mars-explosion.jpg" alt="The Martian Movie - Explosion - Twentieth Century Fox/YouTube" /></p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- can now index various scalar values to allow sorting,  term matching, and inequality filters. We support these value types: <code>int</code>, <code>float</code>, <code>string</code>, <code>bool</code>, <code>date</code>, <code>datetime</code>, <code>geo</code>, <code>uid</code>.</p>
+<p>The memory usage spiked, and Dgraph quickly went OOM. For a while, we couldn&rsquo;t figure out why.  The heap seemed normal. We debugged the cache; it seemed to be of normal size.  The mutations weren&rsquo;t consuming too much either. Nothing in the system looked like it was out of place.</p>
 
-<p>String values get tokenized using ICU, and allow <code>allof</code> and <code>anyof</code> functions.
-<code>geo</code> values allow for geo-indexing and support the geo functions mentioned below. <code>uid</code> value is a way to indicate that the predicate edge points to another entity node.
-This is useful to generate edges in reverse direction automatically. The rest support sorting, equality and inequality functions.</p>
+<h2 id="the-stack">The Stack</h2>
 
-<p>If you want to generate the index for a particular predicate, mention its type and specify the <code>@index</code> keyword.
-Similarly, to generate reverses for a uid predicate, you can specify the <code>@reverse</code> keyword.</p>
+<p>Then almost accidentally, we saw the stack size. We always tracked Go heap size but had never tracked the stack.  We just happened to print the entire Go memory stack and noticed that the stack size was totally out of whack.</p>
 
-<p>Here&rsquo;s an example schema file for freebase film data:</p>
+<p>We quickly noticed the number of goroutines. We had millions of them running, one per key. Each goroutine consumes at least 4KB in the stack (in practice, more). <strong>10 million of them would consume at least 40GB!</strong></p>
 
-<pre><code>scalar (
-  film.director.film             : uid    @ reverse
-  film.film.genre                : uid    @ reverse
-  film.film.initial_release_date : date   @ index
-  film.film.rating               : uid    @ reverse
-  loc                            : geo    @ index
-  type.object.name.en            : string @ index
-  type.object.name.hi            : string @ index
-  type.object.name.ta            : string @ index
-)
-</code></pre>
+<p>Learning a new lesson about the cost of cheap goroutines, we changed our solution.  Note that when we pick something from the dirty channel, we don&rsquo;t immediately work on it. We store it in a local dirty map. We then pick <code>X%</code> of total entries in the dirty map and trigger sync to disk on them.</p>
 
-<p>You can read more about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- schema <a href="https://wiki.dgraph.io/Query_Language#Schema">here</a>.</p>
+<p>Previously, we were just storing <code>struct{}</code> in the map value. We changed that to store a timestamp. We removed the local goroutines per posting list and switched back to pushing to dirty chan on every mutation. But, when it reached the local dirty map, we&rsquo;d just update the timestamp.</p>
 
-<h4 id="reverse-edges">Reverse Edges</h4>
+<p>When picking the <code>X%</code> entries from the dirty map, we&rsquo;d check if the timestamp was within five seconds. If not, we&rsquo;ll just skip that list. <strong>This gave us the delay factor.</strong> We just had to add a small break condition to avoid looping over the entire dirty map.</p>
 
-<p>Each graph edge is unidirectional. But a lot of times, you need to have both the forward and backward edges. For those cases, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- now provides a <code>@reverse</code> keyword, which can be applied to predicates of <code>uid</code> type. This would trigger automatic generation of the reverse edges, to allow querying in the reverse direction.</p>
+<p>Now, this worked. We saw a jump in our mutations per second, from 50-60K to close to 100K. At least initially.</p>
 
-<p>You can read more about reverse edges <a href="https://wiki.dgraph.io/Query_Language#Reverse_Edges">here</a>.</p>
+<h2 id="range-anxiety">Range Anxiety</h2>
 
-<h3 id="sorting">Sorting</h3>
+<p><img src="/images/range anxiety.jpg" alt="The Martian Movie - Range Anxiety" /></p>
 
-<p>You can now sort the results by any indexed predicate (except string and geo, of course). For example, you can now get a list of films directed by Steven Spielberg sorted by initial release date.</p>
+<p>The write throughput would start above 100K, but after a few minutes of running, the throughput would drop down to 70K, then 50K, then lower. We tried to figure out what was causing this drop. Turns out, some of our frequently written posting lists were taking longer and longer to add mutations.</p>
 
-<pre><code>{
-  me(_xid_: m.06pj8) {
-    type.object.name.en
-    film.director.film(order: film.film.initial_release_date) {
-      type.object.name.en
-      film.film.initial_release_date
-    }
-  }
-}
+<p>Remember, how we have a mutable layer above the immutable layer. For a small number of frequently updated posting lists, the time delay would almost never trigger. Within the 5 second period, at least some mutation would touch it, which caused its mutable layer to grow unbounded. And this layer is slower to access compared to the immutable layer. So, new additions were being slow.</p>
 
-# To sort in descending order, just use orderdesc instead of order.
-</code></pre>
+<p>Along with the time delay, we added a heuristic that for every 1000 writes; these layers would be merged. This let the loading run for longer at higher throughputs. Another day, another fix!</p>
 
-<p>You can read more about sorting <a href="https://wiki.dgraph.io/Query_Language#Sorting">here</a>.</p>
+<p>Now that write throughput was OK, <strong>we had a new problem.</strong> After an hour or so of running, dgraph would be killed by OOM.</p>
 
-<h3 id="functions">Functions</h3>
+<p>We tried various things, over many days. We enabled swap space. We used all the <code>sync.Pools</code> in every critical path. We evicted things more aggressively. But, all we were able to do was to push it from one hour to three hours, before it would OOM.</p>
 
-<p>Functions are a great way to provide functionality with a simple and clear interface. <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- functions can be used as both starting points to queries and as filters.</p>
+<p>See, every time we read a posting list, we would store it in memory in case something else needed it. <em>That’s our version of cache.</em></p>
 
-<p>Here&rsquo;s a list of functions we introduced in v0.7.1:</p>
+<p>We used a sharded map to store these posting lists in memory. We’d have 64 shards, to allow fast concurrent access by multi core machines. The thing is, this cache would grow as you access more and more lists.</p>
 
-<ul>
-<li><code>anyof(predicate, &quot;space separated list of terms&quot;)</code> : Entities whose value for the predicate has any of the terms specified.</li>
-<li><code>allof(predicate, &quot;space separated list of terms&quot;)</code> : Entities whose value for the predicate has all of the terms specified.</li>
-<li><code>leq(predicate, &quot;value&quot;)</code>                           : Entities whose value for the predicate is less than or equal to specified value.</li>
-<li><code>geq(predicate, &quot;value&quot;)</code>                           : Entities whose value for the predicate is greater than or equal to specified value.</li>
-</ul>
+<p>We had a mechanism in place to manage memory. We have a goroutine which periodically checks memory usage by our program. If that memory exceeds a certain specified value by the user, we will evict one shard. That is, we’d go over all the keys in one shard and just delete them. During our various attempts, we also added some heuristic to increase that number to 3 shards, if memory usage grew beyond some higher limit.</p>
 
-<p>Both <code>anyof</code> and <code>allof</code> functions work based on an index generated by tokenizing string values. We use ICU, which has vast support for human languages and is used by major projects like Google Web Search, Chrome, Mac OSX, Lucene, etc.</p>
+<p><strong>In theory, this works OK.</strong> You go over memory, you discard a chunk of items, and let Go and hence the OS reclaim the memory. Now, Go is slow in releasing memory to the OS, so we’d trigger <code>debug.FreeOSMemory()</code> method, to avoid the OS killing the process with an OOM.</p>
 
-<p>Upcoming in v0.7.2:</p>
+<p><strong>In practice, it sunk fast!</strong> First, Go might still not release memory despite calls to <code>debug.FreeOSMemory()</code>. <em>It’s suggestion, not a command.</em> It might hold tens of GBs of memory, while the OS is close to killing the process.  Second, we didn’t account for an interesting behavior.</p>
 
-<ul>
-<li><code>eq(predicate, &quot;value&quot;)</code>: Entities whose value for predicate is equal to specified value.</li>
-<li><code>le(predicate, &quot;value&quot;)</code>: Entities whose value for predicate is less than specified value.</li>
-<li><code>ge(predicate, &quot;value&quot;)</code>: Entities whose value for predicate is greater than specified value.</li>
-</ul>
+<p><img src="/images/out-of-memory.jpg" alt="Out of memory" /></p>
 
-<p>To enable these functions, a <a href="https://wiki.dgraph.io/Query_Language#Schema">schema providing the scalar type</a> for the predicates should be provided. For e.g.</p>
+<p>Every time the goroutine would check our memory usage is greater than the threshold, it would trigger an <code>EvictShard()</code>. What happened was, memory usage would sort of stay above the limit for a while, causing many evict shards.  Eventually, almost the entire cache would be evicted; and the memory usage would go below the threshold (but not too much, because Go holds memory).</p>
 
-<pre><code>scalar(
-  name          : string @ index # anyof, allof
-  age           : int    @ index # leq, geq
-  date_of_birth : date   @ index # leq, geq
-)
-</code></pre>
+<p>A memory having gone to normal state, the system would accept requests again and start loading the data. But the requests have been retrying for a while, so they’d reload too many posting lists all at once (plus, almost zero caches). The memory usage would suddenly spike, and before the goroutine could trigger another evict shard, the program would OOM.</p>
 
-<p>You can read more about functions <a href="https://wiki.dgraph.io/Query_Language#Functions">here</a>.</p>
+<p>The lesson learned here was not only to avoid the program from going above the normal limit (which is what we were doing) but to <strong>avoid evicting big chunks of cache all at once.</strong> Because when it comes back, it comes back with a <em>vengeance</em>!</p>
 
-<h4 id="geospatial-functions">Geospatial functions</h4>
+<p>So, we switched to a single shard LRU cache, which would release memory consistently over time (<em>well, we should have had that in the first place, but it was slower compared to sharded map; so it was a pending investigative TODO item for over a year</em>).</p>
 
-<p>Geospatial queries are important to build location-aware search and recommendations. Being able to find the nearby restaurants who serve sushi, or bars in the city which play Jazz, or friends who are visiting your neighborhood is pretty crucial to such use cases. We couldn&rsquo;t imagine building a database without providing full-fledged support for geo queries, and in v0.7.1, we added geo indexing.</p>
+<p>Also, we couldn’t rely upon the goroutine doing Go memory monitoring to tell us how much to release — because of its unreliability. So, we just set the size of the LRU cache upfront, and then maintain that over time.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- now supports four geospatial functions:</p>
+<p><strong>That fixed our OOM issue. Almost surprisingly!</strong></p>
 
-<ul>
-<li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
-<li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
-<li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
-</ul>
+<h1 id="getting-back-to-your-perf-review">Getting back to your perf review</h1>
 
-<pre><code>$ curl localhost:8080/query -XPOST -d $'
-{
-  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-    name
-  }
-}' | python -m json.tool | grep name
+<p>Now that memory issue was solved, it was time to load the entire 2B edges and play with it. <em>Almost!</em></p>
 
-            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-            &quot;name&quot;: &quot;De Young Museum&quot;
-            &quot;name&quot;: &quot;Chinese Pavillion&quot;
-            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-            &quot;name&quot;: &quot;Peace Lantern&quot;
-            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-            &quot;name&quot;: &quot;Morrison Planetarium&quot;
-            &quot;name&quot;: &quot;California Academy of Sciences&quot;
-            &quot;name&quot;: &quot;Hamon Tower&quot;
-            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-            &quot;name&quot;: &quot;La Rose des Vents&quot;
-            &quot;name&quot;: &quot;Strawberry Hill&quot;
-            &quot;name&quot;: &quot;Buddha&quot;
-            &quot;name&quot;: &quot;Rose Garden&quot;
+<p>After some hours of loading data, we realized we had some huge posting lists, containing millions of integers. These were the frequently updating ones, which have a very <strong>high fan-out.</strong> That is, one node has millions of edges going outwards.</p>
 
-</code></pre>
+<p>This particularly troubled us in indices. For, e.g., <code>Type</code> index, which points from a certain type to all the instances of that type. If you have 100s of millions of comments, all these comments would be referenced in one posting list. Another good example is full-text search, where certain common terms can cause high fan-out nodes.</p>
 
-<p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
+<p>As the list size grows, re-encoding the list after every 1000 mutations was getting slower and slower. This would cause all writes waiting on this list to slow down considerably; which in turn slows down the data loading.</p>
 
-<h3 id="filtering">Filtering</h3>
+<p><em>This is where we are right now! And we have ideas to solve this problem.</em></p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- now supports pretty advanced and complex filtering operations. We do both &amp;&amp; (and) and || (or) filters, using round brackets to specify the right sequence. For e.g., <code>(A || (B &amp;&amp; C))</code>, as demonstrated in the following query.</p>
+<p>One is to split the posting list into smaller and smaller shards, to create essentially <em>sharded posting lists</em>.  Each shard holding a contiguous portion of the sorted list. This way, the mutations could be applied to these lists concurrently, and each of these could be re-encoded easily.</p>
 
-<pre><code>{
-  me(_xid_: m.06pj8) {
-    type.object.name.en
-    film.director.film @filter(
-      allof(&quot;type.object.name.en&quot;, &quot;jones indiana&quot;) ||
-      (anyof(&quot;type.object.name.en&quot;, &quot;jurassic&quot;) &amp;&amp; anyof(&quot;type.object.name.en&quot;, &quot;park&quot;)))  {
-      type.object.name.en
-      film.film.initial_release_date
-    }
-  }
-}
-</code></pre>
+<p>The problem with this approach is that when iterating or intersecting these posting lists, all the shards of the posting list would have to be brought into memory. <strong>This is bad for two reasons.</strong> One, bringing the whole thing into memory is still a problem. And two, more disk reads are now required to read the posting list.</p>
 
-<p>With that, I&rsquo;ll finish the blog post. <strong>If you found these interesting, try out the <a href="https://wiki.dgraph.io/Get_Started">5 step tutorial to get started with Dgraph</a>.</strong> Let us know what you think!</p>
+<p>Without going into details, the other option is based on research, which is to encode the posting list smartly.</p>
 
-<blockquote>
-<p>I&rsquo;ll be giving a talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- at Go Meetup in Sydney on 19th Jan and in Gophercon India on 24-25th Feb. So, come talk to me about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</p>
-</blockquote>
+<p>We initially worked on the first approach, but after writing it quickly rejected it in favor of the second approach.</p>
+
+<p>Posting list encoding change is currently being implemented and tested. We’ll know soon how effective this is, and what new issues we encounter along the path to scaling Dgraph to billions of edges. Stay tuned!</p>
 
 <hr />
 
@@ -659,7 +552,12 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
   </table>
 	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
 </div>
-<br/></div>
+<br/>
+
+
+<p><em>Images: Stills from <a href="http://www.foxmovies.com/movies/the-martian">The Martian</a>
+and <a href="https://www.uphe.com/movies/apollo-13">Apollo 13</a>.</em></p>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -760,7 +658,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/v0.7-release/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://open.dgraph.io/post/scaling-dgraph/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -799,7 +697,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-08-08%2019%3a21%3a11.615321363%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-08-08%2019%3a21%3a11.611519591%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -854,7 +752,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/open.dgraph.io\/post\/v0.7-release\/"
+  discourseEmbedUrl: "https:\/\/open.dgraph.io\/post\/scaling-dgraph\/"
 };
 (function() {
   var d = document.createElement("script");
