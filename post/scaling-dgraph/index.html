@@ -67,8 +67,8 @@ Part of ensuring stability and performance led us to try and load the entire Sta
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://open.dgraph.io//css/runnable.css?2017-08-08%2019%3a21%3a11.610369625%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-08%2019%3a21%3a11.610396219%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable.css?2017-08-08%2019%3a31%3a40.71626874%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://open.dgraph.io//css/runnable-custom.css?2017-08-08%2019%3a31%3a40.716292669%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -411,9 +411,9 @@ Part of ensuring stability and performance led us to try and load the entire Sta
           <img class="opening__image" src="https://open.dgraph.io/images/science.jpg">
           <div class="article-content">
 
-<p>Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.</p>
+<p>Starting v0.8, we have aimed to focus purely on the stability and performance of <a href="https://dgraph.io">Dgraph</a>. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.</p>
 
-<p>Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph, which is around 2 billion edges. With full-text search, reverses and other indices (insert link), this jumps between 6 - 8 billion edges; which poses unique challenges.</p>
+<p>Part of ensuring stability and performance led us to try and load the entire Stack Overflow on <a href="https://dgraph.io">Dgraph</a>, which is around 2 billion edges. With full-text search, reverses and other indices (insert link), this jumps between 6 - 8 billion edges; which poses unique challenges.</p>
 
 <p>Trying to load up this data has been an interesting journey in problem-solving.  Every step of the way we made our best judgment to come up with a good solution &ndash; sometimes they stuck, other times they didn&rsquo;t, only to be replaced by another solution.</p>
 
@@ -421,7 +421,7 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 
 <p><img src="/images/posting list.png" alt="Inverted Index" /></p>
 
-<p>While typical search engines have the luxury to create these posting lists once using a map-reduce; in Dgraph, we need to update these in real time as mutations flow.  But for every new mutation to this posting list, we don&rsquo;t rewrite this posting list. That&rsquo;d be computationally expensive. Instead, we store these mutations in a layer above the list; and on some trigger, we merge this layer and regenerate the sorted integer list.</p>
+<p>While typical search engines have the luxury to create these posting lists once using a map-reduce; in <a href="https://dgraph.io">Dgraph</a>, we need to update these in real time as mutations flow.  But for every new mutation to this posting list, we don&rsquo;t rewrite this posting list. That&rsquo;d be computationally expensive. Instead, we store these mutations in a layer above the list; and on some trigger, we merge this layer and regenerate the sorted integer list.</p>
 
 <p>If a posting list has a mutation, we consider it <em>dirty</em>. We have a dirty channel, which we push the corresponding key to, after every successful mutation. A few goroutines would pick keys from this channel and <em>sync them to disk</em>. This sync step includes regenerating the posting list, followed by a write to the underlying key-value store.</p>
 
@@ -444,7 +444,7 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 <p><strong>This was a nifty idea but crumbled as soon as we ran it.</strong>
 <img src="/images/mars-explosion.jpg" alt="The Martian Movie - Explosion - Twentieth Century Fox/YouTube" /></p>
 
-<p>The memory usage spiked, and Dgraph quickly went OOM. For a while, we couldn&rsquo;t figure out why.  The heap seemed normal. We debugged the cache; it seemed to be of normal size.  The mutations weren&rsquo;t consuming too much either. Nothing in the system looked like it was out of place.</p>
+<p>The memory usage spiked, and <a href="https://dgraph.io">Dgraph</a> quickly went OOM. For a while, we couldn&rsquo;t figure out why.  The heap seemed normal. We debugged the cache; it seemed to be of normal size.  The mutations weren&rsquo;t consuming too much either. Nothing in the system looked like it was out of place.</p>
 
 <h2 id="the-stack">The Stack</h2>
 
@@ -470,7 +470,7 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 
 <p>Along with the time delay, we added a heuristic that for every 1000 writes; these layers would be merged. This let the loading run for longer at higher throughputs. Another day, another fix!</p>
 
-<p>Now that write throughput was OK, <strong>we had a new problem.</strong> After an hour or so of running, dgraph would be killed by OOM.</p>
+<p>Now that write throughput was OK, <strong>we had a new problem.</strong> After an hour or so of running, <a href="https://dgraph.io">Dgraph</a> would be killed by OOM.</p>
 
 <p>We tried various things, over many days. We enabled swap space. We used all the <code>sync.Pools</code> in every critical path. We evicted things more aggressively. But, all we were able to do was to push it from one hour to three hours, before it would OOM.</p>
 
@@ -518,7 +518,9 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 
 <p>We initially worked on the first approach, but after writing it quickly rejected it in favor of the second approach.</p>
 
-<p>Posting list encoding change is currently being implemented and tested. We’ll know soon how effective this is, and what new issues we encounter along the path to scaling Dgraph to billions of edges. Stay tuned!</p>
+<p>Posting list encoding change is currently being implemented and tested. We’ll know soon how effective this is, and what new issues we encounter along the path to scaling <a href="https://dgraph.io">Dgraph</a> to billions of edges. Stay tuned!</p>
+
+<p><em>P.S. To see the commits corresponding to this blog post, <a href="https://github.com/dgraph-io/dgraph/commits/master?author=janardhan1993">see recent activity here</a>.</em></p>
 
 <hr />
 
@@ -697,7 +699,7 @@ and <a href="https://www.uphe.com/movies/apollo-13">Apollo 13</a>.</em></p>
 </div>
 
     <script src="https://open.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://open.dgraph.io//js/runnable.js?2017-08-08%2019%3a21%3a11.611519591%20%2b1000%20AEST"></script>
+    <script src="https://open.dgraph.io//js/runnable.js?2017-08-08%2019%3a31%3a40.71693903%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
