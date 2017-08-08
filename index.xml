@@ -19,7 +19,7 @@
       
       <guid>https://open.dgraph.io/post/scaling-dgraph/</guid>
       <description>Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &amp;ndash; so we&amp;rsquo;ve decided to freeze it until we reach v1.0.
-Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph, which is around 2 billion edges. With full-text search, reverses and other indices (insert link), this jumps between 6 - 8 billion edges; which poses unique challenges.</description>
+Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</description>
     </item>
     
     <item>
