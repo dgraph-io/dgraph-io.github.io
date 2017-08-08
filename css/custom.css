@@ -4,7 +4,7 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
-    font-size: 15px;
+    font-size: 20px;
     font-family: "Lato", sans-serif;
     color: #3a3a3a !important;
     line-height: 1.6;
@@ -153,12 +153,12 @@ table tbody td {
 }
 
 .engage {
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .engage table {
     line-height: 0.7;
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 
