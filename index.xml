@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dgraph Blog</title>
-    <link>https://open.dgraph.io/index.xml</link>
+    <link>https://blog.dgraph.io/index.xml</link>
     <description>Recent content on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
     <lastBuildDate>Tue, 08 Aug 2017 17:23:51 +1000</lastBuildDate>
-    <atom:link href="https://open.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Scale the shit out of this!</title>
-      <link>https://open.dgraph.io/post/scaling-dgraph/</link>
+      <link>https://blog.dgraph.io/post/scaling-dgraph/</link>
       <pubDate>Tue, 08 Aug 2017 17:23:51 +1000</pubDate>
       
-      <guid>https://open.dgraph.io/post/scaling-dgraph/</guid>
+      <guid>https://blog.dgraph.io/post/scaling-dgraph/</guid>
       <description>
 
 &lt;p&gt;Starting v0.8, we have aimed to focus purely on the stability and performance of &lt;a href=&#34;https://dgraph.io&#34;&gt;Dgraph&lt;/a&gt;. Our feature set is at this point good enough for most users &amp;ndash; so we&amp;rsquo;ve decided to freeze it until we reach v1.0.&lt;/p&gt;
@@ -26,7 +26,7 @@
 
 &lt;p&gt;To give you an idea of how we store data, we convert all outgoing edges from a node, sharing the same predicate into a single key-value pair. The value is typically a sorted list of integers, what we refer to as posting list. Computer Science graduates familiar with Information Retrieval problem would instantly recognize this as &lt;a href=&#34;https://nlp.stanford.edu/IR-book/html/htmledition/an-example-information-retrieval-problem-1.html&#34;&gt;an inverted index&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/posting list.png&#34; alt=&#34;Inverted Index&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/posting list.png&#34; alt=&#34;Inverted Index&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;While typical search engines have the luxury to create these posting lists once using a map-reduce; in &lt;a href=&#34;https://dgraph.io&#34;&gt;Dgraph&lt;/a&gt;, we need to update these in real time as mutations flow.  But for every new mutation to this posting list, we don&amp;rsquo;t rewrite this posting list. That&amp;rsquo;d be computationally expensive. Instead, we store these mutations in a layer above the list; and on some trigger, we merge this layer and regenerate the sorted integer list.&lt;/p&gt;
 
@@ -34,7 +34,7 @@
 
 &lt;h2 id=&#34;stuck-write-throughput&#34;&gt;Stuck write throughput&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/houston-we-have-a-problem.jpg&#34; alt=&#34;Houston, we have a problem&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/houston-we-have-a-problem.jpg&#34; alt=&#34;Houston, we have a problem&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;The problem we hit&lt;/strong&gt; was during loading. When we started loading the data, we saw our write throughput was getting stuck on around 50-60K updates per second. The system was definitely capable of doing more than that.&lt;/p&gt;
 
@@ -49,7 +49,7 @@
 &lt;p&gt;We needed a way to delay the push to dirty channel. So, we introduced a goroutine and a local channel. This goroutine would listen on this channel, and we&amp;rsquo;ll push to this channel on every successful mutation. When the goroutine receives something on the channel, it will sleep for five seconds. On awake, it would check if there was something new on the channel. If so, it would repeat the loop of sleeping. If not, it would push to the global dirty channel.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;This was a nifty idea but crumbled as soon as we ran it.&lt;/strong&gt;
-&lt;img src=&#34;https://open.dgraph.io/images/mars-explosion.jpg&#34; alt=&#34;The Martian Movie - Explosion - Twentieth Century Fox/YouTube&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://blog.dgraph.io/images/mars-explosion.jpg&#34; alt=&#34;The Martian Movie - Explosion - Twentieth Century Fox/YouTube&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The memory usage spiked, and &lt;a href=&#34;https://dgraph.io&#34;&gt;Dgraph&lt;/a&gt; quickly went OOM. For a while, we couldn&amp;rsquo;t figure out why.  The heap seemed normal. We debugged the cache; it seemed to be of normal size.  The mutations weren&amp;rsquo;t consuming too much either. Nothing in the system looked like it was out of place.&lt;/p&gt;
 
@@ -69,7 +69,7 @@
 
 &lt;h2 id=&#34;range-anxiety&#34;&gt;Range Anxiety&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/range anxiety.jpg&#34; alt=&#34;The Martian Movie - Range Anxiety&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/range anxiety.jpg&#34; alt=&#34;The Martian Movie - Range Anxiety&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The write throughput would start above 100K, but after a few minutes of running, the throughput would drop down to 70K, then 50K, then lower. We tried to figure out what was causing this drop. Turns out, some of our frequently written posting lists were taking longer and longer to add mutations.&lt;/p&gt;
 
@@ -91,7 +91,7 @@
 
 &lt;p&gt;&lt;strong&gt;In practice, it sunk fast!&lt;/strong&gt; First, Go might still not release memory despite calls to &lt;code&gt;debug.FreeOSMemory()&lt;/code&gt;. &lt;em&gt;It’s suggestion, not a command.&lt;/em&gt; It might hold tens of GBs of memory, while the OS is close to killing the process.  Second, we didn’t account for an interesting behavior.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/out-of-memory.jpg&#34; alt=&#34;Out of memory&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/out-of-memory.jpg&#34; alt=&#34;Out of memory&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Every time the goroutine would check our memory usage is greater than the threshold, it would trigger an &lt;code&gt;EvictShard()&lt;/code&gt;. What happened was, memory usage would sort of stay above the limit for a while, causing many evict shards.  Eventually, almost the entire cache would be evicted; and the memory usage would go below the threshold (but not too much, because Go holds memory).&lt;/p&gt;
 
@@ -171,10 +171,10 @@ and &lt;a href=&#34;https://www.uphe.com/movies/apollo-13&#34;&gt;Apollo 13&lt;/
     
     <item>
       <title>Building a Stack Overflow Clone with Dgraph, and React</title>
-      <link>https://open.dgraph.io/post/building-graphoverflow/</link>
+      <link>https://blog.dgraph.io/post/building-graphoverflow/</link>
       <pubDate>Wed, 02 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://open.dgraph.io/post/building-graphoverflow/</guid>
+      <guid>https://blog.dgraph.io/post/building-graphoverflow/</guid>
       <description>&lt;p&gt;I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built &lt;em&gt;Graphoverflow&lt;/em&gt; and share the best practices I learned for using Dgraph to build a modern web application.
 &lt;/p&gt;
 
@@ -210,7 +210,7 @@ SUM:                            79            482             75           3341
 
 &lt;p&gt;I believe that &lt;em&gt;Graphoverflow&lt;/em&gt; owes its simple code base and the fast iteration cycle to Dgraph&amp;rsquo;s homebred query language, &lt;a href=&#34;https://docs.dgraph.io/query-language/&#34;&gt;&lt;em&gt;Graphql+-&lt;/em&gt;&lt;/a&gt;. To me, the biggest benefit of the query language was that I was able to retrieve complex data by writing a single, and intuitive tree-like structure. I could spend less time worrying about what tables to create or join together to store and fetch the data that the frontend required. Instead, I could simply focus on polishing my front-end components, while relying on Dgraph&amp;rsquo;s flexible schema system and its powerful query language.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/graphoverflow-question.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/graphoverflow-question.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The inner workings of the question page shown above can shed lights on Dgraph&amp;rsquo;s ability to retrieve complex data in a straightforward way. In order to render this page on the front-end, I needed to fetch &lt;code&gt;question&lt;/code&gt;, and all of its &lt;code&gt;answers&lt;/code&gt;. For all of them, I needed to fetch the total number of &lt;code&gt;upvotes&lt;/code&gt; and &lt;code&gt;downvotes&lt;/code&gt;, &lt;code&gt;viewCounts&lt;/code&gt;, its &lt;code&gt;history&lt;/code&gt;, &lt;code&gt;comments&lt;/code&gt;, and those comments&amp;rsquo; respective &lt;code&gt;scores&lt;/code&gt;. Not only that but also I needed to fetch 30 &lt;code&gt;related questions&lt;/code&gt; based on the tags attached to the displayed question. These data have complex schemas and interdependent relationships with one another. The queries I wrote, on the other hand, felt very straightforward to me.&lt;/p&gt;
 
@@ -446,7 +446,7 @@ function runQuery(queryText) {
 
 &lt;p&gt;If queries for one of your components exhibits repeated structures, consider extracting them as fragments that can be reused. Doing so will allow us to avoid the mismatch between the shape of Dgraph response and your React component&amp;rsquo;s expectation of it, a common pitfall that we already identified above.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/graphoverflow-node-cover.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/graphoverflow-node-cover.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As we can see from the picture, the &lt;code&gt;Home&lt;/code&gt; component of &lt;em&gt;Graphoverflow&lt;/em&gt; can fetch questions according to three different criteria: &amp;lsquo;Recommended&amp;rsquo;, &amp;lsquo;Most Recent&amp;rsquo;, and &amp;lsquo;Hot&amp;rsquo;. While these criteria fetch questions of different ilks, the returned fields for the questions must be consistent because a single React component is responsible for rendering a question item, no matter what criteria is used to fetch them.&lt;/p&gt;
 
@@ -581,10 +581,10 @@ export const recentQuestionQuery = `{
     
     <item>
       <title>Building apps with Dgraph&#39;s Go client</title>
-      <link>https://open.dgraph.io/post/client0.8.0/</link>
+      <link>https://blog.dgraph.io/post/client0.8.0/</link>
       <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://open.dgraph.io/post/client0.8.0/</guid>
+      <guid>https://blog.dgraph.io/post/client0.8.0/</guid>
       <description>
 
 &lt;p&gt;We&amp;rsquo;ve just released v0.8 and it contains lots of &lt;a href=&#34;https://github.com/dgraph-io/dgraph/releases/tag/v0.8.0&#34;&gt;new features and improvements&lt;/a&gt;.  The Go client saw some nice improvements, so this post will walk you through the client interface and demonstrate some example code.&lt;/p&gt;
@@ -670,7 +670,7 @@ defer dgraphClient.Close()
 
 &lt;p&gt;The 21million data is all about movies, directors and actors.  Here&amp;rsquo;s a conceptual view of some of what the dataset contains.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/movies-schema.png&#34; alt=&#34;Movies Schema&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/movies-schema.png&#34; alt=&#34;Movies Schema&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Directors are linked to their films with &lt;code&gt;director.film&lt;/code&gt;.  Films have an &lt;code&gt;initial_release_date&lt;/code&gt; a &lt;code&gt;genre&lt;/code&gt; and are linked to performances by &lt;code&gt;starring&lt;/code&gt;.  Performances tell us about an actor playing a character.  Actors are linked to their roles and thus movies.  Actors, directors, movies and genres all have a &lt;code&gt;name&lt;/code&gt;.  I drew the actors and directors overlapping because some people are both actors and directors.  The data doesn&amp;rsquo;t contain typing information for directors etc.  We know, however, that a node represents a director when it has the &lt;code&gt;director.film&lt;/code&gt; edge, or an actor when it has &lt;code&gt;actor.film&lt;/code&gt;.&lt;/p&gt;
 
@@ -1027,10 +1027,10 @@ dgraphClient.BatchSet(e)
     
     <item>
       <title>Orchestrating signal and wait in Go</title>
-      <link>https://open.dgraph.io/post/signal-and-wait/</link>
+      <link>https://blog.dgraph.io/post/signal-and-wait/</link>
       <pubDate>Wed, 19 Jul 2017 15:24:00 -0700</pubDate>
       
-      <guid>https://open.dgraph.io/post/signal-and-wait/</guid>
+      <guid>https://blog.dgraph.io/post/signal-and-wait/</guid>
       <description>&lt;p&gt;One of the common use case in Go is to start a few goroutines to do some
 work. These goroutines block listening in on a channel, waiting for more work to
 arrive. At some point, you want to signal these goroutines to stop accepting
@@ -1379,10 +1379,10 @@ between the various stages.&lt;/p&gt;
     
     <item>
       <title>Running Stack Overflow on Dgraph</title>
-      <link>https://open.dgraph.io/post/sql-vs-dgraph/</link>
+      <link>https://blog.dgraph.io/post/sql-vs-dgraph/</link>
       <pubDate>Mon, 17 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://open.dgraph.io/post/sql-vs-dgraph/</guid>
+      <guid>https://blog.dgraph.io/post/sql-vs-dgraph/</guid>
       <description>
 
 &lt;p&gt;We have been taught, conditioned, trained to use SQL all our lives as engineers.
@@ -1715,7 +1715,7 @@ longer considered one.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;This is how the final Dgraph schema looks.&lt;/strong&gt; It&amp;rsquo;s a lot simpler than SQL.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/schema.png&#34; alt=&#34;Dgraph Schema&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/schema.png&#34; alt=&#34;Dgraph Schema&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;In fact, SQL schema complexity increases rapidly as the relationships among
 data increase.&lt;/em&gt; Each relationship would inadvertently require joins, which would
@@ -1744,7 +1744,7 @@ all the associated meta information that SO shows.&lt;/p&gt;
 
 &lt;p&gt;This is the corresponding query fragment to retrieve the data to render one question div.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/homepage-question.png&#34; alt=&#34;Home page question&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/homepage-question.png&#34; alt=&#34;Home page question&#34; /&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;_uid_  # Unique identifier
 
@@ -1791,7 +1791,7 @@ questions(func: eq(Type, &amp;quot;Question&amp;quot;), orderdesc: Timestamp, fi
 
 &lt;p&gt;&lt;strong&gt;Top 100 hot questions&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/homepage-hot-questions.png&#34; alt=&#34;Home page hot questions&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/homepage-hot-questions.png&#34; alt=&#34;Home page hot questions&#34; /&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# Get the latest 1000 questions.
 var(func: eq(Type, &amp;quot;Question&amp;quot;), orderdesc: Timestamp, first: 1000) {
@@ -1817,7 +1817,7 @@ questions(id: var(score), orderdesc: var(score), first: 100) {
 
 &lt;p&gt;&lt;strong&gt;Top Tags&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/homepage-toptags.png&#34; alt=&#34;Top tags&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/homepage-toptags.png&#34; alt=&#34;Top tags&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;To get the most frequently used tags, we can run this query.&lt;/p&gt;
 
@@ -1842,7 +1842,7 @@ in application. But, even so, the amount of application code that needs to go in
 to generate the list of most popular tags is very little (run the query, cache
 the results).&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/question.png&#34; alt=&#34;Question&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/question.png&#34; alt=&#34;Question&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Now let&amp;rsquo;s see how to render the question page.&lt;/strong&gt; This is one complex page, with
 many components, touching almost all the tables in SQL. We&amp;rsquo;ll see how we can get
@@ -2120,13 +2120,13 @@ significantly cuts down on the backend code, and allows faster iteration.&lt;/p&
     
     <item>
       <title>Build a Realtime Recommendation Engine: Part 2</title>
-      <link>https://open.dgraph.io/post/recommendation2/</link>
+      <link>https://blog.dgraph.io/post/recommendation2/</link>
       <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://open.dgraph.io/post/recommendation2/</guid>
+      <guid>https://blog.dgraph.io/post/recommendation2/</guid>
       <description>
 
-&lt;p&gt;&lt;em&gt;This is part 2 of a two-part series on recommendations using Dgraph.  Check our &lt;a href=&#34;https://open.dgraph.io/post/recommendation/&#34;&gt;part 1 here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;This is part 2 of a two-part series on recommendations using Dgraph.  Check our &lt;a href=&#34;https://blog.dgraph.io/post/recommendation/&#34;&gt;part 1 here&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users.  There&amp;rsquo;s a whole field of theory and practice in recommendation engines that we touched on, talking about &lt;strong&gt;content-based&lt;/strong&gt; (based on properties of objects) and &lt;strong&gt;collaborative&lt;/strong&gt; (based on similar users) filtering techniques based on a chapter from Stanford MOOC &lt;a href=&#34;https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about&#34;&gt;Minning Massive Datasets&lt;/a&gt;.&lt;/p&gt;
 
@@ -2148,7 +2148,7 @@ MathJax.Hub.Config({
 &lt;h2 id=&#34;collaborative-filtering&#34;&gt;Collaborative filtering&lt;/h2&gt;
 
 &lt;p&gt;Content-based filtering measures the similarity of objects based on their properties.
-&lt;strong&gt;Rather than trying to find similar items, collaborative filtering works by finding similar users and then recommending items that similar users have rated highly.&lt;/strong&gt;  In the movie example from &lt;a href=&#34;https://open.dgraph.io/post/recommendation/&#34;&gt;part 1&lt;/a&gt;, for a given user we first find the set of users that are similar, find movies those users rated highly and recommend some that our user hasn&amp;rsquo;t seen.&lt;/p&gt;
+&lt;strong&gt;Rather than trying to find similar items, collaborative filtering works by finding similar users and then recommending items that similar users have rated highly.&lt;/strong&gt;  In the movie example from &lt;a href=&#34;https://blog.dgraph.io/post/recommendation/&#34;&gt;part 1&lt;/a&gt;, for a given user we first find the set of users that are similar, find movies those users rated highly and recommend some that our user hasn&amp;rsquo;t seen.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Let&amp;rsquo;s say we are trying to recommend movies to Bob.&lt;/em&gt; If Bob and Alice have rated a movie highly and they
 do this repeatedly for many movies, they are similar. The more movies they have in common this way,
@@ -2163,7 +2163,7 @@ these users have rated highly. We then remove the movies that Bob has seen, leav
 
 &lt;!--$$\frac{\sum{R_{U_i}(M_{(u_i,u_j)})} + \sum{R_{U_j}(M_{(u_i,u_j)})}}{|M_{(u_i,u_j)}|}$$--&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/collab_diff1.png&#34; alt=&#34;collaborative distance 1&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/collab_diff1.png&#34; alt=&#34;collaborative distance 1&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is how the query would look in Dgraph.&lt;/p&gt;
 
@@ -2539,7 +2539,7 @@ recommended movies cheaply by using this stored similarity score between users.&
 the users. Now, when we want to do recommendation, we can directly get the top similar users and then just have to do the 2nd part
 of the query which is getting the average ratings for the movies that these similar users rated.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/newedge.png&#34; alt=&#34;Edge creation with score&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/newedge.png&#34; alt=&#34;Edge creation with score&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that this would require some extra code in the application which creates these edges when an
 update happens but can make the recommendation query highly performant even for extremely large
@@ -2563,7 +2563,7 @@ collaborative filtering we saw in the last section.&lt;/p&gt;
 
 &lt;p&gt;First, let&amp;rsquo;s take a look at the schema for a part of the data that is of interest to us.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/soSchema.png&#34; alt=&#34;Stack Overflow schema&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/soSchema.png&#34; alt=&#34;Stack Overflow schema&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The query to do collaborative filtering on this dataset is as follows:&lt;/p&gt;
 
@@ -2746,10 +2746,10 @@ their recommendations using these edges directly.&lt;/p&gt;
     
     <item>
       <title>Build a Realtime Recommendation Engine: Part 1</title>
-      <link>https://open.dgraph.io/post/recommendation/</link>
+      <link>https://blog.dgraph.io/post/recommendation/</link>
       <pubDate>Thu, 29 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://open.dgraph.io/post/recommendation/</guid>
+      <guid>https://blog.dgraph.io/post/recommendation/</guid>
       <description>
 
 &lt;h2 id=&#34;preface&#34;&gt;Preface&lt;/h2&gt;
@@ -2910,7 +2910,7 @@ propagated, such that the value inside the block marked C is the sum of values f
 
 &lt;p&gt;Here&amp;rsquo;s how that propagation looks in a graph.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/vartransform.png&#34; alt=&#34;Variable propagation&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/vartransform.png&#34; alt=&#34;Variable propagation&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In short, the value that a node receives is equal to the sum of values of all its parent nodes.&lt;/strong&gt;
 This propagation is useful when we want to normalize a sum across users, find the number of paths
@@ -2926,7 +2926,7 @@ Dgraph.&lt;/p&gt;
 
 &lt;p&gt;It&amp;rsquo;s about users and movies and user&amp;rsquo;s ratings of movies.  So a user (a node in the graph) has a name and a gender and a &lt;code&gt;rated&lt;/code&gt; edge to a movie.  The &lt;code&gt;rated&lt;/code&gt; edge has a facet &lt;code&gt;rating&lt;/code&gt; that tells us the users numeric 0&amp;ndash;5 rating of the movie.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/movilensschema.png&#34; alt=&#34;Movielens schema&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/movilensschema.png&#34; alt=&#34;Movielens schema&#34; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;content-based-filtering&#34;&gt;Content-based filtering&lt;/h2&gt;
 
@@ -3107,7 +3107,7 @@ Dgraph.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In terms of variable propagation, the important part is the calculation of average rating.&lt;/strong&gt;  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/facetsumming.png&#34; alt=&#34;Facet summing&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/facetsumming.png&#34; alt=&#34;Facet summing&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Running the query we get the following results.&lt;/p&gt;
 
@@ -3171,7 +3171,7 @@ Dgraph.&lt;/p&gt;
 
 &lt;p&gt;the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/cosine_diff.png&#34; alt=&#34;cosine difference&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/cosine_diff.png&#34; alt=&#34;cosine difference&#34; /&gt;&lt;/p&gt;
 
 &lt;!--
 what&#39;s wrong with this???
@@ -3181,7 +3181,7 @@ If I paste it into http://www.hostmath.com/ I get what I want
 
 &lt;p&gt;In our case the $x$&amp;rsquo;s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/cosine_diff_movies.png&#34; alt=&#34;cosine difference&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/cosine_diff_movies.png&#34; alt=&#34;cosine difference&#34; /&gt;&lt;/p&gt;
 
 &lt;!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} --&gt;
 
@@ -3344,10 +3344,10 @@ distance. That&amp;rsquo;s three content-based filtering distance metrics and qu
     
     <item>
       <title>go get github.com/dgraph-io/dgraph/...</title>
-      <link>https://open.dgraph.io/post/goget/</link>
+      <link>https://blog.dgraph.io/post/goget/</link>
       <pubDate>Mon, 29 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://open.dgraph.io/post/goget/</guid>
+      <guid>https://blog.dgraph.io/post/goget/</guid>
       <description>&lt;p&gt;Thank you Go community for all the love that you showered on Badger. Within 8 hours of announcing
 &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;, the blog post &lt;a href=&#34;https://news.ycombinator.com/item?id=14335931&#34;&gt;made it to the first
 page&lt;/a&gt; of Hacker News. And within three days, the
@@ -3389,7 +3389,7 @@ performance. No hard language boundaries, and that&amp;rsquo;s powerful.&lt;/p&g
 &lt;p&gt;I adore changes which delete more code than they add, while also gaining simplicity and functionality. This change is one of those.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/remove-badger-pr.png&#34; alt=&#34;Dgraph PR to replace Badger&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/remove-badger-pr.png&#34; alt=&#34;Dgraph PR to replace Badger&#34; /&gt;
 &lt;a href=&#34;https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5&#34;&gt;&lt;img src=&#34;https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5.png&#34; alt=&#34;asciicast&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Happy go getting!&lt;/strong&gt; It needs a bit more work before Dgraph can be embedded in your Go code, but
@@ -3438,10 +3438,10 @@ that is coming soon to master. It would be part of the v0.8 release.&lt;/p&gt;
     
     <item>
       <title>Introducing Badger: A fast key-value store written natively in Go</title>
-      <link>https://open.dgraph.io/post/badger/</link>
+      <link>https://blog.dgraph.io/post/badger/</link>
       <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
       
-      <guid>https://open.dgraph.io/post/badger/</guid>
+      <guid>https://blog.dgraph.io/post/badger/</guid>
       <description>
 
 &lt;p&gt;We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
@@ -3567,7 +3567,7 @@ paper estimates this to be 336 for a 1-KB key-value pair.&lt;/p&gt;
 ones. Thus, running compactions to continually sort keys and enable efficient lookups is an
 excellent trade-off.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://open.dgraph.io/images/nvme-ssd-960pro.jpg&#34; alt=&#34;NVMe SSD Samsung 960 pro&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://blog.dgraph.io/images/nvme-ssd-960pro.jpg&#34; alt=&#34;NVMe SSD Samsung 960 pro&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;However, SSDs are fundamentally different from HDDs. The difference between their sequential and
 random reads are not nearly as large as HDDs. In fact, top of the line SSDs like &lt;a href=&#34;http://www.anandtech.com/show/10754/samsung-960-pro-ssd-review&#34;&gt;Samsung 960
@@ -3768,7 +3768,7 @@ here&lt;/a&gt;.&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;All the 4 measurements are visualized in the following charts.
-&lt;img src=&#34;https://open.dgraph.io/images/badger-benchmarks.png&#34; alt=&#34;[Badger](https://github.com/dgraph-io/badger) benchmarks&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://blog.dgraph.io/images/badger-benchmarks.png&#34; alt=&#34;[Badger](https://github.com/dgraph-io/badger) benchmarks&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Data loading performance:&lt;/strong&gt; &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt;&amp;rsquo;s key-value separation design shows huge performance gains as
 value sizes increase. For value sizes of 1KB and 16KB, &lt;a href=&#34;https://github.com/dgraph-io/badger&#34;&gt;Badger&lt;/a&gt; achieves 4.5x and 11.7x more
@@ -3899,10 +3899,10 @@ speed of 265,00 kmph relative to Earth.&lt;/em&gt;&lt;/p&gt;
     
     <item>
       <title>String matching in Dgraph v0.7.5</title>
-      <link>https://open.dgraph.io/post/string-matching/</link>
+      <link>https://blog.dgraph.io/post/string-matching/</link>
       <pubDate>Mon, 10 Apr 2017 12:10:00 +0200</pubDate>
       
-      <guid>https://open.dgraph.io/post/string-matching/</guid>
+      <guid>https://blog.dgraph.io/post/string-matching/</guid>
       <description>&lt;p&gt;The recent release of Dgraph is packed with new features and improvements.
 Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
 All of these changes make Dgraph an excellent tool for working with multilingual applications.&lt;/p&gt;
@@ -4139,7 +4139,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -4309,7 +4309,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -4483,7 +4483,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -4655,7 +4655,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -4823,7 +4823,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -4981,7 +4981,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -5160,7 +5160,7 @@ public class DgraphMain {
             &lt;/div&gt;
           &lt;/div&gt;
 
-          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://open.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
+          &lt;div class=&#34;runnable-content runnable-output&#34; style=&#34;background: url(&#39;https://blog.dgraph.io/images/dgraph-black.png&#39;); background-repeat: no-repeat; background-position: center; background-color: #fff;&#34;&gt;
             &lt;pre class=&#34;output-container empty&#34;&gt;&lt;code class=&#34;output&#34; tabindex=&#34;-1&#34;&gt;&lt;/code&gt;&lt;/pre&gt;
           &lt;/div&gt;
 
@@ -5240,10 +5240,10 @@ And to get the most precise results of complicated text searches, regular expres
     
     <item>
       <title>Building a long lasting company around open-source</title>
-      <link>https://open.dgraph.io/post/licensing/</link>
+      <link>https://blog.dgraph.io/post/licensing/</link>
       <pubDate>Sun, 26 Mar 2017 07:30:00 +1100</pubDate>
       
-      <guid>https://open.dgraph.io/post/licensing/</guid>
+      <guid>https://blog.dgraph.io/post/licensing/</guid>
       <description>
 
 &lt;p&gt;Dgraph started with the idea that every startup should be able to have the same level of technology as run by big giants. We designed Dgraph from ground-up to allow data sharding, horizontal scalability, consistent replication, and a fast and distributed architecture.&lt;/p&gt;
@@ -5349,10 +5349,10 @@ So, after talking to other open source vendors and top open source lawyers, we c
     
     <item>
       <title>Neo4j vs Dgraph - The numbers speak for themselves</title>
-      <link>https://open.dgraph.io/post/benchmark-neo4j/</link>
+      <link>https://blog.dgraph.io/post/benchmark-neo4j/</link>
       <pubDate>Mon, 23 Jan 2017 18:07:44 +1100</pubDate>
       
-      <guid>https://open.dgraph.io/post/benchmark-neo4j/</guid>
+      <guid>https://blog.dgraph.io/post/benchmark-neo4j/</guid>
       <description>&lt;p&gt;As &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;. We have divided this post into five parts:&lt;/p&gt;
 
@@ -5513,20 +5513,20 @@ go test -v -bench=Neo -benchtime=10s .
 &lt;h4 id=&#34;read-only-benchmarks&#34;&gt;Read-only benchmarks&lt;/h4&gt;
 
 &lt;p&gt;&lt;em&gt;Query caching turned off for Neo4j&lt;/em&gt;
-&lt;img src=&#34;https://open.dgraph.io/images/read-no-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://blog.dgraph.io/images/read-no-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Query caching on for Neo4j&lt;/em&gt;
-&lt;img src=&#34;https://open.dgraph.io/images/read-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://blog.dgraph.io/images/read-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Queries to Dgraph took the same amount of time, as expected in the both cases. But, Neo4j query latency was at least &lt;em&gt;halved&lt;/em&gt;. That&amp;rsquo;s not surprising given all the subsequent runs were using query cache. &lt;strong&gt;Thence, Neo4j latency was better than Dgraph with query caching turned on, and worse when off.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h4 id=&#34;read-write-benchmarks&#34;&gt;Read-write benchmarks&lt;/h4&gt;
 
 &lt;p&gt;&lt;em&gt;Query caching turned off for Neo4j&lt;/em&gt;
-&lt;img src=&#34;https://open.dgraph.io/images/read-write-no-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://blog.dgraph.io/images/read-write-no-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Query caching on for Neo4j&lt;/em&gt;
-&lt;img src=&#34;https://open.dgraph.io/images/read-write-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
+&lt;img src=&#34;https://blog.dgraph.io/images/read-write-cache.png&#34; alt=&#34;Dgraph vs Neo4j Read-write&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;For intertwined reads and writes, &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  is at least 3x to 6x faster.&lt;/strong&gt;&lt;/p&gt;
@@ -5755,10 +5755,10 @@ go test -v -bench=Neo -benchtime=10s .
     
     <item>
       <title>Releasing Dgraph v0.7.1</title>
-      <link>https://open.dgraph.io/post/v0.7-release/</link>
+      <link>https://blog.dgraph.io/post/v0.7-release/</link>
       <pubDate>Thu, 05 Jan 2017 20:00:00 +1100</pubDate>
       
-      <guid>https://open.dgraph.io/post/v0.7-release/</guid>
+      <guid>https://blog.dgraph.io/post/v0.7-release/</guid>
       <description>&lt;p&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  team is super excited to present v0.7.1 of &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
 . This version is the biggest step we&amp;rsquo;ve taken towards our production aim of v1.0.
@@ -6010,10 +6010,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     
     <item>
       <title>Dgraph hugo blog theme</title>
-      <link>https://open.dgraph.io/post/hugo/</link>
+      <link>https://blog.dgraph.io/post/hugo/</link>
       <pubDate>Thu, 06 Oct 2016 16:56:08 +0530</pubDate>
       
-      <guid>https://open.dgraph.io/post/hugo/</guid>
+      <guid>https://blog.dgraph.io/post/hugo/</guid>
       <description>&lt;p&gt;We at &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  love &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; and use it for our blog. It&amp;rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.&lt;/p&gt;
 
@@ -6060,10 +6060,10 @@ Similarly, to generate reverses for a uid predicate, you can specify the &lt;cod
     
     <item>
       <title>Golang: Run multiple services on one port</title>
-      <link>https://open.dgraph.io/post/cmux/</link>
+      <link>https://blog.dgraph.io/post/cmux/</link>
       <pubDate>Tue, 04 Oct 2016 11:59:57 +0530</pubDate>
       
-      <guid>https://open.dgraph.io/post/cmux/</guid>
+      <guid>https://blog.dgraph.io/post/cmux/</guid>
       <description>&lt;p&gt;Ever faced the problem of having multiple ports in an application, one for each service?
 In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.
 &lt;/p&gt;
