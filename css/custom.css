@@ -18,6 +18,17 @@ body {
     max-width: 100%;
 }
 
+.article-content img {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  max-width: 100%;
+}
+
+.article-content h2 {
+  font-size: 2rem;
+}
+
 .opening__image {
     max-width: 80%;
     display: block;
@@ -170,6 +181,7 @@ pre code {
 
 code {
   font-weight: 600;
+  font-size: 0.75rem;
 }
 
 /* override hljs background color which conflicts with our style */
