@@ -64,8 +64,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-08-18%2010%3a40%3a34.568776157%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-08-18%2010%3a40%3a34.568798527%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-08-18%2012%3a00%3a47.193172057%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-08-18%2012%3a00%3a47.19325279%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -80,8 +80,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-08-18%2010%3a40%3a34.568815208%20%2b1000%20AEST">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-08-18%2010%3a40%3a34.568827635%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-08-18%2012%3a00%3a47.193279365%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-08-18%2012%3a00%3a47.193299195%20%2b1000%20AEST">
   </head>
 
 
@@ -798,7 +798,13 @@ so that it will aggressively trigger them, even for small data writes.</p>
 <p>When ALICE was first run over <a href="https://github.com/dgraph-io/badger">Badger</a>,
 the output indicated quite a few problems:</p>
 
+<p><em>Triggering value log garbage collection:</em></p>
+
 <p><img src="/images/alice_before_badger.png" alt="" /></p>
+
+<p><em>Triggering LSM tree compaction:</em></p>
+
+<p><img src="/images/alice_lsm_compaction_before.png" alt="" /></p>
 
 <p>The long list of problems from the output only corresponds to two different
 vulnerabilities, which are discussed in detail in the next sections.</p>
@@ -952,7 +958,13 @@ file is always persisted completely before the n+1th is written.</p>
 <p>After we fixed the problems that ALICE reported, running ALICE again shows no
 crash vulnerabilities for <a href="https://github.com/dgraph-io/badger">Badger</a>. Awesome!</p>
 
+<p><em>Triggering value log garbage collection:</em></p>
+
 <p><img src="/images/alice_after_badger.png" alt="" /></p>
+
+<p><em>Triggering LSM tree compaction:</em></p>
+
+<p><img src="/images/alice_lsm_compaction_after.png" alt="" /></p>
 
 <p><strong>Here at Dgraph Labs, we really care about making our products as robust as
 possible,</strong> even under unlikely and rare scenarios such as system crashes.
@@ -1182,7 +1194,7 @@ Jupiter</a></em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-08-18%2010%3a40%3a34.570033648%20%2b1000%20AEST"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-08-18%2012%3a00%3a47.194540534%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
