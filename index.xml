@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 08 Aug 2017 17:23:51 +1000</lastBuildDate>
+    <lastBuildDate>Mon, 14 Aug 2017 13:21:25 +1000</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Making Badger Crash Resilient with ALICE</title>
+      <link>https://blog.dgraph.io/post/alice/</link>
+      <pubDate>Mon, 14 Aug 2017 13:21:25 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/alice/</guid>
+      <description>Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&amp;rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&amp;rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</description>
+    </item>
     
     <item>
       <title>Scale the shit out of this!</title>

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/alice/</loc>
+    <lastmod>2017-08-14T13:21:25+10:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/scaling-dgraph/</loc>
     <lastmod>2017-08-08T17:23:51+10:00</lastmod>
   </url>
@@ -119,13 +124,13 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2017-08-08T17:23:51+10:00</lastmod>
+    <lastmod>2017-08-14T13:21:25+10:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2017-08-08T17:23:51+10:00</lastmod>
+    <lastmod>2017-08-14T13:21:25+10:00</lastmod>
     <priority>0</priority>
   </url>
   
