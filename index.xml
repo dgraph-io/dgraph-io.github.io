@@ -105,12 +105,12 @@ All this goes to show how much people enjoy Go native libraries.</description>
     </item>
     
     <item>
-      <title>Introducing Badger: A fast key-value store written natively in Go</title>
+      <title>Introducing Badger: A fast key-value store written purely in Go</title>
       <link>https://blog.dgraph.io/post/badger/</link>
       <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger/</guid>
-      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, natively in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
+      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
 We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</description>
     </item>
     

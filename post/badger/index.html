@@ -35,8 +35,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Introducing Badger: A fast key-value store written natively in Go - Dgraph Blog</title>
-    <meta property='og:title' content="Introducing Badger: A fast key-value store written natively in Go - Dgraph Blog">
+    <title>Introducing Badger: A fast key-value store written purely in Go - Dgraph Blog</title>
+    <meta property='og:title' content="Introducing Badger: A fast key-value store written purely in Go - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
@@ -52,8 +52,8 @@
       
     
 
-    <meta name="twitter:title" content="Introducing Badger: A fast key-value store written natively in Go"/>
-    <meta name="twitter:description" content="We have built an efficient and persistent log structured merge (LSM) tree based key-value store, natively in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
+    <meta name="twitter:title" content="Introducing Badger: A fast key-value store written purely in Go"/>
+    <meta name="twitter:description" content="We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
 We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
@@ -65,8 +65,8 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-08-18%2013%3a27%3a47.461895046%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-08-18%2013%3a27%3a47.461928511%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-08-18%2018%3a57%3a42.531529342%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-08-18%2018%3a57%3a42.531545307%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -81,8 +81,8 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-08-18%2013%3a27%3a47.461959146%20%2b1000%20AEST">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-08-18%2013%3a27%3a47.461973124%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-08-18%2018%3a57%3a42.531559067%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-08-18%2018%3a57%3a42.531571512%20%2b1000%20AEST">
   </head>
 
 
@@ -388,7 +388,7 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Introducing%20Badger%3a%20A%20fast%20key-value%20store%20written%20natively%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Introducing%20Badger%3a%20A%20fast%20key-value%20store%20written%20purely%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -396,7 +396,7 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Introducing Badger: A fast key-value store written natively in Go</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Introducing Badger: A fast key-value store written purely in Go</h1>
           </header>
         </div>
       </div>
@@ -412,7 +412,7 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
           <div class="article-content">
 
 <p>We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
-natively in Go language.  It is based upon <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WiscKey paper included in USENIX FAST
+purely in Go language.  It is based upon <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WiscKey paper included in USENIX FAST
 2016</a>. This design is
 highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both
 the sequential and the random performance of SSDs.</p>
@@ -560,7 +560,7 @@ utilizing its vastly superior random read performance.</p>
 <p>These are the guiding principles that decide the design, what goes in and what doesn&rsquo;t in Badger.</p>
 
 <ul>
-<li>Write it natively in Go language.</li>
+<li>Write it purely in Go language.</li>
 <li>Use the latest research to build the fastest key-value store.</li>
 <li>Keep it simple, stupid.</li>
 <li>SSD-centric design.</li>
@@ -1001,7 +1001,7 @@ speed of 265,00 kmph relative to Earth.</em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-08-18%2013%3a27%3a47.462444226%20%2b1000%20AEST"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-08-18%2018%3a57%3a42.531880212%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
