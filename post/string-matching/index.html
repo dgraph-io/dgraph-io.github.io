@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.25.1" />
+      <meta name="generator" content="Hugo 0.19" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -68,8 +68,8 @@ All of these changes make Dgraph an excellent tool for working with multilingual
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-08-18%2018%3a57%3a42.532074053%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-08-18%2018%3a57%3a42.532090681%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-08%2016%3a51%3a25.843576566%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-08%2016%3a51%3a25.843605523%20%2b1000%20AEST" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -84,8 +84,8 @@ All of these changes make Dgraph an excellent tool for working with multilingual
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-08-18%2018%3a57%3a42.532104339%20%2b1000%20AEST">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-08-18%2018%3a57%3a42.53211675%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-08%2016%3a51%3a25.843630663%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-08%2016%3a51%3a25.843653494%20%2b1000%20AEST">
   </head>
 
 
@@ -1533,15 +1533,15 @@ After FTS/NLP processing, there are no movies that match the query.</p>
 
 
 
-<div class="runnable" data-checksum="8734f0b7c65b1d74a521a67d4a77522c" data-initial="{
-  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+<div class="runnable" data-checksum="23ed524490f96aec36c54a4a839190a0" data-initial="{
+  movie(func:regexp(name@en, /^[a-zA-z]*[^Kk ]?[Nn]ight/)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
   }
 }
 " data-current="{
-  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+  movie(func:regexp(name@en, /^[a-zA-z]*[^Kk ]?[Nn]ight/)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
@@ -1586,7 +1586,7 @@ After FTS/NLP processing, there are no movies that match the query.</p>
           <div class="runnable-content runnable-code">
             <div class="runnable-tab-content active" data-tab="query">
               <pre><code class="no-copy"><span class="query-content">{
-  movie(func:regexp(name, "^[a-zA-z]*[^Kk ]?[Nn]ight")) @filter(gt(count(genre), 1)) {
+  movie(func:regexp(name@en, /^[a-zA-z]*[^Kk ]?[Nn]ight/)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
@@ -1598,7 +1598,7 @@ After FTS/NLP processing, there are no movies that match the query.</p>
 
             <div class="runnable-tab-content" data-tab="edit">
               <textarea class="query-content-editable">{
-  movie(func:regexp(name, &#34;^[a-zA-z]*[^Kk ]?[Nn]ight&#34;)) @filter(gt(count(genre), 1)) {
+  movie(func:regexp(name@en, /^[a-zA-z]*[^Kk ]?[Nn]ight/)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
@@ -1610,7 +1610,7 @@ After FTS/NLP processing, there are no movies that match the query.</p>
             <div class="runnable-tab-content" data-tab="curl">
               <pre><code class="no-copy" tabindex="-1">curl localhost:8080/query -XPOST -d '
 <span class="query-content">{
-  movie(func:regexp(name, "^[a-zA-z]*[^Kk ]?[Nn]ight")) @filter(gt(count(genre), 1)) {
+  movie(func:regexp(name@en, /^[a-zA-z]*[^Kk ]?[Nn]ight/)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
@@ -1628,7 +1628,7 @@ public class DgraphMain {
   public static void main(final String[] args) {
     final DgraphClient dgraphClient = GrpcDgraphClient.newInstance("localhost", 8080);
     final DgraphResult result = dgraphClient.query("<span class="query-content java">{
-  movie(func:regexp(name, "^[a-zA-z]*[^Kk ]?[Nn]ight")) @filter(gt(count(genre), 1)) {
+  movie(func:regexp(name@en, /^[a-zA-z]*[^Kk ]?[Nn]ight/)) @filter(gt(count(genre), 1)) {
 	name@en
 	name@de
 	name@it
@@ -1886,7 +1886,7 @@ Programming is his greatest passion but he also likes trekking, skiing, cross co
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-08-18%2018%3a57%3a42.532463957%20%2b1000%20AEST"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-08%2016%3a51%3a25.844333972%20%2b1000%20AEST"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
