@@ -19,14 +19,14 @@ body {
 }
 
 .article-content img {
-  margin-left: auto;
-  margin-right: auto;
-  width: auto;
-  max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    max-width: 100%;
 }
 
 .article-content h2 {
-  font-size: 2rem;
+    font-size: 2rem;
 }
 
 .opening__image {
@@ -64,7 +64,7 @@ h3.article__titile {
 }
 
 .engage table thead th {
-    padding: .3em .5em;
+    padding: 0.3em 0.5em;
 }
 
 #page-header iframe {
@@ -75,7 +75,7 @@ h3.article__titile {
 
 @media screen and (max-width: 989px) {
     #page-header iframe {
-        top: 20px
+        top: 20px;
     }
 }
 
@@ -102,7 +102,7 @@ h3.article__titile {
 }
 
 .page-logo {
-    padding-top: 0
+    padding-top: 0;
 }
 
 .page-nav__list {
@@ -129,13 +129,17 @@ ul.page-nav__list {
 }
 
 .article-content a {
-  text-decoration: none;
-  color: #333333;
-  border-bottom: 2px solid #fac5a8;
+    text-decoration: none;
+    color: #333333;
+    border-bottom: 2px solid #fac5a8;
 }
 
-.article-content p{
+.article-content p {
     line-height: 1.6;
+}
+
+.article-content strong {
+    color: maroon;
 }
 
 table tbody td {
@@ -176,15 +180,15 @@ table tbody td {
 /* make code oneliners bold */
 
 pre code {
-  font-weight: 400;
+    font-weight: 400;
 }
 
 code {
-  font-weight: 600;
-  font-size: 0.75rem;
+    font-weight: 600;
+    font-size: 0.75rem;
 }
 
 /* override hljs background color which conflicts with our style */
 .hljs {
-  background-color: inherit;
+    background-color: inherit;
 }

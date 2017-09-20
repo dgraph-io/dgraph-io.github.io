@@ -35,32 +35,25 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Custom encoding: Go implementation in net/rpc vs grpc and why we switched - Dgraph Blog</title>
-    <meta property='og:title' content="Custom encoding: Go implementation in net/rpc vs grpc and why we switched - Dgraph Blog">
+    <title>Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go - Dgraph Blog</title>
+    <meta property='og:title' content="Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/rpc-vs-grpc/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/badger-lmdb-boltdb/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/martian-encoding.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/pia21778.png">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/martian-encoding.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/pia21778.png"/>
       
     
 
-    <meta name="twitter:title" content="Custom encoding: Go implementation in net/rpc vs grpc and why we switched"/>
-    <meta name="twitter:description" content="At Dgraph
-, we aim to build a low latency, distributed graph database.
-This means our data is distributed among nodes in the cluster.
-Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called Flatbuffers.
-
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer."/>
+    <meta name="twitter:title" content="Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go"/>
+    <meta name="twitter:description" content="If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -71,8 +64,8 @@ To keep our latency of communication low, we use a new form of serialization lib
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-20%2023%3a18%3a21.840750162%20%2b1000%20AEST%20m%3d%2b0.369546496" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-20%2023%3a18%3a21.840787582%20%2b1000%20AEST%20m%3d%2b0.369583881" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-20%2023%3a18%3a21.824870413%20%2b1000%20AEST%20m%3d%2b0.353666742" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-20%2023%3a18%3a21.824922085%20%2b1000%20AEST%20m%3d%2b0.353718392" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -87,8 +80,8 @@ To keep our latency of communication low, we use a new form of serialization lib
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-20%2023%3a18%3a21.840821491%20%2b1000%20AEST%20m%3d%2b0.369617790">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-20%2023%3a18%3a21.840855075%20%2b1000%20AEST%20m%3d%2b0.369651374">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-20%2023%3a18%3a21.824961073%20%2b1000%20AEST%20m%3d%2b0.353757377">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-20%2023%3a18%3a21.824994223%20%2b1000%20AEST%20m%3d%2b0.353790522">
   </head>
 
 
@@ -385,16 +378,16 @@ To keep our latency of communication low, we use a new form of serialization lib
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Sat, Jun 25, 2016
+                  Wed, Sep 20, 2017
                  by
-                Manish Rai Jain
+                Deepak Jois
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Custom%20encoding%3a%20Go%20implementation%20in%20net%2frpc%20vs%20grpc%20and%20why%20we%20switched&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frpc-vs-grpc%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Badger%20vs%20LMDB%20vs%20BoltDB%3a%20Benchmarking%20key-value%20databases%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-lmdb-boltdb%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -402,7 +395,7 @@ To keep our latency of communication low, we use a new form of serialization lib
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Custom encoding: Go implementation in net/rpc vs grpc and why we switched</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h1>
           </header>
         </div>
       </div>
@@ -414,556 +407,421 @@ To keep our latency of communication low, we use a new form of serialization lib
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://blog.dgraph.io/images/martian-encoding.jpg">
-          <div class="article-content"><p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, we aim to build a low latency, distributed graph database.
-This means our data is distributed among nodes in the cluster.
-Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
+          <img class="opening__image" src="https://blog.dgraph.io/images/pia21778.png">
+          <div class="article-content">
 
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer.</p>
+<p>If you have been following us, you may know that we <a href="https://blog.dgraph.io/post/badger/">released
+Badger</a> a few months ago. Badger is a simple, efficient, and
+persistent key-value store, written in <a href="http://n-gate.com/hackernews/2017/05/14/"><em>a hipster language</em></a>. Even though
+it is not at v1.0 yet, we have already received a great response from the
+community. As of writing, Badger has 2350 stars <a href="https://github.com/dgraph-io/badger">on Github</a>, and
+there have been
+<a href="https://www.reddit.com/r/golang/comments/6b57aa/badger_a_faster_kv_store/">lots</a>
+<a href="https://www.reddit.com/r/golang/comments/6jm2db/badger_fastest_keyvalue_store_in_go/">of</a> <a href="https://news.ycombinator.com/item?id=14335931">discussions</a> online
+since the release announcement.</p>
 
-<p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
+<p>Our <a href="https://blog.dgraph.io/post/badger/">launch post</a> contained benchmarks evaluating Badger against <a href="http://rocksdb.org/">RocksDB</a>.
+RocksDB was the store we were using before we decided to replace it and write
+our own, so it made sense to benchmark against it. However, a lot of
+people <a href="https://twitter.com/tobym/status/882760757615759361">have</a> <a href="https://www.reddit.com/r/golang/comments/6jm2db/badger_fastest_keyvalue_store_in_go/">been</a> <a href="https://twitter.com/hyc_symas/status/884001285879599104">curious</a> about how Badger fares against stores like
+<a href="https://symas.com/lmdb/">LMDB</a> and <a href="https://github.com/boltdb/bolt">BoltDB</a>.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- responses can contain millions of entities and binary blob values.
-And the fact that Flatbuffers doesn&rsquo;t need to recreate the entire information in language specific data structures is very helpful for both memory and speed.</p>
+<p>In the launch post, we had mentioned that recent improvements
+to SSDs might make B+-trees a viable option for high write throughput.
+Also, the reason B+ trees are considered good for reads is that they have low read
+amplification. Badger&rsquo;s design also provides for a significantly lower read
+amplification compared to other LSM tree based key-value stores. So, we decided
+it was worth benchmarking Badger against these stores.</p>
 
-<p>Also, TCP is always going to be faster than HTTP, because HTTP is one extra layer on top of TCP.
-So, our goal was to implement communication using RPC over custom encoding utilizing Flatbuffers.</p>
+<p><em>It will be helpful if you have read our <a href="https://blog.dgraph.io/post/badger/">earlier post</a> from when
+we launched Badger, but it is not required.</em></p>
 
-<h1 id="go-net-rpc">Go net/rpc</h1>
+<p><strong>Based on our benchmarks,</strong> Badger is at least 1.7✕-22.3✕ faster than LMDB and BoltDB
+when doing random writes. Sorted range iteration is a bit slower when value
+size is small, but as value sizes increase, Badger is 4✕-111✕ times faster. On
+the flip side, Badger is currently up to 1.9✕ slower when doing random reads.</p>
 
-<p>Our first approach was to use Go language library <code>net/rpc</code> and implement custom encoding in it.</p>
-
-<p>Helper function to deal with writing and parsing header for the payload:</p>
-
-<pre><code>/*
- * Copyright 2016 DGraph Labs, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package conn
-
-import (
-    &quot;bytes&quot;
-    &quot;encoding/binary&quot;
-    &quot;fmt&quot;
-    &quot;io&quot;
-
-    &quot;github.com/dgraph-io/dgraph/x&quot;
-)
-
-type Query struct {
-    Data []byte
-}
-
-type Reply struct {
-    Data []byte
-}
-
-func writeHeader(rwc io.ReadWriteCloser, seq uint64,
-    method string, data []byte) error {
-
-    var bh bytes.Buffer
-    var rerr error
-
-    // In package x: func SetError(prev *error, n error)
-    x.SetError(&amp;rerr, binary.Write(&amp;bh, binary.LittleEndian, seq))
-    x.SetError(&amp;rerr, binary.Write(&amp;bh, binary.LittleEndian, int32(len(method))))
-    x.SetError(&amp;rerr, binary.Write(&amp;bh, binary.LittleEndian, int32(len(data))))
-    _, err := bh.Write([]byte(method))
-    x.SetError(&amp;rerr, err)
-    if rerr != nil {
-        return rerr
-    }
-    _, err = rwc.Write(bh.Bytes())
-    return err
-}
-
-func parseHeader(rwc io.ReadWriteCloser, seq *uint64,
-    method *string, plen *int32) error {
-
-    var err error
-    var sz int32
-    x.SetError(&amp;err, binary.Read(rwc, binary.LittleEndian, seq))
-    x.SetError(&amp;err, binary.Read(rwc, binary.LittleEndian, &amp;sz))
-    x.SetError(&amp;err, binary.Read(rwc, binary.LittleEndian, plen))
-    if err != nil {
-        return err
-    }
-
-    buf := make([]byte, sz)
-    n, err := rwc.Read(buf)
-    if err != nil {
-        return err
-    }
-    if n != int(sz) {
-        return fmt.Errorf(&quot;Expected: %v. Got: %v\n&quot;, sz, n)
-    }
-    *method = string(buf)
-    return nil
-}
-</code></pre>
-
-<p>Code at server to read requests and write responses:</p>
-
-<pre><code>/*
- * Copyright 2016 DGraph Labs, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package conn
-
-import (
-    &quot;io&quot;
-    &quot;log&quot;
-    &quot;net/rpc&quot;
-)
-
-type ServerCodec struct {
-    Rwc        io.ReadWriteCloser
-    payloadLen int32
-}
-
-func (c *ServerCodec) ReadRequestHeader(r *rpc.Request) error {
-    return parseHeader(c.Rwc, &amp;r.Seq, &amp;r.ServiceMethod, &amp;c.payloadLen)
-}
-
-func (c *ServerCodec) ReadRequestBody(data interface{}) error {
-    b := make([]byte, c.payloadLen)
-    _, err := io.ReadFull(c.Rwc, b)
-    if err != nil {
-        return err
-    }
-
-    if data == nil {
-        // If data is nil, discard this request.
-        return nil
-    }
-    query := data.(*Query)
-    query.Data = b
-    return nil
-}
-
-func (c *ServerCodec) WriteResponse(resp *rpc.Response,
-    data interface{}) error {
-
-    if len(resp.Error) &gt; 0 {
-        log.Fatal(&quot;Response has error: &quot; + resp.Error)
-    }
-    if data == nil {
-        log.Fatal(&quot;Worker write response data is nil&quot;)
-    }
-    reply, ok := data.(*Reply)
-    if !ok {
-        log.Fatal(&quot;Unable to convert to reply&quot;)
-    }
-
-    if err := writeHeader(c.Rwc, resp.Seq,
-        resp.ServiceMethod, reply.Data); err != nil {
-        return err
-    }
-
-    _, err := c.Rwc.Write(reply.Data)
-    return err
-}
-
-func (c *ServerCodec) Close() error {
-    return c.Rwc.Close()
-}
-</code></pre>
-
-<p>Similarly, the code at the client to read requests and write responses:</p>
-
-<pre><code>/*
- * Copyright 2016 DGraph Labs, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package conn
-
-import (
-    &quot;errors&quot;
-    &quot;fmt&quot;
-    &quot;io&quot;
-    &quot;log&quot;
-    &quot;net/rpc&quot;
-)
-
-type ClientCodec struct {
-    Rwc        io.ReadWriteCloser
-    payloadLen int32
-}
-
-func (c *ClientCodec) WriteRequest(r *rpc.Request, body interface{}) error {
-    if body == nil {
-        return fmt.Errorf(&quot;Nil request body from client.&quot;)
-    }
-
-    query := body.(*Query)
-    if err := writeHeader(c.Rwc, r.Seq, r.ServiceMethod, query.Data); err != nil {
-        return err
-    }
-    n, err := c.Rwc.Write(query.Data)
-    if n != len(query.Data) {
-        return errors.New(&quot;Unable to write payload.&quot;)
-    }
-    return err
-}
-
-func (c *ClientCodec) ReadResponseHeader(r *rpc.Response) error {
-    if len(r.Error) &gt; 0 {
-        log.Fatal(&quot;client got response error: &quot; + r.Error)
-    }
-    if err := parseHeader(c.Rwc, &amp;r.Seq,
-        &amp;r.ServiceMethod, &amp;c.payloadLen); err != nil {
-        return err
-    }
-    return nil
-}
-
-func (c *ClientCodec) ReadResponseBody(body interface{}) error {
-    buf := make([]byte, c.payloadLen)
-    _, err := io.ReadFull(c.Rwc, buf)
-    reply := body.(*Reply)
-    reply.Data = buf
-    return err
-}
-
-func (c *ClientCodec) Close() error {
-    return c.Rwc.Close()
-}
-</code></pre>
-
-<p>Also, each server should be able to send multiple requests in parallel.
-So, we built a connection pool to create, store and reuse multiple connections:</p>
-
-<pre><code>/*
- * Copyright 2016 DGraph Labs, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package conn
-
-import (
-    &quot;net&quot;
-    &quot;net/rpc&quot;
-    &quot;strings&quot;
-    &quot;time&quot;
-
-    &quot;github.com/dgraph-io/dgraph/x&quot;
-)
-
-var glog = x.Log(&quot;conn&quot;) // In package x: func Log(p string) *logrus.Entry
-
-type Pool struct {
-    clients chan *rpc.Client
-    Addr    string
-}
-
-func NewPool(addr string, maxCap int) *Pool {
-    p := new(Pool)
-    p.Addr = addr
-    p.clients = make(chan *rpc.Client, maxCap)
-    client, err := p.dialNew()
-    if err != nil {
-        glog.Fatal(err)
-        return nil
-    }
-    p.clients &lt;- client
-    return p
-}
-
-func (p *Pool) dialNew() (*rpc.Client, error) {
-    d := &amp;net.Dialer{
-        Timeout: 3 * time.Minute,
-    }
-    var nconn net.Conn
-    var err error
-    // This loop will retry for 10 minutes before giving up.
-    for i := 0; i &lt; 60; i++ {
-        nconn, err = d.Dial(&quot;tcp&quot;, p.Addr)
-        if err == nil {
-            break
-        }
-        if !strings.Contains(err.Error(), &quot;refused&quot;) {
-            break
-        }
-
-        glog.WithField(&quot;error&quot;, err).WithField(&quot;addr&quot;, p.Addr).
-            Info(&quot;Retrying connection...&quot;)
-        time.Sleep(10 * time.Second)
-    }
-    if err != nil {
-        return nil, err
-    }
-    cc := &amp;ClientCodec{
-        Rwc: nconn,
-    }
-    return rpc.NewClientWithCodec(cc), nil
-}
-
-func (p *Pool) Call(serviceMethod string, args interface{},
-    reply interface{}) error {
-
-    client, err := p.get()
-    if err != nil {
-        return err
-    }
-    if err = client.Call(serviceMethod, args, reply); err != nil {
-        return err
-    }
-
-    select {
-    case p.clients &lt;- client:
-        return nil
-    default:
-        return client.Close()
-    }
-}
-
-func (p *Pool) get() (*rpc.Client, error) {
-    select {
-    case client := &lt;-p.clients:
-        return client, nil
-    default:
-        return p.dialNew()
-    }
-}
-
-func (p *Pool) Close() error {
-    // We're not doing a clean exit here. A clean exit here would require
-    // synchronization, which seems unnecessary for now. But, we should
-    // add one if required later.
-    return nil
-}
-</code></pre>
-
-<p>This worked well.
-And both v0.2 and v0.3 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- were using this code for the nodes to communicate with each other.</p>
+<p>Thus, Badger&rsquo;s unique design significantly outperforms these stores on write
+throughput and iteration latency, while being only slightly slower when it comes
+to random reads.</p>
 
 <hr />
 
-<h1 id="the-switch">The Switch</h1>
+<h2 id="some-notes-about-architecture">Some notes about architecture</h2>
 
-<p><img src="/images/martian-receiving.jpg" alt="" /></p>
+<h3 id="lmdb-and-boltdb">LMDB and BoltDB</h3>
 
-<p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, we spend Fridays learning and improving.
-This means reading books, papers, articles, watching talks.
-And we came across a great talk by Jeff Dean of Google: <a href="https://discuss.dgraph.io/t/jeff-deans-talk-about-rapid-response-times/83">Rapid Response Times</a></p>
+<p>BoltDB started out as a port of LMDB to Go but has somewhat diverged since then.
+While LMDB heavily focuses on raw performance, Bolt has focused on simplicity
+and ease of use. However, they both share the same design, so describing LMDB should
+be sufficient.</p>
 
-<p>As I mentioned above, we care a lot about query latency.
-After watching it a couple of times from two different conferences, the prime learning I gathered from his talk was:</p>
+<p>LMDB provides a key-value stored using <a href="https://en.wikipedia.org/wiki/B%2B_tree">B+ trees</a>. It has ACID
+semantics and support for transactions. It does not do any background work and
+has a crash resilient design that uses <a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">MVCC</a> instead of locking. This means readers
+operate on an isolated snapshot of the database and don’t block. The codebase
+is quite small and portable, so LMDB runs across multiple platforms including
+Android, BSD, and Solaris. This <a href="https://www.youtube.com/watch?v=tEa5sAh-kVk&amp;t=10s">talk by Howard Chu</a> at Databaseology
+2015 goes into much more details about LMDB’s design.</p>
 
-<ul>
-<li>Send request to the first replica, telling it that it&rsquo;s going to send it to a second one.</li>
-<li>2 ms later, send the request to the second one, telling it that it&rsquo;s already sent to the first one.</li>
-<li>When one of them starts processing the request, it sends a cancellation request directly to its peer.</li>
-<li>If the peer hasn&rsquo;t started processing the request, it would just cancel the request.</li>
-<li>In a rare case, both of them process it and overall do twice the work.</li>
-<li>Overall, your latencies improve considerably due to this method.</li>
-</ul>
+<p>It is generally understood that B+ tree based stores are ideal for workloads
+which are read intensive.</p>
 
-<p><a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> has an impressive track record at Google. He&rsquo;s behind almost every distributed system in production at Google.
-So, when he gives a suggestion, you take it seriously.</p>
+<h3 id="badger">Badger</h3>
 
-<p>At v0.4, we&rsquo;re not doing replication yet. So, we can&rsquo;t send queries to multiple servers in parallel.
-However, that&rsquo;s how the system is going to look like a few minor releases down the lane.</p>
+<p>Badger belongs to a family of key-value stores that are characterized by a
+design that uses a <a href="https://en.wikipedia.org/wiki/Log-structured_merge-tree">log-structured merge-tree</a> (LSM tree). Popular
+stores in this category include <a href="https://github.com/google/leveldb">LevelDB</a> and <a href="http://rocksdb.org/">RocksDB</a>.</p>
 
-<p>So, we started thinking about how we could change our custom encoding based RPC implementation to achieve something like this.
-Around the same time, we were looking for a way to figure out slow rpcs on servers.
-<a href="https://forum.golangbridge.org/t/equivalent-of-rpcz-at-google/2609">Dave Cheney&rsquo;s response</a> pointed us to <a href="http://www.grpc.io/">grpc.io</a>.</p>
+<p>LSM tree based stores provide high write performance by sequentially writing
+key-value pairs in memory in the foreground, and then arranging them in
+multi-tiered levels on disk in the background. This approach is not without
+tradeoffs though. Values are written multiple times when arranging them in the
+tree (known as <em>write amplification</em>) and a single read might need to read
+multiple levels in the LSM tree before finding a value (known as <em>read
+amplification</em>).</p>
 
-<p>While I had considered Google built <code>grpc</code> in the past, I&rsquo;d rejected it understanding that it requires you to use Protocol Buffers; but we&rsquo;d already chosen to go with Flatbuffers.
-But when <a href="https://www.youtube.com/watch?v=sZx3oZt7LVg">Sameer Ajmani&rsquo;s talk</a> pointed that <code>grpc</code> is essentially a rewrite of Google internal Stubby from ground up, that got me to dig deeper.
-<code>grpc</code> came with <code>net/context</code> which could easily do what Jeff Dean had talked about.
-Also, it can help see live rpcs and track the slowest ones.</p>
+<p>Badger’s design is based on a paper titled <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">‘WiscKey: Separating Keys
+from Values in SSD-conscious Storage’</a> (referred to as the WISCKEY
+paper from now on). Here is an excerpt from the paper touching on the key
+design aspects:</p>
 
-<p>Overall, there was a lot of advantages to switching to <code>grpc</code>.
-But, we didn&rsquo;t want to give up the performance benefits of Flatbuffers.</p>
+<blockquote>
+<p><em>“To realize an SSD-optimized key-value store,
+WiscKey includes four critical ideas. First, WiscKey separates keys from
+values, keeping only keys in the LSM-tree and the values in a separate log
+file. Second, to deal with unsorted values (which necessitate random access
+during range queries), WiscKey uses the parallel random-read characteristic of
+SSD devices. Third, WiscKey utilizes unique crash-consistency and
+garbage collection techniques to efficiently manage the value log. Finally,
+WiscKey optimizes performance by removing the LSM-tree log without sacrificing
+consistency, thus reducing system-call overhead from small writes.”</em></p>
+</blockquote>
 
-<p>So, digging deeper, we found that <code>grpc</code> did support custom encoding. And we implemented it.
-This is the whole equivalent code implemented in <code>grpc</code>:</p>
+<p><strong>Badger&rsquo;s design reduces both the read and write amplification</strong> seen in other LSM
+tree based stores. Keys tend to be much smaller in size than values, so by
+separating keys from values and prefix-diffing the keys, Badger significantly
+reduces the size of LSM tree.
+Badger does not acquire any global mutex locks, allowing reads to happen
+concurrently while writes are going on, to achieve a high read-write throughput.
+It is very crash resilient, as we tested and explained in <a href="https://blog.dgraph.io/post/alice/">this blog
+post</a>.</p>
 
-<pre><code>/*
- * Copyright 2016 DGraph Labs, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package worker
-
-import (
-    &quot;log&quot;
-
-    &quot;google.golang.org/grpc&quot;
-)
-
-type PayloadCodec struct{}
-
-func (cb *PayloadCodec) Marshal(v interface{}) ([]byte, error) {
-    p, ok := v.(*Payload)
-    if !ok {
-        log.Fatalf(&quot;Invalid type of struct: %+v&quot;, v)
-    }
-    return p.Data, nil
-}
-
-func (cb *PayloadCodec) Unmarshal(data []byte, v interface{}) error {
-    p, ok := v.(*Payload)
-    if !ok {
-        log.Fatalf(&quot;Invalid type of struct: %+v&quot;, v)
-    }
-    p.Data = data
-    return nil
-}
-
-func (cb *PayloadCodec) String() string {
-    return &quot;worker.PayloadCodec&quot;
-}
-
-type Pool struct {
-    conns chan *grpc.ClientConn
-    Addr  string
-}
-
-func NewPool(addr string, maxCap int) *Pool {
-    p := new(Pool)
-    p.Addr = addr
-    p.conns = make(chan *grpc.ClientConn, maxCap)
-    conn, err := p.dialNew()
-    if err != nil {
-        glog.Fatal(err)
-        return nil
-    }
-    p.conns &lt;- conn
-    return p
-}
-
-func (p *Pool) dialNew() (*grpc.ClientConn, error) {
-    return grpc.Dial(p.Addr, grpc.WithInsecure(), grpc.WithInsecure(),
-        grpc.WithCodec(&amp;PayloadCodec{}))
-}
-
-func (p *Pool) Get() (*grpc.ClientConn, error) {
-    select {
-    case conn := &lt;-p.conns:
-        return conn, nil
-    default:
-        return p.dialNew()
-    }
-}
-
-func (p *Pool) Put(conn *grpc.ClientConn) error {
-    select {
-    case p.conns &lt;- conn:
-        return nil
-    default:
-        return conn.Close()
-    }
-}
-</code></pre>
-
-<p>And this is the proto file with Payload and <code>service</code>:</p>
-
-<pre><code>syntax = &quot;proto3&quot;;
-
-package worker;
-
-message Payload {
-    bytes Data = 1;
-}
-
-service Worker {
-    rpc Hello (Payload) returns (Payload) {}
-    rpc GetOrAssign (Payload) returns (Payload) {}
-    rpc Mutate (Payload) returns (Payload) {}
-    rpc ServeTask (Payload) returns (Payload) {}
-}
-</code></pre>
+<p>While there are differences in implementation, design details are available
+in <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">the paper</a>. It also contains a good overview of LSM trees and databases
+using them.</p>
 
 <hr />
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="benchmarking">Benchmarking</h2>
 
-<p>So, turns out, <code>grpc</code> not only does custom encoding, but it also leads to</p>
+<h3 id="setup">Setup</h3>
 
-<ul>
-<li>smaller code footprint.</li>
-<li><a href="https://godoc.org/golang.org/x/net/context">net/context</a>, which in turn allows client to cancel pending rpc requests to servers, among many other benefits.</li>
-<li><a href="https://godoc.org/golang.org/x/net/trace">net/trace</a>, which allows tracing of rpcs and long-lived objects.</li>
-</ul>
+<p>The benchmarking setup was identical to the one we used when benchmarking
+Badger <a href="https://blog.dgraph.io/post/badger/">against RocksDB</a>. Therefore the numbers should be
+comparable as well. We have made many optimizations, fixes, and improvements to
+Badger since, which should reflect in the numbers below.</p>
 
-<p>For more, read the <a href="https://github.com/dgraph-io/dgraph/commit/c4629b907702748694712637cbef1fb2c1f15d07">pull request which made this change</a> across our code base.
-Hope you find this useful.</p>
+<h3 id="methodology">Methodology</h3>
 
-<p>Also read:</p>
+<p>To benchmark the stores, we measured 4 things:</p>
 
 <ul>
-<li>Research paper on <a href="https://www.google.com.au/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=2&amp;cad=rja&amp;uact=8&amp;ved=0ahUKEwipuJ3rjsPNAhWEopQKHeeZBkMQFggiMAE&amp;url=http%3A%2F%2Fresearch.google.com%2Fpeople%2Fjeff%2FBerkeley-Latency-Mar2012.pdf&amp;usg=AFQjCNGnP9v7v9xN93MM6KPVJ7FcML6LvQ&amp;bvm=bv.125596728,d.dGo">Rapid Response Times</a> by Jeff Dean.</li>
-<li>Blog post on <a href="https://blog.golang.org/context">Go Concurrency Patterns: Context</a> by Sameer Ajmani.</li>
-<li>Slides on <a href="https://talks.golang.org/2014/gotham-context.slide#1">Cancellation, Context and Plumbing</a> by Sameer Ajmani.</li>
+<li><strong>Data loading performance</strong>:  Populating the database with a pre-specified
+number of keys.</li>
+<li><strong>Output Size</strong>: Size of the data set on disk.</li>
+<li><strong>Random Key Lookup Performance</strong>: Generating a random key and reading its
+value from the fully populated store (<em>this was done several million times
+using Go benchmarking tools, and an average was taken</em>).</li>
+<li><strong>Sorted Range Iteration Performance</strong>: Iterating through 2 million keys in
+sorted order.</li>
 </ul>
 
-<p><em>Images courtesy: <a href="http://www.foxmovies.com/movies/the-martian">The Martian</a></em></p>
+<p>We performed benchmarks on 3 different data sets, varying the number of keys
+and the value size (in bytes) associated with the keys.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Value Size (bytes)</th>
+<th>Num Keys (Each Key = 22 bytes)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Data Set 1</td>
+<td>128</td>
+<td>250M</td>
+</tr>
+
+<tr>
+<td>Data Set 2</td>
+<td>1024 (1kb)</td>
+<td>75M</td>
+</tr>
+
+<tr>
+<td>Data Set 3</td>
+<td>16384 (16kb)</td>
+<td>5M</td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="hardware">Hardware</h4>
+
+<p>All benchmarks were done on a dedicated AWS EC2 i3.large instance (us-east-2
+region) running Ubuntu Server 16.04 LTS (HVM) with 16GB RAM. This instance
+comes with a locally mounted 470GB SSD drive. The benchmarks were performed on
+data stored on the local SSD, which provides 100K IOPS with 4KB block sizes.
+Note that the root and home directories are mounted on EBS storage which has
+very low IOPS.</p>
+
+<p>We deliberately chose an instance with RAM size (16GB) lesser than the data set
+sizes. This provides a good setup for benchmarking and is representative of our
+use-cases for Badger, where data sizes are several times the size of RAM
+available.</p>
+
+<h4 id="software">Software</h4>
+
+<h5 id="lmdb"><strong>LMDB</strong></h5>
+
+<p>We used the <a href="https://github.com/bmatsuo/lmdb-go">lmdb-go</a> bindings to LMDB, which comes with its own embedded copy
+of the lmdb C source code. It is the most up to date binding available in Go
+and is <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb">well documented</a>.</p>
+
+<p><strong>Thanks to Howard Chu</strong> for looking at the benchmarking code for lmdb-go. He
+helped us <a href="https://github.com/dgraph-io/badger-bench/pull/5">tune the code</a>, and also <a href="https://github.com/bmatsuo/lmdb-go/issues/118#issuecomment-325449496">pointed
+out</a> that we should be using <code>lmdb.NoReadahead</code> flag
+in our benchmarks when data size is larger than RAM.</p>
+
+<p>We ran into a couple of issues with LMDB APIs:</p>
+
+<ul>
+<li><p>Several hours into populating data into LMDB for one of our benchmarks, we
+suddenly saw a crash. After investigation, we realized that LMDB needs a
+configuration value for the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#Env.SetMapSize">maximum map size</a> of the database.
+This needs to be determined upfront while opening the database. LMDB will not expand
+automatically as data size increases. To get around it, we set it to a
+calculated large number and re-populated the data.</p></li>
+
+<li><p>During our initial benchmarking runs, the hit ratio (found vs. miss) and hence
+read performance of LMDB was significantly affected by the value of
+GOMAXPROCS. We could not figure out why this was happening. This issue got
+compounded by an oversight in our code which was correctly handling error
+inside the view transaction, but not outside it. A few days into this issue,
+we fixed the error handling and realized that a large number of reads were
+failing, because the maximum number of concurrent readers had to be set
+explicitly, using the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#Env.SetMaxReaders"><code>SetMaxReaders</code></a> API function.  <strong>From a
+Go perspective, this is strange.</strong> This would require tracking how many
+concurrent reads are going on at a given moment, and restrict them to a
+pre-specified number. In a highly concurrent Go based system like Dgraph, this
+would be a severe limitation. We got around the limitation by setting the
+maximum number of readers to a number based on the benchmarks.</p></li>
+</ul>
+
+<p>While none of these limitations are deal breakers, they do present unfamiliar
+obstacles for a Go programmer using LMDB.  In comparison, BoltDB and Badger
+do not require you to specify a maximum map size, or a maximum number of readers in
+advance.</p>
+
+<h5 id="bolt"><strong>Bolt</strong></h5>
+
+<p>We used the BoltDB source <a href="https://github.com/boltdb/bolt">hosted on Github</a>. Note that there is a
+fork of BoltDB, called <a href="https://github.com/coreos/bbolt">bbolt</a> maintained by CoreOS. However, we decided to stick to
+the original version which is considered complete by its maintainer. We did not
+run into any issues when using BoltDB APIs. They are clean and well documented.</p>
+
+<h5 id="badger-1"><strong>Badger</strong></h5>
+
+<p>We ran the benchmarks against code in <a href="https://github.com/dgraph-io/badger">Badger repo</a> on Github, at
+commit <a href="https://github.com/dgraph-io/badger/tree/64df7f57d9ee20d7b28de4a3eea90bf8d7310a77">64df7f5</a>. This included a significant change in
+the way we read the value log, where we switched from using standard file I/O
+to memory-mapping the files before reading. We will cover this in more detail
+in the sections below.</p>
+
+<h4 id="code">Code</h4>
+
+<p>All the benchmarking code and results are available on Github in the
+<a href="https://github.com/dgraph-io/badger-bench">badger-bench</a> repo. To make the benchmarks transparent and repeatable, we have
+recorded all the steps in detail in our <a href="https://github.com/dgraph-io/badger-bench/blob/master/BENCH-lmdb.md">benchmarking log</a>.</p>
+
+<h3 id="results">Results</h3>
+
+<p>Numbers and charts can also be found in <a href="https://docs.google.com/spreadsheets/d/1Hz9XHk8v45qHhjr2DwXhblrhtg7pMim-GRLYNqRKCK0/edit?usp=sharing">this spreadsheet</a>.</p>
+
+<h4 id="data-loading">Data Loading</h4>
+
+<p><a href="/images/lmdb-bolt-bench/data-loading.png"><img src="/images/lmdb-bolt-bench/data-loading.png" alt="Data loading performance" /></a></p>
+
+<p>The results of this benchmark are pretty unequivocal. <strong>Badger is significantly
+faster than both LMDB and BoltDB in loading data.</strong> The factor of speedup ranges
+from 1.7✕ to 22.3✕. Bolt DB degrades pretty badly in the 16kb data set with a
+throughput of only 32000 key-value pairs a minute.</p>
+
+<p>B+ trees do not have very good write performance, and these benchmarks
+support that claim. Writing KV pairs randomly to Bolt or LMDB leads to a lot
+of random seeks on the disk. Badger, on the other hand, writes to an LSM tree where all writes are sequential. Moreover, the actual values are written in a log elsewhere using sequential writes. This leads to much better disk utilization and throughput.</p>
+
+<p>Some additional technical notes:</p>
+
+<ul>
+<li><p>Badger provides an API method called <a href="https://godoc.org/github.com/dgraph-io/badger#KV.BatchSet"><code>BatchSet</code></a> which
+batches up a series of writes to the value log. This can significantly speed
+up bulk-loading. BoltDB and lmdb-go do not have an equivalent API.</p></li>
+
+<li><p>BoltDB provides an API method called <a href="https://godoc.org/github.com/boltdb/bolt#DB.Batch"><code>Batch()</code></a>, which can be
+used to achieve some concurrency while writing to it. The results
+above are using this call, but we did not notice a very significant
+difference for this specific benchmark.</p></li>
+
+<li><p>lmdb-go has a limitation in its API when it comes to writing to the
+store using multiple goroutines. Here is what the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#hdr-Caveats">API docs
+say</a>: <em>Write transactions (those created without the
+<code>Readonly</code> flag) must be created in a goroutine that has been locked to its
+thread by calling the function <code>runtime.LockOSThread</code>. Furthermore all
+methods on such transactions must be called from the goroutine which created
+them. This is a fundamental limitation of LMDB even when using the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#hdr-Environment">NoTLS</a>
+flag (which the package always uses).</em></p></li>
+</ul>
+
+<h4 id="data-set-size">Data Set Size</h4>
+
+<p><a href="/images/lmdb-bolt-bench/data-size.png"><img src="/images/lmdb-bolt-bench/data-size.png" alt="Data set size" /></a></p>
+
+<p>We did not notice any patterns w.r.t. final data set sizes among the stores.
+Bolt and LMDB store data in one large file and keys and values are stored
+together. Badger stores data in two different kinds of files: one for LSM data
+which contains keys and pointer to values, and value log files which contain the
+actual values.</p>
+
+<h4 id="random-key-lookup">Random Key Lookup</h4>
+
+<p><a href="/images/lmdb-bolt-bench/random-lookup.png"><img src="/images/lmdb-bolt-bench/random-lookup.png" alt="Random Key Lookup latency" /></a></p>
+
+<p><strong>LMDB has the lowest read latencies</strong> across all the data sets.
+Badger goes neck-to-neck against LMDB in 1kB value, but in
+other values are up to 2x slow.
+BoltDB, on the other hand, has lower latencies than Badger for the 128B and 16kB
+datasets but shows higher latency in the 1kB data set.</p>
+
+<p>We were pleasantly surprised by these results. <strong>Badger holds pretty well</strong>
+against both the stores, never performing particularly worse than others, and at
+least in one instance, beating BoltDB. This is a particularly important feat
+because random key lookup is the weakest spot for LSM based KV stores.  LSM-tree
+suffers from read-amplification. It needs to look for the key in multiple places
+before returning.</p>
+
+<p>Badger&rsquo;s design handles read amplification in two ways. It first significantly
+reduces the size of LSM tree by separating keys from values, and secondly,
+minimizes the latency by keeping the (much smaller) LSM tree entirely in RAM.
+This makes Badger much faster than other LSM-tree based key-value stores like
+RocksDB and a lot more competitive with B+-trees.</p>
+
+<p><em>Note that LMDB was slower in our initial benchmarks before Howard Chu <a href="https://github.com/bmatsuo/lmdb-go/issues/118#issuecomment-325449496">pointed
+out</a> that we should be setting the
+<code>lmdb.NoReadahead</code> flag when opening the store. This got us thinking, and we
+realized that this could apply to Badger as well. We already had a feature
+request to memory-map the value log files. We decided to <a href="https://github.com/dgraph-io/badger/commit/b9aae1b3895c41176770406d66d6614bf525f80f">give that a
+shot</a>, and also disabled readahead using the <code>madvise</code> system
+call. When we ran the benchmarks for the 16kB dataset after this change, we
+were able to reduce the latency from  22µs to 3.8µs.</em></p>
+
+<h4 id="sorted-range-iteration">Sorted Range Iteration</h4>
+
+<p><a href="/images/lmdb-bolt-bench/range-iteration.png"><img src="/images/lmdb-bolt-bench/range-iteration.png" alt="Sorted range iteration" /></a></p>
+
+<p>For the data store with 128B value size, Badger is about 1.5✕-1.6✕ slower than
+lmdb-go and BoltDB. However, Badger’s performance improves as value sizes get
+bigger. <strong>Badger is anywhere between 4✕-111✕ times faster</strong> when iterating over
+data stores with 1kb and 16kb value size. Badger’s design allows it to prefetch
+values in the background during iteration. This is controlled by an option and
+is enabled by default. The <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WISCKEY paper</a> touches upon this:</p>
+
+<blockquote>
+<p><em>“To make range queries efficient, WiscKey leverages
+the parallel I/O characteristic of SSD devices to prefetch
+values from the vLog during range queries. The underlying
+idea is that, with SSDs, only keys require special
+attention for efficient retrieval. So long as keys are retrieved
+efficiently, range queries can use parallel random
+reads for efficiently retrieving values.”</em></p>
+</blockquote>
+
+<p>In our <a href="https://blog.dgraph.io/post/badger/">launch post</a>, we mentioned that there were shortcomings with iteration in
+Badger because we were unable to realize the high SSD IOPS via Go. After much
+<a href="https://groups.google.com/forum/#!topic/golang-nuts/jPb_h3TvlKE/discussion">discussion and digging</a>, we realized that setting
+GOMAXPROCS to a high enough number (say 128), allows us to realize the high
+IOPS, making Badger significantly faster for key-value iterations.</p>
+
+<p>Badger’s iterator API also allows what we call <strong><em>key-only</em> iteration.</strong> In this
+mode, we iterate only over the LSM tree and do not read the values in the value
+log files at all. This means that most of the time, iterations do not touch the
+disk and happen blazingly fast. This functionality is unique to Badger among
+all the other key-value stores compared.</p>
+
+<p>Key-only iterations are very useful in various applications which only need to
+iterate over keys, for splitting tablets or estimating data sizes based on key
+prefixes. At Dgraph, we use them to estimate the size of tablets, run filters and only
+retrieve values for a much smaller subset of keys.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+<li><p><strong>LMDB</strong> implementation in Go outperformed both BoltDB and Badger in terms of
+random read latency, but was significantly slower for sorted range iteration
+and had several mind-boggling API limitations. If you have a random read
+intensive workload, LMDB Go might be a suitable store for you.</p></li>
+
+<li><p><strong>BoltDB</strong> didn&rsquo;t really stand apart in any of the four criteria. It was the
+slowest in data loading, fell well behind Badger in sorted range iteration
+(though outperformed LMDB), and gave conflicting results w.r.t. random key lookup.
+However, it did have a clean and well-documented APIs and supports ACID
+transactions.</p></li>
+</ul>
+
+<p><strong>One of the big reasons</strong> we wrote Badger was that we were having difficulty understanding the behavior of Cgo APIs accessing RocksDB
+  from within Go. Using a store written in pure Go allows better visibility
+  into what’s going on using Go’s profiling tools. It also allows more
+  convenient control over concurrent operations using Go’s native support for
+  goroutines. So BoltDB and Badger might be better choices over LMDB in this scenario.</p>
+
+<ul>
+<li><strong>Badger</strong> significantly outperformed its competition in both write throughput and
+sorted range iteration. It performed slightly worse in random key lookup but
+did not deteriorate in performance as badly as competition did in other
+categories.  For a workload which has a mix of reads and writes in any
+proportion (even 90-10), Badger is a <strong>clear choice.</strong></li>
+</ul>
+
+<h2 id="further-work">Further Work</h2>
+
+<p>At this point, the biggest aim for Badger is to stabilize the API and bring it
+past v1.0. Various projects like <a href="https://ipfs.io/">IPFS</a> use Badger, and there&rsquo;s an outstanding
+Github issue to integrate Badger with <a href="https://github.com/blevesearch/bleve/issues/591">Bleve</a>.</p>
+
+<p>Also, we are considering adding transactional support into Badger.
+So, if you think it would be useful to you, <a href="https://github.com/dgraph-io/badger/issues/230">let us know</a>.</p>
+
+<h2 id="parting-thoughts">Parting thoughts</h2>
+
+<p>In this post, we have done a comprehensive survey of how <a href="https://github.com/dgraph-io/badger">Badger</a> compares
+against two popular options for key-value stores in Go. <a href="https://github.com/dgraph-io/badger">Badger</a> is still quite
+new, and we are excited about what lies ahead for the project.</p>
+
+<p>We put months of effort into ensuring the benchmarks were impartial, correctly
+set up and executed. Many a times this process was menial and frustrating, but we
+were excited about the possibility of learning a few things from other
+key-value stores and improving Badger; <em>which we did</em>.  These benchmarks make us
+even more convinced of the effort that Dgraph team has put into building Badger
+from scratch. We have built a solid offering not only to be used within Dgraph,
+but for anyone looking for a key-value store in Go.</p>
+
+<p>We would love to hear from you regarding what you think we should be focusing
+on in the future. If you have any comments or questions, please head to
+<a href="https://discuss.dgraph.io/t/making-badger-crash-resilient-with-alice-dgraph-blog/1685">discuss.dgraph.io</a>.</p>
 
 <hr />
 
@@ -997,7 +855,11 @@ Hope you find this useful.</p>
   </table>
 	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
 </div>
-<br/></div>
+<br/>
+
+
+<p><em>Top image: <a href="https://www.nasa.gov/image-feature/jpl/pia21778/jupiter-a-new-point-of-view">Jupiter: A new point of view</a></em></p>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -1022,17 +884,49 @@ Hope you find this useful.</p>
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/team-manish.jpg" class="article-author__image">
+	<img src="/images/deepak.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Manish Rai Jain
+    <h4 class="article-author__name">Deepak Jois
 
 
       <span class="article-author__title">Author</span>
     </h4>
     
+<nav class="social__nav article-author__social">
+    <ul class="social__list social__list--inline">
+        <li class="social__item social__item--inline">
+            <a href="https://twitter.com/debugjois" class="social__link">
+                <svg class="icon social__icon social__icon--twitter">
+                    <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
+                </svg>
+            </a>
+        </li>
+    </ul>
+</nav>
+<p>Deepak graduated from Nanyang Technological University in Singapore, and earned the nickname Debug because of his passion for debugging programming assignments for others in his class. When not spending time in front of the computer, he loves listening to podcasts, going on walks and travelling.</p>
+
+
+  </div>
+</div>
+
+              
+	<div class="article-author">
+	<figure class="article-author__figure">
+		
+	<img src="/images/team-manish.jpg" class="article-author__image">
+
+
+	</figure>
+	<div class="article-author__bio">
+		<h4 class="article-author__name">Manish Rai Jain
+
+
+			<span class="article-author__title">Editor</span>
+		</h4>
+		
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
@@ -1055,10 +949,9 @@ Hope you find this useful.</p>
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
-  </div>
+	</div>
 </div>
 
-              
               </div>
             </div>
           </div>
@@ -1098,7 +991,7 @@ Hope you find this useful.</p>
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/rpc-vs-grpc/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1137,7 +1030,7 @@ Hope you find this useful.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-20%2023%3a18%3a21.841679122%20%2b1000%20AEST%20m%3d%2b0.370475470"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-20%2023%3a18%3a21.828475149%20%2b1000%20AEST%20m%3d%2b0.357271466"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -1192,7 +1085,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/rpc-vs-grpc\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/badger-lmdb-boltdb\/"
 };
 (function() {
   var d = document.createElement("script");

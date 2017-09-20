@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.19" />
+      <meta name="generator" content="Hugo 0.27.1" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-08%2016%3a51%3a25.856865541%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-08%2016%3a51%3a25.856916443%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-20%2023%3a18%3a21.84555203%20%2b1000%20AEST%20m%3d%2b0.374348355" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-20%2023%3a18%3a21.845574117%20%2b1000%20AEST%20m%3d%2b0.374370409" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-08%2016%3a51%3a25.856977639%20%2b1000%20AEST">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-08%2016%3a51%3a25.85699658%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-20%2023%3a18%3a21.845593536%20%2b1000%20AEST%20m%3d%2b0.374389828">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-20%2023%3a18%3a21.845614089%20%2b1000%20AEST%20m%3d%2b0.374410381">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
@@ -110,6 +110,23 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
+          
+          
+          
+            <li class="article__item">
+  <div class="article__meta"><span class="article__meta-item article__date">
+  	Sun, May 14, 2017 by Manish Rai Jain
+
+
+  	<span></div>
+    <a href="https://blog.dgraph.io/post/badger/" class="clearfix">
+        <h3 class="article__title">Introducing Badger: A fast key-value store written purely in Go</h3>
+        <img class="opening__image" src="https://blog.dgraph.io/images/juno.jpg">
+    </a>
+    <p class="article__summary">We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
+We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</p>
+</li>
+
           
           
           
@@ -193,22 +210,6 @@ We also dream that graph database would no longer run as a secondary database. B
 We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
 
 <p></p></p>
-</li>
-
-          
-          
-          
-            <li class="article__item">
-  <div class="article__meta"><span class="article__meta-item article__date">
-  	Thu, Oct 6, 2016 by Pawan Rawal
-
-
-  	<span></div>
-    <a href="https://blog.dgraph.io/post/hugo/" class="clearfix">
-        <h3 class="article__title">Dgraph hugo blog theme</h3>
-        <img class="opening__image" src="https://blog.dgraph.io/images/blackholestar.jpg">
-    </a>
-    <p class="article__summary">We at Dgraph love Hugo and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.</p>
 </li>
 
           
@@ -321,7 +322,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-08%2016%3a51%3a25.859019617%20%2b1000%20AEST"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-20%2023%3a18%3a21.846446158%20%2b1000%20AEST%20m%3d%2b0.375242499"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.19" />
+      <meta name="generator" content="Hugo 0.27.1" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-08%2016%3a51%3a25.848278446%20%2b1000%20AEST" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-08%2016%3a51%3a25.848302686%20%2b1000%20AEST" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-09-20%2023%3a18%3a21.842673152%20%2b1000%20AEST%20m%3d%2b0.371469471" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-09-20%2023%3a18%3a21.842697842%20%2b1000%20AEST%20m%3d%2b0.371494139" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-08%2016%3a51%3a25.84832624%20%2b1000%20AEST">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-08%2016%3a51%3a25.848346292%20%2b1000%20AEST">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-09-20%2023%3a18%3a21.842716978%20%2b1000%20AEST%20m%3d%2b0.371513271">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-09-20%2023%3a18%3a21.842735287%20%2b1000%20AEST%20m%3d%2b0.371531579">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
@@ -110,6 +110,22 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
+          
+          
+          
+            <li class="article__item">
+  <div class="article__meta"><span class="article__meta-item article__date">
+  	Wed, Sep 20, 2017 by Deepak Jois
+
+
+  	<span></div>
+    <a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
+        <h3 class="article__title">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h3>
+        <img class="opening__image" src="https://blog.dgraph.io/images/pia21778.png">
+    </a>
+    <p class="article__summary">If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</p>
+</li>
+
           
           
           
@@ -175,26 +191,6 @@ Part of ensuring stability and performance led us to try and load the entire Sta
     </a>
     <p class="article__summary">We&rsquo;ve just released v0.8 and it contains lots of new features and improvements. The Go client saw some nice improvements, so this post will walk you through the client interface and demonstrate some example code.
 The GoDoc already contains all the specs and small examples of how to use the client. This post will take you on a guided tour and with examples that are more on the scale of a real app.</p>
-</li>
-
-          
-          
-          
-            <li class="article__item">
-  <div class="article__meta"><span class="article__meta-item article__date">
-  	Wed, Jul 19, 2017 by Manish Rai Jain
-
-
-  	<span></div>
-    <a href="https://blog.dgraph.io/post/signal-and-wait/" class="clearfix">
-        <h3 class="article__title">Orchestrating signal and wait in Go</h3>
-        <img class="opening__image" src="https://blog.dgraph.io/images/spacex-stages.jpg">
-    </a>
-    <p class="article__summary"><p>One of the common use case in Go is to start a few goroutines to do some
-work. These goroutines block listening in on a channel, waiting for more work to
-arrive. At some point, you want to signal these goroutines to stop accepting
-more work and exit, so you can cleanly shut down the program.
-</p></p>
 </li>
 
           
@@ -307,7 +303,7 @@ more work and exit, so you can cleanly shut down the program.
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-08%2016%3a51%3a25.849853577%20%2b1000%20AEST"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-09-20%2023%3a18%3a21.84403266%20%2b1000%20AEST%20m%3d%2b0.372828972"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
