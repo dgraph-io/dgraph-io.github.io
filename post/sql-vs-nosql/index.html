@@ -66,8 +66,8 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-03%2013%3a47%3a11.212858525%20%2b1100%20AEDT%20m%3d%2b0.082971545" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-03%2013%3a47%3a11.212922214%20%2b1100%20AEDT%20m%3d%2b0.083035212" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-03%2014%3a33%3a32.206618414%20%2b1100%20AEDT%20m%3d%2b0.562797308" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-03%2014%3a33%3a32.206684033%20%2b1100%20AEDT%20m%3d%2b0.562862911" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -82,8 +82,8 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-03%2013%3a47%3a11.212966036%20%2b1100%20AEDT%20m%3d%2b0.083079025">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-03%2013%3a47%3a11.213000857%20%2b1100%20AEDT%20m%3d%2b0.083113841">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-03%2014%3a33%3a32.206731413%20%2b1100%20AEDT%20m%3d%2b0.562910284">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-03%2014%3a33%3a32.206769259%20%2b1100%20AEDT%20m%3d%2b0.562948122">
   </head>
 
 
@@ -418,9 +418,15 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 
 <p>Typical SQL database has not changed. It is still a single instance, scaling which is pain and requires application side complexity. There’s a real need for scalable systems, something that traditional SQL systems still haven’t evolved to provide. We do not have a distributed MySQL or a distributed Postgres.</p>
 
-<p>A learning curve is commonly cited as a counter to new entrants to database world (also made by Kulkarni). “Each NoSQL database offered its own unique query language, which meant: more languages to learn” I do not buy it. Most companies add new tech despite the unfamiliarity of their devs. Redis, Elastic Search, Memcache are (or at least recently were) all unfamiliar technologies that are commonly part of a typical tech stack.</p>
+<p>A learning curve is commonly cited as a counter to new entrants to database world (also made by Kulkarni).</p>
 
-<p>In fact, contradictory arguments are used in both ways. Devs like “everything new and shiny,” and at the same time, “learning curve is limiting to adoption.” Both arguments were made by Kulkarni on why NoSQL became big and why it did not, respectively. Both fail to understand and explain the NoSQL movement.</p>
+<blockquote>
+<p>“Each NoSQL database offered its own unique query language, which meant: more languages to learn”</p>
+</blockquote>
+
+<p><strong>I do not buy it.</strong> Most companies add new tech despite the unfamiliarity of their devs. Redis, Elastic Search, Memcache are (or at least recently were) all unfamiliar technologies that are commonly part of a typical tech stack.</p>
+
+<p>In fact, contradictory arguments are used in both ways. Devs like <em>“everything new and shiny,”</em> and at the same time, <em>“learning curve limits adoption.”</em> Both arguments were made by Kulkarni on why NoSQL became big and why it did not, respectively. Both fail to understand and explain the NoSQL movement.</p>
 
 <p>As I write this, MongoDB has <a href="https://techcrunch.com/2017/09/21/database-provider-mongodb-has-filed-to-go-public/">filed to go public</a>. <em>This is a huge success for any database company!</em> Developers use Mongo not just because it is new and shiny (well, it no longer is new), but because it solves real problems for them.</p>
 
@@ -608,7 +614,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-03%2013%3a47%3a11.214838706%20%2b1100%20AEDT%20m%3d%2b0.084951702"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-03%2014%3a33%3a32.212403503%20%2b1100%20AEDT%20m%3d%2b0.568582409"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
