@@ -7,9 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 03 Oct 2017 13:20:35 +1100</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Opinion</title>
+      <link>https://blog.dgraph.io/tags/opinion/</link>
+      <pubDate>Tue, 03 Oct 2017 13:20:35 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/opinion/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
