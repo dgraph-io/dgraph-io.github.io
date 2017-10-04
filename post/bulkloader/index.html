@@ -35,26 +35,26 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>go get github.com/dgraph-io/dgraph/... - Dgraph Blog</title>
-    <meta property='og:title' content="go get github.com/dgraph-io/dgraph/... - Dgraph Blog">
+    <title>Loading close to 1M edges/sec into Dgraph - Dgraph Blog</title>
+    <meta property='og:title' content="Loading close to 1M edges/sec into Dgraph - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/goget/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/bulkloader/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/arm.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/cassini.jpg">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/arm.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/cassini.jpg"/>
       
     
 
-    <meta name="twitter:title" content="go get github.com/dgraph-io/dgraph/..."/>
-    <meta name="twitter:description" content="Thank you Go community for all the love that you showered on Badger. Within 8 hours of announcing Badger, the blog post made it to the first page of Hacker News. And within three days, the Github repo received 1250 stars, having crossed 1500 by the time of this post. We have already merged contributions and received feedback that we need to work on.
-All this goes to show how much people enjoy Go native libraries."/>
+    <meta name="twitter:title" content="Loading close to 1M edges/sec into Dgraph"/>
+    <meta name="twitter:description" content="We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges! When we heard about the size of these datasets, we knew we needed to have a solid data loading story so that we could support the most extreme demands from our users.
+In a previous blog post, we discussed some of the challenges that we met on our journey towards loading massive datasets into Dgraph."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -65,8 +65,8 @@ All this goes to show how much people enjoy Go native libraries."/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-04%2014%3a41%3a59.268273384%20%2b1100%20AEDT%20m%3d%2b0.121143638" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-04%2014%3a41%3a59.268306143%20%2b1100%20AEDT%20m%3d%2b0.121176443" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-04%2014%3a41%3a59.261121482%20%2b1100%20AEDT%20m%3d%2b0.113991797" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-04%2014%3a41%3a59.261165363%20%2b1100%20AEDT%20m%3d%2b0.114035615" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -81,8 +81,8 @@ All this goes to show how much people enjoy Go native libraries."/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-04%2014%3a41%3a59.26833702%20%2b1100%20AEDT%20m%3d%2b0.121207290">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-04%2014%3a41%3a59.268365842%20%2b1100%20AEDT%20m%3d%2b0.121236091">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-04%2014%3a41%3a59.261201473%20%2b1100%20AEDT%20m%3d%2b0.114071722">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-04%2014%3a41%3a59.261232142%20%2b1100%20AEDT%20m%3d%2b0.114102393">
   </head>
 
 
@@ -379,16 +379,16 @@ All this goes to show how much people enjoy Go native libraries."/>
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Mon, May 29, 2017
+                  Wed, Oct 4, 2017
                  by
-                Manish Rai Jain
+                Peter Stace
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=go%20get%20github.com%2fdgraph-io%2fdgraph%2f...&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fgoget%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Loading%20close%20to%201M%20edges%2fsec%20into%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbulkloader%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -396,7 +396,7 @@ All this goes to show how much people enjoy Go native libraries."/>
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">go get github.com/dgraph-io/dgraph/...</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Loading close to 1M edges/sec into Dgraph</h1>
           </header>
         </div>
       </div>
@@ -408,92 +408,202 @@ All this goes to show how much people enjoy Go native libraries."/>
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://blog.dgraph.io/images/arm.jpg">
-          <div class="article-content"><p>Thank you Go community for all the love that you showered on Badger. Within 8 hours of announcing
-<a href="https://github.com/dgraph-io/badger">Badger</a>, the blog post <a href="https://news.ycombinator.com/item?id=14335931">made it to the first
-page</a> of Hacker News. And within three days, the
-Github repo received 1250 stars, having crossed 1500 by the time of this post. We have already
-merged <a href="https://github.com/dgraph-io/badger/graphs/contributors">contributions</a> and received
-<a href="https://github.com/dgraph-io/badger/issues">feedback</a> that we need to work on.</p>
+          <img class="opening__image" src="https://blog.dgraph.io/images/cassini.jpg">
+          <div class="article-content">
 
-<p>All this goes to show how much people enjoy Go native libraries. They
-make things easier. Any tool, library or system written in Go can now just run <code>go get
-github.com/dgraph-io/badger</code>, and they have a fast, efficient key-value store to use.</p>
+<p>We&rsquo;re seeing more and more users who want to load massive data sets into
+<a href="https://github.com/dgraph-io/dgraph">Dgraph</a>. Many users want to load billions of edges, and some even want to load
+up to 50 billion edges! When we heard about the size of these datasets, we knew
+we needed to have a solid data loading story so that we could support the most
+extreme demands from our users.</p>
 
-<p>Dgraph users have been asking us about embeddable and go gettable Dgraph for a while. After
-hearing from many different users independently, I decided to <a href="https://github.com/dgraph-io/dgraph/issues/673">create a Github
-issue</a> to track it.</p>
+<p>In a previous <a href="https://blog.dgraph.io/post/scaling-dgraph/">blog post</a>, we
+discussed some of the challenges that we met on our journey towards loading
+massive datasets into <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.  In this post, we will discuss an alternate
+approach that has yielded significantly faster loading times.</p>
 
-<p>We had two dependencies on Cgo which prevented <code>go get</code>able Dgraph in the past:</p>
+<p><strong>TL;DR:</strong> <em>We created a new tool called <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> to populate Dgraph with
+an initial dataset.  It&rsquo;s highly performant and is able to load the entire
+<a href="https://archive.org/details/stackexchange">Stack Overflow dataset</a> in just
+over 1 hour on a single 64 core machine. The Stack Overflow dataset is massive
+and consists of ~2 billion RDFs. An additional ~1 billion edges are created for
+indexing and other internal usages.  This gives</em> <strong>~3 billion edges</strong> <em>in
+total. This equates to a loading rate of</em> <strong>~820k edges per second!</strong> <em>Note
+that we had a significant skew in the predicate distribution which slowed the
+load down (all the text for questions, answers and comments was on the same
+predicate). Better results can likely be achieved on datasets with a more even
+predicate distribution.</em></p>
 
-<ol>
-<li>ICU library to do tokenization and full-text search.</li>
-<li>RocksDB as the key-value store.</li>
-</ol>
+<h2 id="previous-approach">Previous approach</h2>
 
-<p>Back in Q1 2017, we got rid of C based ICU library and switched to using parts of Bleve. Bleve simplified our code base, at the cost of losing <a href="http://www.blevesearch.com/">CJK support</a>. But, we thought that&rsquo;s a trade-off we can live with for the time being.</p>
+<p>All of our previous approaches have involved writing batch mutations to a
+running <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instance. This is a convenient approach; we just have to
+iterate over the RDFs we want to load, batch them up, then send them to Dgraph.</p>
 
-<p>The second step of replacing RocksDB was a lot harder, and a lot more interesting journey,
-culminating in the release of Badger.</p>
+<p>We were able to achieve over 50k edges per second, which is really good
+throughput for a live system. But doing so seemed insufficient when you&rsquo;re
+starting out with billions of edges and just want to bulk load them up into a
+new Dgraph instance.</p>
 
-<p>Today, we <a href="https://github.com/dgraph-io/dgraph/commit/ed048d5d59248875c55ff5fbf14025e67f1a164c">pushed a
-change</a> to
-Dgraph master branch to switch to Badger. That single change resulted in 450K deleted lines and made Dgraph
-<code>go get</code>able. <strong>This is an exciting day for the Dgraph team, as it simplifies our lives as
-developers hugely.</strong></p>
+<p>Our previous approaches at speeding up the loading process had a focus on
+performance improvements to Dgraph&rsquo;s mutation handling capabilities. We made
+great strides here, facing some tough challenges related to memory management
+along the way. Ultimately we hit some speed roadblocks though. We had to
+propose the mutations via Raft, which would write to a WAL for durability (to
+deal with crashes) and achieve consensus for consistency. We also needed to
+read the key to merge the new mutations coming in. Some of these keys
+(particularly index keys) were in such high demand that they&rsquo;d become
+stragglers for the entire bulk load operation.</p>
 
-<p>Not only would we have simpler, faster builds and releases; we&rsquo;d also have profiles going all the way down to
-the disk, and all the way out to the RAM. Every aspect of Dgraph system can now be tweaked for
-performance. No hard language boundaries, and that&rsquo;s powerful.</p>
+<p>A key observation about loading massive datasets is that Dgraph does not have
+to be live while the loading happens. This is because loading large
+amounts of data is usually a step taken by users when migrating from another
+database technology stack (whether a graph database or otherwise).</p>
 
-<blockquote>
-<p>I adore changes which delete more code than they add, while also gaining simplicity and functionality. This change is one of those.</p>
-</blockquote>
+<p>Because Dgraph doesn&rsquo;t have to be up and running while data is being loaded,
+this opens up lots of avenues for alternate (<strong>faster!</strong>) approaches.</p>
 
-<p><img src="/images/remove-badger-pr.png" alt="Dgraph PR to replace Badger" />
-<a href="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5"><img src="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5.png" alt="asciicast" /></a></p>
+<p>This is where Bulkloader comes in. It&rsquo;s a new program that performs the initial
+population of a <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instance. It runs very quickly and scales well on
+high-end hardware.</p>
 
-<p><strong>Happy go getting!</strong> It needs a bit more work before Dgraph can be embedded in your Go code, but
-that is coming soon to master. It would be part of the v0.8 release.</p>
+<h2 id="the-new-approach">The new approach</h2>
 
-<p><em>Disclaimer: Dgraph in master branch contains latest changes and isn&rsquo;t thoroughly tested. Use it at your own risk.</em></p>
+<p><a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> utilises the map/shuffle/reduce paradigm. The diagram below shows
+the data flow through the system, from RDFs in files all the way to posting
+lists stored in <a href="https://github.com/dgraph-io/badger">Badger</a> (<a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&rsquo;s key-value store).</p>
 
-<hr />
+<p><img src="/images/bulkloader_map_shuffle_reduce.png" alt="" /></p>
 
-<div class="engage">
-	<p><strong>We are building an open source, real time, horizontally scalable and distributed graph database.</strong></p>
-  <table>
-    <thead>
-    <tr>
-    <th></th>
-    <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>Get started with Dgraph.</td>
-      <td><a href="https://docs.dgraph.io" target="_blank">https://docs.dgraph.io</a></td>
-    </tr>
-    <tr>
-      <td>See our live demo.</td>
-      <td><a href="https://dgraph.io" target="_blank">https://dgraph.io</a></td>
-    </tr>
-    <tr>
-      <td>Star us on Github.</td>
-      <td><a href="https://github.com/dgraph-io/dgraph" target="_blank">https://github.com/dgraph-io/dgraph</a></td>
-    </tr>
-    <tr>
-      <td>Ask us questions.</td>
-      <td><a href="https://discuss.dgraph.io" target="_blank">https://discuss.dgraph.io</a></td>
-    </tr>
-    </tbody>
-  </table>
-	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
-</div>
-<br/>
+<p>There&rsquo;s a lot going on here, so let&rsquo;s break it down:</p>
 
+<ul>
+<li><p>The map phase takes RDFs as its input. It creates the edges that will
+eventually become part of the final Dgraph instance. Each RDF can correspond
+to one or more edges. The additional edges are for indexing and reverse edge
+traversal. Each edge is output along with the key of the posting list it will
+eventually become part of (this combination of edge and posting list key is
+referred to as a <em>map entry</em>). Map entries are bundled up into reasonably sized
+batches (e.g. 100MB), sorted, then written out to disk in <em>map files</em>.
+Sorting is only <em>local</em> for each map file since edges can be split
+between the map files in arbitrary ways. The sorting is important, and critical
+to the speed of the shuffler.</p></li>
 
-<p><em>Top image: <a href="https://apod.nasa.gov/apod/ap060522.html">Canadarm aboard the ISS</a></em></p>
+<li><p>The shuffle phase combines all map files into a single globally sorted stream
+of map entries. Because each map file is sorted internally, a min heap data
+structure can be used to quickly assemble the stream.  The stream is then
+broken up into batches that are passed on to the reduce phase.</p></li>
+
+<li><p>The reduce phase takes batches of sorted map entries from the shuffle phase.
+It collects up groups of map entries with the same posting list key and then
+builds the corresponding posting list. To do this, the reducer iterates through
+the batch and generates a posting list whenever the posting list key changes.
+The posting lists are then written directly to <a href="https://github.com/dgraph-io/badger">Badger</a>, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&rsquo;s key-value
+store.</p></li>
+</ul>
+
+<p>There are some additional complexities in the architecture that aren&rsquo;t shown in
+the diagram. These are all related to bottlenecks in the processing where all
+data must flow through a single point or exclusive access to a single resource
+is needed. The bottlenecks don&rsquo;t show themselves when running on regular
+quad-core machines but are must be removed in order to achieve full hardware
+utilization on high-end machines (e.g. machines with 64 cores).</p>
+
+<h5 id="sharded-uid-map">Sharded UID Map</h5>
+
+<p>The first bottleneck is in the map phase. As part of this phase, blank nodes
+must be mapped to 64-bit UIDs. The first time a particular blank node (a
+string) is seen, a new UID must be assigned. When that blank node is seen again
+in a subsequent RDF, the same UID must be used. Since the input RDF files can
+be split up in any arbitrary way, the same blank node could be processed by two
+different mappers that are running concurrently. Because of this, the management
+of UID assignment must be shared between all mappers.</p>
+
+<p>The original design was to use a map (from <code>string</code> to <code>uint64</code>) protected by a
+mutex. With many concurrent mappers (e.g. 64), profiling showed large amounts
+of contention on the lock.</p>
+
+<p>We solved this problem by using a <em>sharded map</em>. The idea is to break the map
+into two levels. The first level is a fixed size array e.g. of length 256. A
+hash of the key determines which entry in the array to use.  Each array element
+is a mutex and a regular hash map, which stores the final <code>string</code> to <code>uint64</code>
+mapping (i.e. a single <em>shard</em> of the sharded map). Assuming the hash function
+gives a reasonable key distribution, access is spread out evenly among the
+different map shards, and contention is no longer a problem.</p>
+
+<p><img src="/images/bulkloader_map.png" alt="" /></p>
+
+<h5 id="more-shufflers">More Shufflers</h5>
+
+<p>Another bottleneck in the program is the shuffling. The architecture diagram
+above just shows a single shuffler for simplicity. This was the original
+design and showed up as a bottleneck when running on a machine with 64
+cores. All data has to flow through a single code path in a single thread in
+order to get a globally sorted stream of map entries.</p>
+
+<p>The reason we wanted a globally sorted stream was so that the reducer could
+quickly scan the stream and assemble posting lists from entries with the same
+posting list key.</p>
+
+<p>The solution was to split up the entire <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> into shards, separated by
+predicates. Since edges with different predicates can never appear in the same
+posting list, this is safe to do. There are a separate set of map entry files
+for each shard that can be picked up by multiple shufflers, 1 per shard. If
+there are more predicates than the requested number of shards, then multiple
+predicates are placed in each shard. Automatic predicate balancing results in
+shards that are as evenly sized as possible.</p>
+
+<p><img src="/images/bulkloader_shards.png" alt="" /></p>
+
+<h5 id="multiple-badgers">Multiple Badgers</h5>
+
+<p>For big datasets, users typically want to split up the data among multiple
+servers. So splitting the output from multiple shufflers into multiple
+Badgers allows us to produce multiple shards of <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>; which a user can
+use to run a Dgraph cluster.</p>
+
+<p>This also significantly improves the reduce phase, because multiple Badgers are
+concurrently being written to. So many badgers!</p>
+
+<p><img src="/images/many_badgers.jpg" alt="" /></p>
+
+<h2 id="show-me-the-numbers">Show me the numbers</h2>
+
+<p>We used <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> to load the entire <a href="https://archive.org/details/stackexchange">Stack Overflow
+dataset</a> in just over 1 hour.</p>
+
+<p>Machine details:</p>
+
+<ul>
+<li>i3.16xlarge AWS machine.</li>
+<li>64 cores.</li>
+<li>488GB RAM.</li>
+<li>NVMe SSD.</li>
+</ul>
+
+<p>Bulkloader performance:</p>
+
+<ul>
+<li>Total runtime: 1 hr and 4 min.</li>
+<li>RDF count: 1.950 billion.</li>
+<li>Edge count: 3.161 billion.</li>
+<li>Map phase speed: 1.767 million edges per second.</li>
+<li>Reduce phase speed: 1.525 million edges per second.</li>
+<li>Total speed: 0.818 million edges per second.</li>
+</ul>
+
+<p><a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> is super fast, and we recommend it as the way to do the initial
+data loading for new <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instances. It&rsquo;s available from Dgraph v0.8.2
+onwards.</p>
+
+<p>There are lots of different knobs and dials that can be tweaked to get maximum
+performance out of different hardware setups (look at the output when using the
+<code>--help</code> flag). Documentation is also
+<a href="https://docs.dgraph.io/master/deploy/#dgraph-bulk-loader">available</a>.  Give it
+a go and be amazed!</p>
+
+<p>Top image: <a href="https://www.nasa.gov/sites/default/files/thumbnails/image/pia21438.jpg">Cassini spacecraft near
+Saturn.</a></p>
 </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
@@ -519,12 +629,12 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/team-manish.jpg" class="article-author__image">
+	<img src="/images/peter.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Manish Rai Jain
+    <h4 class="article-author__name">Peter Stace
 
 
       <span class="article-author__title">Author</span>
@@ -533,14 +643,14 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://au.linkedin.com/in/manishrjain" class="social__link">
+            <a href="https://www.linkedin.com/in/peter-stace-b34726b8/" class="social__link">
                 <svg class="icon social__icon social__icon--linkedin">
                     <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
             </a>
         </li>
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/manishrjain" class="social__link">
+            <a href="https://twitter.com/peterjohnstace" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -548,8 +658,7 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
         </li>
     </ul>
 </nav>
-<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
-<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
+<p>After Peter graduated in Computer Science in 2012, he worked on low latency derivative trading systems. He enjoys optimising systems for efficiency and speed. In his spare time, he enjoys cycling and drone racing.</p>
 
 
   </div>
@@ -595,7 +704,7 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/goget/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/bulkloader/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -634,7 +743,7 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-04%2014%3a41%3a59.26901254%20%2b1100%20AEDT%20m%3d%2b0.121882799"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-04%2014%3a41%3a59.262877725%20%2b1100%20AEDT%20m%3d%2b0.115747993"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -689,7 +798,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/goget\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/bulkloader\/"
 };
 (function() {
   var d = document.createElement("script");
