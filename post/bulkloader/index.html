@@ -65,8 +65,8 @@ In a previous blog post, we discussed some of the challenges that we met on our 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-04%2014%3a41%3a59.261121482%20%2b1100%20AEDT%20m%3d%2b0.113991797" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-04%2014%3a41%3a59.261165363%20%2b1100%20AEDT%20m%3d%2b0.114035615" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-04%2015%3a28%3a27.621225631%20%2b1100%20AEDT%20m%3d%2b0.080403913" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-04%2015%3a28%3a27.621269999%20%2b1100%20AEDT%20m%3d%2b0.080448269" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -81,8 +81,8 @@ In a previous blog post, we discussed some of the challenges that we met on our 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-04%2014%3a41%3a59.261201473%20%2b1100%20AEDT%20m%3d%2b0.114071722">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-04%2014%3a41%3a59.261232142%20%2b1100%20AEDT%20m%3d%2b0.114102393">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-04%2015%3a28%3a27.621305345%20%2b1100%20AEDT%20m%3d%2b0.080483612">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-04%2015%3a28%3a27.621335404%20%2b1100%20AEDT%20m%3d%2b0.080513671">
   </head>
 
 
@@ -417,7 +417,7 @@ up to 50 billion edges! When we heard about the size of these datasets, we knew
 we needed to have a solid data loading story so that we could support the most
 extreme demands from our users.</p>
 
-<p>In a previous <a href="https://blog.dgraph.io/post/scaling-dgraph/">blog post</a>, we
+<p><a href="https://blog.dgraph.io/post/scaling-dgraph/">In a previous blog post</a>, we
 discussed some of the challenges that we met on our journey towards loading
 massive datasets into <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.  In this post, we will discuss an alternate
 approach that has yielded significantly faster loading times.</p>
@@ -509,7 +509,7 @@ is needed. The bottlenecks don&rsquo;t show themselves when running on regular
 quad-core machines but are must be removed in order to achieve full hardware
 utilization on high-end machines (e.g. machines with 64 cores).</p>
 
-<h5 id="sharded-uid-map">Sharded UID Map</h5>
+<h3 id="sharded-uid-map">Sharded UID Map</h3>
 
 <p>The first bottleneck is in the map phase. As part of this phase, blank nodes
 must be mapped to 64-bit UIDs. The first time a particular blank node (a
@@ -533,7 +533,7 @@ different map shards, and contention is no longer a problem.</p>
 
 <p><img src="/images/bulkloader_map.png" alt="" /></p>
 
-<h5 id="more-shufflers">More Shufflers</h5>
+<h3 id="more-shufflers">More Shufflers</h3>
 
 <p>Another bottleneck in the program is the shuffling. The architecture diagram
 above just shows a single shuffler for simplicity. This was the original
@@ -555,7 +555,7 @@ shards that are as evenly sized as possible.</p>
 
 <p><img src="/images/bulkloader_shards.png" alt="" /></p>
 
-<h5 id="multiple-badgers">Multiple Badgers</h5>
+<h3 id="multiple-badgers">Multiple Badgers</h3>
 
 <p>For big datasets, users typically want to split up the data among multiple
 servers. So splitting the output from multiple shufflers into multiple
@@ -602,8 +602,43 @@ performance out of different hardware setups (look at the output when using the
 <a href="https://docs.dgraph.io/master/deploy/#dgraph-bulk-loader">available</a>.  Give it
 a go and be amazed!</p>
 
-<p>Top image: <a href="https://www.nasa.gov/sites/default/files/thumbnails/image/pia21438.jpg">Cassini spacecraft near
-Saturn.</a></p>
+<hr />
+
+<div class="engage">
+	<p><strong>We are building an open source, real time, horizontally scalable and distributed graph database.</strong></p>
+  <table>
+    <thead>
+    <tr>
+    <th></th>
+    <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Get started with Dgraph.</td>
+      <td><a href="https://docs.dgraph.io" target="_blank">https://docs.dgraph.io</a></td>
+    </tr>
+    <tr>
+      <td>See our live demo.</td>
+      <td><a href="https://dgraph.io" target="_blank">https://dgraph.io</a></td>
+    </tr>
+    <tr>
+      <td>Star us on Github.</td>
+      <td><a href="https://github.com/dgraph-io/dgraph" target="_blank">https://github.com/dgraph-io/dgraph</a></td>
+    </tr>
+    <tr>
+      <td>Ask us questions.</td>
+      <td><a href="https://discuss.dgraph.io" target="_blank">https://discuss.dgraph.io</a></td>
+    </tr>
+    </tbody>
+  </table>
+	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
+</div>
+<br/>
+
+
+<p><em>Top image: <a href="https://www.nasa.gov/sites/default/files/thumbnails/image/pia21438.jpg">Cassini spacecraft near
+Saturn.</a></em></p>
 </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
@@ -743,7 +778,7 @@ Saturn.</a></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-04%2014%3a41%3a59.262877725%20%2b1100%20AEDT%20m%3d%2b0.115747993"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-04%2015%3a28%3a27.623577755%20%2b1100%20AEDT%20m%3d%2b0.082756051"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
