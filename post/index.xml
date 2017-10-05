@@ -7,20 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 04 Oct 2017 17:09:10 +1000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Oct 2017 13:20:35 +1100</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Loading close to 1M edges/sec into Dgraph</title>
-      <link>https://blog.dgraph.io/post/bulkloader/</link>
-      <pubDate>Wed, 04 Oct 2017 17:09:10 +1000</pubDate>
-      
-      <guid>https://blog.dgraph.io/post/bulkloader/</guid>
-      <description>We&amp;rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges! When we heard about the size of these datasets, we knew we needed to have a solid data loading story so that we could support the most extreme demands from our users.
-In a previous blog post, we discussed some of the challenges that we met on our journey towards loading massive datasets into Dgraph.</description>
-    </item>
     
     <item>
       <title>SQL is not beating NoSQL. NoSQL is evolving.</title>

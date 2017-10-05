@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-04%2018%3a49%3a22.544752512%20%2b1100%20AEDT%20m%3d%2b0.115754510" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-04%2018%3a49%3a22.544786175%20%2b1100%20AEDT%20m%3d%2b0.115788144" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-05%2011%3a54%3a48.986831694%20%2b1100%20AEDT%20m%3d%2b0.332814892" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-05%2011%3a54%3a48.986863759%20%2b1100%20AEDT%20m%3d%2b0.332846946" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-04%2018%3a49%3a22.544814609%20%2b1100%20AEDT%20m%3d%2b0.115816563">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-04%2018%3a49%3a22.544843394%20%2b1100%20AEDT%20m%3d%2b0.115845347">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-05%2011%3a54%3a48.986896038%20%2b1100%20AEDT%20m%3d%2b0.332879233">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-05%2011%3a54%3a48.98692515%20%2b1100%20AEDT%20m%3d%2b0.332908327">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
@@ -110,24 +110,6 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
-          
-          
-          
-            <li class="article__item">
-  <div class="article__meta"><span class="article__meta-item article__date">
-  	Mon, Sep 12, 2016 by Pawan Rawal
-
-
-  	<span></div>
-    <a href="https://blog.dgraph.io/post/protobuf/" class="clearfix">
-        <h3 class="article__title">Dgraph: JSON vs. Binary clients</h3>
-        <img class="opening__image" src="https://blog.dgraph.io/images/geminiview.jpg">
-    </a>
-    <p class="article__summary"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
-
-<p></p></p>
-</li>
-
           
           
           
@@ -205,6 +187,28 @@ To keep our latency of communication low, we use a new form of serialization lib
     <p class="article__summary"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em>
 </p></p>
+</li>
+
+          
+          
+          
+            <li class="article__item">
+  <div class="article__meta"><span class="article__meta-item article__date">
+  	Wed, Jun 15, 2016 by Pawan Rawal
+
+
+  	<span></div>
+    <a href="https://blog.dgraph.io/post/wisemonk/" class="clearfix">
+        <h3 class="article__title">Wisemonk: A slackbot to move discussions from Slack to Discourse</h3>
+        <img class="opening__image" src="https://blog.dgraph.io/images/yoda.jpg">
+    </a>
+    <p class="article__summary"><blockquote>
+<p>Then there was the fact that we had so many channels and direct messages and group chats.
+It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
+<em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
+</blockquote>
+
+<p></p></p>
 </li>
 
           
@@ -321,7 +325,7 @@ To keep our latency of communication low, we use a new form of serialization lib
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-04%2018%3a49%3a22.546061403%20%2b1100%20AEDT%20m%3d%2b0.117063400"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-05%2011%3a54%3a48.98814485%20%2b1100%20AEDT%20m%3d%2b0.334128080"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
