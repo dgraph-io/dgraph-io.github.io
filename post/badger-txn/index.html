@@ -64,8 +64,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-05%2016%3a02%3a56.507718538%20%2b1100%20AEDT%20m%3d%2b0.117926482" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-05%2016%3a02%3a56.507741482%20%2b1100%20AEDT%20m%3d%2b0.117949414" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-07%2007%3a43%3a12.550106821%20%2b1100%20AEDT%20m%3d%2b0.074759261" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-07%2007%3a43%3a12.550147811%20%2b1100%20AEDT%20m%3d%2b0.074800220" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -80,8 +80,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-05%2016%3a02%3a56.50775975%20%2b1100%20AEDT%20m%3d%2b0.117967682">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-05%2016%3a02%3a56.507773832%20%2b1100%20AEDT%20m%3d%2b0.117981764">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-07%2007%3a43%3a12.550184347%20%2b1100%20AEDT%20m%3d%2b0.074836742">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-07%2007%3a43%3a12.55021271%20%2b1100%20AEDT%20m%3d%2b0.074865103">
   </head>
 
 
@@ -412,7 +412,7 @@
 
 <p>When we started working on <a href="https://github.com/dgraph-io/badger">Badger</a>, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
 
-<p>As <a href="https://github.com/dgraph-io/badger">Badger</a> is gaining popularity, we see the limitations of our initial choices. The choice to not add transactions cause issues for many users. In fact, that&rsquo;s something we are witnessing in Dgraph as well. So, we decided to support transactions in <a href="and successively in Dgraph">Badger</a>.</p>
+<p>As <a href="https://github.com/dgraph-io/badger">Badger</a> is gaining popularity, we see the limitations of our initial choices. The choice to not add transactions caused issues for many users. In fact, that&rsquo;s something we are witnessing in Dgraph as well. So, we decided to support transactions in <a href="and successively in Dgraph">Badger</a>.</p>
 
 <p>For a good design, we spent time reading through six popular papers on the subject. In particular, Yabandeh&rsquo;s <a href="https://dl.acm.org/citation.cfm?id=2168853">A Critique of Snapshot Isolation</a> provided a sound basis for allowing execution of transactions concurrently, delivering <a href="https://en.wikipedia.org/wiki/Snapshot_isolation">serializable snapshot isolation</a>, avoiding write-skews. While this paper is designed for distributed systems, its applicability extends to any single node system wanting to support concurrent transactional execution.</p>
 
@@ -430,11 +430,11 @@
 
 <p>Once we have a commit timestamp, the writes from this and other transactions are queued in a channel, batched up, and written to value log. Once value log write is successful, we are assured of <strong>Durability.</strong> In case of a crash, a value log replay would be able to pick up these transactions.</p>
 
-<p>Once written to value log, the LSM tree would be updated.  If writing to value log fails, however, the writes won&rsquo;t make it to LSM tree, and the transaction is abandoned.  Because LSM tree wasn&rsquo;t updated, the writes won&rsquo;t be visible to any other transaction, thus ensuring <strong>Atomicity.</strong></p>
+<p>Once written to value log, the LSM tree would be updated, making these writes visible to future transactions.  If writing to value log fails, however, the writes won&rsquo;t make it to LSM tree, and the transaction is abandoned.  Because LSM tree wasn&rsquo;t updated, the writes won&rsquo;t be visible to any other transaction, thus ensuring <strong>Atomicity.</strong></p>
 
-<p>Oracle keeps track of commit-pending transactions in a min heap. Once the transaction is successfully committed, the oracle would advance its read timestamp.  Any new transactions would now start from this version.</p>
+<p>Oracle keeps track of commit-pending transactions in a min heap. Once the transaction is successfully committed, Oracle would advance its read timestamp.  Any new transactions would now start from this version.</p>
 
-<p>This particular strategy is different from Yabandeh&rsquo;s paper, where typically locks are acquired upfront on the keys which are written. Given <a href="https://github.com/dgraph-io/badger">Badger</a> isn&rsquo;t a distributed database and unmarred by the unreliability of network, we could simplify the implementation considerably.</p>
+<p>This particular strategy is different from Yabandeh&rsquo;s paper, where typically locks are acquired upfront on the keys which are written. Given <a href="https://github.com/dgraph-io/badger">Badger</a> isn&rsquo;t a distributed database and isn&rsquo;t marred by the unreliability of network, we could simplify the implementation considerably by using a min heap to update read timestamp.</p>
 
 <h2 id="performance">Performance</h2>
 
@@ -630,7 +630,7 @@
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-05%2016%3a02%3a56.508912942%20%2b1100%20AEDT%20m%3d%2b0.119120875"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-07%2007%3a43%3a12.552302946%20%2b1100%20AEDT%20m%3d%2b0.076955360"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
