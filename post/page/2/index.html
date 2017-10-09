@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.27.1" />
+      <meta name="generator" content="Hugo 0.19" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-07%2007%3a43%3a12.569411668%20%2b1100%20AEDT%20m%3d%2b0.094064074" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-07%2007%3a43%3a12.569430809%20%2b1100%20AEDT%20m%3d%2b0.094083196" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-09%2015%3a08%3a45.218543983%20%2b1100%20AEDT" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-09%2015%3a08%3a45.21856286%20%2b1100%20AEDT" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-07%2007%3a43%3a12.569446978%20%2b1100%20AEDT%20m%3d%2b0.094099366">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-07%2007%3a43%3a12.569463069%20%2b1100%20AEDT%20m%3d%2b0.094115457">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-09%2015%3a08%3a45.218578056%20%2b1100%20AEDT">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-09%2015%3a08%3a45.218590529%20%2b1100%20AEDT">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
@@ -110,6 +110,22 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
+          
+          
+          
+            <li class="article__item">
+  <div class="article__meta"><span class="article__meta-item article__date">
+  	Mon, Aug 14, 2017 by Peter Stace
+
+
+  	<span></div>
+    <a href="https://blog.dgraph.io/post/alice/" class="clearfix">
+        <h3 class="article__title">Making Badger Crash Resilient with ALICE</h3>
+        <img class="opening__image" src="https://blog.dgraph.io/images/galileo-jupiter.jpg">
+    </a>
+    <p class="article__summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</p>
+</li>
+
           
           
           
@@ -179,22 +195,6 @@ work. These goroutines block listening in on a channel, waiting for more work to
 arrive. At some point, you want to signal these goroutines to stop accepting
 more work and exit, so you can cleanly shut down the program.
 </p></p>
-</li>
-
-          
-          
-          
-            <li class="article__item">
-  <div class="article__meta"><span class="article__meta-item article__date">
-  	Mon, Jul 17, 2017 by Manish Rai Jain
-
-
-  	<span></div>
-    <a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="clearfix">
-        <h3 class="article__title">Running Stack Overflow on Dgraph</h3>
-        <img class="opening__image" src="https://blog.dgraph.io/images/reddragonmars.jpg">
-    </a>
-    <p class="article__summary">We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college. It was being used at the company that we joined. It was such a common interview question that it no longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from. MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the same year).</p>
 </li>
 
           
@@ -311,7 +311,7 @@ more work and exit, so you can cleanly shut down the program.
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-07%2007%3a43%3a12.570221999%20%2b1100%20AEDT%20m%3d%2b0.094874410"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-09%2015%3a08%3a45.220431788%20%2b1100%20AEDT"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

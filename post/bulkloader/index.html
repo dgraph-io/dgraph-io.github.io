@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.27.1" />
+      <meta name="generator" content="Hugo 0.19" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -65,8 +65,8 @@ In a previous blog post, we discussed some of the challenges that we met on our 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-04%2018%3a49%3a22.519724588%20%2b1100%20AEDT%20m%3d%2b0.090726569" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-04%2018%3a49%3a22.519766572%20%2b1100%20AEDT%20m%3d%2b0.090768535" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-10-09%2015%3a08%3a45.203566487%20%2b1100%20AEDT" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-10-09%2015%3a08%3a45.203613615%20%2b1100%20AEDT" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -81,8 +81,8 @@ In a previous blog post, we discussed some of the challenges that we met on our 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-04%2018%3a49%3a22.519798123%20%2b1100%20AEDT%20m%3d%2b0.090800084">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-04%2018%3a49%3a22.519827687%20%2b1100%20AEDT%20m%3d%2b0.090829670">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-10-09%2015%3a08%3a45.20363552%20%2b1100%20AEDT">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-10-09%2015%3a08%3a45.203655039%20%2b1100%20AEDT">
   </head>
 
 
@@ -379,7 +379,7 @@ In a previous blog post, we discussed some of the challenges that we met on our 
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Wed, Oct 4, 2017
+                  Mon, Oct 9, 2017
                  by
                 Peter Stace
 
@@ -422,7 +422,7 @@ discussed some of the challenges that we met on our journey towards loading
 massive datasets into <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.  In this post, we will discuss an alternate
 approach that has yielded significantly faster loading times.</p>
 
-<p><strong>TL;DR:</strong> <em>We created a new tool called <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> to populate Dgraph with
+<p><strong>TL;DR:</strong> <em>We created a new tool called <a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> to populate Dgraph with
 an initial dataset.  It&rsquo;s highly performant and is able to load the entire
 <a href="https://archive.org/details/stackexchange">Stack Overflow dataset</a> in just
 over 1 hour on a single 64 core machine. The Stack Overflow dataset is massive
@@ -469,7 +469,7 @@ high-end hardware.</p>
 
 <h2 id="the-new-approach">The new approach</h2>
 
-<p><a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> utilises the map/shuffle/reduce paradigm. The diagram below shows
+<p><a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> utilises the map/shuffle/reduce paradigm. The diagram below shows
 the data flow through the system, from RDFs in files all the way to posting
 lists stored in <a href="https://github.com/dgraph-io/badger">Badger</a> (<a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&rsquo;s key-value store).</p>
 
@@ -545,7 +545,7 @@ order to get a globally sorted stream of map entries.</p>
 quickly scan the stream and assemble posting lists from entries with the same
 posting list key.</p>
 
-<p>The solution was to split up the entire <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> into shards, separated by
+<p>The solution was to split up the entire <a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> into shards, separated by
 predicates. Since edges with different predicates can never appear in the same
 posting list, this is safe to do. There are a separate set of map entry files
 for each shard that can be picked up by multiple shufflers, 1 per shard. If
@@ -569,7 +569,7 @@ concurrently being written to. So many badgers!</p>
 
 <h2 id="show-me-the-numbers">Show me the numbers</h2>
 
-<p>We used <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> to load the entire <a href="https://archive.org/details/stackexchange">Stack Overflow
+<p>We used <a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> to load the entire <a href="https://archive.org/details/stackexchange">Stack Overflow
 dataset</a> in just over 1 hour.</p>
 
 <p>Machine details:</p>
@@ -592,15 +592,14 @@ dataset</a> in just over 1 hour.</p>
 <li>Total speed: 0.818 million edges per second.</li>
 </ul>
 
-<p><a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/bulkloader">Bulkloader</a> is super fast, and we recommend it as the way to do the initial
+<p><a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> is super fast, and we recommend it as the way to do the initial
 data loading for new <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instances.</p>
 
-<p>It will be available from Dgraph v0.8.3 onwards.</p>
+<p>It is available from Dgraph v0.8.3 onwards.</p>
 
 <p>There are lots of different knobs and dials that can be tweaked to get maximum
 performance out of different hardware setups (look at the output when using the
-<code>--help</code> flag). <a href="https://docs.dgraph.io/master/deploy/#dgraph-bulk-loader">Documentation is also
-available</a>.  Give it
+<code>--help</code> flag). You can have a look at the code for the bulkloader <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/dgraph-bulk-loader">here</a>.  Give it
 a go and be amazed!</p>
 
 <hr />
@@ -779,7 +778,7 @@ Saturn.</a></em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-04%2018%3a49%3a22.521765768%20%2b1100%20AEDT%20m%3d%2b0.092767751"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-10-09%2015%3a08%3a45.204461513%20%2b1100%20AEDT"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
