@@ -43,11 +43,6 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/post/client0.8.0/</loc>
-    <lastmod>2017-07-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/post/signal-and-wait/</loc>
     <lastmod>2017-07-19T15:24:00-07:00</lastmod>
   </url>

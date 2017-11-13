@@ -90,16 +90,6 @@ Part of ensuring stability and performance led us to try and load the entire Sta
     </item>
     
     <item>
-      <title>Building apps with Dgraph&#39;s Go client</title>
-      <link>https://blog.dgraph.io/post/client0.8.0/</link>
-      <pubDate>Fri, 28 Jul 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.dgraph.io/post/client0.8.0/</guid>
-      <description>We&amp;rsquo;ve just released v0.8 and it contains lots of new features and improvements. The Go client saw some nice improvements, so this post will walk you through the client interface and demonstrate some example code.
-The GoDoc already contains all the specs and small examples of how to use the client. This post will take you on a guided tour and with examples that are more on the scale of a real app.</description>
-    </item>
-    
-    <item>
       <title>Orchestrating signal and wait in Go</title>
       <link>https://blog.dgraph.io/post/signal-and-wait/</link>
       <pubDate>Wed, 19 Jul 2017 15:24:00 -0700</pubDate>
