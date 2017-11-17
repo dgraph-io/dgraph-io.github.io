@@ -64,8 +64,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-11-13%2016%3a34%3a47.376718147%20%2b1100%20AEDT%20m%3d%2b0.657659159" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-11-13%2016%3a34%3a47.376896295%20%2b1100%20AEDT%20m%3d%2b0.657837237" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-11-17%2012%3a56%3a13.867998409%20%2b1100%20AEDT%20m%3d%2b0.153730639" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-11-17%2012%3a56%3a13.868056044%20%2b1100%20AEDT%20m%3d%2b0.153788256" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -80,8 +80,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-11-13%2016%3a34%3a47.377077154%20%2b1100%20AEDT%20m%3d%2b0.658018106">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-11-13%2016%3a34%3a47.377246088%20%2b1100%20AEDT%20m%3d%2b0.658187130">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-11-17%2012%3a56%3a13.868096815%20%2b1100%20AEDT%20m%3d%2b0.153829027">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-11-17%2012%3a56%3a13.868144722%20%2b1100%20AEDT%20m%3d%2b0.153876958">
   </head>
 
 
@@ -412,7 +412,7 @@
 
 <p>When we started working on <a href="https://github.com/dgraph-io/badger">Badger</a>, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
 
-<p>As <a href="https://github.com/dgraph-io/badger">Badger</a> is gaining popularity, we see the limitations of our initial choices. The choice to not add transactions caused issues for many users. In fact, that&rsquo;s something we are witnessing in Dgraph as well. So, we decided to support transactions in <a href="and successively in Dgraph">Badger</a>.</p>
+<p>As <a href="https://github.com/dgraph-io/badger">Badger</a> is gaining popularity, we see the limitations of our initial choices. The choice to not add transactions caused issues for many users. In fact, that&rsquo;s something we are witnessing in Dgraph as well. So, we decided to support transactions in <a href="https://github.com/dgraph-io/badger">Badger</a> (and successively in Dgraph).</p>
 
 <p>For a good design, we spent time reading through six popular papers on the subject. In particular, Yabandeh&rsquo;s <a href="https://dl.acm.org/citation.cfm?id=2168853">A Critique of Snapshot Isolation</a> provided a sound basis for allowing execution of transactions concurrently, delivering <a href="https://en.wikipedia.org/wiki/Snapshot_isolation">serializable snapshot isolation</a>, avoiding write-skews. While this paper is designed for distributed systems, its applicability extends to any single node system wanting to support concurrent transactional execution.</p>
 
@@ -630,7 +630,7 @@
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-11-13%2016%3a34%3a47.386388266%20%2b1100%20AEDT%20m%3d%2b0.667329516"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-11-17%2012%3a56%3a13.869472753%20%2b1100%20AEDT%20m%3d%2b0.155204983"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

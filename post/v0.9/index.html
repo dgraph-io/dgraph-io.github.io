@@ -35,27 +35,27 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Can it really scale? - Dgraph Blog</title>
-    <meta property='og:title' content="Can it really scale? - Dgraph Blog">
+    <title>Releasing distributed transactions in v0.9 - Dgraph Blog</title>
+    <meta property='og:title' content="Releasing distributed transactions in v0.9 - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/performance-throughput-latency/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/v0.9/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/lander.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/when_neutron_stars_collide.jpg">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/lander.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/when_neutron_stars_collide.jpg"/>
       
     
 
-    <meta name="twitter:title" content="Can it really scale?"/>
-    <meta name="twitter:description" content="In this post, we’ll look at how Dgraph
- performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: Can it really scale?
-"/>
+    <meta name="twitter:title" content="Releasing distributed transactions in v0.9"/>
+    <meta name="twitter:description" content="It all started with a Github issue.
+At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
+Since the beginning of Dgraph, transactions were road mapped as a post v1."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -66,8 +66,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-11-17%2012%3a56%3a13.879326571%20%2b1100%20AEDT%20m%3d%2b0.165058834" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-11-17%2012%3a56%3a13.879358568%20%2b1100%20AEDT%20m%3d%2b0.165090785" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-11-17%2012%3a56%3a13.867816287%20%2b1100%20AEDT%20m%3d%2b0.153548530" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-11-17%2012%3a56%3a13.867884074%20%2b1100%20AEDT%20m%3d%2b0.153616289" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -82,8 +82,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-11-17%2012%3a56%3a13.879388049%20%2b1100%20AEDT%20m%3d%2b0.165120264">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-11-17%2012%3a56%3a13.879418746%20%2b1100%20AEDT%20m%3d%2b0.165150963">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-11-17%2012%3a56%3a13.867919277%20%2b1100%20AEDT%20m%3d%2b0.153651492">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-11-17%2012%3a56%3a13.86795034%20%2b1100%20AEDT%20m%3d%2b0.153682557">
   </head>
 
 
@@ -380,16 +380,16 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Tue, Jun 21, 2016
+                  Tue, Nov 14, 2017
                  by
-                Ashwin Ramesh
+                Peter Stace
 
 
               </span>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Can%20it%20really%20scale%3f&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Releasing%20distributed%20transactions%20in%20v0.9&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fv0.9%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -397,7 +397,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Can it really scale?</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Releasing distributed transactions in v0.9</h1>
           </header>
         </div>
       </div>
@@ -409,218 +409,269 @@
       <div class="row">
         <div class="col-12">
 
-          <img class="opening__image" src="https://blog.dgraph.io/images/lander.jpg">
-          <div class="article-content"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em>
-</p>
+          <img class="opening__image" src="https://blog.dgraph.io/images/when_neutron_stars_collide.jpg">
+          <div class="article-content">
 
-<h2 id="the-dataset">The Dataset</h2>
+<p><strong>It all started with a Github issue.</strong></p>
 
-<p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
-Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
-On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
-It is an ideal data set to test the performance of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.
-We decided not to use the entire data set as it wasn&rsquo;t necessary for our goal here.</p>
+<p>At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting
+January 2017, has been based what our community (<em>that&rsquo;s you!</em>) told us.  The
+biggest contribution that we get from our community, is in the form of feedback.
+We&rsquo;ll forgo any code contribution for quality feedback based on real-world
+usage.</p>
 
-<p>Given our love for movies, we narrowed it down to the film data.
-We ran some scripts and filtered in the movie data only.
-All the data and scripts are present in <a href="https://github.com/dgraph-io/benchmarks/tree/master/data">our benchmarks repository</a>.
-There are two million nodes, which represent directors, actors, films and all the other objects in the database.
-Moreover, 21 million edges (including 4M edges for names) are representing the relationships between actors, films, directors and all the other nodes in the database.</p>
+<p>Since the beginning of Dgraph, transactions were road mapped as a post v1.0
+feature.  Dgraph is a distributed and synchronously replicated system. Adding
+transactions in such a system is a hard challenge; something that we felt
+wasn&rsquo;t worth the complexity to tackle early on.</p>
 
-<hr />
+<p>That changed when <a href="https://twitter.com/gniemeyer">Gustavo Niemeyer</a> filed <a href="https://github.com/dgraph-io/dgraph/issues/1445">this issue</a>. In
+this issue, he made a very convincing case for supporting transactions sooner
+rather than later.</p>
 
-<p>Some interesting information about this data:</p>
+<blockquote>
+<p>So, coming back to Dgraph, if the idea is indeed to position it as a general
+alternative for existing databases as I&rsquo;ve watched in one of your videos,
+please don&rsquo;t make the same mistake of postponing transactions for too long,
+or voicing them as relevant mainly for financial transactions. The sort of
+consistency at stake is relevant for pretty much any application at all that
+uses data, even more when even basic details about a record are recorded as
+multiple individual terms. This would make the situation even worse than with
+MongoDB. &ndash;Gustavo</p>
+</blockquote>
 
-<pre><code># film.film --{film.film.starring}--&gt; [mediator] --{film.performance.actor}--&gt; film.actor
-# Film --&gt; Mediator
-$ zgrep &quot;&lt;film.film.starring&gt;&quot; rdf-films.gz | wc -l
-1397647
+<p>The arguments made by Gustavo were intriguing enough for us to look seriously
+in that direction. Once we started looking, evidence was everywhere.  People
+have been complaining about lack of transactions in MongoDB. Bigtable author
+and Google Fellow, Jeff Dean, considered not implementing transactions in Bigtable
+his <a href="http://highscalability.com/blog/2016/3/16/jeff-dean-on-large-scale-deep-learning-at-google.html">&ldquo;biggest mistake as an engineer&rdquo;</a>.</p>
 
-# Mediator --&gt; Actor
-$ zgrep &quot;&lt;film.performance.actor&gt;&quot; rdf-films.gz | wc -l
-1396420
+<p>It was clear that transactions were something that we should implement right
+away.</p>
 
-# Film --&gt; Director
-$ zgrep &quot;&lt;film.film.directed_by&gt;&quot; rdf-films.gz | wc -l
-242212
+<p>So that&rsquo;s what we did. We used what we call the <strong>Blitzkrieg approach</strong>.
+Explaining it can be a blog post of its own, but the general idea is that a
+single or a very small set of engineers work initially to make changes deep into
+the core, which would break most things minus the core (possibly one package).
+And then the rest of the team helps fix up the outer shells level by level. We
+use this technique regularly to implement major design changes at a lightning
+speed.</p>
 
-# Director --&gt; Film
-$ zgrep &quot;&lt;film.director.film&gt;&quot; rdf-films.gz | wc -l
-245274
+<p>The entire work from the reporting of the <a href="https://github.com/dgraph-io/dgraph/issues/1445">issue</a> (Sep 13) to implementing
+<a href="https://blog.dgraph.io/post/badger-txn/">transactions in Badger</a> (Oct 5), to releasing <a href="https://github.com/dgraph-io/dgraph/releases/tag/v0.9.0">v0.9 with
+transactions</a> (on Nov 14), was done <strong>within a time span of two
+months.</strong></p>
 
-# Film --&gt; Initial Release Date
-$ zgrep &quot;&lt;film.film.initial_release_date&gt;&quot; rdf-films.gz | wc -l
-240858
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wow.. that&#39;s an amazing turnaround time for that level of complexity. Thank you! <a href="https://t.co/niILz03jw0">https://t.co/niILz03jw0</a></p>&mdash; Gustavo Niemeyer (@gniemeyer) <a href="https://twitter.com/gniemeyer/status/930459384131538944?ref_src=twsrc%5Etfw">November 14, 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-# Film --&gt; Genre
-$ zgrep &quot;&lt;film.film.genre&gt;&quot; rdf-films.gz | wc -l
-548152
 
-# Genre --&gt; Film
-$ zgrep &quot;&lt;film.film_genre.films_in_this_genre&gt;&quot; rdf-films.gz | wc -l
-546698
+<p><em>In this blog post, we won&rsquo;t go into the details of how Dgraph&rsquo;s transactions
+work. There&rsquo;s a lot of interesting bits there, due to the uniqueness of this
+challenge; so the team decided that a blog post won&rsquo;t do justice to what has
+gone into building this amazingly distributed graph database over the past two
+years. Instead, we plan to write a technical paper about Dgraph&rsquo;s unique design.
+Watch for that in the coming months!</em></p>
 
-# Generated language names from names freebase rdf data.
-$ zcat langnames.gz | awk '{print $1}' | uniq | sort | uniq | wc -l
-55
+<p>So, instead of how it works, this blog post focuses on how to use transactions
+to build your application.</p>
 
-# Total number of countries.
-$ zgrep &quot;&lt;film.film.country&gt;&quot; rdf-films.gz | awk '{print $3}' | uniq | sort | uniq | wc -l
-304
-</code></pre>
+<h2 id="the-transaction-model">The transaction model</h2>
 
-<hr />
+<p>Transactions come along with a new model for how to interact with Dgraph.
+Previously, it has just been single queries and data mutations on their own.
+Now all queries and mutations are performed as part of a transaction.</p>
 
-<p>This data set contains information about ~480K actors, ~100K directors and ~240K films.
-Some example of entries in the dataset are :</p>
-
-<pre><code>&lt;m.0102j2vq&gt; &lt;film.actor.film&gt; &lt;m.011kyqsq&gt; .
-&lt;m.0102xz6t&gt; &lt;film.performance.film&gt; &lt;m.0kv00q&gt; .
-&lt;m.050llt&gt; &lt;type.object.name&gt; “Aishwarya Rai Bachchan”@hr .
-&lt;m.0bxtg&gt; &lt;type.object.name&gt; “Tom Hanks”@es .
-</code></pre>
-
-<h2 id="terminology">Terminology</h2>
-
-<ul>
-<li>Throughput: Number of queries served by the server per second and received by the client</li>
-<li>Latency: Difference between the time when the server received the request and the time it finished processing the request</li>
-<li>95 percentile latency: The worst case latency which 95 percentage of users that query the database face</li>
-<li>50 percentile latency: The worst case latency which half the users that query the database face</li>
-</ul>
-
-<h2 id="setup">Setup</h2>
-
-<p>All the testing was done on GCE instances. Each machine had 30GB of SSD and at least 7.5 GB of RAM. The number of cores varied depending on the experiments performed.</p>
-
-<p>The tests were run for 1-minute intervals during which all the parallel connections made requests to the database.
-This was repeated ten times and throughput, mean latency, 95th percentile latency, 50th percentile latency were measured.
-Note that for user-facing systems, measuring percentile latency is better than mean latency as the average can be skewed by outliers.</p>
-
-<p>In a multi-node cluster set up, the queries were distributed among each node in a round-robin fashion.
-Note that no single machine contains all the data to answer these queries, in a multi-node cluster.
-They still have to communicate with each other to respond to the queries.</p>
-
-<h2 id="variables">Variables</h2>
-
-<p>The parameters that were varied were:</p>
+<p><strong>Dgraph can perform read-modify-write transactions,</strong> the typical lifecycle
+being:</p>
 
 <ol>
-<li>A number of parallel connections to the database. In Go, this equated to the number of goroutines a client would have. Each goroutine would run in an infinite loop, querying the database via a blocking function.</li>
-<li>Number of cores per server</li>
-<li>Number of servers in the cluster</li>
+<li><p>Create a transaction. Go client: <code>client.NewTxn()</code>.</p></li>
+
+<li><p>Execute a series of queries and mutations. Go client: <code>txn.Mutate(...)</code> and
+<code>txn.Query(...)</code>.</p></li>
+
+<li><p>Finally, commit or abort the transaction. Go client: <code>txn.Commit()</code> and
+<code>txn.Abort()</code>.</p></li>
 </ol>
 
-<p>This gave us an idea of what to expect from the system and would help in predicting the configuration required to handle a given load.</p>
+<p>If two concurrently running transactions write to the same data, then one of the
+commits will fail. It&rsquo;s up to the user to retry.</p>
 
-<h2 id="queries">Queries</h2>
+<h2 id="why-are-transactions-important">Why are transactions important?</h2>
 
-<p>We ran broadly 2 categories of queries.</p>
+<p>Database transactions are important for any app that needs to update its state
+based upon its previous state in a consistent manner or has operations that
+need to apply in atomic units.</p>
+
+<p>That covers a lot of different things. Just to name a few:</p>
 
 <ul>
-<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
+<li><p>Marking inventory in an online shop as sold. You wouldn&rsquo;t want to sell the
+last remaining item to two customers.</p></li>
+
+<li><p>Paying out bets on an online poker site. It&rsquo;s important to ensure the same
+win isn&rsquo;t paid twice.</p></li>
+
+<li><p>Inventory management for a warehouse. Restocking an item twice without seeing
+the new quantity could result in twice as much held stock as intended.</p></li>
+
+<li><p>Financial transactions. When transferring money, it&rsquo;s important that credits
+and debts on two accounts are either both applied or not applied at all.</p></li>
 </ul>
 
-<pre><code>{
-  me ( _xid_ : XID ) {
-    type.object.name.en
-    film.actor.film {
-      film.performance.film {
-        type.object.name.en
-      }
+<p>Dgraph v0.9 introduces <strong>distributed ACID transactions with synchronous
+replication</strong>. What this means is that transactions work across multiple servers
+each holding a part of the graph, providing <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> guarantees.</p>
+
+<p>Increasing throughput is still just a matter of bringing up additional dgraph
+instances. There is no need to worry about seeing a previous database state when
+querying a replica.  From the point of view of a single client, once a
+transaction is committed its changes are guaranteed to be visible in all future
+transactions.  These guarantees help simplify application code significantly
+while providing a high level of scalability and crash resilience.</p>
+
+<h2 id="client-libraries">Client Libraries</h2>
+
+<p>Dgraph exposes its API via gRPC and HTTP. <em>However&hellip;</em></p>
+
+<p>Transactions require some bookkeeping and state management on the client side.
+Because of this, it&rsquo;s strongly recommended to use a client library to interact
+with dgraph.</p>
+
+<p>At the time of writing, official <a href="https://docs.dgraph.io/clients/#go">Go</a>, <a href="https://docs.dgraph.io/clients/#java">Java</a> and a
+community-driven <a href="https://github.com/calummoore/dgraph-node">Javascript</a> clients are available.</p>
+
+<p>Client libraries for other languages can be implemented on top of the gRPC or
+HTTP APIs. The best way to approach this is to read the documentation about how
+to use the <a href="https://docs.dgraph.io/clients/#raw-http">raw HTTP API</a> and look at the implementations for other
+existing clients.</p>
+
+<p>The examples in this blog post will use the Go client.</p>
+
+<h4 id="a-simple-login-system">A simple login system</h4>
+
+<p>Prior to v0.9.0 dgraph had an upsert feature which is now removed. Upsert
+atomically searches and retrieves or creates and retrieves depending on whether
+an entity exists or not.</p>
+
+<p>With transactions, an explicit upsert feature is no longer required. This is
+because upsert style operations can be performed atomically within a transaction.</p>
+
+<p>So how is this done?</p>
+
+<p>In this example, we model a simple login system, where a user has to provide an
+email address and password in order to gain access to the system.</p>
+
+<p>If the user already exists, then the password must match. If the user <em>doesn&rsquo;t</em>
+yet exist, then their password should be stored for later logins.</p>
+
+<p>It&rsquo;s important to do all of this in a transaction. If it&rsquo;s not, then the same
+account might inadvertently be created twice.</p>
+
+<p>Error checking and JSON marshalling/unmarshalling have been omitted for
+brevity:</p>
+
+<pre><code class="language-go">// Create a new transaction. The deferred call to Discard
+// ensures that server-side resources are cleaned up.
+txn := client.NewTxn()
+defer txn.Discard(ctx)
+
+// Create and execute a query to looks up an email and checks if the password
+matches.
+q := fmt.Sprintf(`
+    {
+        login_attempt(func: eq(email, %q)) {
+            checkpwd(pass, %q)
+        }
     }
-  }
+`, email, pass)
+resp, err := txn.Query(ctx, q)
+
+// Unmarshal the response into a struct. It will be empty if the email couldn't
+// be found. Otherwise it will contain a bool to indicate if the password matched.
+var login struct {
+    Account []struct {
+        Pass []struct {
+            CheckPwd bool `json:&quot;checkpwd&quot;`
+        } `json:&quot;pass&quot;`
+    } `json:&quot;login_attempt&quot;`
+}
+err = json.Unmarshal(resp.GetJson(), &amp;login); err != nil {
+
+// Now perform the upsert logic.
+if len(login.Account) == 0 {
+    fmt.Println(&quot;Account doesn't exist! Creating new account.&quot;)
+    mu := &amp;protos.Mutation{
+        SetJson: []byte(fmt.Sprintf(`{ &quot;email&quot;: %q, &quot;pass&quot;: %q }`, email, pass)),
+    }
+    _, err = txn.Mutate(ctx, mu)
+    // Commit the mutation, making it visible outside of the transaction.
+    err = txn.Commit(ctx)
+} else if login.Account[0].Pass[0].CheckPwd {
+    fmt.Println(&quot;Login successful!&quot;)
+} else {
+    fmt.Println(&quot;Wrong email or password.&quot;)
 }
 </code></pre>
 
-<ul>
-<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
-</ul>
+<h4 id="bank-account-transfers">Bank Account Transfers</h4>
 
-<pre><code>{
-  me ( _xid_ : XID ) {
-    type.object.name.en
-    film.director.film {
-      film.film.genre {
-        type.object.name.en
-      }
-    }
-  }
+<p>The classical example for database transactions is to transfer money between
+two bank accounts. In this example, we have a set of bank accounts, each
+represented by a node in the graph. Each node is known by a uid and has its
+balance represented by a <code>bal</code> predicate.</p>
+
+<p>This example was extracted from a tool we used when testing the correctness of
+our transaction implementation. The full source is <a href="https://github.com/dgraph-io/dgraph/blob/master/contrib/integration/bank/main.go">here</a>.</p>
+
+<p>Given the uid of two accounts, we want to transfer money from one account to
+the other, i.e. reduce one balance and increase the other by the same amount.</p>
+
+<p>It&rsquo;s important that this is done in a transaction; if it isn&rsquo;t, then two
+transfers happening concurrently could result in the net balance of all
+accounts changing. It could also result in double spending.</p>
+
+<pre><code class="language-go">txn := s.dg.NewTxn()
+defer txn.Discard(ctx)
+
+// Get current balances for the two accounts.
+q := fmt.Sprintf(`{both(func: uid(%s, %s)) { uid, bal }}`, from, to)
+resp, err := txn.Query(ctx, q)
+type Accounts struct {
+    Both []Account `json:&quot;both&quot;`
 }
+var a Accounts
+err := json.Unmarshal(resp.Json, &amp;a); err != nil {
+
+// Perform the transfer.
+a.Both[0].Bal += 5
+a.Both[1].Bal -= 5
+if a.Both[0].Bal &lt; 0 || a.Both[1].Bal &lt; {
+    // Abandon the transaction if there are insufficient funds.
+    return
+}
+
+// Write back to dgraph.
+var mu protos.Mutation
+data, err := json.Marshal(a.Both)
+mu.SetJson = data
+_, err = txn.Mutate(ctx, &amp;mu)
+err = txn.Commit(ctx)
 </code></pre>
-
-<p>During each iteration, either an actor or a director category was chosen randomly.
-Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
-
-<h2 id="performance">Performance</h2>
-
-<p>Let us look at some graphs obtained by varying the machine specs and the number of nodes in the cluster under different loads.</p>
-
-<h3 id="vary-the-number-of-cores-in-a-single-instance">Vary the number of cores in a single instance</h3>
-
-<p><img src="/images/cores_thru.jpg" alt="Throughput on varying number of cores" /></p>
-
-<p><img src="/images/cores_lat_50.jpg" alt="50 percentile latency on varying number of cores" /></p>
-
-<p><img src="/images/cores_lat_95.jpg" alt="95 percentile latency on varying number of cores" /></p>
-
-<p><img src="/images/cores_lat_mean.jpg" alt="mean latency on varying number of cores" /></p>
-
-<ul>
-<li>With the same number of cores, when we increase the number of connections, i.e. load on the system, the throughput as well as the latency increase.</li>
-<li>Throughput increases till some point and then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
-<li>As expected, the latency increases almost linearly with the number of connections.</li>
-<li>When we increase the number of cores, the latency decreases and the throughput increases.</li>
-</ul>
-
-<h3 id="vary-number-of-instances">Vary number of instances</h3>
-
-<p><img src="/images/topo_thru.jpg" alt="Throughput on varying number of instances" /></p>
-
-<p><img src="/images/dist_lat_50.jpg" alt="50 percentile latency on varying number of instances" /></p>
-
-<p><img src="/images/dist_lat_95.jpg" alt="95 percentile latency on varying number of instances" /></p>
-
-<p><img src="/images/dist_lat_mean.jpg" alt="mean latency on varying number of instances" /></p>
-
-<ul>
-<li>When we increase the number of parallel connections, the throughput increases, but then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
-<li>The latency increases almost linearly with the number of connections.</li>
-<li>Latency in the case of a single instance is observed to be the equal to (or a bit lower than) that of distributed configurations as the former doesn’t require any network calls. However, as the number of requests/load increase, the cumulative computational power comes into play and overshadows the latency incurred due to network calls. Hence, the latency reduces in the distributed version under higher loads.</li>
-<li>On comparing across the one, two and five node clusters, we can see that the latency, as well as the throughput, are better for configurations with a higher number of nodes, i.e., when there is more computational capacity at disposal. The throughput increases as we have greater computational power and can handle more queries.</li>
-</ul>
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>From the above experiments, we can see a relationship between the throughput, latency and the overall computational power of the cluster.
-The graphs show that the throughput increases as the computational power increases.
-Which can be achieved either by increasing the number of cores on each server or the number of nodes in the cluster.</p>
+<p>It has historically been difficult to implement transactions in NoSQL
+technologies. Notably, MongoDB has been
+<a href="https://jira.mongodb.org/browse/SERVER-11500">working</a> on a
+<a href="https://jira.mongodb.org/browse/SERVER-11508">solution</a> for a
+<a href="https://jira.mongodb.org/browse/SERVER-2804">while</a>.</p>
 
-<p>The latency increases as the amount of load on the database increases.
-However, the rate of the increase differs based on how much computational power we have available.</p>
-
-<p>This experiment also shows that there is a limit on how much computational power a single node can have, and once we reach that limit, scaling horizontally is the right option.
-Not only that, but it also proves that scaling horizontally improves the performance.
-Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.</p>
-
-<p>Based on this experiment, our recommendation for running <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- would be:</p>
-
-<ul>
-<li>Use as many cores as possible</li>
-<li>Have the servers geographically close-by so that network latency is reduced</li>
-<li>Distribute the data among servers and query them in a round-robin fashion for greater throughput</li>
-</ul>
-
-<p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is scalable.</strong></p>
-
-<p>Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!</p>
-
-<p><em>This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
-The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0">available for download here</a>.</em></p>
+<p>So implementing transactions with synchronous replication is a massive
+milestone for Dgraph. With this complex but valuable feature, our community
+will be able to build apps on top of dgraph without having to worry about
+tricky data integrity issues!</p>
 
 <hr />
 
@@ -657,7 +708,8 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 <br/>
 
 
-<p><em>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></em></p></div>
+<p><em>Top image: <a href="https://www.nasa.gov/sites/default/files/thumbnails/image/neutron_star_merger_still_3.jpg">When (Neutron) Stars Colide</a></em></p>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -682,12 +734,12 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/ashwin.jpg" class="article-author__image">
+	<img src="/images/peter.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Ashwin Ramesh
+    <h4 class="article-author__name">Peter Stace
 
 
       <span class="article-author__title">Author</span>
@@ -696,14 +748,14 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/ashwin95r" class="social__link">
+            <a href="https://www.linkedin.com/in/peter-stace-b34726b8/" class="social__link">
                 <svg class="icon social__icon social__icon--linkedin">
                     <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
             </a>
         </li>
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/ashwin_rrr" class="social__link">
+            <a href="https://twitter.com/peterjohnstace" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -711,7 +763,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
         </li>
     </ul>
 </nav>
-<p>Ashwin did his undergrad in computer science at IIT Madras and likes working on distributed systems. He likes working out, hiking, swimming and everything adventurous. Loves travelling to new places and trying out new food.</p>
+<p>After Peter graduated in Computer Science in 2012, he worked on low latency derivative trading systems. He enjoys optimising systems for efficiency and speed. In his spare time, he enjoys cycling and drone racing.</p>
 
 
   </div>
@@ -796,7 +848,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/performance-throughput-latency/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/v0.9/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -835,7 +887,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-11-17%2012%3a56%3a13.880114058%20%2b1100%20AEDT%20m%3d%2b0.165846290"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-11-17%2012%3a56%3a13.870094922%20%2b1100%20AEDT%20m%3d%2b0.155827157"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -890,7 +942,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/performance-throughput-latency\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/v0.9\/"
 };
 (function() {
   var d = document.createElement("script");

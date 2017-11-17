@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 09 Oct 2017 17:09:10 +1000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Nov 2017 15:30:04 +1100</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Releasing distributed transactions in v0.9</title>
+      <link>https://blog.dgraph.io/post/v0.9/</link>
+      <pubDate>Tue, 14 Nov 2017 15:30:04 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/v0.9/</guid>
+      <description>It all started with a Github issue.
+At Dgraph, we really care about user feedback. Most of what we&amp;rsquo;ve built starting January 2017, has been based what our community (that&amp;rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&amp;rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
+Since the beginning of Dgraph, transactions were road mapped as a post v1.</description>
+    </item>
     
     <item>
       <title>Loading close to 1M edges/sec into Dgraph</title>

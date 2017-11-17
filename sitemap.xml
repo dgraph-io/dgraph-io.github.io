@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/v0.9/</loc>
+    <lastmod>2017-11-14T15:30:04+11:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/bulkloader/</loc>
     <lastmod>2017-10-09T17:09:10+10:00</lastmod>
   </url>
@@ -144,7 +149,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2017-10-09T17:09:10+10:00</lastmod>
+    <lastmod>2017-11-14T15:30:04+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -156,7 +161,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2017-10-09T17:09:10+10:00</lastmod>
+    <lastmod>2017-11-14T15:30:04+11:00</lastmod>
     <priority>0</priority>
   </url>
   
