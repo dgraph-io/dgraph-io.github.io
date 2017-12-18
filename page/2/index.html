@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-18%2018%3a59%3a48.655201918%20%2b1100%20AEDT%20m%3d%2b1.001473679" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-18%2018%3a59%3a48.655225734%20%2b1100%20AEDT%20m%3d%2b1.001497466" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-18%2019%3a02%3a03.285138114%20%2b1100%20AEDT%20m%3d%2b0.199051226" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-18%2019%3a02%3a03.285182516%20%2b1100%20AEDT%20m%3d%2b0.199095643" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-18%2018%3a59%3a48.655245409%20%2b1100%20AEDT%20m%3d%2b1.001517140">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-18%2018%3a59%3a48.655264152%20%2b1100%20AEDT%20m%3d%2b1.001535882">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-18%2019%3a02%3a03.285219691%20%2b1100%20AEDT%20m%3d%2b0.199132809">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-18%2019%3a02%3a03.285261149%20%2b1100%20AEDT%20m%3d%2b0.199174288">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
@@ -110,24 +110,6 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
-          
-          
-          
-            <li class="article__item">
-  <div class="article__meta"><span class="article__meta-item article__date">
-  	Tue, Oct 3, 2017 by Manish Rai Jain
-
-
-  	<span></div>
-    <a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="clearfix">
-        <h3 class="article__title">[Opinion] SQL is not beating NoSQL. NoSQL is evolving.</h3>
-        <img class="opening__image" src="https://blog.dgraph.io/images/northwest.jpg">
-    </a>
-    <p class="article__summary">Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
-The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.
-Bigtable and MapReduce were developed to deal with an enormous amount of data at Google.</p>
-</li>
-
           
           
           
@@ -191,6 +173,23 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
     </a>
     <p class="article__summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
 Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</p>
+</li>
+
+          
+          
+          
+            <li class="article__item">
+  <div class="article__meta"><span class="article__meta-item article__date">
+  	Wed, Aug 2, 2017 by Sung Won Cho
+
+
+  	<span></div>
+    <a href="https://blog.dgraph.io/post/building-graphoverflow/" class="clearfix">
+        <h3 class="article__title">Building a Stack Overflow Clone with Dgraph, and React</h3>
+        <img class="opening__image" src="https://blog.dgraph.io/images/graphoverflow-node-cover.jpg">
+    </a>
+    <p class="article__summary"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.
+</p></p>
 </li>
 
           
@@ -307,7 +306,7 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-18%2018%3a59%3a48.656149119%20%2b1100%20AEDT%20m%3d%2b1.002420850"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-18%2019%3a02%3a03.286894581%20%2b1100%20AEDT%20m%3d%2b0.200807730"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
