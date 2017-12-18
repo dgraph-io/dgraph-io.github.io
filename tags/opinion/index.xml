@@ -2,12 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Opinion on Dgraph Blog</title>
-    <link>https://blog.dgraph.io/tags/opinion/index.xml</link>
+    <link>https://blog.dgraph.io/tags/opinion/</link>
     <description>Recent content in Opinion on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <atom:link href="https://blog.dgraph.io/tags/opinion/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 03 Oct 2017 13:20:35 +1100</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/tags/opinion/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>[Opinion] SQL is not beating NoSQL. NoSQL is evolving.</title>
@@ -15,71 +18,9 @@
       <pubDate>Tue, 03 Oct 2017 13:20:35 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/sql-vs-nosql/</guid>
-      <description>&lt;p&gt;Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “&lt;a href=&#34;https://blog.timescale.com/why-sql-beating-nosql-what-this-means-for-future-of-data-time-series-database-348b777b847a&#34;&gt;Why SQL is beating NoSQL&lt;/a&gt;,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.&lt;/p&gt;
-
-&lt;p&gt;The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.&lt;/p&gt;
-
-&lt;p&gt;Bigtable and MapReduce were developed to deal with an enormous amount of data at Google. I was part of Google’s incremental indexing system, &lt;a href=&#34;https://googleblog.blogspot.com.au/2010/06/our-new-search-index-caffeine.html&#34;&gt;Caffeine&lt;/a&gt;. A single distributed Bigtable instance handled petabytes of web data with new information being added at the rate of hundreds of terabytes per day. A feat like this is unachievable by any SQL system popular even today.&lt;/p&gt;
-
-&lt;p&gt;Typical SQL database has not changed. It is still a single instance, scaling which is pain and requires application side complexity. There’s a real need for scalable systems, something that traditional SQL systems still haven’t evolved to provide. We do not have a distributed MySQL or a distributed Postgres.&lt;/p&gt;
-
-&lt;p&gt;A learning curve is commonly cited as a counter to new entrants to database world (also made by Kulkarni).&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;“Each NoSQL database offered its own unique query language, which meant: more languages to learn”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;I do not buy it.&lt;/strong&gt; Most companies add new tech despite the unfamiliarity of their devs. Redis, Elastic Search, Memcache are (or at least recently were) all unfamiliar technologies that are commonly part of a typical tech stack.&lt;/p&gt;
-
-&lt;p&gt;In fact, contradictory arguments are used in both ways. Devs like &lt;em&gt;“everything new and shiny,”&lt;/em&gt; and at the same time, &lt;em&gt;“learning curve limits adoption.”&lt;/em&gt; Both arguments were made by Kulkarni on why NoSQL became big and why it did not, respectively. Both fail to understand and explain the NoSQL movement.&lt;/p&gt;
-
-&lt;p&gt;As I write this, MongoDB has &lt;a href=&#34;https://techcrunch.com/2017/09/21/database-provider-mongodb-has-filed-to-go-public/&#34;&gt;filed to go public&lt;/a&gt;. &lt;em&gt;This is a huge success for any database company!&lt;/em&gt; Developers use Mongo not just because it is new and shiny (well, it no longer is new), but because it solves real problems for them.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;So what has changed?&lt;/strong&gt; What changed is a result of lessons learned by NoSQL folks. Jeff Dean, the Google fellow behind MapReduce and Bigtable, said that not supporting distributed transactions in Bigtable &lt;a href=&#34;http://nosql.mypopescu.com/post/2082849662/distributed-transactions-matter-googles-jeff&#34;&gt;was a mistake&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;In fact, many projects were using Megastore at Google despite poor write throughput, because it added transactions on top of Bigtable. Caffeine itself used transactions via &lt;a href=&#34;https://research.google.com/pubs/pub36726.html&#34;&gt;Percolator&lt;/a&gt;. So Spanner was an evolution of Bigtable to provide distributed transactions. Four of Bigtable authors worked on Spanner, including Jeff Dean and Sanjay Ghemawat.&lt;/p&gt;
-
-&lt;p&gt;Once you evolve a NoSQL database into providing MVCC and transactions, then adding a SQL based query language is not hard. However, it could be any other interface. &lt;strong&gt;The interface does not matter.&lt;/strong&gt; What matters is the fact that scalability &lt;strong&gt;and&lt;/strong&gt; transactions are important. Bigtable traded off transactional access for scalability, something that Cassandra and MongoDB went on to copy. That and lack of joins is the primary cause of discontent among NoSQL developers.&lt;/p&gt;
-
-&lt;p&gt;So, like Spanner is an evolution of Bigtable, CockroachDB is an evolution of MongoDB. SQL has not changed or made a comeback, or beaten NoSQL. NoSQL has morphed into something developers have come to expect from their databases, namely transactions and joins.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;div class=&#34;engage&#34;&gt;
-	&lt;p&gt;&lt;strong&gt;We are building an open source, real time, horizontally scalable and distributed graph database.&lt;/strong&gt;&lt;/p&gt;
-  &lt;table&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-    &lt;th&gt;&lt;/th&gt;
-    &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Get started with Dgraph.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://docs.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://docs.dgraph.io&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;See our live demo.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://dgraph.io&#34; target=&#34;_blank&#34;&gt;https://dgraph.io&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Star us on Github.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;https://github.com/dgraph-io/dgraph&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Ask us questions.&lt;/td&gt;
-      &lt;td&gt;&lt;a href=&#34;https://discuss.dgraph.io&#34; target=&#34;_blank&#34;&gt;https://discuss.dgraph.io&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-	&lt;strong&gt;We&#39;re starting to support enterprises in deploying Dgraph in production. &lt;a href=&#34;mailto:manish@dgraph.io&#34;&gt;Talk to us&lt;/a&gt;, if you want us to help you try out Dgraph at your organization.&lt;/strong&gt;
-&lt;/div&gt;
-&lt;br/&gt;
-
-
-&lt;p&gt;&lt;em&gt;Top image: &lt;a href=&#34;https://www.nasa.gov/image-feature/phytoplankton-bloom-in-the-north-atlantic&#34;&gt;Phytoplankton Bloom in the North Atlantic&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-</description>
+      <description>Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
+The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.
+Bigtable and MapReduce were developed to deal with an enormous amount of data at Google.</description>
     </item>
     
   </channel>
