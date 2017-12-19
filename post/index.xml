@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Fri, 01 Dec 2017 17:56:17 +1100</lastBuildDate>
+    <lastBuildDate>Tue, 19 Dec 2017 17:33:22 +1100</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Releasing Dgraph 1.0: Production-Ready Graph Database</title>
+      <link>https://blog.dgraph.io/post/releasing-v1.0/</link>
+      <pubDate>Tue, 19 Dec 2017 17:33:22 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/releasing-v1.0/</guid>
+      <description>Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&amp;rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
+To give a bit of a background &amp;ndash; Dgraph, as a graph database, is designed to excel at the weaknesses of traditional relational databases: traversing relationships and efficiently executing complex joins at scale.</description>
+    </item>
     
     <item>
       <title>Open Source Alternative to Amazon Neptune</title>

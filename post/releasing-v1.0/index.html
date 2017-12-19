@@ -35,30 +35,26 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
-    <title>Releasing Dgraph v0.7.1 - Dgraph Blog</title>
-    <meta property='og:title' content="Releasing Dgraph v0.7.1 - Dgraph Blog">
+    <title>Releasing Dgraph 1.0: Production-Ready Graph Database - Dgraph Blog</title>
+    <meta property='og:title' content="Releasing Dgraph 1.0: Production-Ready Graph Database - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/v0.7-release/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/releasing-v1.0/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/routeplan.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/launch.jpg">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/routeplan.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/launch.jpg"/>
       
     
 
-    <meta name="twitter:title" content="Releasing Dgraph v0.7.1"/>
-    <meta name="twitter:description" content="Dgraph
- team is super excited to present v0.7.1 of Dgraph
-. This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented 90% of all the features we had planned in our product roadmap, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.
-
-"/>
+    <meta name="twitter:title" content="Releasing Dgraph 1.0: Production-Ready Graph Database"/>
+    <meta name="twitter:description" content="Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
+To give a bit of a background &ndash; Dgraph, as a graph database, is designed to excel at the weaknesses of traditional relational databases: traversing relationships and efficiently executing complex joins at scale."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -69,8 +65,8 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-20%2005%3a23%3a38.218528583%20%2b1100%20AEDT%20m%3d%2b0.135661989" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-20%2005%3a23%3a38.218564952%20%2b1100%20AEDT%20m%3d%2b0.135698359" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-20%2005%3a23%3a38.205301894%20%2b1100%20AEDT%20m%3d%2b0.122435331" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-20%2005%3a23%3a38.205360164%20%2b1100%20AEDT%20m%3d%2b0.122493557" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -85,8 +81,8 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-20%2005%3a23%3a38.218603423%20%2b1100%20AEDT%20m%3d%2b0.135736813">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-20%2005%3a23%3a38.218641903%20%2b1100%20AEDT%20m%3d%2b0.135775296">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-20%2005%3a23%3a38.20540647%20%2b1100%20AEDT%20m%3d%2b0.122539859">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-20%2005%3a23%3a38.205443105%20%2b1100%20AEDT%20m%3d%2b0.122576492">
 
     
     <script>
@@ -449,7 +445,7 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Jan 5, 2017
+                  Tue, Dec 19, 2017
                  by
                 Manish Rai Jain
 
@@ -458,7 +454,7 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Releasing%20Dgraph%20v0.7.1&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fv0.7-release%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Releasing%20Dgraph%201.0%3a%20Production-Ready%20Graph%20Database&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2freleasing-v1.0%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -466,7 +462,7 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Releasing Dgraph v0.7.1</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Releasing Dgraph 1.0: Production-Ready Graph Database</h1>
           </header>
         </div>
       </div>
@@ -478,220 +474,192 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
       <div class="row">
         <div class="col-12">
 
-          <img class="main__image" src="https://blog.dgraph.io/images/routeplan.jpg">
-          <div class="article-content"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-. This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
+          <img class="main__image" src="https://blog.dgraph.io/images/launch.jpg">
+          <div class="article-content">
 
-<p></p>
+<p><a href="https://github.com/dgraph-io/dgraph">Dgraph</a> started around end-August, picked up steam in mid-October, and v0.1 was
+released in early-December, 2015. From one, the contributors grew to 46, with
+the project amassing over 4000 Github stars over the past two years. 2190
+commits (<em>we squash our branches</em>), 277 branches and 25 releases later, <strong>we&rsquo;re
+proud to announce that <a href="https://github.com/dgraph-io/dgraph/releases">Dgraph has reached v1.0</a>, our first production-ready
+release.</strong></p>
 
-<p>Today, I&rsquo;m going to talk about these new features, and what you can expect from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</p>
+<p>To give a bit of a background &ndash; Dgraph, as a graph database, is
+designed to excel at the weaknesses of traditional relational databases:
+traversing relationships and efficiently executing complex joins at scale.
+Relational databases are not going anywhere, and they would continue to play a
+huge role in tech. But, at the same time, there&rsquo;s a big need for handling highly
+interconnected, sparse data with flexible schema, to truly understand user
+queries.  Google is <a href="http://indianexpress.com/article/technology/google-search-algorithm-fake-news-machine-learning-ben-gomes-4975997/">going this way</a>, and so is the rest of the world.
+This is what inspired us to build <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> back in 2015, and this basic
+premise continues to shape the project.</p>
 
-<p><strong>Note: This is going to be a long blog post. If you just want to try out <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, you can jump straight to our <a href="https://wiki.dgraph.io/Get_Started">5 step tutorial to get started with Dgraph</a>.</strong></p>
+<p>Our investors immediately saw the value of what we were building and where the
+database market is headed.  While it is hard as an outsider to raise funds from
+the valley, we got backing from some of the smartest investors. <strong>We&rsquo;re thrilled
+to announce that we have raised $3M in seed funding,</strong> led by Salil Deshpande of
+Bain Capital Ventures, joined by Mike Cannon-Brookes of Atlassian, Blackbird
+Ventures, and AirTree Ventures.</p>
 
-<h3 id="speed">Speed</h3>
+<p>With experience in early-stage infrastructure software and open source, Salil
+will make an invaluable asset to Dgraph Labs by joining the board.  He&rsquo;s been on
+Midas list of top 100 VCs, with prominent investments in Mulesoft, Lending Club
+and, Redis Labs.  This funding round comes at the right time for us to expand our
+offerings to the cloud, and continue to build the most advanced graph database
+in the world.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- v0.7.1 is the <em>fastest</em> version of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- we&rsquo;ve ever released. Live data loading is now so fast that we realized we no longer needed a separate offline batch data loader. So, we removed all that complexity and just wrote a simple script to send mutation queries to live <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- via GRPC.</p>
+<p>For this next phase of <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>, we&rsquo;re moving our engineering team to
+the SF bay area, which is where the inspiration of Dgraph came from, and where
+we&rsquo;ll have access to an unparalleled level of knowledge, talent, and market. At
+the same time, we&rsquo;re opening an office in Bangalore.</p>
 
-<p>You can read more about loading and querying performance <a href="https://wiki.dgraph.io/Performance">here</a>.</p>
 
-<h3 id="data-persistence-sharding-high-availability-and-crash-resilience">Data Persistence, Sharding, High Availability, and Crash Resilience</h3>
+<figure >
+    
+        <img src="/images/team-dgraph.jpg" alt="Dgraph&#39;s Australia team went for a splash during summer in Sydney." />
+    
+    
+    <figcaption>
+        <p>
+        Dgraph&#39;s Australia team went for a splash during summer in Sydney.
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- has been built from ground up to be run in Google scale production environments. To run terabytes of structured data over commodity hardware has been the main aim since the beginning. To achieve that, Dgraph needs to be able to deal with server failures; without losing any data or dropping any queries.</p>
 
-<p>We&rsquo;ve implemented RAFT, a distributed consensus algorithm within <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, to handle such failures. Any writes that happen to go through a group of servers and are only acknowledged to the client once they&rsquo;ve been applied to a majority of servers in the group. Thus, even if some of these servers crash, the data can be accessed, updated and queries can flow without the user getting affected.</p>
+<h2 id="dgraph-version-1-0">Dgraph version 1.0</h2>
 
-<p>Also, new servers can be introduced into an existing cluster by providing the IP address of any healthy server in the cluster. They will automatically pick up the other members, pull in data shards from healthy nodes, join the groups and become part of the cluster.</p>
+<p>At Dgraph, our mission is to build <strong>world&rsquo;s best graph database.</strong> We&rsquo;re the
+only graph database which inspires to become the primary database in the tech
+stack. This idea has been the driving factor behind the design choices of
+<a href="https://github.com/dgraph-io/dgraph">Dgraph</a>, which we&rsquo;ll explore now.</p>
 
-<p>Such functionality has never been an aim for graph databases in the past. But we strongly believe that graph databases can be run as the primary databases; not just add-ons. To that effect, it&rsquo;s important that they be able to survive machine crashes and avoid data loss.</p>
+<h3 id="distributed-graph">Distributed Graph</h3>
 
-<blockquote>
-<p>This functionality makes <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- the most production ready graph database in the market.</p>
-</blockquote>
+<p>Dgraph is built to scale horizontally. Modern data sets have long grown beyond
+the capabilities of a single server. However, most SQL and graph databases are
+limited by design to store the universal data set into a single machine. This
+has many disadvantages, including introducing a <a href="https://en.wikipedia.org/wiki/Single_point_of_failure">single point of failure</a>
+and being <a href="https://www.345.systems/architecture/vertical-scalability-even-thing/">disproportionately more expensive</a> to run.</p>
 
-<p>You can read more about running multiple instances of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, sharding and distributing data in a cluster <a href="https://wiki.dgraph.io/Deploy">here</a>. In fact, we created a small video to show you how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- can recover from crashes without losing any data directly after a load.
-<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
-    <iframe src="//www.youtube.com/embed/dzTEXxF0TGs?rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="" frameborder="0"></iframe>
-</div>
-</p>
+<p>Building a distributed graph database is a hard challenge. Graph DBs must
+provide a superset of relational database operations, including storing the data
+in a way which can execute constant time edge traversals and arbitrarily deep
+joins, without a view of the universal data set.  Most graph databases are,
+therefore, either a single server architecture or a graph layer built on top of
+other databases, where they can get this vantage point of universal view. This
+leads to either lack of scalability, or lack of performance, <em>choose at least one</em>.</p>
 
-<h3 id="backups">Backups</h3>
+<p><a href="https://github.com/dgraph-io/dgraph">Dgraph</a>, on the other hand, was designed keeping the problems of a
+fast-growing company in mind.  It not only shards the data in a way where it can
+execute queries (<em>joins, traversals, filters, sorts, paginations</em>) without this universal
+view, it also minimizes the number of network calls and disk seeks required to
+execute these queries. Both of these factors become prominent in datasets
+spanning hundreds of servers. Not only that, as you add more servers, data
+automatically gets sharded and moved to fill the new ones. Dgraph automatically
+rebalances shards among servers to ensure that load is evenly distributed.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- believes in standards. We heartily use the existing RDF NQuad standard for data input. Now, we&rsquo;re making it easy to export data from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- to other systems, by exporting our backups in RDF NQuad format. This makes it easy to feed <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- data into other systems, upgrade <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- versions or to switch over to another graph database. You can read more about backup <a href="https://wik.dgraph.io/Deploy#Backup">here</a>.</p>
+<p>While being distributed, Dgraph provides lock-free ACID transactions with
+snapshot isolation, designed for low latency. Transactions make it a
+lot easier for application developers to think through database behavior,
+removing any data integrity issues.</p>
 
-<h3 id="indexing">Indexing</h3>
+<h3 id="consistent-replication-and-high-availability">Consistent Replication and High-Availability</h3>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- can now index various scalar values to allow sorting,  term matching, and inequality filters. We support these value types: <code>int</code>, <code>float</code>, <code>string</code>, <code>bool</code>, <code>date</code>, <code>datetime</code>, <code>geo</code>, <code>uid</code>.</p>
+<p><a href="https://github.com/dgraph-io/dgraph">Dgraph</a> does away with the whole master-slave replication architecture.
+Early on, we decided against providing an eventual consistency model. In that
+model, a replica which is running behind the <em>master</em> would not show latest
+writes, and the developer needs to handle this in the application logic. We want
+Dgraph system to be reliable and consistent, where <strong>scalability is an operational
+feature, not a hurdle application developers need to code around.</strong></p>
 
-<p>String values get tokenized using ICU, and allow <code>allof</code> and <code>anyof</code> functions.
-<code>geo</code> values allow for geo-indexing and support the geo functions mentioned below. <code>uid</code> value is a way to indicate that the predicate edge points to another entity node.
-This is useful to generate edges in reverse direction automatically. The rest support sorting, equality and inequality functions.</p>
+<p>Instead, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> provides consistent (synchronous) replication, utilizing Raft, a
+consensus algorithm, allowing k servers dying in a 2k+1 replication setting,
+without affecting any reads or writes. Each data shard can be replicated an odd
+number of times, and replicas located in different datacenters, or availability
+zones to allow faster communication from your clients. Dgraph guarantees atomic
+consistency of writes, which means irrespective of which replica is hit for
+reading, any write done before is guaranteed to be available. This guarantee
+makes it a lot easier to build applications, which can then serve queries from
+the closest datacenter to the end-user.</p>
 
-<p>If you want to generate the index for a particular predicate, mention its type and specify the <code>@index</code> keyword.
-Similarly, to generate reverses for a uid predicate, you can specify the <code>@reverse</code> keyword.</p>
 
-<p>Here&rsquo;s an example schema file for freebase film data:</p>
+<figure >
+    
+        <img src="/images/supersonic.jpg" alt="Aircraft transitioning from subsonic to supersonic speed" />
+    
+    
+    <figcaption>
+        <p>
+        Aircraft transitioning from subsonic to supersonic speed
+        <a href="https://www.nasa.gov/image-feature/seeing-an-x-planes-sonic-boom"> 
+            
+        </a> 
+        </p> 
+    </figcaption>
+    
+</figure>
 
-<pre><code>scalar (
-  film.director.film             : uid    @ reverse
-  film.film.genre                : uid    @ reverse
-  film.film.initial_release_date : date   @ index
-  film.film.rating               : uid    @ reverse
-  loc                            : geo    @ index
-  type.object.name.en            : string @ index
-  type.object.name.hi            : string @ index
-  type.object.name.ta            : string @ index
-)
-</code></pre>
 
-<p>You can read more about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- schema <a href="https://wiki.dgraph.io/Query_Language#Schema">here</a>.</p>
+<p>Despite the focus on distribution, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> performs exceptionally well as a
+single server. In fact, many Dgraph users run it on a single server and benefit
+from the amazing performance it brings.  You can read more about the
+capabilities of Dgraph, in <a href="https://blog.dgraph.io/post/neptune/">this recent post</a>.</p>
 
-<h4 id="reverse-edges">Reverse Edges</h4>
+<h2 id="what-next">What Next</h2>
 
-<p>Each graph edge is unidirectional. But a lot of times, you need to have both the forward and backward edges. For those cases, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- now provides a <code>@reverse</code> keyword, which can be applied to predicates of <code>uid</code> type. This would trigger automatic generation of the reverse edges, to allow querying in the reverse direction.</p>
+<p>The next chapter of <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is very exciting. We&rsquo;re planning to provide a managed
+hosted service, to make it easier for adopters to use Dgraph without
+any of the operational overhead. We&rsquo;ll also be significantly improving our user
+interface, to allow cluster management and advanced data exploration.</p>
 
-<p>You can read more about reverse edges <a href="https://wiki.dgraph.io/Query_Language#Reverse_Edges">here</a>.</p>
+<p>They say the true test of any distributed system is <a href="https://jepsen.io/">Jepsen</a>, and in the
+coming year, we&rsquo;re going to be working with <a href="https://twitter.com/aphyr">Kyle Kingsbury</a> to help set up the
+tests for Dgraph. Simultaneously, we&rsquo;ll push our design to span globally,
+with automatic replication across geographically distributed regions, to become
+the <strong>Spanner of Graph Databases</strong>.</p>
 
-<h3 id="sorting">Sorting</h3>
+<p>We&rsquo;ll be expanding our list of languages to include <a href="https://www.opencypher.org/">Open Cypher</a>
+and <a href="https://tinkerpop.apache.org/gremlin.html">Gremlin</a>.  Both of these are very popular graph languages, and
+would make it easier for existing graph users to switch to Dgraph. We also
+plan to support the standard version of <a href="http://facebook.github.io/graphql/October2016/">GraphQL</a>.</p>
 
-<p>You can now sort the results by any indexed predicate (except string and geo, of course). For example, you can now get a list of films directed by Steven Spielberg sorted by initial release date.</p>
+<h2 id="onwards-and-upwards">Onwards and Upwards</h2>
 
-<pre><code>{
-  me(_xid_: m.06pj8) {
-    type.object.name.en
-    film.director.film(order: film.film.initial_release_date) {
-      type.object.name.en
-      film.film.initial_release_date
-    }
-  }
-}
+<p>We&rsquo;re really excited about <a href="https://github.com/dgraph-io/dgraph/releases">v1.0 release</a> of Dgraph. Pushing it this far has
+been a particularly challenging road, full of experimentation. <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is the
+only graph database which is building for native geographical distribution of
+data, while providing efficient arbitrarily deep joins and traversals. <em>Those are
+hard problems that we have solved.</em></p>
 
-# To sort in descending order, just use orderdesc instead of order.
-</code></pre>
+<p>Lacking a guiding Google paper on distributed graph databases, we built a system
+which puts together the best of Bigtable (<a href="https://en.wikipedia.org/wiki/NoSQL">NoSQL</a>) and Spanner
+(<a href="https://en.wikipedia.org/wiki/NewSQL">NewSQL</a>).  Within Dgraph, we term this <strong>NewGraph &ndash; a graph database
+which is horizontally scalable, multi-versional, transactional, synchronously
+replicated and inherently capable as a primary database.</strong>  In fact, we think a
+paper describing the unique design of <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is quite important, so we&rsquo;re
+working towards writing one. Being engineers, we can&rsquo;t think of a better way to
+celebrate the last over two years of hard work.</p>
 
-<p>You can read more about sorting <a href="https://wiki.dgraph.io/Query_Language#Sorting">here</a>.</p>
+<p>With Dgraph, we hope to break the cycle of many fast-growing companies from
+<em>looking for a graph database, trying something, giving up and building their
+own graph system;</em> to <em>looking for a graph database, finding Dgraph and building
+applications on top.</em></p>
 
-<h3 id="functions">Functions</h3>
+<p>While traditional databases only serve data, graph databases allow machine
+interpretation of data, which is crucial to build smart systems.  We look
+forward to putting <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> into the hands of users who need the stability
+of v1.0, and hear about all smart use cases they are building. And we&rsquo;re
+confident that Dgraph would make their use cases successful. We have taken giant
+strides in graph database world, and we promise to continue taking those, so our
+users can push the envelope for what&rsquo;s possible and maintain the competitive edge.</p>
 
-<p>Functions are a great way to provide functionality with a simple and clear interface. <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- functions can be used as both starting points to queries and as filters.</p>
-
-<p>Here&rsquo;s a list of functions we introduced in v0.7.1:</p>
-
-<ul>
-<li><code>anyof(predicate, &quot;space separated list of terms&quot;)</code> : Entities whose value for the predicate has any of the terms specified.</li>
-<li><code>allof(predicate, &quot;space separated list of terms&quot;)</code> : Entities whose value for the predicate has all of the terms specified.</li>
-<li><code>leq(predicate, &quot;value&quot;)</code>                           : Entities whose value for the predicate is less than or equal to specified value.</li>
-<li><code>geq(predicate, &quot;value&quot;)</code>                           : Entities whose value for the predicate is greater than or equal to specified value.</li>
-</ul>
-
-<p>Both <code>anyof</code> and <code>allof</code> functions work based on an index generated by tokenizing string values. We use ICU, which has vast support for human languages and is used by major projects like Google Web Search, Chrome, Mac OSX, Lucene, etc.</p>
-
-<p>Upcoming in v0.7.2:</p>
-
-<ul>
-<li><code>eq(predicate, &quot;value&quot;)</code>: Entities whose value for predicate is equal to specified value.</li>
-<li><code>le(predicate, &quot;value&quot;)</code>: Entities whose value for predicate is less than specified value.</li>
-<li><code>ge(predicate, &quot;value&quot;)</code>: Entities whose value for predicate is greater than specified value.</li>
-</ul>
-
-<p>To enable these functions, a <a href="https://wiki.dgraph.io/Query_Language#Schema">schema providing the scalar type</a> for the predicates should be provided. For e.g.</p>
-
-<pre><code>scalar(
-  name          : string @ index # anyof, allof
-  age           : int    @ index # leq, geq
-  date_of_birth : date   @ index # leq, geq
-)
-</code></pre>
-
-<p>You can read more about functions <a href="https://wiki.dgraph.io/Query_Language#Functions">here</a>.</p>
-
-<h4 id="geospatial-functions">Geospatial functions</h4>
-
-<p>Geospatial queries are important to build location-aware search and recommendations. Being able to find the nearby restaurants who serve sushi, or bars in the city which play Jazz, or friends who are visiting your neighborhood is pretty crucial to such use cases. We couldn&rsquo;t imagine building a database without providing full-fledged support for geo queries, and in v0.7.1, we added geo indexing.</p>
-
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- now supports four geospatial functions:</p>
-
-<ul>
-<li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
-<li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
-<li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
-</ul>
-
-<pre><code>$ curl localhost:8080/query -XPOST -d $'
-{
-  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-    name
-  }
-}' | python -m json.tool | grep name
-
-            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-            &quot;name&quot;: &quot;De Young Museum&quot;
-            &quot;name&quot;: &quot;Chinese Pavillion&quot;
-            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-            &quot;name&quot;: &quot;Peace Lantern&quot;
-            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-            &quot;name&quot;: &quot;Morrison Planetarium&quot;
-            &quot;name&quot;: &quot;California Academy of Sciences&quot;
-            &quot;name&quot;: &quot;Hamon Tower&quot;
-            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-            &quot;name&quot;: &quot;La Rose des Vents&quot;
-            &quot;name&quot;: &quot;Strawberry Hill&quot;
-            &quot;name&quot;: &quot;Buddha&quot;
-            &quot;name&quot;: &quot;Rose Garden&quot;
-
-</code></pre>
-
-<p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
-
-<h3 id="filtering">Filtering</h3>
-
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- now supports pretty advanced and complex filtering operations. We do both &amp;&amp; (and) and || (or) filters, using round brackets to specify the right sequence. For e.g., <code>(A || (B &amp;&amp; C))</code>, as demonstrated in the following query.</p>
-
-<pre><code>{
-  me(_xid_: m.06pj8) {
-    type.object.name.en
-    film.director.film @filter(
-      allof(&quot;type.object.name.en&quot;, &quot;jones indiana&quot;) ||
-      (anyof(&quot;type.object.name.en&quot;, &quot;jurassic&quot;) &amp;&amp; anyof(&quot;type.object.name.en&quot;, &quot;park&quot;)))  {
-      type.object.name.en
-      film.film.initial_release_date
-    }
-  }
-}
-</code></pre>
-
-<p>With that, I&rsquo;ll finish the blog post. <strong>If you found these interesting, try out the <a href="https://wiki.dgraph.io/Get_Started">5 step tutorial to get started with Dgraph</a>.</strong> Let us know what you think!</p>
-
-<blockquote>
-<p>I&rsquo;ll be giving a talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- at Go Meetup in Sydney on 19th Jan and in Gophercon India on 24-25th Feb. So, come talk to me about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</p>
-</blockquote>
+<p><strong>Also read coverage on
+<a href="https://techcrunch.com/2017/12/19/dgraph-raises-3m-for-its-open-source-distributed-graph-database-hits-1-0-release/">TechCrunch</a>.</strong></p>
 
 <hr />
 
@@ -725,7 +693,12 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
   </table>
 	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
 </div>
-<br/></div>
+<br/>
+
+
+<p><em>Top image: <a href="https://www.nasa.gov/image-feature/expedition-53-launches-to-the-international-space-station">Expedition 53 Launches to the International Space
+Station</a></em></p>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -857,7 +830,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/v0.7-release/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/releasing-v1.0/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -896,7 +869,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-20%2005%3a23%3a38.219427099%20%2b1100%20AEDT%20m%3d%2b0.136560552"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-20%2005%3a23%3a38.207792043%20%2b1100%20AEDT%20m%3d%2b0.124925458"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -951,7 +924,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/v0.7-release\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/releasing-v1.0\/"
 };
 (function() {
   var d = document.createElement("script");
