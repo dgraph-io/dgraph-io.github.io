@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-19%2016%3a22%3a17.952320937%20%2b0530%20IST%20m%3d%2b5.365324641" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-19%2016%3a22%3a17.952341629%20%2b0530%20IST%20m%3d%2b5.365345295" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-20%2004%3a08%3a30.746732509%20%2b1100%20AEDT%20m%3d%2b0.580684714" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-20%2004%3a08%3a30.746775788%20%2b1100%20AEDT%20m%3d%2b0.580727962" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-19%2016%3a22%3a17.952363901%20%2b0530%20IST%20m%3d%2b5.365367559">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-19%2016%3a22%3a17.952380541%20%2b0530%20IST%20m%3d%2b5.365384209">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-20%2004%3a08%3a30.746819101%20%2b1100%20AEDT%20m%3d%2b0.580771270">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-20%2004%3a08%3a30.746858776%20%2b1100%20AEDT%20m%3d%2b0.580810949">
 
     
     <script>
@@ -191,7 +191,9 @@
 				<h3 class="article__title">Custom encoding: Go implementation in net/rpc vs grpc and why we switched</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/rpc-vs-grpc/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/martian-encoding.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we aim to build a low latency, distributed graph database.
@@ -201,6 +203,7 @@ To keep our latency of communication low, we use a new form of serialization lib
 
 &gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
 &gt; The only memory needed to access your data is that of the buffer.</p></p>
+
 		</li>
 	</div>
 
@@ -219,11 +222,14 @@ To keep our latency of communication low, we use a new form of serialization lib
 				<h3 class="article__title">Can it really scale?</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/performance-throughput-latency/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/lander.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em>
 </p></p>
+
 		</li>
 	</div>
 
@@ -242,7 +248,9 @@ To keep our latency of communication low, we use a new form of serialization lib
 				<h3 class="article__title">Wisemonk: A slackbot to move discussions from Slack to Discourse</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/wisemonk/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/yoda.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><blockquote>
 <p>Then there was the fact that we had so many channels and direct messages and group chats.
@@ -251,6 +259,7 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
 </blockquote>
 
 <p></p></p>
+
 		</li>
 	</div>
 
@@ -269,11 +278,14 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
 				<h3 class="article__title">Hello, World!</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/hello-world/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/default.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , what it is and why it was created.
 </p></p>
+
 		</li>
 	</div>
 
@@ -421,7 +433,7 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-19%2016%3a22%3a17.9530202%20%2b0530%20IST%20m%3d%2b5.366023911"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-20%2004%3a08%3a30.748359502%20%2b1100%20AEDT%20m%3d%2b0.582311699"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

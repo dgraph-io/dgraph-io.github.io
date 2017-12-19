@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-19%2016%3a22%3a17.950091718%20%2b0530%20IST%20m%3d%2b5.363095441" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-19%2016%3a22%3a17.950130191%20%2b0530%20IST%20m%3d%2b5.363133862" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2017-12-20%2004%3a08%3a30.740394506%20%2b1100%20AEDT%20m%3d%2b0.574346706" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2017-12-20%2004%3a08%3a30.740440453%20%2b1100%20AEDT%20m%3d%2b0.574392644" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -78,8 +78,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-19%2016%3a22%3a17.950152361%20%2b0530%20IST%20m%3d%2b5.363156045">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-19%2016%3a22%3a17.950168721%20%2b0530%20IST%20m%3d%2b5.363172384">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2017-12-20%2004%3a08%3a30.74051088%20%2b1100%20AEDT%20m%3d%2b0.574463091">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2017-12-20%2004%3a08%3a30.74054887%20%2b1100%20AEDT%20m%3d%2b0.574501051">
 
     
     <script>
@@ -191,10 +191,13 @@
 				<h3 class="article__title">Introducing Badger: A fast key-value store written purely in Go</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/badger/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/juno.jpg">
+				</a>
 			</div>
 			<p class="article__summary">We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
 We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</p>
+
 		</li>
 	</div>
 
@@ -213,13 +216,16 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
 				<h3 class="article__title">String matching in Dgraph v0.7.5</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/string-matching/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/splitting-dunes.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><p>The recent release of Dgraph is packed with new features and improvements.
 Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
 All of these changes make Dgraph an excellent tool for working with multilingual applications.</p>
 
 <p></p></p>
+
 		</li>
 	</div>
 
@@ -238,10 +244,13 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 				<h3 class="article__title">Building a long lasting company around open-source</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/licensing/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/peoplelandingonmars.jpg">
+				</a>
 			</div>
 			<p class="article__summary">Dgraph started with the idea that every startup should be able to have the same level of technology as run by big giants. We designed Dgraph from ground-up to allow data sharding, horizontal scalability, consistent replication, and a fast and distributed architecture.
 We also dream that graph database would no longer run as a secondary database. By building a truly robust piece of technology, we can have our users run only one database, which allows arbitrarily complex queries while providing rock solid performance.</p>
+
 		</li>
 	</div>
 
@@ -260,7 +269,9 @@ We also dream that graph database would no longer run as a secondary database. B
 				<h3 class="article__title">Neo4j vs Dgraph - The numbers speak for themselves</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/potw1652a.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>. We have divided this post into five parts:</p>
@@ -274,6 +285,7 @@ We also dream that graph database would no longer run as a secondary database. B
 </ol>
 
 <p></p></p>
+
 		</li>
 	</div>
 
@@ -292,7 +304,9 @@ We also dream that graph database would no longer run as a secondary database. B
 				<h3 class="article__title">Releasing Dgraph v0.7.1</h3>
 			</a>
 			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/v0.7-release/" class="clearfix">
 				<img src="https://blog.dgraph.io/images/routeplan.jpg">
+				</a>
 			</div>
 			<p class="article__summary"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
@@ -300,6 +314,7 @@ We also dream that graph database would no longer run as a secondary database. B
 We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
 
 <p></p></p>
+
 		</li>
 	</div>
 
@@ -447,7 +462,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-19%2016%3a22%3a17.950999718%20%2b0530%20IST%20m%3d%2b5.364003430"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2017-12-20%2004%3a08%3a30.74207299%20%2b1100%20AEDT%20m%3d%2b0.576025201"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

@@ -25,10 +25,6 @@ body {
     max-width: 100%;
 }
 
-.article-content h2 {
-    font-size: 2rem;
-}
-
 .opening__image {
     float: left;
 }
@@ -206,4 +202,10 @@ code {
 /* override hljs background color which conflicts with our style */
 .hljs {
     background-color: inherit;
+}
+
+.article-content figure {
+    max-width: 50%;
+    float: left;
+    margin-right: 20px;
 }
