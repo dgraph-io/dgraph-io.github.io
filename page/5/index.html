@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.19" />
+      <meta name="generator" content="Hugo 0.37.1" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-03-06%2017%3a08%3a27.489708786%20%2b1100%20AEDT" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-03-06%2017%3a08%3a27.489734244%20%2b1100%20AEDT" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2018-04-03%2018%3a38%3a22.05546994%20-0700%20PDT%20m%3d%2b0.092582862" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-04-03%2018%3a38%3a22.055492708%20-0700%20PDT%20m%3d%2b0.092605603" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -71,81 +71,15 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 
 
-
+    
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-03-06%2017%3a08%3a27.489758438%20%2b1100%20AEDT">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-03-06%2017%3a08%3a27.48977903%20%2b1100%20AEDT">
-
-    
-    <script>
-      function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-      }
-
-      function setCookie(cname, cvalue, exdays) {
-        exdays = exdays || 60;
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
-      }
-    </script>
-    <script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-    <script type="text/javascript">
-      function showPopup(isStart) {
-        var skip = false;
-        if (isStart && getCookie("MCCustom")) {
-          skip = true;
-        }
-
-        var elements = document.getElementsByClassName('mc-modal');
-        while(elements.length > 0) {
-          elements[0].parentNode.parentNode.removeChild(elements[0].parentNode);
-        }
-
-        require(["mojo/signup-forms/Loader"], function(L) {
-          if (!skip) {
-            L.start({"baseUrl":"mc.us17.list-manage.com","uuid":"f6c6a28bb40d10e26b88fff1c","lid":"e85c448cac"});
-          }
-        });
-
-        if (skip) {
-          return;
-        }
-
-        var mcPopupClosed = getCookie("MCPopupClosed");
-        if (mcPopupClosed) {
-          setCookie("MCCustom", "c");
-        }
-
-        var mcPopupSubscribed = getCookie("MCPopupSubscribed");
-        if (mcPopupSubscribed) {
-          setCookie("MCCustom", "s");
-        }
-
-        document.cookie = 'MCPopupClosed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-        document.cookie = 'MCPopupSubscribed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-      }
-
-      showPopup(true);
-    </script>
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-04-03%2018%3a38%3a22.055511892%20-0700%20PDT%20m%3d%2b0.092624788">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-04-03%2018%3a38%3a22.055530165%20-0700%20PDT%20m%3d%2b0.092643061">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
@@ -176,6 +110,41 @@
       <div class="row">
         <div class="col-12">
           <ul class="article__list">
+          
+          
+          
+            <div class="row col-xs-10 col-xs-offset-1">
+	<li class="article__item">
+		<div class="article__meta"><span class="article__meta-item article__date">
+			Mon, Jan 23, 2017 by Pawan Rawal
+
+
+			<span>
+			</div>
+			<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
+				<h3 class="article__title">Neo4j vs Dgraph - The numbers speak for themselves</h3>
+			</a>
+			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
+				<img src="https://blog.dgraph.io/images/potw1652a.jpg">
+				</a>
+			</div>
+			<p class="article__summary"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>. We have divided this post into five parts:</p>
+
+<ol>
+<li>Loading data</li>
+<li>Querying</li>
+<li>Issues faced</li>
+<li>Features</li>
+<li>Principles behind Dgraph</li>
+</ol>
+
+<p></p></p>
+
+		</li>
+	</div>
+
           
           
           
@@ -283,33 +252,6 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 
           
           
-          
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Thu, Jul 21, 2016 by Manish Rai Jain
-
-
-			<span>
-			</div>
-			<a href="https://blog.dgraph.io/post/gru/" class="clearfix">
-				<h3 class="article__title">Gru: Open source solution for better technical interviews</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/gru/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/gru.jpg">
-				</a>
-			</div>
-			<p class="article__summary"><p>Candidate <strong>REJECTED</strong>.</p>
-
-<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn&rsquo;t.</em>
-</p></p>
-
-		</li>
-	</div>
-
-          
-          
           </ul>
           
         </div>
@@ -349,6 +291,10 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
         <a class="paginator__pages paginator__gray" href="/page/6/">6</a>
       
     
+      
+        <a class="paginator__pages paginator__gray" href="/page/7/">7</a>
+      
+    
 
     
       <a class="paginator__active paginator__right" href="/page/6/">
@@ -356,6 +302,9 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
       </a>
     
   </div>
+  
+  
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   <div class="community-cta-wrapper">
   <a href="#choose-community" class="community-cta">
@@ -452,7 +401,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-03-06%2017%3a08%3a27.491844863%20%2b1100%20AEDT"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2018-04-03%2018%3a38%3a22.056425082%20-0700%20PDT%20m%3d%2b0.093538026"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
@@ -490,6 +439,78 @@ $(document.links)
   })
   .attr("target", "_blank");
 </script>
+
+
+<script>
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    exdays = exdays || 60;
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
+  }
+</script>
+<script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
+<script type="text/javascript">
+  function isLocal() {
+    const hostname = window.location.hostname;
+    return hostname === "localhost" || hostname === "127.0.0.1";
+  }
+
+  function showPopup(isStart) {
+    var skip = false;
+    if (isStart && (getCookie("MCCustom") || isLocal())) {
+      skip = true;
+    }
+
+    var elements = document.getElementsByClassName('mc-modal');
+    while(elements.length > 0) {
+      elements[0].parentNode.parentNode.removeChild(elements[0].parentNode);
+    }
+
+    require(["mojo/signup-forms/Loader"], function(L) {
+      if (!skip) {
+        L.start({"baseUrl":"mc.us17.list-manage.com","uuid":"f6c6a28bb40d10e26b88fff1c","lid":"e85c448cac"});
+      }
+    });
+
+    if (skip) {
+      return;
+    }
+
+    var mcPopupClosed = getCookie("MCPopupClosed");
+    if (mcPopupClosed) {
+      setCookie("MCCustom", "c");
+    }
+
+    var mcPopupSubscribed = getCookie("MCPopupSubscribed");
+    if (mcPopupSubscribed) {
+      setCookie("MCCustom", "s");
+    }
+
+    document.cookie = 'MCPopupClosed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'MCPopupSubscribed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+  }
+
+  showPopup(true);
+</script>
+
 </body>
 </html>
 
@@ -500,8 +521,6 @@ $(document.links)
   
   <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
   
   <script type="text/javascript">
   hljs.initHighlightingOnLoad();

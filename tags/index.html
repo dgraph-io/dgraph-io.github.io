@@ -1,18 +1,38 @@
-<div class="list">
-  <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+
+ <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.17-DEV" />
+      <meta name="generator" content="Hugo 0.37.1" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans|Marcellus+SC'>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="http://blog.dgraph.io/css/styles.css">
-    <link rel="stylesheet" href="http://blog.dgraph.io/css/custom.css">
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://blog.dgraph.io//index.xml">
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-touch-icon-76x76.png">
+
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon-180x180.png">
+
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/assets/favicons/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
+
+    <link rel="manifest" href="assets/images/favicons/manifest.json">
+    <link rel="mask-icon" href="assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
+    <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
     <title>Tags - Dgraph Blog</title>
@@ -20,119 +40,351 @@
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="http://blog.dgraph.io/tags/">
+    <meta property="og:url" content="https://blog.dgraph.io/tags/">
     
     
 
+    
+    
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/diggy-lg.png"/>
+    
+
+    <meta name="twitter:title" content="Tags"/>
+    <meta name="twitter:description" content="Engineering stories of building the world&#39;s fast graph database Dgraph"/>
+    <meta name="twitter:site" content="@dgraphlabs"/>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/js/modernizr.min.js"></script>
+    
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+
+    <link href="https://blog.dgraph.io//css/runnable.css?2018-04-03%2018%3a38%3a22.051975839%20-0700%20PDT%20m%3d%2b0.089088742" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-04-03%2018%3a38%3a22.052040175%20-0700%20PDT%20m%3d%2b0.089153078" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-04-03%2018%3a38%3a22.05207842%20-0700%20PDT%20m%3d%2b0.089191347">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-04-03%2018%3a38%3a22.052115537%20-0700%20PDT%20m%3d%2b0.089228444">
   </head>
 
-  <body>
-
-    <header class="site">
-      <div class="title"><a href="http://blog.dgraph.io/">Dgraph Blog</a></div>
-    </header>
-
-    <div class="container site">
-
-
-  <div class="row">
-    <div class="col-sm-9">
-
-      <header class="title"><h1>Tags</h1></header>
-
+<body class="blog" data-gr-c-s-loaded="true">
+  <header id="page-header" class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
+				
+				<a href="https://github.com/dgraph-io/dgraph" data-style="mega" data-count-href="/dgraph-io/dgraph/stargazers" data-count-api="/repos/dgraph-io/dgraph#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star us on GitHub" class="github-button">Star</a>
       
 
-    </div>
-
-    <div class="col-sm-3">
-      <aside class="site">
-
-  
-
-  
-
-  <div class="section">
-    <header><div class="title">LatestPosts</div></header>
-    <div class="content">
-      
-      <div class="sm"><article class="li">
-  <a href="http://blog.dgraph.io/post/performance-throughput-latency/" class="clearfix">
-    <div class="image" style="background-image: url(http://blog.dgraph.io/images/lander.jpg);"></div>
-    <div class="detail">
-      <time>Tue, Jun 21, 2016</time>
-      <h2 class="title">Can it really scale?</h2>
-      <div class="summary"><p>In this post, we’ll look at how Dgraph performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
-</div>
-    </div>
-  </a>
-</article>
-</div>
-      
-      <div class="sm"><article class="li">
-  <a href="http://blog.dgraph.io/post/hello-world/" class="clearfix">
-    <div class="image" style="background-image: url(http://blog.dgraph.io/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Mon, Apr 18, 2016</time>
-      <h2 class="title">Hello, World!</h2>
-      <div class="summary"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about Dgraph, what it is and why it was created.</p>
-</div>
-    </div>
-  </a>
-</article>
-</div>
-      
-    </div>
-  </div>
-
-  
-  <div class="section taxonomies">
-    <header><div class="title">category</div></header>
-    <div class="content">
-      
-    </div>
-  </div>
-  
-  <div class="section taxonomies">
-    <header><div class="title">tag</div></header>
-    <div class="content">
-      
-    </div>
-  </div>
-  
-
-</aside>
-
-    </div>
-
-  </div>
+        <nav class="page-nav pull-right">
+          <ul class="page-nav__list">
+						
+						<li class="page-nav__item"><a href="https://dgraph.io/" title="Dgraph Website" class="button button--outline page-nav__link page-nav__link--button">Home</a></li>
+						
+          </ul>
+        </nav>
       </div>
+      <a href="javascript:void(0)" title="Site Navigation" id="page-nav-button" class="button page-nav-button">Menu</a>
+    </div>
+  </div>
+</header>
 
-    <footer class="site">
-      <p>Copyright (c) 2016, Dgraph Labs, Inc. All rights reserved.</p>
-    </footer>
+  <div class="page-content page-content--blog">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <ul class="article__list">
+          
+          
+          
+            <div class="row col-xs-10 col-xs-offset-1">
+	<li class="article__item">
+		<div class="article__meta"><span class="article__meta-item article__date">
+			Tue, Oct 3, 2017 by 
 
-    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+			<span>
+			</div>
+			<a href="https://blog.dgraph.io/tags/opinion/" class="clearfix">
+				<h3 class="article__title">Opinion</h3>
+			</a>
+			<div class="col-md-3 opening__image">
+				<a href="https://blog.dgraph.io/tags/opinion/" class="clearfix">
+				<img src="https://blog.dgraph.io/images/default.jpg">
+				</a>
+			</div>
+			<p class="article__summary"></p>
+
+		</li>
+	</div>
+
+          
+          
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paginator container">
+    
+      <a class="paginator__gray paginator__left">
+          &lt; Previous Page
+      </a>
+    
 
     
+      
+        <a class="paginator__pages paginator__selected" href="/page/1/">1</a>
+      
+    
+
+    
+      <a class="paginator__right paginator__gray">
+          Next Page >
+      </a>
+    
+  </div>
+  
+  
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  <div class="community-cta-wrapper">
+  <a href="#choose-community" class="community-cta">
+    Join our community
+  </a>
+
+  <ul class="community-list">
+    <li>
+      <a href="#" class="community-link" onclick="showPopup(false); return false;">
+        <i class="fa fa-envelope-o"></i> <span class="name">Subscribe</span>
+      </a>
+    </li>
+    <li>
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" class="community-link">
+          <i class="fa fa-github"></i> <span class="name">Github</span>
+        </a>
+      </li>
+    <li>
+      <a href="https://slack.dgraph.io/" target="_blank" class="community-link">
+        <i class="fa fa-slack"></i> <span class="name">Slack</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://discuss.dgraph.io/" target="_blank" class="community-link">
+        <i class="fa fa-comments"></i> <span class="name">Forum</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  <div class="page-footer__wrapper">
+  <footer id="page-footer" class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-tablet-3">
+          <figure class="page-logo-footer"><a href="/"><img src="/images/logo.svg" width="140" height="42" alt="Company Logo"></a></figure>
+        </div>
+        
+        <div class="col-4 col-tablet-2">
+          <nav class="page-footer-nav">
+            <h6 class="page-footer-nav__title">Company</h6>
+            <ul class="page-footer-nav__list">
+              <li class="page-footer-nav__item"><a href="https://dgraph.io/about.html" title="Learn More about us" target="_blank" class="page-footer-nav__link">About</a></li>
+              <li class="page-footer-nav__item"><a href="https://dgraph.io/careers.html" title="See open positions" target="_blank" class="page-footer-nav__link">Careers</a></li>
+              <li class="page-footer-nav__item"><a href="https://dgraph.io/contact.html" title="How can you reach us" target="_blank" class="page-footer-nav__link">Contact</a></li>
+              
+              <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/Beginners_Guide#Installation" title="Download" target="_blank" class="page-footer-nav__link page-footer-nav__link--download">Download</a></li>
+              
+            </ul>
+          </nav>
+        </div>
+        
+        <div class="col-4 col-tablet-2">
+          <nav class="page-footer-nav">
+            <h6 class="page-footer-nav__title">Community</h6>
+            <ul class="page-footer-nav__list">
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/tags/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              
+              <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
+              
+              
+              <li class="page-footer-nav__item"><a href="https://github.com/dgraph-io/dgraph" title="We are on GitHub, check it out." target="_blank" class="page-footer-nav__link">GitHub</a></li>
+              
+              
+              <li class="page-footer-nav__item"><a href="https://discuss.dgraph.io/" title="Join our community" target="_blank" class="page-footer-nav__link">Discuss</a></li>
+              
+              
+              <li class="page-footer-nav__item"><a href="https://slack.dgraph.io/" title="Join our community" target="_blank" class="page-footer-nav__link">Slack</a></li>
+              
+            </ul>
+          </nav>
+        </div>
+        <div class="col-4 col-tablet-2">
+          <nav class="page-footer-nav">
+            <h6 class="page-footer-nav__title">Connect</h6>
+            <ul class="page-footer-nav__list">
+              
+              <li class="page-footer-nav__item"><a href="https://twitter.com/dgraphlabs" title="Follow us on twitter" target="_blank" class="page-footer-nav__link">Twitter</a></li>
+              
+              
+              <li class="page-footer-nav__item"><a href="https://angel.co/dgraph-labs" title="Follow us on twitter" target="_blank" class="page-footer-nav__link">Angel List</a></li>
+              
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="row">
+        <span class="imprint__copyrights">Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+  
+</div>
+
+    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2018-04-03%2018%3a38%3a22.053018567%20-0700%20PDT%20m%3d%2b0.090131480"></script>
     <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-75364122-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    
+    hljs.initHighlightingOnLoad();
+</script>
 
-		<script>
-			$(document.links).filter(function() {
-						return this.hostname != window.location.hostname;
-			}).attr('target', '_blank');
-		</script>
-  </body>
+<script>
+if (window.location.host.indexOf("dgraph.io") > -1) {
+  (function(i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    (i[r] =
+      i[r] ||
+      function() {
+        (i[r].q = i[r].q || []).push(arguments);
+      }), (i[r].l = 1 * new Date());
+    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "//www.google-analytics.com/analytics.js",
+    "ga"
+  );
+  ga("create", "UA-75364122-1", "auto");
+  ga("send", "pageview");
+}
+</script>
+
+
+<script>
+$(document.links)
+  .filter(function() {
+    return this.hostname != window.location.hostname;
+  })
+  .attr("target", "_blank");
+</script>
+
+
+<script>
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    exdays = exdays || 60;
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
+  }
+</script>
+<script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
+<script type="text/javascript">
+  function isLocal() {
+    const hostname = window.location.hostname;
+    return hostname === "localhost" || hostname === "127.0.0.1";
+  }
+
+  function showPopup(isStart) {
+    var skip = false;
+    if (isStart && (getCookie("MCCustom") || isLocal())) {
+      skip = true;
+    }
+
+    var elements = document.getElementsByClassName('mc-modal');
+    while(elements.length > 0) {
+      elements[0].parentNode.parentNode.removeChild(elements[0].parentNode);
+    }
+
+    require(["mojo/signup-forms/Loader"], function(L) {
+      if (!skip) {
+        L.start({"baseUrl":"mc.us17.list-manage.com","uuid":"f6c6a28bb40d10e26b88fff1c","lid":"e85c448cac"});
+      }
+    });
+
+    if (skip) {
+      return;
+    }
+
+    var mcPopupClosed = getCookie("MCPopupClosed");
+    if (mcPopupClosed) {
+      setCookie("MCCustom", "c");
+    }
+
+    var mcPopupSubscribed = getCookie("MCPopupSubscribed");
+    if (mcPopupSubscribed) {
+      setCookie("MCCustom", "s");
+    }
+
+    document.cookie = 'MCPopupClosed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'MCPopupSubscribed=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+  }
+
+  showPopup(true);
+</script>
+
+</body>
 </html>
 
-</div>
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/custom.js"></script>
+  <script type="text/javascript" src="/js/script.min.js"></script>
+  
+  <script type="text/javascript">
+  hljs.initHighlightingOnLoad();
+</script>
+  
+  
+  <script id="dsq-count-scr" src="//skgamingtest.disqus.com/count.js" async></script>
+</html>
