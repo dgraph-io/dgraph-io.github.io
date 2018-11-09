@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.37.1" />
+      <meta name="generator" content="Hugo 0.51" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -56,9 +56,7 @@
     <meta name="twitter:description" content="Dgraph
  team is super excited to present v0.7.1 of Dgraph
 . This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented 90% of all the features we had planned in our product roadmap, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.
-
-"/>
+We&rsquo;ve implemented 90% of all the features we had planned in our product roadmap, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -69,8 +67,8 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-04-08%2018%3a28%3a46.66286355%20-0700%20PDT%20m%3d%2b0.077695834" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-04-08%2018%3a28%3a46.662894694%20-0700%20PDT%20m%3d%2b0.077726966" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2018-11-09%2003%3a12%3a43.694248709%20-0800%20PST%20m%3d%2b0.235456207" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-11-09%2003%3a12%3a43.694352297%20-0800%20PST%20m%3d%2b0.235559714" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -85,8 +83,8 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-04-08%2018%3a28%3a46.662924382%20-0700%20PDT%20m%3d%2b0.077756649">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-04-08%2018%3a28%3a46.662953373%20-0700%20PDT%20m%3d%2b0.077785644">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-11-09%2003%3a12%3a43.694444398%20-0800%20PST%20m%3d%2b0.235651775">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-11-09%2003%3a12%3a43.694530307%20-0800%20PST%20m%3d%2b0.235737653">
   </head>
 
 
@@ -417,8 +415,6 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
  team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 . This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
 We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
-
-<p></p>
 
 <p>Today, I&rsquo;m going to talk about these new features, and what you can expect from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .</p>
@@ -833,7 +829,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-04-08%2018%3a28%3a46.663593809%20-0700%20PDT%20m%3d%2b0.078426100"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2018-11-09%2003%3a12%3a43.696328218%20-0800%20PST%20m%3d%2b0.237535669"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

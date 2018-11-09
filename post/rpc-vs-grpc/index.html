@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.37.1" />
+      <meta name="generator" content="Hugo 0.51" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -57,10 +57,7 @@
 , we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called Flatbuffers.
-
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer."/>
+To keep our latency of communication low, we use a new form of serialization library called Flatbuffers."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -71,8 +68,8 @@ To keep our latency of communication low, we use a new form of serialization lib
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-04-08%2018%3a28%3a46.665813754%20-0700%20PDT%20m%3d%2b0.080646033" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-04-08%2018%3a28%3a46.665854868%20-0700%20PDT%20m%3d%2b0.080687141" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2018-11-09%2003%3a12%3a43.724734674%20-0800%20PST%20m%3d%2b0.265942078" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-11-09%2003%3a12%3a43.724834864%20-0800%20PST%20m%3d%2b0.266042215" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -87,8 +84,8 @@ To keep our latency of communication low, we use a new form of serialization lib
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-04-08%2018%3a28%3a46.665893485%20-0700%20PDT%20m%3d%2b0.080725761">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-04-08%2018%3a28%3a46.665930197%20-0700%20PDT%20m%3d%2b0.080762475">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-11-09%2003%3a12%3a43.72492593%20-0800%20PST%20m%3d%2b0.266133276">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-11-09%2003%3a12%3a43.725016046%20-0800%20PST%20m%3d%2b0.266223410">
   </head>
 
 
@@ -419,10 +416,12 @@ To keep our latency of communication low, we use a new form of serialization lib
 , we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
+To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p>
 
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer.</p>
+<blockquote>
+<p>What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+The only memory needed to access your data is that of the buffer.</p>
+</blockquote>
 
 <p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
 
@@ -1171,7 +1170,7 @@ Hope you find this useful.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-04-08%2018%3a28%3a46.668711532%20-0700%20PDT%20m%3d%2b0.083543824"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2018-11-09%2003%3a12%3a43.728543286%20-0800%20PST%20m%3d%2b0.269750753"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>

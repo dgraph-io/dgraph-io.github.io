@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.37.1" />
+      <meta name="generator" content="Hugo 0.51" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -65,8 +65,8 @@ In the last post, we looked at how many applications and web apps no longer pres
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-04-08%2018%3a28%3a46.661390269%20-0700%20PDT%20m%3d%2b0.076222551" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-04-08%2018%3a28%3a46.661409515%20-0700%20PDT%20m%3d%2b0.076241778" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2018-11-09%2003%3a12%3a43.680807608%20-0800%20PST%20m%3d%2b0.222015006" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-11-09%2003%3a12%3a43.680909128%20-0800%20PST%20m%3d%2b0.222116583" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -81,8 +81,8 @@ In the last post, we looked at how many applications and web apps no longer pres
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-04-08%2018%3a28%3a46.66142537%20-0700%20PDT%20m%3d%2b0.076257634">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-04-08%2018%3a28%3a46.661440781%20-0700%20PDT%20m%3d%2b0.076273045">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-11-09%2003%3a12%3a43.681012644%20-0800%20PST%20m%3d%2b0.222220015">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-11-09%2003%3a12%3a43.68110261%20-0800%20PST%20m%3d%2b0.222309997">
   </head>
 
 
@@ -722,6 +722,11 @@ to predict the ratings.</em></p>
 
 <p>For our hybrid filtering, we&rsquo;ll assign a score to each genre as the number of movies watched by user 2 in that genre. Then, after we&rsquo;ve found the similar users, we&rsquo;ll give a boost to the ratings of movies based on the genres that user 2 watches most.  That&rsquo;s collaborative filtering to get the similar users and the movies they enjoy, and then content-based filtering to help order those movies based on genres.</p>
 
+<p><strong>Warning</strong></p>
+
+<p>Query syntax and features has changed in v1.0 release.
+ For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
+
 <pre><code>{
   var(func: uid(2)) {  # 1
     rated @groupby(genre) {
@@ -1223,7 +1228,7 @@ their recommendations using these edges directly.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-04-08%2018%3a28%3a46.661867859%20-0700%20PDT%20m%3d%2b0.076700124"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2018-11-09%2003%3a12%3a43.683123669%20-0800%20PST%20m%3d%2b0.224331180"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
