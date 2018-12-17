@@ -3,7 +3,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.51" />
+      <meta name="generator" content="Hugo 0.46" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -54,7 +54,8 @@
 
     <meta name="twitter:title" content="Golang: Run multiple services on one port"/>
     <meta name="twitter:description" content="Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port."/>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
+"/>
     <meta name="twitter:site" content="@dgraphlabs"/>
 
     
@@ -65,8 +66,8 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-11-09%2003%3a12%3a43.704154072%20-0800%20PST%20m%3d%2b0.245361528" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-11-09%2003%3a12%3a43.704298217%20-0800%20PST%20m%3d%2b0.245505659" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2018-12-17%2015%3a58%3a42.313419297%20-0800%20PST%20m%3d%2b0.089593732" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-12-17%2015%3a58%3a42.313464288%20-0800%20PST%20m%3d%2b0.089638723" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -81,8 +82,8 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-11-09%2003%3a12%3a43.704428713%20-0800%20PST%20m%3d%2b0.245636101">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-11-09%2003%3a12%3a43.704562473%20-0800%20PST%20m%3d%2b0.245769880">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-12-17%2015%3a58%3a42.313506111%20-0800%20PST%20m%3d%2b0.089680546">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-12-17%2015%3a58%3a42.313543524%20-0800%20PST%20m%3d%2b0.089717960">
   </head>
 
 
@@ -410,7 +411,8 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 
           <img class="main__image" src="https://blog.dgraph.io/images/rover-cmux.jpg">
           <div class="article-content"><p>Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.</p>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
+</p>
 
 <p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
@@ -722,7 +724,7 @@ Look at the following code sample to get a better hang of the above-mentioned st
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-11-09%2003%3a12%3a43.707044274%20-0800%20PST%20m%3d%2b0.248251677"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2018-12-17%2015%3a58%3a42.315918769%20-0800%20PST%20m%3d%2b0.092093222"></script>
     <script>
     hljs.initHighlightingOnLoad();
 </script>
