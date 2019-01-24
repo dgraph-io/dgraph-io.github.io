@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.46" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -32,7 +31,6 @@
     <meta name="theme-color" content="#ffffff">
 
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
     <title>Learn the basics of GraphQL&#43;-, now available on video - Dgraph Blog</title>
@@ -55,33 +53,6 @@
     <meta name="twitter:title" content="Learn the basics of GraphQL&#43;-, now available on video"/>
     <meta name="twitter:description" content="Dgraph has its own custom query language based on GraphQL, called GraphQL&#43;-. You can learn about the basics of GraphQL&#43;- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the interactive tour it compliments, but in further depth. You can also subscribe to our YouTube channel if you would like to be posted when we release new videos."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
-
-    
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/js/modernizr.min.js"></script>
-    
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
-
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-12-17%2015%3a58%3a42.302357531%20-0800%20PST%20m%3d%2b0.078531884" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-12-17%2015%3a58%3a42.302393897%20-0800%20PST%20m%3d%2b0.078568250" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-12-17%2015%3a58%3a42.302420566%20-0800%20PST%20m%3d%2b0.078594919">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-12-17%2015%3a58%3a42.302446537%20-0800%20PST%20m%3d%2b0.078620890">
   </head>
 
 
@@ -347,14 +318,22 @@
       </symbol>
     </svg>
   </div>
-  <header id="page-header" class="page-header">
+  <style>
+  #page-header, .article__meta {
+    height: 72px;
+    overflow: hidden;
+  }
+</style>
+<header id="page-header" class="page-header">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
 				
-				<a href="https://github.com/dgraph-io/dgraph" data-style="mega" data-count-href="/dgraph-io/dgraph/stargazers" data-count-api="/repos/dgraph-io/dgraph#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star us on GitHub" class="github-button">Star</a>
-      
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
         <nav class="page-nav pull-right">
           <ul class="page-nav__list">
@@ -373,7 +352,7 @@
   <section class="page-intro page-intro--blog-article">
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-10 offset-md-1">
           <header class="page-intro__header">
             <div class="article__meta">
               <span class="article__meta-item article__date">
@@ -384,6 +363,11 @@
 
 
               </span>
+              <style>
+                div.share {
+                  opacity: 0;
+                }
+              </style>
               <div class="share">
                 <ul class="share__list">
                   
@@ -405,8 +389,7 @@
   <div class="page-content page-content--blog-article">
     <div class="container">
       <div class="row">
-        <div class="col-12">
-
+        <div class="col-md-10 offset-md-1">
           <img class="main__image" src="https://blog.dgraph.io/images/atlantis-iss.jpg">
           <div class="article-content"><p>Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the <a href="https://tour.dgraph.io/basic/1/">interactive tour it compliments</a>, but in further depth. You can also <a href="https://www.youtube.com/channel/UCghE41LR8nkKFlR3IFTRO4w?sub_confirmation=1">subscribe to our YouTube channel</a> if you would like to be posted when we release new videos.</p>
 
@@ -433,7 +416,8 @@
 <hr />
 
 <div class="engage">
-	<p><strong>We are building a fast, transactional and distributed graph database.</strong></p>
+	<p><strong>We are building a fast, transactional and distributed graph database. If you like what
+      you read above and want to solve complex problems, <a href="https://dgraph.io/about">come join</a> the team!</strong></p>
   <table>
     <thead>
     <tr>
@@ -443,24 +427,21 @@
     </thead>
     <tbody>
     <tr>
-      <td>Get started with Dgraph.</td>
+      <td><a href="https://docs.dgraph.io" target="_blank">Get started with Dgraph</a></td>
       <td><a href="https://docs.dgraph.io" target="_blank">https://docs.dgraph.io</a></td>
     </tr>
     <tr>
-      <td>See our live demo.</td>
-      <td><a href="https://dgraph.io" target="_blank">https://dgraph.io</a></td>
-    </tr>
-    <tr>
-      <td>Star us on Github.</td>
+      <td><a href="https://github.com/dgraph-io/dgraph" target="_blank">Star us on GitHub</a></td>
       <td><a href="https://github.com/dgraph-io/dgraph" target="_blank">https://github.com/dgraph-io/dgraph</a></td>
     </tr>
     <tr>
-      <td>Ask us questions.</td>
+      <td><a href="https://discuss.dgraph.io" target="_blank">Ask us questions</a></td>
       <td><a href="https://discuss.dgraph.io" target="_blank">https://discuss.dgraph.io</a></td>
     </tr>
     </tbody>
   </table>
-	<strong>We're starting to support enterprises in deploying Dgraph in production. <a href="mailto:manish@dgraph.io">Talk to us</a>, if you want us to help you try out Dgraph at your organization.</strong>
+	<strong>Fortune 500 companies are using Dgraph in production. If you need production support,
+    <a href="mailto:manish@dgraph.io">talk to us.</a></strong>
 </div>
 <br/>
 
@@ -534,9 +515,6 @@
     </div>
   </div>
 
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-
   <div class="community-cta-wrapper">
   <a href="#choose-community" class="community-cta">
     Join our community
@@ -566,16 +544,16 @@
   </ul>
 </div>
 
-  
+
   <div class="page-footer__wrapper">
   <footer id="page-footer" class="page-footer">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-tablet-3">
+        <div class="col-12 col-md-3">
           <figure class="page-logo-footer"><a href="/"><img src="/images/logo.svg" width="140" height="42" alt="Company Logo"></a></figure>
         </div>
         
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Company</h6>
             <ul class="page-footer-nav__list">
@@ -589,7 +567,7 @@
           </nav>
         </div>
         
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
@@ -609,7 +587,7 @@
             </ul>
           </nav>
         </div>
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Connect</h6>
             <ul class="page-footer-nav__list">
@@ -631,11 +609,38 @@
   
 </div>
 
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/modernizr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2009%3a58%3a21.215135922%20-0800%20PST%20m%3d%2b0.080663015" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2009%3a58%3a21.215158712%20-0800%20PST%20m%3d%2b0.080685725" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+    
+
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2009%3a58%3a21.215179382%20-0800%20PST%20m%3d%2b0.080706405">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2009%3a58%3a21.215202762%20-0800%20PST%20m%3d%2b0.080729845">
+
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-12-17%2015%3a58%3a42.303117106%20-0800%20PST%20m%3d%2b0.079291464"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2009%3a58%3a21.215232202%20-0800%20PST%20m%3d%2b0.080759224"></script>
     <script>
-    hljs.initHighlightingOnLoad();
-</script>
+      hljs.initHighlightingOnLoad();
+    </script>
+
 
 <script>
 if (window.location.host.indexOf("dgraph.io") > -1) {
@@ -742,14 +747,23 @@ $(document.links)
   showPopup(true);
 </script>
 
+<style>
+  div.share {
+    opacity: 1;
+  }
+  #page-header, .article__meta {
+    overflow: inherit;
+  }
+  .article__meta {
+    height: inherit;
+  }
+</style>
+
 </body>
 </html>
 
   
 
-  
-
-  
   <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
 

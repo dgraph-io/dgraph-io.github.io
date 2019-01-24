@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.46" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -32,7 +31,6 @@
     <meta name="theme-color" content="#ffffff">
 
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
     <title>Dgraph Blog</title>
@@ -53,44 +51,25 @@
     <meta name="twitter:title" content="Dgraph Blog"/>
     <meta name="twitter:description" content="Engineering stories of building the world&#39;s fast graph database Dgraph"/>
     <meta name="twitter:site" content="@dgraphlabs"/>
-
-    
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/js/modernizr.min.js"></script>
-    
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
-
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-12-17%2015%3a58%3a42.322362219%20-0800%20PST%20m%3d%2b0.098536720" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-12-17%2015%3a58%3a42.322404027%20-0800%20PST%20m%3d%2b0.098578529" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-12-17%2015%3a58%3a42.322442554%20-0800%20PST%20m%3d%2b0.098617056">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-12-17%2015%3a58%3a42.322469359%20-0800%20PST%20m%3d%2b0.098643861">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
-  <header id="page-header" class="page-header">
+  <style>
+  #page-header, .article__meta {
+    height: 72px;
+    overflow: hidden;
+  }
+</style>
+<header id="page-header" class="page-header">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
 				
-				<a href="https://github.com/dgraph-io/dgraph" data-style="mega" data-count-href="/dgraph-io/dgraph/stargazers" data-count-api="/repos/dgraph-io/dgraph#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star us on GitHub" class="github-button">Star</a>
-      
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
         <nav class="page-nav pull-right">
           <ul class="page-nav__list">
@@ -113,124 +92,139 @@
           
           
           
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Thu, Oct 5, 2017 by Manish Rai Jain
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Thu, Oct 5, 2017 by Manish Rai Jain
 
 
-			<span>
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/badger-txn/" class="clearfix">
+			<h3 class="article__title">Concurrent ACID Transactions in Badger</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/badger-txn/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/hubble_atom.jpg)">
+				</div>
 			</div>
-			<a href="https://blog.dgraph.io/post/badger-txn/" class="clearfix">
-				<h3 class="article__title">Concurrent ACID Transactions in Badger</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/badger-txn/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/hubble_atom.jpg">
-				</a>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
 			</div>
-			<p class="article__summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
-
-		</li>
-	</div>
+		</a>
+	</li>
+</div>
 
           
           
           
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Tue, Oct 3, 2017 by Manish Rai Jain
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Tue, Oct 3, 2017 by Manish Rai Jain
 
 
-			<span>
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="clearfix">
+			<h3 class="article__title">[Opinion] SQL is not beating NoSQL. NoSQL is evolving.</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/northwest.jpg)">
+				</div>
 			</div>
-			<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="clearfix">
-				<h3 class="article__title">[Opinion] SQL is not beating NoSQL. NoSQL is evolving.</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/northwest.jpg">
-				</a>
-			</div>
-			<p class="article__summary">Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
 The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.
 Bigtable and MapReduce were developed to deal with an enormous amount of data at Google.</p>
-
-		</li>
-	</div>
-
-          
-          
-          
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Mon, Oct 2, 2017 by Jason Chu
-
-
-			<span>
 			</div>
-			<a href="https://blog.dgraph.io/post/basics-graphql/" class="clearfix">
-				<h3 class="article__title">Learn the basics of GraphQL&#43;-, now available on video</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/basics-graphql/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/atlantis-iss.jpg">
-				</a>
+		</a>
+	</li>
+</div>
+
+          
+          
+          
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Mon, Oct 2, 2017 by Jason Chu
+
+
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/basics-graphql/" class="clearfix">
+			<h3 class="article__title">Learn the basics of GraphQL&#43;-, now available on video</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/basics-graphql/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/atlantis-iss.jpg)">
+				</div>
 			</div>
-			<p class="article__summary">Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the interactive tour it compliments, but in further depth. You can also subscribe to our YouTube channel if you would like to be posted when we release new videos.</p>
-
-		</li>
-	</div>
-
-          
-          
-          
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Wed, Sep 20, 2017 by Deepak Jois
-
-
-			<span>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the interactive tour it compliments, but in further depth. You can also subscribe to our YouTube channel if you would like to be posted when we release new videos.</p>
 			</div>
-			<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
-				<h3 class="article__title">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/pia21778.png">
-				</a>
-			</div>
-			<p class="article__summary">If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</p>
-
-		</li>
-	</div>
+		</a>
+	</li>
+</div>
 
           
           
           
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Mon, Aug 14, 2017 by Peter Stace
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Wed, Sep 20, 2017 by Deepak Jois
 
 
-			<span>
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
+			<h3 class="article__title">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/pia21778.png)">
+				</div>
 			</div>
-			<a href="https://blog.dgraph.io/post/alice/" class="clearfix">
-				<h3 class="article__title">Making Badger Crash Resilient with ALICE</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/alice/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/galileo-jupiter.jpg">
-				</a>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</p>
 			</div>
-			<p class="article__summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</p>
+		</a>
+	</li>
+</div>
 
-		</li>
-	</div>
+          
+          
+          
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Mon, Aug 14, 2017 by Peter Stace
+
+
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/alice/" class="clearfix">
+			<h3 class="article__title">Making Badger Crash Resilient with ALICE</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/alice/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/galileo-jupiter.jpg)">
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</p>
+			</div>
+		</a>
+	</li>
+</div>
 
           
           
@@ -284,9 +278,6 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
       </a>
     
   </div>
-  
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   <div class="community-cta-wrapper">
   <a href="#choose-community" class="community-cta">
@@ -322,11 +313,11 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
   <footer id="page-footer" class="page-footer">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-tablet-3">
+        <div class="col-12 col-md-3">
           <figure class="page-logo-footer"><a href="/"><img src="/images/logo.svg" width="140" height="42" alt="Company Logo"></a></figure>
         </div>
         
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Company</h6>
             <ul class="page-footer-nav__list">
@@ -340,7 +331,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
           </nav>
         </div>
         
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
@@ -360,7 +351,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
             </ul>
           </nav>
         </div>
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Connect</h6>
             <ul class="page-footer-nav__list">
@@ -382,11 +373,38 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
   
 </div>
 
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/modernizr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2009%3a58%3a21.231416924%20-0800%20PST%20m%3d%2b0.096944007" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2009%3a58%3a21.231435514%20-0800%20PST%20m%3d%2b0.096962536" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+    
+
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2009%3a58%3a21.231451814%20-0800%20PST%20m%3d%2b0.096978836">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2009%3a58%3a21.231468653%20-0800%20PST%20m%3d%2b0.096995676">
+
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-12-17%2015%3a58%3a42.325935458%20-0800%20PST%20m%3d%2b0.102109986"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2009%3a58%3a21.231496603%20-0800%20PST%20m%3d%2b0.097023626"></script>
     <script>
-    hljs.initHighlightingOnLoad();
-</script>
+      hljs.initHighlightingOnLoad();
+    </script>
+
 
 <script>
 if (window.location.host.indexOf("dgraph.io") > -1) {
@@ -493,20 +511,25 @@ $(document.links)
   showPopup(true);
 </script>
 
+<style>
+  div.share {
+    opacity: 1;
+  }
+  #page-header, .article__meta {
+    overflow: inherit;
+  }
+  .article__meta {
+    height: inherit;
+  }
+</style>
+
 </body>
 </html>
 
   
 
-  
-
-  
   <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
-  
-  <script type="text/javascript">
-  hljs.initHighlightingOnLoad();
-</script>
   
   
   <script id="dsq-count-scr" src="//skgamingtest.disqus.com/count.js" async></script>

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.46" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -32,7 +31,6 @@
     <meta name="theme-color" content="#ffffff">
 
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     
     <title>Dgraph Blog</title>
@@ -53,44 +51,25 @@
     <meta name="twitter:title" content="Dgraph Blog"/>
     <meta name="twitter:description" content="Engineering stories of building the world&#39;s fast graph database Dgraph"/>
     <meta name="twitter:site" content="@dgraphlabs"/>
-
-    
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,800,700,500" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/js/modernizr.min.js"></script>
-    
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
-
-    <link href="https://blog.dgraph.io//css/runnable.css?2018-12-17%2015%3a58%3a42.33020361%20-0800%20PST%20m%3d%2b0.106378169" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2018-12-17%2015%3a58%3a42.330220399%20-0800%20PST%20m%3d%2b0.106394959" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-
-
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2018-12-17%2015%3a58%3a42.330239071%20-0800%20PST%20m%3d%2b0.106413631">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2018-12-17%2015%3a58%3a42.330253982%20-0800%20PST%20m%3d%2b0.106428542">
   </head>
 
 <body class="blog" data-gr-c-s-loaded="true">
-  <header id="page-header" class="page-header">
+  <style>
+  #page-header, .article__meta {
+    height: 72px;
+    overflow: hidden;
+  }
+</style>
+<header id="page-header" class="page-header">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
 				
-				<a href="https://github.com/dgraph-io/dgraph" data-style="mega" data-count-href="/dgraph-io/dgraph/stargazers" data-count-api="/repos/dgraph-io/dgraph#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star us on GitHub" class="github-button">Star</a>
-      
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
         <nav class="page-nav pull-right">
           <ul class="page-nav__list">
@@ -113,23 +92,25 @@
           
           
           
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Mon, Jan 23, 2017 by Pawan Rawal
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Mon, Jan 23, 2017 by Pawan Rawal
 
 
-			<span>
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
+			<h3 class="article__title">Neo4j vs Dgraph - The numbers speak for themselves</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/potw1652a.jpg)">
+				</div>
 			</div>
-			<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
-				<h3 class="article__title">Neo4j vs Dgraph - The numbers speak for themselves</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/potw1652a.jpg">
-				</a>
-			</div>
-			<p class="article__summary"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>. We have divided this post into five parts:</p>
 
 <ol>
@@ -138,117 +119,123 @@
 <li>Issues faced</li>
 <li>Features</li>
 <li>Principles behind Dgraph</li>
-</ol>
-
-<p></p></p>
-
-		</li>
-	</div>
-
-          
-          
-          
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Thu, Jan 5, 2017 by Manish Rai Jain
-
-
-			<span>
+</ol></p>
 			</div>
-			<a href="https://blog.dgraph.io/post/v0.7-release/" class="clearfix">
-				<h3 class="article__title">Releasing Dgraph v0.7.1</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/v0.7-release/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/routeplan.jpg">
-				</a>
+		</a>
+	</li>
+</div>
+
+          
+          
+          
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Thu, Jan 5, 2017 by Manish Rai Jain
+
+
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/v0.7-release/" class="clearfix">
+			<h3 class="article__title">Releasing Dgraph v0.7.1</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/v0.7-release/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/routeplan.jpg)">
+				</div>
 			</div>
-			<p class="article__summary"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 . This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
-
-<p></p></p>
-
-		</li>
-	</div>
-
-          
-          
-          
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Thu, Oct 6, 2016 by Pawan Rawal
-
-
-			<span>
+We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p></p>
 			</div>
-			<a href="https://blog.dgraph.io/post/hugo/" class="clearfix">
-				<h3 class="article__title">Dgraph hugo blog theme</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/hugo/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/blackholestar.jpg">
-				</a>
+		</a>
+	</li>
+</div>
+
+          
+          
+          
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Thu, Oct 6, 2016 by Pawan Rawal
+
+
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/hugo/" class="clearfix">
+			<h3 class="article__title">Dgraph hugo blog theme</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/hugo/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/blackholestar.jpg)">
+				</div>
 			</div>
-			<p class="article__summary">We at Dgraph love Hugo and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.</p>
-
-		</li>
-	</div>
-
-          
-          
-          
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Tue, Oct 4, 2016 by Ashwin Ramesh
-
-
-			<span>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">We at Dgraph love Hugo and use it for our blog. It&rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with. Initially, we were confused between Hugo vs. having a publication on Medium but later decided to go with Hugo because of the factors mentioned above. One of the things that we found lacking in the Hugo ecosystem was a good theme that we could use for our blog.</p>
 			</div>
-			<a href="https://blog.dgraph.io/post/cmux/" class="clearfix">
-				<h3 class="article__title">Golang: Run multiple services on one port</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/cmux/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/rover-cmux.jpg">
-				</a>
-			</div>
-			<p class="article__summary"><p>Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
-</p></p>
-
-		</li>
-	</div>
+		</a>
+	</li>
+</div>
 
           
           
           
-            <div class="row col-xs-10 col-xs-offset-1">
-	<li class="article__item">
-		<div class="article__meta"><span class="article__meta-item article__date">
-			Mon, Sep 12, 2016 by Pawan Rawal
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Tue, Oct 4, 2016 by Ashwin Ramesh
 
 
-			<span>
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/cmux/" class="clearfix">
+			<h3 class="article__title">Golang: Run multiple services on one port</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/cmux/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/rover-cmux.jpg)">
+				</div>
 			</div>
-			<a href="https://blog.dgraph.io/post/protobuf/" class="clearfix">
-				<h3 class="article__title">Dgraph: JSON vs. Binary clients</h3>
-			</a>
-			<div class="col-md-3 opening__image">
-				<a href="https://blog.dgraph.io/post/protobuf/" class="clearfix">
-				<img src="https://blog.dgraph.io/images/geminiview.jpg">
-				</a>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary"><p>Ever faced the problem of having multiple ports in an application, one for each service?
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.</p></p>
 			</div>
-			<p class="article__summary"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
+		</a>
+	</li>
+</div>
 
-<p></p></p>
+          
+          
+          
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
+				Mon, Sep 12, 2016 by Pawan Rawal
 
-		</li>
-	</div>
+
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/protobuf/" class="clearfix">
+			<h3 class="article__title">Dgraph: JSON vs. Binary clients</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/protobuf/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/geminiview.jpg)">
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p></p>
+			</div>
+		</a>
+	</li>
+</div>
 
           
           
@@ -302,9 +289,6 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
       </a>
     
   </div>
-  
-  
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
   <div class="community-cta-wrapper">
   <a href="#choose-community" class="community-cta">
@@ -340,11 +324,11 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
   <footer id="page-footer" class="page-footer">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-tablet-3">
+        <div class="col-12 col-md-3">
           <figure class="page-logo-footer"><a href="/"><img src="/images/logo.svg" width="140" height="42" alt="Company Logo"></a></figure>
         </div>
         
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Company</h6>
             <ul class="page-footer-nav__list">
@@ -358,7 +342,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
           </nav>
         </div>
         
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
@@ -378,7 +362,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
             </ul>
           </nav>
         </div>
-        <div class="col-4 col-tablet-2">
+        <div class="col-4 col-md-2">
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Connect</h6>
             <ul class="page-footer-nav__list">
@@ -400,11 +384,38 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
   
 </div>
 
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
+
+    <script type="text/javascript" src="/js/modernizr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2009%3a58%3a21.234531377%20-0800%20PST%20m%3d%2b0.100058480" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2009%3a58%3a21.234550047%20-0800%20PST%20m%3d%2b0.100077070" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+    
+
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2009%3a58%3a21.234572766%20-0800%20PST%20m%3d%2b0.100099799">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2009%3a58%3a21.234588806%20-0800%20PST%20m%3d%2b0.100115830">
+
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2018-12-17%2015%3a58%3a42.331131615%20-0800%20PST%20m%3d%2b0.107306181"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2009%3a58%3a21.234613116%20-0800%20PST%20m%3d%2b0.100140129"></script>
     <script>
-    hljs.initHighlightingOnLoad();
-</script>
+      hljs.initHighlightingOnLoad();
+    </script>
+
 
 <script>
 if (window.location.host.indexOf("dgraph.io") > -1) {
@@ -511,20 +522,25 @@ $(document.links)
   showPopup(true);
 </script>
 
+<style>
+  div.share {
+    opacity: 1;
+  }
+  #page-header, .article__meta {
+    overflow: inherit;
+  }
+  .article__meta {
+    height: inherit;
+  }
+</style>
+
 </body>
 </html>
 
   
 
-  
-
-  
   <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
-  
-  <script type="text/javascript">
-  hljs.initHighlightingOnLoad();
-</script>
   
   
   <script id="dsq-count-scr" src="//skgamingtest.disqus.com/count.js" async></script>
