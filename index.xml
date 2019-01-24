@@ -14,10 +14,10 @@
     
     <item>
       <title>Why we choose Badger over RocksDB in Dgraph</title>
-      <link>https://blog.dgraph.io/post/why-choose-badger/</link>
+      <link>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</link>
       <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
       
-      <guid>https://blog.dgraph.io/post/why-choose-badger/</guid>
+      <guid>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</guid>
       <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
 This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
     </item>

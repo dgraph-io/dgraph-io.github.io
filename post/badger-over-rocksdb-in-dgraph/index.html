@@ -33,14 +33,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
     
-    <title>Releasing distributed transactions in v0.9 - Dgraph Blog</title>
-    <meta property='og:title' content="Releasing distributed transactions in v0.9 - Dgraph Blog">
+    <title>Why we choose Badger over RocksDB in Dgraph - Dgraph Blog</title>
+    <meta property='og:title' content="Why we choose Badger over RocksDB in Dgraph - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/v0.9/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/when_neutron_stars_collide.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/keymaker.png">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a36%3a05.052985544%20-0800%20PST%20m%3d%2b0.077328741" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a36%3a05.053048924%20-0800%20PST%20m%3d%2b0.077392101" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a36%3a05.049371184%20-0800%20PST%20m%3d%2b0.073714451" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a36%3a05.049423514%20-0800%20PST%20m%3d%2b0.073766751" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,21 +65,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a36%3a05.053100754%20-0800%20PST%20m%3d%2b0.077443921">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a36%3a05.053144904%20-0800%20PST%20m%3d%2b0.077488081">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a36%3a05.049466044%20-0800%20PST%20m%3d%2b0.073809251">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a36%3a05.049500274%20-0800%20PST%20m%3d%2b0.073843482">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/when_neutron_stars_collide.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/keymaker.png"/>
       
     
 
-    <meta name="twitter:title" content="Releasing distributed transactions in v0.9"/>
-    <meta name="twitter:description" content="It all started with a Github issue.
-At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
-Since the beginning of Dgraph, transactions were road mapped as a post v1."/>
+    <meta name="twitter:title" content="Why we choose Badger over RocksDB in Dgraph"/>
+    <meta name="twitter:description" content="At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
+This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -379,9 +378,9 @@ Since the beginning of Dgraph, transactions were road mapped as a post v1."/>
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Tue, Nov 14, 2017
+                  Thu, Jan 24, 2019
                  by
-                Peter Stace
+                Manish Rai Jain
 
 
               </span>
@@ -393,7 +392,7 @@ Since the beginning of Dgraph, transactions were road mapped as a post v1."/>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Releasing%20distributed%20transactions%20in%20v0.9&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fv0.9%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Why%20we%20choose%20Badger%20over%20RocksDB%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-over-rocksdb-in-dgraph%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -401,7 +400,7 @@ Since the beginning of Dgraph, transactions were road mapped as a post v1."/>
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Releasing distributed transactions in v0.9</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Why we choose Badger over RocksDB in Dgraph</h1>
           </header>
         </div>
       </div>
@@ -412,269 +411,413 @@ Since the beginning of Dgraph, transactions were road mapped as a post v1."/>
     <div class="container">
       <div class="row">
         <div class="col-md-10 offset-md-1">
-          <img class="main__image" src="https://blog.dgraph.io/images/when_neutron_stars_collide.jpg">
+          <img class="main__image" src="https://blog.dgraph.io/images/keymaker.png">
           <div class="article-content">
 
-<p><strong>It all started with a Github issue.</strong></p>
+<p>At Dgraph, we&rsquo;re building <strong>the most advanced graph database</strong> in the world. It
+does distributed transactions, low-latency arbitrary depth joins, traversals,
+provides synchronous replication and horizontal scalability &mdash; with a simple
+GraphQL-like API. <em>Does it sounds like a tough problem?</em> That&rsquo;s because it is.</p>
 
-<p>At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting
-January 2017, has been based what our community (<em>that&rsquo;s you!</em>) told us.  The
-biggest contribution that we get from our community, is in the form of feedback.
-We&rsquo;ll forgo any code contribution for quality feedback based on real-world
-usage.</p>
+<p>This blog post is about <a href="https://github.com/dgraph-io/badger">Badger</a>, the key-value database that makes it
+all happen under the hood, housing all Dgraph data, including Raft logs. Badger
+uses an <a href="https://en.wikipedia.org/wiki/Log-structured_merge-tree">LSM tree</a> structure for holding keys. Badger is different from
+other LSM tree based DBs in that it colocates only small values or pointers
+along with these keys, storing the values separately in a value log.</p>
 
-<p>Since the beginning of Dgraph, transactions were road mapped as a post v1.0
-feature.  Dgraph is a distributed and synchronously replicated system. Adding
-transactions in such a system is a hard challenge; something that we felt
-wasn&rsquo;t worth the complexity to tackle early on.</p>
+<p>Many Go developers have to make this exact decision when they need to choose a
+key-value database. Badger, RocksDB, or the various other KV DBs around, which
+one they should base their projects on. As I write this blog post, Badger is
+crossing <a href="https://github.com/dgraph-io/badger">5000 GitHub stars</a> proving its popularity in the Go community.
+So, this is a perfect time for a post about our experience using Badger and
+what makes it unique.</p>
 
-<p>That changed when <a href="https://twitter.com/gniemeyer">Gustavo Niemeyer</a> filed <a href="https://github.com/dgraph-io/dgraph/issues/1445">this issue</a>. In
-this issue, he made a very convincing case for supporting transactions sooner
-rather than later.</p>
+<h3 id="the-motivation">The Motivation</h3>
 
-<blockquote>
-<p>So, coming back to Dgraph, if the idea is indeed to position it as a general
-alternative for existing databases as I&rsquo;ve watched in one of your videos,
-please don&rsquo;t make the same mistake of postponing transactions for too long,
-or voicing them as relevant mainly for financial transactions. The sort of
-consistency at stake is relevant for pretty much any application at all that
-uses data, even more when even basic details about a record are recorded as
-multiple individual terms. This would make the situation even worse than with
-MongoDB. &ndash;Gustavo</p>
-</blockquote>
+<p>Recently, our friends at CockroachDB wrote about why <a href="https://www.cockroachlabs.com/blog/cockroachdb-on-rocksd/">they use RocksDB</a>. The
+various APIs they rely upon internally and how they use them. They also mentioned the
+things they&rsquo;re doing to get around the Cgo barrier.</p>
 
-<p>The arguments made by Gustavo were intriguing enough for us to look seriously
-in that direction. Once we started looking, evidence was everywhere.  People
-have been complaining about lack of transactions in MongoDB. Bigtable author
-and Google Fellow, Jeff Dean, considered not implementing transactions in Bigtable
-his <a href="http://highscalability.com/blog/2016/3/16/jeff-dean-on-large-scale-deep-learning-at-google.html">&ldquo;biggest mistake as an engineer&rdquo;</a>.</p>
+<p>That reminded me of the alternate path we embarked upon almost two years
+<a href="https://github.com/dgraph-io/badger/commit/b31e045903a47b4a17bc2d42458e602d33fd33a1">ago</a>,
+where we decided to cut out RocksDB and Cgo entirely from our code base and
+write a fast key-value database purely in Go (see <a href="https://blog.dgraph.io/post/badger/">original post</a> for a
+deeper look into the whys).</p>
 
-<p>It was clear that transactions were something that we should implement right
-away.</p>
+<p>The Go language prides itself on the speed of compilation and its amazing debugging
+tools. In fact, the debug tools built by Go are directly informed by the
+tooling that existed at Google. The pprof charts that are common place now in
+the Go community had only been available to a select few who worked at Google
+backends. All of these benefits of the Go langauge are negated when Cgo is
+used. That was the motivation which led us to write Badger.</p>
 
-<p>So that&rsquo;s what we did. We used what we call the <strong>Blitzkrieg approach</strong>.
-Explaining it can be a blog post of its own, but the general idea is that a
-single or a very small set of engineers work initially to make changes deep into
-the core, which would break most things minus the core (possibly one package).
-And then the rest of the team helps fix up the outer shells level by level. We
-use this technique regularly to implement major design changes at a lightning
-speed.</p>
+<p>We started at a disadvantage. <em>Replace a DB started at Google and pioneered at
+Facebook? Go vs C++? New vs Established?</em> So, I knew we had to do things differently.</p>
 
-<p>The entire work from the reporting of the <a href="https://github.com/dgraph-io/dgraph/issues/1445">issue</a> (Sep 13) to implementing
-<a href="https://blog.dgraph.io/post/badger-txn/">transactions in Badger</a> (Oct 5), to releasing <a href="https://github.com/dgraph-io/dgraph/releases/tag/v0.9.0">v0.9 with
-transactions</a> (on Nov 14), was done <strong>within a time span of two
-months.</strong></p>
+<p>When starting the project, I remember telling my team that if we can be within
+75% performance range of RocksDB, it would be a good outcome.  But as I started
+spending more and more time thinking and reading about the problem, it became
+clear that not only can we get the performance of RocksDB, <strong>we can actually do
+better.</strong> There was research out there which improved upon LSM trees, in
+particular, a paper I came across called <a href="https://blog.dgraph.io/post/badger/">WiscKey</a>.  The beauty of this paper
+compared to others was in its logical simplicity: <strong>Separate key-values, reduce
+write amplification, and reduce read amplification.</strong></p>
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wow.. that&#39;s an amazing turnaround time for that level of complexity. Thank you! <a href="https://t.co/niILz03jw0">https://t.co/niILz03jw0</a></p>&mdash; Gustavo Niemeyer (@gniemeyer) <a href="https://twitter.com/gniemeyer/status/930459384131538944?ref_src=twsrc%5Etfw">November 14, 2017</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h3 id="was-it-the-right-move">Was it the right move?</h3>
 
+<p>Now that it&rsquo;s been 1.5 years since <a href="https://blog.dgraph.io/post/badger/">launch</a>, and almost 2 years since the
+initial commit, we have had time to reflect on our decision to build
+Badger.  And I can tell you, <em>there&rsquo;s not been a single day of regret over
+writing Badger from scratch, and we&rsquo;d do it all over again.</em> The time and
+effort required to build and maintain Badger <em>dwarfs</em> in comparison to the
+advantages we have had using it in Dgraph. Over time, we&rsquo;ve pushed more and more
+things from Dgraph to Badger, which has made Dgraph simpler and Badger even
+more enticing to a broader community of Go developers.</p>
 
-<p><em>In this blog post, we won&rsquo;t go into the details of how Dgraph&rsquo;s transactions
-work. There&rsquo;s a lot of interesting bits there, due to the uniqueness of this
-challenge; so the team decided that a blog post won&rsquo;t do justice to what has
-gone into building this amazingly distributed graph database over the past two
-years. Instead, we plan to write a technical paper about Dgraph&rsquo;s unique design.
-Watch for that in the coming months!</em></p>
+<p>Because Badger acted as a base for Dgraph first and foremost, we built some
+unique things into it. <strong>These features are unique enough that it would be
+prohibitively hard for any other KV DB to replace Badger in Dgraph.</strong> In this blog
+post, I&rsquo;d like to talk about those unique features, that make Badger different
+from other storage engines, <em>including RocksDB,</em> and provide wheels for the
+<em>engineering wagon</em> at Dgraph Labs.</p>
 
-<p>So, instead of how it works, this blog post focuses on how to use transactions
-to build your application.</p>
+<h3 id="performance-benefits">Performance Benefits</h3>
 
-<h2 id="the-transaction-model">The transaction model</h2>
+<p>Badger provides <a href="https://blog.dgraph.io/post/badger/">better performance</a> than RocksDB, both in terms of reads
+<strong>and</strong> writes. Writes because each table in LSM tree can hold a lot more keys,
+so there are fewer compactions. Reads because the LSM tree in Badger is
+shallower, so fewer levels have to be queried.</p>
 
-<p>Transactions come along with a new model for how to interact with Dgraph.
-Previously, it has just been single queries and data mutations on their own.
-Now all queries and mutations are performed as part of a transaction.</p>
+<p>Many developers automatically assume that RocksDB is faster than Badger and
+dismiss performance of Badger over RocksDB as being due to lack of Cgo<sup class="footnote-ref" id="fnref:4"><a href="#fn:4">1</a></sup>.
+Also, comparisons between Badger and RocksDB typically assume a zero-sum game.
+<em>If Badger is faster, then it must be less consistent, or must have fewer
+features.</em> That might be the case if the design was exactly the same. But that&rsquo;s
+not the case here.</p>
 
-<p><strong>Dgraph can perform read-modify-write transactions,</strong> the typical lifecycle
-being:</p>
+<p>Badger&rsquo;s design is inherently more complex than RocksDB. Not only does Badger
+need to deal with an LSM tree, but it also needs to maintain a value log. There&rsquo;s the
+added complexity of maintaining a value log, doing live value log garbage
+collection, and moving valid key-value pointers around&mdash;all while keeping the LSM
+tree constraints valid (newer versions at the top, older below). This is a different
+design and therefore there are bigger wins in performance, beyond just the cost of
+Go to Cgo calls.<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">2</a></sup> The implementation of this wasn&rsquo;t easy, and the paper had left
+out exactly these complex and important topics, worthy of another paper on its
+own.</p>
+
+<p><strong>Imitation is the best form of flattery. Our performance numbers and design
+decisions have triggered <a href="https://pingcap.com/blog-cn/for-community-tidb-2019-level-up/">a fork of RocksDB</a> by authors of TiDB, where they
+intend to implement separation of keys from values.</strong></p>
+
+<p>Overall, we got a <em>Strongly Exceeds Expectations</em> on performance with Badger.
+Today Badger is the most actively maintained KV DB in Go language and is being
+adopted by more and more Go projects. It has crossed 5000 GitHub stars. In
+addition to <a href="https://dgraph.io/">Dgraph</a>, Badger is being used by <a href="https://ipfs.io/">IPFS</a>, <a href="https://www.usenetexpress.com/">Usenet
+Express</a> (Usenet Express is serving Petabytes of data via Badger),
+various blockchain companies like <a href="https://decred.org/">Decred</a>, <a href="https://insolar.io/">Insolar</a>, <a href="https://iotex.io/">IoTex</a> and many
+others. Godoc shows there are <a href="https://godoc.org/github.com/dgraph-io/badger?importers">194 Go packages</a> relying on Badger.</p>
+
+<h3 id="badger-features">Badger features</h3>
+
+<p>I&rsquo;ll start by mentioning all the staple features that Badger has. Badger stores keys in
+a lexicographically sorted manner.  It exports <a href="https://godoc.org/github.com/dgraph-io/badger#Txn">Transaction API</a>, which can
+Set, Get and Delete keys. You can iterate over the keys in both forward and
+reverse order, using <a href="https://godoc.org/github.com/dgraph-io/badger#Iterator">Iterators</a>.  At Dgraph, we use iterations in both
+directions to provide various <a href="https://docs.dgraph.io/query-language/#inequality">inequality operators</a>.</p>
+
+<p>Beyond these basics, Badger has a lot of unique features that are hard to
+find in other storage engines, built to help with the specific demands of a
+distributed graph database. In fact, some of these features
+were built in Dgraph first, before getting ported over to Badger (like
+<a href="#anchor-stream">Stream</a> framework), while others were built specifically to avoid
+rebuilding the same in Dgraph (like <a href="#anchor-managed">Managed mode</a>).</p>
+
+<p>In general, our philosophy towards development in Dgraph has been that <strong>any
+change which is generic enough and can be used by a wide-array of users, should
+lie in Badger.</strong></p>
+
+<p>So, let&rsquo;s have a look at these unique features.</p>
+
+<h4 id="acid-ssi-transactions-a-id-anchor-acid-a">ACID SSI Transactions <a id="anchor-acid"></a></h4>
+
+<p>Dgraph relies heavily on the transactional nature of Badger. Badger provides
+<a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">multiple version concurrency control</a>, snapshots and strong <a href="https://en.wikipedia.org/wiki/ACID_(computer_science)">ACID</a>
+transactional guarantees. It provides serializable snapshot isolation (<a href="https://wiki.postgresql.org/wiki/SSI">SSI</a>)
+guarantees, while also running transactions concurrently to achieve great
+performance.</p>
+
+<p>You can see these in action, by running <code>badger bank test</code>, which runs a
+<a href="https://jepsen.io/">Jepsen</a>-style bank test, (by default) running 16 concurrent transactions over
+10K accounts, moving money from one to another, constantly checking if the total
+money in the bank has changed at all (it shouldn&rsquo;t). With this running nightly
+for 8hrs, we get the confidence that Badger is capable of supporting distributed
+ACID transactions in Dgraph.</p>
+
+<h4 id="key-only-iteration">Key-Only Iteration</h4>
+
+<p>Badger can push a lot of keys into a single SSTable, whatever the size of values
+might be, because only small values or value pointers are stored in LSM tree.
+Hence, our LSM tree is much smaller than the total amount of data, so we
+can easily load the tables in RAM (via <code>options.LoadToRAM</code>, or
+<code>options.MemoryMap</code>).</p>
+
+<p>This quick RAM access to the LSM tree allows Badger to provide an option to
+iterate over the keys very quickly (<code>PrefetchValues=false</code>), and get a bunch of
+unique information about the values without fetching them: value identification
+<a href="#anchor-vid">bits</a>, size of the value, expiry time and and so on.</p>
+
+<p>In Dgraph, we use <code>Item.EstimatedSize()</code> to calculate the size of certain ranges
+of data without ever touching the values. And use the identification bits to
+support the <a href="https://docs.dgraph.io/query-language/#has">has function</a>. We also use this in the Stream framework,
+described later.</p>
+
+<h4 id="3d-access-key-value-versions-a-id-anchor-3d-a">3D Access (Key-Value-Versions) <a id="anchor-3d"></a></h4>
+
+<p>Badger is probably the only key-value database which exposes the
+versions of the values to the user. When opening a Badger DB, you can set the
+<code>options.NumVersionsToKeep</code>. We set this by default to 1 in Badger, but in
+Dgraph, we set this to infinity <sup class="footnote-ref" id="fnref:2"><a href="#fn:2">3</a></sup>.</p>
+
+<p>A typical <code>Txn.Get</code> in Badger would only retrieve the latest version back. But,
+<code>Txn.Iterator</code> can be instructed to retrieve all the available versions, via
+<code>IteratorOptions.AllVersions</code>. Badger stores
+versions in reverse order. That is, if you are iterating in the forward
+direction, Badger would return the latest version first, then the older versions
+in descending order (opposite in reverse iteration).</p>
+
+<p>In Dgraph, we use this feature very heavily. All the writes to Dgraph, are
+stored as <em>deltas</em> in Badger, using <a href="#anchor-vid">value identification</a> bits.
+Periodically, we <em>roll-up</em> the deltas into a state, using the Stream framework
+(described <a href="#anchor-stream">below</a>). Which keys need to be rollup can be quickly
+determined using the very fast key-only iteration.</p>
+
+<h4 id="single-key-iteration">Single-Key Iteration</h4>
+
+<p>Just the idea of this is beyond the scope of other storage engines. Because
+Badger supports 3D access (described <a href="#anchor-3d">above</a>), it can optimize iterations
+where the user only wants to iterate over versions of the same key (as explained
+in the <a href="https://www.cockroachlabs.com/blog/cockroachdb-on-rocksd/">Fast scans</a> section of CockroachDB&rsquo;s blog post). It can do that by
+using table boundaries and bloom filters to eliminate tables from LSM tree in
+advance, picking only those which might have the key (multiple versions of the
+key could lie across multiple levels in the LSM tree). This is more efficient
+than typical iteration.</p>
+
+<p>In Dgraph, whenever we need to read a key, we use this iterator.</p>
+
+<h4 id="value-identification-bits-a-id-anchor-vid-a">Value Identification Bits <a id="anchor-vid"></a></h4>
+
+<p>Badger allows users to specify an optional byte when storing keys and values,
+exposed via <code>Txn.SetWithMeta</code>.  This byte can be used to uniquely identify the
+type of the value. In Dgraph, we use this byte in all our writes, to identify
+whether the value is a delta, a state, a schema, or empty; before even
+retrieving the value (see <a href="https://github.com/dgraph-io/dgraph/blob/f6a2c045aca6073cfa60414de8fd729e9f07bd41/posting/list.go#L63-L66">code here</a>). This knowledge allows our access
+to be very efficient.</p>
+
+<h4 id="separation-but-only-as-much-as-needed">Separation, but only as much as needed</h4>
+
+<p>While Badger is designed around key-value separation, it provides a knob to the
+user to specify a <code>ValueThreshold</code>. Any values below this threshold are
+colocated with the keys in the LSM tree. For values above this threshold, only
+their pointers are stored in the LSM tree. By default, the threshold is set to
+32 bytes.</p>
+
+<p>Dgraph uses this fact to fine tune performance based on access patterns.
+Dgraph opens up two instances of Badger: one for data, and one for Raft logs. We
+set these knobs differently for these two. For data, we set the
+<code>ValueThreshold</code> to 1KB. For Raft logs, we use <code>badger.LSMOnlyOptions</code>, which
+sets the threshold to the maximum allowed value of <code>uint16</code> (minus a few bytes to
+avoid edge cases), around 64KB.</p>
+
+<p>And surely, the resulting behavior is quite different. Raft logs are constantly
+being written and deleted. LSM tree compactions do a good job of quickly
+reclaiming the space while maintaining the valid small sized data, which we
+keep in memory via <code>options.LoadtoRAM</code>.</p>
+
+<p>The data instance keeps long-lived keys, can have large values, and can grow
+unbounded to TBs in size. But we know our users are not all on SSDs, using
+a range of different devices (or network drives) with varying capabilities of
+IOPS. So the <code>ValueThreshold</code> of 1KB gives us a sweet spot where our writes are
+still fast, while our reads require less random reads from the value log.</p>
+
+<h4 id="managed-mode-a-id-anchor-managed-a">Managed Mode <a id="anchor-managed"></a></h4>
+
+<p>Badger was written to support building another DB on top of it. That knowledge
+is part of Badger&rsquo;s DNA. It provides a unique mode, called <em>managed mode</em> &mdash;
+which allows a user to specify the version a key-value gets written at.
+Similarly, it allows specifying a read timestamp to use to get a consistent
+snapshot of the data.  This avoids having to build another versioning system on
+top of Badger (which is already versioned), something we rely upon in Dgraph. In
+other words, <strong>we can directly use Dgraph transaction timestamps to write data
+in Badger.</strong></p>
+
+<p>Badger provides a set of APIs to that extent: <code>db.OpenManaged</code>,
+<code>db.NewTransactionAt</code>, <code>db.NewStreamAt</code>, etc. to support this use case.</p>
+
+<p>In <em>normal mode</em>, Badger relies on an internal <code>Oracle</code> to hand out
+monotonically increasing timestamps. This is what most users of Badger use.</p>
+
+<h4 id="stream-framework-a-id-anchor-stream-a">Stream Framework <a id="anchor-stream"></a></h4>
+
+<p>A key-value database&rsquo;s job is not just to store data, but also to allow very fast
+ways to access that data. Typical ways of accessing data provided by most DBs
+are <code>Txn.Get</code>, or <code>Txn.Iterator</code>, etc. But Dgraph deals with a lot of data
+movement and doing a serial iteration over the entire DB or even certain
+prefixes isn&rsquo;t efficient.  Synchronous replication, for example, requires that in
+case of machine failures resulting in data loss, or in case a server falls behind its
+peers, a data snapshot must be sent to the follower to bring it up to date.</p>
+
+<p>We realized we <strong>needed to quickly grab a lot of data from Badger from certain
+ranges and move that over the wire.</strong> Not only that, but we also realized that sending
+a lot of small bits over Go channels or <a href="https://grpc.io/">gRPC</a> is very slow. For example, sending
+every key-value individually over any of these mediums is almost <em>disastrous</em> for
+the performance that we need in Dgraph. So, within Dgraph, we developed the <code>Stream</code>
+framework, which is highly optimized for concurrent iteration and data
+transmission while avoiding contention.</p>
+
+<p>Usage of the <code>Stream</code> framework, while initially designed only to move data
+between servers, quickly spread to other modules and before we knew it, data
+exports, data backups, rolling up deltas into states, all were using it. At some
+point, I determined that the framework itself was generic enough to lie in
+Badger, and I <a href="https://github.com/dgraph-io/badger/commit/14cbd89eb9238d4f32828ccb0822da2ac2397306">ported</a> it over.</p>
+
+<p>What <code>Stream</code> framework does is that, for any prefix (or even for the entire
+DB), it splits up the entire data into key ranges (exposed via <code>db.Tables</code> and
+<code>db.KeySplits</code>). These key ranges are then split among a bunch of goroutine
+workers which iterate over these ranges, while providing a few methods for the
+users to overwrite.</p>
+
+<pre><code class="language-go">ChooseKey func(item *Item) bool
+KeyToList func(key []byte, itr *Iterator) (*pb.KVList, error)
+Send func(*pb.KVList) error
+</code></pre>
+
+<p>In addition to specifying a key <code>Prefix</code> to iterate over, a user can optionally
+choose if they want to pick a certain key or not. For example, when doing roll-ups
+(as described in <a href="#anchor-3d">3D access</a>), we use the <code>item.UserMeta</code> in
+<code>ChooseKey(item)</code> to determine if the latest key version is already a state or a
+delta, so we can skip the keys whose latest value is already a state.</p>
+
+<p><img src="/images/stream.png" alt="Stream Framework" /></p>
+
+<p>The framework then provides a way for a user to create a list of key-values from
+a single key in <code>KeyToList</code> (default implementation is provided). The
+framework picks up multiple <code>KVList</code>, batches them up into 4MB chunks, and
+sends them out to a channel. Most users would return a single KV for a single
+key input, but in Dgraph, we use versioning heavily, and so can return multiple
+KVs for a single key. Note that both <code>ChooseKey</code> and <code>KeyToList</code> are run
+concurrently via goroutines to speed the data retrieval process.</p>
+
+<p>Finally, a goroutine picks up data from this channel, further utilizing the
+power of smart batching to sequentially call <code>Send</code>. In smart batching, data
+gets buffered until the current Send call returns. Thus, there&rsquo;s always one
+pending call to <code>Send</code>. <strong>This framework can move data as fast as <code>Send</code> would
+allow it.</strong></p>
+
+<p>In Dgraph, we use this function to plug into <a href="https://grpc.io/">gRPC</a> and send data over the
+wire (send snapshots or predicates out, or take backups over the network), or
+even back to Badger (roll up deltas into states). In fact, we&rsquo;re using it in <a href="https://github.com/dgraph-io/dgraph/search?q=NewStreamAt&amp;unscoped_q=NewStreamAt">5
+different places</a> in Dgraph. Badger itself uses it to provide fast full
+and incremental backups.</p>
+
+<h4 id="dropall-a-clean-slate">DropAll: A clean slate</h4>
+
+<p>When a new Snapshot is received, Dgraph needs a way to quickly drop all the data
+present in Badger and get ready to receive the new data. Initially, we did this
+using key-only iteration and setting delete markers at the latest version of
+their values. However, we found that this caused issues
+when the new data&rsquo;s version was below the delete marker.</p>
+
+<p>So, we built a way in Badger to drop all the data and start from scratch,
+without changing the DB pointer held by the process. Badger achieves this
+complex feat in a very methodical way by stopping the writes, then the
+compactors, deleting LSM tree, value logs, and finally restarting the compactors
+and writes. During this process, concurrent reads and writes calls can still be
+made, they&rsquo;d return errors without causing panics. In Dgraph, this avoids having
+to stop all the reads from users while <code>DropAll</code> is running, which saves us
+from code complexity.</p>
+
+<p>We have plans to introduce dropping a prefix of the keys, which is the other
+functionality that we use in Dgraph.</p>
+
+<h4 id="tooling">Tooling</h4>
+
+<p>Over time, we have built some very interesting tools around Badger. Most users
+have concerns about data correctness and integrity. We ourselves wanted to
+ensure that Badger provides the highest level of ACID transaction guarantees
+(SSI). So, we baked a tool, called <code>badger bank</code>, as described <a href="#anchor-acid">above</a>.</p>
+
+<p>We built <code>badger fill</code> to quickly fill up Badger with random data for testing
+purposes. Similarly, we built <code>badger flatten</code> to flatten up the LSM tree into a
+single level. This uses the <code>db.Flatten</code> API, which can also be run live.</p>
+
+<p>Badger, of course, has <code>badger backup</code> and <code>badger restore</code>, both using internal
+<code>db.Backup</code> and <code>db.Load</code> APIs.</p>
+
+<p>Finally, a user can use <code>badger info</code> to check the state of the instance, as
+seen by MANIFEST: the levels where each table is stored, the size of
+each table, its SHA-256 checksum and the size of each level, value logs and a
+summary of any abnormalities observed by the tool.</p>
+
+<p>We use these tools on a regular basis to help debug Dgraph instances.</p>
+
+<p><em>There are others which are not mentioned here, like TTL for keys and setting
+<code>Txn.SetWithDiscard</code>, etc. But, I&rsquo;ll take a break from features here and talk
+about the challenges of building Badger and the unique design choices we made.</em></p>
+
+<h3 id="what-wisckey-did-not-mention-complexity">What WiscKey did not mention: Complexity</h3>
+
+<p>The <a href="https://blog.dgraph.io/post/badger/">WiscKey</a> paper made a good case for the novel idea of key-value separation.
+During the implementation of Badger, we realized that the LSM tree part, i.e.
+reading, writing and running compactions, was the easier portion of the code. The
+harder portion was to garbage collect data from value logs. The paper
+briefly mentioned doing value log GC offline with a technique which doesn&rsquo;t
+work well for production systems. In particular, punching holes in files isn&rsquo;t
+supported by Windows or Mac and does not play well with the various things you
+need to do to ensure data consistency across file system failures.</p>
+
+<p>The paper missed out two very important questions:</p>
 
 <ol>
-<li><p>Create a transaction. Go client: <code>client.NewTxn()</code>.</p></li>
-
-<li><p>Execute a series of queries and mutations. Go client: <code>txn.Mutate(...)</code> and
-<code>txn.Query(...)</code>.</p></li>
-
-<li><p>Finally, commit or abort the transaction. Go client: <code>txn.Commit()</code> and
-<code>txn.Abort()</code>.</p></li>
+<li>How to run value log garbage collection live?</li>
+<li>How to do that, while maintaining the 3D key-value-version access?</li>
 </ol>
 
-<p>If two concurrently running transactions write to the same data, then one of the
-commits will fail. It&rsquo;s up to the user to retry.</p>
+<p>Getting those details right has been an iterative process for us, causing us
+a bunch of headaches. The solution that we finally put in place is a good
+one and warrants a blog post on its own (or a paper).</p>
 
-<h2 id="why-are-transactions-important">Why are transactions important?</h2>
+<h3 id="unique-design-choices">Unique Design Choices</h3>
 
-<p>Database transactions are important for any app that needs to update its state
-based upon its previous state in a consistent manner or has operations that
-need to apply in atomic units.</p>
+<p>Badger does not have any cache or do any compression <sup class="footnote-ref" id="fnref:3"><a href="#fn:3">4</a></sup>. Badger&rsquo;s LSM tree is
+typically small enough that it can fit in RAM, or at least be memory mapped
+efficiently. We use prefix-diffing over keys to achieve key compression, but
+because we can already fit millions of keys in a single table, there&rsquo;s no need to
+pay for the higher cost of block or table compression.</p>
 
-<p>That covers a lot of different things. Just to name a few:</p>
+<p>RocksDB has a lot bigger LSM tree, lot more tables, lot more blocks. To achieve
+good read performance, they do both compression and caching. In fact, it
+is spread across two levels, one for compressed blocks and one for uncompressed
+blocks. All this is unnecessary in Badger. If values are large, they would lie
+in the value log and be retrieved via a single lookup (LSM tree does the hard
+work of finding the key). A user can optionally compress the value upfront,
+before passing it to Badger, and use the <a href="#anchor-vid">value identification</a> bits to
+know when a value is compressed if needed.</p>
 
-<ul>
-<li><p>Marking inventory in an online shop as sold. You wouldn&rsquo;t want to sell the
-last remaining item to two customers.</p></li>
+<h3 id="future-work">Future Work</h3>
 
-<li><p>Paying out bets on an online poker site. It&rsquo;s important to ensure the same
-win isn&rsquo;t paid twice.</p></li>
+<p>Recently, we <a href="https://github.com/dgraph-io/dgraph/commit/b9990f4619b64615c2c18bb7627d198b4397109c">removed</a> the LRU cache from Dgraph because of a high level of
+contention and gained a lot in query performance&mdash;we saw Badger was perfectly
+capable of providing us the fast access that we needed to run Dgraph queries.
+But we think, we can get more performance out of it. So, we plan to introduce an
+LRU cache in Badger instead.</p>
 
-<li><p>Inventory management for a warehouse. Restocking an item twice without seeing
-the new quantity could result in twice as much held stock as intended.</p></li>
+<p>We also have plans to add encryption at rest in Badger, which might require us
+to introduce a table level or block level cache (read from disk, decrypt,
+cache).</p>
 
-<li><p>Financial transactions. When transferring money, it&rsquo;s important that credits
-and debts on two accounts are either both applied or not applied at all.</p></li>
-</ul>
-
-<p>Dgraph v0.9 introduces <strong>distributed ACID transactions with synchronous
-replication</strong>. What this means is that transactions work across multiple servers
-each holding a part of the graph, providing <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> guarantees.</p>
-
-<p>Increasing throughput is still just a matter of bringing up additional dgraph
-instances. There is no need to worry about seeing a previous database state when
-querying a replica.  From the point of view of a single client, once a
-transaction is committed its changes are guaranteed to be visible in all future
-transactions.  These guarantees help simplify application code significantly
-while providing a high level of scalability and crash resilience.</p>
-
-<h2 id="client-libraries">Client Libraries</h2>
-
-<p>Dgraph exposes its API via gRPC and HTTP. <em>However&hellip;</em></p>
-
-<p>Transactions require some bookkeeping and state management on the client side.
-Because of this, it&rsquo;s strongly recommended to use a client library to interact
-with dgraph.</p>
-
-<p>At the time of writing, official <a href="https://docs.dgraph.io/clients/#go">Go</a>, <a href="https://docs.dgraph.io/clients/#java">Java</a> and a
-community-driven <a href="https://github.com/calummoore/dgraph-node">Javascript</a> clients are available.</p>
-
-<p>Client libraries for other languages can be implemented on top of the gRPC or
-HTTP APIs. The best way to approach this is to read the documentation about how
-to use the <a href="https://docs.dgraph.io/clients/#raw-http">raw HTTP API</a> and look at the implementations for other
-existing clients.</p>
-
-<p>The examples in this blog post will use the Go client.</p>
-
-<h4 id="a-simple-login-system">A simple login system</h4>
-
-<p>Prior to v0.9.0 dgraph had an upsert feature which is now removed. Upsert
-atomically searches and retrieves or creates and retrieves depending on whether
-an entity exists or not.</p>
-
-<p>With transactions, an explicit upsert feature is no longer required. This is
-because upsert style operations can be performed atomically within a transaction.</p>
-
-<p>So how is this done?</p>
-
-<p>In this example, we model a simple login system, where a user has to provide an
-email address and password in order to gain access to the system.</p>
-
-<p>If the user already exists, then the password must match. If the user <em>doesn&rsquo;t</em>
-yet exist, then their password should be stored for later logins.</p>
-
-<p>It&rsquo;s important to do all of this in a transaction. If it&rsquo;s not, then the same
-account might inadvertently be created twice.</p>
-
-<p>Error checking and JSON marshalling/unmarshalling have been omitted for
-brevity:</p>
-
-<pre><code class="language-go">// Create a new transaction. The deferred call to Discard
-// ensures that server-side resources are cleaned up.
-txn := client.NewTxn()
-defer txn.Discard(ctx)
-
-// Create and execute a query to looks up an email and checks if the password
-matches.
-q := fmt.Sprintf(`
-    {
-        login_attempt(func: eq(email, %q)) {
-            checkpwd(pass, %q)
-        }
-    }
-`, email, pass)
-resp, err := txn.Query(ctx, q)
-
-// Unmarshal the response into a struct. It will be empty if the email couldn't
-// be found. Otherwise it will contain a bool to indicate if the password matched.
-var login struct {
-    Account []struct {
-        Pass []struct {
-            CheckPwd bool `json:&quot;checkpwd&quot;`
-        } `json:&quot;pass&quot;`
-    } `json:&quot;login_attempt&quot;`
-}
-err = json.Unmarshal(resp.GetJson(), &amp;login)
-
-// Now perform the upsert logic.
-if len(login.Account) == 0 {
-    fmt.Println(&quot;Account doesn't exist! Creating new account.&quot;)
-    mu := &amp;protos.Mutation{
-        SetJson: []byte(fmt.Sprintf(`{ &quot;email&quot;: %q, &quot;pass&quot;: %q }`, email, pass)),
-    }
-    _, err = txn.Mutate(ctx, mu)
-    // Commit the mutation, making it visible outside of the transaction.
-    err = txn.Commit(ctx)
-} else if login.Account[0].Pass[0].CheckPwd {
-    fmt.Println(&quot;Login successful!&quot;)
-} else {
-    fmt.Println(&quot;Wrong email or password.&quot;)
-}
-</code></pre>
-
-<h4 id="bank-account-transfers">Bank Account Transfers</h4>
-
-<p>The classical example for database transactions is to transfer money between
-two bank accounts. In this example, we have a set of bank accounts, each
-represented by a node in the graph. Each node is known by a uid and has its
-balance represented by a <code>bal</code> predicate.</p>
-
-<p>This example was extracted from a tool we used when testing the correctness of
-our transaction implementation. The full source is <a href="https://github.com/dgraph-io/dgraph/blob/master/contrib/integration/bank/main.go">here</a>.</p>
-
-<p>Given the uid of two accounts, we want to transfer money from one account to
-the other, i.e. reduce one balance and increase the other by the same amount.</p>
-
-<p>It&rsquo;s important that this is done in a transaction; if it isn&rsquo;t, then two
-transfers happening concurrently could result in the net balance of all
-accounts changing. It could also result in double spending.</p>
-
-<pre><code class="language-go">txn := s.dg.NewTxn()
-defer txn.Discard(ctx)
-
-// Get current balances for the two accounts.
-q := fmt.Sprintf(`{both(func: uid(%s, %s)) { uid, bal }}`, from, to)
-resp, err := txn.Query(ctx, q)
-type Accounts struct {
-    Both []Account `json:&quot;both&quot;`
-}
-var a Accounts
-err := json.Unmarshal(resp.Json, &amp;a)
-
-// Perform the transfer.
-a.Both[0].Bal += 5
-a.Both[1].Bal -= 5
-if a.Both[0].Bal &lt; 0 || a.Both[1].Bal &lt; 0 {
-    // Abandon the transaction if there are insufficient funds.
-    return
-}
-
-// Write back to dgraph.
-var mu protos.Mutation
-data, err := json.Marshal(a.Both)
-mu.SetJson = data
-_, err = txn.Mutate(ctx, &amp;mu)
-err = txn.Commit(ctx)
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>It has historically been difficult to implement transactions in NoSQL
-technologies. Notably, MongoDB has been
-<a href="https://jira.mongodb.org/browse/SERVER-11500">working</a> on a
-<a href="https://jira.mongodb.org/browse/SERVER-11508">solution</a> for a
-<a href="https://jira.mongodb.org/browse/SERVER-2804">while</a>.</p>
-
-<p>So implementing transactions with synchronous replication is a massive
-milestone for Dgraph. With this complex but valuable feature, our community
-will be able to build apps on top of dgraph without having to worry about
-tricky data integrity issues!</p>
+<p>And with over 5000 GitHub stars and almost 200 projects using <a href="https://github.com/dgraph-io/badger">Badger</a>,
+within the span of 1.5 years, we have a very active community whom we like to
+hear from.  <em>So, tell us what you&rsquo;d like to see happen in Badger this year!</em></p>
 
 <hr />
 
@@ -709,7 +852,39 @@ tricky data integrity issues!</p>
 <br/>
 
 
-<p><em>Top image: <a href="https://www.nasa.gov/sites/default/files/thumbnails/image/neutron_star_merger_still_3.jpg">When (Neutron) Stars Colide</a></em></p>
+<p><em>Top image: Caption the image and identify the location of two easter eggs in
+it.  The first three developers to find them and <a href="mailto:contact@dgraph.io">reply back to
+us</a> will receive a Dgraph T-shirt.</em></p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:4"><p>We have already tackled the crash resilience of Badger in our <a href="https://blog.dgraph.io/post/alice/">previous
+  blog post</a>. In addition, we have an open
+  bounty on proving that <a href="https://github.com/dgraph-io/badger/issues/601">Badger loses
+  data</a>.</p>
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+
+<li id="fn:1"><p>One could argue that if that was the only differentiator, then Go being a slower
+  language than C++ in a single-threaded execution, Badger would always be slower
+  than RocksDB.</p>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+
+<li id="fn:2"><p>This is similar to how Google&rsquo;s Bigtable works, which exposes the z-axis,
+  i.e.  the timestamp/version axis, and allows users to set the version when
+  writing a key-value. One could also set the GC policy on the versions, based
+  on the number (<code>NumVersionsToKeep</code> in Badger), age (<code>SetWithTTL</code>),
+  or other factors. And the way we&rsquo;re using the versions in Dgraph is exactly
+  like how I wrote a real-time graph indexing system back in 2012 at Google to
+  unify all structured data in the company under one system.</p>
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+
+<li id="fn:3"><p>This might change later with the introduction of new features, as described in
+  Future work.</p>
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+</ol>
+</div>
 </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
@@ -735,56 +910,17 @@ tricky data integrity issues!</p>
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/peter.jpg" class="article-author__image">
+	<img src="/images/team-manish.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Peter Stace
+    <h4 class="article-author__name">Manish Rai Jain
 
 
       <span class="article-author__title">Author</span>
     </h4>
     
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-        <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/peter-stace-b34726b8/" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="social__item social__item--inline">
-            <a href="https://twitter.com/peterjohnstace" class="social__link">
-                <svg class="icon social__icon social__icon--twitter">
-                    <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-    </ul>
-</nav>
-<p>After Peter graduated in Computer Science in 2012, he worked on low latency derivative trading systems. He enjoys optimising systems for efficiency and speed. In his spare time, he enjoys cycling and drone racing.</p>
-
-
-  </div>
-</div>
-
-              
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/team-manish.jpg" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Manish Rai Jain
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
@@ -800,9 +936,10 @@ tricky data integrity issues!</p>
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
-	</div>
+  </div>
 </div>
 
+              
               </div>
             </div>
           </div>
@@ -873,7 +1010,7 @@ tricky data integrity issues!</p>
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/v0.9/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -912,7 +1049,7 @@ tricky data integrity issues!</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a36%3a05.055376197%20-0800%20PST%20m%3d%2b0.079719474"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a36%3a05.052955203%20-0800%20PST%20m%3d%2b0.077298410"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1035,7 +1172,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/v0.9\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/badger-over-rocksdb-in-dgraph\/"
 };
 (function() {
   var d = document.createElement("script");

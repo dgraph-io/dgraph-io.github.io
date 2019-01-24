@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.dgraph.io/post/why-choose-badger/</loc>
+    <loc>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</loc>
     <lastmod>2019-01-24T10:00:00-08:00</lastmod>
   </url>
   
