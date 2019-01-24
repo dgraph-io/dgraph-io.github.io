@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/why-choose-badger/</loc>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/relicensing-dgraph/</loc>
     <lastmod>2018-04-03T03:19:54-07:00</lastmod>
   </url>
@@ -164,7 +169,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2018-04-03T03:19:54-07:00</lastmod>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -176,7 +181,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2018-04-03T03:19:54-07:00</lastmod>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   

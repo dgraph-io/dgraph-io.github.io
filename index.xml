@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 03 Apr 2018 03:19:54 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 24 Jan 2019 10:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Why we choose Badger over RocksDB in Dgraph</title>
+      <link>https://blog.dgraph.io/post/why-choose-badger/</link>
+      <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/why-choose-badger/</guid>
+      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
+This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
+    </item>
     
     <item>
       <title>Switching Dgraph to a Liberal License</title>

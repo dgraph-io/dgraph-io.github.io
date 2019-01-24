@@ -33,34 +33,26 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
     
-    <title>Neo4j vs Dgraph - The numbers speak for themselves - Dgraph Blog</title>
-    <meta property='og:title' content="Neo4j vs Dgraph - The numbers speak for themselves - Dgraph Blog">
+    <title>Why we choose Badger over RocksDB in Dgraph - Dgraph Blog</title>
+    <meta property='og:title' content="Why we choose Badger over RocksDB in Dgraph - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/benchmark-neo4j/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/why-choose-badger/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/potw1652a.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/keymaker.png">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/potw1652a.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/keymaker.png"/>
       
     
 
-    <meta name="twitter:title" content="Neo4j vs Dgraph - The numbers speak for themselves"/>
-    <meta name="twitter:description" content="As Dgraph
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the most popular graph database. We have divided this post into five parts:
-
-
-Loading data
-Querying
-Issues faced
-Features
-Principles behind Dgraph
-"/>
+    <meta name="twitter:title" content="Why we choose Badger over RocksDB in Dgraph"/>
+    <meta name="twitter:description" content="At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
+This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -366,9 +358,9 @@ Principles behind Dgraph
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Mon, Jan 23, 2017
+                  Thu, Jan 24, 2019
                  by
-                Pawan Rawal
+                Manish Rai Jain
 
 
               </span>
@@ -380,7 +372,7 @@ Principles behind Dgraph
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Neo4j%20vs%20Dgraph%20-%20The%20numbers%20speak%20for%20themselves&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbenchmark-neo4j%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item"><a href="https://twitter.com/share?text=Why%20we%20choose%20Badger%20over%20RocksDB%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fwhy-choose-badger%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg></a></li>
@@ -388,7 +380,7 @@ Principles behind Dgraph
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Neo4j vs Dgraph - The numbers speak for themselves</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Why we choose Badger over RocksDB in Dgraph</h1>
           </header>
         </div>
       </div>
@@ -399,366 +391,413 @@ Principles behind Dgraph
     <div class="container">
       <div class="row">
         <div class="col-md-10 offset-md-1">
-          <img class="main__image" src="https://blog.dgraph.io/images/potw1652a.jpg">
-          <div class="article-content"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>. We have divided this post into five parts:</p>
+          <img class="main__image" src="https://blog.dgraph.io/images/keymaker.png">
+          <div class="article-content">
+
+<p>At Dgraph, we&rsquo;re building <strong>the most advanced graph database</strong> in the world. It
+does distributed transactions, low-latency arbitrary depth joins, traversals,
+provides synchronous replication and horizontal scalability &mdash; with a simple
+GraphQL-like API. <em>Does it sounds like a tough problem?</em> That&rsquo;s because it is.</p>
+
+<p>This blog post is about <a href="https://github.com/dgraph-io/badger">Badger</a>, the key-value database that makes it
+all happen under the hood, housing all Dgraph data, including Raft logs. Badger
+uses an <a href="https://en.wikipedia.org/wiki/Log-structured_merge-tree">LSM tree</a> structure for holding keys. Badger is different from
+other LSM tree based DBs in that it colocates only small values or pointers
+along with these keys, storing the values separately in a value log.</p>
+
+<p>Many Go developers have to make this exact decision when they need to choose a
+key-value database. Badger, RocksDB, or the various other KV DBs around, which
+one they should base their projects on. As I write this blog post, Badger is
+crossing <a href="https://github.com/dgraph-io/badger">5000 GitHub stars</a> proving its popularity in the Go community.
+So, this is a perfect time for a post about our experience using Badger and
+what makes it unique.</p>
+
+<h3 id="the-motivation">The Motivation</h3>
+
+<p>Recently, our friends at CockroachDB wrote about why <a href="https://www.cockroachlabs.com/blog/cockroachdb-on-rocksd/">they use RocksDB</a>. The
+various APIs they rely upon internally and how they use them. They also mentioned the
+things they&rsquo;re doing to get around the Cgo barrier.</p>
+
+<p>That reminded me of the alternate path we embarked upon almost two years
+<a href="https://github.com/dgraph-io/badger/commit/b31e045903a47b4a17bc2d42458e602d33fd33a1">ago</a>,
+where we decided to cut out RocksDB and Cgo entirely from our code base and
+write a fast key-value database purely in Go (see <a href="https://blog.dgraph.io/post/badger/">original post</a> for a
+deeper look into the whys).</p>
+
+<p>The Go language prides itself on the speed of compilation and its amazing debugging
+tools. In fact, the debug tools built by Go are directly informed by the
+tooling that existed at Google. The pprof charts that are common place now in
+the Go community had only been available to a select few who worked at Google
+backends. All of these benefits of the Go langauge are negated when Cgo is
+used. That was the motivation which led us to write Badger.</p>
+
+<p>We started at a disadvantage. <em>Replace a DB started at Google and pioneered at
+Facebook? Go vs C++? New vs Established?</em> So, I knew we had to do things differently.</p>
+
+<p>When starting the project, I remember telling my team that if we can be within
+75% performance range of RocksDB, it would be a good outcome.  But as I started
+spending more and more time thinking and reading about the problem, it became
+clear that not only can we get the performance of RocksDB, <strong>we can actually do
+better.</strong> There was research out there which improved upon LSM trees, in
+particular, a paper I came across called <a href="https://blog.dgraph.io/post/badger/">WiscKey</a>.  The beauty of this paper
+compared to others was in its logical simplicity: <strong>Separate key-values, reduce
+write amplification, and reduce read amplification.</strong></p>
+
+<h3 id="was-it-the-right-move">Was it the right move?</h3>
+
+<p>Now that it&rsquo;s been 1.5 years since <a href="https://blog.dgraph.io/post/badger/">launch</a>, and almost 2 years since the
+initial commit, we have had time to reflect on our decision to build
+Badger.  And I can tell you, <em>there&rsquo;s not been a single day of regret over
+writing Badger from scratch, and we&rsquo;d do it all over again.</em> The time and
+effort required to build and maintain Badger <em>dwarfs</em> in comparison to the
+advantages we have had using it in Dgraph. Over time, we&rsquo;ve pushed more and more
+things from Dgraph to Badger, which has made Dgraph simpler and Badger even
+more enticing to a broader community of Go developers.</p>
+
+<p>Because Badger acted as a base for Dgraph first and foremost, we built some
+unique things into it. <strong>These features are unique enough that it would be
+prohibitively hard for any other KV DB to replace Badger in Dgraph.</strong> In this blog
+post, I&rsquo;d like to talk about those unique features, that make Badger different
+from other storage engines, <em>including RocksDB,</em> and provide wheels for the
+<em>engineering wagon</em> at Dgraph Labs.</p>
+
+<h3 id="performance-benefits">Performance Benefits</h3>
+
+<p>Badger provides <a href="https://blog.dgraph.io/post/badger/">better performance</a> than RocksDB, both in terms of reads
+<strong>and</strong> writes. Writes because each table in LSM tree can hold a lot more keys,
+so there are fewer compactions. Reads because the LSM tree in Badger is
+shallower, so fewer levels have to be queried.</p>
+
+<p>Many developers automatically assume that RocksDB is faster than Badger and
+dismiss performance of Badger over RocksDB as being due to lack of Cgo<sup class="footnote-ref" id="fnref:4"><a href="#fn:4">1</a></sup>.
+Also, comparisons between Badger and RocksDB typically assume a zero-sum game.
+<em>If Badger is faster, then it must be less consistent, or must have fewer
+features.</em> That might be the case if the design was exactly the same. But that&rsquo;s
+not the case here.</p>
+
+<p>Badger&rsquo;s design is inherently more complex than RocksDB. Not only does Badger
+need to deal with an LSM tree, but it also needs to maintain a value log. There&rsquo;s the
+added complexity of maintaining a value log, doing live value log garbage
+collection, and moving valid key-value pointers around&mdash;all while keeping the LSM
+tree constraints valid (newer versions at the top, older below). This is a different
+design and therefore there are bigger wins in performance, beyond just the cost of
+Go to Cgo calls.<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">2</a></sup> The implementation of this wasn&rsquo;t easy, and the paper had left
+out exactly these complex and important topics, worthy of another paper on its
+own.</p>
+
+<p><strong>Imitation is the best form of flattery. Our performance numbers and design
+decisions have triggered <a href="https://pingcap.com/blog-cn/for-community-tidb-2019-level-up/">a fork of RocksDB</a> by authors of TiDB, where they
+intend to implement separation of keys from values.</strong></p>
+
+<p>Overall, we got a <em>Strongly Exceeds Expectations</em> on performance with Badger.
+Today Badger is the most actively maintained KV DB in Go language and is being
+adopted by more and more Go projects. It has crossed 5000 GitHub stars. In
+addition to <a href="https://dgraph.io/">Dgraph</a>, Badger is being used by <a href="https://ipfs.io/">IPFS</a>, <a href="https://www.usenetexpress.com/">Usenet
+Express</a> (Usenet Express is serving Petabytes of data via Badger),
+various blockchain companies like <a href="https://decred.org/">Decred</a>, <a href="https://insolar.io/">Insolar</a>, <a href="https://iotex.io/">IoTex</a> and many
+others. Godoc shows there are <a href="https://godoc.org/github.com/dgraph-io/badger?importers">194 Go packages</a> relying on Badger.</p>
+
+<h3 id="badger-features">Badger features</h3>
+
+<p>I&rsquo;ll start by mentioning all the staple features that Badger has. Badger stores keys in
+a lexicographically sorted manner.  It exports <a href="https://godoc.org/github.com/dgraph-io/badger#Txn">Transaction API</a>, which can
+Set, Get and Delete keys. You can iterate over the keys in both forward and
+reverse order, using <a href="https://godoc.org/github.com/dgraph-io/badger#Iterator">Iterators</a>.  At Dgraph, we use iterations in both
+directions to provide various <a href="https://docs.dgraph.io/query-language/#inequality">inequality operators</a>.</p>
+
+<p>Beyond these basics, Badger has a lot of unique features that are hard to
+find in other storage engines, built to help with the specific demands of a
+distributed graph database. In fact, some of these features
+were built in Dgraph first, before getting ported over to Badger (like
+<a href="#anchor-stream">Stream</a> framework), while others were built specifically to avoid
+rebuilding the same in Dgraph (like <a href="#anchor-managed">Managed mode</a>).</p>
+
+<p>In general, our philosophy towards development in Dgraph has been that <strong>any
+change which is generic enough and can be used by a wide-array of users, should
+lie in Badger.</strong></p>
+
+<p>So, let&rsquo;s have a look at these unique features.</p>
+
+<h4 id="acid-ssi-transactions-a-id-anchor-acid-a">ACID SSI Transactions <a id="anchor-acid"></a></h4>
+
+<p>Dgraph relies heavily on the transactional nature of Badger. Badger provides
+<a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">multiple version concurrency control</a>, snapshots and strong <a href="https://en.wikipedia.org/wiki/ACID_(computer_science)">ACID</a>
+transactional guarantees. It provides serializable snapshot isolation (<a href="https://wiki.postgresql.org/wiki/SSI">SSI</a>)
+guarantees, while also running transactions concurrently to achieve great
+performance.</p>
+
+<p>You can see these in action, by running <code>badger bank test</code>, which runs a
+<a href="https://jepsen.io/">Jepsen</a>-style bank test, (by default) running 16 concurrent transactions over
+10K accounts, moving money from one to another, constantly checking if the total
+money in the bank has changed at all (it shouldn&rsquo;t). With this running nightly
+for 8hrs, we get the confidence that Badger is capable of supporting distributed
+ACID transactions in Dgraph.</p>
+
+<h4 id="key-only-iteration">Key-Only Iteration</h4>
+
+<p>Badger can push a lot of keys into a single SSTable, whatever the size of values
+might be, because only small values or value pointers are stored in LSM tree.
+Hence, our LSM tree is much smaller than the total amount of data, so we
+can easily load the tables in RAM (via <code>options.LoadToRAM</code>, or
+<code>options.MemoryMap</code>).</p>
+
+<p>This quick RAM access to the LSM tree allows Badger to provide an option to
+iterate over the keys very quickly (<code>PrefetchValues=false</code>), and get a bunch of
+unique information about the values without fetching them: value identification
+<a href="#anchor-vid">bits</a>, size of the value, expiry time and and so on.</p>
+
+<p>In Dgraph, we use <code>Item.EstimatedSize()</code> to calculate the size of certain ranges
+of data without ever touching the values. And use the identification bits to
+support the <a href="https://docs.dgraph.io/query-language/#has">has function</a>. We also use this in the Stream framework,
+described later.</p>
+
+<h4 id="3d-access-key-value-versions-a-id-anchor-3d-a">3D Access (Key-Value-Versions) <a id="anchor-3d"></a></h4>
+
+<p>Badger is probably the only key-value database which exposes the
+versions of the values to the user. When opening a Badger DB, you can set the
+<code>options.NumVersionsToKeep</code>. We set this by default to 1 in Badger, but in
+Dgraph, we set this to infinity <sup class="footnote-ref" id="fnref:2"><a href="#fn:2">3</a></sup>.</p>
+
+<p>A typical <code>Txn.Get</code> in Badger would only retrieve the latest version back. But,
+<code>Txn.Iterator</code> can be instructed to retrieve all the available versions, via
+<code>IteratorOptions.AllVersions</code>. Badger stores
+versions in reverse order. That is, if you are iterating in the forward
+direction, Badger would return the latest version first, then the older versions
+in descending order (opposite in reverse iteration).</p>
+
+<p>In Dgraph, we use this feature very heavily. All the writes to Dgraph, are
+stored as <em>deltas</em> in Badger, using <a href="#anchor-vid">value identification</a> bits.
+Periodically, we <em>roll-up</em> the deltas into a state, using the Stream framework
+(described <a href="#anchor-stream">below</a>). Which keys need to be rollup can be quickly
+determined using the very fast key-only iteration.</p>
+
+<h4 id="single-key-iteration">Single-Key Iteration</h4>
+
+<p>Just the idea of this is beyond the scope of other storage engines. Because
+Badger supports 3D access (described <a href="#anchor-3d">above</a>), it can optimize iterations
+where the user only wants to iterate over versions of the same key (as explained
+in the <a href="https://www.cockroachlabs.com/blog/cockroachdb-on-rocksd/">Fast scans</a> section of CockroachDB&rsquo;s blog post). It can do that by
+using table boundaries and bloom filters to eliminate tables from LSM tree in
+advance, picking only those which might have the key (multiple versions of the
+key could lie across multiple levels in the LSM tree). This is more efficient
+than typical iteration.</p>
+
+<p>In Dgraph, whenever we need to read a key, we use this iterator.</p>
+
+<h4 id="value-identification-bits-a-id-anchor-vid-a">Value Identification Bits <a id="anchor-vid"></a></h4>
+
+<p>Badger allows users to specify an optional byte when storing keys and values,
+exposed via <code>Txn.SetWithMeta</code>.  This byte can be used to uniquely identify the
+type of the value. In Dgraph, we use this byte in all our writes, to identify
+whether the value is a delta, a state, a schema, or empty; before even
+retrieving the value (see <a href="https://github.com/dgraph-io/dgraph/blob/f6a2c045aca6073cfa60414de8fd729e9f07bd41/posting/list.go#L63-L66">code here</a>). This knowledge allows our access
+to be very efficient.</p>
+
+<h4 id="separation-but-only-as-much-as-needed">Separation, but only as much as needed</h4>
+
+<p>While Badger is designed around key-value separation, it provides a knob to the
+user to specify a <code>ValueThreshold</code>. Any values below this threshold are
+colocated with the keys in the LSM tree. For values above this threshold, only
+their pointers are stored in the LSM tree. By default, the threshold is set to
+32 bytes.</p>
+
+<p>Dgraph uses this fact to fine tune performance based on access patterns.
+Dgraph opens up two instances of Badger: one for data, and one for Raft logs. We
+set these knobs differently for these two. For data, we set the
+<code>ValueThreshold</code> to 1KB. For Raft logs, we use <code>badger.LSMOnlyOptions</code>, which
+sets the threshold to the maximum allowed value of <code>uint16</code> (minus a few bytes to
+avoid edge cases), around 64KB.</p>
+
+<p>And surely, the resulting behavior is quite different. Raft logs are constantly
+being written and deleted. LSM tree compactions do a good job of quickly
+reclaiming the space while maintaining the valid small sized data, which we
+keep in memory via <code>options.LoadtoRAM</code>.</p>
+
+<p>The data instance keeps long-lived keys, can have large values, and can grow
+unbounded to TBs in size. But we know our users are not all on SSDs, using
+a range of different devices (or network drives) with varying capabilities of
+IOPS. So the <code>ValueThreshold</code> of 1KB gives us a sweet spot where our writes are
+still fast, while our reads require less random reads from the value log.</p>
+
+<h4 id="managed-mode-a-id-anchor-managed-a">Managed Mode <a id="anchor-managed"></a></h4>
+
+<p>Badger was written to support building another DB on top of it. That knowledge
+is part of Badger&rsquo;s DNA. It provides a unique mode, called <em>managed mode</em> &mdash;
+which allows a user to specify the version a key-value gets written at.
+Similarly, it allows specifying a read timestamp to use to get a consistent
+snapshot of the data.  This avoids having to build another versioning system on
+top of Badger (which is already versioned), something we rely upon in Dgraph. In
+other words, <strong>we can directly use Dgraph transaction timestamps to write data
+in Badger.</strong></p>
+
+<p>Badger provides a set of APIs to that extent: <code>db.OpenManaged</code>,
+<code>db.NewTransactionAt</code>, <code>db.NewStreamAt</code>, etc. to support this use case.</p>
+
+<p>In <em>normal mode</em>, Badger relies on an internal <code>Oracle</code> to hand out
+monotonically increasing timestamps. This is what most users of Badger use.</p>
+
+<h4 id="stream-framework-a-id-anchor-stream-a">Stream Framework <a id="anchor-stream"></a></h4>
+
+<p>A key-value database&rsquo;s job is not just to store data, but also to allow very fast
+ways to access that data. Typical ways of accessing data provided by most DBs
+are <code>Txn.Get</code>, or <code>Txn.Iterator</code>, etc. But Dgraph deals with a lot of data
+movement and doing a serial iteration over the entire DB or even certain
+prefixes isn&rsquo;t efficient.  Synchronous replication, for example, requires that in
+case of machine failures resulting in data loss, or in case a server falls behind its
+peers, a data snapshot must be sent to the follower to bring it up to date.</p>
+
+<p>We realized we <strong>needed to quickly grab a lot of data from Badger from certain
+ranges and move that over the wire.</strong> Not only that, but we also realized that sending
+a lot of small bits over Go channels or <a href="https://grpc.io/">gRPC</a> is very slow. For example, sending
+every key-value individually over any of these mediums is almost <em>disastrous</em> for
+the performance that we need in Dgraph. So, within Dgraph, we developed the <code>Stream</code>
+framework, which is highly optimized for concurrent iteration and data
+transmission while avoiding contention.</p>
+
+<p>Usage of the <code>Stream</code> framework, while initially designed only to move data
+between servers, quickly spread to other modules and before we knew it, data
+exports, data backups, rolling up deltas into states, all were using it. At some
+point, I determined that the framework itself was generic enough to lie in
+Badger, and I <a href="https://github.com/dgraph-io/badger/commit/14cbd89eb9238d4f32828ccb0822da2ac2397306">ported</a> it over.</p>
+
+<p>What <code>Stream</code> framework does is that, for any prefix (or even for the entire
+DB), it splits up the entire data into key ranges (exposed via <code>db.Tables</code> and
+<code>db.KeySplits</code>). These key ranges are then split among a bunch of goroutine
+workers which iterate over these ranges, while providing a few methods for the
+users to overwrite.</p>
+
+<pre><code class="language-go">ChooseKey func(item *Item) bool
+KeyToList func(key []byte, itr *Iterator) (*pb.KVList, error)
+Send func(*pb.KVList) error
+</code></pre>
+
+<p>In addition to specifying a key <code>Prefix</code> to iterate over, a user can optionally
+choose if they want to pick a certain key or not. For example, when doing roll-ups
+(as described in <a href="#anchor-3d">3D access</a>), we use the <code>item.UserMeta</code> in
+<code>ChooseKey(item)</code> to determine if the latest key version is already a state or a
+delta, so we can skip the keys whose latest value is already a state.</p>
+
+<p><img src="/images/stream.png" alt="Stream Framework" /></p>
+
+<p>The framework then provides a way for a user to create a list of key-values from
+a single key in <code>KeyToList</code> (default implementation is provided). The
+framework picks up multiple <code>KVList</code>, batches them up into 4MB chunks, and
+sends them out to a channel. Most users would return a single KV for a single
+key input, but in Dgraph, we use versioning heavily, and so can return multiple
+KVs for a single key. Note that both <code>ChooseKey</code> and <code>KeyToList</code> are run
+concurrently via goroutines to speed the data retrieval process.</p>
+
+<p>Finally, a goroutine picks up data from this channel, further utilizing the
+power of smart batching to sequentially call <code>Send</code>. In smart batching, data
+gets buffered until the current Send call returns. Thus, there&rsquo;s always one
+pending call to <code>Send</code>. <strong>This framework can move data as fast as <code>Send</code> would
+allow it.</strong></p>
+
+<p>In Dgraph, we use this function to plug into <a href="https://grpc.io/">gRPC</a> and send data over the
+wire (send snapshots or predicates out, or take backups over the network), or
+even back to Badger (roll up deltas into states). In fact, we&rsquo;re using it in <a href="https://github.com/dgraph-io/dgraph/search?q=NewStreamAt&amp;unscoped_q=NewStreamAt">5
+different places</a> in Dgraph. Badger itself uses it to provide fast full
+and incremental backups.</p>
+
+<h4 id="dropall-a-clean-slate">DropAll: A clean slate</h4>
+
+<p>When a new Snapshot is received, Dgraph needs a way to quickly drop all the data
+present in Badger and get ready to receive the new data. Initially, we did this
+using key-only iteration and setting delete markers at the latest version of
+their values. However, we found that this caused issues
+when the new data&rsquo;s version was below the delete marker.</p>
+
+<p>So, we built a way in Badger to drop all the data and start from scratch,
+without changing the DB pointer held by the process. Badger achieves this
+complex feat in a very methodical way by stopping the writes, then the
+compactors, deleting LSM tree, value logs, and finally restarting the compactors
+and writes. During this process, concurrent reads and writes calls can still be
+made, they&rsquo;d return errors without causing panics. In Dgraph, this avoids having
+to stop all the reads from users while <code>DropAll</code> is running, which saves us
+from code complexity.</p>
+
+<p>We have plans to introduce dropping a prefix of the keys, which is the other
+functionality that we use in Dgraph.</p>
+
+<h4 id="tooling">Tooling</h4>
+
+<p>Over time, we have built some very interesting tools around Badger. Most users
+have concerns about data correctness and integrity. We ourselves wanted to
+ensure that Badger provides the highest level of ACID transaction guarantees
+(SSI). So, we baked a tool, called <code>badger bank</code>, as described <a href="#anchor-acid">above</a>.</p>
+
+<p>We built <code>badger fill</code> to quickly fill up Badger with random data for testing
+purposes. Similarly, we built <code>badger flatten</code> to flatten up the LSM tree into a
+single level. This uses the <code>db.Flatten</code> API, which can also be run live.</p>
+
+<p>Badger, of course, has <code>badger backup</code> and <code>badger restore</code>, both using internal
+<code>db.Backup</code> and <code>db.Load</code> APIs.</p>
+
+<p>Finally, a user can use <code>badger info</code> to check the state of the instance, as
+seen by MANIFEST: the levels where each table is stored, the size of
+each table, its SHA-256 checksum and the size of each level, value logs and a
+summary of any abnormalities observed by the tool.</p>
+
+<p>We use these tools on a regular basis to help debug Dgraph instances.</p>
+
+<p><em>There are others which are not mentioned here, like TTL for keys and setting
+<code>Txn.SetWithDiscard</code>, etc. But, I&rsquo;ll take a break from features here and talk
+about the challenges of building Badger and the unique design choices we made.</em></p>
+
+<h3 id="what-wisckey-did-not-mention-complexity">What WiscKey did not mention: Complexity</h3>
+
+<p>The <a href="https://blog.dgraph.io/post/badger/">WiscKey</a> paper made a good case for the novel idea of key-value separation.
+During the implementation of Badger, we realized that the LSM tree part, i.e.
+reading, writing and running compactions, was the easier portion of the code. The
+harder portion was to garbage collect data from value logs. The paper
+briefly mentioned doing value log GC offline with a technique which doesn&rsquo;t
+work well for production systems. In particular, punching holes in files isn&rsquo;t
+supported by Windows or Mac and does not play well with the various things you
+need to do to ensure data consistency across file system failures.</p>
+
+<p>The paper missed out two very important questions:</p>
 
 <ol>
-<li>Loading data</li>
-<li>Querying</li>
-<li>Issues faced</li>
-<li>Features</li>
-<li>Principles behind Dgraph</li>
+<li>How to run value log garbage collection live?</li>
+<li>How to do that, while maintaining the 3D key-value-version access?</li>
 </ol>
 
-<h3 id="set-up">Set up</h3>
-
-<ul>
-<li>Thinkpad T460 laptop running Ubuntu Linux, Intel Core i7, with 16 GB RAM and SSD storage.</li>
-<li>Neo4j v3.1.0</li>
-<li>Dgraph from master branch (commit: 100c104a)</li>
-</ul>
-
-<h3 id="1-loading-data">1. Loading Data</h3>
-
-<p>We wanted to load a dense graph data set involving real world data. We at <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- have been using the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz">Freebase film data</a> for our development and testing. We feel this data is highly interconnected and makes a good use case for storing in a graph database.</p>
-
-<p>The first problem we faced was that Neo4j doesn&rsquo;t accept data in RDF format directly <sup>
-    <a class="internal" href="#1">3.1</a>
-</sup>
-. The <a href="https://neo4j.com/developer/guide-import-csv/#_super_fast_batch_importer_for_huge_datasets">loader</a> for Neo4j accepts data in CSV format which is essentially what SQL tables have. In our 21 million dataset, we have 50 distinct types of entities and 132 types of relationships between these entities. If we were to try and convert it to CSV format, we would end up with 100s of CSV files. One file for each type of entity, and one file per relationship between two types of entities. While this is okay for relational data, this doesn&rsquo;t work for graph data sets, where each entity can be of multiple types, and relationships between entities are fluid.</p>
-
-<p>So, we looked into the next best option to load graph data into Neo4j. We wrote a <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go">small program</a> similar to the Dgraphloader which reads N-Quads, batches them and tries to load them concurrently into Neo4j. This program used <a href="https://neo4j.com/blog/neo4j-3-0-milestone-1-release/">Bolt</a>, a new protocol by Neo4j. It is the fastest way we could find to load RDF data into Neo4j. In the video below, you can see a comparison of loading 1.1 million N-Quads on <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- vs. Neo4j.</p>
-
-<p>Note that we only used 20 concurrent connections and batched 200 N-Quads for each request because Neo4j doesn&rsquo;t work well if we increase either the number of connections or N-Quads per connection beyond this. In fact, that&rsquo;s a sure way to make Neo4j data corrupt and hang the system <sup>
-    <a class="internal" href="#2">3.2</a>
-</sup>
-. For Dgraph, we typically send 1000 N-Quads per request and have 500 concurrent connections.</p>
-
-<p><br/>
-<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
-    <iframe src="//www.youtube.com/embed/S_DsEMnawwU?rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen="" frameborder="0"></iframe>
-</div>
-
-<br/></p>
-
-<p>With the golden data set of 1.1 million N-Quads, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- outperformed Neo4j 46.7k to 280 N-Quads per second. In fact, the Neo4j loader process <em>never finished</em> (we killed it after a considerable wait).</p>
-
-<blockquote>
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is 160x faster than Neo4j for loading graph data.</p>
-</blockquote>
-
-<h3 id="2-querying">2. Querying</h3>
-
-<p>We would have ideally liked to load up the entire 21 million RDF dataset so that we could compare the performance of both databases at scale. But given the difficulties we faced loading large amounts of data into Neo4j, we resorted to a subset dataset of 1.3 million N-Quads containing only certain types of entities and relationships. After a <em>painful</em> process, we converted our data into <a href="https://github.com/dgraph-io/benchmarks/tree/master/data/neo4j">five CSV files</a>, one for each type of entity (film, director, and genre) and two for the relationships between them; so that we could do some queries. We loaded these files into Neo4j using their import tool.</p>
-
-<pre><code>./neo4j start
-./neo4j-admin import --database film.db --id-type string --nodes:Film $DATA/films.csv --nodes:Genre $DATA/genres.csv --nodes:Director $DATA/directors.csv --relationships:GENRE $DATA/filmgenre.csv --relationships:FILMS $DATA/directorfilm.csv
-</code></pre>
-
-<p>Then we created some indexes in Neo4j for the best query performance.</p>
-
-<pre><code>CREATE INDEX ON :Director(directorId)
-CREATE INDEX ON :Director(name)
-CREATE INDEX ON :Film(release_date)
-</code></pre>
-
-<p>We tested Neo4j twice. Once with query caching turned off, and then with query caching turned on. <strong>Generally, it does not make sense to benchmark queries with caching turned on, but we decided to set it because that&rsquo;s the default behavior Neo4j users see.</strong> You can set it by modifying the following variable in <code>conf/neo4j.conf</code>.</p>
-
-<pre><code>dbms.query_cache_size=0
-</code></pre>
-
-<p>Dgraph does not do any query caching. We loaded an equivalent <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/neo.rdf.gz">data set</a> into <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- using the following schema and the commands below.</p>
-
-<pre><code>scalar (
-    type.object.name.en: string @index
-    film.film.initial_release_date: date @index
-)
-</code></pre>
-
-<p>The schema file specifies creation of an index on the two predicates.</p>
-
-<pre><code># Start Dgraph with a schema which specifies the predicates to index.
-dgraph --schema ~/work/src/github.com/dgraph-io/benchmarks/data/goldendata.schema
-# Load the data
-dgraphloader -r ~/work/src/github.com/dgraph-io/benchmarks/data/neo4j/neo.rdf.gz
-</code></pre>
-
-<p>With data loaded up into both the databases, we <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go">benchmarked</a> both simple and complex queries. The results didn&rsquo;t surprise us.</p>
-
-<h4 id="benchmarking-process">Benchmarking process</h4>
-
-<p>The benchmarks for Neo4j and <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- were run separately so that both processes could utilize full CPU and RAM resources. Each sub-benchmark was run for 10s so that sufficient iterations could be run. We also monitored the memory usage for both the processes using a simple shell script.</p>
-
-<pre><code>go test -v -bench=Dgraph -benchtime=10s .
-go test -v -bench=Neo -benchtime=10s .
-</code></pre>
-
-<h4 id="queries">Queries</h4>
-
-<table>
-<thead>
-<tr>
-<th align="center">Id</th>
-<th>Description</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">SQ</td>
-<td>Get all films and genres of <strong>films directed by Steven Spielberg.</strong></td>
-</tr>
-
-<tr>
-<td align="center">SQM</td>
-<td>Runs the query above and changes the name of one of the films.</td>
-</tr>
-
-<tr>
-<td align="center">GS1Q</td>
-<td>Search for directors with name Steven Spielberg and get <strong>their films sorted by release date</strong>.</td>
-</tr>
-
-<tr>
-<td align="center">GS1QM</td>
-<td>Runs the query above and also changes the name of one of the films.</td>
-</tr>
-
-<tr>
-<td align="center">GS2Q</td>
-<td>Search for directors with name Steven Spielberg and only their films <strong>released after 1984-08</strong> sorted by release date.</td>
-</tr>
-
-<tr>
-<td align="center">GS2QM</td>
-<td>Runs the query above and also changes the name of one of the films.</td>
-</tr>
-
-<tr>
-<td align="center">GS3Q</td>
-<td>Search for directors with name Steven Spielberg and only their movies <strong>released between 1984-08 and 2000</strong> sorted by release date.</td>
-</tr>
-
-<tr>
-<td align="center">GS3QM</td>
-<td>Runs the query above and also changes the name of one of the films.</td>
-</tr>
-</tbody>
-</table>
-
-<p><strong>Note:</strong> If the test id has a <code>P</code> suffix, it was run in parallel.</p>
-
-<h4 id="read-only-benchmarks">Read-only benchmarks</h4>
-
-<p><em>Query caching turned off for Neo4j</em>
-<img src="/images/read-no-cache.png" alt="Dgraph vs Neo4j Read-write" /></p>
-
-<p><em>Query caching on for Neo4j</em>
-<img src="/images/read-cache.png" alt="Dgraph vs Neo4j Read-write" /></p>
-
-<p>Queries to Dgraph took the same amount of time, as expected in the both cases. But, Neo4j query latency was at least <em>halved</em>. That&rsquo;s not surprising given all the subsequent runs were using query cache. <strong>Thence, Neo4j latency was better than Dgraph with query caching turned on, and worse when off.</strong></p>
-
-<h4 id="read-write-benchmarks">Read-write benchmarks</h4>
-
-<p><em>Query caching turned off for Neo4j</em>
-<img src="/images/read-write-no-cache.png" alt="Dgraph vs Neo4j Read-write" /></p>
-
-<p><em>Query caching on for Neo4j</em>
-<img src="/images/read-write-cache.png" alt="Dgraph vs Neo4j Read-write" /></p>
-
-<p><strong>For intertwined reads and writes, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is at least 3x to 6x faster.</strong></p>
-
-<p>We can see that Neo4j is <strong>even slower with query caching on</strong> because they have to do the extra work of cache invalidation on writes. Dgraph was designed to achieve low latency querying with real world use cases, where reads are typically followed by writes and vice-versa, and the <strong>performance benefits show in the numbers.</strong></p>
-
-<p>Not just that, Neo4j takes up <strong>much more memory</strong>. At the start of the benchmarks <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- consumed around 20 MB which increased to 600 MB at the end. In comparison, Neo4j was already consuming 550 MB at the start which increased to 3.2 GB at the end of the benchmarks.</p>
-
-<blockquote>
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- consumes 5x lesser memory compared to Neo4j and is at least 3x faster for intertwined reads and writes.</p>
-</blockquote>
-
-<h3 id="3-issues-faced">3. Issues faced</h3>
-
-<ul>
-<li><div id="1"></div>We couldn&rsquo;t find a convenient way to load large amount of interconnected graph data into Neo4j apart from breaking it into CSV files. We had to write a loader which could concurrently load RDF data into Neo4j.</li>
-<li><div id="2"></div>We hit data corruption issues on sending more than 20 requests concurrently, which the database could not recover from. In comparison, we typically send 500 concurrent requests to <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, each request batching 1000 N-Quads.</li>
-<li>While loading data concurrently and opening 100 connections, Neo4j started returning bad connection error because it hit the limit of maximum open file descriptors which was set to 1024 (the default). We have never witnessed such a problem with Dgraph.</li>
-</ul>
-
-<h3 id="4-features">4. Features</h3>
-
-<p>We talked about performance and issues. Now, let&rsquo;s see how does Dgraph compare against Neo4j regarding features.</p>
-
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Dgraph</th>
-<th>Neo4j</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>Production Features</td>
-<td>Highly available, Consistent, Fault tolerant</td>
-<td>Master-slave architecture (only full data replicas)</td>
-</tr>
-
-<tr>
-<td>Data Sharding</td>
-<td>Yes. Data sharded and replicated across servers, using consensus for writes.</td>
-<td>No data sharding.</td>
-</tr>
-
-<tr>
-<td>Horizontal Scalability</td>
-<td>Yes. Add servers to cluster on the fly to distribute data better.</td>
-<td>Supports only full data replicas</td>
-</tr>
-
-<tr>
-<td>Transactional Model</td>
-<td><a href="http://www.bailis.org/blog/linearizability-versus-serializability/">Linearizability</a> aka Atomic Consistency</td>
-<td>ACID transactions</td>
-</tr>
-
-<tr>
-<td>Backups</td>
-<td>Hot backups in RDF format available using the HTTP interface</td>
-<td>Hot full and incremental backups available only as part of paid enterprise edition</td>
-</tr>
-
-<tr>
-<td>HTTP API for queries and mutations</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-
-<tr>
-<td>Communication using clients over binary protocol</td>
-<td>Yes, using grpc</td>
-<td>Yes, using bolt protocol</td>
-</tr>
-
-<tr>
-<td>Bulk loading of graph data</td>
-<td>Yes, can load arbitrarily connected RDF data using dgraphloader</td>
-<td>Only supports loading relational data in CSV format using the loader</td>
-</tr>
-
-<tr>
-<td>Schema</td>
-<td>Optional (supports int, float, string, bool, date, datetime and geo types)</td>
-<td>Optional (supports byte, short, int, long, float, double, char and string types)</td>
-</tr>
-
-<tr>
-<td>Geospatial Queries</td>
-<td>Yes. Supports near, within, contains, intersects</td>
-<td>No. Not part of core database</td>
-</tr>
-
-<tr>
-<td>Query language</td>
-<td>GraphQL like which responds in JSON</td>
-<td>Cypher</td>
-</tr>
-
-<tr>
-<td>Order by, limit, skip and filter queries</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-
-<tr>
-<td>Authorization and authentication</td>
-<td>SSL/TLS and auth token based security (support by v1.0)</td>
-<td>Supports basic user authentication and authorization</td>
-</tr>
-
-<tr>
-<td>Aggregation queries</td>
-<td>Work in progress (support by v1.0)</td>
-<td>Supports count(), sum(), avg(), distinct and other aggregation queries</td>
-</tr>
-
-<tr>
-<td>Access Control Lists</td>
-<td>Work in progress (support by v1.0)</td>
-<td>Available based on roles as part of enterprise edition</td>
-</tr>
-
-<tr>
-<td>Support for plugins and user defined functions</td>
-<td>Work in progress (support by v1.0)</td>
-<td>Yes</td>
-</tr>
-
-<tr>
-<td>Browser interface for visualization</td>
-<td>Work in progress (support by v1.0)</td>
-<td>Yes</td>
-</tr>
-</tbody>
-</table>
-
-<p>Dgraph (2016) is a lot younger project than Neo4j (2007), so reaching feature parity quickly was a tough job.</p>
-
-<blockquote>
-<p>Dgraph supports most of the functionality that one <em>needs</em> to get the job done; though it doesn&rsquo;t have all the functionality one might <em>want</em>.</p>
-</blockquote>
-
-<h3 id="5-principles-behind-dgraph">5. Principles behind Dgraph</h3>
-
-<p>While <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- runs very well on our (Linux) Thinkpads, it is designed to be a graph database for production. As such, it allows the ability to shard and distribute data over many servers. Consistency and fault tolerance are baked deep into <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, to the point where even our tests need to start a <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go#L2715">single-node Raft cluster</a>. All the writes, irrespective of which replica they end up on, can be read back instantaneously, i.e. linearizable (work in progress, ETA v0.8). A few server crashes would not lose data or affect the end-user queries, making the system highly-available.</p>
-
-<p>Such features have traditionally been a talk for NoSQL databases or Spanner, not for graph databases. But, we think any production system, on which the entire application stack is based, <strong>must stay up, perform and scale well.</strong> The system must be able to utilize the server running it well, process a lot of queries per second, and provide a consistent latency.</p>
-
-<p>Also, given we&rsquo;re building a graph database, the system should be able to handle <strong>arbitrarily dense interconnected data and complex queries.</strong> It should not be confined by pre-optimization of certain edges, or other tricks to make certain queries run fast.</p>
-
-<blockquote>
-<p>The speed achieved should be due to a better design and across the entire spectrum.</p>
-</blockquote>
-
-<p>Finally, running and maintaining such a system should be easy to the engineers. And that&rsquo;s only possible if the system is <strong>as simple as it can be,</strong> and every piece of complexity introduced to the system is carefully weighted.</p>
-
-<p>These are the principles which guide us towards building Dgraph. And we&rsquo;re glad that in a short period, we&rsquo;ve been able to achieve many of these. Now we leave it to you, our users to <a href="https://wiki.dgraph.io/Get_Started">try out Dgraph</a>, and let us know what you think.</p>
-
-<hr />
-
-<h5 id="criticism-to-these-benchmarks-updated-feb-1-2017">Criticism to these benchmarks (Updated Feb 1, 2017)</h5>
-
-<ul>
-<li><strong>This reads like marketing material:</strong> <em>You&rsquo;re on Dgraph blog!</em> Having said that, the benchmarking code is <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go">open source</a> and available to any one willing to put some time to verify these benchmarks.</li>
-<li><strong>Query caching was turned off:</strong> The benchmarks above showcase results for Neo4j with <em>both caching turned on and off.</em></li>
-<li><strong>Neo4j only uses query plan cache, not result cache:</strong> That&rsquo;s not what we observed. In fact, for the same read-write query, Neo4j latency increased when caching was turned on, compared to when off (as you can see in the read-write benchmarks above). A pure query plan cache shouldn&rsquo;t be affected by data changes.</li>
-<li><strong>JVM takes time to warm up:</strong> Each benchmark was run for 10 seconds by Go, which ran thousands of iterations for the same query to get accurate latency per iteration. We think the JVM should be able to warm up by then.</li>
-<li><strong>Neo4j queries could be optimized:</strong> Just mentioning it doesn&rsquo;t help. Please send us a <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go">pull request</a> to optimize Neo4j data loading and queries. Or, <a href="mailto:contact@dgraph.io">send us</a> a mail.</li>
-<li><strong>Benchmarking on a laptop isn&rsquo;t right:</strong> We are just looking for relative performance, not absolute performance. It shouldn&rsquo;t matter which machine you run them on.</li>
-</ul>
-
-<hr />
-
-<p>Manish will be giving a talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- at Gophercon India on 24-25th Feb. If you&rsquo;re attending the conference, find him to talk about all things Dgraph.</p>
-
-<p><strong>Note:</strong> We are happy to <a href="mailto:contact@dgraph.io">accept feedback</a> about any improvements to the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/main.go">loader</a> or the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/neo4j/query_test.go">benchmark tests</a> to get better results for Neo4j.</p>
-
-<p><strong>If you haven&rsquo;t already tried <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, try out the <a href="https://wiki.dgraph.io/Get_Started">5 step tutorial to get started with Dgraph</a>.</strong> Let us know what you think!</p>
+<p>Getting those details right has been an iterative process for us, causing us
+a bunch of headaches. The solution that we finally put in place is a good
+one and warrants a blog post on its own (or a paper).</p>
+
+<h3 id="unique-design-choices">Unique Design Choices</h3>
+
+<p>Badger does not have any cache or do any compression <sup class="footnote-ref" id="fnref:3"><a href="#fn:3">4</a></sup>. Badger&rsquo;s LSM tree is
+typically small enough that it can fit in RAM, or at least be memory mapped
+efficiently. We use prefix-diffing over keys to achieve key compression, but
+because we can already fit millions of keys in a single table, there&rsquo;s no need to
+pay for the higher cost of block or table compression.</p>
+
+<p>RocksDB has a lot bigger LSM tree, lot more tables, lot more blocks. To achieve
+good read performance, they do both compression and caching. In fact, it
+is spread across two levels, one for compressed blocks and one for uncompressed
+blocks. All this is unnecessary in Badger. If values are large, they would lie
+in the value log and be retrieved via a single lookup (LSM tree does the hard
+work of finding the key). A user can optionally compress the value upfront,
+before passing it to Badger, and use the <a href="#anchor-vid">value identification</a> bits to
+know when a value is compressed if needed.</p>
+
+<h3 id="future-work">Future Work</h3>
+
+<p>Recently, we <a href="https://github.com/dgraph-io/dgraph/commit/b9990f4619b64615c2c18bb7627d198b4397109c">removed</a> the LRU cache from Dgraph because of a high level of
+contention and gained a lot in query performance&mdash;we saw Badger was perfectly
+capable of providing us the fast access that we needed to run Dgraph queries.
+But we think, we can get more performance out of it. So, we plan to introduce an
+LRU cache in Badger instead.</p>
+
+<p>We also have plans to add encryption at rest in Badger, which might require us
+to introduce a table level or block level cache (read from disk, decrypt,
+cache).</p>
+
+<p>And with over 5000 GitHub stars and almost 200 projects using <a href="https://github.com/dgraph-io/badger">Badger</a>,
+within the span of 1.5 years, we have a very active community whom we like to
+hear from.  <em>So, tell us what you&rsquo;d like to see happen in Badger this year!</em></p>
 
 <hr />
 
@@ -793,7 +832,40 @@ go test -v -bench=Neo -benchtime=10s .
 <br/>
 
 
-<p><em>Top image: <a href="https://www.nasa.gov/image-feature/goddard/2016/hubble-gazes-at-a-cosmic-megamaser">Hubble Gazes at a Cosmic Megamaser</a></em></p></div>
+<p><em>Top image: Caption the image and identify the location of two easter eggs in
+it.  The first three developers to find them and <a href="mailto:contact@dgraph.io">reply back to
+us</a> will receive a Dgraph T-shirt.</em></p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:4"><p>We have already tackled the crash resilience of Badger in our <a href="https://blog.dgraph.io/post/alice/">previous
+  blog post</a>. In addition, we have an open
+  bounty on proving that <a href="https://github.com/dgraph-io/badger/issues/601">Badger loses
+  data</a>.</p>
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+
+<li id="fn:1"><p>One could argue that if that was the only differentiator, then Go being a slower
+  language than C++ in a single-threaded execution, Badger would always be slower
+  than RocksDB.</p>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+
+<li id="fn:2"><p>This is similar to how Google&rsquo;s Bigtable works, which exposes the z-axis,
+  i.e.  the timestamp/version axis, and allows users to set the version when
+  writing a key-value. One could also set the GC policy on the versions, based
+  on the number (<code>NumVersionsToKeep</code> in Badger), age (<code>SetWithTTL</code>),
+  or other factors. And the way we&rsquo;re using the versions in Dgraph is exactly
+  like how I wrote a real-time graph indexing system back in 2012 at Google to
+  unify all structured data in the company under one system.</p>
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+
+<li id="fn:3"><p>This might change later with the introduction of new features, as described in
+  Future work.</p>
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+</ol>
+</div>
+</div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -818,56 +890,17 @@ go test -v -bench=Neo -benchtime=10s .
               <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/pawan.png" class="article-author__image">
+	<img src="/images/team-manish.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Pawan Rawal
+    <h4 class="article-author__name">Manish Rai Jain
 
 
       <span class="article-author__title">Author</span>
     </h4>
     
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-        <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/pawanrawal1" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="social__item social__item--inline">
-            <a href="https://twitter.com/pawan_rawal" class="social__link">
-                <svg class="icon social__icon social__icon--twitter">
-                    <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-    </ul>
-</nav>
-<p>After graduating from IIT Delhi in 2014, Pawan worked in various startups understanding how the web works. His interest in distributed systems and application of concepts in Computer Science to solve real world problems led him to Dgraph. In his free time, he likes to travel, do yoga, read and cook.</p>
-
-
-  </div>
-</div>
-
-              
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/team-manish.jpg" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Manish Rai Jain
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
@@ -883,9 +916,10 @@ go test -v -bench=Neo -benchtime=10s .
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
-	</div>
+  </div>
 </div>
 
+              
               </div>
             </div>
           </div>
@@ -956,7 +990,7 @@ go test -v -bench=Neo -benchtime=10s .
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/benchmark-neo4j/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/why-choose-badger/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1000,8 +1034,8 @@ go test -v -bench=Neo -benchtime=10s .
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2010%3a00%3a38.746002799%20-0800%20PST%20m%3d%2b0.088541319" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2010%3a00%3a38.746035109%20-0800%20PST%20m%3d%2b0.088573559" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2010%3a00%3a38.734576321%20-0800%20PST%20m%3d%2b0.077115372" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2010%3a00%3a38.735050969%20-0800%20PST%20m%3d%2b0.077589439" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -1017,11 +1051,11 @@ go test -v -bench=Neo -benchtime=10s .
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2010%3a00%3a38.746063739%20-0800%20PST%20m%3d%2b0.088602189">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2010%3a00%3a38.746091709%20-0800%20PST%20m%3d%2b0.088630159">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2010%3a00%3a38.735198638%20-0800%20PST%20m%3d%2b0.077737118">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2010%3a00%3a38.735288648%20-0800%20PST%20m%3d%2b0.077827128">
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2010%3a00%3a38.746133559%20-0800%20PST%20m%3d%2b0.088671999"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2010%3a00%3a38.735387067%20-0800%20PST%20m%3d%2b0.077925527"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1156,7 +1190,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/benchmark-neo4j\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/why-choose-badger\/"
 };
 (function() {
   var d = document.createElement("script");

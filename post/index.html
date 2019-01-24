@@ -96,6 +96,34 @@
 	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
 		<div class="article__meta">
 			<span class="article__meta-item article__date">
+				Thu, Jan 24, 2019 by Manish Rai Jain
+
+
+			</span>
+		</div>
+		<a href="https://blog.dgraph.io/post/why-choose-badger/" class="clearfix">
+			<h3 class="article__title">Why we choose Badger over RocksDB in Dgraph</h3>
+		</a>
+		<a href="https://blog.dgraph.io/post/why-choose-badger/" class="row no-hover">
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/keymaker.png)">
+				</div>
+			</div>
+			<div class="col-md-12 col-lg-9">
+				<p class="article__summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
+This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</p>
+			</div>
+		</a>
+	</li>
+</div>
+
+          
+          
+          
+            <div class="row">
+	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
+		<div class="article__meta">
+			<span class="article__meta-item article__date">
 				Tue, Apr 3, 2018 by Manish Rai Jain
 
 
@@ -200,34 +228,6 @@ To give a bit of a background &ndash; Dgraph, as a graph database, is designed t
 				<p class="article__summary">It all started with a Github issue.
 At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
 Since the beginning of Dgraph, transactions were road mapped as a post v1.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Mon, Oct 9, 2017 by Peter Stace
-
-
-			</span>
-		</div>
-		<a href="https://blog.dgraph.io/post/bulkloader/" class="clearfix">
-			<h3 class="article__title">Loading close to 1M edges/sec into Dgraph</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/bulkloader/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/cassini.jpg)">
-				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges! When we heard about the size of these datasets, we knew we needed to have a solid data loading story so that we could support the most extreme demands from our users.
-In a previous blog post, we discussed some of the challenges that we met on our journey towards loading massive datasets into Dgraph.</p>
 			</div>
 		</a>
 	</li>
@@ -386,8 +386,8 @@ In a previous blog post, we discussed some of the challenges that we met on our 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2009%3a58%3a21.231888701%20-0800%20PST%20m%3d%2b0.097415804" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2009%3a58%3a21.231923971%20-0800%20PST%20m%3d%2b0.097451014" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2010%3a00%3a38.754287805%20-0800%20PST%20m%3d%2b0.096826334" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2010%3a00%3a38.754321234%20-0800%20PST%20m%3d%2b0.096859694" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -403,11 +403,11 @@ In a previous blog post, we discussed some of the challenges that we met on our 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2009%3a58%3a21.231953281%20-0800%20PST%20m%3d%2b0.097480324">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2009%3a58%3a21.231982421%20-0800%20PST%20m%3d%2b0.097509464">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2010%3a00%3a38.754357624%20-0800%20PST%20m%3d%2b0.096896094">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2010%3a00%3a38.754386674%20-0800%20PST%20m%3d%2b0.096925124">
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2009%3a58%3a21.23204193%20-0800%20PST%20m%3d%2b0.097568973"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2010%3a00%3a38.754433954%20-0800%20PST%20m%3d%2b0.096972414"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
