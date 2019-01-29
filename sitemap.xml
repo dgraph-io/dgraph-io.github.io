@@ -185,12 +185,6 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
-    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
     <priority>0</priority>
@@ -241,6 +235,12 @@
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/rocksdb/</loc>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   

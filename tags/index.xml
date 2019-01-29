@@ -31,15 +31,6 @@
     </item>
     
     <item>
-      <title>Dgraph</title>
-      <link>https://blog.dgraph.io/tags/dgraph/</link>
-      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/dgraph/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Go</title>
       <link>https://blog.dgraph.io/tags/go/</link>
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
@@ -99,6 +90,15 @@
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/tags/optimization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rocksdb</title>
+      <link>https://blog.dgraph.io/tags/rocksdb/</link>
+      <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/rocksdb/</guid>
       <description></description>
     </item>
     
