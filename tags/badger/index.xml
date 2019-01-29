@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Badger on Dgraph Blog</title>
+    <link>https://blog.dgraph.io/tags/badger/</link>
+    <description>Recent content in Badger on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Thu, 24 Jan 2019 10:00:00 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/tags/badger/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why we choose Badger over RocksDB in Dgraph</title>
+      <link>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</link>
+      <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</guid>
+      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
+This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
+    </item>
+    
+    <item>
+      <title>Concurrent ACID Transactions in Badger</title>
+      <link>https://blog.dgraph.io/post/badger-txn/</link>
+      <pubDate>Thu, 05 Oct 2017 13:30:16 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger-txn/</guid>
+      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</description>
+    </item>
+    
+    <item>
+      <title>Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</title>
+      <link>https://blog.dgraph.io/post/badger-lmdb-boltdb/</link>
+      <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger-lmdb-boltdb/</guid>
+      <description>If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</description>
+    </item>
+    
+    <item>
+      <title>Introducing Badger: A fast key-value store written purely in Go</title>
+      <link>https://blog.dgraph.io/post/badger/</link>
+      <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger/</guid>
+      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
+We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</description>
+    </item>
+    
+  </channel>
+</rss>

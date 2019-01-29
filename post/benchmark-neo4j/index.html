@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a41%3a10.812786609%20-0800%20PST%20m%3d%2b0.086303363" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a41%3a10.812822919%20-0800%20PST%20m%3d%2b0.086339653" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-29%2012%3a06%3a25.899261016%20-0800%20PST%20m%3d%2b0.067730603" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-29%2012%3a06%3a25.899278615%20-0800%20PST%20m%3d%2b0.067748202" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a41%3a10.812856069%20-0800%20PST%20m%3d%2b0.086372833">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a41%3a10.812888009%20-0800%20PST%20m%3d%2b0.086404753">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-29%2012%3a06%3a25.899293324%20-0800%20PST%20m%3d%2b0.067762913">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-29%2012%3a06%3a25.89930869%20-0800%20PST%20m%3d%2b0.067778279">
 
     
     
@@ -78,13 +78,15 @@
 
     <meta name="twitter:title" content="Neo4j vs Dgraph - The numbers speak for themselves"/>
     <meta name="twitter:description" content="As Dgraph
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the most popular graph database. We have divided this post into five parts:
+ is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the most popular graph database.
+
+We have divided this post into five parts:
 
 
 Loading data
 Querying
 Issues faced
-Features
+Dgraph vs Neo4j Feature Comparison
 Principles behind Dgraph
 "/>
     <meta name="twitter:site" content="@dgraphlabs"/>
@@ -392,18 +394,17 @@ Principles behind Dgraph
 
 
               </span>
-              <style>
-                div.share {
-                  opacity: 0;
-                }
-              </style>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Neo4j%20vs%20Dgraph%20-%20The%20numbers%20speak%20for%20themselves&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbenchmark-neo4j%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item">
+                    <a href="https://twitter.com/share?text=Neo4j%20vs%20Dgraph%20-%20The%20numbers%20speak%20for%20themselves&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbenchmark-neo4j%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                      </svg></a></li>
+                      </svg>
+                      Tweet this
+                    </a>
+                  </li>
                   
                 </ul>
               </div>
@@ -415,20 +416,25 @@ Principles behind Dgraph
     </div>
   </section>
   
-  <div class="page-content page-content--blog-article">
+  <div class="page-content">
     <div class="container">
       <div class="row">
         <div class="col-md-10 offset-md-1">
-          <img class="main__image" src="https://blog.dgraph.io/images/potw1652a.jpg">
+          <img
+            class="main__image"
+            src="https://blog.dgraph.io/images/potw1652a.jpg"
+          >
           <div class="article-content"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>. We have divided this post into five parts:</p>
+ is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>.</p>
+
+<p>We have divided this post into five parts:</p>
 
 <ol>
-<li>Loading data</li>
-<li>Querying</li>
-<li>Issues faced</li>
-<li>Features</li>
-<li>Principles behind Dgraph</li>
+<li><a href="#ref-loading-data">Loading data</a></li>
+<li><a href="#ref-querying">Querying</a></li>
+<li><a href="#ref-issues-faced">Issues faced</a></li>
+<li><a href="#ref-feature-comparison">Dgraph vs Neo4j Feature Comparison</a></li>
+<li><a href="#ref-dgraph-principles">Principles behind Dgraph</a></li>
 </ol>
 
 <h3 id="set-up">Set up</h3>
@@ -439,7 +445,7 @@ Principles behind Dgraph
 <li>Dgraph from master branch (commit: 100c104a)</li>
 </ul>
 
-<h3 id="1-loading-data">1. Loading Data</h3>
+<h3 id="1-loading-data-a-id-ref-loading-data-a">1. Loading Data <a id="ref-loading-data"></a></h3>
 
 <p>We wanted to load a dense graph data set involving real world data. We at <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  have been using the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz">Freebase film data</a> for our development and testing. We feel this data is highly interconnected and makes a good use case for storing in a graph database.</p>
@@ -472,7 +478,7 @@ Principles behind Dgraph
  is 160x faster than Neo4j for loading graph data.</p>
 </blockquote>
 
-<h3 id="2-querying">2. Querying</h3>
+<h3 id="2-querying-a-id-ref-querying-a">2. Querying <a id="ref-querying"></a></h3>
 
 <p>We would have ideally liked to load up the entire 21 million RDF dataset so that we could compare the performance of both databases at scale. But given the difficulties we faced loading large amounts of data into Neo4j, we resorted to a subset dataset of 1.3 million N-Quads containing only certain types of entities and relationships. After a <em>painful</em> process, we converted our data into <a href="https://github.com/dgraph-io/benchmarks/tree/master/data/neo4j">five CSV files</a>, one for each type of entity (film, director, and genre) and two for the relationships between them; so that we could do some queries. We loaded these files into Neo4j using their import tool.</p>
 
@@ -606,7 +612,7 @@ go test -v -bench=Neo -benchtime=10s .
  consumes 5x lesser memory compared to Neo4j and is at least 3x faster for intertwined reads and writes.</p>
 </blockquote>
 
-<h3 id="3-issues-faced">3. Issues faced</h3>
+<h3 id="3-issues-faced-a-id-ref-issues-faced-a">3. Issues faced <a id="ref-issues-faced"></a></h3>
 
 <ul>
 <li><div id="1"></div>We couldn&rsquo;t find a convenient way to load large amount of interconnected graph data into Neo4j apart from breaking it into CSV files. We had to write a loader which could concurrently load RDF data into Neo4j.</li>
@@ -615,7 +621,7 @@ go test -v -bench=Neo -benchtime=10s .
 <li>While loading data concurrently and opening 100 connections, Neo4j started returning bad connection error because it hit the limit of maximum open file descriptors which was set to 1024 (the default). We have never witnessed such a problem with Dgraph.</li>
 </ul>
 
-<h3 id="4-features">4. Features</h3>
+<h3 id="4-dgraph-vs-neo4j-feature-comparison-a-id-ref-feature-comparison-a">4. Dgraph vs Neo4j Feature Comparison <a id="ref-feature-comparison"></a></h3>
 
 <p>We talked about performance and issues. Now, let&rsquo;s see how does Dgraph compare against Neo4j regarding features.</p>
 
@@ -739,7 +745,7 @@ go test -v -bench=Neo -benchtime=10s .
 <p>Dgraph supports most of the functionality that one <em>needs</em> to get the job done; though it doesn&rsquo;t have all the functionality one might <em>want</em>.</p>
 </blockquote>
 
-<h3 id="5-principles-behind-dgraph">5. Principles behind Dgraph</h3>
+<h3 id="5-principles-behind-dgraph-a-id-ref-dgraph-principles-a">5. Principles behind Dgraph <a id="ref-dgraph-principles"></a></h3>
 
 <p>While <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  runs very well on our (Linux) Thinkpads, it is designed to be a graph database for production. As such, it allows the ability to shard and distribute data over many servers. Consistency and fault tolerance are baked deep into <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
@@ -814,6 +820,20 @@ go test -v -bench=Neo -benchtime=10s .
 
 
 <p><em>Top image: <a href="https://www.nasa.gov/image-feature/goddard/2016/hubble-gazes-at-a-cosmic-megamaser">Hubble Gazes at a Cosmic Megamaser</a></em></p></div>
+          <div class="article-tag-list">
+            
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/benchmark/">Benchmark</a>
+                
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/neo4j/">Neo4j</a>
+                
+            
+          </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -899,7 +919,7 @@ go test -v -bench=Neo -benchtime=10s .
         </li>
     </ul>
 </nav>
-<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
+<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing systems at Google. He then lead various projects to consolidate and serve Knowledge Graph right behind web search.</p>
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
@@ -1015,7 +1035,7 @@ go test -v -bench=Neo -benchtime=10s .
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a41%3a10.8142173%20-0800%20PST%20m%3d%2b0.087734034"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-29%2012%3a06%3a25.901435437%20-0800%20PST%20m%3d%2b0.069905027"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>

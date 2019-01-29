@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/indexing-in-dgraph/</loc>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</loc>
     <lastmod>2019-01-24T10:00:00-08:00</lastmod>
   </url>
@@ -163,13 +168,61 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/tags/badger/</loc>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/benchmark/</loc>
+    <lastmod>2017-01-23T18:07:44+11:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/go/</loc>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/gru/</loc>
+    <lastmod>2016-07-21T11:53:04+10:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/hiring/</loc>
+    <lastmod>2016-07-21T11:53:04+10:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/indexing/</loc>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/neo4j/</loc>
+    <lastmod>2017-01-23T18:07:44+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -180,14 +233,26 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/tags/optimization/</loc>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/</loc>
-    <lastmod>2017-10-03T13:20:35+11:00</lastmod>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/transactions/</loc>
+    <lastmod>2017-10-05T13:30:16+11:00</lastmod>
     <priority>0</priority>
   </url>
   

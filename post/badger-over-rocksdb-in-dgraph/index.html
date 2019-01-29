@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a41%3a10.798361357%20-0800%20PST%20m%3d%2b0.071878101" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a41%3a10.798403877%20-0800%20PST%20m%3d%2b0.071920611" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-29%2012%3a06%3a25.888697279%20-0800%20PST%20m%3d%2b0.057166877" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-29%2012%3a06%3a25.888719566%20-0800%20PST%20m%3d%2b0.057189160" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a41%3a10.798480877%20-0800%20PST%20m%3d%2b0.071997621">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a41%3a10.798509467%20-0800%20PST%20m%3d%2b0.072026171">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-29%2012%3a06%3a25.888736884%20-0800%20PST%20m%3d%2b0.057206475">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-29%2012%3a06%3a25.888753235%20-0800%20PST%20m%3d%2b0.057222826">
 
     
     
@@ -384,18 +384,17 @@ This blog post is about Badger, the key-value database that makes it all happen 
 
 
               </span>
-              <style>
-                div.share {
-                  opacity: 0;
-                }
-              </style>
               <div class="share">
                 <ul class="share__list">
                   
-                  <li class="share__item"><a href="https://twitter.com/share?text=Why%20we%20choose%20Badger%20over%20RocksDB%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-over-rocksdb-in-dgraph%2f&amp;via=dgraphlabs" class="share__link">
+                  <li class="share__item">
+                    <a href="https://twitter.com/share?text=Why%20we%20choose%20Badger%20over%20RocksDB%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-over-rocksdb-in-dgraph%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                      </svg></a></li>
+                      </svg>
+                      Tweet this
+                    </a>
+                  </li>
                   
                 </ul>
               </div>
@@ -407,11 +406,14 @@ This blog post is about Badger, the key-value database that makes it all happen 
     </div>
   </section>
   
-  <div class="page-content page-content--blog-article">
+  <div class="page-content">
     <div class="container">
       <div class="row">
         <div class="col-md-10 offset-md-1">
-          <img class="main__image" src="https://blog.dgraph.io/images/keymaker.png">
+          <img
+            class="main__image"
+            src="https://blog.dgraph.io/images/keymaker.png"
+          >
           <div class="article-content">
 
 <p>At Dgraph, we&rsquo;re building <strong>the most advanced graph database</strong> in the world. It
@@ -886,6 +888,15 @@ us</a> will receive a Dgraph T-shirt.</em></p>
 </ol>
 </div>
 </div>
+          <div class="article-tag-list">
+            
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+                
+            
+          </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
     Close
@@ -932,7 +943,7 @@ us</a> will receive a Dgraph T-shirt.</em></p>
         </li>
     </ul>
 </nav>
-<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing system at Google. He then lead various projects to consolidate and serve knowledge graph right behind web search.</p>
+<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing systems at Google. He then lead various projects to consolidate and serve Knowledge Graph right behind web search.</p>
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
@@ -1049,7 +1060,7 @@ us</a> will receive a Dgraph T-shirt.</em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a41%3a10.800863619%20-0800%20PST%20m%3d%2b0.074380363"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-29%2012%3a06%3a25.891866025%20-0800%20PST%20m%3d%2b0.060335623"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>

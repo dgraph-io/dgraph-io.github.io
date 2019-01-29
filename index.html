@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a41%3a10.818846244%20-0800%20PST%20m%3d%2b0.092363018" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a41%3a10.818879904%20-0800%20PST%20m%3d%2b0.092396608" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-29%2012%3a06%3a25.905232757%20-0800%20PST%20m%3d%2b0.073702355" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-29%2012%3a06%3a25.905251518%20-0800%20PST%20m%3d%2b0.073721104" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a41%3a10.818902624%20-0800%20PST%20m%3d%2b0.092419318">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a41%3a10.818926514%20-0800%20PST%20m%3d%2b0.092443208">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-29%2012%3a06%3a25.905264742%20-0800%20PST%20m%3d%2b0.073734327">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-29%2012%3a06%3a25.905277121%20-0800%20PST%20m%3d%2b0.073746708">
 
     
     
@@ -104,161 +104,196 @@
   </div>
 </header>
 
-  <div class="page-content page-content--blog">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <ul class="article__list">
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Thu, Jan 24, 2019 by Manish Rai Jain
+  <div class="content container">
+    <div class="row">
+      
+
+      <ul class="article__list col-xs-12 col-lg-10 offset-lg-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Jan 29, 2019 by Martin Martinez Rivera
 
 
-			</span>
-		</div>
-		<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="clearfix">
-			<h3 class="article__title">Why we choose Badger over RocksDB in Dgraph</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/keymaker.png)">
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/indexing-in-dgraph/" class="clearfix">
+		<h3 class="article__title">Optimizing Indexing in Dgraph</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/indexing-in-dgraph/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/iss.jpg); ">
 				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
-This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Tue, Apr 3, 2018 by Manish Rai Jain
-
-
-			</span>
+			</a>
 		</div>
-		<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="clearfix">
-			<h3 class="article__title">Switching Dgraph to a Liberal License</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/lightsaber.jpg)">
-				</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime. This involves changing data types and adding or removing indices with a single ALTER command to match the needs of an application developer.
+Dgraph supports indexing natively, which means common use cases around full-text search, regular expressions, date matching, geolocation queries, etc. can all be executed within Dgraph, while maintaining transactional guarantees.</div>
+			<div class="tags">
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/dgraph/">Dgraph</a>
+						
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/indexing/">Indexing</a>
+						
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/optimization/">Optimization</a>
+						
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/go/">Go</a>
+						
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Last year, we had switched Dgraph license to AGPLv3.0, considering reasons like the ability to monetize in a competitive environment. In particular,
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Thu, Jan 24, 2019 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="clearfix">
+		<h3 class="article__title">Why we choose Badger over RocksDB in Dgraph</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/keymaker.png); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
+This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</div>
+			<div class="tags">
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+						
+				
+			</div>
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Apr 3, 2018 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="clearfix">
+		<h3 class="article__title">Switching Dgraph to a Liberal License</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/lightsaber.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Last year, we had switched Dgraph license to AGPLv3.0, considering reasons like the ability to monetize in a competitive environment. In particular,
  The threat of duplicate commercial services and enterprise features built by others without paying anything back towards the development of the open source version.
 Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, with no restrictions.
- This remains a credible threat; nothing has changed in that regard.</p>
+ This remains a credible threat; nothing has changed in that regard.</div>
+			<div class="tags">
+				
 			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Tue, Dec 19, 2017 by Manish Rai Jain
-
-
-			</span>
 		</div>
-		<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="clearfix">
-			<h3 class="article__title">Releasing Dgraph 1.0: Production-Ready Graph Database</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/launch.jpg)">
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Dec 19, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="clearfix">
+		<h3 class="article__title">Releasing Dgraph 1.0: Production-Ready Graph Database</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/launch.jpg); ">
 				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
-To give a bit of a background &ndash; Dgraph, as a graph database, is designed to excel at the weaknesses of traditional relational databases: traversing relationships and efficiently executing complex joins at scale.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Fri, Dec 1, 2017 by Manish Rai Jain
-
-
-			</span>
+			</a>
 		</div>
-		<a href="https://blog.dgraph.io/post/neptune/" class="clearfix">
-			<h3 class="article__title">Open Source Alternative to Amazon Neptune</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/neptune/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/Neptune_Earth.jpg)">
-				</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
+To give a bit of a background &ndash; Dgraph, as a graph database, is designed to excel at the weaknesses of traditional relational databases: traversing relationships and efficiently executing complex joins at scale.</div>
+			<div class="tags">
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Amazon just announced their new graph database service, called Amazon Neptune. As per a TechCrunch article,
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Fri, Dec 1, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/neptune/" class="clearfix">
+		<h3 class="article__title">Open Source Alternative to Amazon Neptune</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/neptune/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/Neptune_Earth.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Amazon just announced their new graph database service, called Amazon Neptune. As per a TechCrunch article,
  Amazon Neptune has been optimized to handle billions of relationships and run queries within milliseconds. Neptune supports fast-failover, point-in-time recovery and Multi-AZ deployments. And you can also encrypt data at rest.
- This is very exciting news for the entire tech ecosystem. It clearly shows that graph databases are going mainstream. Already many tech companies are using existing graph solutions or building their own graph-like systems.</p>
+ This is very exciting news for the entire tech ecosystem. It clearly shows that graph databases are going mainstream. Already many tech companies are using existing graph solutions or building their own graph-like systems.</div>
+			<div class="tags">
+				
 			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Tue, Nov 14, 2017 by Peter Stace
-
-
-			</span>
 		</div>
-		<a href="https://blog.dgraph.io/post/v0.9/" class="clearfix">
-			<h3 class="article__title">Releasing distributed transactions in v0.9</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/v0.9/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/when_neutron_stars_collide.jpg)">
-				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">It all started with a Github issue.
-At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
-Since the beginning of Dgraph, transactions were road mapped as a post v1.</p>
-			</div>
-		</a>
-	</li>
-</div>
+	</div>
+</li>
 
-          
-          
-          </ul>
-          
-        </div>
-      </div>
+        
+      </ul>
     </div>
   </div>
 
@@ -401,7 +436,7 @@ Since the beginning of Dgraph, transactions were road mapped as a post v1.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a41%3a10.820636835%20-0800%20PST%20m%3d%2b0.094153629"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-29%2012%3a06%3a25.905988255%20-0800%20PST%20m%3d%2b0.074457860"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>

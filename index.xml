@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 24 Jan 2019 10:00:00 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 Jan 2019 12:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Optimizing Indexing in Dgraph</title>
+      <link>https://blog.dgraph.io/post/indexing-in-dgraph/</link>
+      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/indexing-in-dgraph/</guid>
+      <description>One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime. This involves changing data types and adding or removing indices with a single ALTER command to match the needs of an application developer.
+Dgraph supports indexing natively, which means common use cases around full-text search, regular expressions, date matching, geolocation queries, etc. can all be executed within Dgraph, while maintaining transactional guarantees.</description>
+    </item>
     
     <item>
       <title>Why we choose Badger over RocksDB in Dgraph</title>
@@ -233,14 +243,16 @@ We also dream that graph database would no longer run as a secondary database.</
       
       <guid>https://blog.dgraph.io/post/benchmark-neo4j/</guid>
       <description>&lt;p&gt;As &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;. We have divided this post into five parts:&lt;/p&gt;
+ is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We have divided this post into five parts:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Loading data&lt;/li&gt;
-&lt;li&gt;Querying&lt;/li&gt;
-&lt;li&gt;Issues faced&lt;/li&gt;
-&lt;li&gt;Features&lt;/li&gt;
-&lt;li&gt;Principles behind Dgraph&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-loading-data&#34;&gt;Loading data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-querying&#34;&gt;Querying&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-issues-faced&#34;&gt;Issues faced&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-feature-comparison&#34;&gt;Dgraph vs Neo4j Feature Comparison&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-dgraph-principles&#34;&gt;Principles behind Dgraph&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</description>
     </item>
     

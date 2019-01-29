@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a41%3a10.821260216%20-0800%20PST%20m%3d%2b0.094777030" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a41%3a10.821294016%20-0800%20PST%20m%3d%2b0.094810740" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-29%2012%3a06%3a25.906247271%20-0800%20PST%20m%3d%2b0.074716860" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-29%2012%3a06%3a25.906262482%20-0800%20PST%20m%3d%2b0.074732068" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a41%3a10.821326536%20-0800%20PST%20m%3d%2b0.094843270">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a41%3a10.821356086%20-0800%20PST%20m%3d%2b0.094872820">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-29%2012%3a06%3a25.906276721%20-0800%20PST%20m%3d%2b0.074746306">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-29%2012%3a06%3a25.906289439%20-0800%20PST%20m%3d%2b0.074759030">
 
     
     
@@ -104,155 +104,183 @@
   </div>
 </header>
 
-  <div class="page-content page-content--blog">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <ul class="article__list">
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Mon, Oct 9, 2017 by Peter Stace
+  <div class="content container">
+    <div class="row">
+      
+
+      <ul class="article__list col-xs-12 col-lg-10 offset-lg-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Nov 14, 2017 by Peter Stace
 
 
-			</span>
-		</div>
-		<a href="https://blog.dgraph.io/post/bulkloader/" class="clearfix">
-			<h3 class="article__title">Loading close to 1M edges/sec into Dgraph</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/bulkloader/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/cassini.jpg)">
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/v0.9/" class="clearfix">
+		<h3 class="article__title">Releasing distributed transactions in v0.9</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/v0.9/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/when_neutron_stars_collide.jpg); ">
 				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges! When we heard about the size of these datasets, we knew we needed to have a solid data loading story so that we could support the most extreme demands from our users.
-In a previous blog post, we discussed some of the challenges that we met on our journey towards loading massive datasets into Dgraph.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Thu, Oct 5, 2017 by Manish Rai Jain
-
-
-			</span>
+			</a>
 		</div>
-		<a href="https://blog.dgraph.io/post/badger-txn/" class="clearfix">
-			<h3 class="article__title">Concurrent ACID Transactions in Badger</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/badger-txn/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/hubble_atom.jpg)">
-				</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">It all started with a Github issue.
+At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
+Since the beginning of Dgraph, transactions were road mapped as a post v1.</div>
+			<div class="tags">
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Tue, Oct 3, 2017 by Manish Rai Jain
-
-
-			</span>
 		</div>
-		<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="clearfix">
-			<h3 class="article__title">[Opinion] SQL is not beating NoSQL. NoSQL is evolving.</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/northwest.jpg)">
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Mon, Oct 9, 2017 by Peter Stace
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/bulkloader/" class="clearfix">
+		<h3 class="article__title">Loading close to 1M edges/sec into Dgraph</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/bulkloader/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/cassini.jpg); ">
 				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges! When we heard about the size of these datasets, we knew we needed to have a solid data loading story so that we could support the most extreme demands from our users.
+In a previous blog post, we discussed some of the challenges that we met on our journey towards loading massive datasets into Dgraph.</div>
+			<div class="tags">
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Thu, Oct 5, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/badger-txn/" class="clearfix">
+		<h3 class="article__title">Concurrent ACID Transactions in Badger</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/badger-txn/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/hubble_atom.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</div>
+			<div class="tags">
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+						
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/transactions/">Transactions</a>
+						
+				
+			</div>
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Oct 3, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="clearfix">
+		<h3 class="article__title">[Opinion] SQL is not beating NoSQL. NoSQL is evolving.</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/sql-vs-nosql/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/northwest.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
 The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.
-Bigtable and MapReduce were developed to deal with an enormous amount of data at Google.</p>
+Bigtable and MapReduce were developed to deal with an enormous amount of data at Google.</div>
+			<div class="tags">
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/opinion/">opinion</a>
+						
+				
 			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Mon, Oct 2, 2017 by Jason Chu
-
-
-			</span>
 		</div>
-		<a href="https://blog.dgraph.io/post/basics-graphql/" class="clearfix">
-			<h3 class="article__title">Learn the basics of GraphQL&#43;-, now available on video</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/basics-graphql/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/atlantis-iss.jpg)">
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Mon, Oct 2, 2017 by Jason Chu
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/basics-graphql/" class="clearfix">
+		<h3 class="article__title">Learn the basics of GraphQL&#43;-, now available on video</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/basics-graphql/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/atlantis-iss.jpg); ">
 				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the interactive tour it compliments, but in further depth. You can also subscribe to our YouTube channel if you would like to be posted when we release new videos.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Wed, Sep 20, 2017 by Deepak Jois
-
-
-			</span>
+			</a>
 		</div>
-		<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
-			<h3 class="article__title">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/pia21778.png)">
-				</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the interactive tour it compliments, but in further depth. You can also subscribe to our YouTube channel if you would like to be posted when we release new videos.</div>
+			<div class="tags">
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</p>
-			</div>
-		</a>
-	</li>
-</div>
+		</div>
+	</div>
+</li>
 
-          
-          
-          </ul>
-          
-        </div>
-      </div>
+        
+      </ul>
     </div>
   </div>
 
@@ -395,7 +423,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a41%3a10.822738647%20-0800%20PST%20m%3d%2b0.096255451"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-29%2012%3a06%3a25.906947639%20-0800%20PST%20m%3d%2b0.075417226"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>

@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-24%2011%3a41%3a10.823078167%20-0800%20PST%20m%3d%2b0.096594971" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-24%2011%3a41%3a10.823110338%20-0800%20PST%20m%3d%2b0.096627051" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-01-29%2012%3a06%3a25.907143061%20-0800%20PST%20m%3d%2b0.075612646" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-01-29%2012%3a06%3a25.907315414%20-0800%20PST%20m%3d%2b0.075785010" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-24%2011%3a41%3a10.823141067%20-0800%20PST%20m%3d%2b0.096657791">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-24%2011%3a41%3a10.823168987%20-0800%20PST%20m%3d%2b0.096685702">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-01-29%2012%3a06%3a25.907352981%20-0800%20PST%20m%3d%2b0.075822571">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-01-29%2012%3a06%3a25.907386908%20-0800%20PST%20m%3d%2b0.075856499">
 
     
     
@@ -104,156 +104,172 @@
   </div>
 </header>
 
-  <div class="page-content page-content--blog">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <ul class="article__list">
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Mon, Aug 14, 2017 by Peter Stace
+  <div class="content container">
+    <div class="row">
+      
+
+      <ul class="article__list col-xs-12 col-lg-10 offset-lg-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Wed, Sep 20, 2017 by Deepak Jois
 
 
-			</span>
-		</div>
-		<a href="https://blog.dgraph.io/post/alice/" class="clearfix">
-			<h3 class="article__title">Making Badger Crash Resilient with ALICE</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/alice/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/galileo-jupiter.jpg)">
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
+		<h3 class="article__title">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/pia21778.png); ">
 				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Tue, Aug 8, 2017 by Manish Rai Jain
-
-
-			</span>
+			</a>
 		</div>
-		<a href="https://blog.dgraph.io/post/scaling-dgraph/" class="clearfix">
-			<h3 class="article__title">Scale the shit out of this!</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/scaling-dgraph/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/science.jpg)">
-				</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</div>
+			<div class="tags">
+				
+						
+						
+								<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+						
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
-Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Wed, Aug 2, 2017 by Sung Won Cho
-
-
-			</span>
 		</div>
-		<a href="https://blog.dgraph.io/post/building-graphoverflow/" class="clearfix">
-			<h3 class="article__title">Building a Stack Overflow Clone with Dgraph, and React</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/building-graphoverflow/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/graphoverflow-node-cover.jpg)">
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Mon, Aug 14, 2017 by Peter Stace
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/alice/" class="clearfix">
+		<h3 class="article__title">Making Badger Crash Resilient with ALICE</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/alice/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/galileo-jupiter.jpg); ">
 				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p></p>
-			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Wed, Jul 19, 2017 by Manish Rai Jain
-
-
-			</span>
+			</a>
 		</div>
-		<a href="https://blog.dgraph.io/post/signal-and-wait/" class="clearfix">
-			<h3 class="article__title">Orchestrating signal and wait in Go</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/signal-and-wait/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/spacex-stages.jpg)">
-				</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</div>
+			<div class="tags">
+				
 			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary"><p>One of the common use case in Go is to start a few goroutines to do some
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Aug 8, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/scaling-dgraph/" class="clearfix">
+		<h3 class="article__title">Scale the shit out of this!</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/scaling-dgraph/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/science.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
+Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</div>
+			<div class="tags">
+				
+			</div>
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Wed, Aug 2, 2017 by Sung Won Cho
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/building-graphoverflow/" class="clearfix">
+		<h3 class="article__title">Building a Stack Overflow Clone with Dgraph, and React</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/building-graphoverflow/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/graphoverflow-node-cover.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p></div>
+			<div class="tags">
+				
+			</div>
+		</div>
+	</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Wed, Jul 19, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/signal-and-wait/" class="clearfix">
+		<h3 class="article__title">Orchestrating signal and wait in Go</h3>
+	</a>
+	<div class="row">
+		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
+			<a href="https://blog.dgraph.io/post/signal-and-wait/" class="no-hover">
+				<div
+						class="img_square"
+						style="background-image: url(https://blog.dgraph.io/images/spacex-stages.jpg); ">
+				</div>
+			</a>
+		</div>
+		<div class="col-md-12 col-lg-9">
+			<div class="summary"><p>One of the common use case in Go is to start a few goroutines to do some
 work. These goroutines block listening in on a channel, waiting for more work to
 arrive. At some point, you want to signal these goroutines to stop accepting
-more work and exit, so you can cleanly shut down the program.</p></p>
+more work and exit, so you can cleanly shut down the program.</p></div>
+			<div class="tags">
+				
 			</div>
-		</a>
-	</li>
-</div>
-
-          
-          
-          
-            <div class="row">
-	<li class="article__item col-md-12 col-lg-10 offset-lg-1">
-		<div class="article__meta">
-			<span class="article__meta-item article__date">
-				Mon, Jul 17, 2017 by Manish Rai Jain
-
-
-			</span>
 		</div>
-		<a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="clearfix">
-			<h3 class="article__title">Running Stack Overflow on Dgraph</h3>
-		</a>
-		<a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="row no-hover">
-			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-				<div class="img_square" style="background-image: url(https://blog.dgraph.io/images/reddragonmars.jpg)">
-				</div>
-			</div>
-			<div class="col-md-12 col-lg-9">
-				<p class="article__summary">We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college. It was being used at the company that we joined. It was such a common interview question that it no longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from. MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the same year).</p>
-			</div>
-		</a>
-	</li>
-</div>
+	</div>
+</li>
 
-          
-          
-          </ul>
-          
-        </div>
-      </div>
+        
+      </ul>
     </div>
   </div>
 
@@ -396,7 +412,7 @@ more work and exit, so you can cleanly shut down the program.</p></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-24%2011%3a41%3a10.824465809%20-0800%20PST%20m%3d%2b0.097982613"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-01-29%2012%3a06%3a25.908751361%20-0800%20PST%20m%3d%2b0.077220956"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>

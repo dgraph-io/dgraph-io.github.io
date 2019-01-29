@@ -7,10 +7,82 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 03 Oct 2017 13:20:35 +1100</lastBuildDate>
+    <lastBuildDate>Thu, 24 Jan 2019 10:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Badger</title>
+      <link>https://blog.dgraph.io/tags/badger/</link>
+      <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/badger/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Benchmark</title>
+      <link>https://blog.dgraph.io/tags/benchmark/</link>
+      <pubDate>Mon, 23 Jan 2017 18:07:44 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/benchmark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dgraph</title>
+      <link>https://blog.dgraph.io/tags/dgraph/</link>
+      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/dgraph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>https://blog.dgraph.io/tags/go/</link>
+      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gru</title>
+      <link>https://blog.dgraph.io/tags/gru/</link>
+      <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/gru/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hiring</title>
+      <link>https://blog.dgraph.io/tags/hiring/</link>
+      <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/hiring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Indexing</title>
+      <link>https://blog.dgraph.io/tags/indexing/</link>
+      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/indexing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Neo4j</title>
+      <link>https://blog.dgraph.io/tags/neo4j/</link>
+      <pubDate>Mon, 23 Jan 2017 18:07:44 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/neo4j/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Opinion</title>
@@ -18,6 +90,24 @@
       <pubDate>Tue, 03 Oct 2017 13:20:35 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/tags/opinion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Optimization</title>
+      <link>https://blog.dgraph.io/tags/optimization/</link>
+      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/optimization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Transactions</title>
+      <link>https://blog.dgraph.io/tags/transactions/</link>
+      <pubDate>Thu, 05 Oct 2017 13:30:16 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/transactions/</guid>
       <description></description>
     </item>
     
