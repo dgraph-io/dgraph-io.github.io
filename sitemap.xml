@@ -185,6 +185,12 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/tags/boltdb/</loc>
+    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/categories/</loc>
     <priority>0</priority>
   </url>

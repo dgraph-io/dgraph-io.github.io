@@ -48,8 +48,8 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-14%2009%3a47%3a53.216943468%20-0800%20PST%20m%3d%2b0.070449736" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-14%2009%3a47%3a53.216975258%20-0800%20PST%20m%3d%2b0.070481496" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-14%2012%3a09%3a51.26393871%20-0800%20PST%20m%3d%2b0.080911826" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-14%2012%3a09%3a51.263973%20-0800%20PST%20m%3d%2b0.080946096" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,8 +65,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-14%2009%3a47%3a53.216998917%20-0800%20PST%20m%3d%2b0.070505155">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-14%2009%3a47%3a53.217020868%20-0800%20PST%20m%3d%2b0.070527106">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-14%2012%3a09%3a51.264009169%20-0800%20PST%20m%3d%2b0.080982265">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-14%2012%3a09%3a51.264030859%20-0800%20PST%20m%3d%2b0.081003955">
 
     
     
@@ -434,8 +434,8 @@ could build.</p>
 <p><strong>Google needed to build a graph serving system</strong> to serve not just the complex relationships in the
 Knowledge Graph data, but also all the <a href="https://en.ryte.com/wiki/Google_OneBox">OneBoxes</a> which had access to structured data. The
 serving system needed to traverse facts, with high enough throughput and low enough latency to be
-hit by a good chunk of <a href="https://google.com">web search</a> queries. Any available systems or databases
-were not able to do all three.</p>
+hit by a good chunk of <a href="https://google.com">web search</a> queries. No available system or database
+was able to do all three.</p>
 
 <p>Now that I&rsquo;ve answered the why, I&rsquo;ll take the rest of the blog post to walk you through my journey,
 intertwined with Google&rsquo;s, of building the graph system to serve the <a href="https://en.wikipedia.org/wiki/Knowledge_Graph">Knowledge Graph</a> and
@@ -474,7 +474,7 @@ experience), communicated using Stubby (<a href="https://grpc.io/">gRPC</a> came
 name service (BNS, baked into K8s), and housed their data on Google File System (<a href="https://en.wikipedia.org/wiki/Google_File_System">GFS</a>, think
 Hadoop FS).  <em>Processes can die and machines can crash, but the system just keeps humming.</em></p>
 
-<p>That was the environment into which Graphd found itself. The idea of a database serving an entire
+<p>That was the environment in which Graphd found itself. The idea of a database serving an entire
 website running on a single server was alien to Google (myself included).  In particular,
 Graphd needed 64GB or more memory just to function. If you are sneering at the memory requirement,
 note that this was back in 2010. Most Google servers were maxed at 32GB. In fact, Google had to
@@ -482,25 +482,25 @@ procure special machines with enough RAM to serve Graphd as it stood.</p>
 
 <h4 id="replacement-for-graphd">Replacement for Graphd</h4>
 
-<p>Ideas were thrown around how Graphd could be moved or rewritten to work in a distributed way. But
-see, graphs are hard. They are not key-value databases, where one can just take a chunk of
-data, move it to another server and when asked for the key, serve it. Graphs promise efficient joins
-and traversals, which require software to be built in a particular way.</p>
+<p>Ideas were thrown around about how Graphd could be moved or rewritten to work in a distributed way.
+But see, graphs are hard. They are not key-value databases, where one can just take a chunk of data,
+move it to another server and when asked for the key, serve it. Graphs promise efficient joins and
+traversals, which require software to be built in a particular way.</p>
 
 <p>One of the ideas was to use a project called MindMeld (IIRC). The promise was that memory from
 another server could be accessed much faster via network hardware. This was supposedly faster than
 doing normal RPCs, fast enough to pseudo-replicate direct memory accesses required by an in-memory
 database. <em>That idea didn&rsquo;t go very far.</em></p>
 
-<p>Another idea, which actually became a project was to build a truly distributed graph serving system.
+<p>Another idea, which actually became a project, was to build a truly distributed graph serving system.
 Something which can not only replace Graphd for Freebase but also serve all knowledge efforts in
 the future. <strong>This was named, Dgraph &ndash; distributed graph, a spin on Graphd &ndash; graph daemon.</strong></p>
 
 <p>If you are now wondering, the answer is <em>yes.</em> Dgraph Labs, the company and Dgraph, the open source
-project is named after this project at Google<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>.</p>
+project are named after this project at Google<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>.</p>
 
 <p>For the majority of this blog post, when I refer to Dgraph, I am referring to the project internal
-to Google, not the open source project that we built. But more on Dgraph later.</p>
+to Google, not the open source project that we built. But more on <em>that</em> later.</p>
 
 <h3 id="the-story-of-cerebro-a-knowledge-engine">The Story of Cerebro: A Knowledge Engine</h3>
 
@@ -513,7 +513,7 @@ to improve web search. I came across a research engineer, DH, at Metaweb, who ha
 <a href="/refs/freebase-cubed.pdf">Cubed</a>.</p>
 
 <p>As I mentioned before, a ragtag of engineers at Google NY had built Google <a href="https://en.wikipedia.org/wiki/Google_Squared">Squared</a>. So, doing a
-one up, DH built Cubed. While Squared was a dud, Cubed was <em>very impressive</em>. I started thinking
+one up, DH built Cubed. While Squared was a dud, Cubed was <em>very</em> impressive. I started thinking
 about how I could build that at Google. Google had bits and pieces of the puzzle that I could
 readily use.</p>
 
@@ -524,10 +524,10 @@ francisco weather]</code>, <code>[san]</code> and <code>[francisco]</code> belon
 not so obvious to machines.</p>
 
 <p>The second piece of the puzzle was to understand grammar. When a query asks for <code>[books by french
-authors]</code>, a machine could interpret it as <code>[books]</code> by <code>[french authors]</code>, as the query is about
-books by those authors who are French. But it could also interpret it was <code>[french books]</code> by
-<code>[authors]</code>, as in French language books by (any) author. I used a Part-Of-Speech (POS) tagger by
-<a href="https://nlp.stanford.edu/software/tagger.shtml">Stanford</a> to understand grammar better and build a tree.</p>
+authors]</code>, a machine could interpret it as <code>[books]</code> by <code>[french authors]</code> (i.e.  books by those
+authors who are French). But it could also interpret it as <code>[french books]</code> by <code>[authors]</code> (i.e.
+French language books by any author). I used a Part-Of-Speech (POS) tagger by <a href="https://nlp.stanford.edu/software/tagger.shtml">Stanford</a> to
+understand grammar better and build a tree.</p>
 
 <p>The third piece of the puzzle was to understand entities. <code>[french]</code> can mean many things. It could be
 the country (the region), the nationality (referring to French people), the cuisine (referring to
@@ -555,8 +555,8 @@ O]</code> &rarr; <code>[S]</code>, and sometimes from <code>[S O]</code> &rarr; 
 <p><img src="/images/google-spo-indexing.png" style="width:80%;"></img></p>
 
 <p><strong>I used Google&rsquo;s search index system,</strong> assigned a docid to each triple and built three indices,
-one each for S, P and O. In addition, the index allowed attachments. So, I attached the type
-information about each entity, i.e. actor, book, person, etc.</p>
+one each for S, P and O. In addition, the index allowed attachments, so I attached the type
+information about each entity (i.e. actor, book, person, etc).</p>
 
 <blockquote>
 <p>I built this graph serving system, with the knowledge that it had the join depth problem (explained
@@ -587,8 +587,8 @@ you&rsquo;d run a query like <code>[us presidents]</code>, Cerebro would underst
 humans have height.  Therefore, it would allow you to sort presidents by height and show that
 <em>Abraham Lincoln</em> is the tallest US president. It would also let people be filtered by nationality.
 In this case, it showed America and Britain in the list, because US had one British president,
-namely <em>George Washington.</em> (<em>Disclaimer: Results based on the state of KG at the time, can&rsquo;t vouch
-for the accuracy of these results</em>).</p>
+namely <em>George Washington.</em> (<em>Disclaimer: Results based on the state of KG at the time; can&rsquo;t vouch
+for the correctness of these results.</em>)</p>
 
 <h3 id="blue-links-vs-knowledge">Blue Links vs Knowledge</h3>
 
@@ -611,7 +611,7 @@ senior search leader showed me Google search results for the query, which showed
 asserted that Google can do the same thing. Also, they do not want to take traffic away from
 websites, because then the owners would be pissed.</p>
 
-<p><em>If you are thinking he was right, consider this.</em> When Google does a web search, it does not truly
+<p><em>If you are thinking he was right, consider this:</em> When Google does a web search, it does not truly
 understand the query. It looks for the right keywords, at the right relative position, the rank of
 the page, and so on. It is a very complex and extremely sophisticated system, but it does not
 truly understand either the query or the results. It is up to the user to read, parse, and extract
@@ -625,9 +625,9 @@ searches, and human aggregation of results. Cerebro had the power to cut down on
 make the user interaction simple and flawless.</p>
 
 <p>However, this was the typical approach towards knowledge back then. Management wasn&rsquo;t sure of the
-utility of the knowledge graph, and how and in what capacity should that be involved with search.
-<strong>This new way of approaching knowledge was not easily digestible by an organization that had been
-so massively successful by providing users with links to web pages.</strong></p>
+utility of the knowledge graph, or how and in what capacity that should be involved with
+search.  <strong>This new way of approaching knowledge was not easily digestible by an organization that
+had been so massively successful by providing users with links to web pages.</strong></p>
 
 <p>After butting heads with the management for a year, I eventually lost interest in continuing. A
 manager from the Google Shanghai office reached out to me, and I handed the project over to him in June
@@ -646,7 +646,7 @@ an example.</p>
 <p>Say, you want to know <code>[people in SF who eat sushi]</code>. Data is sharded by people, and has information
 about who lives in which city and what food they eat.</p>
 
-<p>The above query is a single level join. If an application external to a database was executing this,
+<p>The above query is a single-level join. If an application external to a database was executing this,
 it would do one query to execute the first step. Then execute multiple queries (one query for each
 result), to figure out what each person eats, picking only those who eat sushi.</p>
 
@@ -662,7 +662,7 @@ This would give them a join, but cause query latency issues.</p>
 
 <p>Broadcasts in a distributed system are bad. This issue is best explained by <a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> of
 Google in his &ldquo;Achieving Rapid Response Times in Large Online Services&rdquo; talk (<a href="https://www.youtube.com/watch?v=1-3Ahy7Fxsc">video</a>,
-<a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/44875.pdf">slides</a>). Overall latency of a query is always greater than the latency of the slowest
+<a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/44875.pdf">slides</a>). The overall latency of a query is always greater than the latency of the slowest
 component. <strong>Small blips on individual machines cause delays, and touching more machines per query
 increases the likelihood of delays dramatically.</strong></p>
 
@@ -672,7 +672,7 @@ touches one server, only 1% of requests take over a second. But if the query tou
 servers, 63% of requests would take over a second.</p>
 </blockquote>
 
-<p>Thus, broadcasts to execute one query is bad for query latency. Now consider if two, three or more
+<p>Thus, broadcasts to execute one query are bad for query latency. Now consider if two, three or more
 joins need to happen. They would get too slow for real-time (OLTP) execution.</p>
 
 <p>This high fan-out broadcast problem is shared by most non-native graph databases, including <a href="https://github.com/JanusGraph/janusgraph">Janus
@@ -1060,7 +1060,7 @@ performant solution instead of a yet another half baked one.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-14%2009%3a47%3a53.220112941%20-0800%20PST%20m%3d%2b0.073619199"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-14%2012%3a09%3a51.267664718%20-0800%20PST%20m%3d%2b0.084637824"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
