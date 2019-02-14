@@ -31,11 +31,29 @@
     </item>
     
     <item>
+      <title>Freebase</title>
+      <link>https://blog.dgraph.io/tags/freebase/</link>
+      <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/freebase/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Go</title>
       <link>https://blog.dgraph.io/tags/go/</link>
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google</title>
+      <link>https://blog.dgraph.io/tags/google/</link>
+      <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/google/</guid>
       <description></description>
     </item>
     
@@ -63,6 +81,24 @@
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/tags/indexing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Knowledge Graph</title>
+      <link>https://blog.dgraph.io/tags/knowledge-graph/</link>
+      <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/knowledge-graph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Metaweb</title>
+      <link>https://blog.dgraph.io/tags/metaweb/</link>
+      <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/metaweb/</guid>
       <description></description>
     </item>
     

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/why-google-needed-graph-serving-system/</loc>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/indexing-in-dgraph/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
   </url>
@@ -186,13 +191,25 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/freebase/</loc>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/go/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/google/</loc>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -211,6 +228,18 @@
   <url>
     <loc>https://blog.dgraph.io/tags/indexing/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/knowledge-graph/</loc>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/metaweb/</loc>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -234,7 +263,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   

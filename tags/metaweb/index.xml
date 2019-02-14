@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Metaweb on Dgraph Blog</title>
+    <link>https://blog.dgraph.io/tags/metaweb/</link>
+    <description>Recent content in Metaweb on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Wed, 13 Feb 2019 19:49:00 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/tags/metaweb/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why Google Needed a Graph Serving System</title>
+      <link>https://blog.dgraph.io/post/why-google-needed-graph-serving-system/</link>
+      <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/why-google-needed-graph-serving-system/</guid>
+      <description>When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&amp;rsquo;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together.
+Word from Google has been limited to serving Knowledge Graph, but nothing has been said about the internal infrastructure which makes this happen.</description>
+    </item>
+    
+  </channel>
+</rss>
