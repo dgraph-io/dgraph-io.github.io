@@ -159,10 +159,32 @@ ul.page-nav__list {
 }
 
 @media only screen and (min-width: 1169px) {
-    .container,
-    .container-full {
-        width: 80%;
-    }
+  .container {
+    max-width: 920px;
+  }
+}
+
+:target {
+  animation-duration: 2s;
+  animation-name: anchor-fadeout;
+}
+
+@keyframes anchor-fadeout {
+  0 {
+    background-color: transparent;
+  }
+
+  12.5% {
+    background-color: rgba(0, 178, 173, 0.25);
+  }
+
+  25% {
+    background-color: rgba(0, 178, 173, 0.25);
+  }
+
+  100% {
+    background-color: transparent;
+  }
 }
 
 .article-content h3:not(:first-child) {
