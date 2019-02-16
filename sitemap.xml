@@ -226,6 +226,12 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/tags/hacker-news/</loc>
+    <lastmod>2019-02-13T19:49:00-08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/tags/hiring/</loc>
     <lastmod>2016-07-21T11:53:04+10:00</lastmod>
     <priority>0</priority>
