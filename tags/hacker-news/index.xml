@@ -22,5 +22,15 @@
 When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&amp;rsquo;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together.</description>
     </item>
     
+    <item>
+      <title>Introducing Badger: A fast key-value store written purely in Go</title>
+      <link>https://blog.dgraph.io/post/badger/</link>
+      <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger/</guid>
+      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
+We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</description>
+    </item>
+    
   </channel>
 </rss>
