@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.54.0" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -29,6 +29,7 @@
     <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
     <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
@@ -48,11 +49,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-21%2017%3a57%3a23.440951635%20-0800%20PST%20m%3d%2b0.079082822" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-21%2017%3a57%3a23.440987794%20-0800%20PST%20m%3d%2b0.079119012" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-25%2015%3a18%3a05.46398%20%2b0200%20EET%20m%3d%2b0.174589771" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-25%2015%3a18%3a05.464006%20%2b0200%20EET%20m%3d%2b0.174616162" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -65,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-21%2017%3a57%3a23.441005634%20-0800%20PST%20m%3d%2b0.079136832">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-21%2017%3a57%3a23.441021704%20-0800%20PST%20m%3d%2b0.079152901">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-25%2015%3a18%3a05.464028%20%2b0200%20EET%20m%3d%2b0.174638591">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-25%2015%3a18%3a05.464049%20%2b0200%20EET%20m%3d%2b0.174659490">
 
     
     
@@ -351,23 +355,22 @@
   <header id="page-header" class="page-header">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
 				
           <span class="topnav-stargazers-wrapper">
             <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
           </span>
         
 
-        <nav class="page-nav pull-right">
-          <ul class="page-nav__list">
-						
-						<li class="page-nav__item"><a href="https://dgraph.io/" title="Dgraph Website" class="button button--outline page-nav__link page-nav__link--button">Home</a></li>
-						
-          </ul>
-        </nav>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
       </div>
-      <a href="javascript:void(0)" title="Site Navigation" id="page-nav-button" class="button page-nav-button">Menu</a>
     </div>
   </div>
 </header>
@@ -376,7 +379,7 @@
   <section class="page-intro page-intro--blog-article">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-md-10 offset-md-1">
+        <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <header class="page-intro__header">
             <div class="article__meta">
               <span class="article__meta-item article__date">
@@ -412,7 +415,7 @@
   <div class="page-content">
     <div class="container">
       <div class="row">
-        <div class="col-md-10 offset-md-1">
+        <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
             src="https://blog.dgraph.io/images/atlantis-iss.jpg"
@@ -673,7 +676,7 @@
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-21%2017%3a57%3a23.441810001%20-0800%20PST%20m%3d%2b0.079941237"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-25%2015%3a18%3a05.464944%20%2b0200%20EET%20m%3d%2b0.175553722"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -786,8 +789,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-02-21%2017%3a57%3a23.44183533%20-0800%20PST%20m%3d%2b0.079966527" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-21%2017%3a57%3a23.442162259%20-0800%20PST%20m%3d%2b0.080293546" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-02-25%2015%3a18%3a05.465035%20%2b0200%20EET%20m%3d%2b0.175645108" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-25%2015%3a18%3a05.465058%20%2b0200%20EET%20m%3d%2b0.175668457" rel="stylesheet">
 
 </body>
 </html>

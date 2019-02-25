@@ -154,10 +154,6 @@ ul.page-nav__list {
     top: 12px;
 }
 
-.page-footer__wrapper:before {
-    width: 100%;
-}
-
 @media only screen and (min-width: 1169px) {
   .container {
     max-width: 920px;

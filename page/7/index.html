@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.54.0" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -29,6 +29,7 @@
     <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
     <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
@@ -48,11 +49,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-21%2017%3a57%3a23.48726174%20-0800%20PST%20m%3d%2b0.125392977" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-21%2017%3a57%3a23.48728125%20-0800%20PST%20m%3d%2b0.125412437" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-25%2015%3a18%3a05.504928%20%2b0200%20EET%20m%3d%2b0.215536946" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-25%2015%3a18%3a05.504953%20%2b0200%20EET%20m%3d%2b0.215562562" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -65,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-21%2017%3a57%3a23.48729769%20-0800%20PST%20m%3d%2b0.125428887">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-21%2017%3a57%3a23.48731568%20-0800%20PST%20m%3d%2b0.125446887">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-25%2015%3a18%3a05.504978%20%2b0200%20EET%20m%3d%2b0.215587085">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-25%2015%3a18%3a05.505003%20%2b0200%20EET%20m%3d%2b0.215611713">
 
     
     
@@ -83,23 +87,22 @@
   <header id="page-header" class="page-header">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
 				
           <span class="topnav-stargazers-wrapper">
             <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
           </span>
         
 
-        <nav class="page-nav pull-right">
-          <ul class="page-nav__list">
-						
-						<li class="page-nav__item"><a href="https://dgraph.io/" title="Dgraph Website" class="button button--outline page-nav__link page-nav__link--button">Home</a></li>
-						
-          </ul>
-        </nav>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
       </div>
-      <a href="javascript:void(0)" title="Site Navigation" id="page-nav-button" class="button page-nav-button">Menu</a>
     </div>
   </div>
 </header>
@@ -108,7 +111,7 @@
     <div class="row">
       
 
-      <ul class="article__list col-xs-12 col-lg-10 offset-lg-1">
+      <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
         
           <li class="article__item">
 	<div class="article__meta">
@@ -121,26 +124,26 @@
 	<a href="https://blog.dgraph.io/post/rpc-vs-grpc/" class="clearfix">
 		<h3 class="article__title">Custom encoding: Go implementation in net/rpc vs grpc and why we switched</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/rpc-vs-grpc/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/martian-encoding.jpg); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary"><p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/rpc-vs-grpc/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/martian-encoding.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
 To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p></div>
-			<div class="tags">
-				
+				<div class="tags">
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -155,23 +158,23 @@ To keep our latency of communication low, we use a new form of serialization lib
 	<a href="https://blog.dgraph.io/post/performance-throughput-latency/" class="clearfix">
 		<h3 class="article__title">Can it really scale?</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/performance-throughput-latency/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/lander.jpg); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/performance-throughput-latency/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/lander.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p></div>
-			<div class="tags">
-				
+				<div class="tags">
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -186,26 +189,26 @@ To keep our latency of communication low, we use a new form of serialization lib
 	<a href="https://blog.dgraph.io/post/wisemonk/" class="clearfix">
 		<h3 class="article__title">Wisemonk: A slackbot to move discussions from Slack to Discourse</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/wisemonk/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/yoda.jpg); background-position: 50% 0%;">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary"><blockquote>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/wisemonk/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/yoda.jpg); background-position: 50% 0%;">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><blockquote>
 <p>Then there was the fact that we had so many channels and direct messages and group chats.
 It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
 <em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
 </blockquote></div>
-			<div class="tags">
-				
+				<div class="tags">
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -220,23 +223,23 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
 	<a href="https://blog.dgraph.io/post/hello-world/" class="clearfix">
 		<h3 class="article__title">Hello, World!</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/hello-world/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/default.jpg); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/hello-world/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/default.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , what it is and why it was created.</p></div>
-			<div class="tags">
-				
+				<div class="tags">
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -244,48 +247,52 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
     </div>
   </div>
 
-  <div class="paginator container">
-    
-      <a class="paginator__active paginator__left" href="/page/6/">
-          &lt; Previous Page
-      </a>
-    
+  <div class="container">
+    <div class="row">
+      <div class="paginator col-12 offset-0 col-md-10 offset-md-1">
+        
+          <a class="paginator__active" href="/page/6/">
+              &lt;Prev Page
+          </a>
+        
 
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/1/">1</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/2/">2</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/3/">3</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/4/">4</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/5/">5</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/6/">6</a>
-      
-    
-      
-        <a class="paginator__pages paginator__selected" href="/page/7/">7</a>
-      
-    
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/1/">1</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/2/">2</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/3/">3</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/4/">4</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/5/">5</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/6/">6</a>
+          
+        
+          
+            <a class="paginator__pages paginator__selected" href="/page/7/">7</a>
+          
+        
 
-    
-      <a class="paginator__right paginator__gray">
-          Next Page >
-      </a>
-    
+        
+          <a class="next paginator__gray">
+              Next Page&gt;
+          </a>
+        
+      </div>
+    </div>
   </div>
 
   <div class="community-cta-wrapper">
@@ -416,7 +423,7 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-21%2017%3a57%3a23.488000846%20-0800%20PST%20m%3d%2b0.126132083"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-25%2015%3a18%3a05.506013%20%2b0200%20EET%20m%3d%2b0.216622271"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -529,8 +536,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-02-21%2017%3a57%3a23.488026036%20-0800%20PST%20m%3d%2b0.126157223" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-21%2017%3a57%3a23.488042906%20-0800%20PST%20m%3d%2b0.126174093" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-02-25%2015%3a18%3a05.506049%20%2b0200%20EET%20m%3d%2b0.216657882" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-25%2015%3a18%3a05.50607%20%2b0200%20EET%20m%3d%2b0.216679463" rel="stylesheet">
 
 </body>
 </html>
@@ -539,7 +546,4 @@ $(document.links)
 
   <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
-  
-  
-  <script id="dsq-count-scr" src="//skgamingtest.disqus.com/count.js" async></script>
 </html>

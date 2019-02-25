@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.54.0" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -29,6 +29,7 @@
     <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
     <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
@@ -48,11 +49,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-21%2017%3a57%3a23.475069141%20-0800%20PST%20m%3d%2b0.113200358" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-21%2017%3a57%3a23.475107531%20-0800%20PST%20m%3d%2b0.113238748" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-25%2015%3a18%3a05.492719%20%2b0200%20EET%20m%3d%2b0.203328588" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-25%2015%3a18%3a05.492747%20%2b0200%20EET%20m%3d%2b0.203356537" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
@@ -65,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-21%2017%3a57%3a23.475140301%20-0800%20PST%20m%3d%2b0.113271528">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-21%2017%3a57%3a23.475173631%20-0800%20PST%20m%3d%2b0.113304848">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-25%2015%3a18%3a05.492772%20%2b0200%20EET%20m%3d%2b0.203381268">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-25%2015%3a18%3a05.492795%20%2b0200%20EET%20m%3d%2b0.203404585">
 
     
     
@@ -83,23 +87,22 @@
   <header id="page-header" class="page-header">
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" width="233" height="70" alt=""></a></figure>
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
 				
           <span class="topnav-stargazers-wrapper">
             <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
           </span>
         
 
-        <nav class="page-nav pull-right">
-          <ul class="page-nav__list">
-						
-						<li class="page-nav__item"><a href="https://dgraph.io/" title="Dgraph Website" class="button button--outline page-nav__link page-nav__link--button">Home</a></li>
-						
-          </ul>
-        </nav>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
       </div>
-      <a href="javascript:void(0)" title="Site Navigation" id="page-nav-button" class="button page-nav-button">Menu</a>
     </div>
   </div>
 </header>
@@ -108,7 +111,7 @@
     <div class="row">
       
 
-      <ul class="article__list col-xs-12 col-lg-10 offset-lg-1">
+      <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
         
           <li class="article__item">
 	<div class="article__meta">
@@ -121,48 +124,48 @@
 	<a href="https://blog.dgraph.io/post/why-google-needed-graph-serving-system/" class="clearfix">
 		<h3 class="article__title">Why Google Needed a Graph Serving System</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/why-google-needed-graph-serving-system/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/google-kg2.png); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary">This post made it to #3 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/why-google-needed-graph-serving-system/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/google-kg2.png); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">This post made it to #3 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.
 When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&rsquo;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together.</div>
-			<div class="tags">
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/freebase/">Freebase</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/google/">Google</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/knowledge-graph/">Knowledge Graph</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/metaweb/">Metaweb</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
-						
-				
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/freebase/">Freebase</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/google/">Google</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/knowledge-graph/">Knowledge Graph</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/metaweb/">Metaweb</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
+							
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -177,38 +180,38 @@ When I introduce myself and explain what we are building at Dgraph Labs, I am ty
 	<a href="https://blog.dgraph.io/post/indexing-in-dgraph/" class="clearfix">
 		<h3 class="article__title">Optimizing Indexing in Dgraph</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/indexing-in-dgraph/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/iss.jpg); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary">One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime. This involves changing data types and adding or removing indices with a single ALTER command to match the needs of an application developer.
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/indexing-in-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/iss.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime. This involves changing data types and adding or removing indices with a single ALTER command to match the needs of an application developer.
 Dgraph supports indexing natively, which means common use cases around full-text search, regular expressions, date matching, geolocation queries, etc. can all be executed within Dgraph, while maintaining transactional guarantees.</div>
-			<div class="tags">
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/indexing/">Indexing</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/optimization/">Optimization</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/go/">Go</a>
-						
-				
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/indexing/">Indexing</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/optimization/">Optimization</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/go/">Go</a>
+							
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -223,33 +226,33 @@ Dgraph supports indexing natively, which means common use cases around full-text
 	<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="clearfix">
 		<h3 class="article__title">Why we choose Badger over RocksDB in Dgraph</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/keymaker.png); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/keymaker.png); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
 This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</div>
-			<div class="tags">
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
-						
-				
-						
-						
-								<a href="https://blog.dgraph.io/tags/rocksdb/">RocksDB</a>
-						
-				
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/rocksdb/">RocksDB</a>
+							
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -264,25 +267,25 @@ This blog post is about Badger, the key-value database that makes it all happen 
 	<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="clearfix">
 		<h3 class="article__title">Switching Dgraph to a Liberal License</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/lightsaber.jpg); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary">Last year, we had switched Dgraph license to AGPLv3.0, considering reasons like the ability to monetize in a competitive environment. In particular,
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/lightsaber.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">Last year, we had switched Dgraph license to AGPLv3.0, considering reasons like the ability to monetize in a competitive environment. In particular,
  The threat of duplicate commercial services and enterprise features built by others without paying anything back towards the development of the open source version.
 Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, with no restrictions.
  This remains a credible threat; nothing has changed in that regard.</div>
-			<div class="tags">
-				
+				<div class="tags">
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -297,23 +300,23 @@ Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, wit
 	<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="clearfix">
 		<h3 class="article__title">Releasing Dgraph 1.0: Production-Ready Graph Database</h3>
 	</a>
-	<div class="row">
-		<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0 opening__image">
-			<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="no-hover">
-				<div
-						class="img_square"
-						style="background-image: url(https://blog.dgraph.io/images/launch.jpg); ">
-				</div>
-			</a>
-		</div>
-		<div class="col-md-12 col-lg-9">
-			<div class="summary">Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/launch.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
 To give a bit of a background &ndash; Dgraph, as a graph database, is designed to excel at the weaknesses of traditional relational databases: traversing relationships and efficiently executing complex joins at scale.</div>
-			<div class="tags">
-				
+				<div class="tags">
+					
+				</div>
 			</div>
 		</div>
-	</div>
 </li>
 
         
@@ -321,48 +324,52 @@ To give a bit of a background &ndash; Dgraph, as a graph database, is designed t
     </div>
   </div>
 
-  <div class="paginator container">
-    
-      <a class="paginator__gray paginator__left">
-          &lt; Previous Page
-      </a>
-    
+  <div class="container">
+    <div class="row">
+      <div class="paginator col-12 offset-0 col-md-10 offset-md-1">
+        
+          <a class="paginator__gray">
+              &lt;Prev Page
+          </a>
+        
 
-    
-      
-        <a class="paginator__pages paginator__selected" href="/page/1/">1</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/2/">2</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/3/">3</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/4/">4</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/5/">5</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/6/">6</a>
-      
-    
-      
-        <a class="paginator__pages paginator__gray" href="/page/7/">7</a>
-      
-    
+        
+          
+            <a class="paginator__pages paginator__selected" href="/page/1/">1</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/2/">2</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/3/">3</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/4/">4</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/5/">5</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/6/">6</a>
+          
+        
+          
+            <a class="paginator__pages paginator__gray" href="/page/7/">7</a>
+          
+        
 
-    
-      <a class="paginator__active paginator__right" href="/page/2/">
-          Next Page >
-      </a>
-    
+        
+          <a class="next paginator__active" href="/page/2/">
+              Next Page&gt;
+          </a>
+        
+      </div>
+    </div>
   </div>
 
   <div class="community-cta-wrapper">
@@ -493,7 +500,7 @@ To give a bit of a background &ndash; Dgraph, as a graph database, is designed t
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-21%2017%3a57%3a23.478762463%20-0800%20PST%20m%3d%2b0.116893760"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-25%2015%3a18%3a05.494144%20%2b0200%20EET%20m%3d%2b0.204753312"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -606,8 +613,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-02-21%2017%3a57%3a23.478817183%20-0800%20PST%20m%3d%2b0.116948400" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-21%2017%3a57%3a23.478852662%20-0800%20PST%20m%3d%2b0.116983880" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-02-25%2015%3a18%3a05.494181%20%2b0200%20EET%20m%3d%2b0.204790279" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-25%2015%3a18%3a05.494203%20%2b0200%20EET%20m%3d%2b0.204812550" rel="stylesheet">
 
 </body>
 </html>
@@ -616,7 +623,4 @@ $(document.links)
 
   <script type="text/javascript" src="/js/custom.js"></script>
   <script type="text/javascript" src="/js/script.min.js"></script>
-  
-  
-  <script id="dsq-count-scr" src="//skgamingtest.disqus.com/count.js" async></script>
 </html>
