@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 13 Feb 2019 19:49:00 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 07 Mar 2019 15:30:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The State of Caching in Go</title>
+      <link>https://blog.dgraph.io/post/caching-in-go/</link>
+      <pubDate>Thu, 07 Mar 2019 15:30:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
+      <description>Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.
+Being a graph database, Dgraph can access thousands&amp;mdash;even millions&amp;mdash;of keys per query, depending upon the number of intermediate results. Accessing these via our key-value DB, Badger, results in disk seeks, which is something we want to reduce for performance reasons.
+Typical access patterns follow a Zipfian distribution.</description>
+    </item>
     
     <item>
       <title>Why Google Needed a Graph Serving System</title>

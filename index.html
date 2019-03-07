@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.53" />
+      <meta name="generator" content="Hugo 0.54.0" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-02-25%2020%3a03%3a50.439708%20%2b0200%20EET%20m%3d%2b0.163973530" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-02-25%2020%3a03%3a50.440257%20%2b0200%20EET%20m%3d%2b0.164522666" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-07%2015%3a54%3a29.111405296%20-0800%20PST%20m%3d%2b0.106707528" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-07%2015%3a54%3a29.111430575%20-0800%20PST%20m%3d%2b0.106732788" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-02-25%2020%3a03%3a50.440486%20%2b0200%20EET%20m%3d%2b0.164751446">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-02-25%2020%3a03%3a50.440656%20%2b0200%20EET%20m%3d%2b0.164921879">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-07%2015%3a54%3a29.111452195%20-0800%20PST%20m%3d%2b0.106754408">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-07%2015%3a54%3a29.111473025%20-0800%20PST%20m%3d%2b0.106775238">
 
     
     
@@ -112,6 +112,48 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Thu, Mar 7, 2019 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/caching-in-go/" class="clearfix">
+		<h3 class="article__title">The State of Caching in Go</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/caching-in-go/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/ristretto.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.
+Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of keys per query, depending upon the number of intermediate results. Accessing these via our key-value DB, Badger, results in disk seeks, which is something we want to reduce for performance reasons.
+Typical access patterns follow a Zipfian distribution.</div>
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/go/">Go</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/cache/">Cache</a>
+							
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -281,37 +323,6 @@ This blog post is about Badger, the key-value database that makes it all happen 
  The threat of duplicate commercial services and enterprise features built by others without paying anything back towards the development of the open source version.
 Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, with no restrictions.
  This remains a credible threat; nothing has changed in that regard.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Tue, Dec 19, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="clearfix">
-		<h3 class="article__title">Releasing Dgraph 1.0: Production-Ready Graph Database</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/releasing-v1.0/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/launch.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">Dgraph started around end-August, picked up steam in mid-October, and v0.1 was released in early-December, 2015. From one, the contributors grew to 46, with the project amassing over 4000 Github stars over the past two years. 2190 commits (we squash our branches), 277 branches and 25 releases later, we&rsquo;re proud to announce that Dgraph has reached v1.0, our first production-ready release.
-To give a bit of a background &ndash; Dgraph, as a graph database, is designed to excel at the weaknesses of traditional relational databases: traversing relationships and efficiently executing complex joins at scale.</div>
 				<div class="tags">
 					
 				</div>
@@ -500,7 +511,7 @@ To give a bit of a background &ndash; Dgraph, as a graph database, is designed t
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-02-25%2020%3a03%3a50.443206%20%2b0200%20EET%20m%3d%2b0.167471829"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-07%2015%3a54%3a29.114957906%20-0800%20PST%20m%3d%2b0.110260159"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -613,8 +624,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-02-25%2020%3a03%3a50.443244%20%2b0200%20EET%20m%3d%2b0.167509208" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-02-25%2020%3a03%3a50.443266%20%2b0200%20EET%20m%3d%2b0.167531140" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-07%2015%3a54%3a29.115019846%20-0800%20PST%20m%3d%2b0.110322089" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-07%2015%3a54%3a29.115052326%20-0800%20PST%20m%3d%2b0.110354549" rel="stylesheet">
 
 </body>
 </html>

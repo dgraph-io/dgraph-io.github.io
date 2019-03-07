@@ -40,6 +40,15 @@
     </item>
     
     <item>
+      <title>Cache</title>
+      <link>https://blog.dgraph.io/tags/cache/</link>
+      <pubDate>Thu, 07 Mar 2019 15:30:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/cache/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Freebase</title>
       <link>https://blog.dgraph.io/tags/freebase/</link>
       <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
@@ -51,7 +60,7 @@
     <item>
       <title>Go</title>
       <link>https://blog.dgraph.io/tags/go/</link>
-      <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
+      <pubDate>Thu, 07 Mar 2019 15:30:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/tags/go/</guid>
       <description></description>

@@ -34,14 +34,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
     
-    <title>Hello, World! - Dgraph Blog</title>
-    <meta property='og:title' content="Hello, World! - Dgraph Blog">
+    <title>The State of Caching in Go - Dgraph Blog</title>
+    <meta property='og:title' content="The State of Caching in Go - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/hello-world/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/caching-in-go/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/default.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/ristretto.jpg">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-07%2015%3a54%3a29.106890528%20-0800%20PST%20m%3d%2b0.102192761" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-07%2015%3a54%3a29.106911568%20-0800%20PST%20m%3d%2b0.102226341" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-07%2015%3a54%3a29.083294627%20-0800%20PST%20m%3d%2b0.078596881" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-07%2015%3a54%3a29.083326367%20-0800%20PST%20m%3d%2b0.078628590" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,20 +69,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-07%2015%3a54%3a29.106947998%20-0800%20PST%20m%3d%2b0.102250221">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-07%2015%3a54%3a29.106969098%20-0800%20PST%20m%3d%2b0.102271311">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-07%2015%3a54%3a29.083361387%20-0800%20PST%20m%3d%2b0.078663620">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-07%2015%3a54%3a29.083382397%20-0800%20PST%20m%3d%2b0.078684600">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/default.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/ristretto.jpg"/>
       
     
 
-    <meta name="twitter:title" content="Hello, World!"/>
-    <meta name="twitter:description" content="I&rsquo;m very excited to use this first post to talk about Dgraph
-, what it is and why it was created."/>
+    <meta name="twitter:title" content="The State of Caching in Go"/>
+    <meta name="twitter:description" content="Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.
+Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of keys per query, depending upon the number of intermediate results. Accessing these via our key-value DB, Badger, results in disk seeks, which is something we want to reduce for performance reasons.
+Typical access patterns follow a Zipfian distribution."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -385,7 +386,7 @@
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Mon, Apr 18, 2016
+                  Thu, Mar 7, 2019
                  by
                 Manish Rai Jain
 
@@ -395,7 +396,7 @@
                 <ul class="share__list">
                   
                   <li class="share__item">
-                    <a href="https://twitter.com/share?text=Hello%2c%20World%21&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fhello-world%2f&amp;via=dgraphlabs" class="share__link">
+                    <a href="https://twitter.com/share?text=The%20State%20of%20Caching%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fcaching-in-go%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg>
@@ -406,7 +407,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Hello, World!</h1>
+            <h1 class="page-intro__title page-intro__title--blog">The State of Caching in Go</h1>
           </header>
         </div>
       </div>
@@ -419,143 +420,301 @@
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/default.jpg"
+            src="https://blog.dgraph.io/images/ristretto.jpg"
           >
-          <div class="article-content"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, what it is and why it was created.</p>
+          <div class="article-content">
 
-<p>Before I explain what&rsquo;s <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, let&rsquo;s start with a basic understanding of graphs.
-A graph is a mathematical structure used to model a pairwise relationship between entities.
-A graph is thus composed of nodes connected by edges.
-Each node represents an entity (a person, place, thing, etc.), and each edge represents the relationship between two nodes.
-Some popular graphs that we all know about are the <a href="https://en.wikipedia.org/wiki/Social_graph">Facebook Social Graph</a> and the <a href="https://en.wikipedia.org/wiki/Knowledge_Graph">Google Knowledge Graph</a>.</p>
+<p>Every database system requires a smart cache. That is, a cache that keeps the most
+frequently or recently accessed items and has a configurable memory utilization limit.</p>
 
-<p>A graph database is a database that uses graph structures with nodes and edges to represent, store and serve data.</p>
+<p>Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
+keys per query, depending upon the number of intermediate results. Accessing
+these via our key-value DB, <a href="https://github.com/dgraph-io/badger">Badger</a>, results in disk seeks, which is something
+we want to reduce for performance reasons.</p>
 
-<p>But who really uses graph databases? More teams and companies than you&rsquo;d think.
-Google, Facebook, Twitter, eBay, LinkedIn, Amazon, Dropbox, Pinterest &ndash; pick a company you are familiar with.
-If they&rsquo;re doing something smart, chances are they&rsquo;re probably using a graph database.
-Even very simple web apps have much to gain from graph databases.
-In the past, I&rsquo;ve built a graph based REST framework and using that <a href="https://mrjn.xyz/post/Porting-To-Gocrud/">cut down the code in half</a>.</p>
+<p>Typical access patterns follow a <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipfian</a> distribution. <strong>The most
+frequently accessed keys are accessed exponentially more times than others.</strong> We
+see this in Dgraph as well.</p>
 
-<p>So now that we understand graphs, let&rsquo;s talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</p>
+<p>We have been extremely happy with our choice of using the Go language to build
+Dgraph. A lot can be said about why Go makes a great language to write back-end
+code in, but that is a post in itself. We would not swap out Go for any
+other existing language. Although Go is great, the Go ecosystem is
+still lacking.</p>
 
-<p><strong><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is an open source, low-latency, high throughput, native and distributed graph database.</strong></p>
+<p>My general complaints around Go stem from the lack of a library ecosystem around the
+language. Go is mature in the sense that it is stable and has delivered upon the
+<a href="https://eli.thegreenplace.net/2018/go-hits-the-concurrency-nail-right-on-the-head/">core</a> <a href="https://talks.golang.org/2012/splash.article">promise</a> of fast compilation, execution,
+and utilization of machine cores really well. However, for a language built
+around concurrency, it still lacks an ecosystem of performant, concurrent
+libraries which can scale well to the number of cores. A concurrent list or map
+<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> is largely left as an exercise to the end-user&mdash;which would be just fine
+if this was a serially-executing language&mdash;but feels like a glaring omission
+when everything is built around concurrency.</p>
 
-<p>To understand why it was created, let&rsquo;s rewind a few years back to 2011.</p>
+<p>In particular, Go lacks a concurrent <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU">LRU</a> (or <a href="https://en.wikipedia.org/wiki/Least_frequently_used">LFU</a>) cache which can scale well
+enough to be a process-global cache. In this blog post, I will take you through
+the various attempts at workarounds that are typically advocated, including some
+which we have executed and learnt from within Dgraph. Aman will then present the
+design, performance and hit ratio comparison for the existing popular cache
+implementations in the Go ecosystem.</p>
 
-<hr />
+<p>I&rsquo;ll start by listing the requirements for the cache, the various
+approaches we can take to implement the cache, and how they fail to achieve them.</p>
 
-<p><strong>I&rsquo;d been at Google</strong> about 4+ years with the Web Search Infrastructure Group.
-Google had just then acquired Metaweb a year earlier in 2010.
-I&rsquo;d been wrapping my head around the newly acquired Knowledge Graph, trying to find ways to integrate Knowledge Graph with Google Search.
-This is when I found a problem.</p>
+<h3 id="requirements-for-the-cache">Requirements for the cache</h3>
 
-<p>At Google, we had multiple knowledge bearing feeds called One Boxes.
-You know, the boxed snippets that sometimes show up at the top of the search results, for instance when you search for <a href="https://www.google.com/#q=tesla+stock">Tesla stock</a>, <a href="https://www.google.com/#q=weather+in+sydney">Weather in Sydney</a>, or <a href="https://www.google.com/#q=events+in+san+francisco">Events in San Francisco</a>.</p>
+<ol>
+<li>Concurrent.</li>
+<li>Memory-bounded (limit to configurable max memory usage).</li>
+<li>Scale well as the number of cores and goroutines increase.</li>
+<li>Scale well under non-random key access distribution (e.g. Zipf).</li>
+<li>High cache hit ratio</li>
+</ol>
 
-<p>There were multiple custom built backends, each serving a One Box.
-A search query hitting <em><a href="https://www.google.com">www.google.com</a></em> would be sent iteratively through each of these One Box backends to check if any of them has a response.
-When one of the backends responds, the One Box data is retrieved and rendered on the top of the search results page.
-This is how that well-formatted box with just the right information shows up below the search bar, thus saving you a few clicks.</p>
+<h4 id="use-go-map-with-sync-mutex">Use Go map with sync.Mutex</h4>
 
-<p>As good as it sounded, One Boxes had several inefficiencies and missed opportunities.</p>
-
-<p>For starters, each One Box was custom built by a separate team that was responsible for running and maintaining it.
-As a result, there was no particular sharing of the framework used to build the One Box.</p>
-
-<p>This also meant that there was no single standard for the data format used by the One Boxes.
-Each One Box kept its data in its very own data structure, and no common querying language.
-Thus, there didn&rsquo;t exist an opportunity to share data amongst the boxes, to respond to more interesting queries that required an intersection of diverse data feeds.</p>
+<p>Using a Go map with a sync.Mutex (or sync.RWMutex) is the most commonly
+advocated approach to caching. This does result in all the goroutines blocking
+upon one lock, which can lead to contention. This also fails to keep a tab on
+the amount of memory usage. So, it does not work as a memory bounded cache in
+itself.</p>
 
 <blockquote>
-<p>A good example of this would be the ability to <em>recommend events based on the weather</em> to a tourist exploring NYC &ndash; that couldn&rsquo;t easily be done with the existing system.</p>
+<p>Fails on requirements 2-4.</p>
 </blockquote>
 
-<p><img src="/images/nyc.jpg" alt="NYC in rain" />
-<em>Courtesy: <a href="https://flic.kr/p/azztBd">Several Seconds</a></em></p>
+<h4 id="use-lock-striping-with-go-maps">Use lock striping with Go maps</h4>
 
-<p>This motivated me to start a project to standardize the data structures and eventually serve them all using a single backend.
-Using the vast expertise of Metaweb team, we chose a data normalization structure that was also used by Knowledge Graph, the RDF Triples.
-By reconciling all the various entities from the different data feeds, we could start to reuse the data.</p>
+<p>This is the same concept as above, but splits keys using a fingerprint into many
+smaller Go map shards protected by mutex locks (see <a href="https://netjs.blogspot.com/2016/05/lock-striping-in-java-concurrency.html">here</a>). Many
+developers incorrectly believe lock striping to be a great way to avoid
+contention, particularly when setting the number of shards to exceed the number
+of threads in the program (&gt; GOMAXPROCS).</p>
 
-<p><strong>But, there was a second and more challenging part to the problem.</strong></p>
+<p>In our initial attempts at building a simplified memory-bounded cache, we built
+this as well. To allow for releasing memory back to the OS, we would
+periodically pick a random shard and delete its map, allowing it to refill. This
+was a crude but simple technique which performed better than an LRU cache
+(explained below) but had many downsides.</p>
 
-<p>It was to build a system that could serve structured queries with data updating in real time.
-The system had to run behind Web Search, which meant that if it doesn&rsquo;t respond within allocated milliseconds, Search would time out and move on.
-Also, this system had to tackle a major chunk of query load to Web Search, which amounts to thousands of queries per second.</p>
+<p>One, Go is slow to release memory back to the OS but fast to request it. As
+soon as the shard was emptied, goroutines trying to access the keys in that
+shard would start allocating memory while the previous memory was still not
+released back fully, causing a spike in memory usage and a rapid OOM crash.</p>
 
-<p><em>We basically had to build a low latency, high throughput system to serve graph queries.</em></p>
+<p>Also, what we failed to realize at the time was that the access patterns are
+bounded by Zipf&rsquo;s law. The most frequently accessed keys are still under a few
+locks, thus becoming the cause of contention for all goroutines. The performance
+of this approach does not scale well with the number of cores.</p>
 
-<p>It was certainly an exciting project and held much promise.
-But, the harsh realities of the business environment and the attendant politics resulted in the cancellation of the project.
-Shortly thereafter I left Google in 2013 and didn&rsquo;t give much thought to the project.</p>
+<blockquote>
+<p>Fails on requirements 2,4.</p>
+</blockquote>
 
-<hr />
+<h4 id="lru-cache">LRU cache</h4>
 
-<p><strong>Fast forward two years,</strong> I was hanging out on the Go language&rsquo;s Slack channel and Stack Overflow.
-I saw quite a few people complaining about a popular graph database&rsquo;s performance and stability.</p>
+<p>Go has a basic LRU cache implementation as part of <a href="https://github.com/golang/groupcache/tree/master/lru">groupcache</a>. After
+our failed attempt with lock striping with map shards, we modified this LRU
+cache by introducing locks and making it concurrent. While this cache did
+solve the immediate issues around memory spikes caused by frequently and
+consistent memory releases, we realized it would introduce contention.</p>
 
-<p>That&rsquo;s when I realized that graph databases were starting to be used more frequently than it would appear from the surface.
-But a bit more digging around revealed a deeper problem.</p>
+<p>This cache is also sized by the number of entries, not the amount of
+memory they are consuming. Trying to estimate the memory usage of a complex
+data structure on the heap in Go is prohibitively expensive and almost impossible
+to get right, something we realized after trying in vain using multiple
+mechanisms. This got particularly hard because our data structures were changing
+after being placed in the cache (something that we plan to avoid going forward).</p>
 
-<p><em>Existing native graph databases weren&rsquo;t designed to be performant or distributed.</em></p>
+<p>But, we did not comprehend how much contention that cache could cause. After
+having this cache for over a year, we realized that the contention around this
+cache was so significant, that removing it caused our queries to
+<a href="https://github.com/dgraph-io/dgraph/commit/b9990f4619b64615c2c18bb7627d198b4397109c">speed up</a> 10x!</p>
 
-<p>The ones that sharded the data and distributed it across a cluster weren&rsquo;t actually native graph databases.
-They were largely serving as a graph layer over another database.
-This meant having many network calls should the intermediate number of results be large, which leads to performance degradation.</p>
+<p>In this implementation, every read is a write which updates the
+relative positioning of the element in the recency linked list. Thus, all
+accesses wait on a single mutex lock. In addition, the critical section of LRU
+is slower than a map and does a lot of pointer dereferences, maintaining a map and
+a doubly-linked list (see <a href="https://github.com/golang/groupcache/blob/5b532d6fd5efaf7fa130d4e859a2fde0fc3a9e1b/lru/lru.go#L32-L33">code</a>).  Despite our efforts around lazy
+eviction, it still suffered from severe contention.</p>
 
-<p>For example, say you wanted to find <strong>[People living in SF who eat Sushi]</strong>.
-Assuming you have this data (<em>hey Facebook!</em>) and keeping things simple, this requires 2 steps.</p>
+<blockquote>
+<p>Fails on requirement 3-4.</p>
+</blockquote>
 
-<p><img src="/images/sushi.jpg" alt="Sushi" />
-<em>Courtesy: <a href="https://flic.kr/p/nLkbkQ">Yannig Van de Wouwer</a></em></p>
+<h4 id="striped-lru-cache">Striped LRU cache</h4>
 
-<p>First, you find all the people living in SF, and then secondly, intersect that list with all the people who eat Sushi.</p>
+<p>We did not bother trying this. From our experiments with striped map shards, we
+know it would only be an incremental improvement and would not scale well.
+<em>(Though, for the purpose of benchmarking caches for this article, we implemented
+a striped LRU cache as described below.)</em></p>
 
-<p>As you can imagine, the intermediate step here has a <em>large fan-out</em>, i.e. there&rsquo;re over a million results.
-If you were to shard the data by <em>entities</em> (people), you&rsquo;d end up broadcasting to all the servers in the cluster.
-Thus, this query would be affected by even a single slow machine in the cluster.</p>
+<blockquote>
+<p>Would fail on requirement 4.</p>
+</blockquote>
 
-<p>Do that for every query, and it would spike the 95%-ile latency numbers up dramatically, <em>higher latency being worse</em>.</p>
+<h3 id="popular-cache-implementations">Popular Cache Implementations</h3>
 
-<hr />
+<p>Many other approaches aim at reducing the GC time spent on the map shards.
+GC time increases as the number of entries in the map increase. Reduction is
+achieved by allocating fewer, larger byte slices and storing many cache entries
+in each slice.  This is an effective approach&mdash;we use this in Badger in
+multiple places (Skiplist, Table builder, etc.). Some of the popular caches in
+Go use this technique.</p>
 
-<p><strong><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, on the other hand, is a native graph database</strong> in the sense that the data is handled directly by <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, and not given off to another database layer.</p>
+<h4 id="bigcache">BigCache</h4>
 
-<p>This allows us to shard and relocate the data better, to minimize the number of network calls required per query.
-In fact, the above query would run in 2 network calls, irrespective of the cluster size.</p>
+<p><a href="https://github.com/allegro/bigcache">BigCache</a> divides the data into shards based on the hash of the key. Each shard
+contains a map and a ring buffer. Whenever a new element is set, it appends the
+element in the ring buffer of the corresponding shard and the offset into the
+buffer is stored in the map. If the same element is set more than once, the
+previous entries in the buffer are marked invalid. If the buffer is too small,
+it is expanded until the maximum capacity is reached.</p>
 
-<p>The number of network calls being <em>directly proportional to the complexity of the query</em>, not the number of intermediate or final results.</p>
+<p>Each map key is a uint32 hash and the value is a uint32 pointer to the offset in
+the buffer where the value is stored along with metadata information. If there are
+hash collisions, BigCache ignores the previous key and stores the current one
+into the map. Allocating fewer, larger buffers up front and using a
+<code>map[uint32]uint32</code> is a great way to avoid paying the cost of GC sweeps.</p>
 
-<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
-This means being able to run on a laptop as well as on a big cluster of hundreds of machines serving thousands of queries per second.</p>
+<h4 id="freecache">FreeCache</h4>
 
-<p>Additionally, it would also have to survive machine failures and partial data center collapses.
-The data stored would have to be automatically replicated with no single point of failure, and be able to move around the cluster to better distribute traffic.</p>
+<p><a href="https://github.com/coocood/freecache">FreeCache</a> divides the cache into 256 segments. Each segment contains 256 slots
+and a ring buffer to store the data. When a new key is added to the cache,
+a segment id is identified using the lower eight bits of the hash of the key. Further,
+a slot is chosen using LSB 9-16 of the hash of the key. Dividing data
+into slots helps in reducing the search space while looking for a key in the
+cache.</p>
 
-<p><strong>This is the big vision which led to <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</strong> And I&rsquo;m <a href="http://dgraph.io/">fortunate to have a team</a> that believes in and shares this vision with me.</p>
+<p>The data is then appended into the ring buffer and offset is stored into a sorted
+array. If a ring buffer doesn&rsquo;t have enough space, eviction is performed in the
+segment from the beginning of the ring buffer using a modified LRU policy. An
+entry is deleted from the ring buffer if the last access time for the entry is
+smaller than the average access time of the segment. To find an entry in a cache
+on Get, a binary search is performed in the sorted array in the corresponding
+slot.</p>
 
-<p>Apart from use with diverse social and knowledge graphs, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- can also be used to:</p>
+<h4 id="groupcache">GroupCache</h4>
+
+<p><a href="https://github.com/golang/groupcache/tree/master/lru">GroupCache</a> implements an exact LRU eviction policy using a linked list
+and a Go map. For a fair comparison, we implemented a sharding logic with
+256 shards on top of GroupCache.</p>
+
+<h3 id="performance-comparison">Performance Comparison</h3>
+
+<p>To compare performance of various caches, we generated a Zipf-distributed
+workload and ran benchmarks using an <a href="https://cloud.google.com/compute/docs/machine-types">n1-highcpu-32</a> machine. The chart below
+compares performance of the three cache libraries for a read-only workload.</p>
+
+<h4 id="read-only">Read-Only</h4>
+
+<p><img src="/images/cache_read_workload.svg" alt="Read-Only Performance Benchmark" /></p>
+
+<p>We can see that BigCache reads scales well given that reads
+are lock-free. FreeCache and GroupCache reads are not lock-free and don&rsquo;t
+scale after a point (20 concurrent accesses).
+(lower value is better on y axis)</p>
+
+<h4 id="write-only">Write-Only</h4>
+
+<p><img src="/images/cache_write_workload.svg" alt="Write-Only Performance Benchmark" /></p>
+
+<p>For a write-only workload, all the libraries seem to perform similarly. Though,
+FreeCache is slightly faster than the other two.</p>
+
+<h4 id="read-write-25-writes-75-reads">Read-Write (25% writes, 75% reads)</h4>
+
+<p><img src="/images/cache_mixed_workload.svg" alt="Read-Write Performance Benchmark" /></p>
+
+<p>For a mixed workload containing 25% writes and 75% reads, while BigCache is the
+only library that clearly seems to scale well, the hit ratios are bad for a Zipf
+workload, as explained in the next section.</p>
+
+<h4 id="hit-ratio-comparison">Hit Ratio Comparison</h4>
+
+<p>Hit Ratio for the three caches are shown below. FreeCache does pretty close to
+LRU policy implemented by GroupCache. BigCache, however, doesn&rsquo;t do well for a
+Zipf-distributed workload for following reasons:</p>
 
 <ul>
-<li>build real-time recommendation engines,</li>
-<li>do semantic search,</li>
-<li>pattern matching,</li>
-<li>serve relationship data, and</li>
-<li>serve web apps via <a href="https://facebook.github.io/graphql/">GraphQL</a>, a full feature graph query language by Facebook.</li>
+<li>BigCache doesn&rsquo;t utilize the buffer efficiently and may end up storing
+multiple entries for the same key in the buffer.</li>
+<li>BigCache doesn&rsquo;t update entries on access (read), hence, resulting in
+eviction of recently accessed keys.</li>
 </ul>
 
-<p>We&rsquo;ll be reporting some performance numbers for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- in our next few posts, to give you an idea of what you can expect from the system.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Cache Size (# of elem)</th>
+<th align="center">10000</th>
+<th align="center">100000</th>
+<th align="center">1000000</th>
+<th align="center">10000000</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">BigCache</td>
+<td align="center">-</td>
+<td align="center">37%</td>
+<td align="center">52%</td>
+<td align="center">55%</td>
+</tr>
+
+<tr>
+<td align="center">FreeCache</td>
+<td align="center">-</td>
+<td align="center">38%</td>
+<td align="center">55%</td>
+<td align="center">90%</td>
+</tr>
+
+<tr>
+<td align="center">GroupCache</td>
+<td align="center">29%</td>
+<td align="center">40%</td>
+<td align="center">54%</td>
+<td align="center">90%</td>
+</tr>
+</tbody>
+</table>
+
+<p>So, we can conclude that none of the cache libraries meet all the requirements.</p>
+
+<blockquote>
+<p>GroupCache and FreeCache fails on requirement 4 whereas BigCache fails
+on requirement 5.</p>
+</blockquote>
+
+<h3 id="so-what-are-we-left-with">So, what are we left with?</h3>
+
+<p><em>Well, nothing really.</em> We are not aware of a smart memory-bounded cache in Go
+that can meet the entire list of requirements. If you know of one, do let us
+know in the comments.</p>
+
+<p>Meanwhile, we came across <a href="https://github.com/ben-manes/caffeine">Caffeine</a>, a Java library used by Cassandra,
+Finagle and other database systems. It uses <a href="https://arxiv.org/abs/1512.00727">TinyLFU</a>, a highly efficient
+cache admission policy and uses various techniques to scale and <a href="https://docs.google.com/presentation/d/1NlDxyXsUG1qlVHMl4vsUUBQfAJ2c2NsFPNPr2qymIBs/edit?usp=sharing">perform
+well</a> as the number of threads and cores grow, while providing a close to
+optimal hit ratio. You can read more about how it works in <a href="http://highscalability.com/blog/2016/1/25/design-of-a-modern-cache.html">this article</a>.</p>
+
+<p>Caffeine meets all the five requirements I mentioned at the beginning, so <strong>we
+are looking into building a Go equivalent of Caffeine,</strong> something which can
+serve our needs and potentially fill the gap of a concurrent, performant,
+memory-bounded cache in the Go language. Let us know if you&rsquo;d like to
+contribute or if you have something similar built already!</p>
+
+<h3 id="acknowledgement">Acknowledgement</h3>
+
+<p>We want to thank <a href="https://github.com/ben-manes">Benjamin Manes</a> for helping us replicate
+performance benchmarks from <a href="https://github.com/ben-manes/caffeine">Caffeine</a> into Go (code available
+<a href="https://github.com/dgraph-io/benchmarks/tree/master/cachebench">here</a>).  We also would like to thank <a href="https://github.com/dgryski">Damian Gryski</a> for
+providing us with base framework to benchmark cache hit ratios (available
+<a href="https://github.com/dgryski/trifles/tree/master/cachetest">here</a>), which we also modified to work for our needs. He readily
+accepted our changes into his Github repository.</p>
 
 <hr />
 
@@ -590,9 +749,35 @@ The data stored would have to be automatically replicated with no single point o
 <br/>
 
 
-<p><em>Top image: <a href="http://go.nasa.gov/1VlGVXx">Mars Rover Curiosity in Buckskin Selfie</a></em></p></div>
+<p><em>Top image: A <a href="https://commons.wikimedia.org/wiki/File:Doppio_ristretto_Chiang_Mai.jpg">ristretto
+doppio</a>
+in Chiang Mai.</em></p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1"><p>Use of sync.Map is discouraged by the Go team for various reasons. One of
+  them is that it does not reduce in size, despite deleting elements in the map.
+  So, for practical purposes, I&rsquo;m going to disregard sync.Map as a
+  first-class data structure. Most users would fill the need with a mutex
+  lock on top of Go native data structures.</p>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+</div>
           <div class="article-tag-list">
             
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/go/">Go</a>
+                
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/cache/">Cache</a>
+                
             
           </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -649,6 +834,37 @@ The data stored would have to be automatically replicated with no single point o
 </div>
 
             
+	<div class="article-author">
+	<figure class="article-author__figure">
+		
+	<img src="/images/aman.png" class="article-author__image">
+
+
+	</figure>
+	<div class="article-author__bio">
+		<h4 class="article-author__name">Aman Mangal
+
+
+			<span class="article-author__title">Editor</span>
+		</h4>
+		
+<nav class="social__nav article-author__social">
+    <ul class="social__list social__list--inline">
+        <li class="social__item social__item--inline">
+            <a href="https://www.linkedin.com/in/amanmangal" class="social__link">
+                <svg class="icon social__icon social__icon--linkedin">
+                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
+                </svg>
+            </a>
+        </li>
+    </ul>
+</nav>
+<p>Aman is a Software Engineer at Dgraph Labs with focus on building high performance and distributed systems. He graduated from IIT Bombay and Georgia Tech with specialization in Systems, Networking and Distributed Systems. He enjoys impromptu bicycle trips whenever he gets a chance.</p>
+
+
+	</div>
+</div>
+
           </div>
           <div class="col-12">
             <div id='discourse-comments'></div>
@@ -714,7 +930,7 @@ The data stored would have to be automatically replicated with no single point o
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/hello-world/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/caching-in-go/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -786,7 +1002,7 @@ The data stored would have to be automatically replicated with no single point o
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-07%2015%3a54%3a29.107530315%20-0800%20PST%20m%3d%2b0.102832538"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-07%2015%3a54%3a29.087698726%20-0800%20PST%20m%3d%2b0.083001049"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -899,8 +1115,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-07%2015%3a54%3a29.107555845%20-0800%20PST%20m%3d%2b0.102858048" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-07%2015%3a54%3a29.107574205%20-0800%20PST%20m%3d%2b0.102876418" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-07%2015%3a54%3a29.087760595%20-0800%20PST%20m%3d%2b0.083062848" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-07%2015%3a54%3a29.087795045%20-0800%20PST%20m%3d%2b0.083097288" rel="stylesheet">
 
 </body>
 </html>
@@ -914,7 +1130,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/hello-world\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/caching-in-go\/"
 };
 (function() {
   var d = document.createElement("script");
