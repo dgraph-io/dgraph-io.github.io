@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-07%2015%3a54%3a29.083294627%20-0800%20PST%20m%3d%2b0.078596881" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-07%2015%3a54%3a29.083326367%20-0800%20PST%20m%3d%2b0.078628590" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-10%2010%3a11%3a55.148104899%20-0700%20PDT%20m%3d%2b0.060489847" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-10%2010%3a11%3a55.148147531%20-0700%20PDT%20m%3d%2b0.060532499" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-07%2015%3a54%3a29.083361387%20-0800%20PST%20m%3d%2b0.078663620">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-07%2015%3a54%3a29.083382397%20-0800%20PST%20m%3d%2b0.078684600">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-10%2010%3a11%3a55.148178691%20-0700%20PDT%20m%3d%2b0.060563636">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-10%2010%3a11%3a55.14820818%20-0700%20PDT%20m%3d%2b0.060593126">
 
     
     
@@ -81,9 +81,9 @@
     
 
     <meta name="twitter:title" content="The State of Caching in Go"/>
-    <meta name="twitter:description" content="Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.
-Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of keys per query, depending upon the number of intermediate results. Accessing these via our key-value DB, Badger, results in disk seeks, which is something we want to reduce for performance reasons.
-Typical access patterns follow a Zipfian distribution."/>
+    <meta name="twitter:description" content="This post made it to the top of Golang subreddit. Do engage in discussion there and show us love by giving us a GitHub star.
+Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.
+Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of keys per query, depending upon the number of intermediate results."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -423,6 +423,10 @@ Typical access patterns follow a Zipfian distribution."/>
             src="https://blog.dgraph.io/images/ristretto.jpg"
           >
           <div class="article-content">
+
+<p><strong>This post made it to the top of Golang subreddit. Do engage in <a href="https://www.reddit.com/r/golang/comments/az99sl/the_state_of_caching_in_go_dgraph_blog/">discussion
+there</a>
+and show us love by giving us a <a href="https://github.com/dgraph-io/dgraph">GitHub star</a>.</strong></p>
 
 <p>Every database system requires a smart cache. That is, a cache that keeps the most
 frequently or recently accessed items and has a configurable memory utilization limit.</p>
@@ -779,6 +783,11 @@ in Chiang Mai.</em></p>
                     <a href="https://blog.dgraph.io/tags/cache/">Cache</a>
                 
             
+                
+                
+                    <a href="https://blog.dgraph.io/tags/reddit/">Reddit</a>
+                
+            
           </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <a href="#" data-dismiss="modal" class="modal-close-btn">
@@ -1002,7 +1011,7 @@ in Chiang Mai.</em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-07%2015%3a54%3a29.087698726%20-0800%20PST%20m%3d%2b0.083001049"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-10%2010%3a11%3a55.151159316%20-0700%20PDT%20m%3d%2b0.063544276"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1115,8 +1124,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-07%2015%3a54%3a29.087760595%20-0800%20PST%20m%3d%2b0.083062848" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-07%2015%3a54%3a29.087795045%20-0800%20PST%20m%3d%2b0.083097288" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-10%2010%3a11%3a55.151208085%20-0700%20PDT%20m%3d%2b0.063593048" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-10%2010%3a11%3a55.151239328%20-0700%20PDT%20m%3d%2b0.063624281" rel="stylesheet">
 
 </body>
 </html>
