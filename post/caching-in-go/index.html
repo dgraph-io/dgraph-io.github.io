@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-10%2019%3a06%3a48.705635811%20-0700%20PDT%20m%3d%2b0.070910860" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-10%2019%3a06%3a48.705678369%20-0700%20PDT%20m%3d%2b0.070953370" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-10%2022%3a40%3a05.490839449%20-0700%20PDT%20m%3d%2b0.095964700" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-10%2022%3a40%3a05.490945765%20-0700%20PDT%20m%3d%2b0.096071060" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-10%2019%3a06%3a48.705709289%20-0700%20PDT%20m%3d%2b0.070984276">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-10%2019%3a06%3a48.705739414%20-0700%20PDT%20m%3d%2b0.071014400">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-10%2022%3a40%3a05.49105517%20-0700%20PDT%20m%3d%2b0.096180452">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-10%2022%3a40%3a05.491213041%20-0700%20PDT%20m%3d%2b0.096338297">
 
     
     
@@ -618,14 +618,14 @@ compares performance of the three cache libraries for a read-only workload.</p>
 <p>We can see that BigCache reads scales well given that reads
 are lock-free. FreeCache and GroupCache reads are not lock-free and don&rsquo;t
 scale after a point (20 concurrent accesses).
-(lower value is better on y axis)</p>
+(higher value is better on y axis)</p>
 
 <h4 id="write-only">Write-Only</h4>
 
 <p><img src="/images/cache_write_workload.svg" alt="Write-Only Performance Benchmark" /></p>
 
 <p>For a write-only workload, all the libraries seem to perform similarly. Though,
-FreeCache is slightly faster than the other two.</p>
+FreeCache performs slightly better than the other two.</p>
 
 <h4 id="read-write-25-writes-75-reads">Read-Write (25% writes, 75% reads)</h4>
 
@@ -711,14 +711,14 @@ serve our needs and potentially fill the gap of a concurrent, performant,
 memory-bounded cache in the Go language. Let us know if you&rsquo;d like to
 contribute or if you have something similar built already!</p>
 
-<h3 id="acknowledgement">Acknowledgement</h3>
+<h3 id="acknowledgment">Acknowledgment</h3>
 
 <p>We want to thank <a href="https://github.com/ben-manes">Benjamin Manes</a> for helping us replicate
 performance benchmarks from <a href="https://github.com/ben-manes/caffeine">Caffeine</a> into Go (code available
 <a href="https://github.com/dgraph-io/benchmarks/tree/master/cachebench">here</a>).  We also would like to thank <a href="https://github.com/dgryski">Damian Gryski</a> for
 providing us with base framework to benchmark cache hit ratios (available
 <a href="https://github.com/dgryski/trifles/tree/master/cachetest">here</a>), which we also modified to work for our needs. He readily
-accepted our changes into his Github repository.</p>
+accepted our changes into his GitHub repository.</p>
 
 <p>Thanks for reading this post. If you liked this post, show us some love and give
 us <a href="https://github.com/dgraph-io/dgraph">a star on GitHub</a>.</p>
@@ -1019,7 +1019,7 @@ in Chiang Mai.</em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-10%2019%3a06%3a48.708504984%20-0700%20PDT%20m%3d%2b0.073780005"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-10%2022%3a40%3a05.494798167%20-0700%20PDT%20m%3d%2b0.099923444"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1132,8 +1132,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-10%2019%3a06%3a48.708551562%20-0700%20PDT%20m%3d%2b0.073826562" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-10%2019%3a06%3a48.708582582%20-0700%20PDT%20m%3d%2b0.073857572" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-10%2022%3a40%3a05.49484419%20-0700%20PDT%20m%3d%2b0.099969446" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-10%2022%3a40%3a05.494875765%20-0700%20PDT%20m%3d%2b0.100001031" rel="stylesheet">
 
 </body>
 </html>
