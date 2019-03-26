@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-26%2016%3a54%3a22.851547%20%2b0200%20EET%20m%3d%2b0.120496641" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-26%2016%3a54%3a22.851572%20%2b0200%20EET%20m%3d%2b0.120521894" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-26%2017%3a06%3a39.742568%20%2b0200%20EET%20m%3d%2b0.096655078" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-26%2017%3a06%3a39.742595%20%2b0200%20EET%20m%3d%2b0.096682060" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-26%2016%3a54%3a22.851597%20%2b0200%20EET%20m%3d%2b0.120546080">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-26%2016%3a54%3a22.85162%20%2b0200%20EET%20m%3d%2b0.120569077">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-26%2017%3a06%3a39.742617%20%2b0200%20EET%20m%3d%2b0.096704158">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-26%2017%3a06%3a39.742638%20%2b0200%20EET%20m%3d%2b0.096725289">
 
     
     
@@ -1016,12 +1016,14 @@ Hope you find this useful.</p>
 <script>
 	$('a[href="https://github.com/dgraph-io/dgraph"]').click(function(e) {
 		var $el = $(e.target);
-		if (keenClient && $el.text().toLowerCase().indexOf('star') >= 0) {
+		if ($el.text().toLowerCase().indexOf('star') >= 0) {
 			var pos = $el.offset();
-			keenClient.recordEvent('star-click', {
+			keenClient && keenClient.recordEvent('star-click', {
 				offsetTop: pos.top,
 				offsetLeft: pos.left,
 			})
+
+			ga && ga('send', 'event', 'Blog', 'text-star-click', 'Non Widget GitHub Click', 1);
 		}
 	})
 </script></div>
@@ -1220,7 +1222,7 @@ Hope you find this useful.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-26%2016%3a54%3a22.852275%20%2b0200%20EET%20m%3d%2b0.121224724"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-26%2017%3a06%3a39.743263%20%2b0200%20EET%20m%3d%2b0.097349527"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1350,8 +1352,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-26%2016%3a54%3a22.852346%20%2b0200%20EET%20m%3d%2b0.121295738" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-26%2016%3a54%3a22.852369%20%2b0200%20EET%20m%3d%2b0.121318527" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-26%2017%3a06%3a39.743327%20%2b0200%20EET%20m%3d%2b0.097414071" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-26%2017%3a06%3a39.743351%20%2b0200%20EET%20m%3d%2b0.097437578" rel="stylesheet">
 
 </body>
 </html>
