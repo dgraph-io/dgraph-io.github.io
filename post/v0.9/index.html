@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-11%2015%3a19%3a24.244063%20%2b0200%20EET%20m%3d%2b0.203814432" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-11%2015%3a19%3a24.244105%20%2b0200%20EET%20m%3d%2b0.203856650" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-26%2016%3a54%3a22.815546%20%2b0200%20EET%20m%3d%2b0.084495768" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-26%2016%3a54%3a22.815574%20%2b0200%20EET%20m%3d%2b0.084524461" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-11%2015%3a19%3a24.244131%20%2b0200%20EET%20m%3d%2b0.203881985">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-11%2015%3a19%3a24.244163%20%2b0200%20EET%20m%3d%2b0.203914268">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-26%2016%3a54%3a22.815598%20%2b0200%20EET%20m%3d%2b0.084547889">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-26%2016%3a54%3a22.81562%20%2b0200%20EET%20m%3d%2b0.084570429">
 
     
     
@@ -688,8 +688,13 @@ tricky data integrity issues!</p>
 <hr />
 
 <div class="engage">
-	<p><strong>We are building a fast, transactional and distributed graph database. If you like what
-      you read above, <a href="https://dgraph.io/about">come join</a> the team!</strong></p>
+	<p>
+		<strong>
+			We are building a fast, transactional and distributed graph database.
+			If you like what you read above,
+			<a href="https://dgraph.io/careers">come join</a> the team!
+		</strong>
+	</p>
   <table>
     <thead>
     <tr>
@@ -716,6 +721,19 @@ tricky data integrity issues!</p>
     <a href="mailto:manish@dgraph.io">talk to us.</a></strong>
 </div>
 <br/>
+
+<script>
+	$('a[href="https://github.com/dgraph-io/dgraph"]').click(function(e) {
+		var $el = $(e.target);
+		if (keenClient && $el.text().toLowerCase().indexOf('star') >= 0) {
+			var pos = $el.offset();
+			keenClient.recordEvent('star-click', {
+				offsetTop: pos.top,
+				offsetLeft: pos.left,
+			})
+		}
+	})
+</script>
 
 
 <p><em>Top image: <a href="https://www.nasa.gov/sites/default/files/thumbnails/image/neutron_star_merger_still_3.jpg">When (Neutron) Stars Colide</a></em></p>
@@ -748,7 +766,7 @@ tricky data integrity issues!</p>
             <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/peter.jpg" class="article-author__image">
+	<img src="/images/people/peter.jpg" class="article-author__image">
 
 
   </figure>
@@ -787,7 +805,7 @@ tricky data integrity issues!</p>
 	<div class="article-author">
 	<figure class="article-author__figure">
 		
-	<img src="/images/team-manish.jpg" class="article-author__image">
+	<img src="/images/people/manish.jpg" class="article-author__image">
 
 
 	</figure>
@@ -953,7 +971,7 @@ tricky data integrity issues!</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-11%2015%3a19%3a25.338926%20%2b0200%20EET%20m%3d%2b1.298666207"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-26%2016%3a54%3a22.819002%20%2b0200%20EET%20m%3d%2b0.087951568"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -982,6 +1000,23 @@ if (window.location.host.indexOf("dgraph.io") > -1) {
   ga("create", "UA-75364122-1", "auto");
   ga("send", "pageview");
 }
+</script>
+
+
+
+<script crossorigin src="https://cdn.jsdelivr.net/npm/keen-tracking@4"></script>
+<script>
+  if (window.location.host.indexOf("dgraph.io") > -1) {
+  	var keenClient = new KeenTracking({
+  	  projectId: "5c9a2f13c9e77c0001cf6d34",
+  	  writeKey: "A667C4E9E93C6440EA2FAC6648054F1970CE6A85BFC82360E5628B2E6060456566297506A99B7C4AE460DFB35BCD88EFF70181B37AD5304E6CCC5C6D09B809AD9BECF4B2D29D34A018511151FC7D6D747A6B109E2F0632644846F656ECE1A728"
+  	});
+    keenClient.initAutoTracking();
+
+  	keenClient.recordEvent('blog-article-visit', {
+  		pathname: window.location.pathname,
+  	})
+  }
 </script>
 
 
@@ -1066,8 +1101,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-11%2015%3a19%3a25.338978%20%2b0200%20EET%20m%3d%2b1.298718767" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-11%2015%3a19%3a25.339016%20%2b0200%20EET%20m%3d%2b1.298756410" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-26%2016%3a54%3a22.819065%20%2b0200%20EET%20m%3d%2b0.088014735" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-26%2016%3a54%3a22.819087%20%2b0200%20EET%20m%3d%2b0.088036661" rel="stylesheet">
 
 </body>
 </html>

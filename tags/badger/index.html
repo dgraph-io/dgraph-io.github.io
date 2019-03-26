@@ -49,8 +49,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-11%2015%3a19%3a24.277018%20%2b0200%20EET%20m%3d%2b0.236769444" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-11%2015%3a19%3a24.277049%20%2b0200%20EET%20m%3d%2b0.236799785" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-26%2016%3a54%3a22.858288%20%2b0200%20EET%20m%3d%2b0.127237831" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-26%2016%3a54%3a22.858328%20%2b0200%20EET%20m%3d%2b0.127277824" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-11%2015%3a19%3a24.277091%20%2b0200%20EET%20m%3d%2b0.236842379">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-11%2015%3a19%3a24.277115%20%2b0200%20EET%20m%3d%2b0.236866307">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-26%2016%3a54%3a22.858366%20%2b0200%20EET%20m%3d%2b0.127315190">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-26%2016%3a54%3a22.858401%20%2b0200%20EET%20m%3d%2b0.127350468">
 
     
     
@@ -446,7 +446,7 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-11%2015%3a19%3a24.278797%20%2b0200%20EET%20m%3d%2b0.238547807"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-26%2016%3a54%3a22.863048%20%2b0200%20EET%20m%3d%2b0.131997373"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -475,6 +475,23 @@ if (window.location.host.indexOf("dgraph.io") > -1) {
   ga("create", "UA-75364122-1", "auto");
   ga("send", "pageview");
 }
+</script>
+
+
+
+<script crossorigin src="https://cdn.jsdelivr.net/npm/keen-tracking@4"></script>
+<script>
+  if (window.location.host.indexOf("dgraph.io") > -1) {
+  	var keenClient = new KeenTracking({
+  	  projectId: "5c9a2f13c9e77c0001cf6d34",
+  	  writeKey: "A667C4E9E93C6440EA2FAC6648054F1970CE6A85BFC82360E5628B2E6060456566297506A99B7C4AE460DFB35BCD88EFF70181B37AD5304E6CCC5C6D09B809AD9BECF4B2D29D34A018511151FC7D6D747A6B109E2F0632644846F656ECE1A728"
+  	});
+    keenClient.initAutoTracking();
+
+  	keenClient.recordEvent('blog-article-visit', {
+  		pathname: window.location.pathname,
+  	})
+  }
 </script>
 
 
@@ -559,8 +576,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-11%2015%3a19%3a24.27885%20%2b0200%20EET%20m%3d%2b0.238600603" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-11%2015%3a19%3a24.278875%20%2b0200%20EET%20m%3d%2b0.238626430" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-03-26%2016%3a54%3a22.863208%20%2b0200%20EET%20m%3d%2b0.132157612" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-26%2016%3a54%3a22.863242%20%2b0200%20EET%20m%3d%2b0.132191319" rel="stylesheet">
 
 </body>
 </html>
