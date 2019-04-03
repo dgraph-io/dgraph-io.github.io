@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.53" />
+      <meta name="generator" content="Hugo 0.37.1" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -22,7 +22,6 @@
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
 
-    <link rel="manifest" href="assets/images/favicons/manifest.json">
     <link rel="mask-icon" href="assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
     <link rel="shortcut icon" href="/images/favicon.ico">
     <meta name="msapplication-TileColor" content="#da532c">
@@ -49,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-03-28%2017%3a28%3a44.989357%20%2b0200%20EET%20m%3d%2b0.212569044" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-03-28%2017%3a28%3a44.989383%20%2b0200%20EET%20m%3d%2b0.212595468" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2012%3a00%3a20.763410332%20-0700%20PDT%20m%3d%2b0.068312948" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2012%3a00%3a20.763430368%20-0700%20PDT%20m%3d%2b0.068332999" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -69,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-03-28%2017%3a28%3a44.989407%20%2b0200%20EET%20m%3d%2b0.212619020">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-03-28%2017%3a28%3a44.989429%20%2b0200%20EET%20m%3d%2b0.212640824">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2012%3a00%3a20.763448878%20-0700%20PDT%20m%3d%2b0.068351506">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2012%3a00%3a20.763467565%20-0700%20PDT%20m%3d%2b0.068370196">
 
     
     
@@ -116,6 +115,45 @@
           <li class="article__item">
 	<div class="article__meta">
 		<span class="article__meta-item article__date">
+			Wed, Apr 3, 2019 by Lucas Wang
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/acl/" class="clearfix">
+		<h3 class="article__title">Access Control in Dgraph</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/acl/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/Mars_Rover.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies. The regulation has profound implications. Many companies take the law and users&rsquo; demand seriously: they start encrypting data for traffic within their data centers, and employing strict control on who can access users&rsquo; data. The Dgraph team takes full notice of that. Access control on the data stored in Dgraph is very important to our enterprise customers.</div>
+				<div class="tags">
+					
+							
+							
+					
+							
+							
+					
+							
+							
+					
+				</div>
+			</div>
+		</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
 			Thu, Mar 7, 2019 by Manish Rai Jain
 
 
@@ -141,22 +179,14 @@ Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/go/">Go</a>
+					
+							
 							
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/cache/">Cache</a>
-							
 					
 							
-							
-									<a href="https://blog.dgraph.io/tags/reddit/">Reddit</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
 							
 					
 				</div>
@@ -192,27 +222,17 @@ When I introduce myself and explain what we are building at Dgraph Labs, I am ty
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/freebase/">Freebase</a>
+					
+							
 							
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/google/">Google</a>
-							
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/knowledge-graph/">Knowledge Graph</a>
-							
 					
 							
-							
-									<a href="https://blog.dgraph.io/tags/metaweb/">Metaweb</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
 							
 					
 				</div>
@@ -248,17 +268,11 @@ Dgraph supports indexing natively, which means common use cases around full-text
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/indexing/">Indexing</a>
-							
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/optimization/">Optimization</a>
-							
 					
 							
-							
-									<a href="https://blog.dgraph.io/tags/go/">Go</a>
 							
 					
 				</div>
@@ -294,12 +308,8 @@ This blog post is about Badger, the key-value database that makes it all happen 
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
-							
 					
 							
-							
-									<a href="https://blog.dgraph.io/tags/rocksdb/">RocksDB</a>
 							
 					
 				</div>
@@ -396,38 +406,6 @@ To give a bit of a background &ndash; Dgraph, as a graph database, is designed t
 				<div class="summary">Amazon just announced their new graph database service, called Amazon Neptune. As per a TechCrunch article,
  Amazon Neptune has been optimized to handle billions of relationships and run queries within milliseconds. Neptune supports fast-failover, point-in-time recovery and Multi-AZ deployments. And you can also encrypt data at rest.
  This is very exciting news for the entire tech ecosystem. It clearly shows that graph databases are going mainstream. Already many tech companies are using existing graph solutions or building their own graph-like systems.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Tue, Nov 14, 2017 by Peter Stace
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/v0.9/" class="clearfix">
-		<h3 class="article__title">Releasing distributed transactions in v0.9</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/v0.9/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/when_neutron_stars_collide.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">It all started with a Github issue.
-At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!) told us. The biggest contribution that we get from our community, is in the form of feedback. We&rsquo;ll forgo any code contribution for quality feedback based on real-world usage.
-Since the beginning of Dgraph, transactions were road mapped as a post v1.</div>
 				<div class="tags">
 					
 				</div>
@@ -608,7 +586,7 @@ Since the beginning of Dgraph, transactions were road mapped as a post v1.</div>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-03-28%2017%3a28%3a44.991261%20%2b0200%20EET%20m%3d%2b0.214473352"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2012%3a00%3a20.764777635%20-0700%20PDT%20m%3d%2b0.069680231"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -754,14 +732,19 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-03-28%2017%3a28%3a44.991353%20%2b0200%20EET%20m%3d%2b0.214565071" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-03-28%2017%3a28%3a44.991376%20%2b0200%20EET%20m%3d%2b0.214587879" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2012%3a00%3a20.76483982%20-0700%20PDT%20m%3d%2b0.069742446" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2012%3a00%3a20.764860391%20-0700%20PDT%20m%3d%2b0.069763008" rel="stylesheet">
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
+  integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps="
+  crossorigin="anonymous"
+></script>
+<script type="text/javascript" src="/js/custom.js"></script>
 
 </body>
 </html>
 
   
 
-  <script type="text/javascript" src="/js/custom.js"></script>
-  <script type="text/javascript" src="/js/script.min.js"></script>
 </html>
