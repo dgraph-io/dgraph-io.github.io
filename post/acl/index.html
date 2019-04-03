@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.37.1" />
+      <meta name="generator" content="Hugo 0.54.0" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2014%3a20%3a29.507995511%20-0700%20PDT%20m%3d%2b0.054408992" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2014%3a20%3a29.508014927%20-0700%20PDT%20m%3d%2b0.054428376" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2016%3a54%3a42.798186121%20-0700%20PDT%20m%3d%2b0.074439727" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2016%3a54%3a42.798216851%20-0700%20PDT%20m%3d%2b0.074470427" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2014%3a20%3a29.508033327%20-0700%20PDT%20m%3d%2b0.054446782">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2014%3a20%3a29.508045159%20-0700%20PDT%20m%3d%2b0.054458619">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2016%3a54%3a42.798246291%20-0700%20PDT%20m%3d%2b0.074499867">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2016%3a54%3a42.798274281%20-0700%20PDT%20m%3d%2b0.074527857">
 
     
     
@@ -501,17 +501,10 @@ rules to all the incoming requests, without having to make network calls.</p>
 the group, e.g. <code>(friend, Read), (name, Read+Write), (^user.*name$, Read+Write+Modify)</code>.</li>
 </ul>
 
-
 <figure>
-    
-        <img src="/images/groot.jpg" />
-    
-    
-    <figcaption>
-        <h4>I AM GROOT</h4>
-        
-    </figcaption>
-    
+    <img src="/images/groot.jpg"/> <figcaption>
+            <h4>I AM GROOT</h4>
+        </figcaption>
 </figure>
 
 
@@ -575,22 +568,15 @@ predicate.</p>
 
 <h3 id="the-jwts">The JWTs</h3>
 
-<p><em>But wait a second.</em> How does an Alpha server know the
+<p><em>But wait a second!</em> How does an Alpha server know the
 query&rsquo;s current user or its groups?  The trick is that each request carries some
 metadata encoded as <a href="https://jwt.io/">JSON Web Token</a> that tells the Alpha server about the
 current user and the groups they belong to.</p>
 
-
 <figure>
-    
-        <img src="/images/accessJWT.png" />
-    
-    
-    <figcaption>
-        <h4>Access Token</h4>
-        
-    </figcaption>
-    
+    <img src="/images/accessJWT.png"/> <figcaption>
+            <h4>Access Token</h4>
+        </figcaption>
 </figure>
 
 
@@ -611,17 +597,10 @@ request it sends to the cluster, e.g. the query request example we saw earlier.<
 can cause a problem if this user is assigned a new group. Until the Access Token
 expires, a new JWT would not be issued to reflect that change.</p>
 
-
 <figure>
-    
-        <img src="/images/refreshJWT.png" />
-    
-    
-    <figcaption>
-        <h4>Refresh Token</h4>
-        
-    </figcaption>
-    
+    <img src="/images/refreshJWT.png"/> <figcaption>
+            <h4>Refresh Token</h4>
+        </figcaption>
 </figure>
 
 
@@ -732,11 +711,17 @@ Jaeger UI:
             
                 
                 
+                    <a href="https://blog.dgraph.io/tags/dgraph/">Dgraph</a>
+                
             
                 
                 
+                    <a href="https://blog.dgraph.io/tags/acl/">ACL</a>
+                
             
                 
+                
+                    <a href="https://blog.dgraph.io/tags/go/">Go</a>
                 
             
           </div>
@@ -927,7 +912,7 @@ Jaeger UI:
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2014%3a20%3a29.509243134%20-0700%20PDT%20m%3d%2b0.055656589"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2016%3a54%3a42.803085537%20-0700%20PDT%20m%3d%2b0.079339233"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1073,8 +1058,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2014%3a20%3a29.509480603%20-0700%20PDT%20m%3d%2b0.055894078" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2014%3a20%3a29.509517434%20-0700%20PDT%20m%3d%2b0.055930907" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2016%3a54%3a42.803284806%20-0700%20PDT%20m%3d%2b0.079538462" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2016%3a54%3a42.803345306%20-0700%20PDT%20m%3d%2b0.079598982" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"

@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.37.1" />
+      <meta name="generator" content="Hugo 0.54.0" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2014%3a20%3a29.520422891%20-0700%20PDT%20m%3d%2b0.066836362" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2014%3a20%3a29.520434614%20-0700%20PDT%20m%3d%2b0.066848062" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2016%3a54%3a42.835668697%20-0700%20PDT%20m%3d%2b0.111922363" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2016%3a54%3a42.835703947%20-0700%20PDT%20m%3d%2b0.111957553" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2014%3a20%3a29.5204464%20-0700%20PDT%20m%3d%2b0.066859850">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2014%3a20%3a29.520456573%20-0700%20PDT%20m%3d%2b0.066870022">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2016%3a54%3a42.835733667%20-0700%20PDT%20m%3d%2b0.111987273">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2016%3a54%3a42.835765846%20-0700%20PDT%20m%3d%2b0.112019442">
 
     
     
@@ -176,15 +176,17 @@ We also dream that graph database would no longer run as a secondary database.</
 <li><a href="#ref-issues-faced">Issues faced</a></li>
 <li><a href="#ref-feature-comparison">Dgraph vs Neo4j Feature Comparison</a></li>
 <li><a href="#ref-dgraph-principles">Principles behind Dgraph</a></li>
-</ol>
-
-<p></p></div>
+</ol></div>
 				<div class="tags">
 					
 							
 							
+									<a href="https://blog.dgraph.io/tags/benchmark/">Benchmark</a>
+							
 					
 							
+							
+									<a href="https://blog.dgraph.io/tags/neo4j/">Neo4j</a>
 							
 					
 				</div>
@@ -217,9 +219,7 @@ We also dream that graph database would no longer run as a secondary database.</
 				<div class="summary"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 . This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
-
-<p></p></div>
+We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p></div>
 				<div class="tags">
 					
 				</div>
@@ -280,8 +280,7 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
 			</div>
 			<div class="col-12 col-lg-9">
 				<div class="summary"><p>Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
-</p></div>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.</p></div>
 				<div class="tags">
 					
 				</div>
@@ -311,9 +310,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
-
-<p></p></div>
+				<div class="summary"><p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p></div>
 				<div class="tags">
 					
 				</div>
@@ -345,14 +342,17 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 			<div class="col-12 col-lg-9">
 				<div class="summary"><p>Candidate <strong>REJECTED</strong>.</p>
 
-<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn&rsquo;t.</em>
-</p></div>
+<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn&rsquo;t.</em></p></div>
 				<div class="tags">
 					
 							
 							
+									<a href="https://blog.dgraph.io/tags/gru/">Gru</a>
+							
 					
 							
+							
+									<a href="https://blog.dgraph.io/tags/hiring/">Hiring</a>
 							
 					
 				</div>
@@ -383,9 +383,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 			</div>
 			<div class="col-12 col-lg-9">
 				<div class="summary"><p>Thanks for your feedback over the last couple of months. This release addresses some of the main pain points of using <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</p>
-
-<p></p></div>
+.</p></div>
 				<div class="tags">
 					
 				</div>
@@ -566,7 +564,7 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2014%3a20%3a29.521243237%20-0700%20PDT%20m%3d%2b0.067656709"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2016%3a54%3a42.837700987%20-0700%20PDT%20m%3d%2b0.113954603"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -712,8 +710,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2014%3a20%3a29.521281919%20-0700%20PDT%20m%3d%2b0.067695392" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2014%3a20%3a29.521293988%20-0700%20PDT%20m%3d%2b0.067707456" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2016%3a54%3a42.837801876%20-0700%20PDT%20m%3d%2b0.114055482" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2016%3a54%3a42.837833716%20-0700%20PDT%20m%3d%2b0.114087312" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"

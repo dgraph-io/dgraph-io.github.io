@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.37.1" />
+      <meta name="generator" content="Hugo 0.54.0" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2014%3a20%3a29.514717318%20-0700%20PDT%20m%3d%2b0.061130771" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2014%3a20%3a29.514775568%20-0700%20PDT%20m%3d%2b0.061189047" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2016%3a54%3a42.821918765%20-0700%20PDT%20m%3d%2b0.098172371" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2016%3a54%3a42.821949995%20-0700%20PDT%20m%3d%2b0.098203591" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2014%3a20%3a29.514802858%20-0700%20PDT%20m%3d%2b0.061216329">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2014%3a20%3a29.514826704%20-0700%20PDT%20m%3d%2b0.061240156">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2016%3a54%3a42.821980175%20-0700%20PDT%20m%3d%2b0.098233771">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2016%3a54%3a42.822007195%20-0700%20PDT%20m%3d%2b0.098260790">
 
     
     
@@ -84,10 +84,7 @@
 , we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called Flatbuffers.
-
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer."/>
+To keep our latency of communication low, we use a new form of serialization library called Flatbuffers."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -430,10 +427,12 @@ To keep our latency of communication low, we use a new form of serialization lib
 , we aim to build a low latency, distributed graph database.
 This means our data is distributed among nodes in the cluster.
 Executing a query means multiple nodes are communicating with each other.
-To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.
+To keep our latency of communication low, we use a new form of serialization library called <a href="https://google.github.io/flatbuffers/">Flatbuffers</a>.</p>
 
-&gt; What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
-&gt; The only memory needed to access your data is that of the buffer.</p>
+<blockquote>
+<p>What sets FlatBuffers apart is that it represents hierarchical data in a flat binary buffer in such a way that it can still be accessed directly without parsing/unpacking, while also still supporting data structure evolution (forwards/backwards compatibility).
+The only memory needed to access your data is that of the buffer.</p>
+</blockquote>
 
 <p><strong>How is Flatbuffers better than <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a></strong>? FlatBuffers does not need a parsing/unpacking step to a secondary representation before you can access data, often coupled with per-object memory allocation.</p>
 
@@ -1222,7 +1221,7 @@ Hope you find this useful.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2014%3a20%3a29.515334139%20-0700%20PDT%20m%3d%2b0.061747632"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2016%3a54%3a42.82289373%20-0700%20PDT%20m%3d%2b0.099147356"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1368,8 +1367,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2014%3a20%3a29.515374035%20-0700%20PDT%20m%3d%2b0.061787500" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2014%3a20%3a29.515385243%20-0700%20PDT%20m%3d%2b0.061798705" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2016%3a54%3a42.82299617%20-0700%20PDT%20m%3d%2b0.099249776" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2016%3a54%3a42.82302728%20-0700%20PDT%20m%3d%2b0.099280876" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
