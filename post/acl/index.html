@@ -40,7 +40,7 @@
 
     <meta property="og:url" content="https://blog.dgraph.io/post/acl/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/Mars_Rover.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/starshine-2.jpg">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2012%3a03%3a54.060838013%20-0700%20PDT%20m%3d%2b0.049133370" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2012%3a03%3a54.060858534%20-0700%20PDT%20m%3d%2b0.049153884" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-03%2014%3a20%3a29.507995511%20-0700%20PDT%20m%3d%2b0.054408992" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-03%2014%3a20%3a29.508014927%20-0700%20PDT%20m%3d%2b0.054428376" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,14 +68,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2012%3a03%3a54.060880991%20-0700%20PDT%20m%3d%2b0.049176359">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2012%3a03%3a54.060913717%20-0700%20PDT%20m%3d%2b0.049209077">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-03%2014%3a20%3a29.508033327%20-0700%20PDT%20m%3d%2b0.054446782">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-03%2014%3a20%3a29.508045159%20-0700%20PDT%20m%3d%2b0.054458619">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/Mars_Rover.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/starshine-2.jpg"/>
       
     
 
@@ -417,7 +417,7 @@
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/Mars_Rover.jpg"
+            src="https://blog.dgraph.io/images/starshine-2.jpg"
           >
           <div class="article-content">
 
@@ -580,6 +580,20 @@ query&rsquo;s current user or its groups?  The trick is that each request carrie
 metadata encoded as <a href="https://jwt.io/">JSON Web Token</a> that tells the Alpha server about the
 current user and the groups they belong to.</p>
 
+
+<figure>
+    
+        <img src="/images/accessJWT.png" />
+    
+    
+    <figcaption>
+        <h4>Access Token</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
 <h4 id="access-token">Access Token</h4>
 
 <p><strong>Here is how JWT works:</strong> Before running any transactions, the client, e.g. dgo
@@ -589,14 +603,27 @@ user&rsquo;s groups, 2) puts an expiration timestamp depending on a server-confi
 TTL, and 3) signs all that data with a secret key. The group list, expiration
 timestamp, and signature together form an access JWT which is sent back to the
 client. The client then remembers this JWT and attaches it to every subsequent
-request it sends to the cluster, e.g. the query request example we saw earlier.
-<img src="/images/accessJWT.png" alt="Access Token" /></p>
+request it sends to the cluster, e.g. the query request example we saw earlier.</p>
 
 <h4 id="refresh-token">Refresh Token</h4>
 
 <p>As explained above, JWTs contain the groups a logged-in user belongs to. This
 can cause a problem if this user is assigned a new group. Until the Access Token
 expires, a new JWT would not be issued to reflect that change.</p>
+
+
+<figure>
+    
+        <img src="/images/refreshJWT.png" />
+    
+    
+    <figcaption>
+        <h4>Refresh Token</h4>
+        
+    </figcaption>
+    
+</figure>
+
 
 <p>Therefore, Access Token expiration is typically set to a short duration, like a
 few hours. But, this causes an issue with long running services, which would
@@ -611,8 +638,7 @@ cause a new JWT to be issued with the updated groups.</p>
 <p>Notice that when an access JWT expiration causes an automatic login using the refresh JWT, not only
 does the access JWT get replaced, but the refresh JWT itself also gets renewed with a later
 expiration timestamp. Thus the same client can be used continually without an explicit call to
-Login again after it&rsquo;s initialized, thanks to the rolling JWTs.
-<img src="/images/refreshJWT.png" alt="Refresh Token" /></p>
+Login again after it&rsquo;s initialized, thanks to the rolling JWTs.</p>
 
 <h3 id="logging">Logging</h3>
 
@@ -690,7 +716,7 @@ Jaeger UI:
 	})
 </script>
 
-<em>Top image: <a href="https://en.wikipedia.org/wiki/Opportunity_(rover)">Mars Rover Opportunity Officially Declared Dead After Record-Breaking 15 Years on Red Planet</a></em></p>
+<em>Top image: <a href="https://en.wikipedia.org/wiki/STARSHINE_(satellite)">On December 5th, 2001, STARSHINE-2 was launched from the Space Shuttle Endeavour on STS-108</a></em></p>
 <div class="footnotes">
 
 <hr />
@@ -901,7 +927,7 @@ Jaeger UI:
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2012%3a03%3a54.062368744%20-0700%20PDT%20m%3d%2b0.050664104"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-03%2014%3a20%3a29.509243134%20-0700%20PDT%20m%3d%2b0.055656589"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1047,8 +1073,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2012%3a03%3a54.062412271%20-0700%20PDT%20m%3d%2b0.050707610" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2012%3a03%3a54.0624235%20-0700%20PDT%20m%3d%2b0.050718837" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-04-03%2014%3a20%3a29.509480603%20-0700%20PDT%20m%3d%2b0.055894078" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-03%2014%3a20%3a29.509517434%20-0700%20PDT%20m%3d%2b0.055930907" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
