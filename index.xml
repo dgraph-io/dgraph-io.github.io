@@ -13,11 +13,11 @@
     
     
     <item>
-      <title>Access Control in Dgraph</title>
-      <link>https://blog.dgraph.io/post/acl/</link>
+      <title>How Access Control Works in Dgraph</title>
+      <link>https://blog.dgraph.io/post/access-control-in-dgraph/</link>
       <pubDate>Wed, 03 Apr 2019 00:06:20 -0800</pubDate>
       
-      <guid>https://blog.dgraph.io/post/acl/</guid>
+      <guid>https://blog.dgraph.io/post/access-control-in-dgraph/</guid>
       <description>With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies. The regulation has profound implications. Many companies take the law and users&amp;rsquo; demand seriously: they start encrypting data for traffic within their data centers, and employing strict control on who can access users&amp;rsquo; data. The Dgraph team takes full notice of that. Access control on the data stored in Dgraph is very important to our enterprise customers.</description>
     </item>
     
