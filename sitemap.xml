@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.dgraph.io/post/access-control-in-dgraph/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/post/caching-in-go/</loc>
     <lastmod>2019-03-07T15:30:00-08:00</lastmod>
   </url>
@@ -183,12 +178,6 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/acl/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/tags/badger/</loc>
     <lastmod>2019-01-24T10:00:00-08:00</lastmod>
     <priority>0</priority>
@@ -218,14 +207,8 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
+    <lastmod>2019-03-07T15:30:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -237,7 +220,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/go/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
+    <lastmod>2019-03-07T15:30:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -303,7 +286,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
+    <lastmod>2019-03-07T15:30:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -321,7 +304,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
+    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
