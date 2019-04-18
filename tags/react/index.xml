@@ -18,7 +18,7 @@
       <pubDate>Thu, 18 Apr 2019 00:00:00 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/building-todo-list-react-dgraph/</guid>
-      <description>Before We Begin In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http to greatly simplify the life of JavaScript developers when accessing Dgraph databases.
+      <description>In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http to greatly simplify the life of JavaScript developers when accessing Dgraph databases.
 The tutorial is split into several steps:
  Creating a React App
  Starting a local Dgraph server using docker-compose
