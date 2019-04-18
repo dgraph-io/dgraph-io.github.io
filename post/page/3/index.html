@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-11%2019%3a38%3a47.768005%20%2b0300%20EEST%20m%3d%2b0.225647748" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-11%2019%3a38%3a47.768041%20%2b0300%20EEST%20m%3d%2b0.225683645" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-04-19%2000%3a02%3a04.761785%20%2b0300%20EEST%20m%3d%2b0.760108223" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-04-19%2000%3a02%3a04.761834%20%2b0300%20EEST%20m%3d%2b0.760157532" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-11%2019%3a38%3a47.768072%20%2b0300%20EEST%20m%3d%2b0.225714700">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-11%2019%3a38%3a47.768095%20%2b0300%20EEST%20m%3d%2b0.225737543">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-04-19%2000%3a02%3a04.761874%20%2b0300%20EEST%20m%3d%2b0.760197763">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-04-19%2000%3a02%3a04.761907%20%2b0300%20EEST%20m%3d%2b0.760230559">
 
     
     
@@ -111,6 +111,67 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Aug 8, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/scaling-dgraph/" class="clearfix">
+		<h3 class="article__title">Scale the shit out of this!</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/scaling-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/science.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
+Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Wed, Aug 2, 2017 by Sung Won Cho
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/building-graphoverflow/" class="clearfix">
+		<h3 class="article__title">Building a Stack Overflow Clone with Dgraph, and React</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/building-graphoverflow/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/graphoverflow-node-cover.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p></div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -315,70 +376,6 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Mon, Apr 10, 2017 by Tomasz Zdybał
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/string-matching/" class="clearfix">
-		<h3 class="article__title">String matching in Dgraph v0.7.5</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/string-matching/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/splitting-dunes.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary"><p>The recent release of Dgraph is packed with new features and improvements.
-Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
-All of these changes make Dgraph an excellent tool for working with multilingual applications.</p></div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Sun, Mar 26, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/licensing/" class="clearfix">
-		<h3 class="article__title">Building a long lasting company around open-source</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/licensing/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/peoplelandingonmars.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">Dgraph started with the idea that every startup should be able to have the same level of technology as run by big giants. We designed Dgraph from ground-up to allow data sharding, horizontal scalability, consistent replication, and a fast and distributed architecture.
-Update (Apr 2018): Dgraph has switched back to Apache 2.0, with a Commons clause restriction. See new post here.
-We also dream that graph database would no longer run as a secondary database.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -551,7 +548,7 @@ We also dream that graph database would no longer run as a secondary database.</
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-11%2019%3a38%3a47.769675%20%2b0300%20EEST%20m%3d%2b0.227316898"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-04-19%2000%3a02%3a04.765124%20%2b0300%20EEST%20m%3d%2b0.763448105"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -697,8 +694,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-04-11%2019%3a38%3a47.769752%20%2b0300%20EEST%20m%3d%2b0.227394306" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-11%2019%3a38%3a47.769779%20%2b0300%20EEST%20m%3d%2b0.227421754" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-04-19%2000%3a02%3a04.765248%20%2b0300%20EEST%20m%3d%2b0.763571560" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-04-19%2000%3a02%3a04.765307%20%2b0300%20EEST%20m%3d%2b0.763630143" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"

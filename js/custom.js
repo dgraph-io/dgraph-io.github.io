@@ -52,29 +52,21 @@ window.addEventListener("hashchange", function(e) {
     return;
   }
 
-  function onScroll() {
+  function onScroll(e) {
     allImages.each(function(i, img) {
       img = $(img)
-      var h = img.height()
       var top = img.offset().top
-      var bottom = top + h
-
+      var h = img.height()
       var viewBegin = document.scrollingElement.scrollTop
       var viewEnd = viewBegin + window.outerHeight
-      viewBegin -= 100
-      viewEnd += 100
+      viewBegin -= 200
+      viewEnd += 200
       var isVisible = top > viewBegin && top < viewEnd
-          || bottom > viewBegin && bottom < viewEnd
-          || top <= viewBegin && bottom >= viewEnd;
-
-      var oldVisibility = img.css('visibility');
-      var newVisibility = isVisible ? 'visible' : 'hidden';
-      if (oldVisibility != newVisibility) {
-        img.css('visibility', newVisibility)
-      }
+          || top+h > viewBegin && top+h < viewEnd
+          || top <= viewBegin && top+h >= viewEnd;
+      img.css('visibility', isVisible ? 'visible' : 'hidden')
     })
   }
-  $(onScroll);
 
   window.addEventListener(
       'scroll',
