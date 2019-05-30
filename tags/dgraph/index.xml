@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 03 Apr 2019 00:06:20 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 May 2019 00:08:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/dgraph/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Migrating data from SQL to Dgraph</title>
+      <link>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</link>
+      <pubDate>Thu, 23 May 2019 00:08:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</guid>
+      <description>Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from. In particular, we get asked a lot about how to migrate data from MySQL to Dgraph. In this article, we present a tool that makes this migration really easy: all a user needs to do is write a small 3 lines configuration file and type in 2 commands.</description>
+    </item>
     
     <item>
       <title>How Access Control Works in Dgraph</title>

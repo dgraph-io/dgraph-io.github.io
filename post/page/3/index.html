@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.53" />
+      <meta name="generator" content="Hugo 0.54-DEV" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-05-06%2018%3a55%3a13.153866%20%2b0300%20EEST%20m%3d%2b1.164518825" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-05-06%2018%3a55%3a13.153887%20%2b0300%20EEST%20m%3d%2b1.164539751" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-05-30%2008%3a56%3a11.250012322%20-0700%20PDT%20m%3d%2b0.061584853" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-05-30%2008%3a56%3a11.250032622%20-0700%20PDT%20m%3d%2b0.061605145" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-05-06%2018%3a55%3a13.153907%20%2b0300%20EEST%20m%3d%2b1.164559062">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-05-06%2018%3a55%3a13.153925%20%2b0300%20EEST%20m%3d%2b1.164576962">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-05-30%2008%3a56%3a11.250051509%20-0700%20PDT%20m%3d%2b0.061624013">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-05-30%2008%3a56%3a11.25006917%20-0700%20PDT%20m%3d%2b0.061641674">
 
     
     
@@ -111,6 +111,36 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Mon, Aug 14, 2017 by Peter Stace
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/alice/" class="clearfix">
+		<h3 class="article__title">Making Badger Crash Resilient with ALICE</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/alice/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/galileo-jupiter.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -330,52 +360,6 @@ All this goes to show how much people enjoy Go native libraries.</div>
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Sun, May 14, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/badger/" class="clearfix">
-		<h3 class="article__title">Introducing Badger: A fast key-value store written purely in Go</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/badger/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/juno.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
-We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</div>
-				<div class="tags">
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/rocksdb/">RocksDB</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
-							
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -548,7 +532,7 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-05-06%2018%3a55%3a13.154766%20%2b0300%20EEST%20m%3d%2b1.165417933"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-05-30%2008%3a56%3a11.251166084%20-0700%20PDT%20m%3d%2b0.062738629"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -662,10 +646,20 @@ $(document.links)
   		})
 </script>
 
+<script>
+  setInterval(function() {
+    var cookieVal = getCookie('MCPopupClosed');
+    if (cookieVal) {
+      
+      setCookie('MCPopupClosed', cookieVal, 5)
+    }
+  }, 3000);
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-05-06%2018%3a55%3a13.154811%20%2b0300%20EEST%20m%3d%2b1.165463681" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-05-06%2018%3a55%3a13.154826%20%2b0300%20EEST%20m%3d%2b1.165478655" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-05-30%2008%3a56%3a11.25122762%20-0700%20PDT%20m%3d%2b0.062800148" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-05-30%2008%3a56%3a11.251247247%20-0700%20PDT%20m%3d%2b0.062819789" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
