@@ -4,7 +4,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</loc>
-    <lastmod>2019-05-23T00:08:00-08:00</lastmod>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
   </url>
   
   <url>
@@ -229,13 +229,13 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/dgraph/</loc>
-    <lastmod>2019-05-23T00:08:00-08:00</lastmod>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-05-23T00:08:00-08:00</lastmod>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -301,7 +301,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/migration/</loc>
-    <lastmod>2019-05-23T00:08:00-08:00</lastmod>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -325,7 +325,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-05-23T00:08:00-08:00</lastmod>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -349,7 +349,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/sql/</loc>
-    <lastmod>2019-05-23T00:08:00-08:00</lastmod>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
     <priority>0</priority>
   </url>
   
