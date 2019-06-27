@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.54-DEV" />
+      <meta name="generator" content="Hugo 0.52" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-05-30%2009%3a00%3a49.754544204%20-0700%20PDT%20m%3d%2b0.054357389" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-05-30%2009%3a00%3a49.754557891%20-0700%20PDT%20m%3d%2b0.054371079" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-27%2016%3a45%3a13.558285784%20-0700%20PDT%20m%3d%2b0.075908016" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-27%2016%3a45%3a13.558310405%20-0700%20PDT%20m%3d%2b0.075932637" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-05-30%2009%3a00%3a49.754568855%20-0700%20PDT%20m%3d%2b0.054382029">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-05-30%2009%3a00%3a49.754578921%20-0700%20PDT%20m%3d%2b0.054392093">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-27%2016%3a45%3a13.558336123%20-0700%20PDT%20m%3d%2b0.075958358">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-27%2016%3a45%3a13.558357995%20-0700%20PDT%20m%3d%2b0.075980231">
 
     
     
@@ -114,13 +114,54 @@
             <li class="breadcrumb-item"><a href="/">Dgraph Blog</a></li>
             <li class="breadcrumb-item active" aria-current="page">
               <span class="tag-name">Badger</span>
-              <span class="article-count">&nbsp;(4)</span>
+              <span class="article-count">&nbsp;(5)</span>
             </li>
           </ol>
         </nav>
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Thu, Jun 27, 2019 by Francesc Campoy
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/serialization-versioning/" class="clearfix">
+		<h3 class="article__title">Semantic Versioning, Go Modules, and Databases</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/serialization-versioning/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/badger-evolution.png); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.
+One of these pieces is BadgerDB, a key-value store written completely in Go following the ideas of RocksDB and LSM trees.</div>
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/go/">Go</a>
+							
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -445,7 +486,7 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-05-30%2009%3a00%3a49.755521535%20-0700%20PDT%20m%3d%2b0.055334746"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-27%2016%3a45%3a13.559867073%20-0700%20PDT%20m%3d%2b0.077489308"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -571,8 +612,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-05-30%2009%3a00%3a49.755581209%20-0700%20PDT%20m%3d%2b0.055394430" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-05-30%2009%3a00%3a49.755597737%20-0700%20PDT%20m%3d%2b0.055410936" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-06-27%2016%3a45%3a13.559940501%20-0700%20PDT%20m%3d%2b0.077562733" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-27%2016%3a45%3a13.559962538%20-0700%20PDT%20m%3d%2b0.077584772" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"

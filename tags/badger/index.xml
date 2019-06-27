@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 24 Jan 2019 10:00:00 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 27 Jun 2019 12:06:20 +1100</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/badger/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Semantic Versioning, Go Modules, and Databases</title>
+      <link>https://blog.dgraph.io/post/serialization-versioning/</link>
+      <pubDate>Thu, 27 Jun 2019 12:06:20 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/serialization-versioning/</guid>
+      <description>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.
+One of these pieces is BadgerDB, a key-value store written completely in Go following the ideas of RocksDB and LSM trees.</description>
+    </item>
     
     <item>
       <title>Why we choose Badger over RocksDB in Dgraph</title>

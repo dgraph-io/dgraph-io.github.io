@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/serialization-versioning/</loc>
+    <lastmod>2019-06-27T12:06:20+11:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</loc>
     <lastmod>2019-05-30T00:08:00-08:00</lastmod>
   </url>
@@ -200,7 +205,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/badger/</loc>
-    <lastmod>2019-01-24T10:00:00-08:00</lastmod>
+    <lastmod>2019-06-27T12:06:20+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -235,7 +240,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
+    <lastmod>2019-06-27T12:06:20+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -247,7 +252,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/go/</loc>
-    <lastmod>2019-04-03T00:06:20-08:00</lastmod>
+    <lastmod>2019-06-27T12:06:20+11:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -325,7 +330,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
+    <lastmod>2019-06-27T12:06:20+11:00</lastmod>
     <priority>0</priority>
   </url>
   

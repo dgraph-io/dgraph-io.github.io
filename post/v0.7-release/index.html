@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.54-DEV" />
+      <meta name="generator" content="Hugo 0.52" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-05-30%2009%3a00%3a49.751955472%20-0700%20PDT%20m%3d%2b0.051768666" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-05-30%2009%3a00%3a49.751970308%20-0700%20PDT%20m%3d%2b0.051783494" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-27%2016%3a45%3a13.554998439%20-0700%20PDT%20m%3d%2b0.072620676" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-27%2016%3a45%3a13.555030474%20-0700%20PDT%20m%3d%2b0.072652705" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-05-30%2009%3a00%3a49.751981496%20-0700%20PDT%20m%3d%2b0.051794689">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-05-30%2009%3a00%3a49.751991963%20-0700%20PDT%20m%3d%2b0.051805154">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-27%2016%3a45%3a13.55505974%20-0700%20PDT%20m%3d%2b0.072681969">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-27%2016%3a45%3a13.555089967%20-0700%20PDT%20m%3d%2b0.072712194">
 
     
     
@@ -576,35 +576,36 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 <li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
 <li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
 <li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
-</ul>
+
+<li><p><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</p>
 
 <pre><code>$ curl localhost:8080/query -XPOST -d $'
 {
-  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-    name
-  }
+tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
+name
+}
 }' | python -m json.tool | grep name
 
-            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-            &quot;name&quot;: &quot;De Young Museum&quot;
-            &quot;name&quot;: &quot;Chinese Pavillion&quot;
-            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-            &quot;name&quot;: &quot;Peace Lantern&quot;
-            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-            &quot;name&quot;: &quot;Morrison Planetarium&quot;
-            &quot;name&quot;: &quot;California Academy of Sciences&quot;
-            &quot;name&quot;: &quot;Hamon Tower&quot;
-            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-            &quot;name&quot;: &quot;La Rose des Vents&quot;
-            &quot;name&quot;: &quot;Strawberry Hill&quot;
-            &quot;name&quot;: &quot;Buddha&quot;
-            &quot;name&quot;: &quot;Rose Garden&quot;
+        &quot;name&quot;: &quot;Steinhart Aquarium&quot;
+        &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
+        &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
+        &quot;name&quot;: &quot;Conservatory of Flowers&quot;
+        &quot;name&quot;: &quot;De Young Museum&quot;
+        &quot;name&quot;: &quot;Chinese Pavillion&quot;
+        &quot;name&quot;: &quot;Japanese Tea Garden&quot;
+        &quot;name&quot;: &quot;Peace Lantern&quot;
+        &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
+        &quot;name&quot;: &quot;Morrison Planetarium&quot;
+        &quot;name&quot;: &quot;California Academy of Sciences&quot;
+        &quot;name&quot;: &quot;Hamon Tower&quot;
+        &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
+        &quot;name&quot;: &quot;La Rose des Vents&quot;
+        &quot;name&quot;: &quot;Strawberry Hill&quot;
+        &quot;name&quot;: &quot;Buddha&quot;
+        &quot;name&quot;: &quot;Rose Garden&quot;
 
-</code></pre>
+</code></pre></li>
+</ul>
 
 <p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
 
@@ -880,7 +881,7 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-05-30%2009%3a00%3a49.75243281%20-0700%20PDT%20m%3d%2b0.052246018"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-27%2016%3a45%3a13.556289521%20-0700%20PDT%20m%3d%2b0.073911753"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1006,8 +1007,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-05-30%2009%3a00%3a49.752470169%20-0700%20PDT%20m%3d%2b0.052283377" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-05-30%2009%3a00%3a49.752481163%20-0700%20PDT%20m%3d%2b0.052294353" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-06-27%2016%3a45%3a13.556364138%20-0700%20PDT%20m%3d%2b0.073986368" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-27%2016%3a45%3a13.556383405%20-0700%20PDT%20m%3d%2b0.074005636" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"

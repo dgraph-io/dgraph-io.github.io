@@ -33,14 +33,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
     
-    <title>The State of Caching in Go - Dgraph Blog</title>
-    <meta property='og:title' content="The State of Caching in Go - Dgraph Blog">
+    <title>Semantic Versioning, Go Modules, and Databases - Dgraph Blog</title>
+    <meta property='og:title' content="Semantic Versioning, Go Modules, and Databases - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/caching-in-go/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/serialization-versioning/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/ristretto.jpg">
+    <meta property="og:image" content="https://blog.dgraph.io/images/badger-evolution.png">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-27%2016%3a45%3a13.545935552%20-0700%20PDT%20m%3d%2b0.063557785" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-27%2016%3a45%3a13.546005122%20-0700%20PDT%20m%3d%2b0.063627353" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-27%2016%3a45%3a13.543699945%20-0700%20PDT%20m%3d%2b0.061322179" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-27%2016%3a45%3a13.543726676%20-0700%20PDT%20m%3d%2b0.061348908" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,21 +68,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-27%2016%3a45%3a13.546067312%20-0700%20PDT%20m%3d%2b0.063689543">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-27%2016%3a45%3a13.546109052%20-0700%20PDT%20m%3d%2b0.063731280">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-27%2016%3a45%3a13.543747759%20-0700%20PDT%20m%3d%2b0.061369991">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-27%2016%3a45%3a13.543766516%20-0700%20PDT%20m%3d%2b0.061388746">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/ristretto.jpg"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/badger-evolution.png"/>
       
     
 
-    <meta name="twitter:title" content="The State of Caching in Go"/>
-    <meta name="twitter:description" content="This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
-Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.
-Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of keys per query, depending upon the number of intermediate results."/>
+    <meta name="twitter:title" content="Semantic Versioning, Go Modules, and Databases"/>
+    <meta name="twitter:description" content="A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.
+One of these pieces is BadgerDB, a key-value store written completely in Go following the ideas of RocksDB and LSM trees."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -385,9 +384,9 @@ Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Mar 7, 2019
+                  Thu, Jun 27, 2019
                  by
-                Manish Rai Jain
+                Francesc Campoy
 
 
               </span>
@@ -395,7 +394,7 @@ Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
                 <ul class="share__list">
                   
                   <li class="share__item">
-                    <a href="https://twitter.com/share?text=The%20State%20of%20Caching%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fcaching-in-go%2f&amp;via=dgraphlabs" class="share__link">
+                    <a href="https://twitter.com/share?text=Semantic%20Versioning%2c%20Go%20Modules%2c%20and%20Databases&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fserialization-versioning%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg>
@@ -406,7 +405,7 @@ Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">The State of Caching in Go</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Semantic Versioning, Go Modules, and Databases</h1>
           </header>
         </div>
       </div>
@@ -419,308 +418,98 @@ Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/ristretto.jpg"
+            src="https://blog.dgraph.io/images/badger-evolution.png"
           >
           <div class="article-content">
 
-<p><strong>This post made it to the top of Golang <a href="https://www.reddit.com/r/golang/comments/az99sl/the_state_of_caching_in_go_dgraph_blog/">subreddit</a> and is trending #2 on the
-front page of <a href="https://news.ycombinator.com/item?id=19344624">Hacker News</a>. Do engage in discussion there and show us love
-by giving us a <a href="https://github.com/dgraph-io/dgraph">GitHub star</a>.</strong></p>
+<p>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.</p>
 
-<p>Every database system requires a smart cache. That is, a cache that keeps the most
-frequently or recently accessed items and has a configurable memory utilization limit.</p>
+<p>One of these pieces is <a href="https://github.com/dgraph-io/badger">BadgerDB</a>, a key-value store written completely in Go following the ideas of RocksDB and LSM trees. BadgerDB has many users (e.g. <a href="https://github.com/ipfs/go-ipfs">go-ipfs</a>, <a href="https://github.com/emitter-io/emitter">emitter</a>, <a href="https://github.com/go-ego/riot">riot</a>, and <a href="https://github.com/dgraph-io/badger/#other-projects-using-badger">many more</a>) but one of the most important one is indeed our database server <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>. Now, this is important because we care about our community of users: they always are the main stakeholder we keep in mind. In our case, though, our biggest user is ourselves so our own engineers become also clients that we need to delight.</p>
 
-<p>Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
-keys per query, depending upon the number of intermediate results. Accessing
-these via our key-value DB, <a href="https://github.com/dgraph-io/badger">Badger</a>, results in disk seeks, which is something
-we want to reduce for performance reasons.</p>
+<p>This post is a report on how we got ourselves into a situation in which Go Modules were simply not good enough for us, and how in the process of understanding why we figured out that our issue might be probably with Semantic Versioning itself.</p>
 
-<p>Typical access patterns follow a <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipfian</a> distribution. <strong>The most
-frequently accessed keys are accessed exponentially more times than others.</strong> We
-see this in Dgraph as well.</p>
+<h2 id="how-we-got-ourselves-in-this-situation">How we got ourselves in this situation</h2>
 
-<p>We have been extremely happy with our choice of using the Go language to build
-Dgraph. A lot can be said about why Go makes a great language to write back-end
-code in, but that is a post in itself. We would not swap out Go for any
-other existing language. Although Go is great, the Go ecosystem is
-still lacking.</p>
+<p>For reasons that are not relevant to this post, BadgerDB has not had a release in over a year. This does not mean that BadgerDB has not changed over this time, it indeed has changed a lot, but we have not really cut a release or tagged a version and published it as something people should be using.</p>
 
-<p>My general complaints around Go stem from the lack of a library ecosystem around the
-language. Go is mature in the sense that it is stable and has delivered upon the
-<a href="https://eli.thegreenplace.net/2018/go-hits-the-concurrency-nail-right-on-the-head/">core</a> <a href="https://talks.golang.org/2012/splash.article">promise</a> of fast compilation, execution,
-and utilization of machine cores really well. However, for a language built
-around concurrency, it still lacks an ecosystem of performant, concurrent
-libraries which can scale well to the number of cores. A concurrent list or map
-<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> is largely left as an exercise to the end-user&mdash;which would be just fine
-if this was a serially-executing language&mdash;but feels like a glaring omission
-when everything is built around concurrency.</p>
+<p>This had to change and I, as VP of Product, was responsible for getting us back to a regular release pace which would allow us to release new features quickly while avoiding any impact on our current users. With that in mind, I started reviewing the changes since our last release and the ones that were coming up in the near future.</p>
 
-<p>In particular, Go lacks a concurrent <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU">LRU</a> (or <a href="https://en.wikipedia.org/wiki/Least_frequently_used">LFU</a>) cache which can scale well
-enough to be a process-global cache. In this blog post, I will take you through
-the various attempts at workarounds that are typically advocated, including some
-which we have executed and learnt from within Dgraph. Aman will then present the
-design, performance and hit ratio comparison for the existing popular cache
-implementations in the Go ecosystem.</p>
+<p>We had two different kinds of backward-incompatible changes: API changes and data format changes. API changes had already been committed to <code>master</code> and many of our users (including Dgraph itself) were already using this new API not fully compatible with the previous release <code>v1.5.3</code>. The data changes had not landed yet, but they were necessary for the next release of Dgraph and therefore imminent.</p>
 
-<p>I&rsquo;ll start by listing the requirements for the cache, the various
-approaches we can take to implement the cache, and how they fail to achieve them.</p>
-
-<h3 id="requirements-for-the-cache">Requirements for the cache</h3>
-
-<ol>
-<li>Concurrent.</li>
-<li>Memory-bounded (limit to configurable max memory usage).</li>
-<li>Scale well as the number of cores and goroutines increase.</li>
-<li>Scale well under non-random key access distribution (e.g. Zipf).</li>
-<li>High cache hit ratio</li>
-</ol>
-
-<h4 id="use-go-map-with-sync-mutex">Use Go map with sync.Mutex</h4>
-
-<p>Using a Go map with a sync.Mutex (or sync.RWMutex) is the most commonly
-advocated approach to caching. This does result in all the goroutines blocking
-upon one lock, which can lead to contention. This also fails to keep a tab on
-the amount of memory usage. So, it does not work as a memory bounded cache in
-itself.</p>
-
-<blockquote>
-<p>Fails on requirements 2-4.</p>
-</blockquote>
-
-<h4 id="use-lock-striping-with-go-maps">Use lock striping with Go maps</h4>
-
-<p>This is the same concept as above, but splits keys using a fingerprint into many
-smaller Go map shards protected by mutex locks (see <a href="https://netjs.blogspot.com/2016/05/lock-striping-in-java-concurrency.html">here</a>). Many
-developers incorrectly believe lock striping to be a great way to avoid
-contention, particularly when setting the number of shards to exceed the number
-of threads in the program (&gt; GOMAXPROCS).</p>
-
-<p>In our initial attempts at building a simplified memory-bounded cache, we built
-this as well. To allow for releasing memory back to the OS, we would
-periodically pick a random shard and delete its map, allowing it to refill. This
-was a crude but simple technique which performed better than an LRU cache
-(explained below) but had many downsides.</p>
-
-<p>One, Go is slow to release memory back to the OS but fast to request it. As
-soon as the shard was emptied, goroutines trying to access the keys in that
-shard would start allocating memory while the previous memory was still not
-released back fully, causing a spike in memory usage and a rapid OOM crash.</p>
-
-<p>Also, what we failed to realize at the time was that the access patterns are
-bounded by Zipf&rsquo;s law. The most frequently accessed keys are still under a few
-locks, thus becoming the cause of contention for all goroutines. The performance
-of this approach does not scale well with the number of cores.</p>
-
-<blockquote>
-<p>Fails on requirements 2,4.</p>
-</blockquote>
-
-<h4 id="lru-cache">LRU cache</h4>
-
-<p>Go has a basic LRU cache implementation as part of <a href="https://github.com/golang/groupcache/tree/master/lru">groupcache</a>. After
-our failed attempt with lock striping with map shards, we modified this LRU
-cache by introducing locks and making it concurrent. While this cache did
-solve the immediate issues around memory spikes caused by frequently and
-consistent memory releases, we realized it would introduce contention.</p>
-
-<p>This cache is also sized by the number of entries, not the amount of
-memory they are consuming. Trying to estimate the memory usage of a complex
-data structure on the heap in Go is prohibitively expensive and almost impossible
-to get right, something we realized after trying in vain using multiple
-mechanisms. This got particularly hard because our data structures were changing
-after being placed in the cache (something that we plan to avoid going forward).</p>
-
-<p>But, we did not comprehend how much contention that cache could cause. After
-having this cache for over a year, we realized that the contention around this
-cache was so significant, that removing it caused our queries to
-<a href="https://github.com/dgraph-io/dgraph/commit/b9990f4619b64615c2c18bb7627d198b4397109c">speed up</a> 10x!</p>
-
-<p>In this implementation, every read is a write which updates the
-relative positioning of the element in the recency linked list. Thus, all
-accesses wait on a single mutex lock. In addition, the critical section of LRU
-is slower than a map and does a lot of pointer dereferences, maintaining a map and
-a doubly-linked list (see <a href="https://github.com/golang/groupcache/blob/5b532d6fd5efaf7fa130d4e859a2fde0fc3a9e1b/lru/lru.go#L32-L33">code</a>).  Despite our efforts around lazy
-eviction, it still suffered from severe contention.</p>
-
-<blockquote>
-<p>Fails on requirement 3-4.</p>
-</blockquote>
-
-<h4 id="striped-lru-cache">Striped LRU cache</h4>
-
-<p>We did not bother trying this. From our experiments with striped map shards, we
-know it would only be an incremental improvement and would not scale well.
-<em>(Though, for the purpose of benchmarking caches for this article, we implemented
-a striped LRU cache as described below.)</em></p>
-
-<blockquote>
-<p>Would fail on requirement 4.</p>
-</blockquote>
-
-<h3 id="popular-cache-implementations">Popular Cache Implementations</h3>
-
-<p>Many other approaches aim at reducing the GC time spent on the map shards.
-GC time increases as the number of entries in the map increase. Reduction is
-achieved by allocating fewer, larger byte slices and storing many cache entries
-in each slice.  This is an effective approach&mdash;we use this in Badger in
-multiple places (Skiplist, Table builder, etc.). Some of the popular caches in
-Go use this technique.</p>
-
-<h4 id="bigcache">BigCache</h4>
-
-<p><a href="https://github.com/allegro/bigcache">BigCache</a> divides the data into shards based on the hash of the key. Each shard
-contains a map and a ring buffer. Whenever a new element is set, it appends the
-element in the ring buffer of the corresponding shard and the offset into the
-buffer is stored in the map. If the same element is set more than once, the
-previous entries in the buffer are marked invalid. If the buffer is too small,
-it is expanded until the maximum capacity is reached.</p>
-
-<p>Each map key is a uint32 hash and the value is a uint32 pointer to the offset in
-the buffer where the value is stored along with metadata information. If there are
-hash collisions, BigCache ignores the previous key and stores the current one
-into the map. Allocating fewer, larger buffers up front and using a
-<code>map[uint32]uint32</code> is a great way to avoid paying the cost of GC sweeps.</p>
-
-<h4 id="freecache">FreeCache</h4>
-
-<p><a href="https://github.com/coocood/freecache">FreeCache</a> divides the cache into 256 segments. Each segment contains 256 slots
-and a ring buffer to store the data. When a new key is added to the cache,
-a segment id is identified using the lower eight bits of the hash of the key. Further,
-a slot is chosen using LSB 9-16 of the hash of the key. Dividing data
-into slots helps in reducing the search space while looking for a key in the
-cache.</p>
-
-<p>The data is then appended into the ring buffer and offset is stored into a sorted
-array. If a ring buffer doesn&rsquo;t have enough space, eviction is performed in the
-segment from the beginning of the ring buffer using a modified LRU policy. An
-entry is deleted from the ring buffer if the last access time for the entry is
-smaller than the average access time of the segment. To find an entry in a cache
-on Get, a binary search is performed in the sorted array in the corresponding
-slot.</p>
-
-<h4 id="groupcache">GroupCache</h4>
-
-<p><a href="https://github.com/golang/groupcache/tree/master/lru">GroupCache</a> implements an exact LRU eviction policy using a linked list
-and a Go map. For a fair comparison, we implemented a sharding logic with
-256 shards on top of GroupCache.</p>
-
-<h3 id="performance-comparison">Performance Comparison</h3>
-
-<p>To compare performance of various caches, we generated a Zipf-distributed
-workload and ran benchmarks using an <a href="https://cloud.google.com/compute/docs/machine-types">n1-highcpu-32</a> machine. The chart below
-compares performance of the three cache libraries for a read-only workload.</p>
-
-<h4 id="read-only">Read-Only</h4>
-
-<p><img src="/images/cache_read_workload.svg" alt="Read-Only Performance Benchmark" /></p>
-
-<p>We can see that BigCache reads scales well given that reads
-are lock-free. FreeCache and GroupCache reads are not lock-free and don&rsquo;t
-scale after a point (20 concurrent accesses).
-(higher value is better on y axis)</p>
-
-<h4 id="write-only">Write-Only</h4>
-
-<p><img src="/images/cache_write_workload.svg" alt="Write-Only Performance Benchmark" /></p>
-
-<p>For a write-only workload, all the libraries seem to perform similarly. Though,
-FreeCache performs slightly better than the other two.</p>
-
-<h4 id="read-write-25-writes-75-reads">Read-Write (25% writes, 75% reads)</h4>
-
-<p><img src="/images/cache_mixed_workload.svg" alt="Read-Write Performance Benchmark" /></p>
-
-<p>For a mixed workload containing 25% writes and 75% reads, while BigCache is the
-only library that clearly seems to scale well, the hit ratios are bad for a Zipf
-workload, as explained in the next section.</p>
-
-<h4 id="hit-ratio-comparison">Hit Ratio Comparison</h4>
-
-<p>Hit Ratio for the three caches are shown below. FreeCache does pretty close to
-LRU policy implemented by GroupCache. BigCache, however, doesn&rsquo;t do well for a
-Zipf-distributed workload for following reasons:</p>
+<p>Following Semantic Versioning principles, I decided we should release the following versions after <code>v1.5.3</code>:</p>
 
 <ul>
-<li>BigCache doesn&rsquo;t utilize the buffer efficiently and may end up storing
-multiple entries for the same key in the buffer.</li>
-<li>BigCache doesn&rsquo;t update entries on access (read), hence, resulting in
-eviction of recently accessed keys.</li>
+<li><code>v2.0.0</code> which would include all of the API breaking changes. This version would support all of those already using <code>master</code>, which includes Dgraph 1.0.</li>
+<li><code>v2.1.0</code> which would include also the data format changes. This version’s API would be backward-compatible with <code>v2.0.0</code> but files written with <code>v2.0.0</code> would not be readable from <code>v2.1.0</code> and vice-versa.</li>
 </ul>
 
-<table>
-<thead>
-<tr>
-<th align="center">Cache Size (# of elem)</th>
-<th align="center">10000</th>
-<th align="center">100000</th>
-<th align="center">1000000</th>
-<th align="center">10000000</th>
-</tr>
-</thead>
+<h2 id="why-go-modules-makes-it-hard-for-us">Why Go Modules makes it hard for us</h2>
 
-<tbody>
-<tr>
-<td align="center">BigCache</td>
-<td align="center">-</td>
-<td align="center">37%</td>
-<td align="center">52%</td>
-<td align="center">55%</td>
-</tr>
+<p>This felt like the right solution from a Semantic Versioning point of view, so I announced the plan and got started with the release process. Then Go Modules, which we planned on supporting, appeared and interrupted the whole process because it caused us to force upon our users a new import path for BadgerDB <code>v2.0.0</code>. The import path would be <code>”github.com/dgraph-io/badger/v2&quot;</code>, note that <code>v2</code> at the end. This would mean that for our users already on <code>master</code>, adopting <code>v2.0.0</code> would require changing every single import statement instead of simply marking on their dependency manager that they were now using <code>v2.0.0</code>.</p>
 
-<tr>
-<td align="center">FreeCache</td>
-<td align="center">-</td>
-<td align="center">38%</td>
-<td align="center">55%</td>
-<td align="center">90%</td>
-</tr>
+<p>This seemed to be a roadblock and I wrote about why we were deciding to postpone adding support for Go Modules on Badger (<a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/16">Go Modules on Badger and Dgraph - Badger - Discuss Dgraph</a>) until a point where our concerns had been addressed.</p>
 
-<tr>
-<td align="center">GroupCache</td>
-<td align="center">29%</td>
-<td align="center">40%</td>
-<td align="center">54%</td>
-<td align="center">90%</td>
-</tr>
-</tbody>
-</table>
+<p>My complaint was and still is that forcing users to include the major version of a package in their import path is unnecessary. I do understand the benefits of having different import paths for different versions, but there are also many drawbacks to this decision so it should be up to package publishers to make it rather than the Go team.</p>
 
-<p>So, we can conclude that none of the cache libraries meet all the requirements.</p>
+<p>I kept thinking about how to get out of this thorny situation since releasing a version 2 of our library without support for Go modules would put us in a situation where adopting Go modules would become almost impossible. We would have to support two different import paths for v2, one for those using Go modules and one for the rest. The other option was, of course, to hope the Go team would change the design of Go Modules making the import path rewrite an optional step … but I’m a realistic person and it seemed that boat (probably) left port long ago.</p>
 
-<blockquote>
-<p>GroupCache and FreeCache fails on requirement 4 whereas BigCache fails
-on requirement 5.</p>
-</blockquote>
+<h2 id="semantic-versioning-should-not-only-about-apis">Semantic Versioning should not only about APIs</h2>
 
-<h3 id="so-what-are-we-left-with">So, what are we left with?</h3>
+<p>At some point, I was discussing with Manish (the CEO of Dgraph Labs) about my plans and concerns and he came out with an interesting point: is Semantic Versioning necessarily about APIs? If you visit semver.org you will see that, indeed, all of the changes they take into account are those impacting the API of a library, but what about the other ways a library can break?</p>
 
-<p><em>Well, nothing really.</em> We are not aware of a smart memory-bounded cache in Go
-that can meet the entire list of requirements. If you know of one, do let us
-know in the comments.</p>
+<p>In our case, there are two different change kinds: API changes and serialization changes. They both are backward-incompatible but the cost of fixing one vastly outweighs the other.</p>
 
-<p>Meanwhile, we came across <a href="https://github.com/ben-manes/caffeine">Caffeine</a>, a Java library used by Cassandra,
-Finagle and other database systems. It uses <a href="https://arxiv.org/abs/1512.00727">TinyLFU</a>, a highly efficient
-cache admission policy and uses various techniques to scale and <a href="https://docs.google.com/presentation/d/1NlDxyXsUG1qlVHMl4vsUUBQfAJ2c2NsFPNPr2qymIBs/edit?usp=sharing">perform
-well</a> as the number of threads and cores grow, while providing a close to
-optimal hit ratio. You can read more about how it works in <a href="http://highscalability.com/blog/2016/1/25/design-of-a-modern-cache.html">this article</a>.</p>
+<p>Migrating to a new API, in our case, is a pretty straight forward change. Some functions might have changed arguments or maybe even replaced byfor a completely new API. These changes, no matter how tedious, are pretty straightforward to fix especially in a strongly typed statically compiled language like Go.</p>
 
-<p>Caffeine meets all the five requirements I mentioned at the beginning, so <strong>we
-are looking into building a Go equivalent of Caffeine,</strong> something which can
-serve our needs and potentially fill the gap of a concurrent, performant,
-memory-bounded cache in the Go language. Let us know if you&rsquo;d like to
-contribute or if you have something similar built already!</p>
+<p>Migrating to a new serialization format, though, can be much time and cost consuming as it requires transforming your whole dataset, often measured in TB, from the previous version into the new one. This takes time, and while the process is ongoing you might need still be serving traffic so the migration strategies become much more advanced than a simple code deployment.</p>
 
-<h3 id="acknowledgment">Acknowledgment</h3>
+<p>So in our case, it turns out that the major breakage we have is not API changes, but serialization format changes! So … what if we adapted Semantic Versioning for us?</p>
 
-<p>We want to thank <a href="https://github.com/ben-manes">Benjamin Manes</a> for helping us replicate
-performance benchmarks from <a href="https://github.com/ben-manes/caffeine">Caffeine</a> into Go (code available
-<a href="https://github.com/dgraph-io/benchmarks/tree/master/cachebench">here</a>).  We also would like to thank <a href="https://github.com/dgryski">Damian Gryski</a> for
-providing us with base framework to benchmark cache hit ratios (available
-<a href="https://github.com/dgryski/trifles/tree/master/cachetest">here</a>), which we also modified to work for our needs. He readily
-accepted our changes into his GitHub repository.</p>
+<p>Our modified version of Semantic Versioning is called Serialization Versioning. You can find a full description of the reasoning and details of the naming schema in <a href="https://medium.com/@francesc/serialization-versioning-the-semantic-versioning-for-databases-eea5aece0355">this post</a>, but let me summarize it here too.</p>
 
-<p>Thanks for reading this post. If you liked this post, show us some love and give
-us <a href="https://github.com/dgraph-io/dgraph">a star on GitHub</a>.</p>
+<p>Given a version number MAJOR.MINOR.PATCH, increment the:</p>
+
+<ol>
+<li>MAJOR version when you make changes that require a transformation of the dataset before it can be used again.</li>
+<li>MINOR version when old datasets are still readable but the API might have changed in backward-compatible or incompatible ways.</li>
+<li>PATCH version when you make backward-compatible bug fixes.</li>
+</ol>
+
+<p>Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.</p>
+
+<h2 id="how-we-get-out-of-this-situation">How we get out of this situation</h2>
+
+<p>Taking into account this new way of interpreting Semantic Versioning, our release plan became quite different and in so adapted to what Go Modules requires in a much more natural way!</p>
+
+<p>My original plan was to release v2.0.0 containing all of the API breaking changes, followed by v2.1.0 containing the serialization format changes. This had three main drawbacks:</p>
+
+<ul>
+<li><p>The most expensive upgrade seemed like the easiest one. Migrating from v1.5.3 to v2.0.0 is actually quite straight forward and it can be done in a single Pull Request, but migrating from v2.0.0 to v2.1.0 can mean weeks or more of engineering efforts to migrate your dataset without causing any downtime.</p></li>
+
+<li><p>Following Go Modules advice, the new versions of Badger needed to have <code>v2</code> at the end of their import path. This meant that our users already using the newer API from master would have to rewrite their import paths for no real benefit.</p></li>
+
+<li><p>It also felt like releasing v2 and v3 at the same time would be confusing to our users and would somehow imply that the release pace had been accelerated unnecessarily. This is why v2.1.0 felt like a better option to follow v2.0.0 even though they were clearly incompatible.</p></li>
+</ul>
+
+<p>These three issues actually disappear once we consider our versioning focus to be on serialization formats rather than APIs. Our plan is now to release these two versions:</p>
+
+<ul>
+<li><p><code>v1.6.0</code> includes all the API changes but no serialization one. A system using <code>v1.5.3</code> for months can simply migrate its code to <code>v1.6.0</code> and start benefiting from the newest features without having to worry about a data migration strategy. Once it compiles, it works.</p></li>
+
+<li><p><code>v2.0.0</code> has actually the same API as <code>v1.6.0</code> but a completely different serialization format. Migrating from <code>v1.6.0</code> to <code>v2.0.0</code> is an endeavor that should be considered carefully.</p></li>
+</ul>
+
+<p>So the cost of the changes is again aligned with the MAJOR, MINOR, PATCH schema, which solves our first concern. But what about the second concern? Since <code>v1.6.0</code> corresponds to our current <code>master</code>, our users depending on <code>master</code> can migrate to using <code>v1.6.0</code> without any hiccups - no need to rewrite any import path either since this is <em>still</em> a <code>v1.x</code> version.</p>
+
+<p>And as part of the migration to <code>v2</code>, we can now force our users to adopt the new import paths, since it actually has a very clear benefit and it is part of a much larger migration process. The clear benefit, at least from our point of view, is that having two different import paths for these two versions will allow us to write a tool that will migrate files from <code>v1</code> formatting to <code>v2</code>, which would have been otherwise impossible if both versions used the same import path, as <code>v2.0.0</code> and <code>v2.1.0</code> would have in our original plan.</p>
+
+<h2 id="in-conclusion">In conclusion</h2>
+
+<p>Releasing Open Source Software is hard and finding a solution that meets everyone’s needs is almost impossible. That said, Go Modules does provide a really good solution to 99% of the use cases - maybe 100% if instead of blaming Go Modules for our issues you simply point at Semantic Versioning not being the right way to version Database libraries.</p>
+
+<p>I wanted to thank everyone in the Go community that participated in this conversation, especially Andrew Gerrand and Russ Cox which took their time to participate in our Discuss post where I originally shared my plans (<a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/16">Go Modules on Badger and Dgraph - Badger - Discuss Dgraph</a>).</p>
+
+<p>Oh, by the way, Dgraph is writing some really cool Go code to solve distributed systems problems … and yes, we’re hiring! Hit me up if you’re interested in joining us as a Software Engineer, Developer Advocate, Technical Writer, or Product Manager roles. Either in SF or Bangalore.</p>
 
 <hr />
 
@@ -775,44 +564,19 @@ us <a href="https://github.com/dgraph-io/dgraph">a star on GitHub</a>.</p>
 </script>
 
 
-<p><em>Top image: A <a href="https://commons.wikimedia.org/wiki/File:Doppio_ristretto_Chiang_Mai.jpg">ristretto
-doppio</a>
-in Chiang Mai.</em></p>
-<div class="footnotes">
-
-<hr />
-
-<ol>
-<li id="fn:1"><p>Use of sync.Map is discouraged by the Go team for various reasons. One of
-  them is that it does not reduce in size, despite deleting elements in the map.
-  So, for practical purposes, I&rsquo;m going to disregard sync.Map as a
-  first-class data structure. Most users would fill the need with a mutex
-  lock on top of Go native data structures.</p>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-</ol>
-</div>
+<p><em>Top image derived from <a href="https://pixabay.com/illustrations/evolution-human-evolution-2780651/">The theory of evolution</a></em></p>
 </div>
           <div class="article-tag-list">
             
             
                 
                 
+                    <a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+                
+            
+                
+                
                     <a href="https://blog.dgraph.io/tags/go/">Go</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/cache/">Cache</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/reddit/">Reddit</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
                 
             
           </div>
@@ -840,12 +604,12 @@ in Chiang Mai.</em></p>
             <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/people/manish.jpg" class="article-author__image">
+	<img src="/images/people/francesc.png" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Manish Rai Jain
+    <h4 class="article-author__name">Francesc Campoy
 
 
       <span class="article-author__title">Author</span>
@@ -854,7 +618,14 @@ in Chiang Mai.</em></p>
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/manishrjain" class="social__link">
+            <a href="https://www.linkedin.com/in/campoy/" class="social__link">
+                <svg class="icon social__icon social__icon--linkedin">
+                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
+                </svg>
+            </a>
+        </li>
+        <li class="social__item social__item--inline">
+            <a href="https://twitter.com/francesc" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -862,49 +633,19 @@ in Chiang Mai.</em></p>
         </li>
     </ul>
 </nav>
-<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing systems at Google. He then lead various projects to consolidate and serve Knowledge Graph right behind web search.</p>
-<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
+<p>
+    Francesc Campoy is the VP of Product at Dgraph: the most advanced distributed graph database.
+    Before that he was VP of Product and Developer Relations at source{d}, the company enabling
+    Machine Learning for large scale code analysis and building the platform for the future
+    of developer tooling. Previously, he worked at Google as a Developer Advocate for Google Cloud
+    Platform and the Go team.
+</p>
 
 
   </div>
 </div>
 
             
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/people/aman.png" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Aman Mangal
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-        <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/amanmangal" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-    </ul>
-</nav>
-<p>
-  Aman is a Software Engineer at Dgraph Labs with focus on building high performance and distributed systems.
-  He graduated from IIT Bombay and Georgia Tech with specialization in Systems, Networking and Distributed Systems.
-  He enjoys impromptu bicycle trips whenever he gets a chance.
-</p>
-
-
-	</div>
-</div>
-
           </div>
           <div class="col-12">
             <div id='discourse-comments'></div>
@@ -970,7 +711,7 @@ in Chiang Mai.</em></p>
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/caching-in-go/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/serialization-versioning/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1042,7 +783,7 @@ in Chiang Mai.</em></p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-27%2016%3a45%3a13.547550604%20-0700%20PDT%20m%3d%2b0.065172842"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-27%2016%3a45%3a13.545248889%20-0700%20PDT%20m%3d%2b0.062871114"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1168,8 +909,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-06-27%2016%3a45%3a13.547617227%20-0700%20PDT%20m%3d%2b0.065239470" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-27%2016%3a45%3a13.547637538%20-0700%20PDT%20m%3d%2b0.065259771" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-06-27%2016%3a45%3a13.545318307%20-0700%20PDT%20m%3d%2b0.062940537" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-27%2016%3a45%3a13.545338753%20-0700%20PDT%20m%3d%2b0.062960985" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
@@ -1187,7 +928,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/caching-in-go\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/serialization-versioning\/"
 };
 (function() {
   var d = document.createElement("script");
