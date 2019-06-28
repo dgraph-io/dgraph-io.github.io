@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-27%2016%3a46%3a00.771902658%20-0700%20PDT%20m%3d%2b0.090811118" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-27%2016%3a46%3a00.77192965%20-0700%20PDT%20m%3d%2b0.090838105" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-28%2005%3a50%3a08.744392401%20-0700%20PDT%20m%3d%2b0.075600868" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-28%2005%3a50%3a08.7444192%20-0700%20PDT%20m%3d%2b0.075627666" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-27%2016%3a46%3a00.771950238%20-0700%20PDT%20m%3d%2b0.090858695">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-27%2016%3a46%3a00.771967296%20-0700%20PDT%20m%3d%2b0.090875753">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-28%2005%3a50%3a08.744438323%20-0700%20PDT%20m%3d%2b0.075646787">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-28%2005%3a50%3a08.74445507%20-0700%20PDT%20m%3d%2b0.075663535">
 
     
     
@@ -428,7 +428,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>This post is a report on how we got ourselves into a situation in which Go Modules were simply not good enough for us, and how in the process of understanding why we figured out that our issue might be probably with Semantic Versioning itself.</p>
 
-<h2 id="how-we-got-ourselves-in-this-situation">How we got ourselves in this situation</h2>
+<h3 id="how-we-got-ourselves-in-this-situation">How we got ourselves in this situation</h3>
 
 <p>For reasons that are not relevant to this post, BadgerDB has not had a release in over a year. This does not mean that BadgerDB has not changed over this time, it indeed has changed a lot, but we have not really cut a release or tagged a version and published it as something people should be using.</p>
 
@@ -443,7 +443,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 <li><code>v2.1.0</code> which would include also the data format changes. This version’s API would be backward-compatible with <code>v2.0.0</code> but files written with <code>v2.0.0</code> would not be readable from <code>v2.1.0</code> and vice-versa.</li>
 </ul>
 
-<h2 id="why-go-modules-makes-it-hard-for-us">Why Go Modules makes it hard for us</h2>
+<h3 id="why-go-modules-makes-it-hard-for-us">Why Go Modules makes it hard for us</h3>
 
 <p>This felt like the right solution from a Semantic Versioning point of view, so I announced the plan and got started with the release process. Then Go Modules, which we planned on supporting, appeared and interrupted the whole process because it caused us to force upon our users a new import path for BadgerDB <code>v2.0.0</code>. The import path would be <code>”github.com/dgraph-io/badger/v2&quot;</code>, note that <code>v2</code> at the end. This would mean that for our users already on <code>master</code>, adopting <code>v2.0.0</code> would require changing every single import statement instead of simply marking on their dependency manager that they were now using <code>v2.0.0</code>.</p>
 
@@ -453,7 +453,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>I kept thinking about how to get out of this thorny situation since releasing a version 2 of our library without support for Go modules would put us in a situation where adopting Go modules would become almost impossible. We would have to support two different import paths for v2, one for those using Go modules and one for the rest. The other option was, of course, to hope the Go team would change the design of Go Modules making the import path rewrite an optional step … but I’m a realistic person and it seemed that boat (probably) left port long ago.</p>
 
-<h2 id="semantic-versioning-should-not-only-about-apis">Semantic Versioning should not only about APIs</h2>
+<h3 id="semantic-versioning-should-not-only-about-apis">Semantic Versioning should not only about APIs</h3>
 
 <p>At some point, I was discussing with Manish (the CEO of Dgraph Labs) about my plans and concerns and he came out with an interesting point: is Semantic Versioning necessarily about APIs? If you visit semver.org you will see that, indeed, all of the changes they take into account are those impacting the API of a library, but what about the other ways a library can break?</p>
 
@@ -463,9 +463,9 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>Migrating to a new serialization format, though, can be much time and cost consuming as it requires transforming your whole dataset, often measured in TB, from the previous version into the new one. This takes time, and while the process is ongoing you might need still be serving traffic so the migration strategies become much more advanced than a simple code deployment.</p>
 
-<p>So in our case, it turns out that the major breakage we have is not API changes, but serialization format changes! So … what if we adapted Semantic Versioning for us?</p>
+<p>So in our case, it turns out that the major breakage we have is not API changes, but serialization format changes! So … what if we adapted Semantic Versioning to take that into account?</p>
 
-<p>Our modified version of Semantic Versioning is called Serialization Versioning. You can find a full description of the reasoning and details of the naming schema in <a href="https://medium.com/@francesc/serialization-versioning-the-semantic-versioning-for-databases-eea5aece0355">this post</a>, but let me summarize it here too.</p>
+<p>Our modified version of Semantic Versioning is called Serialization Versioning. You can find a full description of the reasoning and details of the naming schema in <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/7?u=mrjn">here</a> and <a href="https://medium.com/@francesc/serialization-versioning-the-semantic-versioning-for-databases-eea5aece0355">here</a>, but let me summarize it here too.</p>
 
 <p>Given a version number MAJOR.MINOR.PATCH, increment the:</p>
 
@@ -477,7 +477,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.</p>
 
-<h2 id="how-we-get-out-of-this-situation">How we get out of this situation</h2>
+<h3 id="how-we-get-out-of-this-situation">How we get out of this situation</h3>
 
 <p>Taking into account this new way of interpreting Semantic Versioning, our release plan became quite different and in so adapted to what Go Modules requires in a much more natural way!</p>
 
@@ -503,7 +503,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>And as part of the migration to <code>v2</code>, we can now force our users to adopt the new import paths, since it actually has a very clear benefit and it is part of a much larger migration process. The clear benefit, at least from our point of view, is that having two different import paths for these two versions will allow us to write a tool that will migrate files from <code>v1</code> formatting to <code>v2</code>, which would have been otherwise impossible if both versions used the same import path, as <code>v2.0.0</code> and <code>v2.1.0</code> would have in our original plan.</p>
 
-<h2 id="in-conclusion">In conclusion</h2>
+<h3 id="in-conclusion">In conclusion</h3>
 
 <p>Releasing Open Source Software is hard and finding a solution that meets everyone’s needs is almost impossible. That said, Go Modules does provide a really good solution to 99% of the use cases - maybe 100% if instead of blaming Go Modules for our issues you simply point at Semantic Versioning not being the right way to version Database libraries.</p>
 
@@ -783,7 +783,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-27%2016%3a46%3a00.773807091%20-0700%20PDT%20m%3d%2b0.092715546"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-28%2005%3a50%3a08.748413674%20-0700%20PDT%20m%3d%2b0.079622141"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -909,8 +909,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-06-27%2016%3a46%3a00.773870253%20-0700%20PDT%20m%3d%2b0.092778707" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-27%2016%3a46%3a00.773886009%20-0700%20PDT%20m%3d%2b0.092794463" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-06-28%2005%3a50%3a08.748474351%20-0700%20PDT%20m%3d%2b0.079682815" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-28%2005%3a50%3a08.748493641%20-0700%20PDT%20m%3d%2b0.079702106" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
