@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-28%2005%3a50%3a08.744392401%20-0700%20PDT%20m%3d%2b0.075600868" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-28%2005%3a50%3a08.7444192%20-0700%20PDT%20m%3d%2b0.075627666" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-06-28%2005%3a55%3a12.429164208%20-0700%20PDT%20m%3d%2b0.073924778" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-06-28%2005%3a55%3a12.429190708%20-0700%20PDT%20m%3d%2b0.073951269" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-28%2005%3a50%3a08.744438323%20-0700%20PDT%20m%3d%2b0.075646787">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-28%2005%3a50%3a08.74445507%20-0700%20PDT%20m%3d%2b0.075663535">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-06-28%2005%3a55%3a12.429208023%20-0700%20PDT%20m%3d%2b0.073968584">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-06-28%2005%3a55%3a12.42922365%20-0700%20PDT%20m%3d%2b0.073984214">
 
     
     
@@ -447,7 +447,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>This felt like the right solution from a Semantic Versioning point of view, so I announced the plan and got started with the release process. Then Go Modules, which we planned on supporting, appeared and interrupted the whole process because it caused us to force upon our users a new import path for BadgerDB <code>v2.0.0</code>. The import path would be <code>”github.com/dgraph-io/badger/v2&quot;</code>, note that <code>v2</code> at the end. This would mean that for our users already on <code>master</code>, adopting <code>v2.0.0</code> would require changing every single import statement instead of simply marking on their dependency manager that they were now using <code>v2.0.0</code>.</p>
 
-<p>This seemed to be a roadblock and I wrote about why we were deciding to postpone adding support for Go Modules on Badger (<a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/16">Go Modules on Badger and Dgraph - Badger - Discuss Dgraph</a>) until a point where our concerns had been addressed.</p>
+<p>This seemed to be a roadblock and I <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/16">wrote about</a> why we were deciding to postpone adding support for Go Modules on Badger until a point where our concerns had been addressed.</p>
 
 <p>My complaint was and still is that forcing users to include the major version of a package in their import path is unnecessary. I do understand the benefits of having different import paths for different versions, but there are also many drawbacks to this decision so it should be up to package publishers to make it rather than the Go team.</p>
 
@@ -507,9 +507,9 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 
 <p>Releasing Open Source Software is hard and finding a solution that meets everyone’s needs is almost impossible. That said, Go Modules does provide a really good solution to 99% of the use cases - maybe 100% if instead of blaming Go Modules for our issues you simply point at Semantic Versioning not being the right way to version Database libraries.</p>
 
-<p>I wanted to thank everyone in the Go community that participated in this conversation, especially Andrew Gerrand and Russ Cox which took their time to participate in our Discuss post where I originally shared my plans (<a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/16">Go Modules on Badger and Dgraph - Badger - Discuss Dgraph</a>).</p>
+<p>I wanted to thank everyone in the Go community that participated in this conversation, especially Andrew Gerrand and Russ Cox which took their time to participate in our <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/16">discuss.dgraph.io</a> post where I originally shared my plans.</p>
 
-<p>Oh, by the way, Dgraph is writing some really cool Go code to solve distributed systems problems … and yes, we’re hiring! Hit me up if you’re interested in joining us as a Software Engineer, Developer Advocate, Technical Writer, or Product Manager roles. Either in SF or Bangalore.</p>
+<p><em>Oh, by the way,</em> Dgraph is writing some really cool Go code to solve distributed systems problems … and yes, we’re hiring! Hit me up if you’re interested in joining us as a Software Engineer, Developer Advocate, Technical Writer, or Product Manager roles. Either in SF or Bangalore.</p>
 
 <hr />
 
@@ -783,7 +783,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-28%2005%3a50%3a08.748413674%20-0700%20PDT%20m%3d%2b0.079622141"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-06-28%2005%3a55%3a12.431706239%20-0700%20PDT%20m%3d%2b0.076466801"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -909,8 +909,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-06-28%2005%3a50%3a08.748474351%20-0700%20PDT%20m%3d%2b0.079682815" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-28%2005%3a50%3a08.748493641%20-0700%20PDT%20m%3d%2b0.079702106" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-06-28%2005%3a55%3a12.431766573%20-0700%20PDT%20m%3d%2b0.076527136" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-06-28%2005%3a55%3a12.431783501%20-0700%20PDT%20m%3d%2b0.076544061" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
