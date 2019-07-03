@@ -33,14 +33,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
     
-    <title>Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog</title>
-    <meta property='og:title' content="Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog">
+    <title>Releasing BadgerDB v1.6.0 - Dgraph Blog</title>
+    <meta property='og:title' content="Releasing BadgerDB v1.6.0 - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/recommendation/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/badger-v1.6.0-release/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/falcon.png">
+    <meta property="og:image" content="https://blog.dgraph.io/images/landing-soyuz.png">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-03%2011%3a06%3a03.873938%20-0700%20PDT%20m%3d%2b0.183281907" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-03%2011%3a06%3a03.873966%20-0700%20PDT%20m%3d%2b0.183309392" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-03%2011%3a06%3a03.786726%20-0700%20PDT%20m%3d%2b0.096072134" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-03%2011%3a06%3a03.786764%20-0700%20PDT%20m%3d%2b0.096110802" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,21 +68,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-03%2011%3a06%3a03.87399%20-0700%20PDT%20m%3d%2b0.183333752">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-03%2011%3a06%3a03.874014%20-0700%20PDT%20m%3d%2b0.183357380">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-03%2011%3a06%3a03.786805%20-0700%20PDT%20m%3d%2b0.096150910">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-03%2011%3a06%3a03.786833%20-0700%20PDT%20m%3d%2b0.096178974">
 
     
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/falcon.png"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/landing-soyuz.png"/>
       
     
 
-    <meta name="twitter:title" content="Build a Realtime Recommendation Engine: Part 1"/>
-    <meta name="twitter:description" content="Preface In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the user.
-That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you don&rsquo;t even realize them.
-You wake up and open Facebook, which shows you a feed of articles that it has chosen for you based on your viewing history."/>
+    <meta name="twitter:title" content="Releasing BadgerDB v1.6.0"/>
+    <meta name="twitter:description" content="It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
+project and the community surrounding it have changed a lot, not many new
+releases have seen the light of the day.  Happily, this changes today, as we
+release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
+week!"/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -385,9 +387,9 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Jun 29, 2017
+                  Wed, Jul 3, 2019
                  by
-                Ashwin Ramesh
+                Francesc Campoy
 
 
               </span>
@@ -395,7 +397,7 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
                 <ul class="share__list">
                   
                   <li class="share__item">
-                    <a href="https://twitter.com/share?text=Build%20a%20Realtime%20Recommendation%20Engine%3a%20Part%201&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frecommendation%2f&amp;via=dgraphlabs" class="share__link">
+                    <a href="https://twitter.com/share?text=Releasing%20BadgerDB%20v1.6.0&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-v1.6.0-release%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg>
@@ -406,7 +408,7 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Build a Realtime Recommendation Engine: Part 1</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Releasing BadgerDB v1.6.0</h1>
           </header>
         </div>
       </div>
@@ -419,560 +421,163 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/falcon.png"
+            src="https://blog.dgraph.io/images/landing-soyuz.png"
           >
-          <div class="article-content">
+          <div class="article-content"><p>It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
+project and the community surrounding it have changed a lot, not many new
+releases have seen the light of the day.  Happily, this changes today, as we
+release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
+week!</p>
 
-<h2 id="preface">Preface</h2>
+<h3 id="badgerdb-v1-6-0">BadgerDB v1.6.0</h3>
 
-<p>In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user
-data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the
-user.</p>
+<p>The API of BadgerDB has changed slowly over the last year and, while we tried to
+keep backward incompatible changes to a minimum, some features were deprecated
+and replaced by improved solutions supported by the community.</p>
 
-<p>That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you
-don&rsquo;t even realize them.</p>
+<p>So <strong>please note that v1.6.0 is not fully backward compatible with v1.5.0.</strong> The
+changes you&rsquo;ll need to perform to migrate from v1.5 to v1.6 are pretty minimal
+and only at API level. From a data storage point of view, both versions are
+completely compatible and a database created with v1.5 can be read and managed
+without any hiccups with v1.6.</p>
 
-<p><em>You wake up and open Facebook,</em> which shows you a feed of articles that it
-has chosen for you based on your viewing history.</p>
+<h3 id="new-features">New Features</h3>
 
-<p><em>Want to buy something?</em> Amazon would recommend
-you things to purchase based on what you&rsquo;ve viewed in the recent past.</p>
+<p>Let&rsquo;s see which are the most important features that have been added since 1.5.
+For a detailed list of the changes to the Badger API, you can read the
+<a href="https://github.com/dgraph-io/badger/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
 
-<p><em>Want to relax and unwind with a movie?</em> Netflix would recommend you what to watch based on your
-interests.</p>
+<h4 id="faster-writes-with-writebatch">Faster writes with WriteBatch</h4>
 
-<p><em>No time to watch a full movie?</em> YouTube would recommend you smaller chunk videos.</p>
+<p>Most users write to Badger in a serial loop, one transaction per iteration.
+Badger is built with the idea of high write throughput with many transactions
+happening concurrently.  Writing to Badger one transaction at a time is not
+always the most performant way. That&rsquo;s why we introduced a new API which will
+help you batching writes to Badger: WriteBatch.</p>
 
-<p><em>Want to listen to music instead?</em> Spotify would generate a weekly discovery list of songs just for
-you.</p>
+<p>WriteBatch would automatically batch up multiple serial writes into one
+transaction, send it to be executed asynchronously and continue picking up more
+writes.</p>
 
-<p>All this makes you wonder: <strong>Should recommendations be part of your application?</strong> While competing
-against Netflix might be hard, in this two-part series, we&rsquo;ll explain the basics of a recommendation
-engine. We&rsquo;ll show how you can build recommendations via two approaches: Content-based filtering and
-Collaborative filtering. And, how you can use Dgraph to bring recommendations to your app without breaking a
-sweat.</p>
+<p>In <a href="https://discuss.dgraph.io/t/badgerdb-v1-5-5-and-v2-0-0-rc1-are-now-released/4645/2">our benchmarks</a>, the new API allowed us to write keys at a
+speed almost 7 times faster than what we can do with a single write per
+transaction. Your own numbers might vary, but we do expect this new API to be of
+great help for those looking to squeeze that extra performance from Badger.</p>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-});
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+<h4 id="write-at-1-6-gbps-with-streamwriter">Write at 1.6 Gbps with StreamWriter</h4>
 
-<p>For this, we&rsquo;ll make use of Dgraph&rsquo;s query variables. To learn more about variables, head over to
-<a href="https://tour.dgraph.io/blocksvars/1/">Dgraph tour</a> &mdash; <em>if you are new to Dgraph variables, you
-really should check them out first before diving in here.</em></p>
+<p>While <code>WriteBatch</code> will help pretty much in every situation where blind writes
+need to be done as quickly as possible. But, for some more specific use cases we
+have come up with an even faster solution: StreamWriter.</p>
 
-<p>Let&rsquo;s first check out how recommendation systems work, and then we&rsquo;ll look at the support Dgraph queries offer.  We&rsquo;ll use two sample datasets.  One about movies and ratings (<a href="https://grouplens.org/datasets/movielens/100k/">Movielens</a>) and the other is part of <a href="https://archive.org/download/stackexchange/lifehacks.stackexchange.com.7z">Stack Exchange&rsquo;s data archive</a> &mdash; we&rsquo;ll just use the Lifehacks dataset here, but watch out for a coming series of posts where we show how to load all of Stack Overflow into Dgraph and run the entire website completely off Dgraph.</p>
+<p>StreamWriter was designed to be the complementary API to Stream, and can be used
+to bootstrap new instances of Badger or stream it over the network. In Dgraph,
+if a server loses data or falls behind, we send a snapshot over using this API.</p>
 
-<h2 id="recommendation-systems">Recommendation Systems</h2>
+<p>StreamWriter can write multiple streams, as long as each stream contains sorted
+keys and the streams are non-overlapping. <em>The output from badger.Stream
+framework provides that guarantee.</em> StreamWriter works by avoiding LSM tree
+compactions, instead building SSTables and arranging them directly in the many
+levels of the tree.  This can write almost as fast as disk allows. Our
+<a href="https://github.com/dgraph-io/badger/commit/1725096e24a2bbf932d14808e57d78d296753606">experiments</a> show writes at a rate of 200MBps, writing over 1 billion
+keys in around 3m20s.</p>
 
-<p>Making Recommendations is a subtle art.  There are a number of approaches and a production worthy recommendation system might depend on data, weighting of various features, global user behaviour and maybe recent behaviour of the user we are recommending for.</p>
+<p>This code demonstrates how to copy a dataset onto a new database with
+<code>Stream</code> and <code>StreamWriter</code>.</p>
 
-<p>Rather than just inventing recommendation queries, let&rsquo;s start somewhere more grounded.  For this post, we started with the Stanford University MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.  Part of the course is on recommender systems.  We&rsquo;ll show how the theory in the <em>&ldquo;Recommendation Systems&rdquo;</em> chapter of the <a href="http://www.mmds.org">text</a> can be translated into practice using Dgraph. We&rsquo;ll also talk about other approaches and how to run one at scale.</p>
+<pre><code class="language-go">func streamCopy(dest, orig *badger.DB) error {
+    sw := dest.NewStreamWriter()
+    if err := sw.Prepare(); err != nil {
+        return errors.Wrap(err, &quot;could not prepare stream writer&quot;)
 
-<h3 id="making-recommendations">Making Recommendations</h3>
+    s := orig.NewStream()
+    s.Send = sw.Write
 
-<p>Making recommendations is about taking past benaviour and preferences and trying to predict a preference for some unknown.  For example, later in the post, we&rsquo;ll talk about movie recommendations.  For this, we know what a user has watched and how they rated movies; how then can we predict what unwatched movies they&rsquo;ll enjoy.</p>
+    if err := s.Orchestrate(context.Background()); err != nil {
+        return errors.Wrap(err, &quot;could not orchestrate writes&quot;)
 
-<p>As briefly mentioned before, broadly speaking, there are two basic approaches:</p>
+    if err := sw.Flush(); err != nil {
+        return errors.Wrap(err, &quot;could not flush stream writer&quot;)
 
-<ol>
-<li><p><strong>Content-based:</strong> Such systems base a recommendation on the properties of an item. Two items that have similar properties are deemed similar; the more properties shared, the more similar. For example, if a user likes movies with certain actors or directors, we can
-recommend other movies involving the same people.</p></li>
-
-<li><p><strong>Collaborative filtering:</strong> Such systems base recommendations on the relationship between users and items, and similarity to other users. Users are similar if they have relationships to items in common; the more items in common, the more similar.  For example, if many similar users enjoyed a particular movie, that might be a good one to recommend.</p></li>
-</ol>
-
-<p>There are also classification algorithms based on machine learning.  We&rsquo;ll focus here on how far we can get with Dgraph queries alone.  Machine learning or other algorithms could also be run over the Dgraph output.</p>
-
-<h3 id="interpreting-the-data-for-recommendations">Interpreting the Data for Recommendations</h3>
-
-<p>Our Stanford reference text represents data as a sparse matrix.  So for our movie data set, we might think of the user&rsquo;s ratings of movies as:</p>
-
-<table>
-<thead>
-<tr>
-<th>User</th>
-<th>The Matrix</th>
-<th>Toy Story</th>
-<th>Jurassic Park</th>
-<th>Forrest Gump</th>
-<th>Braveheart</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>A</td>
-<td>5</td>
-<td>4</td>
-<td>4</td>
-<td></td>
-<td></td>
-</tr>
-
-<tr>
-<td>B</td>
-<td></td>
-<td>3</td>
-<td>4</td>
-<td></td>
-<td>1</td>
-</tr>
-
-<tr>
-<td>C</td>
-<td>1</td>
-<td></td>
-<td></td>
-<td>2</td>
-<td>5</td>
-</tr>
-</tbody>
-</table>
-
-<p>The movies also have other properties such as genres, not shown here.  We&rsquo;ve stored it all as a graph, which in itself is a nice way to store a sparse matrix.</p>
-
-<p>The matrix (that&rsquo;s the matrix above, not <em>&ldquo;<a href="https://en.wikipedia.org/wiki/The_Matrix">The Matrix</a>&ldquo;</em>) is missing values because users haven&rsquo;t seen all movies &mdash; in fact, for the real dataset it&rsquo;s much sparser because users have each only rated a tiny percentage of the movies.</p>
-
-<p>The challenge of recommendation is to predict values for the missing ratings.  Will user A enjoy Braveheart because it&rsquo;s an action movie and thus similar to movies they enjoyed? (content based filtering)</p>
-
-<p>But maybe they won&rsquo;t enjoy it because they might have something in common with user B who seems to share similar ratings (collaborative filtering).</p>
-
-<p>Maybe user A just gives high ratings and isn&rsquo;t very discriminating &mdash; sometimes benaviour rather than rating can be a better predictor. We&rsquo;ll need to combine a number of approaches.</p>
-
-<p>The theory boils down to finding functions that serve as measures of similarity or distance.  For example, in content-based filtering, the function would take two movies and output a score (the distance or similarity).  If we start with a movie and apply the function repeatedly to it and all other movies, we can find the most similar movies.</p>
-
-<p>We&rsquo;ll look at some distance measures below as we apply them in queries, but for any of them we&rsquo;ll need to propagate values through our query, so let&rsquo;s look at how that works in Dgraph and then try out some recommendation queries.</p>
-
-<h2 id="variable-propagation">Variable Propagation</h2>
-
-<p>A Dgraph <a href="https://docs.dgraph.io/query-language/#value-variables">value variable</a> is a mapping from graph nodes to values that have been computed for the nodes during the query.  Value variables can be passed around the query, aggregated etc.  Value variables also sum over paths as we move deeper into a query tree.</p>
-
-<p>Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.</p>
-
-<p>We call this <strong>variable propagation.</strong>  Note that the queries in this post we built for our master branch for the upcoming v0.8 release.</p>
-
-<p>Say you had a query:</p>
-
-<pre><code>{
-  var(func: uid(&lt;...P...&gt;)) {
-    myscore as math(1)          # A
-    friends {                   # B
-      friends {                 # C
-        fscore as math(myscore)
-      }
-    }
-  }
-
-  closeFriends(func: uid(fscore), orderdesc: val(fscore)) {
-    name
-    val(score)
-  }
+    return nil
 }
 </code></pre>
 
-<p>At line A, nodes are assigned a score of <code>1</code> (which in this case we&rsquo;ll assume is the single node <code>P</code>).
-Traversing the <code>friend</code> edge twice reaches the friends of friends.  The variable <code>myscore</code> gets
-propagated, such that the value inside the block marked C is the sum of values from all paths from A to C.</p>
+<p><code>StreamWriter</code> can be used without <code>Stream</code> itself, but make sure you read the
+documentation and understand the constraints on how <code>Write</code> should be called.</p>
 
-<p>Here&rsquo;s how that propagation looks in a graph.</p>
+<h4 id="be-notified-of-changes-in-the-db-with-subscribe">Be notified of changes in the DB with Subscribe</h4>
 
-<p><img src="/images/vartransform.png" alt="Variable propagation" /></p>
+<p>Once you&rsquo;ve opened a BadgerDB you can easily set up a subscription so every time
+a key changes a function of your choice will be called. You can choose what
+specific key ranges you&rsquo;d like to observe, or simply give an empty prefix to
+subscribe to all key changes.</p>
 
-<p><strong>In short, the value that a node receives is equal to the sum of values of all its parent nodes.</strong>
-This propagation is useful when we want to normalize a sum across users, find the number of paths
-between some nodes or accumulate a sum as we move through the graph.</p>
+<p>For a complete example of the functionality, check out <a href="http://godoc.org/github.com/dgraph-io/badger/#DB.Subscribe">this
+example</a> in the
+documentation.</p>
 
-<h2 id="movielens">Movielens</h2>
+<h4 id="new-options-api">New Options API</h4>
 
-<p>Let&rsquo;s start with the <a href="https://grouplens.org/datasets/movielens/100k/">ML-100k</a> dataset of
-100,000 ratings from 1000 users on 1700 movies. We converted the dataset to RDF (the dataset and
-script can be found at
-<a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">github</a>) and loaded it into
-Dgraph.</p>
+<p>In the search of more intuitive APIs, we decided to provide a new way of
+creating the <code>badger.Options</code> passed to <code>badger.Open</code> and others.</p>
 
-<p>It&rsquo;s about users and movies and user&rsquo;s ratings of movies.  So a user (a node in the graph) has a name and a gender and a <code>rated</code> edge to a movie.  The <code>rated</code> edge has a facet <code>rating</code> that tells us the users numeric 0&ndash;5 rating of the movie.</p>
+<p>We made <code>DefaultOptions</code> a function that receives the path where the database is
+stored as a parameter. Once you got those default options, you can modify
+specific bits by using the also new builder API.</p>
 
-<p><img src="/images/movilensschema.png" alt="Movielens schema" /></p>
+<p>So for instance, the code needed to open a Badger DB in read-only mode in
+previous versions was:</p>
 
-<h2 id="content-based-filtering">Content-based filtering</h2>
-
-<p>Content-based filtering ranks items as similar or not based on their properties.  There are a number of measures we could use.  Our reference text from Stanford talks about <strong>Jaccard</strong> and <strong>Cosine</strong> distances.</p>
-
-<h3 id="jaccard-distance">Jaccard Distance</h3>
-
-<p>Let&rsquo;s try some measure functions based on Jaccard distance.  For two sets A and B the Jaccard distance is given by</p>
-
-<p>$$1-\frac{|A\cap B|}{| A\cup B |}$$</p>
-
-<p>That&rsquo;s the ratio of the size of the set intersection to the size of the union.  So if items have many properties in common (compared to how many properties each has) then the items are similar.  For our movie example, let&rsquo;s take $A$ and $B$ as the genre sets for each movie.  We can then express our difference function as:</p>
-
-<p>$$d(M_1, M_2) = 1-\frac{|M_1.\mathcal{genres} \cap M_2.\mathcal{genres}|}{| M_1.\mathcal{genres}\cup M_2.\mathcal{genres} |}$$</p>
-
-<p>The closer the result is to 0, the closer the movies &mdash; if the number of genres in common is more, the second term is close to 1, if movies have few genres in common, the second term is closer to 0.</p>
-
-<p>For movie a $M_1$, we picked &ldquo;The Shawshank Redemption&rdquo; with unique ID <code>0x30d80</code>, and translated Jaccard distance to this query.</p>
-
-<pre><code>{
-  # Count the genres for every movie that has been rated
-  var(func: has(~rated)) {
-    M2_num_genres as count(genre)
-  }
-
-
-  # Calculate a Jaccard distance score for every movie that shares
-  # at least 1 genre with the given movie.
-  var(func: uid(0x30d80)) {    # M1
-    norm as math(1)               # 1
-    M1_num_genres as count(genre) # 2
-    M1genres as genre {           # 3
-      ~genre {
-        # M2 -- movies reached here share a genre with the initial movie
-        # normalize the count to account for multiple paths
-        M1_num_genres_norm as math(M1_num_genres / norm)      # 4
-        num_genres as count(genre @filter(uid(M1genres))) # 5
-        distance as math( 1 - ( num_genres / (M1_num_genres_norm + M2_num_genres - num_genres) )) # 6
-      }
-    }
-  }
-
-  # Sort and return closest movies.
-  similarMovies(func: uid(distance), orderasc: val(distance), first: 10) { # 7
-    name
-    val(distance)
-  }
-}
+<pre><code class="language-go">opts := badger.Options
+opts.Dir = &quot;/tmp/db&quot;
+opts.ValueDir = &quot;tmp/db&quot;
+opts.ReadOnly = true
+db, err := badger.Open(opts)
 </code></pre>
 
-<p>The query works as follows.</p>
+<p>With the new builder API, the code becomes less verbose.</p>
 
-<ol>
-<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-<li>Count the number of genres for movie $M_1$.</li>
-<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
-<li>We may have reached this $M_2$ via multiple genre paths and the count of genres set at <code># 2</code> would have accumulated for each path, so normalize back to the original count.</li>
-<li>Find the number of intersecting genres.</li>
-<li>Apply the Jaccard distance formula &mdash; <code>distance</code> is thus a map for each $M_2$ to the Jaccard distance between $M_1$ and $M_2$.</li>
-<li>Filter out the movies that were closest (had lowest distance)</li>
-</ol>
-
-<p>Here&rsquo;s the results we got for &ldquo;The Shawshank Redemption&rdquo;</p>
-
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Miracle on 34th Street (1994)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Postman, The (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Mat' i syn (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Winter Guest, The (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Chamber, The (1996)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Picnic (1955)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Nell (1994)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Dead Man Walking (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Blue Angel, The (Blaue Engel, Der) (1930)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        }
-    ]
-}
+<pre><code class="language-go">db, err := badger.Open(badger.DefaultOpts(&quot;/tmp/db&quot;).WithReadOnly(true))
 </code></pre>
 
-<p>Ouch, there&rsquo;s a bunch of movies with distance 0.  That means all those movies share exactly the same genre set with &ldquo;The Shawshank Redemption&rdquo;, so we can&rsquo;t discriminate between them.  Let&rsquo;s test another movie.  With &ldquo;Toy Story&rdquo; we get.</p>
+<h4 id="new-entry-api">New Entry API</h4>
 
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Aladdin and the King of Thieves (1996)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Toy Story (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Aladdin (1992)&quot;,
-            &quot;var(distance)&quot;: 0.25
-        },
-        {
-            &quot;name&quot;: &quot;Goofy Movie, A (1995)&quot;,
-            &quot;var(distance)&quot;: 0.25
-        },
-        {
-            &quot;name&quot;: &quot;Flintstones, The (1994)&quot;,
-            &quot;var(distance)&quot;: 0.333333
-        }
-    ]
-}
+<p>Similarly to Options, we&rsquo;ve removed some methods in <code>badger.Txn</code> and replaced
+them by a new builder API on <code>badger.Entry</code>. The methods <code>SetWithDiscard</code>,
+<code>SetWithmeta</code>, and <code>SetWithTTL</code> have been removed. New <code>badger.Entry</code>
+methods <code>WithDiscard</code>, <code>WithMeta</code>, and <code>WithTTL</code> provide the same functionality
+and can be used with the <code>badger.Txn.SetEntry</code>.</p>
+
+<p>The benefit of this approach is that it allows all the permutations of <code>SetWith</code>
+without having to introduce an API covering each.</p>
+
+<p>For instance, in previous versions, the code to set a transaction with TTL of 1
+second was the following:</p>
+
+<pre><code class="language-go">    err := db.Update(func(txn *badger.Txn) error {
+        return txn.SetWithTTL(key, value, 1*time.Second)
+    })
 </code></pre>
 
-<p>That&rsquo;s better.  At least similar movies have similar genres. But still, the Jaccard distance function isn&rsquo;t good enough because it can&rsquo;t discriminate a difference between many movies.  Our reference text suggests the same distance function but for data that also has actors and directors, which we don&rsquo;t.</p>
+<p>With the builder API on Entry, you would now write the following:</p>
 
-<p>As it stands, the Jaccard distance might not be so appropriate because the only items we have to compare are the genres, since the Jaccard distance doesn&rsquo;t take into account the magnitude of the ratings.  So let&rsquo;s play around with it and see how some variations come out.</p>
-
-<h3 id="jaccard-distance-variation">Jaccard Distance Variation</h3>
-
-<p>The size of the intersection of the genres seems a reasonable start, but how to bring the magnitude of the ratings into it?  If we are to use the ratings, then the average rating might be appropriate.  Let&rsquo;s try the number of genres in common plus an average rating.  Given a movie $M_1$ we&rsquo;ll find the similarity to all other movies $M_2$ as</p>
-
-<p>$$d(M_1, M_2) = |M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_2.\overline{\mathcal{rating}}$$</p>
-
-<p>Here&rsquo;s the Dgraph query for movie $M_1$ having unique ID <code>0x30d72</code>, that&rsquo;s &ldquo;Star Wars&rdquo;.</p>
-
-<pre><code>{
-  # M1 -- Star Wars by its unique ID
-  var(func: uid(0x30d72)) {
-    g as genre
-  }
-
-  # Calculate the average rating for every movie
-  var(func: has(rated)) {
-    allmovies as rated @facets(a as rating) {
-      c as count(~rated)
-      avg as math(a / c)
-    }
-  }
-
-  # Give every movie a score
-  var(func: uid(allmovies)) {
-    x as count(genre @filter(uid(g)))
-    score as math(avg + x)
-  }
-
-  # Return the top 10 movies
-  fin(func: uid(score), orderdesc: val(score), first: 10) {
-    name
-    val(score)
-  }
-}
+<pre><code class="language-go">    db.Update(func(txn *badger.Txn) error {
+        return txn.SetEntry(badger.NewEntry(key, value).WithTTL(1 * time.Second))
+    })
 </code></pre>
 
-<p><strong>In terms of variable propagation, the important part is the calculation of average rating.</strong>  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.</p>
+<p>This change also makes it possible to set both TTL and Meta, which wasn&rsquo;t the
+case before, as shown in issues <a href="https://github.com/dgraph-io/badger/issues/774">#774</a>
+and <a href="https://github.com/dgraph-io/badger/issues/332">#332</a>.</p>
 
-<p><img src="/images/facetsumming.png" alt="Facet summing" /></p>
+<h3 id="thanks">Thanks!</h3>
 
-<p>Running the query we get the following results.</p>
-
-<pre><code>{
-    &quot;fin&quot;: [
-        {
-            &quot;name&quot;: &quot;Star Wars (1977)&quot;,
-            &quot;var(score)&quot;: 9.358491
-        },
-        {
-            &quot;name&quot;: &quot;Empire Strikes Back, The (1980)&quot;,
-            &quot;var(score)&quot;: 9.20436
-        },
-        {
-            &quot;name&quot;: &quot;Return of the Jedi (1983)&quot;,
-            &quot;var(score)&quot;: 9.00789
-        },
-        {
-            &quot;name&quot;: &quot;African Queen, The (1951)&quot;,
-            &quot;var(score)&quot;: 8.184211
-        },
-        {
-            &quot;name&quot;: &quot;Starship Troopers (1997)&quot;,
-            &quot;var(score)&quot;: 7.232227
-        },
-        {
-            &quot;name&quot;: &quot;Princess Bride, The (1987)&quot;,
-            &quot;var(score)&quot;: 7.17284
-        },
-        {
-            &quot;name&quot;: &quot;Star Kid (1997)&quot;,
-            &quot;var(score)&quot;: 7.0
-        },
-        {
-            &quot;name&quot;: &quot;Aliens (1986)&quot;,
-            &quot;var(score)&quot;: 6.947183
-        },
-        {
-            &quot;name&quot;: &quot;Star Trek: The Wrath of Khan (1982)&quot;,
-            &quot;var(score)&quot;: 6.815574
-        },
-        {
-            &quot;name&quot;: &quot;Men in Black (1997)&quot;,
-            &quot;var(score)&quot;: 6.745875
-        }
-    ]
-}
-</code></pre>
-
-<p><em>Note that we didn&rsquo;t filter out &ldquo;Star Wars&rdquo; and thankfully it came back as the first result.</em>  Looks like a pretty good distance function, especially given the top three results, but it&rsquo;s probably biased.  &ldquo;Star Wars&rdquo; is highly rated on average, and so we got back other highly rated movies with intersecting genres.  If we searched for a movie that wasn&rsquo;t highly rated on average, the measure would still prefer highly rated movies with intersecting genres.</p>
-
-<p>That might be fine.  If a user likes certain genres, then maybe highly rated movie in those genres are good recommendations. Maybe it&rsquo;s better to normalize the result so that two movies come out as more similar if they have genres in common and similar average ratings.  That&rsquo;s what cosine distance does.</p>
-
-<h3 id="cosine-distance">Cosine Distance</h3>
-
-<p>Cosine distance treats our movies as vectors in an n-dimensional space.  The similarity of the movies is then a measure of the difference in angle between the vectors.  The smaller the angle between two vectors, the more similar the movies.  For our movie example, we can express that as follows.</p>
-
-<p>If we treat our movies as vectors</p>
-
-<p>$$x_1 &hellip; x_n$$ and $$y_1 &hellip; y_n$$</p>
-
-<p>the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.</p>
-
-<p><img src="/images/cosine_diff.png" alt="cosine difference" /></p>
-
-<!--
-what's wrong with this???
-$$\frac{\sum_{i=1}^n{x_iy_i}}{\sqrt{\sum_{i=1}^n{x_i^2}}\cdot \sqrt{\sum_{i=1}^n{y_i^2}}}$$
-If I paste it into http://www.hostmath.com/ I get what I want
--->
-
-<p>In our case the $x$&rsquo;s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
-
-<p><img src="/images/cosine_diff_movies.png" alt="cosine difference" /></p>
-
-<!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} -->
-
-<p>That factors in both the intersecting genres as well as the similarity of the average ratings.</p>
-
-<p>As a single Dgraph query, that looks like this.</p>
-
-<pre><code>{
-  # Calculate the average rating of every movie
-  var(func: has(rated)) {
-    rated @facets(r as rating) {
-      c as count(~rated)
-      M2_avg_rating as math(r / c)
-      M2_num_gen as count(genre)
-    }
-  }
-
-  # Calculate a cosine difference score for every movie that shares
-  # at least 1 genre with M1
-  var(func: uid(0x30d80)) {    # movie M1
-    norm as math(1)     # 1
-
-    # Find the average rating for M1
-    M1_num_ratings as count(~rated)
-    ~rated @facets(B as rating)
-    M1_ratings_sum as sum(val(B))
-    M1_avg_rating as math(M1_ratings_sum / M1_num_ratings) # 2
-    M1_num_gen as count(genre)                             # 3
-
-    M1_genres as genre {
-      ~genre { # 4
-        # M2 -- movies reached here share a genre with the initial movie
-
-        # normalize the M1 count and average to account for multiple paths
-        M1_norm_avg as math(M1_avg_rating / norm)
-        num_genN as math(M1_num_gen/norm)              # 5
-        genint as count(genre @filter(uid(M1_genres))) # 6
-
-        score as math((genint + (M1_norm_avg * M2_avg_rating)) /
-          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) *
-          sqrt(M2_num_gen + (M2_avg_rating*M2_avg_rating))))    # 7
-
-      }
-    }
-  }
-
-  similarMovies(func: uid(score), first:20, orderdesc: val(score)) { # 8
-    name
-    val(score)
-  }
-}
-</code></pre>
-
-<p>The query works as follows.</p>
-
-<ol>
-<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-<li>Find the average rating for movie $M_1$.</li>
-<li>Count the genres for $M_1$.</li>
-<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
-<li>We may have reached this $M_2$ via multiple genre paths and the values from <code># 2</code> and <code># 3</code> would have accumulated for each path, so normalize back to the originals.</li>
-<li>Find the number of intersecting genres.</li>
-<li>Apply the cosine distance formula &mdash; <code>score</code> is thus a map for each $M_2$ to the cosine distance between $M_1$ and $M_2$.</li>
-<li>Filter out the movies that were closest (had cosine closer to 1, and thus lowest angle)</li>
-</ol>
-
-<p>We searched again for the &ldquo;The Shawshank Redemption&rdquo; and got these results.</p>
-
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Shawshank Redemption, The (1994)&quot;,
-            &quot;var(score)&quot;: 1.0
-        },
-        {
-            &quot;name&quot;: &quot;Anna (1996)&quot;,
-            &quot;var(score)&quot;: 0.999997
-        },
-        {
-            &quot;name&quot;: &quot;Some Mother's Son (1996)&quot;,
-            &quot;var(score)&quot;: 0.999997
-        },
-        {
-            &quot;name&quot;: &quot;12 Angry Men (1957)&quot;,
-            &quot;var(score)&quot;: 0.999988
-        },
-        {
-            &quot;name&quot;: &quot;Bitter Sugar (Azucar Amargo) (1996)&quot;,
-            &quot;var(score)&quot;: 0.999985
-        },
-        {
-            &quot;name&quot;: &quot;Citizen Kane (1941)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;To Kill a Mockingbird (1962)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;One Flew Over the Cuckoo's Nest (1975)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;Pather Panchali (1955)&quot;,
-            &quot;var(score)&quot;: 0.999965
-        },
-        {
-            &quot;name&quot;: &quot;Good Will Hunting (1997)&quot;,
-            &quot;var(score)&quot;: 0.999958
-        }
-    ]
-}
-</code></pre>
-
-<p>We didn&rsquo;t filter out &ldquo;The Shawshank Redemption&rdquo; and thus it comes back as the top result &mdash; it has an angle of 0 with itself.  Following that the query returns the results that cosine difference calculates as most similar.</p>
-
-<p><em>With that, we conclude this post.</em> In this post, we showcased Jaccard distance, a variation of Jaccard, and finally Cosine
-distance. That&rsquo;s three content-based filtering distance metrics and queries for them in Dgraph.  The variables and math function in Dgraph allow us to encode the metrics directly in the query.</p>
-
-<p>In the next post, we&rsquo;ll take a look at collaborative filtering.  We&rsquo;ll also look at making recommendations for Stack Overflow and how to build a scalable recommendation engine for big graphs.</p>
+<p>BadgerDB is an open source project and as such, we depend on your
+contributions. So we wanted to take a minute to thank all of our contributors.
+No matter whether you contributed code, documentation, reported issues, or
+simply starred the project on GitHub, you made the project better and we thank
+you all for that!</p>
 
 <hr />
 
@@ -1027,10 +632,19 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 </script>
 
 
-<p><em>Top image: <a href="http://www.spacex.com/media-gallery/detail/149441/9516">FALCON 9 FIRST STAGE LANDING</a></em></p>
-</div>
+<p>Top image: <a href="https://www.flickr.com/photos/nasahqphoto/39641281455/in/album-72157693123365554/">Expedition 54 Soyuz MS-06 Landing by NASA</a></p></div>
           <div class="article-tag-list">
             
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+                
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/release/">Release</a>
+                
             
           </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1057,12 +671,12 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
             <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/people/ashwin.jpg" class="article-author__image">
+	<img src="/images/people/francesc.png" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Ashwin Ramesh
+    <h4 class="article-author__name">Francesc Campoy
 
 
       <span class="article-author__title">Author</span>
@@ -1071,14 +685,14 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/ashwin95r" class="social__link">
+            <a href="https://www.linkedin.com/in/campoy/" class="social__link">
                 <svg class="icon social__icon social__icon--linkedin">
                     <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
             </a>
         </li>
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/ashwin_rrr" class="social__link">
+            <a href="https://twitter.com/francesc" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -1086,37 +700,19 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
         </li>
     </ul>
 </nav>
-<p>Ashwin did his undergrad in computer science at IIT Madras and likes working on distributed systems. He likes working out, hiking, swimming and everything adventurous. Loves travelling to new places and trying out new food.</p>
+<p>
+    Francesc Campoy is the VP of Product at Dgraph: the most advanced distributed graph database.
+    Before that he was VP of Product and Developer Relations at source{d}, the company enabling
+    Machine Learning for large scale code analysis and building the platform for the future
+    of developer tooling. Previously, he worked at Google as a Developer Advocate for Google Cloud
+    Platform and the Go team.
+</p>
 
 
   </div>
 </div>
 
             
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/people/michael.jpg" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Michael Compton
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-    </ul>
-</nav>
-<p>Michael did undergrad computer science at ANU in Canberra and a Ph.D. at Cambridge in the U.K.  He's worked for a number of years with graph databases.  He likes sport and hanging out with his family.</p>
-
-
-	</div>
-</div>
-
           </div>
           <div class="col-12">
             <div id='discourse-comments'></div>
@@ -1182,7 +778,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/recommendation/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/badger-v1.6.0-release/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1254,7 +850,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-03%2011%3a06%3a03.874816%20-0700%20PDT%20m%3d%2b0.184159826"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-03%2011%3a06%3a03.790507%20-0700%20PDT%20m%3d%2b0.099853364"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1380,8 +976,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-07-03%2011%3a06%3a03.8749%20-0700%20PDT%20m%3d%2b0.184243471" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-03%2011%3a06%3a03.874924%20-0700%20PDT%20m%3d%2b0.184268051" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-07-03%2011%3a06%3a03.790627%20-0700%20PDT%20m%3d%2b0.099973088" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-03%2011%3a06%3a03.790657%20-0700%20PDT%20m%3d%2b0.100002805" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
@@ -1399,7 +995,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/recommendation\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/badger-v1.6.0-release\/"
 };
 (function() {
   var d = document.createElement("script");

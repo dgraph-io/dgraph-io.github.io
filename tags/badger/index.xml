@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 27 Jun 2019 12:06:20 +1100</lastBuildDate>
+    <lastBuildDate>Wed, 03 Jul 2019 11:00:00 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/badger/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Releasing BadgerDB v1.6.0</title>
+      <link>https://blog.dgraph.io/post/badger-v1.6.0-release/</link>
+      <pubDate>Wed, 03 Jul 2019 11:00:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger-v1.6.0-release/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
+project and the community surrounding it have changed a lot, not many new
+releases have seen the light of the day.  Happily, this changes today, as we
+release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
+week!&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Semantic Versioning, Go Modules, and Databases</title>
