@@ -3,19 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.dgraph.io/tags/badger/</loc>
-    <lastmod>2019-07-03T11:00:00-07:00</lastmod>
+    <loc>https://blog.dgraph.io/post/10k-github-stars/</loc>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/devrel/</loc>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-07-03T11:00:00-07:00</lastmod>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/github/</loc>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/</loc>
+    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/badger/</loc>
     <lastmod>2019-07-03T11:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
@@ -32,12 +61,6 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/</loc>
-    <lastmod>2019-07-03T11:00:00-07:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/tags/go/</loc>
     <lastmod>2019-06-27T12:06:20+11:00</lastmod>
     <priority>0</priority>
@@ -46,12 +69,6 @@
   <url>
     <loc>https://blog.dgraph.io/post/serialization-versioning/</loc>
     <lastmod>2019-06-27T12:06:20+11:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
-    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

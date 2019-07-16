@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 03 Jul 2019 11:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jul 2019 01:23:05 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DevRel</title>
+      <link>https://blog.dgraph.io/tags/devrel/</link>
+      <pubDate>Tue, 16 Jul 2019 01:23:05 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/devrel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dgraph</title>
+      <link>https://blog.dgraph.io/tags/dgraph/</link>
+      <pubDate>Tue, 16 Jul 2019 01:23:05 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/dgraph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GitHub</title>
+      <link>https://blog.dgraph.io/tags/github/</link>
+      <pubDate>Tue, 16 Jul 2019 01:23:05 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/github/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Badger</title>
@@ -36,15 +63,6 @@
       <pubDate>Thu, 27 Jun 2019 12:06:20 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Dgraph</title>
-      <link>https://blog.dgraph.io/tags/dgraph/</link>
-      <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/dgraph/</guid>
       <description></description>
     </item>
     
