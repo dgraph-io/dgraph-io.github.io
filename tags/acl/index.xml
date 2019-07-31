@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ACL on Dgraph Blog</title>
+    <title>Acl on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/acl/</link>
-    <description>Recent content in ACL on Dgraph Blog</description>
+    <description>Recent content in Acl on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>

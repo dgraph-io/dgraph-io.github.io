@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.56.2" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-31%2011%3a02%3a49.524386003%20-0700%20PDT%20m%3d%2b0.078494884" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-31%2011%3a02%3a49.524440622%20-0700%20PDT%20m%3d%2b0.078549483" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-08-01%2002%3a21%3a27.368792%20%2b0300%20EEST%20m%3d%2b0.233895886" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-08-01%2002%3a21%3a27.368819%20%2b0300%20EEST%20m%3d%2b0.233922729" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-31%2011%3a02%3a49.524487332%20-0700%20PDT%20m%3d%2b0.078596173">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-31%2011%3a02%3a49.524525532%20-0700%20PDT%20m%3d%2b0.078634382">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-08-01%2002%3a21%3a27.36884%20%2b0300%20EEST%20m%3d%2b0.233943585">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-08-01%2002%3a21%3a27.368859%20%2b0300%20EEST%20m%3d%2b0.233962980">
 
     
     
@@ -529,34 +529,36 @@ They still have to communicate with each other to respond to the queries.</p>
 <p>We ran broadly 2 categories of queries.</p>
 
 <ul>
-<li><p>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</p>
-
-<pre><code>{
-me ( _xid_ : XID ) {
-type.object.name.en
-film.actor.film {
-  film.performance.film {
-    type.object.name.en
-  }
-}
-}
-}
-</code></pre></li>
-
-<li><p>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</p>
-
-<pre><code>{
-me ( _xid_ : XID ) {
-type.object.name.en
-film.director.film {
-  film.film.genre {
-    type.object.name.en
-  }
-}
-}
-}
-</code></pre></li>
+<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
 </ul>
+
+<pre><code>{
+  me ( _xid_ : XID ) {
+    type.object.name.en
+    film.actor.film {
+      film.performance.film {
+        type.object.name.en
+      }
+    }
+  }
+}
+</code></pre>
+
+<ul>
+<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
+</ul>
+
+<pre><code>{
+  me ( _xid_ : XID ) {
+    type.object.name.en
+    film.director.film {
+      film.film.genre {
+        type.object.name.en
+      }
+    }
+  }
+}
+</code></pre>
 
 <p>During each iteration, either an actor or a director category was chosen randomly.
 Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
@@ -916,7 +918,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-31%2011%3a02%3a49.529561679%20-0700%20PDT%20m%3d%2b0.083670560"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-08-01%2002%3a21%3a27.369439%20%2b0300%20EEST%20m%3d%2b0.234542399"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1042,8 +1044,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-07-31%2011%3a02%3a49.529655599%20-0700%20PDT%20m%3d%2b0.083764460" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-31%2011%3a02%3a49.529680858%20-0700%20PDT%20m%3d%2b0.083789729" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-08-01%2002%3a21%3a27.369507%20%2b0300%20EEST%20m%3d%2b0.234610503" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-08-01%2002%3a21%3a27.369527%20%2b0300%20EEST%20m%3d%2b0.234630382" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
