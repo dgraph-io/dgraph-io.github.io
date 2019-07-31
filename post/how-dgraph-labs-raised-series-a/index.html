@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-31%2007%3a14%3a46.692594639%20-0700%20PDT%20m%3d%2b0.047621995" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-31%2007%3a14%3a46.692631023%20-0700%20PDT%20m%3d%2b0.047658383" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-31%2007%3a53%3a23.636059583%20-0700%20PDT%20m%3d%2b0.052073757" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-31%2007%3a53%3a23.636100855%20-0700%20PDT%20m%3d%2b0.052115006" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-31%2007%3a14%3a46.692664638%20-0700%20PDT%20m%3d%2b0.047692196">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-31%2007%3a14%3a46.692696555%20-0700%20PDT%20m%3d%2b0.047723910">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-31%2007%3a53%3a23.636159616%20-0700%20PDT%20m%3d%2b0.052173771">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-31%2007%3a53%3a23.636197502%20-0700%20PDT%20m%3d%2b0.052211658">
 
     
     
@@ -436,7 +436,7 @@ make their lives significantly easier as data and queries grow in size and
 complexity.</p>
 
 <p>This blog post is a detailed, expanded version of my pitch to investors
-showing the need for a technology like Dgraph and why I think it can play a much
+showing the need for a technology like <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> and why I think it can play a much
 bigger role in the future. If you just want the deck, you can jump to the end of
 this blog post.</p>
 
@@ -616,7 +616,7 @@ layer, which might not work out, is a serious decision.</p>
 
 <h3 id="what-makes-dgraph-different">What makes Dgraph different?</h3>
 
-<p>Dgraph is built to provide low-latency, high throughput query execution even
+<p><a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is built to provide low-latency, high throughput query execution even
 with arbitrary depth joins and large fan-outs over massive datasets. And instead
 of being a hastily put custom solution on top of SQL, Dgraph is designed from
 scratch to execute well on both graph style joins and traversals, and SQL style
@@ -673,7 +673,7 @@ solution for apps.</strong> Most data models have relationships which need to be
 into account to execute queries and Dgraph can simplify data models quite
 significantly while improving query performance.</p>
 
-<p>The most common use case that Dgraph is solving is to <strong>unify multiple data silos</strong>
+<p>The most common use case that <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is solving is to <strong>unify multiple data silos</strong>
 stuck in traditional databases or across different backends, into one Dgraph
 powered platform. This allows much more powerful queries across different
 datasets without compromising on performance, allowing users to build smarter
@@ -727,7 +727,7 @@ star power when the projects were of same age.</strong> You can see the graphs h
 <p><em>Here, the x-axis represents the number of weeks since project was first made
 public on GitHub. And the y-axis is the star count as of that week<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>.</em></p>
 
-<p>Compared against Neo4j, JanusGraph and ArangoDB, <strong>Dgraph is the fastest growing
+<p>Compared against Neo4j, JanusGraph and ArangoDB, <strong><a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is the fastest growing
 and one of the most popular open source graph databases.</strong> And it performs well
 when put side-by-side with the most popular databases in other categories,
 including InfluxDB and MongoDB.</p>
@@ -737,7 +737,7 @@ instances running in the wild, together serving terabytes of data.</p>
 
 <h3 id="the-next-generation-of-apps">The next generation of apps</h3>
 
-<p>This is one of the bets we took very early on in Dgraph&rsquo;s journey. When looking
+<p>This is one of the bets we took very early on in <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&rsquo;s journey. When looking
 for a query language for the database back in 2015, we weren&rsquo;t happy with the
 existing choices of Cypher and Gremlin. Incidentally, Facebook&rsquo;s GraphQL draft
 spec had just been publicly <a href="https://graphql.github.io/graphql-spec/July2015/">released</a> in July 2015. <em>We really liked it.</em></p>
@@ -1069,7 +1069,7 @@ full life of an old project.</p>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-31%2007%3a14%3a46.696200853%20-0700%20PDT%20m%3d%2b0.051228210"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-31%2007%3a53%3a23.640169638%20-0700%20PDT%20m%3d%2b0.056183795"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -1195,8 +1195,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-07-31%2007%3a14%3a46.696302438%20-0700%20PDT%20m%3d%2b0.051329808" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-31%2007%3a14%3a46.696332917%20-0700%20PDT%20m%3d%2b0.051360290" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-07-31%2007%3a53%3a23.640288869%20-0700%20PDT%20m%3d%2b0.056303028" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-31%2007%3a53%3a23.64032321%20-0700%20PDT%20m%3d%2b0.056337366" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
