@@ -3,6 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/</loc>
+    <lastmod>2019-07-31T05:05:05-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/</loc>
+    <lastmod>2019-07-31T05:05:05-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/</loc>
+    <lastmod>2019-07-31T05:05:05-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/10k-github-stars/</loc>
     <lastmod>2019-07-16T01:23:05+05:30</lastmod>
   </url>
@@ -20,19 +37,7 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/tags/github/</loc>
-    <lastmod>2019-07-16T01:23:05+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/post/</loc>
     <lastmod>2019-07-16T01:23:05+05:30</lastmod>
     <priority>0</priority>
   </url>

@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.55.6" />
+      <meta name="generator" content="Hugo 0.56.2" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -48,8 +48,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
-    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-16%2011%3a56%3a06.920338934%20-0700%20PDT%20m%3d%2b0.089145064" rel="stylesheet" />
-    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-16%2011%3a56%3a06.920387784%20-0700%20PDT%20m%3d%2b0.089193914" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable.css?2019-07-31%2006%3a41%3a51.294364825%20-0700%20PDT%20m%3d%2b0.758393153" rel="stylesheet" />
+    <link href="https://blog.dgraph.io//css/runnable-custom.css?2019-07-31%2006%3a41%3a51.29438277%20-0700%20PDT%20m%3d%2b0.758411081" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script
@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-16%2011%3a56%3a06.920434124%20-0700%20PDT%20m%3d%2b0.089240244">
-    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-16%2011%3a56%3a06.920477054%20-0700%20PDT%20m%3d%2b0.089283174">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/styles.css?2019-07-31%2006%3a41%3a51.294398001%20-0700%20PDT%20m%3d%2b0.758426311">
+    <link rel="stylesheet" href="https://blog.dgraph.io/css/custom.css?2019-07-31%2006%3a41%3a51.29441443%20-0700%20PDT%20m%3d%2b0.758442739">
 
     
     
@@ -111,6 +111,46 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Thu, Oct 5, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/badger-txn/" class="clearfix">
+		<h3 class="article__title">Concurrent ACID Transactions in Badger</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/badger-txn/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/hubble_atom.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</div>
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/transactions/">Transactions</a>
+							
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -343,36 +383,6 @@ more work and exit, so you can cleanly shut down the program.</p></div>
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Mon, Jul 17, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="clearfix">
-		<h3 class="article__title">Running Stack Overflow on Dgraph</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/reddragonmars.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college. It was being used at the company that we joined. It was such a common interview question that it no longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from. MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the same year).</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -549,7 +559,7 @@ more work and exit, so you can cleanly shut down the program.</p></div>
 </div>
 
     <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
-    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-16%2011%3a56%3a06.922771182%20-0700%20PDT%20m%3d%2b0.091577342"></script>
+    <script src="https://blog.dgraph.io//js/runnable.js?2019-07-31%2006%3a41%3a51.303857249%20-0700%20PDT%20m%3d%2b0.767885568"></script>
     <script>
       hljs.initHighlightingOnLoad();
     </script>
@@ -675,8 +685,8 @@ $(document.links)
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/heart.css?2019-07-16%2011%3a56%3a06.922867172%20-0700%20PDT%20m%3d%2b0.091673322" rel="stylesheet">
-<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-16%2011%3a56%3a06.922894632%20-0700%20PDT%20m%3d%2b0.091700742" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/heart.css?2019-07-31%2006%3a41%3a51.304013937%20-0700%20PDT%20m%3d%2b0.768042301" rel="stylesheet">
+<link href="https://blog.dgraph.io/css/github-engage.css?2019-07-31%2006%3a41%3a51.304080792%20-0700%20PDT%20m%3d%2b0.768109141" rel="stylesheet">
 
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
