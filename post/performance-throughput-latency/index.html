@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.53" />
+      <meta name="generator" content="Hugo 0.56.0-DEV" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -539,36 +539,34 @@ They still have to communicate with each other to respond to the queries.</p>
 <p>We ran broadly 2 categories of queries.</p>
 
 <ul>
-<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
-</ul>
+<li><p>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</p>
 
 <pre><code>{
-  me ( _xid_ : XID ) {
+me ( _xid_ : XID ) {
+type.object.name.en
+film.actor.film {
+  film.performance.film {
     type.object.name.en
-    film.actor.film {
-      film.performance.film {
-        type.object.name.en
-      }
-    }
   }
 }
-</code></pre>
+}
+}
+</code></pre></li>
 
-<ul>
-<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
-</ul>
+<li><p>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</p>
 
 <pre><code>{
-  me ( _xid_ : XID ) {
+me ( _xid_ : XID ) {
+type.object.name.en
+film.director.film {
+  film.film.genre {
     type.object.name.en
-    film.director.film {
-      film.film.genre {
-        type.object.name.en
-      }
-    }
   }
 }
-</code></pre>
+}
+}
+</code></pre></li>
+</ul>
 
 <p>During each iteration, either an actor or a director category was chosen randomly.
 Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>

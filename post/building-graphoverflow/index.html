@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.53" />
+      <meta name="generator" content="Hugo 0.56.0-DEV" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -566,35 +566,31 @@ class Question extends React.Component {
 <p>Three things need to happen in <code>componentDidMount</code>: constructing a query for the question, sending the query to the server, storing the result so that it can be rendered. Let us look at this simple process step-by-step.</p>
 
 <ul>
-<li>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</li>
-</ul>
+<li><p>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</p>
 
-<pre><code class="language-js">  function getQuestionQuery(questionUID) {
-    return `
-      question(func: uid(${questionUID})) {
-        ...
-      }
-    `;
+<pre><code class="language-js">function getQuestionQuery(questionUID) {
+return `
+  question(func: uid(${questionUID})) {
+    ...
   }
-</code></pre>
+`;
+}
+</code></pre></li>
 
-<ul>
-<li>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</li>
-</ul>
+<li><p>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</p>
 
 <pre><code class="language-js">import request from &quot;superagent&quot;;
 
 function runQuery(queryText) {
-  const endpointBaseURL = 'http://localhost:3030';
+const endpointBaseURL = 'http://localhost:3030';
 
-  return request.post(`${endpointBaseURL}/query`).send(queryText).then(res =&gt; {
-    return JSON.parse(res.text);
-  });
+return request.post(`${endpointBaseURL}/query`).send(queryText).then(res =&gt; {
+return JSON.parse(res.text);
+});
 }
-</code></pre>
+</code></pre></li>
 
-<ul>
-<li>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component&rsquo;s state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</li>
+<li><p>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component&rsquo;s state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</p></li>
 </ul>
 
 <p>Having completed the above process in <code>componentDidMount</code>, now we can render the question page. Here is what <code>render</code> method of <code>Question</code> component looks like in a simplified way.</p>
