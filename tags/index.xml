@@ -31,6 +31,15 @@
     </item>
     
     <item>
+      <title>Go</title>
+      <link>https://blog.dgraph.io/tags/go/</link>
+      <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Indexing</title>
       <link>https://blog.dgraph.io/tags/indexing/</link>
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
@@ -72,15 +81,6 @@
       <pubDate>Wed, 03 Jul 2019 11:00:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/tags/release/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Go</title>
-      <link>https://blog.dgraph.io/tags/go/</link>
-      <pubDate>Thu, 27 Jun 2019 12:06:20 +1100</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/go/</guid>
       <description></description>
     </item>
     
