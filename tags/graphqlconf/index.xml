@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 20 Aug 2019 20:00:00 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 20 Aug 2019 20:20:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/graphqlconf/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Dgraph&#39;s recap of GraphQL Conf - Berlin 2019</title>
       <link>https://blog.dgraph.io/post/graphql-conf-19/</link>
-      <pubDate>Tue, 20 Aug 2019 20:00:00 +0530</pubDate>
+      <pubDate>Tue, 20 Aug 2019 20:20:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/post/graphql-conf-19/</guid>
       <description>We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&amp;rsquo;t help ourselves from sharing this with Dgraph&amp;rsquo;s community! This is the story of the GraphQL conference in Berlin.
