@@ -7,37 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 20 Aug 2019 20:00:00 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 08 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>DevRel</title>
-      <link>https://blog.dgraph.io/tags/devrel/</link>
-      <pubDate>Tue, 20 Aug 2019 20:00:00 +0530</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/devrel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GraphQL</title>
-      <link>https://blog.dgraph.io/tags/graphql/</link>
-      <pubDate>Tue, 20 Aug 2019 20:00:00 +0530</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/graphql/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GraphQLConf</title>
-      <link>https://blog.dgraph.io/tags/graphqlconf/</link>
-      <pubDate>Tue, 20 Aug 2019 20:00:00 +0530</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/graphqlconf/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Dgraph</title>
@@ -72,6 +45,15 @@
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/tags/indexing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DevRel</title>
+      <link>https://blog.dgraph.io/tags/devrel/</link>
+      <pubDate>Tue, 16 Jul 2019 01:23:05 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/devrel/</guid>
       <description></description>
     </item>
     
