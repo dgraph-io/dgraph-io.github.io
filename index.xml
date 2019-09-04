@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Fri, 23 Aug 2019 08:00:00 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 04 Sep 2019 06:00:00 -0400</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Releasing Dgraph v1.1.0</title>
+      <link>https://blog.dgraph.io/post/release-v1.1.0/</link>
+      <pubDate>Wed, 04 Sep 2019 06:00:00 -0400</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/release-v1.1.0/</guid>
+      <description>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness. Dgraph is built as an effort to enable and simplify the development of scalable cloud applications that could continue to thrive even when the data is highly connected and involved.
+Set on this path, embracing open source all along the way, the first production-ready, major release v1.</description>
+    </item>
     
     <item>
       <title>Dgraph Labs wants you!</title>
@@ -25,7 +35,7 @@ We also realized that the job openings were neither really up to date nor covere
     <item>
       <title>Dgraph&#39;s recap of GraphQL Conf - Berlin 2019</title>
       <link>https://blog.dgraph.io/post/graphql-conf-19/</link>
-      <pubDate>Tue, 20 Aug 2019 20:20:00 +0530</pubDate>
+      <pubDate>Fri, 16 Aug 2019 14:30:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/post/graphql-conf-19/</guid>
       <description>We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&amp;rsquo;t help ourselves from sharing this with Dgraph&amp;rsquo;s community! This is the story of the GraphQL conference in Berlin.
@@ -338,6 +348,17 @@ All this goes to show how much people enjoy Go native libraries.</description>
       <guid>https://blog.dgraph.io/post/badger/</guid>
       <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
 We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</description>
+    </item>
+    
+    <item>
+      <title>String matching in Dgraph v0.7.5</title>
+      <link>https://blog.dgraph.io/post/string-matching/</link>
+      <pubDate>Mon, 10 Apr 2017 12:10:00 +0200</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/string-matching/</guid>
+      <description>&lt;p&gt;The recent release of Dgraph is packed with new features and improvements.
+Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
+All of these changes make Dgraph an excellent tool for working with multilingual applications.&lt;/p&gt;</description>
     </item>
     
     <item>

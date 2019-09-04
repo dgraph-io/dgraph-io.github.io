@@ -33,14 +33,14 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
     
-    <title>Dgraph&#39;s recap of GraphQL Conf - Berlin 2019 - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph&#39;s recap of GraphQL Conf - Berlin 2019 - Dgraph Blog">
+    <title>Releasing Dgraph v1.1.0 - Dgraph Blog</title>
+    <meta property='og:title' content="Releasing Dgraph v1.1.0 - Dgraph Blog">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://blog.dgraph.io/post/graphql-conf-19/">
+    <meta property="og:url" content="https://blog.dgraph.io/post/release-v1.1.0/">
     
-    <meta property="og:image" content="https://blog.dgraph.io/images/graphqlconf-19-4.JPG">
+    <meta property="og:image" content="https://blog.dgraph.io/images/release-v1.1.0.jpg">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -85,13 +85,13 @@
     
       
         <meta name="twitter:card" content="summary_large_image"/>
-        <meta name="twitter:image" content="https://blog.dgraph.io/images/graphqlconf-19-4.JPG"/>
+        <meta name="twitter:image" content="https://blog.dgraph.io/images/release-v1.1.0.jpg"/>
       
     
 
-    <meta name="twitter:title" content="Dgraph&#39;s recap of GraphQL Conf - Berlin 2019"/>
-    <meta name="twitter:description" content="We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&rsquo;t help ourselves from sharing this with Dgraph&rsquo;s community! This is the story of the GraphQL conference in Berlin.
-The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with GraphQL, here&rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early."/>
+    <meta name="twitter:title" content="Releasing Dgraph v1.1.0"/>
+    <meta name="twitter:description" content="Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness. Dgraph is built as an effort to enable and simplify the development of scalable cloud applications that could continue to thrive even when the data is highly connected and involved.
+Set on this path, embracing open source all along the way, the first production-ready, major release v1."/>
     <meta name="twitter:site" content="@dgraphlabs"/>
   </head>
 
@@ -394,7 +394,7 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Fri, Aug 16, 2019
+                  Wed, Sep 4, 2019
                  by
                 Karthic Rao
 
@@ -404,7 +404,7 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
                 <ul class="share__list">
                   
                   <li class="share__item">
-                    <a href="https://twitter.com/share?text=Dgraph%27s%20recap%20of%20GraphQL%20Conf%20-%20Berlin%202019&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fgraphql-conf-19%2f&amp;via=dgraphlabs" class="share__link">
+                    <a href="https://twitter.com/share?text=Releasing%20Dgraph%20v1.1.0&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frelease-v1.1.0%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg>
@@ -415,7 +415,7 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Dgraph&#39;s recap of GraphQL Conf - Berlin 2019</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Releasing Dgraph v1.1.0</h1>
           </header>
         </div>
       </div>
@@ -428,365 +428,150 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/graphqlconf-19-4.JPG"
+            src="https://blog.dgraph.io/images/release-v1.1.0.jpg"
           >
           <div class="article-content">
 
-<p>We took part in the recently held <a href="https://www.graphqlconf.org/">GraphQL conference</a> in Berlin.
-The experience was fascinating, and we were amazed by the high voltage
-enthusiasm in the GraphQL community.
-Now, we couldn&rsquo;t help ourselves from sharing this with Dgraph&rsquo;s community!
-This is the story of the GraphQL conference in Berlin.</p>
+<p>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness.
+Dgraph is built as an effort to enable and simplify the development of scalable cloud applications that could continue to thrive even when the data is highly connected and involved.</p>
 
-<hr />
+<p>Set on this path, embracing open source all along the way, the first <a href="https://blog.dgraph.io/post/releasing-v1.0/">production-ready, major release v1.0.0</a> happened
+in December 2017. Since then, the feedback from the community and customers has prominently shaped the evolution of the product. Thanks to all of you!</p>
 
-<h2 id="the-graphql-connection">The GraphQL connection</h2>
+<p>Also, along the way, we have hit a few major milestones.
+<a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">Raising Series A funding</a> and
+<a href="https://blog.dgraph.io/post/10k-github-stars/">Reaching 10K starts</a> tops the list.</p>
 
-<p>If you&rsquo;re wondering what does Dgraph has to do with GraphQL, here&rsquo;s the answer.
-Dgraph had set its eyes and placed its bet on GraphQL very early. Back in 2015,
-when GraphQL was still hot and new,
-we were intrigued by its intuitiveness and expressiveness to query application Graphs.</p>
+<p>Dgraph&rsquo;s new release <a href="https://github.com/dgraph-io/dgraph/releases/tag/v1.1.0">v1.1.0 is here</a>.
+The new version ships with a plethora of significant changes and new features. In this post, we will
+cover the most important ones, but you can find all the details in the
+<a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#110---2019-09-03">changelog</a>.</p>
 
-<p>But, the simplicity of GraphQL makes it infeasible to express all database
-operations with it. Rather than exposing a subset of functionalities through
-complete GraphQL spec compatibility, we chose to sway away a bit, and this led to
-GraphQL+-. This love affair with GraphQL over the years has been full of flavors.
-But it never has been bitter :) The GraphQL community constantly desired
-for the full spec compatibility. And we obliged.</p>
+<h2 id="breaking-changes">Breaking changes</h2>
 
-<p><img src="/images/graphqlconf-19-7.jpeg" alt="GraphQL-request" /></p>
+<p>Before we go over the new features, let&rsquo;s cover the changes that could break your current code.
+We have only three breaking changes, so you might probably want to have a quick look at them.</p>
 
-<p>Dgraph is currently a member of the GraphQL Foundation. As we head towards
-shipping a layer that would
-completely adhere to GraphQL spec, we decided it was time for us to participate
-more actively within the GraphQL community.</p>
+<h4 id="1-removal-of-predicate-keyword">1. Removal of _predicate_ keyword</h4>
 
-<hr />
+<p>Due to long-standing performance and transactional concerns around
+<code>_predicate_</code>, the keyword has been removed in this release.</p>
 
-<h2 id="the-trip">The trip</h2>
+<p>We are working on providing an alternative mechanism to support our users while writing their
+queries. If you have specific needs or suggestions regarding this feature, please let us know
+by filing an issue on <a href="https://github.com/dgraph-io/dgraph">GitHub</a>.</p>
 
-<p>The yearning to be amidst the community brought 5 of us from 4 different continents
-to fly to Berlin for the conference.</p>
+<h4 id="2-predicates-of-type-uid-lists-are-now-explicit">2. Predicates of type UID lists are now explicit</h4>
 
-<p>For most of us in the team, it was our first time in Berlin. The liveliness and
-vivacity of Berlin are indeed limitless.</p>
+<p>Before this release, it was not possible to say that a predicate could have a single UID value.
+This was caused by <code>foo: uid .</code> being interpreted as a predicate foo of type list of
+UIDs.</p>
 
-<p><img src="/images/graphqlconf-19-1.jpg" alt="Berlin" /></p>
+<p>In the new release, to indicate that a predicate has a list of UIDs associated with it you
+will need to use <code>[uid]</code>, as <code>uid</code> now means the value is a single UID.</p>
 
-<p>As a precursor to GraphQL conf, we attended the <a href="https://www.prisma.io/day/">Prisma day</a>. The interaction with the Prisma team and the community was wonderful.</p>
+<h4 id="3-http-header-changes">3. HTTP header changes</h4>
 
-<p><img src="/images/graphqlconf-19-9.jpg" alt="Berlin" /></p>
+<p>We have dropped support for the HTTP headers <code>X-Dgraph-CommitNow</code> and <code>X-Dgraph-MutationType</code>.
+Instead of <code>X-Dgraph-MutationType</code>, we now use the standard HTTP header <code>Content-Type</code>,
+and <code>X-Dgraph-CommitNow</code> is now a query parameter in the URL <code>commitNow=true</code>.</p>
 
-<hr />
+<p>This should only affect applications that are directly using Dgraph&rsquo;s REST endpoints.
+If you are using a client library, these changes should be fully transparent.</p>
 
-<h2 id="the-conference-day">The conference day</h2>
+<h2 id="new-features">New Features</h2>
 
-<p>The first glimpse at the conference was thrilling! It was all set for a splendid show.
-<img src="/images/graphqlconf-19-5.jpg" alt="graphql-conf" /></p>
+<p>Now that we have covered the breaking changes, it&rsquo;s time to go over the exciting new features which
+are coming with v1.1.0.</p>
 
-<p>The talks touched upon a diverse set of topics, here are the broad categories,</p>
+<h4 id="a-new-type-system">A new type system</h4>
 
-<h3 id="the-graphql-success-story">The GraphQL success story.</h3>
+<p>Starting with version 1.1.0, Dgraph provides support for types.
+Types allow grouping of nodes into sets describing the data associated with them.</p>
 
-<p>History and reasons why GraphQL kicked off in one&rsquo;s company or how GraphQL brings
- efficiency to their existing practices. These talks took us through the GraphQL journey,
- the set of pain points one faced in their organizations, and how the adoption of GraphQL solved it.</p>
+<p>The type system follows the GraphQL syntax for defining the types.
+The fields in the types correspond to existing predicates in the schema, where their indexes are also defined.</p>
 
-<p>The co-creators of GraphQL, <a href="https://twitter.com/dlschafer">Dan Schafer</a> and
- <a href="https://twitter.com/leeb">Lee Byron</a> took the audience through their journey
- at Facebook during which GraphQL evolved</p>
+<pre><code class="language-sh">type Student {
+  name: string
+  dob: datetime
+  home_address: string
+  year: int
+}
+</code></pre>
 
-<ul>
-<li>We&rsquo;re going to program like it&rsquo;s 1999 by <a href="https://twitter.com/leeb">Lee Byron</a></li>
-</ul>
+<p>This type system is an early release and, among other features, doesn&rsquo;t support required
+(aka non-nullable) fields. Defining a field of type <code>string!</code> is supported but it will be considered
+exactly as <code>string</code> for now.</p>
 
+<p>Once a type has been defined, nodes can be given associated with the <code>dgraph.type</code> predicate.
+The new <code>type</code> function can be used in queries and filters to find the corresponding nodes.
+Here are the docs to learn more about the
+<a href="https://docs.dgraph.io/master/query-language/#type-system">type system in Dgraph</a>.</p>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/ADEav6zlDjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<h4 id="upsert-blocks">Upsert blocks</h4>
 
+<p>Dgraph doesn&rsquo;t have the concept of primary key. The upsert primitive is necessary to guarantee the uniqueness of the value for a predicate (like the <code>email</code> of a user),</p>
 
-<ul>
-<li>GraphQL before GraphQL — <a href="https://twitter.com/dlschafer">Dan Schafer</a></li>
-</ul>
+<p>Previously to this release, upsert was a two-step operation:</p>
 
+<ol>
+<li>First, send a query to find whether a user exists with a given email.</li>
+<li>Then, if no user was found with that email, use a mutation to create it.</li>
+</ol>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/gb1R-fWP1Yw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<p>With the new upsert block feature, upserts can be performed in one step. This simplifies the usage of client libraries to build applications, improves the performance by reducing the network calls, and enhances the developer experience around upserts.</p>
 
+<p>Here is the <a href="https://github.com/dgraph-io/flock/commit/b77b366c66c2805eabaf7828bd08ece68705a7c5">commit</a> on our flock project (a twitter clone build on Dgraph using Go) which illustrates the simplicity the new upsert block brings into application development on Dgraph.</p>
 
-<hr />
+<p><a href="https://docs.dgraph.io/master/mutations/#upsert-block">Here are the docs</a> to learn how to use upsert blocks.</p>
 
-<ul>
-<li>Making Design More Human With GraphQL by <a href="https://twitter.com/braposo">Bernado Raposo</a></li>
-</ul>
+<h2 id="enterprise-features">Enterprise features</h2>
 
+<h4 id="binary-backups">Binary Backups</h4>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/W_-RLshKCwE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<p>Binary backups are part of Dgraph&rsquo;s <a href="https://docs.dgraph.io/master/enterprise-features">enterprise features</a>.
+Backup can be stored directly on your on-premise or cloud storage systems and then they can
+be used to restore a new Dgraph cluster to the previous state.</p>
 
+<p>You can learn more about Binary Backups reading the
+<a href="https://docs.dgraph.io/master/enterprise-features/#binary-backups">Binary Backup documentation page</a>.</p>
 
-<ul>
-<li>GraphQL Subscriptions at Scale for Real-time Monitoring Dashboard at VISA by
-<a href="https://twitter.com/email2vimalraj">Vimalraj Selvam</a></li>
-</ul>
+<h4 id="access-control-lists">Access Control Lists</h4>
 
+<p>Access Control Lists (ACL) provide access protection to your data stored in Dgraph.
+When the ACL feature is turned on, a client must authenticate with a username and password
+before executing any transactions and is only allowed to access the data permitted by the ACL rules.</p>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/k4rX8wUYjmU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<p>Check out the <a href="https://docs.dgraph.io/master/enterprise-features/#access-control-lists">docs</a>
+to learn more about ACLs.</p>
 
+<h2 id="ready-to-migrate">Ready to migrate?</h2>
 
-<hr />
+<p>If you are convinced that v1.1.0 is the future and you are ready to migrate, make sure you follow
+these steps.</p>
 
-<h3 id="tooling">Tooling</h3>
+<p>First, export the data from your current Dgraph cluster following the
+<a href="https://docs.dgraph.io/deploy/#export-database">database export documentation</a>.
+Make sure you keep this data somewhere safe, you will need it soon.</p>
 
-<p>One of the real advantages of adhering to GraphQL spec is its rich ecosystem of tooling.</p>
+<p>Then, install v1.1.0 and either follow the <a href="https://docs.dgraph.io/deploy/#bulk-loader">bulk loader</a>
+documentation to import all the data back into the database before it starts serving traffic,
+or start your new cluster and use <a href="https://docs.dgraph.io/deploy/#live-loader">live loader</a>.</p>
 
-<p>Here&rsquo;s one such talk around GraphQL tooling,</p>
+<p>Please, note that the UIDs will change during the export/import process, so any queries or mutations
+using explicit UIDs will fail. We recommend using <code>upsert</code> mutations instead.
+In future versions, UIDs will be preserved during the import/export process.</p>
 
-<ul>
-<li>Building Custom GraphQL Tooling For Your Team by <a href="https://twitter.com/stubailo">Sashko Stubailo</a></li>
-</ul>
+<h3 id="in-conclusion">In conclusion</h3>
 
+<p>We went through the highlights of the release including the new features and three breaking changes.
+To know more about all the changes, bug-fixes, and enhancements this release is shipped with,
+read the <a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#changelog">changelog</a>.</p>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/jegQWT-Wl64" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="the-scale-challenges">The scale challenges.</h3>
-
-<p>Some of the talks touched upon scaling challenges with GraphQL. These talks
- were particular interest to us. I&rsquo;ll dig more into why later in the article.</p>
-
-<ul>
-<li><a href="https://twitter.com/mahoneymattj">Matt Mahoney</a> from Facebook spoke about scaling the GraphQL clients.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/Vo8nqjiKI3A" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>This talk by <a href="https://twitter.com/jbaxleyiii">James Baxley</a> explains
-how Apollo Federation aims to simplify the challenge of providing a unified
-GraphQL API gateway on top of multiple GraphQL microservices.·</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/Uw-Z1aUQvgg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/__xuorig__">Marc</a> from Github also focuses on how having
-a monolith for the purpose of having one Graph for an entire
-organization is a bad idea, but stitching the GraphQL microservices also has
-its downsides. He
-shares views on what could be the right mixture.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/Vq0ajno-zgw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>Adam D. I. Kramer from Facebook shares tips about maintaining backward
-compatibility as your GraphQL project grows big.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/FGCqA9PjVQk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/jnwng">Jon Wong</a> from Coursera explains their strategies
-for scaling GraphQL adoption over the last few years.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/fmsDlaKTJZs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="the-community-projects-and-libs">The community projects and libs</h3>
-
-<ul>
-<li><a href="https://www.gatsbyjs.org/">Gatsby</a> is a free and open-source framework based
-on React that helps developers build blazing-fast websites and apps.
-<a href="https://twitter.com/kylemathews">Kyle Matthews</a>, Co-Founder and CEO of Gatsby
-discussed how they use GraphQL to support querying data from hundreds of different source plugins.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/hXGziTHNTKY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://github.com/tartiflette/tartiflette">Tartiflette</a> is a new &ldquo;SDL First&rdquo;
-implementation built for Python 3.6+. <a href="https://twitter.com/tsunammis">Stan Chollet</a>
-talks about how the library was built based on his experience at Dailymotion
-running GraphQL API&rsquo;s.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/r070pi8np1M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/andimarek">Andreas Marek</a>, Creator and Maintainer
-of <a href="https://github.com/graphql-java/graphql-java">GraphQL Java</a> shed
-light on execution strategies in GraqhQL client libraries.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/SOloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="best-practices">Best practices</h3>
-
-<ul>
-<li><a href="https://twitter.com/sachee">Sasha Solomon</a> from twitter on best practices around Error Handling in GraphQL.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/A5-H6MtTvqk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/nikolasburk">Nikolas Burk</a> on Code first GraphQL Server Development with Prisma.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/OloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>SDL as an Artifact by <a href="https://twitter.com/tgriesser">Tim Griesser</a>.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/5oyWwjLpUS4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>Kewei Qu from Facebook explains best practices learned from their massive migration efforts to GraphQL.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/YCmtNB61BS8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>Refactoring Your Mind From REST by <a href="https://twitter.com/builtbyproxy">Lachlan Young</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/xHLzguFd8Ug" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<p><img src="/images/graphqlconf-19-3.png" alt="collage" /></p>
-
-<hr />
-
-<h3 id="the-graphql-documentary-screening">The GraphQL documentary screening</h3>
-
-<p>The GraphQL documentary screening was one of the highlights of the conference.</p>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/783ccP__No8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<p><img src="/images/graphqlconf-19-6.jpeg" alt="GraphQL documentary" /></p>
-
-<hr />
-
-<h2 id="the-live-tweeting">The live-tweeting</h2>
-
-<p>We didn&rsquo;t miss the chance to live-tweet the event :) Here are the threads,</p>
-
-<ul>
-<li><a href="https://twitter.com/dgraphlabs/status/1141615202447835137">Day 1</a></li>
-<li><a href="https://twitter.com/dgraphlabs/status/1141973074742521856">Day 2</a></li>
-</ul>
-
-<hr />
-
-<h2 id="thank-you-note-to-the-organizers">Thank you note to the organizers.</h2>
-
-<p>The show was indeed a GraphQL carnival. A big shoutout to <a href="https://twitter.com/etelsverdlov">Etel Sverdlov</a>, <a href="https://twitter.com/kromina_ek">Ekaterina Kromina</a>,
-and <a href="https://twitter.com/Batjohe">Johanna Dahlroos</a>. The three wonderful
-organizers who made the event a grand success.</p>
-
-<p><img src="/images/graphqlconf-19-8.JPG" alt="Organizers" /></p>
-
-<hr />
-
-<h2 id="the-closing-notes">The closing notes</h2>
-
-<p>The adoption and growth of GraphQL have been tremendous. The community is very
-enthusiastic and dynamic. We are witnessing a trend wherein a large number of
-companies are gearing up to adopt GraphQL at scale.</p>
-
-<p>GraphQL encourages one to think, visualize, and query by imagining an entire
-organization&rsquo;s data as one big graph,
-and this changes the whole view of one&rsquo;s business domain. In a short period
-post GraphQL adoption,
-one would be implicitly accustomed to think &ldquo;Graph&rdquo;ically! In due course,
-there is a great possibility
-that the nature of the database and server-side workloads start to change.</p>
-
-<p>But it looks evident that amidst the GraphQL excitement, the new set of
-challenges that could potentially be posed by the change in the nature of
-workload at the database layer has been underplayed.</p>
-
-<p>The staggering adoption of GraphQL has renewed the need for a distributed engine
-which in one sweep could resolve arbitrary depth GraphQL queries, without having
-to compromise on the scale, throughput, and speed.</p>
-
-<p>Hence, we are excited about the way GraphQL has kicked off in the last couple of years.
-We look forward to making active participation and
-impactful contributions to the vibrant GraphQL community.</p>
-
-<p>We signed off with impressions of great experiences and the mandatory
-<a href="https://twitter.com/dgraphlabs/status/1142108053078196225">bye bye tweet</a> :)</p>
-
-<p><img src="/images/graphqlconf-19-2.png" alt="Bye Bye" /></p>
+<p>This release is the result of years of evolution driven by the feedback from the community and our
+customers. We&rsquo;d like to take this opportunity to thank you all again for helping us make Dgraph even
+better with every release.</p>
 
 <hr />
 
@@ -846,12 +631,7 @@ impactful contributions to the vibrant GraphQL community.</p>
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/graphql/">GraphQL</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/graphqlconf/">GraphQLConf</a>
+                    <a href="https://blog.dgraph.io/tags/release/">Release</a>
                 
             
                 
@@ -992,7 +772,7 @@ impactful contributions to the vibrant GraphQL community.</p>
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/graphql-conf-19/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/release-v1.1.0/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1218,7 +998,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/graphql-conf-19\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/release-v1.1.0\/"
 };
 (function() {
   var d = document.createElement("script");

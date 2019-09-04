@@ -3,8 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/tags/devrel/</loc>
+    <lastmod>2019-09-04T06:00:00-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-08-23T08:00:00-07:00</lastmod>
+    <lastmod>2019-09-04T06:00:00-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/</loc>
+    <lastmod>2019-09-04T06:00:00-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/release/</loc>
+    <lastmod>2019-09-04T06:00:00-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/release-v1.1.0/</loc>
+    <lastmod>2019-09-04T06:00:00-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/</loc>
+    <lastmod>2019-09-04T06:00:00-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -14,37 +43,19 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-08-23T08:00:00-07:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/devrel/</loc>
-    <lastmod>2019-08-20T20:20:00+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/post/graphql-conf-19/</loc>
-    <lastmod>2019-08-20T20:20:00+05:30</lastmod>
+    <lastmod>2019-08-16T14:30:00+05:30</lastmod>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/graphql/</loc>
-    <lastmod>2019-08-20T20:20:00+05:30</lastmod>
+    <lastmod>2019-08-16T14:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/graphqlconf/</loc>
-    <lastmod>2019-08-20T20:20:00+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/</loc>
-    <lastmod>2019-08-20T20:20:00+05:30</lastmod>
+    <lastmod>2019-08-16T14:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
@@ -95,12 +106,6 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/badger/</loc>
-    <lastmod>2019-07-03T11:00:00-07:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/release/</loc>
     <lastmod>2019-07-03T11:00:00-07:00</lastmod>
     <priority>0</priority>
   </url>
@@ -346,6 +351,11 @@
   <url>
     <loc>https://blog.dgraph.io/post/badger/</loc>
     <lastmod>2017-05-14T20:18:15+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/string-matching/</loc>
+    <lastmod>2017-04-10T12:10:00+02:00</lastmod>
   </url>
   
   <url>
