@@ -450,7 +450,7 @@ cover the most important ones, but you can find all the details in the
 <h2 id="breaking-changes">Breaking changes</h2>
 
 <p>Before we go over the new features, let&rsquo;s cover the changes that could break your current code.
-We have only three breaking changes, so you might probably want to have a quick look at them.</p>
+We have only four breaking changes, so you might probably want to have a quick look at them.</p>
 
 <h4 id="1-removal-of-predicate-keyword">1. Removal of _predicate_ keyword</h4>
 
@@ -461,7 +461,30 @@ We have only three breaking changes, so you might probably want to have a quick 
 queries. If you have specific needs or suggestions regarding this feature, please let us know
 by filing an issue on <a href="https://github.com/dgraph-io/dgraph">GitHub</a>.</p>
 
-<h4 id="2-predicates-of-type-uid-lists-are-now-explicit">2. Predicates of type UID lists are now explicit</h4>
+<h4 id="2-change-in-behavior-of-in-delete-operations">2. Change in behavior of * in delete operations</h4>
+
+<p>The delete operation with <code>*</code> only deletes the predicates which are part of the types associated with a given node.
+For instance, let&rsquo;s imagine we have a node
+with UID <code>0x1</code> of type <code>Person</code>.</p>
+
+<pre><code>type Person {
+    name: string 
+    age: int
+}
+</code></pre>
+
+<p>To this node of type <code>Person</code>, we associate an extra predicate <code>salary</code> of type <code>int</code>.
+Running a delete operation with wildcards would delete the <code>name</code> and <code>age</code> predicates, but not the <code>salary</code> predicate.</p>
+
+<pre><code>delete {
+    &lt;0x1&gt; * * .
+}
+</code></pre>
+
+<p>As a logical consequence, running a delete operation with <code>*</code> on a node with no types would not delete anything.
+This change is tied to the removal of  <code>_predicate_</code> mentioned above.</p>
+
+<h4 id="3-predicates-of-type-uid-lists-are-now-explicit">3. Predicates of type UID lists are now explicit</h4>
 
 <p>Before this release, it was not possible to say that a predicate could have a single UID value.
 This was caused by <code>foo: uid .</code> being interpreted as a predicate foo of type list of
@@ -470,7 +493,7 @@ UIDs.</p>
 <p>In the new release, to indicate that a predicate has a list of UIDs associated with it you
 will need to use <code>[uid]</code>, as <code>uid</code> now means the value is a single UID.</p>
 
-<h4 id="3-http-header-changes">3. HTTP header changes</h4>
+<h4 id="4-http-header-changes">4. HTTP header changes</h4>
 
 <p>We have dropped support for the HTTP headers <code>X-Dgraph-CommitNow</code> and <code>X-Dgraph-MutationType</code>.
 Instead of <code>X-Dgraph-MutationType</code>, we now use the standard HTTP header <code>Content-Type</code>,
@@ -565,7 +588,7 @@ In future versions, UIDs will be preserved during the import/export process.</p>
 
 <h3 id="in-conclusion">In conclusion</h3>
 
-<p>We went through the highlights of the release including the new features and three breaking changes.
+<p>We went through the highlights of the release including the new features and four breaking changes.
 To know more about all the changes, bug-fixes, and enhancements this release is shipped with,
 read the <a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#changelog">changelog</a>.</p>
 
