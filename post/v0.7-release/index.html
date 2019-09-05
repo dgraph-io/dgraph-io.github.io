@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.55.6" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -586,36 +586,35 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 <li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
 <li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
 <li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-
-<li><p><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</p>
+<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
+</ul>
 
 <pre><code>$ curl localhost:8080/query -XPOST -d $'
 {
-tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-name
-}
+  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
+    name
+  }
 }' | python -m json.tool | grep name
 
-        &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-        &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-        &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-        &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-        &quot;name&quot;: &quot;De Young Museum&quot;
-        &quot;name&quot;: &quot;Chinese Pavillion&quot;
-        &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-        &quot;name&quot;: &quot;Peace Lantern&quot;
-        &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-        &quot;name&quot;: &quot;Morrison Planetarium&quot;
-        &quot;name&quot;: &quot;California Academy of Sciences&quot;
-        &quot;name&quot;: &quot;Hamon Tower&quot;
-        &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-        &quot;name&quot;: &quot;La Rose des Vents&quot;
-        &quot;name&quot;: &quot;Strawberry Hill&quot;
-        &quot;name&quot;: &quot;Buddha&quot;
-        &quot;name&quot;: &quot;Rose Garden&quot;
+            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
+            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
+            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
+            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
+            &quot;name&quot;: &quot;De Young Museum&quot;
+            &quot;name&quot;: &quot;Chinese Pavillion&quot;
+            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
+            &quot;name&quot;: &quot;Peace Lantern&quot;
+            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
+            &quot;name&quot;: &quot;Morrison Planetarium&quot;
+            &quot;name&quot;: &quot;California Academy of Sciences&quot;
+            &quot;name&quot;: &quot;Hamon Tower&quot;
+            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
+            &quot;name&quot;: &quot;La Rose des Vents&quot;
+            &quot;name&quot;: &quot;Strawberry Hill&quot;
+            &quot;name&quot;: &quot;Buddha&quot;
+            &quot;name&quot;: &quot;Rose Garden&quot;
 
-</code></pre></li>
-</ul>
+</code></pre>
 
 <p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
 
@@ -900,30 +899,20 @@ name
     </script>
 
 
-<script>
-if (window.location.host.indexOf("dgraph.io") > -1) {
-  (function(i, s, o, g, r, a, m) {
-    i["GoogleAnalyticsObject"] = r;
-    (i[r] =
-      i[r] ||
-      function() {
-        (i[r].q = i[r].q || []).push(arguments);
-      }), (i[r].l = 1 * new Date());
-    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m);
-  })(
-    window,
-    document,
-    "script",
-    "//www.google-analytics.com/analytics.js",
-    "ga"
-  );
-  ga("create", "UA-75364122-1", "auto");
-  ga("send", "pageview");
-}
-</script>
+  
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-75364122-5"
+  ></script>
+  <script>
+    if (window.location.host.indexOf("dgraph.io") > -1) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-75364122-5');
+    }
+  </script>
 
 
 
@@ -1034,7 +1023,7 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?2d04df3016e45b49360acc6480e3008e'
+  src='/js/custom.js?5121f4ad385550a97bb2a046b9b43619'
 ></script>
 
 </body>

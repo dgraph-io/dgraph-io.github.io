@@ -2,7 +2,7 @@
  <html class="ie" lang="en"> 
   <head>
     <meta charset="utf-8">
-      <meta name="generator" content="Hugo 0.55.6" />
+      <meta name="generator" content="Hugo 0.53" />
 
     
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
@@ -976,30 +976,20 @@ in v1.1 which we plan to release end of this month. Stay tuned!</p>
     </script>
 
 
-<script>
-if (window.location.host.indexOf("dgraph.io") > -1) {
-  (function(i, s, o, g, r, a, m) {
-    i["GoogleAnalyticsObject"] = r;
-    (i[r] =
-      i[r] ||
-      function() {
-        (i[r].q = i[r].q || []).push(arguments);
-      }), (i[r].l = 1 * new Date());
-    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m);
-  })(
-    window,
-    document,
-    "script",
-    "//www.google-analytics.com/analytics.js",
-    "ga"
-  );
-  ga("create", "UA-75364122-1", "auto");
-  ga("send", "pageview");
-}
-</script>
+  
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-75364122-5"
+  ></script>
+  <script>
+    if (window.location.host.indexOf("dgraph.io") > -1) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-75364122-5');
+    }
+  </script>
 
 
 
@@ -1110,7 +1100,7 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?2d04df3016e45b49360acc6480e3008e'
+  src='/js/custom.js?5121f4ad385550a97bb2a046b9b43619'
 ></script>
 
 </body>
