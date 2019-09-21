@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 07 Mar 2019 15:30:00 -0800</lastBuildDate>
+    <lastBuildDate>Thu, 19 Sep 2019 23:13:13 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/reddit/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introducing Ristretto: A High-Performance Go Cache</title>
+      <link>https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/</link>
+      <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/</guid>
+      <description>This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a star.
+With over six months of research and development, we&amp;rsquo;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios.</description>
+    </item>
     
     <item>
       <title>The State of Caching in Go</title>

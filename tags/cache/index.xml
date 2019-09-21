@@ -18,8 +18,8 @@
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/</guid>
-      <description>With over six months of research and development, we&amp;rsquo;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios.
-Preface It all started with needing a memory-bound, concurrent Go cache in Dgraph. We looked around for a solution, but we couldn&amp;rsquo;t find a great one. We then tried using a sharded map, with shard eviction to release memory, which caused us memory issues.</description>
+      <description>This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a star.
+With over six months of research and development, we&amp;rsquo;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios.</description>
     </item>
     
     <item>
