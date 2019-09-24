@@ -75,10 +75,10 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?01ee9e20d0be24f199f4d665d0479dad'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='https://blog.dgraph.io/css/custom.css?74f7c673a6d818972f35fc02d9001e99'>
 
   
   
@@ -585,36 +585,35 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 <li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
 <li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
 <li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-
-<li><p><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</p>
+<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
+</ul>
 
 <pre><code>$ curl localhost:8080/query -XPOST -d $'
 {
-tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-name
-}
+  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
+    name
+  }
 }' | python -m json.tool | grep name
 
-        &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-        &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-        &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-        &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-        &quot;name&quot;: &quot;De Young Museum&quot;
-        &quot;name&quot;: &quot;Chinese Pavillion&quot;
-        &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-        &quot;name&quot;: &quot;Peace Lantern&quot;
-        &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-        &quot;name&quot;: &quot;Morrison Planetarium&quot;
-        &quot;name&quot;: &quot;California Academy of Sciences&quot;
-        &quot;name&quot;: &quot;Hamon Tower&quot;
-        &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-        &quot;name&quot;: &quot;La Rose des Vents&quot;
-        &quot;name&quot;: &quot;Strawberry Hill&quot;
-        &quot;name&quot;: &quot;Buddha&quot;
-        &quot;name&quot;: &quot;Rose Garden&quot;
+            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
+            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
+            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
+            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
+            &quot;name&quot;: &quot;De Young Museum&quot;
+            &quot;name&quot;: &quot;Chinese Pavillion&quot;
+            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
+            &quot;name&quot;: &quot;Peace Lantern&quot;
+            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
+            &quot;name&quot;: &quot;Morrison Planetarium&quot;
+            &quot;name&quot;: &quot;California Academy of Sciences&quot;
+            &quot;name&quot;: &quot;Hamon Tower&quot;
+            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
+            &quot;name&quot;: &quot;La Rose des Vents&quot;
+            &quot;name&quot;: &quot;Strawberry Hill&quot;
+            &quot;name&quot;: &quot;Buddha&quot;
+            &quot;name&quot;: &quot;Rose Garden&quot;
 
-</code></pre></li>
-</ul>
+</code></pre>
 
 <p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
 
@@ -762,36 +761,6 @@ name
       </div>
     </footer>
   </div>
-
-  <div class="community-cta-wrapper">
-  <a href="#choose-community" class="community-cta">
-    Join our community
-  </a>
-
-  <ul class="community-list">
-    <li>
-      <a href="#" class="community-link" onclick="showPopup(false); return false;">
-        <i class="fa fa-envelope-o"></i> <span class="name">Subscribe</span>
-      </a>
-    </li>
-    <li>
-        <a href="https://github.com/dgraph-io/dgraph" target="_blank" class="community-link">
-          <i class="fa fa-github"></i> <span class="name">Github</span>
-        </a>
-      </li>
-    <li>
-      <a href="https://slack.dgraph.io/" target="_blank" class="community-link">
-        <i class="fa fa-slack"></i> <span class="name">Slack</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://discuss.dgraph.io/" target="_blank" class="community-link">
-        <i class="fa fa-comments"></i> <span class="name">Forum</span>
-      </a>
-    </li>
-  </ul>
-</div>
-
 
   <div class="page-footer__wrapper">
   <footer id="page-footer" class="page-footer">
@@ -949,64 +918,6 @@ $(document.links)
   .attr("target", "_blank");
 </script>
 
-
-<script>
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-  }
-
-  function setCookie(cname, cvalue, exdays) {
-    exdays = exdays || 60;
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
-  }
-</script>
-<script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-
-<script type='text/javascript'>
-  window.mailchimp_require = require
-  window.mailchimp_define = define
-  require = define = undefined
-</script>
-
-<script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-<script>
-  window.dojoRequire(
-  		["mojo/signup-forms/Loader"],
-  		function(L) {
-  			L.start({
-  					"baseUrl":"mc.us17.list-manage.com",
-  					"uuid":"f6c6a28bb40d10e26b88fff1c",
-  					"lid":"e85c448cac",
-  					"uniqueMethods":true
-  			})
-  		})
-</script>
-
-<script>
-  setInterval(function() {
-    var cookieVal = getCookie('MCPopupClosed');
-    if (cookieVal) {
-      
-      setCookie('MCPopupClosed', cookieVal, 5)
-    }
-  }, 3000);
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
@@ -1023,8 +934,11 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?5121f4ad385550a97bb2a046b9b43619'
+  src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
+
+<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
+<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
 
 </body>
 </html>
