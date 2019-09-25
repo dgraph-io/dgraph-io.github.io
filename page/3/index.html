@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.52" />
   <meta charset="utf-8">
 
   
@@ -76,10 +76,10 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?01ee9e20d0be24f199f4d665d0479dad'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/custom.css?74f7c673a6d818972f35fc02d9001e99'>
+    href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
@@ -121,6 +121,39 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Apr 3, 2018 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="clearfix">
+		<h3 class="article__title">Switching Dgraph to a Liberal License</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/relicensing-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/lightsaber.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">Last year, we had switched Dgraph license to AGPLv3.0, considering reasons like the ability to monetize in a competitive environment. In particular,
+ The threat of duplicate commercial services and enterprise features built by others without paying anything back towards the development of the open source version.
+Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, with no restrictions.
+ This remains a credible threat; nothing has changed in that regard.</div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -355,46 +388,6 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Wed, Sep 20, 2017 by Deepak Jois
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="clearfix">
-		<h3 class="article__title">Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/pia21778.png); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</div>
-				<div class="tags">
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/boltdb/">BoltDB</a>
-							
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -442,6 +435,36 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
       </div>
     </div>
   </div>
+
+  <div class="community-cta-wrapper">
+  <a href="#choose-community" class="community-cta">
+    Join our community
+  </a>
+
+  <ul class="community-list">
+    <li>
+      <a href="#" class="community-link" onclick="showPopup(false); return false;">
+        <i class="fa fa-envelope-o"></i> <span class="name">Subscribe</span>
+      </a>
+    </li>
+    <li>
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" class="community-link">
+          <i class="fa fa-github"></i> <span class="name">Github</span>
+        </a>
+      </li>
+    <li>
+      <a href="https://slack.dgraph.io/" target="_blank" class="community-link">
+        <i class="fa fa-slack"></i> <span class="name">Slack</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://discuss.dgraph.io/" target="_blank" class="community-link">
+        <i class="fa fa-comments"></i> <span class="name">Forum</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
 
   <div class="page-footer__wrapper">
   <footer id="page-footer" class="page-footer">
@@ -599,6 +622,64 @@ $(document.links)
   .attr("target", "_blank");
 </script>
 
+
+<script>
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    exdays = exdays || 60;
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
+  }
+</script>
+<script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
+
+<script type='text/javascript'>
+  window.mailchimp_require = require
+  window.mailchimp_define = define
+  require = define = undefined
+</script>
+
+<script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
+<script>
+  window.dojoRequire(
+  		["mojo/signup-forms/Loader"],
+  		function(L) {
+  			L.start({
+  					"baseUrl":"mc.us17.list-manage.com",
+  					"uuid":"f6c6a28bb40d10e26b88fff1c",
+  					"lid":"e85c448cac",
+  					"uniqueMethods":true
+  			})
+  		})
+</script>
+
+<script>
+  setInterval(function() {
+    var cookieVal = getCookie('MCPopupClosed');
+    if (cookieVal) {
+      
+      setCookie('MCPopupClosed', cookieVal, 5)
+    }
+  }, 3000);
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
@@ -615,11 +696,8 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
+  src='/js/custom.js?5121f4ad385550a97bb2a046b9b43619'
 ></script>
-
-<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
-<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
 
 </body>
 </html>

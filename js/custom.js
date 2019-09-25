@@ -11,6 +11,22 @@ $(document).ready(function() {
   });
 });
 
+// Community selector
+$(document).on("click", ".community-cta", function(e) {
+  e.stopPropagation();
+  e.preventDefault();
+  $(this).closest(".community-cta-wrapper").toggleClass("open");
+});
+
+$(document).on("click", ".community-link", function(e) {
+  e.stopPropagation();
+  $(this).closest(".community-cta-wrapper").toggleClass("open");
+});
+
+$(document).click(function() {
+  $(".community-cta-wrapper").removeClass("open");
+});
+
 // Fix scroll position after every click on an anchor element.
 // Doesn't work when currently targeted anchor is clicked, but good enough
 // since this implementation is less likely to break
@@ -71,30 +87,6 @@ window.addEventListener("hashchange", function(e) {
 var intermediateValNotFunc = function () {
   var FLAG_COOKIE = 'noGithubEngage';
   var NUM_DAYS_COOKIE = 'disableGithubCounterDays';
-
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-  }
-
-  function setCookie(cname, cvalue, exdays) {
-    exdays = exdays || 60;
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
-  }
 
   function gaEvent(cat, action, label, value) {
     if (!window.ga) {

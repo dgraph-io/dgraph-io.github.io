@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/</loc>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/release-v1.1.0/</loc>
     <lastmod>2019-09-04T08:00:00-04:00</lastmod>
   </url>
@@ -258,7 +263,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/cache/</loc>
-    <lastmod>2019-03-07T15:30:00-08:00</lastmod>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -281,7 +286,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2019-09-04T08:00:00-04:00</lastmod>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -305,7 +310,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/go/</loc>
-    <lastmod>2019-08-08T00:00:00+00:00</lastmod>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -335,7 +340,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/hacker-news/</loc>
-    <lastmod>2019-03-07T15:30:00-08:00</lastmod>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -395,7 +400,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2019-09-04T08:00:00-04:00</lastmod>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -407,7 +412,7 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/reddit/</loc>
-    <lastmod>2019-03-07T15:30:00-08:00</lastmod>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
     <priority>0</priority>
   </url>
   
