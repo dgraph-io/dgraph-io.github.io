@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 01 Oct 2019 14:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 15 Oct 2019 14:30:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/devrel/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Dgraph tutorials series - 2: UID operations, updating nodes, and traversals</title>
+      <link>https://blog.dgraph.io/post/tutorial-2-getting-started/</link>
+      <pubDate>Tue, 15 Oct 2019 14:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-2-getting-started/</guid>
+      <description>Welcome to the second episode of getting started with Dgraph. In the last episode of the tutorial, we learned some of the basics of Dgraph. Including how to run the database, add new nodes and predicates, and query them back.
+In this episode, we&amp;rsquo;ll build the above Graph and learn more about operations using the UID (Universal Identifier) of the nodes. Specifically, we&amp;rsquo;ll learn about:
+ Querying and updating nodes, deleting predicates using their UIDs.</description>
+    </item>
     
     <item>
       <title>Dgraph tutorials series - 1: Getting started</title>
