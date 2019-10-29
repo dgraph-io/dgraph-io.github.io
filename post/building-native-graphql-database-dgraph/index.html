@@ -32,14 +32,14 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
   
-    <title>Dgraph&#39;s recap of GraphQL Conf - Berlin 2019 - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph&#39;s recap of GraphQL Conf - Berlin 2019 - Dgraph Blog">
+    <title>Building a Native GraphQL Database: Challenges, Learnings and Future - Dgraph Blog</title>
+    <meta property='og:title' content="Building a Native GraphQL Database: Challenges, Learnings and Future - Dgraph Blog">
     <meta property="og:type" content="article">
   
 
-  <meta property="og:url" content="https://blog.dgraph.io/post/graphql-conf-19/">
+  <meta property="og:url" content="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/">
   
-  <meta property="og:image" content="https://blog.dgraph.io/images/graphqlconf-19-4.JPG">
+  <meta property="og:image" content="https://blog.dgraph.io/images/dgraph-graphql-sticker.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -84,13 +84,15 @@
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io/images/graphqlconf-19-4.JPG"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io/images/dgraph-graphql-sticker.jpg"/>
     
   
 
-  <meta name="twitter:title" content="Dgraph&#39;s recap of GraphQL Conf - Berlin 2019"/>
-  <meta name="twitter:description" content="We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&rsquo;t help ourselves from sharing this with Dgraph&rsquo;s community! This is the story of the GraphQL conference in Berlin.
-The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with GraphQL, here&rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early."/>
+  <meta name="twitter:title" content="Building a Native GraphQL Database: Challenges, Learnings and Future"/>
+  <meta name="twitter:description" content="&ldquo;GraphQL is not a Graph DB query language &mdash; it&rsquo;s a replacement for REST APIs.&rdquo;
+ That&rsquo;s my standard opening statement whenever talking about Dgraph&rsquo;s choice of the query language.
+Most people who don&rsquo;t know GraphQL assume it&rsquo;s a graph database query language. Most people who know GraphQL wonder how a graph database is being powered by it.
+Our focus at Dgraph has always been on helping you build apps using an amazingly advanced graph database."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -393,9 +395,9 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Fri, Aug 16, 2019
+                  Tue, Oct 29, 2019
                  by
-                Karthic Rao
+                Manish Rai Jain
 
 
               </span>
@@ -403,7 +405,7 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
                 <ul class="share__list">
                   
                   <li class="share__item">
-                    <a href="https://twitter.com/share?text=Dgraph%27s%20recap%20of%20GraphQL%20Conf%20-%20Berlin%202019&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fgraphql-conf-19%2f&amp;via=dgraphlabs" class="share__link">
+                    <a href="https://twitter.com/share?text=Building%20a%20Native%20GraphQL%20Database%3a%20Challenges%2c%20Learnings%20and%20Future&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbuilding-native-graphql-database-dgraph%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg>
@@ -414,7 +416,7 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Dgraph&#39;s recap of GraphQL Conf - Berlin 2019</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Building a Native GraphQL Database: Challenges, Learnings and Future</h1>
           </header>
         </div>
       </div>
@@ -427,365 +429,484 @@ The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/graphqlconf-19-4.JPG"
+            src="https://blog.dgraph.io/images/dgraph-graphql-sticker.jpg"
           >
           <div class="article-content">
 
-<p>We took part in the recently held <a href="https://www.graphqlconf.org/">GraphQL conference</a> in Berlin.
-The experience was fascinating, and we were amazed by the high voltage
-enthusiasm in the GraphQL community.
-Now, we couldn&rsquo;t help ourselves from sharing this with Dgraph&rsquo;s community!
-This is the story of the GraphQL conference in Berlin.</p>
-
-<hr />
-
-<h2 id="the-graphql-connection">The GraphQL connection</h2>
-
-<p>If you&rsquo;re wondering what does Dgraph has to do with GraphQL, here&rsquo;s the answer.
-Dgraph had set its eyes and placed its bet on GraphQL very early. Back in 2015,
-when GraphQL was still hot and new,
-we were intrigued by its intuitiveness and expressiveness to query application Graphs.</p>
-
-<p>But, the simplicity of GraphQL makes it infeasible to express all database
-operations with it. Rather than exposing a subset of functionalities through
-complete GraphQL spec compatibility, we chose to sway away a bit, and this led to
-GraphQL+-. This love affair with GraphQL over the years has been full of flavors.
-But it never has been bitter :) The GraphQL community constantly desired
-for the full spec compatibility. And we obliged.</p>
-
-<p><img src="/images/graphqlconf-19-7.jpeg" alt="GraphQL-request" /></p>
-
-<p>Dgraph is currently a member of the GraphQL Foundation. As we head towards
-shipping a layer that would
-completely adhere to GraphQL spec, we decided it was time for us to participate
-more actively within the GraphQL community.</p>
-
-<hr />
-
-<h2 id="the-trip">The trip</h2>
-
-<p>The yearning to be amidst the community brought 5 of us from 4 different continents
-to fly to Berlin for the conference.</p>
-
-<p>For most of us in the team, it was our first time in Berlin. The liveliness and
-vivacity of Berlin are indeed limitless.</p>
-
-<p><img src="/images/graphqlconf-19-1.jpg" alt="Berlin" /></p>
-
-<p>As a precursor to GraphQL conf, we attended the <a href="https://www.prisma.io/day/">Prisma day</a>. The interaction with the Prisma team and the community was wonderful.</p>
-
-<p><img src="/images/graphqlconf-19-9.jpg" alt="Berlin" /></p>
-
-<hr />
-
-<h2 id="the-conference-day">The conference day</h2>
-
-<p>The first glimpse at the conference was thrilling! It was all set for a splendid show.
-<img src="/images/graphqlconf-19-5.jpg" alt="graphql-conf" /></p>
-
-<p>The talks touched upon a diverse set of topics, here are the broad categories,</p>
-
-<h3 id="the-graphql-success-story">The GraphQL success story.</h3>
-
-<p>History and reasons why GraphQL kicked off in one&rsquo;s company or how GraphQL brings
- efficiency to their existing practices. These talks took us through the GraphQL journey,
- the set of pain points one faced in their organizations, and how the adoption of GraphQL solved it.</p>
-
-<p>The co-creators of GraphQL, <a href="https://twitter.com/dlschafer">Dan Schafer</a> and
- <a href="https://twitter.com/leeb">Lee Byron</a> took the audience through their journey
- at Facebook during which GraphQL evolved</p>
-
-<ul>
-<li>We&rsquo;re going to program like it&rsquo;s 1999 by <a href="https://twitter.com/leeb">Lee Byron</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/ADEav6zlDjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>GraphQL before GraphQL — <a href="https://twitter.com/dlschafer">Dan Schafer</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/gb1R-fWP1Yw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<ul>
-<li>Making Design More Human With GraphQL by <a href="https://twitter.com/braposo">Bernado Raposo</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/W_-RLshKCwE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>GraphQL Subscriptions at Scale for Real-time Monitoring Dashboard at VISA by
-<a href="https://twitter.com/email2vimalraj">Vimalraj Selvam</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/k4rX8wUYjmU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="tooling">Tooling</h3>
-
-<p>One of the real advantages of adhering to GraphQL spec is its rich ecosystem of tooling.</p>
-
-<p>Here&rsquo;s one such talk around GraphQL tooling,</p>
-
-<ul>
-<li>Building Custom GraphQL Tooling For Your Team by <a href="https://twitter.com/stubailo">Sashko Stubailo</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/jegQWT-Wl64" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="the-scale-challenges">The scale challenges.</h3>
-
-<p>Some of the talks touched upon scaling challenges with GraphQL. These talks
- were particular interest to us. I&rsquo;ll dig more into why later in the article.</p>
-
-<ul>
-<li><a href="https://twitter.com/mahoneymattj">Matt Mahoney</a> from Facebook spoke about scaling the GraphQL clients.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/Vo8nqjiKI3A" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>This talk by <a href="https://twitter.com/jbaxleyiii">James Baxley</a> explains
-how Apollo Federation aims to simplify the challenge of providing a unified
-GraphQL API gateway on top of multiple GraphQL microservices.·</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/Uw-Z1aUQvgg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/__xuorig__">Marc</a> from Github also focuses on how having
-a monolith for the purpose of having one Graph for an entire
-organization is a bad idea, but stitching the GraphQL microservices also has
-its downsides. He
-shares views on what could be the right mixture.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/Vq0ajno-zgw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>Adam D. I. Kramer from Facebook shares tips about maintaining backward
-compatibility as your GraphQL project grows big.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/FGCqA9PjVQk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/jnwng">Jon Wong</a> from Coursera explains their strategies
-for scaling GraphQL adoption over the last few years.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/fmsDlaKTJZs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="the-community-projects-and-libs">The community projects and libs</h3>
-
-<ul>
-<li><a href="https://www.gatsbyjs.org/">Gatsby</a> is a free and open-source framework based
-on React that helps developers build blazing-fast websites and apps.
-<a href="https://twitter.com/kylemathews">Kyle Matthews</a>, Co-Founder and CEO of Gatsby
-discussed how they use GraphQL to support querying data from hundreds of different source plugins.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/hXGziTHNTKY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://github.com/tartiflette/tartiflette">Tartiflette</a> is a new &ldquo;SDL First&rdquo;
-implementation built for Python 3.6+. <a href="https://twitter.com/tsunammis">Stan Chollet</a>
-talks about how the library was built based on his experience at Dailymotion
-running GraphQL API&rsquo;s.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/r070pi8np1M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/andimarek">Andreas Marek</a>, Creator and Maintainer
-of <a href="https://github.com/graphql-java/graphql-java">GraphQL Java</a> shed
-light on execution strategies in GraqhQL client libraries.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/SOloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<hr />
-
-<h3 id="best-practices">Best practices</h3>
-
-<ul>
-<li><a href="https://twitter.com/sachee">Sasha Solomon</a> from twitter on best practices around Error Handling in GraphQL.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/A5-H6MtTvqk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li><a href="https://twitter.com/nikolasburk">Nikolas Burk</a> on Code first GraphQL Server Development with Prisma.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/OloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>SDL as an Artifact by <a href="https://twitter.com/tgriesser">Tim Griesser</a>.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/5oyWwjLpUS4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>Kewei Qu from Facebook explains best practices learned from their massive migration efforts to GraphQL.</li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/YCmtNB61BS8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<ul>
-<li>Refactoring Your Mind From REST by <a href="https://twitter.com/builtbyproxy">Lachlan Young</a></li>
-</ul>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/xHLzguFd8Ug" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<p><img src="/images/graphqlconf-19-3.png" alt="collage" /></p>
-
-<hr />
-
-<h3 id="the-graphql-documentary-screening">The GraphQL documentary screening</h3>
-
-<p>The GraphQL documentary screening was one of the highlights of the conference.</p>
-
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/783ccP__No8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
-
-
-<p><img src="/images/graphqlconf-19-6.jpeg" alt="GraphQL documentary" /></p>
-
-<hr />
-
-<h2 id="the-live-tweeting">The live-tweeting</h2>
-
-<p>We didn&rsquo;t miss the chance to live-tweet the event :) Here are the threads,</p>
-
-<ul>
-<li><a href="https://twitter.com/dgraphlabs/status/1141615202447835137">Day 1</a></li>
-<li><a href="https://twitter.com/dgraphlabs/status/1141973074742521856">Day 2</a></li>
-</ul>
-
-<hr />
-
-<h2 id="thank-you-note-to-the-organizers">Thank you note to the organizers.</h2>
-
-<p>The show was indeed a GraphQL carnival. A big shoutout to <a href="https://twitter.com/etelsverdlov">Etel Sverdlov</a>, <a href="https://twitter.com/kromina_ek">Ekaterina Kromina</a>,
-and <a href="https://twitter.com/Batjohe">Johanna Dahlroos</a>. The three wonderful
-organizers who made the event a grand success.</p>
-
-<p><img src="/images/graphqlconf-19-8.JPG" alt="Organizers" /></p>
-
-<hr />
-
-<h2 id="the-closing-notes">The closing notes</h2>
-
-<p>The adoption and growth of GraphQL have been tremendous. The community is very
-enthusiastic and dynamic. We are witnessing a trend wherein a large number of
-companies are gearing up to adopt GraphQL at scale.</p>
-
-<p>GraphQL encourages one to think, visualize, and query by imagining an entire
-organization&rsquo;s data as one big graph,
-and this changes the whole view of one&rsquo;s business domain. In a short period
-post GraphQL adoption,
-one would be implicitly accustomed to think &ldquo;Graph&rdquo;ically! In due course,
-there is a great possibility
-that the nature of the database and server-side workloads start to change.</p>
-
-<p>But it looks evident that amidst the GraphQL excitement, the new set of
-challenges that could potentially be posed by the change in the nature of
-workload at the database layer has been underplayed.</p>
-
-<p>The staggering adoption of GraphQL has renewed the need for a distributed engine
-which in one sweep could resolve arbitrary depth GraphQL queries, without having
-to compromise on the scale, throughput, and speed.</p>
-
-<p>Hence, we are excited about the way GraphQL has kicked off in the last couple of years.
-We look forward to making active participation and
-impactful contributions to the vibrant GraphQL community.</p>
-
-<p>We signed off with impressions of great experiences and the mandatory
-<a href="https://twitter.com/dgraphlabs/status/1142108053078196225">bye bye tweet</a> :)</p>
-
-<p><img src="/images/graphqlconf-19-2.png" alt="Bye Bye" /></p>
+<blockquote>
+<p><strong>&ldquo;GraphQL is not a Graph DB query language &mdash; it&rsquo;s a replacement for
+REST APIs.&rdquo;</strong></p>
+</blockquote>
+
+<p>That&rsquo;s my standard opening statement whenever talking about Dgraph&rsquo;s
+choice of the query language.</p>
+
+<p>Most people who don&rsquo;t know GraphQL assume it&rsquo;s a graph database query language.
+Most people who know GraphQL wonder how a graph database is being powered by
+it.</p>
+
+<p>Our focus at <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> has always been on helping you build apps using an
+amazingly advanced graph database. And that extends to making sure Dgraph has a
+great development experience for modern developers. Other graph databases choose
+Gremlin, Cypher or write something custom inspired by SQL for their query
+language. We went a slightly different route in Dgraph, <strong>aiming to build a
+query language that modern developers would find useful and intuitive.</strong></p>
+
+<p>Our journey with GraphQL started almost 4 years ago, when
+I wrote this email to my ex-manager at Google.</p>
+
+<p>October 22, 2015</p>
+
+<blockquote>
+<p>I wanted your opinion on Graph languages. I&rsquo;m working on building Dgraph
+outside of Google &ndash; distributed low latency graph serving system
+essentially. This project is going to be open-source after the MVP
+launch in November. It&rsquo;s still early stage, and I&rsquo;m debating which graph
+query language to support. Facebook just launched GraphQL, which seems
+pretty nicely written to me. But, I&rsquo;ve also heard a lot about Gremlin.
+What do you think of them? I don&rsquo;t want to stretch out too thin and
+support both, at least at this stage. Which one do you think would be
+worth aiming at (given it&rsquo;s a new graph database)?</p>
+</blockquote>
+
+<p>The reply was quick, short and sweet.</p>
+
+<blockquote>
+<p>I like GraphQL, it has most of the nice properties of MQL<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>.  Gremlin has more
+Hadoop support if that matters.</p>
+</blockquote>
+
+<p>December 1, 2015</p>
+
+<blockquote>
+<p>Thanks for your advice! Went with GraphQL, quite like the query language so far.
+Just released: <a href="https://github.com/dgraph-io/dgraph">https://github.com/dgraph-io/dgraph</a></p>
+</blockquote>
+
+<p><strong>And that was how GraphQL became the native query language for a new
+database called Dgraph.</strong> Dgraph <a href="https://github.com/dgraph-io/dgraph/commit/73b0e41e2254c6b8cb15e47f521066224de69243">v0.1</a> supported (a version of) GraphQL. Dgraph
+<a href="https://github.com/dgraph-io/dgraph/releases/tag/v1.1.0">v1.1</a>, which launched last month, still only supports GraphQL. Neither
+version ever really achieved spec compliance with GraphQL, but for different
+reasons. The first was too early to achieve feature parity, the latter had
+deliberately deviated from the spec.</p>
+
+<p>In this post, we talk about GraphQL and the choices we&rsquo;ve made in moving beyond
+the GraphQL spec to build a real graph database query language.  We talk about
+the common issues GraphQL engineers face and how Dgraph solves them. We then
+come full-circle back to the GraphQL spec and <a href="https://graphql.dgraph.io/">our next releases</a> which will
+provide native GraphQL backed by Dgraph.</p>
+
+<h3 id="what-is-graphql">What is GraphQL</h3>
+
+<p>As per the spec, GraphQL is a query language designed to build client
+applications by providing an intuitive and flexible syntax for describing data
+requirements. In layman terms, <strong>GraphQL allows a way for clients to understand
+what the server provides and specifically request for data useful to the
+client.</strong></p>
+
+<p>Typical access patterns for applications tend to be graph shaped. For example, a
+question has answers, and comments; answers have comments; comments can have
+comments; all might have likes, and so on. Outside the general understanding,
+there&rsquo;s no real mention of or association with the backend system being a graph
+system in the spec. Both the July 2015 <a href="https://graphql.github.io/graphql-spec/July2015/">draft</a> and the current working
+<a href="https://graphql.github.io/graphql-spec/draft/">draft</a> mention the word &ldquo;graph&rdquo; only twice: once referring to a
+fragment (a concept in GraphQL) and once in a comment.</p>
+
+<p>Despite <a href="https://nordicapis.com/interview-with-graphql-co-creator-lee-byron/">Lee Byron&rsquo;s</a> reservations, GraphQL is widely assumed to be a
+REST API replacement. It provides a simple way for developers to retrieve only
+as much of their strongly-typed dataset as they need, and in the shape in which
+they need it.</p>
+
+<p>REST API endpoints are fixed. Each endpoint would give you a pre-determined
+amount of data, irrespective of how much data the client needs.  Squeezing
+efficiency in such a system leads developers to generate <strong>an ever-increasing
+number of endpoints,</strong> each returning a contained set of results.  The client
+would then call them in sequence to generate a view for the end-user.  There are
+guidelines around what would be an HTTP POST, what would make a PUT, what would
+be a GET,  and what the return error codes would be. By now, most developers are
+supposed to know these and be good at determining when to use what.  These make
+for clichéd interview questions, which don&rsquo;t guarantee you a tech job if you get
+them right, but surely turn the interview negative if you happen to falter.</p>
+
+<p>GraphQL turns all of this on its head. There&rsquo;s <strong>only one endpoint,</strong> most
+<a href="https://graphql.org/learn/serving-over-http/">accesses</a> are POST, all return codes are HTTP 200, with the errors
+captured in a JSON response. The server publishes what all the clients can
+access, and the client determines how much it wants to access, depending upon
+its use case. It is simple and powerful.</p>
+
+<p>Considering GraphQL is put in the same category as <a href="https://nordicapis.com/when-to-use-what-rest-graphql-webhooks-grpc/">REST, gRPC and
+webhooks</a>, calling it a <em>&ldquo;QL&rdquo;</em> (Query Language) is a bit of a stretch.
+<strong>It is really a syntax for describing an API.</strong>  If you take up
+GraphQL, you get to build whatever API you like and use GraphQL to describe the
+API&rsquo;s types and operations. Those things then describe the data that your API
+can return.</p>
+
+<h3 id="why-choose-graphql">Why choose GraphQL?</h3>
+
+<p>GraphQL had never been used as a query language for any database system. We
+bought the simplicity and power of this system, but also felt like we were
+taking a risk in going with unproven technology, particularly considering it
+is a syntax for describing an API (like REST) rather than a query
+language.</p>
+
+<p>For <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>, we needed a graph query language.  And a language powerful enough to
+describe all the sorts of graph queries that we wanted to enable for users.  It
+turns out, however, that a GraphQL-like syntax is a great place to start for two
+main reasons:</p>
+
+<p><strong>The query structure naturally models the graph that the query is traversing.</strong>
+A GraphQL query is like a structured explanation of the graph you&rsquo;d like as a
+result. Other graph query languages and even SQL joins, follow edges in the
+graph, but return lists of results, losing the relationships between the
+entities in the response. GraphQL, on the other hand, responds in the
+same structure as both the graph itself and the query tree, allowing the
+relationships to stay intact. The bracketing and indentation are so revealing of
+the query, graph traversal and intended result, that at a glance you know where
+it is going. So one can, for example, figure out exactly how a director is
+connected to an actor and through which movie.</p>
+
+<p><strong>The JSON result format of GraphQL not only naturally models the returned
+graph, but it&rsquo;s also the most useful structure for developers to consume.</strong>  Graph
+results that are embedded in other formats are difficult to consume for
+developers.  Special tools and libraries are required.  Your language might not
+have a tool for the format, and it&rsquo;s not easy to pass the result on to other
+parts of your system because those too need to be dependent on the workings of
+the format.  Those formats get in the way of developers trying to use the graph
+results.  But a GraphQL result works with any JSON parser, in any language, and
+naturally maps to the types you&rsquo;re using in your programming language.  GraphQL
+is easy to consume and just as easy to pass on, knowing that the next developer
+is also happy.</p>
+
+<p>We did not even fathom how wildly popular GraphQL would become.
+While we were focused on building the most advanced graph database in the
+market, the popularity of GraphQL intermixed with the popularity of Dgraph. One
+year since the original email went out, an article came out hailing
+Dgraph as a potential <a href="https://react-etc.net/entry/dgraph-has-the-potential-to-become-a-defacto-standard-for-graphql-graph-databases"><strong>defacto GraphQL database</strong></a>.</p>
+
+<h3 id="hitting-potholes-the-challenges">Hitting Potholes: The Challenges</h3>
+
+<p>We found the article to be encouraging and perfectly captured our efforts.  What
+they said resonated with us, but also exposed some gashes from our year of
+effort.</p>
+
+<blockquote>
+<p>GraphQL is not a Database Query Language, but it can be &mdash; <a href="https://react-etc.net/entry/dgraph-has-the-potential-to-become-a-defacto-standard-for-graphql-graph-databases">Article</a></p>
+</blockquote>
+
+<p>By this time, we were having doubts about whether GraphQL can really be a query
+language for a database. <strong>We were no longer convinced that the official spec
+matched the needs of a database.</strong></p>
+
+<h4 id="mutations">Mutations</h4>
+
+<p>The original GraphQL draft spec was light on how mutations should be executed. The
+idea was (and still is) that the client would call mutation functions, with
+arguments, which are implemented by custom code written in the backend. Expecting
+a database user to provide a plugin function for data ingest just does not make
+sense. Moreover, any basic function we could have provided wouldn&rsquo;t work for the
+thousands of updates Dgraph would see in a single network call.</p>
+
+<p>So, we realized we needed to build something custom into the spec to allow for
+inserting and modifying data in a standardized way. We achieved this by allowing
+RDF <a href="https://docs.dgraph.io/mutations/">data input</a> in mutation blocks. <strong>This was the first major foray outside
+the official spec for Dgraph.</strong> Later, we extended this to allow JSON inputs.</p>
+
+<h4 id="variables-and-query-blocks">Variables and Query Blocks</h4>
+
+<p>Databases typically allow a way to temporarily <em>hold</em> a result from one step in
+a query, using it later to execute another step in the query. This is the &ldquo;SQL AS&rdquo;
+query concept &mdash; something that&rsquo;s missing from GraphQL. We introduced
+this as <a href="https://docs.dgraph.io/query-language/#query-variables">variables</a> in Dgraph, allowing a user to query for some data and use
+its result in another portion of the same query.</p>
+
+<p><strong>The interplay of variables and query blocks adds significant query power to
+Dgraph.</strong></p>
+
+<p>GraphQL realized that avoiding repeated calls to the database is a great practice,
+and has the concept of query blocks. That is, within the same <code>query { ... }</code>
+block, many queries (executed concurrently) are allowed. Dgraph&rsquo;s variables
+extend that further.</p>
+
+<p>Dgraph allows a user to specify <a href="https://docs.dgraph.io/query-language/#multiple-query-blocks">many different blocks</a> to not only
+allow concurrent execution of these blocks for speed improvements, but also to
+divide the query up into <em>function-like</em> structures, making it easier to read
+and understand, and to share values between them.</p>
+
+<p>In Dgraph, one block can define
+variables that are used by other blocks. Dgraph then orders block execution
+in the right way to run the entire query, sometimes running blocks
+concurrently, sometimes in serial order, <strong>to execute the query in the most
+efficient way possible.</strong></p>
+
+<p>Dgraph extends the GraphQL syntax so that any part of a query can be collected in
+a variable.  Dgraph adds <code>A as ...some-query-field...</code> to mean variable <code>A</code> takes
+on the values (nodes or scalar values) calculated by the following field.</p>
+
+<p>Doing this allows running a query that&rsquo;s dependent on a previous result without
+having to read the result back to the client, deserialize and pass parameters to
+a new query. It also means you can return multiple related subgraphs from a
+single query and that you can reshape the result to fit the client&rsquo;s requirement.
+<strong>With Dgraph&rsquo;s built-in <a href="https://docs.dgraph.io/query-language/#aggregation">aggregation</a>, you can also use variables to build
+calculations into a query.</strong>  You can even break out sub results and use those elsewhere.</p>
+
+<p>For example, the query below finds a movie, calculates the number of roles the
+actors in that movie has had, and then returns that as a result about actors
+(ordered by the number of roles), rather than a result about movies as per the
+initial query. <em>All that in one network call!</em></p>
+
+<pre><code class="language-graphql">query {
+  var(func:allofterms(name@en, &quot;The Princess Bride&quot;)) {
+    starring {
+      actors as performance.actor {
+        roles as count(actor.film)
+      }
+    }
+  }
+
+  totalRoles(func: uid(actors), orderasc: val(roles)) {
+    name@en
+    numRoles : val(roles)
+  }
+}
+</code></pre>
+
+<p>Again that&rsquo;s a great feature for developers using Dgraph: you don&rsquo;t have to
+orchestrate multiple queries and input parameters and you don&rsquo;t have to dig
+through a whole result graph to get the data that matters for particular
+operations; you can just return multiple subgraphs that make sense, deserialize
+into a model that works for your algorithms and off you go.</p>
+
+<p><strong>Dgraph&rsquo;s query blocks add significant extra query power,</strong> while also simplifying
+queries and reducing the network calls from the client to the server, and this is
+an easy win for Dgraph users.</p>
+
+<h4 id="filters-and-functions">Filters and Functions</h4>
+
+<p>The first part of starting any query to a database is to reduce the search
+space. <code>select * from X where Y=Z</code>, reduces the search space to table X and in
+particular, only rows where column Y has a value Z. <code>select * from *</code>
+does not exist, because a database would not know where to begin looking.</p>
+
+<p>The GraphQL draft spec had examples which all started with a certain id. While it
+would be great to know the id of an object, it would be incredibly hard for a
+developer to code that way. Therefore, we needed a way for a user to give a
+starting point.</p>
+
+<p><strong>Dgraph introduced the concept of functions,</strong> oftentimes powered by indices.
+For example, a full-text index allows a user to search for entities using
+<code>anyoftext</code> function.  Similarly, a trigram index allows using <code>regexp</code>
+function.</p>
+
+<p>Furthermore, we needed a way to filter the results, and not only one level of
+filtering, <strong>but allowing the composition of these filters to build an entire filter
+tree.</strong> We introduced brackets and operators to allow for these.</p>
+
+<pre><code>// Dgraph
+@filter((anyoftext(title, &quot;jump&quot;) OR eq(name, &quot;brown fox&quot;)) AND (NOT regexp(title, &quot;A quick.*&quot;)))
+
+// (How it might look in) GraphQL
+filter: { and: { or: { anyoftext: { title: &quot;jump&quot;}, eq: { name: &quot;brown fox&quot;} }, not: { regexp: { title: &quot;A quick.*&quot; }}}}
+</code></pre>
+
+<p>GraphQL would typically require each server is to implement its own filters
+(normally as arguments on fields) and would use JSON input objects. The
+syntax of which is not as intuitive, particularly when dealing with filter trees
+like above. For example, compare the Dgraph infix syntax with the JSON-style
+GraphQL syntax above.</p>
+
+<h4 id="plus-minus">Plus Minus</h4>
+
+<p>Dgraph introduced concepts like <a href="https://docs.dgraph.io/query-language/#facets-edge-attributes">Facets</a>, which are key-value pairs on edges,
+adding properties to the edge instead of the node. Among other things, Facets
+are great at storing weight of an edge to support queries like shortest path, or
+k-shortest paths.</p>
+
+<p>Dgraph also has many other features from full-text search to geo search, to
+aggregations, built-in pagination support, and recursive queries. <strong>We&rsquo;ve packed
+a whole lot into <a href="https://docs.dgraph.io/query-language/">GraphQL+-</a>.</strong></p>
+
+<p>We also felt that the concept of unions, enums, and interfaces are not what a
+database should implement natively. For these, and many more similar reasons, we
+deviated just enough from the GraphQL spec that we could no longer call it
+GraphQL. So, we switched the name of our query language to <code>GraphQL+-</code>.
+<strong>Plus,</strong> because we added things to the query language (vars, blocks, etc.),
+and <strong>Minus,</strong> because we removed things from it (unions, enums, etc.)</p>
+
+<p>Ideas were floated to change the name entirely to something else, but we felt
+there must be a way to converge these two worlds sometime in the future. <strong>We did
+not want to deviate from the spec, we just had to do so</strong> to allow continue using
+GraphQL as our native query language, while building a graph database.</p>
+
+<p>In retrospect, if we really <em>really</em> wanted to, we could
+have built ugly workarounds to stay within the confines of GraphQL &mdash; but our
+goal was to have a simple and intuitive query language and that meant pushing
+the boundaries to see what&rsquo;s possible, particularly at that early stage when
+shaping the database.</p>
+
+<h3 id="the-learnings">The Learnings</h3>
+
+<p>Developers often come to us to ask about spec-compliant GraphQL support.  They
+love Dgraph and what GraphQL+- has to offer, but also want spec compliant
+GraphQL.  It&rsquo;s not something we considered initially because our focus was on a
+great language and fast query.  But we can understand the reason for the
+question: <strong>Developers want the Dgraph experience and query power, but with
+integration into GraphQL growing ecosystem, tooling and development workflows.</strong></p>
+
+<p>Dgraph&rsquo;s unique approach to graphs solves common GraphQL problems
+by default, without any special code or handling.</p>
+
+<h4 id="dgraph-solves-graphql-problems">Dgraph Solves GraphQL Problems</h4>
+
+<p>GraphQL has bought you a simple language for clients and architecture for
+your server, but now you&rsquo;ve got to engineer solutions around production issues.
+It&rsquo;s a nice architecture for turning something that&rsquo;s not a graph into an API
+that serves a graph, but that comes with a host of engineering and performance
+concerns, in particular, <strong>related to the N+1 problem.</strong> There&rsquo;s caching, batching and
+data loading to help, but they aren&rsquo;t a <em>panacea</em> and can introduce latencies and
+complexity of their own.</p>
+
+<p>All of these issues arise because of the disjoint between the underlying data
+model and how the GraphQL server must query and present that data.</p>
+
+<h4 id="query-execution-avoiding-the-n-1-problem">Query Execution: Avoiding the N+1 Problem</h4>
+
+<p><a href="https://itnext.io/what-is-the-n-1-problem-in-graphql-dd4921cb3c1a">N+1 problem</a> occurs when the <strong>GraphQL resolvers execute multiple trips to
+the database/endpoint to resolve a single query,</strong> making one resolver
+invocation per field invocation in the query. And the number of these round
+trips are directly proportional to the number of results in the intermediate
+steps.</p>
+
+<pre><code class="language-graphql">query {
+  queryQuestions(...) {
+    title
+    body
+    answers {         # N answers
+      text
+      comments {      # N * M comments
+        text
+        likes { ... } # N * M * O likes
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>For example, to get all the answers on a question and all their comments, you
+would have to make one query for a post, one query for its N answers, but then N
+queries for the comments on each answer. As you go deeper to get likes on these
+question, answers and comments, the round trips multiply to N*M comments (M
+comments per answer), and so on&hellip;</p>
+
+<p>Many solutions are floated to avoid this problem, the most popular one being the
+<a href="https://medium.com/@__xuorig__/the-graphql-dataloader-pattern-visualized-3064a00f319f">data loader pattern</a>. <strong>In the data loader pattern,</strong> every invocation to
+the resolver gets replaced by a <em>promise</em> to go <em>load</em> that piece of data, with
+the final <em>perform</em> to execute those promises and fetch all those pieces in a
+batched call.</p>
+
+<p>Depending upon how the implementation is done, this <strong>might result in <em>k or more</em> calls to
+the database/endpoint,</strong> where k = number of fields in the GraphQL request.
+Someone smarter might come along and further reduce the <em>k</em> calls by
+understanding that <em>title</em> and <em>body</em> resolvers are part of the same SQL table
+and therefore can be fetched together. But, that&rsquo;d be an optimization over
+the same <em>k</em> order of network call complexity.</p>
+
+<p>The <em>k calls</em> can be even worse if the underlying system is distributed.
+Instead of having a SQL DB running on just one server, it could be a cluster of
+SQL DBs running independently, put together by a thin layer, or a NoSQL
+database, etc. In those cases, the data loader pattern would result in more than
+<em>k</em> network calls as it becomes aware of how the data is sharded, etc.</p>
+
+<p><strong><a href="https://github.com/dgraph-io/dgraph">Dgraph</a> avoids this problem completely.</strong> Any GraphQL query over Dgraph can be
+consumed whole by the database in a single network call. Dgraph has its own
+lexer and parser for GraphQL, <strong>allowing it to parse and execute it in one
+shot.</strong> So, instead of doing many iterations, it can execute the query in as few
+disk seeks and (in a distributed Dgraph cluster) as few network calls as
+possible, utilizing the power of Dgraph&rsquo;s unique graph storage and execution.
+For the end-user, there&rsquo;s no need to write a resolver, no need for a data
+loading framework, no batching, etc. It all just works with a single call to the
+DB.</p>
+
+<p>See with Dgraph, instead of trying to squash a graph on top of a Relational or
+NoSQL database and thus introducing N+1 problems, you can now just query for the
+subgraph you need and operate over that.  You don&rsquo;t have to over fetch or make
+multiple round trips, you can just ask for the subgraph that&rsquo;s needed to answer
+the query in a single call and <strong>that&rsquo;s efficient and powerful.</strong> Particularly,
+when coupled with the advanced operations that Dgraph introduces to the QL.</p>
+
+<h4 id="dgraph-the-graphql-database">Dgraph: The GraphQL Database</h4>
+
+<p>Dgraph&rsquo;s basis in GraphQL means that it is the closest thing available to a
+<strong>native GraphQL database.</strong> Because we spent years of engineering effort
+focused on making the world&rsquo;s best graph database, we have as a result, also
+solved the engineering challenges that GraphQL adopters are hitting and having
+to build bespoke solutions for. <strong>Issues like N+1 problems and scale are solved
+in the database</strong> (including under and over fetching, overloading the endpoint
+with tons of calls, etc.). So a GraphQL solution built with Dgraph doesn&rsquo;t
+have the engineering concerns that keep GraphQL engineers up at night.</p>
+
+<p>Dgraph community realizes this power, which is why there has been a demand for
+official GraphQL spec support. <em>How Dgraph should do GraphQL</em> has become
+a hotly debated topic in our forums. Dgraph is simultaneously hailed and
+critiqued due to its <em>love-hate</em> relationship with GraphQL.</p>
+
+<p>Github issues about supporting GraphQL get submitted and are much commented on.
+Our most commented issue is our 2019 <a href="https://github.com/dgraph-io/dgraph/issues/2894#issuecomment-454137890">Roadmap</a>, where many of
+the comments are about GraphQL support, and our second most commented issue is
+&ldquo;Make Dgraph work with <a href="https://github.com/dgraph-io/dgraph/issues/933">standard</a> GraphQL&rdquo;.</p>
+
+<p>Ideas are thrown around about how GraphQL+- could become GraphQL compliant.
+Multiple GraphQL to GraphQL+- conversion layers have been built by our community
+members (for example, <a href="https://github.com/MichaelJCompton/GraphSchemaTools">here</a> and <a href="http://dpeek.com/dgraphql/">here</a>). The
+demand has become too strong to ignore. <strong>Ultimately, we feel interoperability
+with the growing GraphQL ecosystem is too important for our users to not be
+addressed.</strong></p>
+
+<p>For a while, we have been thinking about a good way to bridge that gap. Here is
+a database that began with a version of GraphQL as its native query language.
+And four years later, this is still the only query language is speaks and
+executes natively. Meanwhile, the community has built social apps on top of
+Dgraph. In some cases, replacing their Postgres and MongoDB instances to use
+Dgraph and gain the simplicity of GraphQL and the power of native GraphQL
+execution. Dgraph is fast, scalable and solves many common GraphQL problems.
+Yet, Dgraph is a spectator in the GraphQL arena. That has to change.</p>
+
+<h3 id="today-we-are-changing-that">Today, we are changing that.</h3>
+
+<p>We mentioned folks building a GraphQL to GraphQL+- conversion layer. <a href="https://github.com/MichaelJCompton/GraphSchemaTools">Michael
+Compton</a> was one of those folks. When we saw that project, we reached out
+to him to join the Dgraph team and build an official one. Over the past few
+months, Michael and his team have been hard at work, putting together a native
+spec-compliant GraphQL support into Dgraph tapping into the power of
+GraphQL+-.</p>
+
+<p><strong>We are proud to launch the <a href="https://graphql.dgraph.io/">beta release</a> of Dgraph GraphQL.</strong> It is
+rough around the edges, the <a href="https://graphql.dgraph.io/">website</a> needs work, but it is ready for a
+spin! So, bring your favorite GraphQL GUI, React library, or language you are
+using to implement your GraphQL server and <a href="https://graphql.dgraph.io/">check it out here</a>!</p>
+
+<h3 id="the-future">The Future</h3>
+
+<p>Dgraph has the advantage of a native GraphQL engine and we plan to adapt it to
+efficiently serve common GraphQL features like subscriptions, live queries
+and more. Over time, we envision the distinction between GraphQL+- and GraphQL
+spec would become smaller and smaller, <strong>to ultimately us merging the two worlds
+into one single powerful system.</strong></p>
+
+<p>GraphQL scalability is a work in progress for many companies. We plan to take
+that problem head-on with our already scalable and distributed engine, solving
+the needs of a startup which has to build an app using the power of GraphQL,
+while also solving the needs of a big company, which is struggling with
+performance issues from existing GraphQL solutions.</p>
+
+<p>We at Dgraph, bet upon GraphQL before it reached <a href="https://nordicapis.com/interview-with-graphql-co-creator-lee-byron/">ubiquity</a>. We then joined
+the GraphQL foundation as a <a href="https://www.linuxfoundation.org/press-release/2019/03/the-graphql-foundation-announces-collaboration-with-the-joint-development-foundation-to-drive-open-source-and-open-standards/">founding</a> member. And today, we reassert our
+faith that GraphQL will change the landscape of how apps are built. At the same
+time, we recognize that <strong>the GraphQL landscape needs performant <a href="https://graphql.dgraph.io/">native</a>
+solutions, which are not just bolt-ons on top of an unrelated database.</strong></p>
+
+<p>We&rsquo;re also proud to sponsor the <a href="https://summit.graphql.com">GraphQL Summit</a> in
+San Francisco this week.  If you&rsquo;re there, come past our booth and talk to us
+about Dgraph, our native GraphQL support and all things GraphQL.</p>
 
 <hr />
 
@@ -839,6 +960,15 @@ impactful contributions to the vibrant GraphQL community.</p>
 	})
 </script>
 
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">See <a href="https://github.com/nchah/freebase-mql">here</a> a rough comparison of MQL vs GraphQL.
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
 </div>
           <div class="article-tag-list">
             
@@ -846,16 +976,6 @@ impactful contributions to the vibrant GraphQL community.</p>
                 
                 
                     <a href="https://blog.dgraph.io/tags/graphql/">GraphQL</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/graphqlconf/">GraphQLConf</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/devrel/">DevRel</a>
                 
             
           </div>
@@ -883,12 +1003,12 @@ impactful contributions to the vibrant GraphQL community.</p>
             <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/people/karthic.png" class="article-author__image">
+	<img src="/images/people/manish.jpg" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Karthic Rao
+    <h4 class="article-author__name">Manish Rai Jain
 
 
       <span class="article-author__title">Author</span>
@@ -897,14 +1017,7 @@ impactful contributions to the vibrant GraphQL community.</p>
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/hackintoshrao/" class="social__link">
-                <svg class="icon social__icon social__icon--linkedin">
-                    <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
-                </svg>
-            </a>
-        </li>
-        <li class="social__item social__item--inline">
-            <a href="https://twitter.com/hackintoshrao" class="social__link">
+            <a href="https://twitter.com/manishrjain" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -912,13 +1025,8 @@ impactful contributions to the vibrant GraphQL community.</p>
         </li>
     </ul>
 </nav>
-<p>
-    Karthic is a Developer Advocate who strives to create value across multiple areas at Dgraph. 
-    He has experience working with a wide range of startups in different domains across the globe.
-    Prior to Dgraph, Caddy Server and Minio are the major Go open source projects he has contributed significantly to.
-    He is an avid blogger, speaker, and musician. When not at work you could find him reading, 
-    at the gym, meditating, practicing music, or on motorcycle trips.
-</p>
+<p>Manish is the Chief decision maker at Dgraph. He got thrust into distributed systems right out of college, working on real time web indexing systems at Google. He then lead various projects to consolidate and serve Knowledge Graph right behind web search.</p>
+<p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
 
@@ -926,6 +1034,31 @@ impactful contributions to the vibrant GraphQL community.</p>
 </div>
 
             
+	<div class="article-author">
+	<figure class="article-author__figure">
+		
+	<img src="/images/people/michael.jpg" class="article-author__image">
+
+
+	</figure>
+	<div class="article-author__bio">
+		<h4 class="article-author__name">Michael Compton
+
+
+			<span class="article-author__title">Editor</span>
+		</h4>
+		
+<nav class="social__nav article-author__social">
+    <ul class="social__list social__list--inline">
+    </ul>
+</nav>
+<p>Michael did undergrad computer science at ANU in Canberra and a Ph.D. at Cambridge in the U.K.  He's worked for a number of years with graph databases.  He likes sport and hanging out with his family.</p>
+
+
+
+	</div>
+</div>
+
           </div>
           <div class="col-12">
             <div id='discourse-comments'></div>
@@ -961,7 +1094,7 @@ impactful contributions to the vibrant GraphQL community.</p>
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/graphql-conf-19/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1122,7 +1255,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/graphql-conf-19\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/building-native-graphql-database-dgraph\/"
 };
 (function() {
   var d = document.createElement("script");

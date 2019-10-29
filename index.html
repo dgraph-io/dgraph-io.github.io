@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-	<meta name="generator" content="Hugo 0.55.6" />
+	<meta name="generator" content="Hugo 0.52" />
   <meta charset="utf-8">
 
   
@@ -76,7 +76,7 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?01ee9e20d0be24f199f4d665d0479dad'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -121,6 +121,44 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Tue, Oct 29, 2019 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/" class="clearfix">
+		<h3 class="article__title">Building a Native GraphQL Database: Challenges, Learnings and Future</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/dgraph-graphql-sticker.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">&ldquo;GraphQL is not a Graph DB query language &mdash; it&rsquo;s a replacement for REST APIs.&rdquo;
+ That&rsquo;s my standard opening statement whenever talking about Dgraph&rsquo;s choice of the query language.
+Most people who don&rsquo;t know GraphQL assume it&rsquo;s a graph database query language. Most people who know GraphQL wonder how a graph database is being powered by it.
+Our focus at Dgraph has always been on helping you build apps using an amazingly advanced graph database.</div>
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/graphql/">GraphQL</a>
+							
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -427,37 +465,6 @@ Bug Discovery While working on Flock, I observed that timestamp comparisons were
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Wed, Jul 31, 2019 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/" class="clearfix">
-		<h3 class="article__title">How Dgraph Labs Raised Series A</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/moonshot.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">The blog post by ZDNet made it to HackerNews front page. Do engage in discussion there, and show us love by giving us a GitHub star.
-I&rsquo;m really excited to announce that Dgraph has raised $11.5M in Series A funding. This round is led by Redpoint Ventures, with investment from our previous lead, Bain Capital Ventures, and participation from all our existing investors &ndash; Blackbird, Grok and AirTree. With this round, Satish Dharmaraj joins Dgraph&rsquo;s board of directors, which includes Salil Deshpande from Bain and myself.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -509,36 +516,6 @@ I&rsquo;m really excited to announce that Dgraph has raised $11.5M in Series A f
       </div>
     </div>
   </div>
-
-  <div class="community-cta-wrapper">
-  <a href="#choose-community" class="community-cta">
-    Join our community
-  </a>
-
-  <ul class="community-list">
-    <li>
-      <a href="#" class="community-link" onclick="showPopup(false); return false;">
-        <i class="fa fa-envelope-o"></i> <span class="name">Subscribe</span>
-      </a>
-    </li>
-    <li>
-        <a href="https://github.com/dgraph-io/dgraph" target="_blank" class="community-link">
-          <i class="fa fa-github"></i> <span class="name">Github</span>
-        </a>
-      </li>
-    <li>
-      <a href="https://slack.dgraph.io/" target="_blank" class="community-link">
-        <i class="fa fa-slack"></i> <span class="name">Slack</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://discuss.dgraph.io/" target="_blank" class="community-link">
-        <i class="fa fa-comments"></i> <span class="name">Forum</span>
-      </a>
-    </li>
-  </ul>
-</div>
-
 
   <div class="page-footer__wrapper">
   <footer id="page-footer" class="page-footer">
@@ -696,64 +673,6 @@ $(document.links)
   .attr("target", "_blank");
 </script>
 
-
-<script>
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-  }
-
-  function setCookie(cname, cvalue, exdays) {
-    exdays = exdays || 60;
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
-  }
-</script>
-<script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-
-<script type='text/javascript'>
-  window.mailchimp_require = require
-  window.mailchimp_define = define
-  require = define = undefined
-</script>
-
-<script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-<script>
-  window.dojoRequire(
-  		["mojo/signup-forms/Loader"],
-  		function(L) {
-  			L.start({
-  					"baseUrl":"mc.us17.list-manage.com",
-  					"uuid":"f6c6a28bb40d10e26b88fff1c",
-  					"lid":"e85c448cac",
-  					"uniqueMethods":true
-  			})
-  		})
-</script>
-
-<script>
-  setInterval(function() {
-    var cookieVal = getCookie('MCPopupClosed');
-    if (cookieVal) {
-      
-      setCookie('MCPopupClosed', cookieVal, 5)
-    }
-  }, 3000);
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
@@ -770,8 +689,11 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?5121f4ad385550a97bb2a046b9b43619'
+  src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
+
+<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
+<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
 
 </body>
 </html>

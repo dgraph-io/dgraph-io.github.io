@@ -75,7 +75,7 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?01ee9e20d0be24f199f4d665d0479dad'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -120,6 +120,39 @@
       
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
+			Thu, Jan 5, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/v0.7-release/" class="clearfix">
+		<h3 class="article__title">Releasing Dgraph v0.7.1</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/v0.7-release/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/routeplan.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+ team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+. This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
+We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p></div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
         
           <li class="article__item">
 	<div class="article__meta">
@@ -350,40 +383,6 @@ To keep our latency of communication low, we use a new form of serialization lib
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Wed, Jun 15, 2016 by Pawan Rawal
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/wisemonk/" class="clearfix">
-		<h3 class="article__title">Wisemonk: A slackbot to move discussions from Slack to Discourse</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/wisemonk/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/yoda.jpg); background-position: 50% 0%;">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary"><blockquote>
-<p>Then there was the fact that we had so many channels and direct messages and group chats.
-It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
-<em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
-</blockquote></div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -435,36 +434,6 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
       </div>
     </div>
   </div>
-
-  <div class="community-cta-wrapper">
-  <a href="#choose-community" class="community-cta">
-    Join our community
-  </a>
-
-  <ul class="community-list">
-    <li>
-      <a href="#" class="community-link" onclick="showPopup(false); return false;">
-        <i class="fa fa-envelope-o"></i> <span class="name">Subscribe</span>
-      </a>
-    </li>
-    <li>
-        <a href="https://github.com/dgraph-io/dgraph" target="_blank" class="community-link">
-          <i class="fa fa-github"></i> <span class="name">Github</span>
-        </a>
-      </li>
-    <li>
-      <a href="https://slack.dgraph.io/" target="_blank" class="community-link">
-        <i class="fa fa-slack"></i> <span class="name">Slack</span>
-      </a>
-    </li>
-    <li>
-      <a href="https://discuss.dgraph.io/" target="_blank" class="community-link">
-        <i class="fa fa-comments"></i> <span class="name">Forum</span>
-      </a>
-    </li>
-  </ul>
-</div>
-
 
   <div class="page-footer__wrapper">
   <footer id="page-footer" class="page-footer">
@@ -622,64 +591,6 @@ $(document.links)
   .attr("target", "_blank");
 </script>
 
-
-<script>
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-  }
-
-  function setCookie(cname, cvalue, exdays) {
-    exdays = exdays || 60;
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";domain=.dgraph.io;path=/";
-  }
-</script>
-<script type="text/javascript" src="https://downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-
-<script type='text/javascript'>
-  window.mailchimp_require = require
-  window.mailchimp_define = define
-  require = define = undefined
-</script>
-
-<script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
-<script>
-  window.dojoRequire(
-  		["mojo/signup-forms/Loader"],
-  		function(L) {
-  			L.start({
-  					"baseUrl":"mc.us17.list-manage.com",
-  					"uuid":"f6c6a28bb40d10e26b88fff1c",
-  					"lid":"e85c448cac",
-  					"uniqueMethods":true
-  			})
-  		})
-</script>
-
-<script>
-  setInterval(function() {
-    var cookieVal = getCookie('MCPopupClosed');
-    if (cookieVal) {
-      
-      setCookie('MCPopupClosed', cookieVal, 5)
-    }
-  }, 3000);
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
@@ -696,8 +607,11 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?5121f4ad385550a97bb2a046b9b43619'
+  src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
+
+<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
+<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
 
 </body>
 </html>
