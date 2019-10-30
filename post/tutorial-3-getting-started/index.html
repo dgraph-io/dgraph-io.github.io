@@ -32,14 +32,14 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
   
-    <title>Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog</title>
-    <meta property='og:title' content="Build a Realtime Recommendation Engine: Part 1 - Dgraph Blog">
+    <title>Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals. - Dgraph Blog</title>
+    <meta property='og:title' content="Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals. - Dgraph Blog">
     <meta property="og:type" content="article">
   
 
-  <meta property="og:url" content="https://blog.dgraph.io/post/recommendation/">
+  <meta property="og:url" content="https://blog.dgraph.io/post/tutorial-3-getting-started/">
   
-  <meta property="og:image" content="https://blog.dgraph.io/images/falcon.png">
+  <meta property="og:image" content="https://blog.dgraph.io/images/tutorials/1/kepler.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -84,14 +84,14 @@
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io/images/falcon.png"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io/images/tutorials/1/kepler.jpg"/>
     
   
 
-  <meta name="twitter:title" content="Build a Realtime Recommendation Engine: Part 1"/>
-  <meta name="twitter:description" content="Preface In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the user.
-That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you don&rsquo;t even realize them.
-You wake up and open Facebook, which shows you a feed of articles that it has chosen for you based on your viewing history."/>
+  <meta name="twitter:title" content="Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals."/>
+  <meta name="twitter:description" content="Welcome to the third episode of getting started with Dgraph. In the previous episode of the tutorial, we learned about the CRUD operations using UIDs. We also learned about traversals and recursive traversals.
+In this tutorial, we&rsquo;ll learn about Dgraph&rsquo;s basic types and how to query for them. Specifically, we&rsquo;ll learn about:
+ Basic data types in Dgraph. Querying for predicate values. Indexing. Filtering nodes. Traversing in reverse direction.  Let&rsquo;s start by building the following graph of a simple blog application."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -394,9 +394,9 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Thu, Jun 29, 2017
+                  Wed, Oct 30, 2019
                  by
-                Ashwin Ramesh
+                Karthic Rao
 
 
               </span>
@@ -404,7 +404,7 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
                 <ul class="share__list">
                   
                   <li class="share__item">
-                    <a href="https://twitter.com/share?text=Build%20a%20Realtime%20Recommendation%20Engine%3a%20Part%201&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frecommendation%2f&amp;via=dgraphlabs" class="share__link">
+                    <a href="https://twitter.com/share?text=Dgraph%20tutorials%20series%20-%203%3a%20Datatypes%2c%20Indexing%2c%20Filtering%2c%20and%20Reverse%20traversals.&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2ftutorial-3-getting-started%2f&amp;via=dgraphlabs" class="share__link">
                       <svg class="icon share__icon share__icon--twitter">
                         <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                       </svg>
@@ -415,7 +415,7 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
                 </ul>
               </div>
             </div>
-            <h1 class="page-intro__title page-intro__title--blog">Build a Realtime Recommendation Engine: Part 1</h1>
+            <h1 class="page-intro__title page-intro__title--blog">Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals.</h1>
           </header>
         </div>
       </div>
@@ -428,562 +428,703 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/falcon.png"
+            src="https://blog.dgraph.io/images/tutorials/1/kepler.jpg"
           >
           <div class="article-content">
 
-<h2 id="preface">Preface</h2>
+<p>Welcome to the third episode of getting started with Dgraph.
+In the <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">previous episode</a> of the tutorial, we learned about the CRUD operations using UIDs.
+We also learned about traversals and recursive traversals.</p>
 
-<p>In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user
-data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the
-user.</p>
+<p>In this tutorial, we&rsquo;ll learn about Dgraph&rsquo;s basic types and how to query for them.
+Specifically, we&rsquo;ll learn about:</p>
 
-<p>That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you
-don&rsquo;t even realize them.</p>
+<ul>
+<li>Basic data types in Dgraph.</li>
+<li>Querying for predicate values.</li>
+<li>Indexing.</li>
+<li>Filtering nodes.</li>
+<li>Traversing in reverse direction.</li>
+</ul>
 
-<p><em>You wake up and open Facebook,</em> which shows you a feed of articles that it
-has chosen for you based on your viewing history.</p>
+<p>Let&rsquo;s start by building the following graph of a simple blog application.
+Here&rsquo;s the Graph model of our application</p>
 
-<p><em>Want to buy something?</em> Amazon would recommend
-you things to purchase based on what you&rsquo;ve viewed in the recent past.</p>
+<p><img src="/images/tutorials/3/a-main-graph.JPG" alt="main graph model" /></p>
 
-<p><em>Want to relax and unwind with a movie?</em> Netflix would recommend you what to watch based on your
-interests.</p>
+<p>The above graph has three entities: Author, Blog posts, and Tags.
+The nodes in the graph represent these entities.
+For the rest of the tutorial, we&rsquo;ll call the node representing a blog as a <code>blog post</code> node.
+And the node presenting a <code>tag</code> as a <code>tag node</code>, and so on.</p>
 
-<p><em>No time to watch a full movie?</em> YouTube would recommend you smaller chunk videos.</p>
+<p>You can see from the graph model that these entities are related:</p>
 
-<p><em>Want to listen to music instead?</em> Spotify would generate a weekly discovery list of songs just for
-you.</p>
+<ul>
+<li>Every Author has one or more blog posts.</li>
+</ul>
 
-<p>All this makes you wonder: <strong>Should recommendations be part of your application?</strong> While competing
-against Netflix might be hard, in this two-part series, we&rsquo;ll explain the basics of a recommendation
-engine. We&rsquo;ll show how you can build recommendations via two approaches: Content-based filtering and
-Collaborative filtering. And, how you can use Dgraph to bring recommendations to your app without breaking a
-sweat.</p>
+<p>The <code>published</code> edge relates the blogs to their authors.
+These edges start from an <code>author node</code> and point to a <code>blog post</code> node.</p>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
-});
-</script>
-<script type="text/javascript" async
-  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
+<ul>
+<li>Every Blog post has one or more tags.</li>
+</ul>
 
-<p>For this, we&rsquo;ll make use of Dgraph&rsquo;s query variables. To learn more about variables, head over to
-<a href="https://tour.dgraph.io/blocksvars/1/">Dgraph tour</a> &mdash; <em>if you are new to Dgraph variables, you
-really should check them out first before diving in here.</em></p>
+<p>The <code>tagged</code> edge relates the blog posts to their tags.
+ These edges emerge from a <code>blog post node</code> and point to a <code>tag node</code>.</p>
 
-<p>Let&rsquo;s first check out how recommendation systems work, and then we&rsquo;ll look at the support Dgraph queries offer.  We&rsquo;ll use two sample datasets.  One about movies and ratings (<a href="https://grouplens.org/datasets/movielens/100k/">Movielens</a>) and the other is part of <a href="https://archive.org/download/stackexchange/lifehacks.stackexchange.com.7z">Stack Exchange&rsquo;s data archive</a> &mdash; we&rsquo;ll just use the Lifehacks dataset here, but watch out for a coming series of posts where we show how to load all of Stack Overflow into Dgraph and run the entire website completely off Dgraph.</p>
+<p>Let&rsquo;s build our Graph.</p>
 
-<h2 id="recommendation-systems">Recommendation Systems</h2>
+<p>Go to Ratel, click on the mutate tab, paste the following mutation, and click Run.</p>
 
-<p>Making Recommendations is a subtle art.  There are a number of approaches and a production worthy recommendation system might depend on data, weighting of various features, global user behaviour and maybe recent behaviour of the user we are recommending for.</p>
+<pre><code class="language-json">{
+ &quot;set&quot;: [
+  {
+   &quot;author_name&quot;: &quot;John Campbell&quot;,
+   &quot;rating&quot;: 4.1,
+   &quot;published&quot;: [
+    {
+     &quot;title&quot;: &quot;Dgraph's recap of GraphQL Conf - Berlin 2019&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/graphql-conf-19/&quot;,
+     &quot;content&quot;: &quot;We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn’t help ourselves from sharing this with Dgraph’s community! This is the story of the GraphQL conference in Berlin.&quot;,
+     &quot;likes&quot;: 100,
+     &quot;dislikes&quot;: 4,
+     &quot;publish_time&quot;: &quot;2018-06-25T02:30:00&quot;,
+     &quot;tagged&quot;: [
+      {
+       &quot;uid&quot;: &quot;_:graphql&quot;,
+       &quot;tag_name&quot;: &quot;graphql&quot;
+      },
+      {
+       &quot;uid&quot;: &quot;_:devrel&quot;,
+       &quot;tag_name&quot;: &quot;devrel&quot;
+      }
+     ]
+    },
+    {
+     &quot;title&quot;: &quot;Dgraph Labs wants you!&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/hiring-19/&quot;,
+     &quot;content&quot;: &quot;We recently announced our successful Series A fundraise and, since then, many people have shown interest to join our team. We are very grateful to have so many people interested in joining our team! We also realized that the job openings were neither really up to date nor covered all of the roles that we are looking for. This is why we decided to spend some time rewriting them and the result is these six new job openings!.&quot;,
+     &quot;likes&quot;: 60,
+     &quot;dislikes&quot;: 2,
+     &quot;publish_time&quot;: &quot;2018-08-25T03:45:00&quot;,
+     &quot;tagged&quot;: [
+      {
+       &quot;uid&quot;: &quot;_:hiring&quot;,
+       &quot;tag_name&quot;: &quot;hiring&quot;
+      },
+      {
+       &quot;uid&quot;: &quot;_:careers&quot;,
+       &quot;tag_name&quot;: &quot;careers&quot;
+      }
+     ]
+    }
+   ]
+  },
+  {
+   &quot;author_name&quot;: &quot;John Travis&quot;,
+   &quot;rating&quot;: 4.5,
+   &quot;published&quot;: [
+    {
+     &quot;title&quot;: &quot;How Dgraph Labs Raised Series A&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/&quot;,
+     &quot;content&quot;: &quot;I’m really excited to announce that Dgraph has raised $11.5M in Series A funding. This round is led by Redpoint Ventures, with investment from our previous lead, Bain Capital Ventures, and participation from all our existing investors – Blackbird, Grok and AirTree. With this round, Satish Dharmaraj joins Dgraph’s board of directors, which includes Salil Deshpande from Bain and myself. Their guidance is exactly what we need as we transition from building a product to bringing it to market. So, thanks to all our investors!.&quot;,
+     &quot;likes&quot;: 139,
+     &quot;dislikes&quot;: 6,
+     &quot;publish_time&quot;: &quot;2019-07-11T01:45:00&quot;,
+     &quot;tagged&quot;: [
+      {
+       &quot;uid&quot;: &quot;_:annoucement&quot;,
+       &quot;tag_name&quot;: &quot;annoucement&quot;
+      },
+      {
+       &quot;uid&quot;: &quot;_:funding&quot;,
+       &quot;tag_name&quot;: &quot;funding&quot;
+      }
+     ]
+    },
+    {
+     &quot;title&quot;: &quot;Celebrating 10,000 GitHub Stars&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/10k-github-stars/&quot;,
+     &quot;content&quot;: &quot;Dgraph is celebrating the milestone of reaching 10,000 GitHub stars 🎉. This wouldn’t have happened without all of you, so we want to thank the awesome community for being with us all the way along. This milestone comes at an exciting time for Dgraph.&quot;,
+     &quot;likes&quot;: 33,
+     &quot;dislikes&quot;: 12,
+     &quot;publish_time&quot;: &quot;2017-03-11T01:45:00&quot;,
+     &quot;tagged&quot;: [
+      {
+       &quot;uid&quot;: &quot;_:devrel&quot;
+      },
+      {
+       &quot;uid&quot;: &quot;_:annoucement&quot;
+      }
+     ]
+    }
+   ]
+  },
+  {
+   &quot;author_name&quot;: &quot;Katie Perry&quot;,
+   &quot;rating&quot;: 3.9,
+   &quot;published&quot;: [
+    {
+     &quot;title&quot;: &quot;Migrating data from SQL to Dgraph!&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/&quot;,
+     &quot;content&quot;: &quot;Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from. In particular, we get asked a lot about how to migrate data from MySQL to Dgraph. In this article, we present a tool that makes this migration really easy: all a user needs to do is write a small 3 lines configuration file and type in 2 commands. In essence, this tool bridges one of the best technologies of the 20th century with one of the best ones of the 21st (if you ask us).&quot;,
+     &quot;likes&quot;: 20,
+     &quot;dislikes&quot;: 1,
+     &quot;publish_time&quot;: &quot;2018-08-25T01:44:00&quot;,
+     &quot;tagged&quot;: [
+      {
+       &quot;uid&quot;: &quot;_:tutorial&quot;,
+       &quot;tag_name&quot;: &quot;tutorial&quot;
+      }
+     ]
+    },
+    {
+     &quot;title&quot;: &quot;Building a To-Do List React App with Dgraph&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/building-todo-list-react-dgraph/&quot;,
+     &quot;content&quot;: &quot;In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http — a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.&quot;,
+     &quot;likes&quot;: 97,
+     &quot;dislikes&quot;: 5,
+     &quot;publish_time&quot;: &quot;2019-02-11T03:33:00&quot;,
+     &quot;tagged&quot;: [
+      {
+       &quot;uid&quot;: &quot;_:tutorial&quot;
+      },
+      {
+       &quot;uid&quot;: &quot;_:devrel&quot;
+      },
+      {
+       &quot;uid&quot;: &quot;_:javascript&quot;,
+       &quot;tag_name&quot;: &quot;javascript&quot;
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
+</code></pre>
 
-<p>Rather than just inventing recommendation queries, let&rsquo;s start somewhere more grounded.  For this post, we started with the Stanford University MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.  Part of the course is on recommender systems.  We&rsquo;ll show how the theory in the <em>&ldquo;Recommendation Systems&rdquo;</em> chapter of the <a href="http://www.mmds.org">text</a> can be translated into practice using Dgraph. We&rsquo;ll also talk about other approaches and how to run one at scale.</p>
+<p>Our Graph is ready!</p>
 
-<h3 id="making-recommendations">Making Recommendations</h3>
+<p><img src="/images/tutorials/3/l-fullgraph-2.png" alt="rating-blog-rating" /></p>
 
-<p>Making recommendations is about taking past benaviour and preferences and trying to predict a preference for some unknown.  For example, later in the post, we&rsquo;ll talk about movie recommendations.  For this, we know what a user has watched and how they rated movies; how then can we predict what unwatched movies they&rsquo;ll enjoy.</p>
+<p>Our Graph has:</p>
 
-<p>As briefly mentioned before, broadly speaking, there are two basic approaches:</p>
+<ul>
+<li>Three blue author nodes.</li>
+<li>Each author has two blog posts each, six in total, which are represented by the green nodes.</li>
+<li>The tags of the blog posts are in pink.
+You can see that there are 8 unique tags, and some of the blogs share a common tag.</li>
+</ul>
 
-<ol>
-<li><p><strong>Content-based:</strong> Such systems base a recommendation on the properties of an item. Two items that have similar properties are deemed similar; the more properties shared, the more similar. For example, if a user likes movies with certain actors or directors, we can
-recommend other movies involving the same people.</p></li>
+<h4 id="data-types-for-predicates">Data types for predicates</h4>
 
-<li><p><strong>Collaborative filtering:</strong> Such systems base recommendations on the relationship between users and items, and similarity to other users. Users are similar if they have relationships to items in common; the more items in common, the more similar.  For example, if many similar users enjoyed a particular movie, that might be a good one to recommend.</p></li>
-</ol>
+<p>Dgraph automatically detects the data type of its predicates.
+You can see the auto-detected data types using the Ratel UI.</p>
 
-<p>There are also classification algorithms based on machine learning.  We&rsquo;ll focus here on how far we can get with Dgraph queries alone.  Machine learning or other algorithms could also be run over the Dgraph output.</p>
+<p>Click on the schema tab on the left and then check the <code>Type</code> column.
+You&rsquo;ll see the predicate names and their corresponding data types.</p>
 
-<h3 id="interpreting-the-data-for-recommendations">Interpreting the Data for Recommendations</h3>
+<p><img src="/images/tutorials/3/a-initial.png" alt="rating-blog-rating" /></p>
 
-<p>Our Stanford reference text represents data as a sparse matrix.  So for our movie data set, we might think of the user&rsquo;s ratings of movies as:</p>
+<p>These data types include <code>string</code>, <code>float</code>, and <code>int</code> and <code>uid</code>.
+Besides them, Dgraph also offers three more basic data types: <code>geo</code>, <code>dateTime</code>, and <code>bool</code>.</p>
+
+<p>The <code>uid</code> type represents predicates between two nodes.
+In other words, they represent edges connecting two nodes.</p>
+
+<p>You might have noticed that the <code>published</code> and <code>tagged</code> predicates are of type <code>uid</code> array (<code>[uid]</code>).
+UID arrays represent a collection of UIDs.
+This is used to represent one to many relationships.</p>
+
+<p>For instance, we know that an author can publish more than one blog.
+Hence, there could be more than one <code>published</code> edge emerging from a given <code>author</code> node.
+Each pointing to a different blog post of the author.</p>
+
+<p>Dgraph&rsquo;s <a href="https://blog.dgraph.io/post/release-v1.1.0/">v1.1 release</a> introduced type system feature.
+This feature made it possible to create custom data types by grouping one or more predicates.
+But in this tutorial, we&rsquo;ll only focus on the basic data types.</p>
+
+<p>Also, notice that there are no entries in the indices column.
+We&rsquo;ll talk about indices in detail shortly.</p>
+
+<h4 id="querying-for-predicate-values">Querying for predicate values</h4>
+
+<p>First, let&rsquo;s query for all the Authors and their ratings.</p>
+
+<pre><code>{
+  authors_and_ratings(func: has(author_name)) {
+    uid
+    author_name
+    rating
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/a-find-rating-2.png" alt="authors" /></p>
+
+<p>Refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first episode</a> if you have any questions related to the structure of the query in general.</p>
+
+<p>We have 3 authors in total in our dataset.
+Now, let&rsquo;s find the best authors.
+Let&rsquo;s query for authors whose rating is 4.0 or more.</p>
+
+<p>In order to achieve it, we need a way to select nodes that meet certain criteria (e.g., rating &gt; 4.0).
+You can do so by using Dgraph&rsquo;s built-in comparator functions.
+Here&rsquo;s the list of comparator functions available in Dgraph.</p>
 
 <table>
 <thead>
 <tr>
-<th>User</th>
-<th>The Matrix</th>
-<th>Toy Story</th>
-<th>Jurassic Park</th>
-<th>Forrest Gump</th>
-<th>Braveheart</th>
+<th>comparator function name</th>
+<th>Full form</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td>A</td>
-<td>5</td>
-<td>4</td>
-<td>4</td>
-<td></td>
-<td></td>
+<td>eq</td>
+<td>equals to</td>
 </tr>
 
 <tr>
-<td>B</td>
-<td></td>
-<td>3</td>
-<td>4</td>
-<td></td>
-<td>1</td>
+<td>lt</td>
+<td>less than</td>
 </tr>
 
 <tr>
-<td>C</td>
-<td>1</td>
-<td></td>
-<td></td>
-<td>2</td>
-<td>5</td>
+<td>le</td>
+<td>less than or equal to</td>
+</tr>
+
+<tr>
+<td>gt</td>
+<td>greater than</td>
+</tr>
+
+<tr>
+<td>ge</td>
+<td>greater than or equal to</td>
 </tr>
 </tbody>
 </table>
 
-<p>The movies also have other properties such as genres, not shown here.  We&rsquo;ve stored it all as a graph, which in itself is a nice way to store a sparse matrix.</p>
+<p>There are a total of five comparator functions in Dgraph.
+You can use any of them alongside the <code>func</code> keyword in your queries.</p>
 
-<p>The matrix (that&rsquo;s the matrix above, not <em>&ldquo;<a href="https://en.wikipedia.org/wiki/The_Matrix">The Matrix</a>&ldquo;</em>) is missing values because users haven&rsquo;t seen all movies &mdash; in fact, for the real dataset it&rsquo;s much sparser because users have each only rated a tiny percentage of the movies.</p>
+<p>The comparator function take two arguments.
+One is the predicate name, and the other is its value to compare.
+Here are a few examples.</p>
 
-<p>The challenge of recommendation is to predict values for the missing ratings.  Will user A enjoy Braveheart because it&rsquo;s an action movie and thus similar to movies they enjoyed? (content based filtering)</p>
+<table>
+<thead>
+<tr>
+<th>Example usage</th>
+<th>Description</th>
+</tr>
+</thead>
 
-<p>But maybe they won&rsquo;t enjoy it because they might have something in common with user B who seems to share similar ratings (collaborative filtering).</p>
+<tbody>
+<tr>
+<td>func: eq(age, 60)</td>
+<td>Return nodes with <code>age</code> predicate equal to 60.</td>
+</tr>
 
-<p>Maybe user A just gives high ratings and isn&rsquo;t very discriminating &mdash; sometimes benaviour rather than rating can be a better predictor. We&rsquo;ll need to combine a number of approaches.</p>
+<tr>
+<td>func: gt(likes, 100)</td>
+<td>Return nodes with a value of <code>likes</code> predicate greater than 100.</td>
+</tr>
 
-<p>The theory boils down to finding functions that serve as measures of similarity or distance.  For example, in content-based filtering, the function would take two movies and output a score (the distance or similarity).  If we start with a movie and apply the function repeatedly to it and all other movies, we can find the most similar movies.</p>
+<tr>
+<td>func: le(dislikes, 10)</td>
+<td>Return nodes with a value of <code>dislikes</code> predicates less than or equal to 10.</td>
+</tr>
+</tbody>
+</table>
 
-<p>We&rsquo;ll look at some distance measures below as we apply them in queries, but for any of them we&rsquo;ll need to propagate values through our query, so let&rsquo;s look at how that works in Dgraph and then try out some recommendation queries.</p>
+<p>Now, guess the comparator function we should use to select <code>author nodes</code> with a rating of 4.0 or more.</p>
 
-<h2 id="variable-propagation">Variable Propagation</h2>
+<p>If you think it should be <code>greater than or equal to(ge)</code> function, then you&rsquo;re right!</p>
 
-<p>A Dgraph <a href="https://docs.dgraph.io/query-language/#value-variables">value variable</a> is a mapping from graph nodes to values that have been computed for the nodes during the query.  Value variables can be passed around the query, aggregated etc.  Value variables also sum over paths as we move deeper into a query tree.</p>
+<p>Let&rsquo;s try it out.</p>
 
-<p>Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.</p>
+<pre><code class="language-graphql">{
+  best_authors(func: ge(rating, 4.0)) {
+    uid
+    author.name
+    rating
+  }
+}
+</code></pre>
 
-<p>We call this <strong>variable propagation.</strong>  Note that the queries in this post we built for our master branch for the upcoming v0.8 release.</p>
+<p><img src="/images/tutorials/3/b-index-missing.png" alt="index missing" /></p>
 
-<p>Say you had a query:</p>
+<p>We got an error! The index for the <code>rating</code> predicate is missing.
+You cannot query for the value of a predicate unless you&rsquo;ve added an index for it.</p>
 
-<pre><code>{
-  var(func: uid(&lt;...P...&gt;)) {
-    myscore as math(1)          # A
-    friends {                   # B
-      friends {                 # C
-        fscore as math(myscore)
+<p>Let&rsquo;s learn more about indices in Dgraph and also how to add them.</p>
+
+<h4 id="indexing-in-dgraph">Indexing in Dgraph</h4>
+
+<p>Indices are used to speed up your queries on predicates.
+They have to be explicitly added to a predicate when they are required.
+That is, only when you need to query for the value of a predicate.</p>
+
+<p>Also, there&rsquo;s no need to anticipate the indices to be added right at the beginning.
+You can add them as you go.</p>
+
+<p>Dgraph offers different types of indices.
+The choice of the index to be added depends on the data type of the predicate.</p>
+
+<p>Here is the table containing data types and the set of indices that can be applied to them.</p>
+
+<table>
+<thead>
+<tr>
+<th>Data type</th>
+<th>Available index types</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>int</td>
+<td>int</td>
+</tr>
+
+<tr>
+<td>float</td>
+<td>float</td>
+</tr>
+
+<tr>
+<td>string</td>
+<td>hash, exact, term, fulltext, trigram</td>
+</tr>
+
+<tr>
+<td>bool</td>
+<td>bool</td>
+</tr>
+
+<tr>
+<td>geo</td>
+<td>geo</td>
+</tr>
+
+<tr>
+<td>dateTime</td>
+<td>year, month, day, hour</td>
+</tr>
+</tbody>
+</table>
+
+<p>Only <code>string</code> and <code>dateTime</code> data types have an option for more than one index type.</p>
+
+<p>Let&rsquo;s create an index on the rating predicate.
+Ratel UI makes it super simple to add an index.</p>
+
+<p>Here&rsquo;s the sequence of steps:</p>
+
+<ul>
+<li>Go to the schema tab on the left.</li>
+<li>Click on the <code>rating</code> predicate from the list.</li>
+<li>Tick the index option in the Properties UI on the right.</li>
+</ul>
+
+<p><img src="/images/tutorials/3/c-add-schema.png" alt="Add schema" /></p>
+
+<p>We successfully added the index for <code>rating</code> predicate!
+Let&rsquo;s rerun our previous query.</p>
+
+<p><img src="/images/tutorials/3/d-rating-query.png" alt="rating" /></p>
+
+<p>We successfully queried for author nodes with a rating of 4.0 or more.</p>
+
+<p>How about we also fetch the blog posts of these authors?</p>
+
+<p>We already know that the <code>published</code> edge points from an <code>author</code> node to a <code>blog post</code> node.
+So fetching the blog posts of the <code>author</code> nodes is simple.
+We need to just traverse the <code>published</code> edge starting from the <code>author</code> nodes.</p>
+
+<pre><code class="language-graphql">{
+  authors_and_ratings(func: ge(rating, 4.0)) {
+    uid
+    author_name
+    rating
+    published {
+      title
+      content
+      dislikes
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/e-rating-blog.png" alt="rating-blog-rating" />
+<em>Check out our <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">previous tutorial</a> if you have questions around graph traversal queries.</em></p>
+
+<p>Similarly, let&rsquo;s extend our previous query to fetch the tags of these blog posts.</p>
+
+<pre><code class="language-graphql">{
+  authors_and_ratings(func: ge(rating, 4.0)) {
+    uid
+    author_name
+    rating
+    published {
+      title
+      content
+      dislikes
+      tags {
+        tag_name
       }
     }
   }
-
-  closeFriends(func: uid(fscore), orderdesc: val(fscore)) {
-    name
-    val(score)
-  }
 }
 </code></pre>
 
-<p>At line A, nodes are assigned a score of <code>1</code> (which in this case we&rsquo;ll assume is the single node <code>P</code>).
-Traversing the <code>friend</code> edge twice reaches the friends of friends.  The variable <code>myscore</code> gets
-propagated, such that the value inside the block marked C is the sum of values from all paths from A to C.</p>
+<p><img src="/images/tutorials/3/m-four-blogs.png" alt="rating-blog-rating" />
+<em>Note: Author nodes are in blue, blogs posts in green, and tags in pink.</em></p>
 
-<p>Here&rsquo;s how that propagation looks in a graph.</p>
+<p>We have two authors, four blog posts, and their tags in the result.</p>
 
-<p><img src="/images/vartransform.png" alt="Variable propagation" /></p>
+<p>If you take a closer look at the result, there&rsquo;s a blog post with 12 dislikes.</p>
 
-<p><strong>In short, the value that a node receives is equal to the sum of values of all its parent nodes.</strong>
-This propagation is useful when we want to normalize a sum across users, find the number of paths
-between some nodes or accumulate a sum as we move through the graph.</p>
+<p><img src="/images/tutorials/3/i-dislikes-2.png" alt="Dislikes" /></p>
 
-<h2 id="movielens">Movielens</h2>
+<p>Let&rsquo;s filter and fetch only the popular blog posts.
+Let&rsquo;s query for only those blog posts with fewer than 10 dislikes.</p>
 
-<p>Let&rsquo;s start with the <a href="https://grouplens.org/datasets/movielens/100k/">ML-100k</a> dataset of
-100,000 ratings from 1000 users on 1700 movies. We converted the dataset to RDF (the dataset and
-script can be found at
-<a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">github</a>) and loaded it into
-Dgraph.</p>
+<p>To achieve that, we need to express the following statement as a query to Dgraph:
+<em>Hey, traverse the <code>published</code> edge, but only return those blogs with fewer than 10 dislikes</em></p>
 
-<p>It&rsquo;s about users and movies and user&rsquo;s ratings of movies.  So a user (a node in the graph) has a name and a gender and a <code>rated</code> edge to a movie.  The <code>rated</code> edge has a facet <code>rating</code> that tells us the users numeric 0&ndash;5 rating of the movie.</p>
+<p>Can we also filter the nodes during traversals?
+Yes, we can! Let&rsquo;s learn how to do that in our next section.</p>
 
-<p><img src="/images/movilensschema.png" alt="Movielens schema" /></p>
+<h4 id="filtering-traversals">Filtering traversals</h4>
 
-<h2 id="content-based-filtering">Content-based filtering</h2>
+<p>We can filter the result of traversals by using the <code>@filter</code> directive.</p>
 
-<p>Content-based filtering ranks items as similar or not based on their properties.  There are a number of measures we could use.  Our reference text from Stanford talks about <strong>Jaccard</strong> and <strong>Cosine</strong> distances.</p>
+<p>You can use any of the Dgraph&rsquo;s comparator functions with the <code>@filter</code> directive.</p>
 
-<h3 id="jaccard-distance">Jaccard Distance</h3>
+<p>You should use the <code>lt</code> comparator to filter for only those blog posts with fewer than 10 dislikes.</p>
 
-<p>Let&rsquo;s try some measure functions based on Jaccard distance.  For two sets A and B the Jaccard distance is given by</p>
+<p>Here&rsquo;s the query.</p>
 
-<p>$$1-\frac{|A\cap B|}{| A\cup B |}$$</p>
+<pre><code class="language-graphql">{
+  authors_and_ratings(func: ge(rating, 4.0)) {
+    author_name
+    rating
 
-<p>That&rsquo;s the ratio of the size of the set intersection to the size of the union.  So if items have many properties in common (compared to how many properties each has) then the items are similar.  For our movie example, let&rsquo;s take $A$ and $B$ as the genre sets for each movie.  We can then express our difference function as:</p>
-
-<p>$$d(M_1, M_2) = 1-\frac{|M_1.\mathcal{genres} \cap M_2.\mathcal{genres}|}{| M_1.\mathcal{genres}\cup M_2.\mathcal{genres} |}$$</p>
-
-<p>The closer the result is to 0, the closer the movies &mdash; if the number of genres in common is more, the second term is close to 1, if movies have few genres in common, the second term is closer to 0.</p>
-
-<p>For movie a $M_1$, we picked &ldquo;The Shawshank Redemption&rdquo; with unique ID <code>0x30d80</code>, and translated Jaccard distance to this query.</p>
-
-<pre><code>{
-  # Count the genres for every movie that has been rated
-  var(func: has(~rated)) {
-    M2_num_genres as count(genre)
-  }
-
-
-  # Calculate a Jaccard distance score for every movie that shares
-  # at least 1 genre with the given movie.
-  var(func: uid(0x30d80)) {    # M1
-    norm as math(1)               # 1
-    M1_num_genres as count(genre) # 2
-    M1genres as genre {           # 3
-      ~genre {
-        # M2 -- movies reached here share a genre with the initial movie
-        # normalize the count to account for multiple paths
-        M1_num_genres_norm as math(M1_num_genres / norm)      # 4
-        num_genres as count(genre @filter(uid(M1genres))) # 5
-        distance as math( 1 - ( num_genres / (M1_num_genres_norm + M2_num_genres - num_genres) )) # 6
+    publishes @filter(lt(dislikes, 10)) {
+      title
+      likes
+      dislikes
+      tag {
+        tag_name
       }
     }
   }
+}
+</code></pre>
 
-  # Sort and return closest movies.
-  similarMovies(func: uid(distance), orderasc: val(distance), first: 10) { # 7
-    name
-    val(distance)
+<p><img src="/images/tutorials/3/j-dislike-index-2.png" alt="Dislikes" /></p>
+
+<p>Oops! We forgot to add the index for the dislike predicate!</p>
+
+<p>Go to the Schema tab, find the <code>dislikes</code> predicate, add the index from the UI.</p>
+
+<p><img src="/images/tutorials/3/g-dislike-index-3.png" alt="Add index" />
+<em>Note: Notice that the <code>dislike</code> predicate is of integer type.</em></p>
+
+<p>Let&rsquo;s rerun the query.</p>
+
+<p><img src="/images/tutorials/3/n-three-blogs.png" alt="rating-blog-rating" /></p>
+
+<p>Now, we only have three blogs in the result.
+The blog with 12 dislikes is filtered out.</p>
+
+<p>Notice that the blog posts are associated with a series of tags.</p>
+
+<p>Let&rsquo;s run the following query and find all the tags in the database.</p>
+
+<pre><code class="language-sh">{
+  all_tags(func: has(tag_name)) {
+    tag_name
   }
 }
 </code></pre>
 
-<p>The query works as follows.</p>
+<p><img src="/images/tutorials/3/o-tags.png" alt="tags" /></p>
 
-<ol>
-<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-<li>Count the number of genres for movie $M_1$.</li>
-<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
-<li>We may have reached this $M_2$ via multiple genre paths and the count of genres set at <code># 2</code> would have accumulated for each path, so normalize back to the original count.</li>
-<li>Find the number of intersecting genres.</li>
-<li>Apply the Jaccard distance formula &mdash; <code>distance</code> is thus a map for each $M_2$ to the Jaccard distance between $M_1$ and $M_2$.</li>
-<li>Filter out the movies that were closest (had lowest distance)</li>
-</ol>
+<p>We got all the tags in the database.
+My favorite tag is <code>devrel</code>. What&rsquo;s yours?</p>
 
-<p>Here&rsquo;s the results we got for &ldquo;The Shawshank Redemption&rdquo;</p>
+<p>In our next section, let&rsquo;s find all the blog posts which are tagged <code>devrel</code>?</p>
 
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Miracle on 34th Street (1994)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Postman, The (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Mat' i syn (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Winter Guest, The (1997)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Chamber, The (1996)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Shanghai Triad (Yao a yao yao dao waipo qiao) (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Picnic (1955)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Nell (1994)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Dead Man Walking (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Blue Angel, The (Blaue Engel, Der) (1930)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        }
-    ]
-}
-</code></pre>
+<h4 id="querying-string-predicates">Querying string predicates</h4>
 
-<p>Ouch, there&rsquo;s a bunch of movies with distance 0.  That means all those movies share exactly the same genre set with &ldquo;The Shawshank Redemption&rdquo;, so we can&rsquo;t discriminate between them.  Let&rsquo;s test another movie.  With &ldquo;Toy Story&rdquo; we get.</p>
+<p>The <code>tag_name</code> predicate represents the name of a tag.
+It is of type <code>string</code>.
+Here are the steps to fetch all blog posts which are tagged <code>devrel</code>.</p>
 
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Aladdin and the King of Thieves (1996)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Toy Story (1995)&quot;,
-            &quot;var(distance)&quot;: 0.0
-        },
-        {
-            &quot;name&quot;: &quot;Aladdin (1992)&quot;,
-            &quot;var(distance)&quot;: 0.25
-        },
-        {
-            &quot;name&quot;: &quot;Goofy Movie, A (1995)&quot;,
-            &quot;var(distance)&quot;: 0.25
-        },
-        {
-            &quot;name&quot;: &quot;Flintstones, The (1994)&quot;,
-            &quot;var(distance)&quot;: 0.333333
-        }
-    ]
-}
-</code></pre>
+<ul>
+<li>Find the root node with the value of <code>tag_name</code> predicate set to <code>devrel</code>.
+We can use the <code>eq</code> comparator function to do so.</li>
+<li>Don&rsquo;t forget to add an index to the <code>tag_name</code> predicate before you run the query.</li>
+<li>Traverse starting from the node for <code>devrel</code> tag along the <code>tagged</code> edge.</li>
+</ul>
 
-<p>That&rsquo;s better.  At least similar movies have similar genres. But still, the Jaccard distance function isn&rsquo;t good enough because it can&rsquo;t discriminate a difference between many movies.  Our reference text suggests the same distance function but for data that also has actors and directors, which we don&rsquo;t.</p>
+<p>Let&rsquo;s start by adding an index to the <code>tag_name</code> predicate.
+Go to Ratel, click <code>tag_name</code> predicate from the list.</p>
 
-<p>As it stands, the Jaccard distance might not be so appropriate because the only items we have to compare are the genres, since the Jaccard distance doesn&rsquo;t take into account the magnitude of the ratings.  So let&rsquo;s play around with it and see how some variations come out.</p>
+<p><img src="/images/tutorials/3/p-string-index-2.png" alt="string index" /></p>
 
-<h3 id="jaccard-distance-variation">Jaccard Distance Variation</h3>
+<p>You can see that there are five choices for indices that can be applied to any <code>string</code> predicate.
+The <code>fulltext</code>, <code>term</code>, and <code>trigram</code> are advanced string indices.
+We&rsquo;ll discuss them in detail in our next episode.</p>
 
-<p>The size of the intersection of the genres seems a reasonable start, but how to bring the magnitude of the ratings into it?  If we are to use the ratings, then the average rating might be appropriate.  Let&rsquo;s try the number of genres in common plus an average rating.  Given a movie $M_1$ we&rsquo;ll find the similarity to all other movies $M_2$ as</p>
+<p>There are a few constraints around the use of string type indices and the comparator functions.</p>
 
-<p>$$d(M_1, M_2) = |M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_2.\overline{\mathcal{rating}}$$</p>
+<p>For example, only the <code>exact</code> index is compatible with <code>le</code>, <code>ge</code>,<code>lt</code>, and <code>gt</code> built-in functions.
+If you set a string predicate with any other index and run the above comparators, the query fails.</p>
 
-<p>Here&rsquo;s the Dgraph query for movie $M_1$ having unique ID <code>0x30d72</code>, that&rsquo;s &ldquo;Star Wars&rdquo;.</p>
+<p>Although, any of the five string type indices are compatible with the <code>eq</code> function.
+The <code>hash</code> index would normally be the most performant to be used with the <code>eq</code> comparator.</p>
 
-<pre><code>{
-  # M1 -- Star Wars by its unique ID
-  var(func: uid(0x30d72)) {
-    g as genre
+<p>Let&rsquo;s add the <code>hash</code> index to the <code>tag_name</code> predicate.
+<img src="/images/tutorials/3/m-hash.png" alt="string index" /></p>
+
+<p>Let&rsquo;s use the <code>eq</code> comparator, and fetch the root node with <code>tag_name</code> set to <code>devrel</code>.</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
   }
+}
+</code></pre>
 
-  # Calculate the average rating for every movie
-  var(func: has(rated)) {
-    allmovies as rated @facets(a as rating) {
-      c as count(~rated)
-      avg as math(a / c)
+<p><img src="/images/tutorials/3/q-devrel-2.png" alt="string index" /></p>
+
+<p>We finally have the node we wanted!</p>
+
+<p>We know that the <code>blog post</code> nodes are connected to their <code>tag nodes</code> via the <code>tagged</code> edges.</p>
+
+<p>Do you think that a traversal from the node for <code>devrel</code> tag should give us the blog posts?</p>
+
+<p>Let&rsquo;s try it out!</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
+      tagged {
+        title 
+        content 
     }
   }
-
-  # Give every movie a score
-  var(func: uid(allmovies)) {
-    x as count(genre @filter(uid(g)))
-    score as math(avg + x)
-  }
-
-  # Return the top 10 movies
-  fin(func: uid(score), orderdesc: val(score), first: 10) {
-    name
-    val(score)
-  }
 }
 </code></pre>
 
-<p><strong>In terms of variable propagation, the important part is the calculation of average rating.</strong>  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.</p>
+<p>Looks like the query didn&rsquo;t work! It didn&rsquo;t return us the blog posts!
+Don&rsquo;t be surprised as this is expected.</p>
 
-<p><img src="/images/facetsumming.png" alt="Facet summing" /></p>
+<p>Let&rsquo;s observe our Graph model again.</p>
 
-<p>Running the query we get the following results.</p>
+<p><img src="/images/tutorials/3/a-main-graph.JPG" alt="main graph model" /></p>
 
-<pre><code>{
-    &quot;fin&quot;: [
-        {
-            &quot;name&quot;: &quot;Star Wars (1977)&quot;,
-            &quot;var(score)&quot;: 9.358491
-        },
-        {
-            &quot;name&quot;: &quot;Empire Strikes Back, The (1980)&quot;,
-            &quot;var(score)&quot;: 9.20436
-        },
-        {
-            &quot;name&quot;: &quot;Return of the Jedi (1983)&quot;,
-            &quot;var(score)&quot;: 9.00789
-        },
-        {
-            &quot;name&quot;: &quot;African Queen, The (1951)&quot;,
-            &quot;var(score)&quot;: 8.184211
-        },
-        {
-            &quot;name&quot;: &quot;Starship Troopers (1997)&quot;,
-            &quot;var(score)&quot;: 7.232227
-        },
-        {
-            &quot;name&quot;: &quot;Princess Bride, The (1987)&quot;,
-            &quot;var(score)&quot;: 7.17284
-        },
-        {
-            &quot;name&quot;: &quot;Star Kid (1997)&quot;,
-            &quot;var(score)&quot;: 7.0
-        },
-        {
-            &quot;name&quot;: &quot;Aliens (1986)&quot;,
-            &quot;var(score)&quot;: 6.947183
-        },
-        {
-            &quot;name&quot;: &quot;Star Trek: The Wrath of Khan (1982)&quot;,
-            &quot;var(score)&quot;: 6.815574
-        },
-        {
-            &quot;name&quot;: &quot;Men in Black (1997)&quot;,
-            &quot;var(score)&quot;: 6.745875
-        }
-    ]
-}
-</code></pre>
+<p>We know that the edges in Dgraph have directions.
+You can see that the <code>tagged</code> edge points from a <code>blog post</code> node to a <code>tag</code> node.</p>
 
-<p><em>Note that we didn&rsquo;t filter out &ldquo;Star Wars&rdquo; and thankfully it came back as the first result.</em>  Looks like a pretty good distance function, especially given the top three results, but it&rsquo;s probably biased.  &ldquo;Star Wars&rdquo; is highly rated on average, and so we got back other highly rated movies with intersecting genres.  If we searched for a movie that wasn&rsquo;t highly rated on average, the measure would still prefer highly rated movies with intersecting genres.</p>
+<p>Traversing along the direction of an edge is natural to Dgraph.
+Hence, you can traverse from any <code>blog post node</code> to their <code>tag node</code> via the <code>tagged</code> edge.</p>
 
-<p>That might be fine.  If a user likes certain genres, then maybe highly rated movie in those genres are good recommendations. Maybe it&rsquo;s better to normalize the result so that two movies come out as more similar if they have genres in common and similar average ratings.  That&rsquo;s what cosine distance does.</p>
+<p>But to traverse the other way around requires you to move opposite to the direction of the edge.
+You can still do so by adding a tilde(~) sign in your query.
+The tilde(~) has to be added at the beginning of the name of the edge to be traversed.</p>
 
-<h3 id="cosine-distance">Cosine Distance</h3>
+<p>Let&rsquo;s add the <code>tilde (~)</code> at the beginning of the <code>tagged</code> edge and initiate a reverse edge traversal.</p>
 
-<p>Cosine distance treats our movies as vectors in an n-dimensional space.  The similarity of the movies is then a measure of the difference in angle between the vectors.  The smaller the angle between two vectors, the more similar the movies.  For our movie example, we can express that as follows.</p>
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
 
-<p>If we treat our movies as vectors</p>
-
-<p>$$x_1 &hellip; x_n$$ and $$y_1 &hellip; y_n$$</p>
-
-<p>the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.</p>
-
-<p><img src="/images/cosine_diff.png" alt="cosine difference" /></p>
-
-<!--
-what's wrong with this???
-$$\frac{\sum_{i=1}^n{x_iy_i}}{\sqrt{\sum_{i=1}^n{x_i^2}}\cdot \sqrt{\sum_{i=1}^n{y_i^2}}}$$
-If I paste it into http://www.hostmath.com/ I get what I want
--->
-
-<p>In our case the $x$&rsquo;s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
-
-<p><img src="/images/cosine_diff_movies.png" alt="cosine difference" /></p>
-
-<!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} -->
-
-<p>That factors in both the intersecting genres as well as the similarity of the average ratings.</p>
-
-<p>As a single Dgraph query, that looks like this.</p>
-
-<pre><code>{
-  # Calculate the average rating of every movie
-  var(func: has(rated)) {
-    rated @facets(r as rating) {
-      c as count(~rated)
-      M2_avg_rating as math(r / c)
-      M2_num_gen as count(genre)
+    ~tagged {
+      title 
+      content 
     }
   }
+}
+</code></pre>
 
-  # Calculate a cosine difference score for every movie that shares
-  # at least 1 genre with M1
-  var(func: uid(0x30d80)) {    # movie M1
-    norm as math(1)     # 1
+<p><img src="/images/tutorials/3/r-reverse-2.png" alt="string index" />
+We got an error!</p>
 
-    # Find the average rating for M1
-    M1_num_ratings as count(~rated)
-    ~rated @facets(B as rating)
-    M1_ratings_sum as sum(val(B))
-    M1_avg_rating as math(M1_ratings_sum / M1_num_ratings) # 2
-    M1_num_gen as count(genre)                             # 3
+<p>Reverse traversals require an index on their predicate.</p>
 
-    M1_genres as genre {
-      ~genre { # 4
-        # M2 -- movies reached here share a genre with the initial movie
+<p>Let&rsquo;s go to Ratel and add the <code>reverse</code> index to the edge.
+<img src="/images/tutorials/3/r-reverse-1.png" alt="string index" /></p>
 
-        # normalize the M1 count and average to account for multiple paths
-        M1_norm_avg as math(M1_avg_rating / norm)
-        num_genN as math(M1_num_gen/norm)              # 5
-        genint as count(genre @filter(uid(M1_genres))) # 6
+<p>Let&rsquo;s re-run the reverse edge traversal.</p>
 
-        score as math((genint + (M1_norm_avg * M2_avg_rating)) /
-          (sqrt(num_genN + (M1_norm_avg*M1_norm_avg)) *
-          sqrt(M2_num_gen + (M2_avg_rating*M2_avg_rating))))    # 7
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name, &quot;devrel&quot;)) {
+    tag_name
 
+    ~tagged {
+      title 
+      content 
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/s-devrel-blogs.png" alt="uid index" />
+<img src="/images/tutorials/3/s-devrel-blogs-2.png" alt="uid index" />
+Phew! Now we got all the blog posts that are tagged <code>devrel</code>.</p>
+
+<p>Similarly, you can extend the query to also find the authors of these blog posts.
+It requires you to reverse traverse the <code>published</code> predicate.</p>
+
+<p>Let&rsquo;s add the reverse index to the <code>published</code> edge.
+<img src="/images/tutorials/3/t-reverse-published.png" alt="uid index" /></p>
+
+<p>Now, let&rsquo;s run the following query.</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
+ 
+    ~tagged {
+      title 
+      content 
+
+      ~published {
+        author_name
       }
     }
   }
-
-  similarMovies(func: uid(score), first:20, orderdesc: val(score)) { # 8
-    name
-    val(score)
-  }
 }
 </code></pre>
 
-<p>The query works as follows.</p>
+<p><img src="/images/tutorials/3/u-author-reverse-1.png" alt="uid index" />
+<img src="/images/tutorials/3/u-author-reverse-2.png" alt="uid index" /></p>
 
-<ol>
-<li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-<li>Find the average rating for movie $M_1$.</li>
-<li>Count the genres for $M_1$.</li>
-<li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
-<li>We may have reached this $M_2$ via multiple genre paths and the values from <code># 2</code> and <code># 3</code> would have accumulated for each path, so normalize back to the originals.</li>
-<li>Find the number of intersecting genres.</li>
-<li>Apply the cosine distance formula &mdash; <code>score</code> is thus a map for each $M_2$ to the cosine distance between $M_1$ and $M_2$.</li>
-<li>Filter out the movies that were closest (had cosine closer to 1, and thus lowest angle)</li>
-</ol>
+<p>With our previous query, we just traversed the entire graph in the reverse order.
+Starting from the tag nodes, we traversed up to the author nodes.</p>
 
-<p>We searched again for the &ldquo;The Shawshank Redemption&rdquo; and got these results.</p>
+<h4 id="summary">Summary</h4>
 
-<pre><code>{
-    &quot;similarMovies&quot;: [
-        {
-            &quot;name&quot;: &quot;Shawshank Redemption, The (1994)&quot;,
-            &quot;var(score)&quot;: 1.0
-        },
-        {
-            &quot;name&quot;: &quot;Anna (1996)&quot;,
-            &quot;var(score)&quot;: 0.999997
-        },
-        {
-            &quot;name&quot;: &quot;Some Mother's Son (1996)&quot;,
-            &quot;var(score)&quot;: 0.999997
-        },
-        {
-            &quot;name&quot;: &quot;12 Angry Men (1957)&quot;,
-            &quot;var(score)&quot;: 0.999988
-        },
-        {
-            &quot;name&quot;: &quot;Bitter Sugar (Azucar Amargo) (1996)&quot;,
-            &quot;var(score)&quot;: 0.999985
-        },
-        {
-            &quot;name&quot;: &quot;Citizen Kane (1941)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;To Kill a Mockingbird (1962)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;One Flew Over the Cuckoo's Nest (1975)&quot;,
-            &quot;var(score)&quot;: 0.999971
-        },
-        {
-            &quot;name&quot;: &quot;Pather Panchali (1955)&quot;,
-            &quot;var(score)&quot;: 0.999965
-        },
-        {
-            &quot;name&quot;: &quot;Good Will Hunting (1997)&quot;,
-            &quot;var(score)&quot;: 0.999958
-        }
-    ]
-}
-</code></pre>
+<p>In this tutorial, we learned about basic types, indices, filtering, and reverse edge traversals.</p>
 
-<p>We didn&rsquo;t filter out &ldquo;The Shawshank Redemption&rdquo; and thus it comes back as the top result &mdash; it has an angle of 0 with itself.  Following that the query returns the results that cosine difference calculates as most similar.</p>
+<p>Before we wrap up, here’s a sneak peek into our next tutorial.</p>
 
-<p><em>With that, we conclude this post.</em> In this post, we showcased Jaccard distance, a variation of Jaccard, and finally Cosine
-distance. That&rsquo;s three content-based filtering distance metrics and queries for them in Dgraph.  The variables and math function in Dgraph allow us to encode the metrics directly in the query.</p>
+<p>Did you know that Dgraph offers advanced text search capabilities?
+How about the geo-location querying capabilities?</p>
 
-<p>In the next post, we&rsquo;ll take a look at collaborative filtering.  We&rsquo;ll also look at making recommendations for Stack Overflow and how to build a scalable recommendation engine for big graphs.</p>
+<p>Sounds interesting?</p>
 
-<hr />
+<p>See you all soon in the next tutorial. Till then, happy Graphing!</p>
 
 <div class="engage">
 	<p>
@@ -1035,11 +1176,19 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 	})
 </script>
 
-
-<p><em>Top image: <a href="http://www.spacex.com/media-gallery/detail/149441/9516">FALCON 9 FIRST STAGE LANDING</a></em></p>
 </div>
           <div class="article-tag-list">
             
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/tutorial/">tutorial</a>
+                
+            
+                
+                
+                    <a href="https://blog.dgraph.io/tags/devrel/">DevRel</a>
+                
             
           </div>
           <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1066,12 +1215,12 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
             <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/people/ashwin.jpg" class="article-author__image">
+	<img src="/images/people/karthic.png" class="article-author__image">
 
 
   </figure>
   <div class="article-author__bio">
-    <h4 class="article-author__name">Ashwin Ramesh
+    <h4 class="article-author__name">Karthic Rao
 
 
       <span class="article-author__title">Author</span>
@@ -1080,14 +1229,14 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 <nav class="social__nav article-author__social">
     <ul class="social__list social__list--inline">
         <li class="social__item social__item--inline">
-            <a href="https://www.linkedin.com/in/ashwin95r" class="social__link">
+            <a href="https://www.linkedin.com/in/hackintoshrao/" class="social__link">
                 <svg class="icon social__icon social__icon--linkedin">
                     <use xlink:href="#icon-linkedin" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
             </a>
         </li>
         <li class="social__item social__item--inline">
-            <a href="https://twitter.com/ashwin_rrr" class="social__link">
+            <a href="https://twitter.com/hackintoshrao" class="social__link">
                 <svg class="icon social__icon social__icon--twitter">
                     <use xlink:href="#icon-twitter" xmlns:xlink="https://www.w3.org/1999/xlink"></use>
                 </svg>
@@ -1095,7 +1244,13 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
         </li>
     </ul>
 </nav>
-<p>Ashwin did his undergrad in computer science at IIT Madras and likes working on distributed systems. He likes working out, hiking, swimming and everything adventurous. Loves travelling to new places and trying out new food.</p>
+<p>
+    Karthic is a Developer Advocate who strives to create value across multiple areas at Dgraph. 
+    He has experience working with a wide range of startups in different domains across the globe.
+    Prior to Dgraph, Caddy Server and Minio are the major Go open source projects he has contributed significantly to.
+    He is an avid blogger, speaker, and musician. When not at work you could find him reading, 
+    at the gym, meditating, practicing music, or on motorcycle trips.
+</p>
 
 
 
@@ -1103,31 +1258,6 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 </div>
 
             
-	<div class="article-author">
-	<figure class="article-author__figure">
-		
-	<img src="/images/people/michael.jpg" class="article-author__image">
-
-
-	</figure>
-	<div class="article-author__bio">
-		<h4 class="article-author__name">Michael Compton
-
-
-			<span class="article-author__title">Editor</span>
-		</h4>
-		
-<nav class="social__nav article-author__social">
-    <ul class="social__list social__list--inline">
-    </ul>
-</nav>
-<p>Michael did undergrad computer science at ANU in Canberra and a Ph.D. at Cambridge in the U.K.  He's worked for a number of years with graph databases.  He likes sport and hanging out with his family.</p>
-
-
-
-	</div>
-</div>
-
           </div>
           <div class="col-12">
             <div id='discourse-comments'></div>
@@ -1163,7 +1293,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/recommendation/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/tutorial-3-getting-started/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
@@ -1306,7 +1436,7 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/recommendation\/"
+  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/tutorial-3-getting-started\/"
 };
 (function() {
   var d = document.createElement("script");

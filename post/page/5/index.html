@@ -124,6 +124,39 @@
           <li class="article__item">
 	<div class="article__meta">
 		<span class="article__meta-item article__date">
+			Wed, Jul 19, 2017 by Manish Rai Jain
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/signal-and-wait/" class="clearfix">
+		<h3 class="article__title">Orchestrating signal and wait in Go</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/signal-and-wait/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/spacex-stages.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary"><p>One of the common use case in Go is to start a few goroutines to do some
+work. These goroutines block listening in on a channel, waiting for more work to
+arrive. At some point, you want to signal these goroutines to stop accepting
+more work and exit, so you can cleanly shut down the program.</p></div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
 			Mon, Jul 17, 2017 by Manish Rai Jain
 
 
@@ -355,57 +388,6 @@ We also dream that graph database would no longer run as a secondary database.</
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Mon, Jan 23, 2017 by Pawan Rawal
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="clearfix">
-		<h3 class="article__title">Neo4j vs Dgraph - The numbers speak for themselves</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/benchmark-neo4j/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/potw1652a.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary"><p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>.</p>
-
-<p>We have divided this post into five parts:</p>
-
-<ol>
-<li><a href="#ref-loading-data">Loading data</a></li>
-<li><a href="#ref-querying">Querying</a></li>
-<li><a href="#ref-issues-faced">Issues faced</a></li>
-<li><a href="#ref-feature-comparison">Dgraph vs Neo4j Feature Comparison</a></li>
-<li><a href="#ref-dgraph-principles">Principles behind Dgraph</a></li>
-</ol></div>
-				<div class="tags">
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/benchmark/">Benchmark</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/neo4j/">Neo4j</a>
-							
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -564,23 +546,6 @@ We also dream that graph database would no longer run as a secondary database.</
     </script>
 
 
-  
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=UA-75364122-5"
-  ></script>
-  <script>
-    if (window.location.host.indexOf("dgraph.io") > -1) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-75364122-5');
-    }
-  </script>
-
-
-
 
 
 <script>
@@ -633,8 +598,7 @@ $(document.links)
   src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
 
-<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
-<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
+<script src="//unpkg.com/@dgraph-io/community"></script>
 
 </body>
 </html>

@@ -124,6 +124,37 @@
           <li class="article__item">
 	<div class="article__meta">
 		<span class="article__meta-item article__date">
+			Mon, Oct 9, 2017 by Peter Stace
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/bulkloader/" class="clearfix">
+		<h3 class="article__title">Loading close to 1M edges/sec into Dgraph</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/bulkloader/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/cassini.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges! When we heard about the size of these datasets, we knew we needed to have a solid data loading story so that we could support the most extreme demands from our users.
+In a previous blog post, we discussed some of the challenges that we met on our journey towards loading massive datasets into Dgraph.</div>
+				<div class="tags">
+					
+				</div>
+			</div>
+		</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
 			Thu, Oct 5, 2017 by Manish Rai Jain
 
 
@@ -359,39 +390,6 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Wed, Jul 19, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/signal-and-wait/" class="clearfix">
-		<h3 class="article__title">Orchestrating signal and wait in Go</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/signal-and-wait/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/spacex-stages.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary"><p>One of the common use case in Go is to start a few goroutines to do some
-work. These goroutines block listening in on a channel, waiting for more work to
-arrive. At some point, you want to signal these goroutines to stop accepting
-more work and exit, so you can cleanly shut down the program.</p></div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -550,23 +548,6 @@ more work and exit, so you can cleanly shut down the program.</p></div>
     </script>
 
 
-  
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=UA-75364122-5"
-  ></script>
-  <script>
-    if (window.location.host.indexOf("dgraph.io") > -1) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-75364122-5');
-    }
-  </script>
-
-
-
 
 
 <script>
@@ -619,8 +600,7 @@ $(document.links)
   src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
 
-<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
-<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
+<script src="//unpkg.com/@dgraph-io/community"></script>
 
 </body>
 </html>

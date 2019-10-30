@@ -124,6 +124,57 @@
           <li class="article__item">
 	<div class="article__meta">
 		<span class="article__meta-item article__date">
+			Thu, Aug 8, 2019 by Aman Mangal
+
+
+		</span>
+	</div>
+	<a href="https://blog.dgraph.io/post/datetime-indexes-dgraph/" class="clearfix">
+		<h3 class="article__title">Datetime Indexes in Dgraph</h3>
+	</a>
+		<div class="row">
+			<div class="col-12 col-lg-3 opening__image">
+				<a href="https://blog.dgraph.io/post/datetime-indexes-dgraph/" class="no-hover">
+					<div
+							class="img_square"
+							style="background-image: url(https://blog.dgraph.io/images/candle.jpg); ">
+					</div>
+				</a>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="summary">I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&rsquo;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
+Bug Discovery While working on Flock, I observed that timestamp comparisons were not working correctly in Dgraph when the data or query had timezone information in it.</div>
+				<div class="tags">
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/dgraph/">Dgraph</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/indexing/">Indexing</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/engineering/">Engineering</a>
+							
+					
+							
+							
+									<a href="https://blog.dgraph.io/tags/go/">Go</a>
+							
+					
+				</div>
+			</div>
+		</div>
+</li>
+
+        
+          <li class="article__item">
+	<div class="article__meta">
+		<span class="article__meta-item article__date">
 			Wed, Jul 31, 2019 by Manish Rai Jain
 
 
@@ -423,58 +474,6 @@ The tutorial is split into several steps:
 </li>
 
         
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Thu, Mar 7, 2019 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/caching-in-go/" class="clearfix">
-		<h3 class="article__title">The State of Caching in Go</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/caching-in-go/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/ristretto.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
-This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
-Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.</div>
-				<div class="tags">
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/go/">Go</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/cache/">Cache</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/reddit/">Reddit</a>
-							
-					
-							
-							
-									<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
-							
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
       </ul>
     </div>
   </div>
@@ -633,23 +632,6 @@ Every database system requires a smart cache. That is, a cache that keeps the mo
     </script>
 
 
-  
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=UA-75364122-5"
-  ></script>
-  <script>
-    if (window.location.host.indexOf("dgraph.io") > -1) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-75364122-5');
-    }
-  </script>
-
-
-
 
 
 <script>
@@ -702,8 +684,7 @@ $(document.links)
   src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
 
-<script src="//unpkg.com/@dgraph-io/community/dist/index.iife.js"></script>
-<link href="//unpkg.com/@dgraph-io/community/dist/index.iife.css" rel="stylesheet">
+<script src="//unpkg.com/@dgraph-io/community"></script>
 
 </body>
 </html>
