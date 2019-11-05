@@ -585,35 +585,36 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 <li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
 <li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
 <li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
-</ul>
+
+<li><p><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</p>
 
 <pre><code>$ curl localhost:8080/query -XPOST -d $'
 {
-  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-    name
-  }
+tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
+name
+}
 }' | python -m json.tool | grep name
 
-            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-            &quot;name&quot;: &quot;De Young Museum&quot;
-            &quot;name&quot;: &quot;Chinese Pavillion&quot;
-            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-            &quot;name&quot;: &quot;Peace Lantern&quot;
-            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-            &quot;name&quot;: &quot;Morrison Planetarium&quot;
-            &quot;name&quot;: &quot;California Academy of Sciences&quot;
-            &quot;name&quot;: &quot;Hamon Tower&quot;
-            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-            &quot;name&quot;: &quot;La Rose des Vents&quot;
-            &quot;name&quot;: &quot;Strawberry Hill&quot;
-            &quot;name&quot;: &quot;Buddha&quot;
-            &quot;name&quot;: &quot;Rose Garden&quot;
+        &quot;name&quot;: &quot;Steinhart Aquarium&quot;
+        &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
+        &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
+        &quot;name&quot;: &quot;Conservatory of Flowers&quot;
+        &quot;name&quot;: &quot;De Young Museum&quot;
+        &quot;name&quot;: &quot;Chinese Pavillion&quot;
+        &quot;name&quot;: &quot;Japanese Tea Garden&quot;
+        &quot;name&quot;: &quot;Peace Lantern&quot;
+        &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
+        &quot;name&quot;: &quot;Morrison Planetarium&quot;
+        &quot;name&quot;: &quot;California Academy of Sciences&quot;
+        &quot;name&quot;: &quot;Hamon Tower&quot;
+        &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
+        &quot;name&quot;: &quot;La Rose des Vents&quot;
+        &quot;name&quot;: &quot;Strawberry Hill&quot;
+        &quot;name&quot;: &quot;Buddha&quot;
+        &quot;name&quot;: &quot;Rose Garden&quot;
 
-</code></pre>
+</code></pre></li>
+</ul>
 
 <p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
 
