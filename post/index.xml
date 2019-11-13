@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 30 Oct 2019 06:30:00 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 12 Nov 2019 06:30:00 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 4: Multi-language strings</title>
+      <link>https://blog.dgraph.io/post/tutorial-4-getting-started/</link>
+      <pubDate>Tue, 12 Nov 2019 06:30:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-4-getting-started/</guid>
+      <description>Welcome to the fourth episode of getting started with Dgraph.
+In the previous episode, we learned about Datatypes, Indexing, Filtering, and Reverse traversals in Dgraph.
+In this episode, we&amp;rsquo;ll learn about using multi-language strings and operations on them using the language tags.
+Strings and languages Strings values in Dgraph are of UTF-8 format. Dgraph also supports values for string predicate types in multiple languages. The multi-lingual capability is particularly useful to build features, which requires you to store the same information in multiple languages.</description>
+    </item>
     
     <item>
       <title>Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals.</title>
