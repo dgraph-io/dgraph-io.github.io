@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Dgraph Blog</title>
@@ -139,20 +139,20 @@
     </item>
     
     <item>
-      <title>SQL</title>
-      <link>https://blog.dgraph.io/tags/sql/</link>
-      <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/sql/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>migration</title>
       <link>https://blog.dgraph.io/tags/migration/</link>
       <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/tags/migration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SQL</title>
+      <link>https://blog.dgraph.io/tags/sql/</link>
+      <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/sql/</guid>
       <description></description>
     </item>
     

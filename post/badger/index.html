@@ -525,7 +525,7 @@ stores allow efficient updates, point lookups and range queries.</p>
 <p>There are two popular types of implementations: Log-structured merge (LSM) tree based, and B+ tree
 based. The main advantage LSM trees have is that all the foreground writes happen in memory, and all
 background writes maintain sequential access patterns. Thus they achieve a very high write
-thoughput. On the other hand, small updates on B+-trees involve repeated random disk writes, and
+throughput. On the other hand, small updates on B+-trees involve repeated random disk writes, and
 hence are unable to maintain high throughput write workload<sup>1</sup>.</p>
 
 <p>To deliver high write performance, LSM-trees batch key-value pairs and write them sequentially.
