@@ -7,20 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 18 Nov 2019 06:30:00 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 26 Nov 2019 06:30:00 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Releasing BadgerDB v2.0</title>
-      <link>https://blog.dgraph.io/post/releasing-badger-v2/</link>
-      <pubDate>Mon, 18 Nov 2019 06:30:00 -0700</pubDate>
+      <title>Getting started with Dgraph tutorials series - 5: Tweet graph, string indices, and keyword-based searching</title>
+      <link>https://blog.dgraph.io/post/tutorial-5-getting-started/</link>
+      <pubDate>Tue, 26 Nov 2019 06:30:00 -0700</pubDate>
       
-      <guid>https://blog.dgraph.io/post/releasing-badger-v2/</guid>
-      <description>Dgraph is an open-source, transactional, distributed, native Graph database. Dgraph is optimized for high-performance reads and writes. It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.
-Much of Dgraph&amp;rsquo;s advanced performance capabilities come from Badger. Badger is the embedded key-value store that is responsible for storing all of Dgraph&amp;rsquo;s data.
-Badger itself is not distributed, Dgraph implements a layer on top of it to provide the distributed capabilities.</description>
+      <guid>https://blog.dgraph.io/post/tutorial-5-getting-started/</guid>
+      <description>Welcome to the fifth episode of getting started with Dgraph. In the previous episode, we learned about using multi-language strings and operations on them using language tags.
+In this episode, we&amp;rsquo;ll model tweets in Dgraph and, using it, we&amp;rsquo;ll learn more about string indices in Dgraph.
+We&amp;rsquo;ll specifically learn about:
+ Modeling tweets in Dgraph. Using String indices in Dgraph  Querying twitter users using the hash index. Comparing strings using the exact index.</description>
     </item>
     
     <item>
