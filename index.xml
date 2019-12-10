@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 26 Nov 2019 06:30:00 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 10 Dec 2019 14:30:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The GraphQL Summit story</title>
+      <link>https://blog.dgraph.io/post/graphql-summit-19/</link>
+      <pubDate>Tue, 10 Dec 2019 14:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/graphql-summit-19/</guid>
+      <description>We took part in the recently held GraphQL Summit in San Francisco.
+The conference was exciting, and it had a great line up of talks. As expected, the enthusiasm in the GraphQL community was unmatchable.
+We took part as one of the platinum sponsors of the event, and we also unveiled the new GraphQL API for Dgraph. Read along as we share our experience at the event as it unfolded.</description>
+    </item>
     
     <item>
       <title>Getting started with Dgraph tutorials series - 5: Tweet graph, string indices, and keyword-based searching</title>
