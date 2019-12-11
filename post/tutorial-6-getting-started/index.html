@@ -90,7 +90,7 @@
 
   <meta name="twitter:title" content="Getting started with Dgraph tutorials series - 6: Advanced text search on social graphs "/>
   <meta name="twitter:description" content="Welcome to the sixth episode of getting started with Dgraph.
-In the previous episode, we learned about building social graphs in Dgraph, by modeling tweets as an example. We queried the tweets using the &lsquo;hash&rsquo; and &lsquo;exact&rsquo; indices, and implemented a keyword-based search to find your favorite tweets using the &lsquo;term&rsquo; index and its functions.
+In the previous episode, we learned about building social graphs in Dgraph, by modeling tweets as an example. We queried the tweets using the hash and exact indices, and implemented a keyword-based search to find your favorite tweets using the term index and its functions.
 In this tutorial, we&rsquo;ll continue from where we left off and learn about advanced text search features in Dgraph."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -435,7 +435,7 @@ In this tutorial, we&rsquo;ll continue from where we left off and learn about ad
 <p>Welcome to the sixth episode of getting started with Dgraph.</p>
 
 <p>In the <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">previous episode</a>, we learned about building social graphs in Dgraph, by modeling tweets as an example.
-We queried the tweets using the &lsquo;hash&rsquo; and &lsquo;exact&rsquo; indices, and implemented a keyword-based search to find your favorite tweets using the &lsquo;term&rsquo; index and its functions.</p>
+We queried the tweets using the <code>hash</code> and <code>exact</code> indices, and implemented a keyword-based search to find your favorite tweets using the <code>term</code> index and its functions.</p>
 
 <p>In this tutorial, we&rsquo;ll continue from where we left off and learn about advanced text search features in Dgraph.</p>
 
@@ -554,7 +554,7 @@ We queried the tweets using the &lsquo;hash&rsquo; and &lsquo;exact&rsquo; indic
 
 <p><em>Note: If you&rsquo;re new to Dgraph, and this is the first time you&rsquo;re running a mutation, we highly recommend reading the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first episode of the series before proceeding.</a></em></p>
 
-<p>Voilà! Now you have a graph with &lsquo;tweets&rsquo;, &lsquo;users&rsquo;, and &lsquo;hashtags&rsquo;. It is ready for us to explore.</p>
+<p>Voilà! Now you have a graph with <code>tweets</code>, <code>users</code>, and <code>hashtags</code>. It is ready for us to explore.</p>
 
 <p><img src="/images/tutorials/5/x-all-tweets.png" alt="tweet graph" />
 <em>Note: If you&rsquo;re curious to know how we modeled the tweets in Dgraph, refer to <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">the previous episode.</a></em></p>
@@ -682,9 +682,9 @@ The second column contains their corresponding <code>fulltext</code> tokens gene
 
 <p>Here are the <code>fulltext</code> tokens generated for our search string: [<code>analyz</code>, <code>data</code>, <code>graph</code>, <code>graphdb</code>].</p>
 
-<p>As you can see from the table above, all of the &lsquo;fulltext&rsquo; tokens generated for the search string exist in the matched tweet.
+<p>As you can see from the table above, all of the <code>fulltext</code> tokens generated for the search string exist in the matched tweet.
 Hence, the <code>alloftext</code> function returns a positive match for the tweet.
-It would not have returned a positive match even if one of the tokens in the search string is missing for the tweet. But, the &lsquo;anyoftext&rsquo; function would&rsquo;ve returned a positive match as long as the tweets and the search string have at least one of the tokens in common.</p>
+It would not have returned a positive match even if one of the tokens in the search string is missing for the tweet. But, the <code>anyoftext</code> function would&rsquo;ve returned a positive match as long as the tweets and the search string have at least one of the tokens in common.</p>
 
 <p>If you&rsquo;re interested to see Dgraph&rsquo;s <code>fulltext</code> tokenizer in action, <a href="https://gist.github.com/hackintoshrao/0e8d715d8739b12c67a804c7249146a3">here is the gist</a> containing the instructions to use it.</p>
 
