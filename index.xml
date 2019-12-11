@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 10 Dec 2019 14:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Wed, 11 Dec 2019 06:30:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 6: Advanced text search on social graphs </title>
+      <link>https://blog.dgraph.io/post/tutorial-6-getting-started/</link>
+      <pubDate>Wed, 11 Dec 2019 06:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-6-getting-started/</guid>
+      <description>Welcome to the sixth episode of getting started with Dgraph.
+In the previous episode, we learned about building social graphs in Dgraph, by modeling tweets as an example. We queried the tweets using the &amp;lsquo;hash&amp;rsquo; and &amp;lsquo;exact&amp;rsquo; indices, and implemented a keyword-based search to find your favorite tweets using the &amp;lsquo;term&amp;rsquo; index and its functions.
+In this tutorial, we&amp;rsquo;ll continue from where we left off and learn about advanced text search features in Dgraph.</description>
+    </item>
     
     <item>
       <title>The GraphQL Summit story</title>
