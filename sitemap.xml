@@ -38,14 +38,14 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/post/graphql-summit-19/</loc>
-    <lastmod>2019-12-10T14:30:00+05:30</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/tags/graphql/</loc>
     <lastmod>2019-12-10T14:30:00+05:30</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/graphql-summit-19/</loc>
+    <lastmod>2019-12-10T14:30:00+05:30</lastmod>
   </url>
   
   <url>
