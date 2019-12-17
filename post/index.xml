@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 16 Dec 2019 07:00:00 -0800</lastBuildDate>
+    <lastBuildDate>Tue, 17 Dec 2019 07:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/post/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Releasing Dgraph v1.1.1: upsert blocks, facets, and encryption at rest</title>
       <link>https://blog.dgraph.io/post/release-v1.1.1/</link>
-      <pubDate>Mon, 16 Dec 2019 07:00:00 -0800</pubDate>
+      <pubDate>Tue, 17 Dec 2019 07:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/release-v1.1.1/</guid>
       <description>It&amp;rsquo;s been a bit over three months since we released Dgraph v1.1.0 (see the announcement) but the wait and hard work were well worth it because today we announce that Dgraph v1.1.1 is released!
