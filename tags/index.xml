@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 11 Dec 2019 06:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 16 Dec 2019 07:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,9 +15,18 @@
     <item>
       <title>DevRel</title>
       <link>https://blog.dgraph.io/tags/devrel/</link>
-      <pubDate>Wed, 11 Dec 2019 06:30:00 +0530</pubDate>
+      <pubDate>Mon, 16 Dec 2019 07:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/tags/devrel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Release</title>
+      <link>https://blog.dgraph.io/tags/release/</link>
+      <pubDate>Mon, 16 Dec 2019 07:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/release/</guid>
       <description></description>
     </item>
     
@@ -81,15 +90,6 @@
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/tags/reddit/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Release</title>
-      <link>https://blog.dgraph.io/tags/release/</link>
-      <pubDate>Wed, 04 Sep 2019 08:00:00 -0400</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/release/</guid>
       <description></description>
     </item>
     

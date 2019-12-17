@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 11 Dec 2019 06:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Mon, 16 Dec 2019 07:00:00 -0800</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Releasing Dgraph v1.1.1: upsert blocks, facets, and encryption at rest</title>
+      <link>https://blog.dgraph.io/post/release-v1.1.1/</link>
+      <pubDate>Mon, 16 Dec 2019 07:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/release-v1.1.1/</guid>
+      <description>It&amp;rsquo;s been a bit over three months since we released Dgraph v1.1.0 (see the announcement) but the wait and hard work were well worth it because today we announce that Dgraph v1.1.1 is released!
+This blog post will cover the biggest changes since v1.1.0, including new features, bug fixes, and other improvements.
+For those in a hurry, these are the changes covered in this article.
+ Breaking changes  Removing expand _reverse_ and _forward_ No more @type directive  New features  Use @cascade and @normalize anywhere Improved support for upsert blocks Changes on types Better facets Transparent data encryption   Breaking changes While this is not a patch release, to fix some of the issues identified with v1.</description>
+    </item>
     
     <item>
       <title>Getting started with Dgraph tutorials series - 6: Advanced text search on social graphs </title>
