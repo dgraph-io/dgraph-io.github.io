@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 17 Dec 2019 07:00:00 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 21:15:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Announcing a new section on our documentation: Getting Started</title>
+      <link>https://blog.dgraph.io/post/introducing-getting-started-series/</link>
+      <pubDate>Wed, 08 Jan 2020 21:15:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/introducing-getting-started-series/</guid>
+      <description>We are excited to announce that the &amp;ldquo;Get Started with Dgraph&amp;rdquo; of our documentation site now includes the episodes from our getting started blog series.
+This blog series consists of various tutorials that are helpful for both beginners and intermediates to get started with Dgraph and to understand the product functionalities better.
+At the time of writing, we’ve published six tutorial episodes, and you can find all of them on the docs.</description>
+    </item>
     
     <item>
       <title>Releasing Dgraph v1.1.1: upsert blocks, facets, and encryption at rest</title>
