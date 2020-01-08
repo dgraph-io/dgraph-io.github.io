@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.dgraph.io/post/introducing-getting-started-series/</loc>
-    <lastmod>2020-01-08T21:30:00+05:30</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/tags/devrel/</loc>
     <lastmod>2020-01-08T21:30:00+05:30</lastmod>
   </url>
@@ -34,6 +29,11 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/tutorial/</loc>
+    <lastmod>2020-01-08T21:30:00+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/introducing-getting-started-series/</loc>
     <lastmod>2020-01-08T21:30:00+05:30</lastmod>
   </url>
   
