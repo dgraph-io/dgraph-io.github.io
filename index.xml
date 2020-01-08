@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 08 Jan 2020 21:15:00 +0530</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jan 2020 21:30:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Announcing a new section on our documentation: Getting Started</title>
       <link>https://blog.dgraph.io/post/introducing-getting-started-series/</link>
-      <pubDate>Wed, 08 Jan 2020 21:15:00 +0530</pubDate>
+      <pubDate>Wed, 08 Jan 2020 21:30:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/post/introducing-getting-started-series/</guid>
       <description>We are excited to announce that the &amp;ldquo;Get Started with Dgraph&amp;rdquo; of our documentation site now includes the episodes from our getting started blog series.
