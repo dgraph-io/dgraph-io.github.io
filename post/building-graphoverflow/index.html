@@ -73,9 +73,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="/js/search.js"></script>
+
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -89,7 +93,8 @@
   
 
   <meta name="twitter:title" content="Building a Stack Overflow Clone with Dgraph, and React"/>
-  <meta name="twitter:description" content="I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built Graphoverflow and share the best practices I learned for using Dgraph to build a modern web application."/>
+  <meta name="twitter:description" content="I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built Graphoverflow and share the best practices I learned for using Dgraph to build a modern web application.
+"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -361,28 +366,42 @@
     </svg>
   </div>
   <header id="page-header" class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 offset-0 col-md-10 offset-md-1">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				
-          <span class="topnav-stargazers-wrapper">
-            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-          </span>
-        
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 offset-0 col-md-10 offset-md-1">
+		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				  
+			<span class="topnav-stargazers-wrapper">
+			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+			</span>
+		  
+  
+		  	<span 
+				onclick="toggleVisibility()"  
+			  	class="search-button pull-right button button-dgraph-site button--outline"
+			>
+			<i class="fa fa-search" aria-hidden="true"></i>
+		  </span>
+  
+		  <a
+			  href="https://dgraph.io/"
+			  title="Dgraph Website"
+			  class="button button-dgraph-site button--outline pull-right"
+		  >
+			Dgraph.io
+		  </a>
+		</div>
+	  </div>
 
-        <a
-            href="https://dgraph.io/"
-            title="Dgraph Website"
-            class="button button-dgraph-site button--outline pull-right"
-        >
-          Dgraph.io
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div id="searchbox"></div>
 
+	</div>
+  
+	<script>
+		createSearch();
+	</script>
+  </header>
+  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -428,7 +447,8 @@
             class="main__image"
             src="https://blog.dgraph.io/images/graphoverflow-node-cover.jpg"
           >
-          <div class="article-content"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p>
+          <div class="article-content"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.
+</p>
 
 <p>As you can see in the <a href="https://graphoverflow.dgraph.io">live demo</a>, <em>Graphoverflow</em> implements all core functionalities of Stack Overflow. Through the web interface, you can create, read, update, and delete questions, answers, comments. You can also cast upvotes and downvotes. In addition, it is smart enough to recommend you questions to read based on <a href="https://en.wikipedia.org/wiki/Collaborative_filtering">collaborative filtering</a>. In many ways, <em>Graphoverflow</em> successfully embodies many important features that most modern web applications depend on: CRUD operations, and user authentication and authorization. As <a href="https://github.com/dgraph-io/graphoverflow">the source code</a> shows, all this is achieved by using Dgraph as the primary and only data storage.</p>
 
@@ -565,31 +585,35 @@ class Question extends React.Component {
 <p>Three things need to happen in <code>componentDidMount</code>: constructing a query for the question, sending the query to the server, storing the result so that it can be rendered. Let us look at this simple process step-by-step.</p>
 
 <ul>
-<li><p>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</p>
+<li>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</li>
+</ul>
 
-<pre><code class="language-js">function getQuestionQuery(questionUID) {
-return `
-  question(func: uid(${questionUID})) {
-    ...
+<pre><code class="language-js">  function getQuestionQuery(questionUID) {
+    return `
+      question(func: uid(${questionUID})) {
+        ...
+      }
+    `;
   }
-`;
-}
-</code></pre></li>
+</code></pre>
 
-<li><p>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</p>
+<ul>
+<li>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</li>
+</ul>
 
 <pre><code class="language-js">import request from &quot;superagent&quot;;
 
 function runQuery(queryText) {
-const endpointBaseURL = 'http://localhost:3030';
+  const endpointBaseURL = 'http://localhost:3030';
 
-return request.post(`${endpointBaseURL}/query`).send(queryText).then(res =&gt; {
-return JSON.parse(res.text);
-});
+  return request.post(`${endpointBaseURL}/query`).send(queryText).then(res =&gt; {
+    return JSON.parse(res.text);
+  });
 }
-</code></pre></li>
+</code></pre>
 
-<li><p>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component&rsquo;s state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</p></li>
+<ul>
+<li>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component&rsquo;s state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</li>
 </ul>
 
 <p>Having completed the above process in <code>componentDidMount</code>, now we can render the question page. Here is what <code>render</code> method of <code>Question</code> component looks like in a simplified way.</p>

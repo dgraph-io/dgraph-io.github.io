@@ -73,9 +73,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="/js/search.js"></script>
+
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -90,7 +94,8 @@
 
   <meta name="twitter:title" content="Golang: Run multiple services on one port"/>
   <meta name="twitter:description" content="Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port."/>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
+"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -362,28 +367,42 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
     </svg>
   </div>
   <header id="page-header" class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 offset-0 col-md-10 offset-md-1">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				
-          <span class="topnav-stargazers-wrapper">
-            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-          </span>
-        
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 offset-0 col-md-10 offset-md-1">
+		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				  
+			<span class="topnav-stargazers-wrapper">
+			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+			</span>
+		  
+  
+		  	<span 
+				onclick="toggleVisibility()"  
+			  	class="search-button pull-right button button-dgraph-site button--outline"
+			>
+			<i class="fa fa-search" aria-hidden="true"></i>
+		  </span>
+  
+		  <a
+			  href="https://dgraph.io/"
+			  title="Dgraph Website"
+			  class="button button-dgraph-site button--outline pull-right"
+		  >
+			Dgraph.io
+		  </a>
+		</div>
+	  </div>
 
-        <a
-            href="https://dgraph.io/"
-            title="Dgraph Website"
-            class="button button-dgraph-site button--outline pull-right"
-        >
-          Dgraph.io
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div id="searchbox"></div>
 
+	</div>
+  
+	<script>
+		createSearch();
+	</script>
+  </header>
+  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -430,7 +449,8 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
             src="https://blog.dgraph.io/images/rover-cmux.jpg"
           >
           <div class="article-content"><p>Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.</p>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
+</p>
 
 <p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.

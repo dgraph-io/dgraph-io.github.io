@@ -73,9 +73,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="/js/search.js"></script>
+
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -92,7 +96,9 @@
   <meta name="twitter:description" content="Dgraph
  team is super excited to present v0.7.1 of Dgraph
 . This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented 90% of all the features we had planned in our product roadmap, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups."/>
+We&rsquo;ve implemented 90% of all the features we had planned in our product roadmap, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.
+
+"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -364,28 +370,42 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
     </svg>
   </div>
   <header id="page-header" class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 offset-0 col-md-10 offset-md-1">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				
-          <span class="topnav-stargazers-wrapper">
-            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-          </span>
-        
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 offset-0 col-md-10 offset-md-1">
+		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				  
+			<span class="topnav-stargazers-wrapper">
+			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+			</span>
+		  
+  
+		  	<span 
+				onclick="toggleVisibility()"  
+			  	class="search-button pull-right button button-dgraph-site button--outline"
+			>
+			<i class="fa fa-search" aria-hidden="true"></i>
+		  </span>
+  
+		  <a
+			  href="https://dgraph.io/"
+			  title="Dgraph Website"
+			  class="button button-dgraph-site button--outline pull-right"
+		  >
+			Dgraph.io
+		  </a>
+		</div>
+	  </div>
 
-        <a
-            href="https://dgraph.io/"
-            title="Dgraph Website"
-            class="button button-dgraph-site button--outline pull-right"
-        >
-          Dgraph.io
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div id="searchbox"></div>
 
+	</div>
+  
+	<script>
+		createSearch();
+	</script>
+  </header>
+  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -435,6 +455,8 @@ We&rsquo;ve implemented 90% of all the features we had planned in our product ro
  team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 . This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
 We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
+
+<p></p>
 
 <p>Today, I&rsquo;m going to talk about these new features, and what you can expect from <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .</p>
@@ -585,36 +607,35 @@ Similarly, to generate reverses for a uid predicate, you can specify the <code>@
 <li><code>near(predicate, geo-location)</code>      : Finds all entities lying within a specified distance from a point.</li>
 <li><code>within(predicate, geo-polygon)</code>     : Finds all entities lying within a specified region.</li>
 <li><code>contains(predicate, geo-location)</code>  : Finds all enclosures for a specified point or region.</li>
-
-<li><p><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</p>
+<li><code>intersects(predicate, geo-polygon)</code> : Finds all entities which intersect a specified region.</li>
+</ul>
 
 <pre><code>$ curl localhost:8080/query -XPOST -d $'
 {
-tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
-name
-}
+  tourist( near(&quot;loc&quot;, &quot;{\'type\':\'Point\', \'coordinates\': [-122.469829, 37.771935]}&quot;, &quot;1000&quot; ) ) {
+    name
+  }
 }' | python -m json.tool | grep name
 
-        &quot;name&quot;: &quot;Steinhart Aquarium&quot;
-        &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
-        &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
-        &quot;name&quot;: &quot;Conservatory of Flowers&quot;
-        &quot;name&quot;: &quot;De Young Museum&quot;
-        &quot;name&quot;: &quot;Chinese Pavillion&quot;
-        &quot;name&quot;: &quot;Japanese Tea Garden&quot;
-        &quot;name&quot;: &quot;Peace Lantern&quot;
-        &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
-        &quot;name&quot;: &quot;Morrison Planetarium&quot;
-        &quot;name&quot;: &quot;California Academy of Sciences&quot;
-        &quot;name&quot;: &quot;Hamon Tower&quot;
-        &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
-        &quot;name&quot;: &quot;La Rose des Vents&quot;
-        &quot;name&quot;: &quot;Strawberry Hill&quot;
-        &quot;name&quot;: &quot;Buddha&quot;
-        &quot;name&quot;: &quot;Rose Garden&quot;
+            &quot;name&quot;: &quot;Steinhart Aquarium&quot;
+            &quot;name&quot;: &quot;Spreckels Temple of Music&quot;
+            &quot;name&quot;: &quot;Pioneer Log Cabin&quot;
+            &quot;name&quot;: &quot;Conservatory of Flowers&quot;
+            &quot;name&quot;: &quot;De Young Museum&quot;
+            &quot;name&quot;: &quot;Chinese Pavillion&quot;
+            &quot;name&quot;: &quot;Japanese Tea Garden&quot;
+            &quot;name&quot;: &quot;Peace Lantern&quot;
+            &quot;name&quot;: &quot;San Francisco Botanical Garden&quot;
+            &quot;name&quot;: &quot;Morrison Planetarium&quot;
+            &quot;name&quot;: &quot;California Academy of Sciences&quot;
+            &quot;name&quot;: &quot;Hamon Tower&quot;
+            &quot;name&quot;: &quot;National AIDS Memorial Grove&quot;
+            &quot;name&quot;: &quot;La Rose des Vents&quot;
+            &quot;name&quot;: &quot;Strawberry Hill&quot;
+            &quot;name&quot;: &quot;Buddha&quot;
+            &quot;name&quot;: &quot;Rose Garden&quot;
 
-</code></pre></li>
-</ul>
+</code></pre>
 
 <p>You can read more about Geolocation functionality <a href="https://wiki.dgraph.io/Query_Language#Geolocation">here</a>.</p>
 

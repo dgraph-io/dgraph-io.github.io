@@ -73,9 +73,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="/js/search.js"></script>
+
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -363,28 +367,42 @@ We took part as one of the platinum sponsors of the event, and we also unveiled 
     </svg>
   </div>
   <header id="page-header" class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 offset-0 col-md-10 offset-md-1">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				
-          <span class="topnav-stargazers-wrapper">
-            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-          </span>
-        
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 offset-0 col-md-10 offset-md-1">
+		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				  
+			<span class="topnav-stargazers-wrapper">
+			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+			</span>
+		  
+  
+		  	<span 
+				onclick="toggleVisibility()"  
+			  	class="search-button pull-right button button-dgraph-site button--outline"
+			>
+			<i class="fa fa-search" aria-hidden="true"></i>
+		  </span>
+  
+		  <a
+			  href="https://dgraph.io/"
+			  title="Dgraph Website"
+			  class="button button-dgraph-site button--outline pull-right"
+		  >
+			Dgraph.io
+		  </a>
+		</div>
+	  </div>
 
-        <a
-            href="https://dgraph.io/"
-            title="Dgraph Website"
-            class="button button-dgraph-site button--outline pull-right"
-        >
-          Dgraph.io
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div id="searchbox"></div>
 
+	</div>
+  
+	<script>
+		createSearch();
+	</script>
+  </header>
+  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -526,14 +544,12 @@ He enlightened the audience on the importance and advantages of decoupling the a
 
 <p>Then he explained how the <a href="https://www.apollographql.com/docs/apollo-server/federation/introduction/">Apollo federation</a> could help you build this Graph gateway to all of your organization data.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">GraphQL summit 2019 kicks off with the opening keynote from Matt Debergalis (<a href="https://twitter.com/debergalis?ref_src=twsrc%5Etfw">@debergalis</a>), Co-founder and CTO at <a href="https://twitter.com/apollographql?ref_src=twsrc%5Etfw">@apollographql</a>.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/GraphQLSummit?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQLSummit</a> <a href="https://t.co/R77DTlVKIu">pic.twitter.com/R77DTlVKIu</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189582590719619073?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/EDqw-sGVq3k" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/EDqw-sGVq3k" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
@@ -546,27 +562,23 @@ He enlightened the audience on the importance and advantages of decoupling the a
 
 <p>Brie Bunge, Software Engineer at Airbnb, shared the GraphQL migration story at Airbnb.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Brie Bunge (<a href="https://twitter.com/briebunge?ref_src=twsrc%5Etfw">@briebunge</a>), Software Engineer at Airbnb, shares the journey of migrating to GraphQL at <a href="https://twitter.com/Airbnb?ref_src=twsrc%5Etfw">@Airbnb</a>.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/hashtag/airbnb?src=hash&amp;ref_src=twsrc%5Etfw">#airbnb</a> <a href="https://t.co/6cVG7dnpnw">pic.twitter.com/6cVG7dnpnw</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189589976129757184?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/pywcFELoU8E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/pywcFELoU8E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
 
 <p>Dan Boerner and Jim Gust shared how GraphQL is transforming Expedia&rsquo;s goals to create seamless customer experiences across their frontend platforms.
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Here&#39;s Jim Gust, a Sr Technical Product Manager and<br>Dan Boerner (<a href="https://twitter.com/dan_boerner?ref_src=twsrc%5Etfw">@dan_boerner</a>), Distinguished Product Manager at Expedia.<br>It was wonderful as they took us through the journey of how GraphQL adoption transformed customer experiences at <a href="https://twitter.com/Expedia?ref_src=twsrc%5Etfw">@expedia</a>.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a>  <a href="https://twitter.com/hashtag/expedia?src=hash&amp;ref_src=twsrc%5Etfw">#expedia</a> <a href="https://t.co/O9e2ic7UsL">pic.twitter.com/O9e2ic7UsL</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189665301845008386?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </p>
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/Jt-ZD4zj4Ow" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/Jt-ZD4zj4Ow" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
@@ -577,13 +589,11 @@ He enlightened the audience on the importance and advantages of decoupling the a
 He presented LinkedIn&rsquo;s vision for modeling entities, defining privacy rules.
 He also shared their plan around using GraphQL to enable a consistent access experience across online, nearline, and offline environments.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Did we hear Gopal say, &quot;Graph Traversals!&quot;?<br><br>Catch Gopal Holla(<a href="https://twitter.com/vgkholla?ref_src=twsrc%5Etfw">@vgkholla</a>), Staff Software Engineer at <a href="https://twitter.com/LinkedIn?ref_src=twsrc%5Etfw">@LinkedIn</a>, as he speaks about the GraphQL journey at his organization. <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/hashtag/LinkedIn?src=hash&amp;ref_src=twsrc%5Etfw">#LinkedIn</a> <a href="https://t.co/yhDG81E3dy">pic.twitter.com/yhDG81E3dy</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189950498972954624?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/C5t3QYch1Tk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/C5t3QYch1Tk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
@@ -592,28 +602,24 @@ He also shared their plan around using GraphQL to enable a consistent access exp
 
 <p>James Lawrie, a Lead Software Engineer at The New York Times, shared their story of scaling GraphQL.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">James Lawrie, Lead Software Engineer at The New York Times (<a href="https://twitter.com/nytimes?ref_src=twsrc%5Etfw">@nytimes</a>) takes the audience through their journey of how they scaled GraphQL.<a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a>  <a href="https://twitter.com/hashtag/NYTimes?src=hash&amp;ref_src=twsrc%5Etfw">#NYTimes</a> <a href="https://t.co/czBYjXG08K">pic.twitter.com/czBYjXG08K</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189701239149228032?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/gpd6JtnWs2E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/gpd6JtnWs2E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
 
 <p>Ben Newman, Apollo Client Architect at Apollo, shared the techniques to fine-tune Apollo client caching for your data graph.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Ben Newman (<a href="https://twitter.com/benjamn?ref_src=twsrc%5Etfw">@benjamn</a>), Apollo Client Architect at <a href="https://twitter.com/apollographql?ref_src=twsrc%5Etfw">@apollographql</a>, sheds light on best practices for fine-tuning Apollo Client caching for your data Graph.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a>  <a href="https://twitter.com/hashtag/cache?src=hash&amp;ref_src=twsrc%5Etfw">#cache</a> <a href="https://twitter.com/hashtag/javascript?src=hash&amp;ref_src=twsrc%5Etfw">#javascript</a> <a href="https://t.co/lUpYNVmcOF">pic.twitter.com/lUpYNVmcOF</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189622092976680960?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/n_j8QckQN5I" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/n_j8QckQN5I" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
@@ -621,14 +627,12 @@ He also shared their plan around using GraphQL to enable a consistent access exp
 <p>Michelle Garrett, Software Engineer at Condé Nast International, spoke about scaling your GraphQL API beyond a single consumer.
 In her talk, she discussed how to transition a client-specific GraphQL layer into a universal graph for multiple consumers.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Fantastic insights and lots of learning! It was excellent watching Michelle Garrett (<a href="https://twitter.com/msmichellegar?ref_src=twsrc%5Etfw">@msmichellegar</a>), a Software Engineer at Condé Nast International (<a href="https://twitter.com/condenasteng?ref_src=twsrc%5Etfw">@CondeNastEng</a>), with her talk titled Scaling GraphQL Beyond a Backend for Frontend.<a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/hashtag/graphql?src=hash&amp;ref_src=twsrc%5Etfw">#graphql</a> <a href="https://t.co/7UYNaRejHW">pic.twitter.com/7UYNaRejHW</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189656455579725824?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/vfYcsgQBTU0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/vfYcsgQBTU0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
@@ -636,14 +640,12 @@ In her talk, she discussed how to transition a client-specific GraphQL layer int
 <p>Marc-André Giroux, a Senior Platform Engineer at GitHub, spoke about caching and GraphQL.
 In his talk, he debunked some myths and shed light on the best practices around caching &amp; GraphQL.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Great to see a talk from Marc-André Giroux (<a href="https://twitter.com/__xuorig__?ref_src=twsrc%5Etfw">@__xuorig__</a>) from <a href="https://twitter.com/github?ref_src=twsrc%5Etfw">@github</a>  after <a href="https://twitter.com/thegraphqlconf?ref_src=twsrc%5Etfw">@thegraphqlconf</a> in Berlin! <br><br>His talk on Caching &amp; GraphQL was very insightful!<a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://t.co/HU0jIiVdl9">pic.twitter.com/HU0jIiVdl9</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189690818098941952?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/CV3puKM_G14" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/CV3puKM_G14" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 
 
 <hr />
@@ -652,13 +654,11 @@ In his talk, he debunked some myths and shed light on the best practices around 
 In his talk, he took a deep dive into subscription implementation and state management.
 He also touched upon solutions for scaling real-time GraphQL applications.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">It was amazing to see the super energetic &quot;The Alex Banks (<a href="https://twitter.com/MoonTahoe?ref_src=twsrc%5Etfw">@moontahoe</a>) 🌙😉&quot;,  a software engineering instructor at <a href="https://twitter.com/MoonHighway?ref_src=twsrc%5Etfw">@MoonHighway</a>!<br>Fasten your seat belts and learn subscriptions in GraphQL.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/OReillyMedia?ref_src=twsrc%5Etfw">@OReillyMedia</a>  <a href="https://twitter.com/eggheadio?ref_src=twsrc%5Etfw">@eggheadio</a> <a href="https://twitter.com/reactjs?ref_src=twsrc%5Etfw">@reactjs</a> <a href="https://t.co/DiS3NtBPqR">pic.twitter.com/DiS3NtBPqR</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189948422641438720?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/QUeL-GfNJVU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/QUeL-GfNJVU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
@@ -669,89 +669,75 @@ He also touched upon solutions for scaling real-time GraphQL applications.</p>
 
 <p>He covered the testing, monitoring, and performance tricks to build a client-side app with hundreds of GraphQL operations.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Curious to learn lessons about client-side GraphQL at scale?<br>Don&#39;t miss this talk by Chris Sauvé (<a href="https://twitter.com/_lemonmade?ref_src=twsrc%5Etfw">@_lemonmade</a>), Senior Web Developer Lead at <a href="https://twitter.com/Shopify?ref_src=twsrc%5Etfw">@Shopify</a> as she shares the GraphQL scale story at <a href="https://twitter.com/ShopifyEng?ref_src=twsrc%5Etfw">@ShopifyEng</a>.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://t.co/eDBZGOXkLL">pic.twitter.com/eDBZGOXkLL</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1190035587295780864?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/lo8BpB17jf0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/lo8BpB17jf0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
 
 <p>Shruti Kapoor, Software Engineer at PayPal, spoke about State Management in GraphQL using React Hooks &amp; Apollo.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Oh hey! Great to see Shruti Kapoor (<a href="https://twitter.com/shrutikapoor08?ref_src=twsrc%5Etfw">@shrutikapoor08</a>) charming the audience again after <a href="https://twitter.com/react_india?ref_src=twsrc%5Etfw">@react_india</a>.<br>This is the talk to be at if you&#39;re eager to learn state management with React hooks and <a href="https://twitter.com/apollographql?ref_src=twsrc%5Etfw">@apollographql</a> Client.  <a href="https://twitter.com/PayPalEng?ref_src=twsrc%5Etfw">@PayPalEng</a> <a href="https://twitter.com/reactjs?ref_src=twsrc%5Etfw">@reactjs</a> <a href="https://twitter.com/hashtag/ReactJS?src=hash&amp;ref_src=twsrc%5Etfw">#ReactJS</a> <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://t.co/WyZaaiUPeh">pic.twitter.com/WyZaaiUPeh</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189617316213882880?ref_src=twsrc%5Etfw">October 30, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/Y3jXNMhAy0U" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/Y3jXNMhAy0U" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
 
 <p>Kiran Kumar Abburi, The Founder at neostack.com and a co-organizer of React Bangalore meetups, taught the tips and tricks when building offline-first apps with GraphQL &amp; Apollo.
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Oh, hey Kiran!<br><br>Kumar Abburi(<a href="https://twitter.com/kiran_abburi?ref_src=twsrc%5Etfw">@kiran_abburi</a>), Founder at <a href="https://twitter.com/neo_stack?ref_src=twsrc%5Etfw">@neo_stack</a> and organiser of <a href="https://twitter.com/ReactBangalore?ref_src=twsrc%5Etfw">@ReactBangalore</a> , shares his expertise around implementing offline apps with GraphQL &amp; <a href="https://twitter.com/apollographql?ref_src=twsrc%5Etfw">@apollographql</a> .<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://twitter.com/hashtag/ReactJS?src=hash&amp;ref_src=twsrc%5Etfw">#ReactJS</a> <a href="https://t.co/ZWljQMtlek">pic.twitter.com/ZWljQMtlek</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189981029865406465?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/6icuEm8c8a8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/6icuEm8c8a8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
 
 <p>Jon Wong, Staff Software Engineer at Coursera, took the audience through a journey into writing GraphQL apps in almost every language.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Jon Wong(<a href="https://twitter.com/jnwng?ref_src=twsrc%5Etfw">@jnwng</a>), Staff Software Engineer at <a href="https://twitter.com/coursera?ref_src=twsrc%5Etfw">@Coursera</a>, reveals the ways to use GraphQL in (almost) every language.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://t.co/gXeSJAoPC7">pic.twitter.com/gXeSJAoPC7</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189943120953106432?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/3iiUEUsk8mc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/3iiUEUsk8mc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
 
 <p>Daniel Woelfel, Founder at OneGraph, shared his thoughts on the future of GraphQL tooling.</p>
 
-<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Daniel Woelfel(<a href="https://twitter.com/DanielWoelfel?ref_src=twsrc%5Etfw">@danielwoelfel</a>), Founder at OneGraph(<a href="https://twitter.com/onegraphio?ref_src=twsrc%5Etfw">@onegraphio</a>), takes the audience through his thoughts around future of GraphQL tooling and developer experience.<a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> <a href="https://t.co/sR37mL1JR8">pic.twitter.com/sR37mL1JR8</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189980022552981504?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-<h2 id="hahahugoshortcode-s29-hbhb">
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/RNPGYfHQVU8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<h2 id="hahahugoshortcode-0xc420719400-30-hbhb">
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/RNPGYfHQVU8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </h2>
 
 <p>Natalia Tepluhina, a Senior Frontend Engineer at GitLab, gave insights about how they moved from Vuex to Apollo state management at GitLab.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Nice talk by Natalia Tepluhina(<a href="https://twitter.com/N_Tepluhina?ref_src=twsrc%5Etfw">@n_tepluhina</a>), a Senior Frontend Engineer at <a href="https://twitter.com/gitlab?ref_src=twsrc%5Etfw">@GitLab</a> , and also a core team member at <a href="https://twitter.com/vuejs?ref_src=twsrc%5Etfw">@vuejs</a>.<br>It was interesting to listen to the journey of how Gitlab moved from Vuex to state management using Apollo.<br><br> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a>  <a href="https://twitter.com/hashtag/gitlab?src=hash&amp;ref_src=twsrc%5Etfw">#gitlab</a> <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://twitter.com/hashtag/Vue?src=hash&amp;ref_src=twsrc%5Etfw">#Vue</a> <a href="https://twitter.com/hashtag/JS?src=hash&amp;ref_src=twsrc%5Etfw">#JS</a> <a href="https://t.co/FWowRllTsp">pic.twitter.com/FWowRllTsp</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189987982670843904?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/9knwu87IfU8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/9knwu87IfU8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
 
 <p>Tanmay Gopal, CEO &amp; Co-founder at Hasura, shared his thoughts around building high-performance real-time GraphQL API on existing data sources.</p>
 
-<p><blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">It&#39;s Tanmai Gopal(<a href="https://twitter.com/tanmaigo?ref_src=twsrc%5Etfw">@tanmaigo</a>), CEO &amp; Co-founder at <a href="https://twitter.com/HasuraHQ?ref_src=twsrc%5Etfw">@HasuraHQ</a>!<br><br>Follow along as Tanmai shares his take on building a high-performance real-time GraphQL API on existing databases and data sources.<br><br> <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a>  <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://t.co/lBT7JMXgZY">pic.twitter.com/lBT7JMXgZY</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1189991444854870017?ref_src=twsrc%5Etfw">October 31, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>
 
-
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/HOKMJkBYaqQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+<div style="position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/HOKMJkBYaqQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" allowfullscreen frameborder="0" title="YouTube Video"></iframe>
+ </div>
 </p>
 
 <hr />
@@ -775,8 +761,6 @@ The intuitiveness of the query language makes it simple to express the data requ
 
 <p>Before we end, if you haven&rsquo;t tried <a href="https://graphql.dgraph.io">Dgraphs new GraphQL API</a> yet, do give it a try, and we would love to hear back from you.</p>
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The <a href="https://twitter.com/hashtag/graphqlsummit?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlsummit</a> has wrapped but you still are right on time to give <a href="https://twitter.com/dgraphlabs?ref_src=twsrc%5Etfw">@dgraphlabs</a>&#39;s new <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> API a try!<br><br>A full-fledged graph database that you already know how to use ... and even integrates with <a href="https://twitter.com/apollographql?ref_src=twsrc%5Etfw">@apollographql</a> federation!<a href="https://t.co/rnjxOWogec">https://t.co/rnjxOWogec</a></p>&mdash; GraphQL Summit (@graphqlsummit) <a href="https://twitter.com/graphqlsummit/status/1190303720765935616?ref_src=twsrc%5Etfw">November 1, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 <hr />
@@ -786,12 +770,8 @@ The intuitiveness of the query language makes it simple to express the data requ
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/graphql/">graphql</a>
-                
             
                 
-                
-                    <a href="https://blog.dgraph.io/tags/devrel/">DevRel</a>
                 
             
           </div>

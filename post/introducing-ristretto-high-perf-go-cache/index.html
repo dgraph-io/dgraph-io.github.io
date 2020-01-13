@@ -73,9 +73,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="/js/search.js"></script>
+
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -362,28 +366,42 @@ With over six months of research and development, we&rsquo;re proud to announce 
     </svg>
   </div>
   <header id="page-header" class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 offset-0 col-md-10 offset-md-1">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				
-          <span class="topnav-stargazers-wrapper">
-            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-          </span>
-        
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 offset-0 col-md-10 offset-md-1">
+		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				  
+			<span class="topnav-stargazers-wrapper">
+			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+			</span>
+		  
+  
+		  	<span 
+				onclick="toggleVisibility()"  
+			  	class="search-button pull-right button button-dgraph-site button--outline"
+			>
+			<i class="fa fa-search" aria-hidden="true"></i>
+		  </span>
+  
+		  <a
+			  href="https://dgraph.io/"
+			  title="Dgraph Website"
+			  class="button button-dgraph-site button--outline pull-right"
+		  >
+			Dgraph.io
+		  </a>
+		</div>
+	  </div>
 
-        <a
-            href="https://dgraph.io/"
-            title="Dgraph Website"
-            class="button button-dgraph-site button--outline pull-right"
-        >
-          Dgraph.io
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div id="searchbox"></div>
 
+	</div>
+  
+	<script>
+		createSearch();
+	</script>
+  </header>
+  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -486,8 +504,8 @@ wider Go community to use and experiment with.</p>
 <p>Before we begin explaining the design of <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>, here&rsquo;s a code snippet which shows how to
 use it:</p>
 
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">main</span>() {
-	cache, err <span style="color:#000;font-weight:bold">:=</span> ristretto.<span style="color:#900;font-weight:bold">NewCache</span>(<span style="color:#000;font-weight:bold">&amp;</span>ristretto.Config{
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> main() {
+	cache, err <span style="color:#000;font-weight:bold">:=</span> ristretto.NewCache(<span style="color:#000;font-weight:bold">&amp;</span>ristretto.Config{
 		NumCounters: <span style="color:#099">1e7</span>,     <span style="color:#998;font-style:italic">// Num keys to track frequency of (10M).
 </span><span style="color:#998;font-style:italic"></span>		MaxCost:     <span style="color:#099">1</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#099">30</span>, <span style="color:#998;font-style:italic">// Maximum cost of cache (1GB).
 </span><span style="color:#998;font-style:italic"></span>		BufferItems: <span style="color:#099">64</span>,      <span style="color:#998;font-style:italic">// Number of keys per Get buffer.
@@ -496,16 +514,16 @@ use it:</p>
 		<span style="color:#0086b3">panic</span>(err)
 	}
 
-	cache.<span style="color:#900;font-weight:bold">Set</span>(<span style="color:#d14">&#34;key&#34;</span>, <span style="color:#d14">&#34;value&#34;</span>, <span style="color:#099">1</span>) <span style="color:#998;font-style:italic">// set a value
+	cache.Set(<span style="color:#d14">&#34;key&#34;</span>, <span style="color:#d14">&#34;value&#34;</span>, <span style="color:#099">1</span>) <span style="color:#998;font-style:italic">// set a value
 </span><span style="color:#998;font-style:italic"></span>	<span style="color:#998;font-style:italic">// wait for value to pass through buffers
-</span><span style="color:#998;font-style:italic"></span>	time.<span style="color:#900;font-weight:bold">Sleep</span>(<span style="color:#099">10</span> <span style="color:#000;font-weight:bold">*</span> time.Millisecond)
+</span><span style="color:#998;font-style:italic"></span>	time.Sleep(<span style="color:#099">10</span> <span style="color:#000;font-weight:bold">*</span> time.Millisecond)
 
-	value, found <span style="color:#000;font-weight:bold">:=</span> cache.<span style="color:#900;font-weight:bold">Get</span>(<span style="color:#d14">&#34;key&#34;</span>)
+	value, found <span style="color:#000;font-weight:bold">:=</span> cache.Get(<span style="color:#d14">&#34;key&#34;</span>)
 	<span style="color:#000;font-weight:bold">if</span> !found {
 		<span style="color:#0086b3">panic</span>(<span style="color:#d14">&#34;missing value&#34;</span>)
 	}
-	fmt.<span style="color:#900;font-weight:bold">Println</span>(value)
-	cache.<span style="color:#900;font-weight:bold">Del</span>(<span style="color:#d14">&#34;key&#34;</span>)
+	fmt.Println(value)
+	cache.Del(<span style="color:#d14">&#34;key&#34;</span>)
 }</code></pre></div>
 
 <h4 id="guiding-principles">Guiding Principles</h4>
@@ -606,25 +624,25 @@ consuming too many CPU cycles to process it. If the channel is full, the batch i
 batch from the internal channel and processes the keys, updating their hit
 counter.</p>
 
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#900;font-weight:bold">AddToLossyBuffer</span>(key):
-  stripe <span style="color:#000;font-weight:bold">:=</span> b.pool.<span style="color:#900;font-weight:bold">Get</span>().(<span style="color:#000;font-weight:bold">*</span>ringStripe)
-  stripe.<span style="color:#900;font-weight:bold">Push</span>(key)
-  b.pool.<span style="color:#900;font-weight:bold">Put</span>(stripe)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">AddToLossyBuffer(key):
+  stripe <span style="color:#000;font-weight:bold">:=</span> b.pool.Get().(<span style="color:#000;font-weight:bold">*</span>ringStripe)
+  stripe.Push(key)
+  b.pool.Put(stripe)
 
 Once buffer fills up, push to channel:
   <span style="color:#000;font-weight:bold">select</span> {
   <span style="color:#000;font-weight:bold">case</span> p.itemsCh <span style="color:#000;font-weight:bold">&lt;-</span> keys:
-      p.stats.<span style="color:#900;font-weight:bold">Add</span>(keepGets, keys[<span style="color:#099">0</span>], <span style="color:#0086b3">uint64</span>(<span style="color:#0086b3">len</span>(keys)))
+      p.stats.Add(keepGets, keys[<span style="color:#099">0</span>], <span style="color:#0086b3">uint64</span>(<span style="color:#0086b3">len</span>(keys)))
       <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span>
   <span style="color:#000;font-weight:bold">default</span>:
-      p.stats.<span style="color:#900;font-weight:bold">Add</span>(dropGets, keys[<span style="color:#099">0</span>], <span style="color:#0086b3">uint64</span>(<span style="color:#0086b3">len</span>(keys)))
+      p.stats.Add(dropGets, keys[<span style="color:#099">0</span>], <span style="color:#0086b3">uint64</span>(<span style="color:#0086b3">len</span>(keys)))
       <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span>
   }
 
 p.itemCh processing:
-  <span style="color:#000;font-weight:bold">func</span> (p <span style="color:#000;font-weight:bold">*</span>tinyLFU) <span style="color:#900;font-weight:bold">Push</span>(keys []<span style="color:#458;font-weight:bold">uint64</span>) {
+  <span style="color:#000;font-weight:bold">func</span> (p <span style="color:#000;font-weight:bold">*</span>tinyLFU) Push(keys []<span style="color:#458;font-weight:bold">uint64</span>) {
     <span style="color:#000;font-weight:bold">for</span> _, key <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">range</span> keys {
-      p.<span style="color:#900;font-weight:bold">Increment</span>(key)
+      p.Increment(key)
     }
   }</code></pre></div>
 
@@ -649,7 +667,7 @@ But, comes with a few caveats, described below.</p>
     <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span>
 <span style="color:#000;font-weight:bold">default</span>:
     <span style="color:#998;font-style:italic">// drop the set and avoid blocking
-</span><span style="color:#998;font-style:italic"></span>    c.stats.<span style="color:#900;font-weight:bold">Add</span>(dropSets, hash, <span style="color:#099">1</span>)
+</span><span style="color:#998;font-style:italic"></span>    c.stats.Add(dropSets, hash, <span style="color:#099">1</span>)
     <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span>
 }</code></pre></div>
 
@@ -765,20 +783,20 @@ variety of workloads.</strong> This means we get the benefits of admission polic
 conservative memory usage, and lower contention in the same little package.</p>
 
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// Snippet from the Admission and Eviction Algorithm
-</span><span style="color:#998;font-style:italic"></span>incHits <span style="color:#000;font-weight:bold">:=</span> p.admit.<span style="color:#900;font-weight:bold">Estimate</span>(key)
-<span style="color:#000;font-weight:bold">for</span> ; room &lt; <span style="color:#099">0</span>; room = p.evict.<span style="color:#900;font-weight:bold">roomLeft</span>(cost) {
-    sample = p.evict.<span style="color:#900;font-weight:bold">fillSample</span>(sample)
+</span><span style="color:#998;font-style:italic"></span>incHits <span style="color:#000;font-weight:bold">:=</span> p.admit.Estimate(key)
+<span style="color:#000;font-weight:bold">for</span> ; room &lt; <span style="color:#099">0</span>; room = p.evict.roomLeft(cost) {
+    sample = p.evict.fillSample(sample)
     minKey, minHits, minId <span style="color:#000;font-weight:bold">:=</span> <span style="color:#0086b3">uint64</span>(<span style="color:#099">0</span>), <span style="color:#0086b3">int64</span>(math.MaxInt64), <span style="color:#099">0</span>
     <span style="color:#000;font-weight:bold">for</span> i, pair <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">range</span> sample {
-        <span style="color:#000;font-weight:bold">if</span> hits <span style="color:#000;font-weight:bold">:=</span> p.admit.<span style="color:#900;font-weight:bold">Estimate</span>(pair.key); hits &lt; minHits {
+        <span style="color:#000;font-weight:bold">if</span> hits <span style="color:#000;font-weight:bold">:=</span> p.admit.Estimate(pair.key); hits &lt; minHits {
             minKey, minHits, minId = pair.key, hits, i
         }
     }
     <span style="color:#000;font-weight:bold">if</span> incHits &lt; minHits {
-        p.stats.<span style="color:#900;font-weight:bold">Add</span>(rejectSets, key, <span style="color:#099">1</span>)
+        p.stats.Add(rejectSets, key, <span style="color:#099">1</span>)
         <span style="color:#000;font-weight:bold">return</span> victims, <span style="color:#000;font-weight:bold">false</span>
     }
-    p.evict.<span style="color:#900;font-weight:bold">del</span>(minKey)
+    p.evict.del(minKey)
     sample[minId] = sample[<span style="color:#0086b3">len</span>(sample)<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
     sample = sample[:<span style="color:#0086b3">len</span>(sample)<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
     victims = <span style="color:#0086b3">append</span>(victims, minKey)
@@ -825,13 +843,13 @@ reused to determine which uint64 to increment.</p>
 	<span style="color:#998;font-style:italic">// Avoid false sharing by padding at least 64 bytes of space between two
 </span><span style="color:#998;font-style:italic"></span>	<span style="color:#998;font-style:italic">// atomic counters which would be incremented.
 </span><span style="color:#998;font-style:italic"></span>	idx <span style="color:#000;font-weight:bold">:=</span> (hash <span style="color:#000;font-weight:bold">%</span> <span style="color:#099">25</span>) <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">10</span>
-	atomic.<span style="color:#900;font-weight:bold">AddUint64</span>(valp[idx], delta)
+	atomic.AddUint64(valp[idx], delta)
 
 Read:
 	valp <span style="color:#000;font-weight:bold">:=</span> p.all[t]
 	<span style="color:#000;font-weight:bold">var</span> total <span style="color:#458;font-weight:bold">uint64</span>
 	<span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">range</span> valp {
-		total <span style="color:#000;font-weight:bold">+=</span> atomic.<span style="color:#900;font-weight:bold">LoadUint64</span>(valp[i])
+		total <span style="color:#000;font-weight:bold">+=</span> atomic.LoadUint64(valp[i])
 	}
 	<span style="color:#000;font-weight:bold">return</span> total</code></pre></div>
 
@@ -1015,22 +1033,14 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/cache/">Cache</a>
+            
+                
                 
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/go/">Go</a>
-                
             
                 
-                
-                    <a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
-                
-            
-                
-                
-                    <a href="https://blog.dgraph.io/tags/reddit/">Reddit</a>
                 
             
           </div>

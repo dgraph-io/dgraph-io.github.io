@@ -73,9 +73,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="/js/search.js"></script>
+
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -90,7 +94,8 @@
 
   <meta name="twitter:title" content="Can it really scale?"/>
   <meta name="twitter:description" content="In this post, we’ll look at how Dgraph
- performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: Can it really scale?"/>
+ performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: Can it really scale?
+"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -362,28 +367,42 @@
     </svg>
   </div>
   <header id="page-header" class="page-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 offset-0 col-md-10 offset-md-1">
-        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				
-          <span class="topnav-stargazers-wrapper">
-            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-          </span>
-        
+	<div class="container">
+	  <div class="row">
+		<div class="col-12 offset-0 col-md-10 offset-md-1">
+		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				  
+			<span class="topnav-stargazers-wrapper">
+			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+			</span>
+		  
+  
+		  	<span 
+				onclick="toggleVisibility()"  
+			  	class="search-button pull-right button button-dgraph-site button--outline"
+			>
+			<i class="fa fa-search" aria-hidden="true"></i>
+		  </span>
+  
+		  <a
+			  href="https://dgraph.io/"
+			  title="Dgraph Website"
+			  class="button button-dgraph-site button--outline pull-right"
+		  >
+			Dgraph.io
+		  </a>
+		</div>
+	  </div>
 
-        <a
-            href="https://dgraph.io/"
-            title="Dgraph Website"
-            class="button button-dgraph-site button--outline pull-right"
-        >
-          Dgraph.io
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+	  <div id="searchbox"></div>
 
+	</div>
+  
+	<script>
+		createSearch();
+	</script>
+  </header>
+  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -430,7 +449,8 @@
             src="https://blog.dgraph.io/images/lander.jpg"
           >
           <div class="article-content"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
+ performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em>
+</p>
 
 <h2 id="the-dataset">The Dataset</h2>
 
@@ -538,34 +558,36 @@ They still have to communicate with each other to respond to the queries.</p>
 <p>We ran broadly 2 categories of queries.</p>
 
 <ul>
-<li><p>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</p>
-
-<pre><code>{
-me ( _xid_ : XID ) {
-type.object.name.en
-film.actor.film {
-  film.performance.film {
-    type.object.name.en
-  }
-}
-}
-}
-</code></pre></li>
-
-<li><p>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</p>
-
-<pre><code>{
-me ( _xid_ : XID ) {
-type.object.name.en
-film.director.film {
-  film.film.genre {
-    type.object.name.en
-  }
-}
-}
-}
-</code></pre></li>
+<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
 </ul>
+
+<pre><code>{
+  me ( _xid_ : XID ) {
+    type.object.name.en
+    film.actor.film {
+      film.performance.film {
+        type.object.name.en
+      }
+    }
+  }
+}
+</code></pre>
+
+<ul>
+<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
+</ul>
+
+<pre><code>{
+  me ( _xid_ : XID ) {
+    type.object.name.en
+    film.director.film {
+      film.film.genre {
+        type.object.name.en
+      }
+    }
+  }
+}
+</code></pre>
 
 <p>During each iteration, either an actor or a director category was chosen randomly.
 Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
