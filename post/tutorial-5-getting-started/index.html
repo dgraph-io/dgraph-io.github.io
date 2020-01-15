@@ -94,8 +94,8 @@
 
   <meta name="twitter:title" content="Getting started with Dgraph tutorials series - 5: Tweet graph, string indices, and keyword-based searching"/>
   <meta name="twitter:description" content="Welcome to the fifth episode of getting started with Dgraph. In the previous episode, we learned about using multi-language strings and operations on them using language tags.
-In this episode, we&rsquo;ll model tweets in Dgraph and, using it, we&rsquo;ll learn more about string indices in Dgraph.
-We&rsquo;ll specifically learn about:
+In this episode, we&#39;ll model tweets in Dgraph and, using it, we&#39;ll learn more about string indices in Dgraph.
+We&#39;ll specifically learn about:
  Modeling tweets in Dgraph. Using String indices in Dgraph  Querying twitter users using the hash index. Comparing strings using the exact index."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -449,392 +449,292 @@ We&rsquo;ll specifically learn about:
             class="main__image"
             src="https://blog.dgraph.io/images/tutorials/5/cover.jpg"
           >
-          <div class="article-content">
-
-<p>Welcome to the fifth episode of getting started with Dgraph.
+          <div class="article-content"><p>Welcome to the fifth episode of getting started with Dgraph.
 In the <a href="https://blog.dgraph.io/post/tutorial-4-getting-started/">previous episode</a>, we learned about using multi-language strings and operations on them using <a href="https://www.w3schools.com/tags/ref_language_codes.asp">language tags</a>.</p>
-
-<p>In this episode, we&rsquo;ll model tweets in Dgraph and, using it, we&rsquo;ll learn more about string indices in Dgraph.</p>
-
-<p>We&rsquo;ll specifically learn about:</p>
-
+<p>In this episode, we'll model tweets in Dgraph and, using it, we'll learn more about string indices in Dgraph.</p>
+<p>We'll specifically learn about:</p>
 <ul>
 <li>Modeling tweets in Dgraph.</li>
 <li>Using String indices in Dgraph
-
 <ul>
 <li>Querying twitter users using the <code>hash</code> index.</li>
 <li>Comparing strings using the <code>exact</code> index.</li>
 <li>Searching for tweets based on keywords using the <code>term</code> index.</li>
-</ul></li>
 </ul>
-
-<p>Let&rsquo;s start analyzing the anatomy of a real tweet and figure out how to model it in Dgraph.</p>
-
+</li>
+</ul>
+<p>Let's start analyzing the anatomy of a real tweet and figure out how to model it in Dgraph.</p>
 <h3 id="modeling-a-tweet-in-dgraph">Modeling a tweet in Dgraph</h3>
-
-<p>Here&rsquo;s a sample tweet.</p>
-
+<p>Here's a sample tweet.</p>
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Test tweet for the fifth episode of getting started series with <a href="https://twitter.com/dgraphlabs?ref_src=twsrc%5Etfw">@dgraphlabs</a>.<br>Wait for the video of the fourth one by <a href="https://twitter.com/francesc?ref_src=twsrc%5Etfw">@francesc</a> the coming Wednesday! <a href="https://twitter.com/hashtag/GraphDB?src=hash&amp;ref_src=twsrc%5Etfw">#GraphDB</a> <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a></p>&mdash; Karthic Rao (@hackintoshrao) <a href="https://twitter.com/hackintoshrao/status/1194740206177402880?ref_src=twsrc%5Etfw">November 13, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
-<p>Let&rsquo;s dissect the tweet above. Here are the components of the tweet:</p>
-
+<p>Let's dissect the tweet above. Here are the components of the tweet:</p>
 <ul>
-<li><strong>The Author</strong></li>
-</ul>
-
+<li>
+<p><strong>The Author</strong></p>
 <p>The author of the tweet is the user <code>@hackintoshrao</code>.</p>
-
-<ul>
-<li><strong>The Body</strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>The Body</strong></p>
 <p>This component is the content of the tweet.</p>
-
 <blockquote>
 <p>Test tweet for the fifth episode of getting started series with @dgraphlabs.
 Wait for the video of the fourth one by @francesc the coming Wednesday!
 #GraphDB #GraphQL</p>
 </blockquote>
-
-<ul>
-<li><strong>The Hashtags</strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>The Hashtags</strong></p>
 <p>Here are the hashtags in the tweet: <code>#GraphQL</code> and <code>#GraphDB</code>.</p>
-
-<ul>
-<li><strong>The Mentions</strong></li>
-</ul>
-
+</li>
+<li>
+<p><strong>The Mentions</strong></p>
 <p>A tweet can mention other twitter users.</p>
-
 <p>Here are the mentions in the tweet above: <code>@dgraphlabs</code> and <code>@francesc</code>.</p>
-
-<p>Before we model tweets in Dgraph using these components, let&rsquo;s recap the design principles of a graph model:</p>
-
+</li>
+</ul>
+<p>Before we model tweets in Dgraph using these components, let's recap the design principles of a graph model:</p>
 <blockquote>
 <p><code>Nodes</code> and <code>Edges</code> are the building blocks of a graph model.
 May it be a sale, a tweet, user info, any concept or an entity is represented as a node.
 If any two nodes are related, represent that by creating an edge between them.</p>
 </blockquote>
-
-<p>With the above design principles in mind, let&rsquo;s go through components of a tweet and see how we could fit them into Dgraph.</p>
-
+<p>With the above design principles in mind, let's go through components of a tweet and see how we could fit them into Dgraph.</p>
 <p><strong>The Author</strong></p>
-
 <p>The Author of a tweet is a twitter user. We should use a node to represent this.</p>
-
 <p><strong>The Body</strong></p>
-
 <p>We should represent every tweet as a node.</p>
-
 <p><strong>The Hashtags</strong></p>
-
 <p>It is advantageous to represent a hashtag as a node of its own.
 It gives us better flexibility while querying.</p>
-
-<p>Though you can search for hashtags from the body of a tweet, it&rsquo;s not efficient to do so.
+<p>Though you can search for hashtags from the body of a tweet, it's not efficient to do so.
 Creating unique nodes to represent a hashtag, allows you to write performant queries like the following: <em>Hey Dgraph, give me all the tweets with hashtag #graphql</em></p>
-
 <p><strong>The Mentions</strong></p>
-
-<p>A mention represents a twitter user, and we&rsquo;ve already modeled a user as a node.
+<p>A mention represents a twitter user, and we've already modeled a user as a node.
 Therefore, we represent a mention as an edge between a tweet and the users mentioned.</p>
-
 <h4 id="the-relationships">The Relationships</h4>
-
 <p>We have three types of nodes: <code>User</code>, <code>Tweet,</code> and <code>Hashtag</code>.</p>
-
-<p><img src="/images/tutorials/5/a-nodes.jpg" alt="graph nodes" /></p>
-
-<p>Let&rsquo;s look at how these nodes might be related to each other and model their relationship as an edge between them.</p>
-
+<p><img src="/images/tutorials/5/a-nodes.jpg" alt="graph nodes"></p>
+<p>Let's look at how these nodes might be related to each other and model their relationship as an edge between them.</p>
 <p><strong>The User and Tweet nodes</strong></p>
-
-<p>There&rsquo;s a two-way relationship between a <code>Tweet</code> and a <code>User</code> node.</p>
-
+<p>There's a two-way relationship between a <code>Tweet</code> and a <code>User</code> node.</p>
 <ul>
 <li>Every tweet is authored by a user, and a user can author many tweets.</li>
 </ul>
-
-<p>Let&rsquo;s name the edge representing this relationship  as <code>authored</code> .</p>
-
+<p>Let's name the edge representing this relationship  as <code>authored</code> .</p>
 <p>An <code>authored</code> edge points from a <code>User</code> node to a <code>Tweet</code> node.</p>
-
 <ul>
 <li>A tweet can mention many users, and users can be mentioned in many tweets.</li>
 </ul>
-
-<p>Let&rsquo;s name the edge which represents this relationship as <code>mentioned</code>.</p>
-
+<p>Let's name the edge which represents this relationship as <code>mentioned</code>.</p>
 <p>A <code>mentioned</code> edge points from a <code>Tweet</code> node to a <code>User</code> node.
 These users are the ones who are mentioned in the tweet.</p>
-
-<p><img src="/images/tutorials/5/a-tweet-user.jpg" alt="graph nodes" /></p>
-
+<p><img src="/images/tutorials/5/a-tweet-user.jpg" alt="graph nodes"></p>
 <p><strong>The tweet and the hashtag nodes</strong></p>
-
 <p>A tweet can have one or more hashtags.
-Let&rsquo;s name the edge, which represents this relationship as <code>tagged_with</code>.</p>
-
+Let's name the edge, which represents this relationship as <code>tagged_with</code>.</p>
 <p>A <code>tagged_with</code> edge points from a <code>Tweet</code> node to a <code>Hashtag</code> node.
 These hashtag nodes correspond to the hashtags in the tweets.</p>
-
-<p><img src="/images/tutorials/5/a-tagged.jpg" alt="graph nodes" /></p>
-
+<p><img src="/images/tutorials/5/a-tagged.jpg" alt="graph nodes"></p>
 <p><strong>The Author and hashtag nodes</strong></p>
-
-<p>There&rsquo;s no direct relationship between an author and a hashtag node.
-Hence, we don&rsquo;t need a direct edge between them.</p>
-
-<p>Our graph model of a tweet is ready! Here&rsquo;s it is.
-<img src="/images/tutorials/5/a-graph-model.jpg" alt="tweet model" />
+<p>There's no direct relationship between an author and a hashtag node.
+Hence, we don't need a direct edge between them.</p>
+<p>Our graph model of a tweet is ready! Here's it is.
+<img src="/images/tutorials/5/a-graph-model.jpg" alt="tweet model">
 Here is the graph of our sample tweet.
-<img src="/images/tutorials/5/c-tweet-model.jpg" alt="tweet model" /></p>
-
-<p>Let&rsquo;s add a couple of tweets to the list.</p>
-
+<img src="/images/tutorials/5/c-tweet-model.jpg" alt="tweet model"></p>
+<p>Let's add a couple of tweets to the list.</p>
 <p><blockquote class="twitter-tweet"><p lang="en" dir="ltr">So many good talks at <a href="https://twitter.com/hashtag/graphqlconf?src=hash&amp;ref_src=twsrc%5Etfw">#graphqlconf</a>, next year I&#39;ll make sure to be *at least* in the audience!<br><br>Also huge thanks to the live tweeting by <a href="https://twitter.com/dgraphlabs?ref_src=twsrc%5Etfw">@dgraphlabs</a> for alleviating the FOMO 😊<a href="https://twitter.com/hashtag/GraphDB?src=hash&amp;ref_src=twsrc%5Etfw">#GraphDB</a> ♥️ <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a> <a href="https://t.co/5uDpbswFZi">https://t.co/5uDpbswFZi</a></p>&mdash; FRANCESC (@francesc) <a href="https://twitter.com/francesc/status/1142124111650443273?ref_src=twsrc%5Etfw">June 21, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Let&#39;s Go and catch <a href="https://twitter.com/francesc?ref_src=twsrc%5Etfw">@francesc</a>  at <a href="https://twitter.com/Gopherpalooza?ref_src=twsrc%5Etfw">@Gopherpalooza</a>  today, as he scans into Go source code by building its Graph in Dgraph!<br><br>Be there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!<a href="https://twitter.com/hashtag/golang?src=hash&amp;ref_src=twsrc%5Etfw">#golang</a> <a href="https://twitter.com/hashtag/GraphDB?src=hash&amp;ref_src=twsrc%5Etfw">#GraphDB</a> <a href="https://twitter.com/hashtag/Databases?src=hash&amp;ref_src=twsrc%5Etfw">#Databases</a> <a href="https://twitter.com/hashtag/Dgraph?src=hash&amp;ref_src=twsrc%5Etfw">#Dgraph</a> <a href="https://t.co/sK90DJ6rLs">pic.twitter.com/sK90DJ6rLs</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1192822660679577602?ref_src=twsrc%5Etfw">November 8, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </p>
-
-<p>We&rsquo;ll be using these two tweets and the sample tweet, which we used in the beginning as our dataset.
+<p>We'll be using these two tweets and the sample tweet, which we used in the beginning as our dataset.
 Open Ratel, go to the mutate tab, paste the mutation, and click Run.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;user_handle&quot;: &quot;hackintoshrao&quot;,
-      &quot;user_name&quot;: &quot;Karthic Rao&quot;,
-      &quot;uid&quot;: &quot;_:hackintoshrao&quot;,
-      &quot;authored&quot;: [
+      <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;hackintoshrao&#34;</span>,
+      <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Karthic Rao&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:hackintoshrao&#34;</span>,
+      <span style="color:#000080">&#34;authored&#34;</span>: [
         {
-          &quot;tweet&quot;: &quot;Test tweet for the fifth episode of getting started series with @dgraphlabs. Wait for the video of the fourth one by @francesc the coming Wednesday!\n#GraphDB #GraphQL&quot;,
-          &quot;tagged_with&quot;: [
+          <span style="color:#000080">&#34;tweet&#34;</span>: <span style="color:#d14">&#34;Test tweet for the fifth episode of getting started series with @dgraphlabs. Wait for the video of the fourth one by @francesc the coming Wednesday!\n#GraphDB #GraphQL&#34;</span>,
+          <span style="color:#000080">&#34;tagged_with&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:graphql&quot;,
-              &quot;hashtag&quot;: &quot;GraphQL&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphql&#34;</span>,
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;GraphQL&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:graphdb&quot;,
-              &quot;hashtag&quot;: &quot;GraphDB&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphdb&#34;</span>,
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;GraphDB&#34;</span>
             }
           ],
-          &quot;mentioned&quot;: [
+          <span style="color:#000080">&#34;mentioned&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:francesc&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:francesc&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:dgraphlabs&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>
             }
           ]
         }
       ]
     },
     {
-      &quot;user_handle&quot;: &quot;francesc&quot;,
-      &quot;user_name&quot;: &quot;Francesc Campoy&quot;,
-      &quot;uid&quot;: &quot;_:francesc&quot;,
-      &quot;authored&quot;: [
+      <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;francesc&#34;</span>,
+      <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Francesc Campoy&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:francesc&#34;</span>,
+      <span style="color:#000080">&#34;authored&#34;</span>: [
         {
-          &quot;tweet&quot;: &quot;So many good talks at #graphqlconf, next year I'll make sure to be *at least* in the audience!\nAlso huge thanks to the live tweeting by @dgraphlabs for alleviating the FOMO😊\n#GraphDB ♥️ #GraphQL&quot;,
-          &quot;tagged_with&quot;: [
+          <span style="color:#000080">&#34;tweet&#34;</span>: <span style="color:#d14">&#34;So many good talks at #graphqlconf, next year I&#39;ll make sure to be *at least* in the audience!\nAlso huge thanks to the live tweeting by @dgraphlabs for alleviating the FOMO😊\n#GraphDB ♥️ #GraphQL&#34;</span>,
+          <span style="color:#000080">&#34;tagged_with&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:graphql&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphql&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:graphdb&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphdb&#34;</span>
             },
             {
-              &quot;hashtag&quot;: &quot;graphqlconf&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;graphqlconf&#34;</span>
             }
           ],
-          &quot;mentioned&quot;: [
+          <span style="color:#000080">&#34;mentioned&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:dgraphlabs&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>
             }
           ]
         }
       ]
     },
     {
-      &quot;user_handle&quot;: &quot;dgraphlabs&quot;,
-      &quot;user_name&quot;: &quot;Dgraph Labs&quot;,
-      &quot;uid&quot;: &quot;_:dgraphlabs&quot;,
-      &quot;authored&quot;: [
+      <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;dgraphlabs&#34;</span>,
+      <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Dgraph Labs&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>,
+      <span style="color:#000080">&#34;authored&#34;</span>: [
         {
-          &quot;tweet&quot;: &quot;Let's Go and catch @francesc at @Gopherpalooza today, as he scans into Go source code by building its Graph in Dgraph!\nBe there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!\n#golang #GraphDB #Databases #Dgraph &quot;,
-          &quot;tagged_with&quot;: [
+          <span style="color:#000080">&#34;tweet&#34;</span>: <span style="color:#d14">&#34;Let&#39;s Go and catch @francesc at @Gopherpalooza today, as he scans into Go source code by building its Graph in Dgraph!\nBe there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!\n#golang #GraphDB #Databases #Dgraph &#34;</span>,
+          <span style="color:#000080">&#34;tagged_with&#34;</span>: [
             {
-              &quot;hashtag&quot;: &quot;golang&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;golang&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:graphdb&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphdb&#34;</span>
             },
             {
-              &quot;hashtag&quot;: &quot;Databases&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;Databases&#34;</span>
             },
             {
-              &quot;hashtag&quot;: &quot;Dgraph&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;Dgraph&#34;</span>
             }
           ],
-          &quot;mentioned&quot;: [
+          <span style="color:#000080">&#34;mentioned&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:francesc&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:francesc&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:dgraphlabs&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>
             }
           ]
         },
         {
-          &quot;uid&quot;: &quot;_:gopherpalooza&quot;,
-          &quot;user_handle&quot;: &quot;gopherpalooza&quot;,
-          &quot;user_name&quot;: &quot;Gopherpalooza&quot;
+          <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:gopherpalooza&#34;</span>,
+          <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;gopherpalooza&#34;</span>,
+          <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Gopherpalooza&#34;</span>
         }
       ]
     }
   ]
 }
-</code></pre>
-
-<p><em>Note: If you&rsquo;re new to Dgraph, and yet to figure out how to run the database and use Ratel, we highly recommend reading the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first article of the series</a></em></p>
-
+</code></pre></div><p><em>Note: If you're new to Dgraph, and yet to figure out how to run the database and use Ratel, we highly recommend reading the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first article of the series</a></em></p>
 <p>Here is the graph we built.</p>
-
-<p><img src="/images/tutorials/5/x-all-tweets.png" alt="tweet graph" /></p>
-
+<p><img src="/images/tutorials/5/x-all-tweets.png" alt="tweet graph"></p>
 <p>Our graph has:</p>
-
 <ul>
 <li>Five blue twitter user nodes.</li>
 <li>The green nodes are the tweets.</li>
 <li>The blue ones are the hashtags.</li>
 </ul>
-
-<p>Let&rsquo;s start our tweet exploration by querying for the twitter users in the database.</p>
-
+<p>Let's start our tweet exploration by querying for the twitter users in the database.</p>
 <pre><code>{
   tweet_graph(func: has(user_handle)) {
      user_handle
   }
 }
-</code></pre>
-
-<p><img src="/images/tutorials/5/j-users.png" alt="tweet model" /></p>
-
+</code></pre><p><img src="/images/tutorials/5/j-users.png" alt="tweet model"></p>
 <p><em>Note: If the query syntax above looks not so familiar to you, check out the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first tutorial</a>.</em></p>
-
 <p>We have four twitter users: <code>@hackintoshrao</code>, <code>@francesc</code>, <code>@dgraphlabs</code>, and <code>@gopherpalooza</code>.</p>
-
-<p>Now, let&rsquo;s find their tweets and hashtags too.</p>
-
-<pre><code class="language-graphql">{
-  tweet_graph(func: has(user_handle)) {
-     user_name
-     authored {
-      tweet
-      tagged_with {
-        hashtag
-      }
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/5/y-author-tweet.png" alt="tweet model" />
+<p>Now, let's find their tweets and hashtags too.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>tweet_graph(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(user_handle))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>user_name<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>authored<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>tagged_with<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>hashtag<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/5/y-author-tweet.png" alt="tweet model">
 <em>Note: If the traversal query syntax in the above query is not familiar to you, <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">check out the third tutorial</a> of the series.</em></p>
-
-<p>Before we start querying our graph, let&rsquo;s learn a bit about database indices using a simple analogy.</p>
-
+<p>Before we start querying our graph, let's learn a bit about database indices using a simple analogy.</p>
 <h4 id="what-are-indices">What are indices?</h4>
-
 <p>Indexing is a way to optimize the performance of a database by minimizing the number of disk accesses required when a query is processed.</p>
-
 <p>Consider a &ldquo;Book&rdquo; of 600 pages, divided into 30 sections.
-Let&rsquo;s say each section has a different number of pages in it.</p>
-
+Let's say each section has a different number of pages in it.</p>
 <p>Now, without an index page, to find a particular section that starts with the letter &ldquo;F&rdquo;, you have no other option than scanning through the entire book. i.e: 600 pages.</p>
-
 <p>But with an index page at the beginning makes it easier to access the intended information.
 You just need to look over the index page, after finding the matching index, you can efficiently jump to the section by skipping other sections.</p>
-
 <p>But remember that the index page also takes disk space!
 Use them only when necessary.</p>
-
-<p>In our next section,let&rsquo;s learn some interesting queries on our twitter graph.</p>
-
+<p>In our next section,let's learn some interesting queries on our twitter graph.</p>
 <h3 id="string-indices-and-querying">String indices and querying</h3>
-
 <h4 id="hash-index">Hash index</h4>
-
-<p>Let&rsquo;s compose a query which says: <em>Hey Dgraph, find me the tweets of user with twitter handle equals to <code>hackintoshrao</code>.</em></p>
-
+<p>Let's compose a query which says: <em>Hey Dgraph, find me the tweets of user with twitter handle equals to <code>hackintoshrao</code>.</em></p>
 <p>Before we do so, we need first to add an index has to the <code>user_handle</code> predicate.
 We know that there are 5 types of string indices: <code>hash</code>, <code>exact</code>, <code>term</code>, <code>full-text</code>, and <code>trigram</code>.</p>
-
 <p>The type of string index to be used depends on the kind of queries you want to run on the string predicate.</p>
-
 <p>In this case, we want to search for a node based on the exact string value of a predicate.
 For a use case like this one, the <code>hash</code> index is recommended.</p>
-
-<p>Let&rsquo;s first add the <code>hash</code> index to the <code>user_handle</code> predicate.
-<img src="/images/tutorials/5/k-hash.png" alt="tweet model" /></p>
-
-<p>Now, let&rsquo;s use the <code>eq</code> comparator to find all the tweets of <code>hackintoshrao</code>.</p>
-
+<p>Let's first add the <code>hash</code> index to the <code>user_handle</code> predicate.
+<img src="/images/tutorials/5/k-hash.png" alt="tweet model"></p>
+<p>Now, let's use the <code>eq</code> comparator to find all the tweets of <code>hackintoshrao</code>.</p>
 <p>Go to the query tab, type in the query, and click Run.</p>
-
-<pre><code class="language-graphql"> {
-  tweet_graph(func: eq(user_handle, &quot;hackintoshrao&quot;)) {
-     user_name
-     authored {
-    	tweet
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/5/z-exact.png" alt="tweet model" />
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>tweet_graph(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(user_handle,<span style="color:#bbb"> </span><span style="color:#d14">&#34;hackintoshrao&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>user_name<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>authored<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    	</span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/5/z-exact.png" alt="tweet model">
 <em>Note: Refer to <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">the third tutorial</a>, if you want to know about comparator functions like <code>eq</code> in detail.</em></p>
-
-<p>Let&rsquo;s extend the last query also to fetch the hashtags and the mentions.</p>
-
-<pre><code class="language-graphql">{
-  tweet_graph(func: eq(user_handle, &quot;hackintoshrao&quot;)) {
-     user_name
-     authored {
-      tweet
-      tagged_with {
-      	hashtag
-      }
-      mentioned {
-      	user_name
-      }
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/5/l-hash-query.png" alt="tweet model" />
+<p>Let's extend the last query also to fetch the hashtags and the mentions.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>tweet_graph(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(user_handle,<span style="color:#bbb"> </span><span style="color:#d14">&#34;hackintoshrao&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>user_name<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>authored<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>tagged_with<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      	</span>hashtag<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>mentioned<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      	</span>user_name<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/5/l-hash-query.png" alt="tweet model">
 <em>Note: If the traversal query syntax in the above query is not familiar to you, <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">check out the third tutorial</a> of the series.</em></p>
-
 <p>Did you know that string values in Dgraph can also be compared using comparators like greater-than or less-than?</p>
-
-<p>In our next section, let&rsquo;s see how to run the comparison functions other than <code>equals to (eq)</code> on the string predicates.</p>
-
+<p>In our next section, let's see how to run the comparison functions other than <code>equals to (eq)</code> on the string predicates.</p>
 <h4 id="exact-index">Exact Index</h4>
-
 <p>We discussed in the <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">third tutorial</a> that there five comparator functions in Dgraph.</p>
-
-<p>Here&rsquo;s a quick recap:</p>
-
+<p>Here's a quick recap:</p>
 <table>
 <thead>
 <tr>
@@ -842,193 +742,128 @@ For a use case like this one, the <code>hash</code> index is recommended.</p>
 <th>Full form</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>eq</td>
 <td>equals to</td>
 </tr>
-
 <tr>
 <td>lt</td>
 <td>less than</td>
 </tr>
-
 <tr>
 <td>le</td>
 <td>less than or equal to</td>
 </tr>
-
 <tr>
 <td>gt</td>
 <td>greater than</td>
 </tr>
-
 <tr>
 <td>ge</td>
 <td>greater than or equal to</td>
 </tr>
 </tbody>
 </table>
-
 <p>All five comparator functions can be applied to the string predicates.</p>
-
 <p>We have already used the <code>eq</code> operator.
 The other four are useful for operations, which depend on the alphabetical ordering of the strings.</p>
-
-<p>Let&rsquo;s learn about it with a simple example.</p>
-
-<p>Let&rsquo;s find the twitter accounts which come after <code>dgraphlabs</code> in alphabetically sorted order.</p>
-
+<p>Let's learn about it with a simple example.</p>
+<p>Let's find the twitter accounts which come after <code>dgraphlabs</code> in alphabetically sorted order.</p>
 <pre><code>{
   using_greater_than(func: gt(user_handle, &quot;dgraphlabs&quot;)) {
     user_handle
   }
 }
-</code></pre>
-
-<p><img src="/images/tutorials/5/n-exact-error.png" alt="tweet model" />
+</code></pre><p><img src="/images/tutorials/5/n-exact-error.png" alt="tweet model">
 Oops, we have an error!</p>
-
-<p>You can see from the error that the current <code>hash</code> index on the <code>user_handle</code> predicate doesn&rsquo;t support the <code>gt</code> function.</p>
-
+<p>You can see from the error that the current <code>hash</code> index on the <code>user_handle</code> predicate doesn't support the <code>gt</code> function.</p>
 <p>To be able to do string comparison operations like the one above, you need first set the <code>exact</code> index on the string predicate.</p>
-
 <p>The <code>exact</code> index is the only string index that allows you to use the <code>ge</code>, <code>gt</code>, <code>le</code>, <code>lt</code> comparators on the string predicates.</p>
-
 <p>Remind you that the <code>exact</code> index also allows you to use <code>equals to (eq)</code> comparator.
 But, if you want to just use the <code>equals to (eq)</code> comparator on string predicates, using the <code>exact</code> index would be an overkill.
 The <code>hash</code> index would be a better option, as it is, in general, much more space-efficient.</p>
-
-<p>Let&rsquo;s see the <code>exact</code> index in action.
-<img src="/images/tutorials/5/o-exact-conflict.png" alt="set exact" />
+<p>Let's see the <code>exact</code> index in action.
+<img src="/images/tutorials/5/o-exact-conflict.png" alt="set exact">
 We again have an error!</p>
-
 <p>Though a string predicate can have more than one index, some of them are not compatible with each other.
 One such example is the combination of the <code>hash</code> and the <code>exact</code> indices.</p>
-
 <p>The <code>user_handle</code> predicate already has the <code>hash</code> index, so trying to set the <code>exact</code> index gives you an error.</p>
-
-<p>Let&rsquo;s uncheck the <code>hash</code> index for the <code>user_handle</code> predicate, select the <code>exact</code> index, and click update.</p>
-
-<p><img src="/images/tutorials/5/p-set-exact.png" alt="set exact" /></p>
-
-<p>Though Dgraph allows you to change the index type of a predicate, do it only if it&rsquo;s necessary.
+<p>Let's uncheck the <code>hash</code> index for the <code>user_handle</code> predicate, select the <code>exact</code> index, and click update.</p>
+<p><img src="/images/tutorials/5/p-set-exact.png" alt="set exact"></p>
+<p>Though Dgraph allows you to change the index type of a predicate, do it only if it's necessary.
 When the indices are changed, the data needs to be re-indexed, and this takes some computing, so it could take a bit of time.
 While the re-indexing operation is running, all mutations will be put on hold.</p>
-
-<p>Now, let&rsquo;s re-run the query.
-<img src="/images/tutorials/5/q-exact-gt.png" alt="tweet model" /></p>
-
+<p>Now, let's re-run the query.
+<img src="/images/tutorials/5/q-exact-gt.png" alt="tweet model"></p>
 <p>The result contains three twitter handles: <code>francesc</code>, <code>gopherpalooza</code>, and <code>hackintoshrao</code>.</p>
-
 <p>In the alphabetically sorted order, these twitter handles are greater than <code>dgraphlabs</code>.</p>
-
 <p>Some tweets appeal to us better than others.
 For instance, I love <code>Graphs</code> and <code>Go</code>.
 Hence, I would surely enjoy tweets that are related to these topics.
 A keyword-based search is a useful way to find relevant information.</p>
-
 <p>Can we search for tweets based on one or more keywords related to your interests?</p>
-
-<p>Yes, we can! Let&rsquo;s do that in our next section.</p>
-
+<p>Yes, we can! Let's do that in our next section.</p>
 <h4 id="the-term-index">The Term index</h4>
-
 <p>The <code>term</code> index lets you search string predicates based on one or more keywords.
 These keywords are called terms.</p>
-
 <p>To be able to search tweets with specific keywords or terms, we need to first set the <code>term</code> index on the tweets.</p>
-
 <p>Adding the <code>term</code> index is similar to adding any other string index.
-<img src="/images/tutorials/5/r-term-set.png" alt="term set" /></p>
-
+<img src="/images/tutorials/5/r-term-set.png" alt="term set"></p>
 <p>Dgraph provides two built-in functions specifically to search for terms: <code>allofterms</code> and <code>anyofterms</code>.</p>
-
 <p>Apart from these two functions, the <code>term</code> index only supports the <code>eq</code> comparator.
 This means any other query functions (like eq, lt, gt&hellip;) fails when run on string predicates with the <code>term</code> index.</p>
-
-<p>We&rsquo;ll soon take a look at the table containing the string indices and their supporting query functions.
-But first, let&rsquo;s learn how to use <code>anyofterms</code> and <code>allofterms</code> query functions.
-Let&rsquo;s write a query to find all tweets with terms or keywords <code>Go</code> or <code>Graph</code> in them.</p>
-
+<p>We'll soon take a look at the table containing the string indices and their supporting query functions.
+But first, let's learn how to use <code>anyofterms</code> and <code>allofterms</code> query functions.
+Let's write a query to find all tweets with terms or keywords <code>Go</code> or <code>Graph</code> in them.</p>
 <p>Go the query tab, paste the query, and click Run.</p>
-
-<pre><code class="language-graphql">{
-  find_tweets(func: anyofterms(tweet, &quot;Go Graph&quot;)) {
-    tweet
-  }
-}
-</code></pre>
-
-<p>Here&rsquo;s the matched tweet from the query response:</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_tweets(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">anyofterms</span>(tweet,<span style="color:#bbb"> </span><span style="color:#d14">&#34;Go Graph&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Here's the matched tweet from the query response:</p>
 <pre><code>{
         &quot;tweet&quot;: &quot;Let's Go and catch @francesc at @Gopherpalooza today, as he scans into Go source code by building its Graph in Dgraph!\nBe there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!\n#golang #GraphDB #Databases #Dgraph &quot;
 }
-</code></pre>
-
-<p><img src="/images/tutorials/5/s-go-graph.png" alt="go graph set" />
+</code></pre><p><img src="/images/tutorials/5/s-go-graph.png" alt="go graph set">
 <em>Note: Check out <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">the first tutorial</a> if the query syntax, in general, is not familiar to you</em></p>
-
 <p>The <code>anyofterms</code> function returns tweets which have either of <code>Go</code> or <code>Graph</code> keyword.</p>
-
-<p>In this case, we&rsquo;ve used only two terms to search for (<code>Go</code> and <code>Graph</code>), but you can extend for any number of terms to be searched or matched.</p>
-
+<p>In this case, we've used only two terms to search for (<code>Go</code> and <code>Graph</code>), but you can extend for any number of terms to be searched or matched.</p>
 <p>The result has one of the three tweets in the database.
-The other two tweets don&rsquo;t make it to the result since they don&rsquo;t have either of the terms <code>Go</code> or <code>Graph</code>.</p>
-
-<p>It&rsquo;s also important to notice that the term search functions (<code>anyofterms</code> and <code>allofterms</code>) are insensitive to case and special characters.</p>
-
+The other two tweets don't make it to the result since they don't have either of the terms <code>Go</code> or <code>Graph</code>.</p>
+<p>It's also important to notice that the term search functions (<code>anyofterms</code> and <code>allofterms</code>) are insensitive to case and special characters.</p>
 <p>This means, if you search for the term <code>GraphQL</code>, the query returns a positive match for all of the following terms found in the tweets: <code>graphql</code>, <code>graphQL</code>, <code>#graphql</code>, <code>#GraphQL</code>.</p>
-
-<p>Now, let&rsquo;s find tweets that have either of the terms <code>Go</code> or <code>GraphQL</code> in them.</p>
-
-<pre><code class="language-graphql">{
-  find_tweets(func: anyofterms(tweet, &quot;Go GraphQL&quot;)) {
-    tweet
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/5/t-go-graphql-all.png" alt="Go Graphql" /></p>
-
+<p>Now, let's find tweets that have either of the terms <code>Go</code> or <code>GraphQL</code> in them.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_tweets(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">anyofterms</span>(tweet,<span style="color:#bbb"> </span><span style="color:#d14">&#34;Go GraphQL&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/5/t-go-graphql-all.png" alt="Go Graphql"></p>
 <p>Oh wow, we have all the three tweets in the result.
 This means, all of the three tweets have either of the terms <code>Go</code> or <code>GraphQL</code>.</p>
-
 <p>Now, how about finding tweets that contain both the terms <code>Go</code> and <code>GraphQL</code> in them.
 We can do it by using the <code>allofterms</code> function.</p>
-
-<pre><code class="language-graphql">{
-  find_tweets(func: allofterms(tweet, &quot;Go GraphQL&quot;)) {
-    tweet
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/5/u-allofterms.png" alt="Go Graphql" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_tweets(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">allofterms</span>(tweet,<span style="color:#bbb"> </span><span style="color:#d14">&#34;Go GraphQL&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/5/u-allofterms.png" alt="Go Graphql"></p>
 <p>We have an empty result.
 None of the tweets have both the terms <code>Go</code> and <code>GraphQL</code> in them.</p>
-
-<p>Besides <code>Go</code> and <code>Graph</code>, I&rsquo;m also a big fan of <code>GraphQL</code> and <code>GraphDB</code>.</p>
-
-<p>Let&rsquo;s find out tweets that contain both the keywords <code>GraphQL</code> and <code>GraphDB</code> in them.</p>
-
-<p><img src="/images/tutorials/5/v-graphdb-graphql.png" alt="Graphdb-GraphQL" /></p>
-
+<p>Besides <code>Go</code> and <code>Graph</code>, I'm also a big fan of <code>GraphQL</code> and <code>GraphDB</code>.</p>
+<p>Let's find out tweets that contain both the keywords <code>GraphQL</code> and <code>GraphDB</code> in them.</p>
+<p><img src="/images/tutorials/5/v-graphdb-graphql.png" alt="Graphdb-GraphQL"></p>
 <p>We have two tweets in a result which has both the terms <code>GraphQL</code> and <code>GraphDB</code>.</p>
-
 <pre><code>{
   &quot;tweet&quot;: &quot;Test tweet for the fifth episode of getting started series with @dgraphlabs. Wait for the video of the fourth one by @francesc the coming Wednesday!\n#GraphDB #GraphQL&quot;
 },
 {
   &quot;tweet&quot;: &quot;So many good talks at #graphqlconf, next year I'll make sure to be *at least* in the audience!\nAlso huge thanks to the live tweeting by @dgraphlabs for alleviating the FOMO😊\n#GraphDB ♥️ #GraphQL&quot;
 }
-</code></pre>
-
-<p>Before we wrap up, here&rsquo;s the table containing the three string indices we learned about, and their compatible built-in functions.</p>
-
+</code></pre><p>Before we wrap up, here's the table containing the three string indices we learned about, and their compatible built-in functions.</p>
 <table>
 <thead>
 <tr>
@@ -1036,38 +871,28 @@ None of the tweets have both the terms <code>Go</code> and <code>GraphQL</code> 
 <th>Valid query functions</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>hash</td>
 <td>eq</td>
 </tr>
-
 <tr>
 <td>exact</td>
 <td>eq, lt, gt, le, ge</td>
 </tr>
-
 <tr>
 <td>term</td>
 <td>eq, allofterms, anyofterms</td>
 </tr>
 </tbody>
 </table>
-
 <h4 id="summary">Summary</h4>
-
 <p>In this episode, we modeled a series of tweets and set up the exact, term, and hash indices in order to query them.</p>
-
 <p>Did you know that Dgraph also offers more powerful search capabilities like full-text search and regular expressions based search?</p>
-
-<p>In the next episode, we&rsquo;ll explore these features and learn about more powerful ways of searching for your favorite tweets!</p>
-
+<p>In the next episode, we'll explore these features and learn about more powerful ways of searching for your favorite tweets!</p>
 <p>Sounds interesting?
 Then see you all soon in the next tutorial. Till then, happy Graphing!</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -1118,56 +943,22 @@ Then see you all soon in the next tutorial. Till then, happy Graphing!</p>
 	})
 </script>
 
-
-<script src="//unpkg.com/clipboard@2.0.4"></script>
-<script src="/js/tutorial-3.js"></script>
-
-<style>
- pre.with-expand {
- position: relative;
- max-height: 300px;
- overflow: hidden;
- }
-
- pre.with-expand .expander {
- color: #ccc;
- cursor: pointer;
- padding: 32px 0 2px;
- position: absolute;
- text-align: center;
- bottom: 0;
- left: 0;
- right: 0;
- background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75));
- }
-
- pre.with-expand.expanded {
- max-height: unset;
- }
- pre.with-expand.expanded .expander {
- display: none;
- }
-
- .copy-btn {
- background: #fff;
- border: 1px solid #666;
- border-radius: 2px;
- cursor: pointer;
- display: block;
- padding: 2px 6px;
- position: absolute;
- top: 4px;
- right: 4px;
- }
-</style>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 </div>
           <div class="article-tag-list">
             
             
                 
                 
+                    <a href="https://blog.dgraph.io/tags/tutorial/">tutorial</a>
+                
             
                 
+                
+                    <a href="https://blog.dgraph.io/tags/devrel/">DevRel</a>
                 
             
           </div>

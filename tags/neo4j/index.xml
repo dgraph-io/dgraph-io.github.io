@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Neo4j on Dgraph Blog</title>
@@ -20,18 +20,14 @@
       <guid>https://blog.dgraph.io/post/benchmark-neo4j/</guid>
       <description>&lt;p&gt;As &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;We have divided this post into five parts:&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-loading-data&#34;&gt;Loading data&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-querying&#34;&gt;Querying&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-issues-faced&#34;&gt;Issues faced&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-feature-comparison&#34;&gt;Dgraph vs Neo4j Feature Comparison&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-dgraph-principles&#34;&gt;Principles behind Dgraph&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;/ol&gt;</description>
     </item>
     
   </channel>

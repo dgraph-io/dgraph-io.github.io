@@ -93,8 +93,7 @@
   
 
   <meta name="twitter:title" content="Building a Stack Overflow Clone with Dgraph, and React"/>
-  <meta name="twitter:description" content="I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built Graphoverflow and share the best practices I learned for using Dgraph to build a modern web application.
-"/>
+  <meta name="twitter:description" content="I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built Graphoverflow and share the best practices I learned for using Dgraph to build a modern web application."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -447,45 +446,34 @@
             class="main__image"
             src="https://blog.dgraph.io/images/graphoverflow-node-cover.jpg"
           >
-          <div class="article-content"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.
-</p>
-
+          <div class="article-content"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p>
 <p>As you can see in the <a href="https://graphoverflow.dgraph.io">live demo</a>, <em>Graphoverflow</em> implements all core functionalities of Stack Overflow. Through the web interface, you can create, read, update, and delete questions, answers, comments. You can also cast upvotes and downvotes. In addition, it is smart enough to recommend you questions to read based on <a href="https://en.wikipedia.org/wiki/Collaborative_filtering">collaborative filtering</a>. In many ways, <em>Graphoverflow</em> successfully embodies many important features that most modern web applications depend on: CRUD operations, and user authentication and authorization. As <a href="https://github.com/dgraph-io/graphoverflow">the source code</a> shows, all this is achieved by using Dgraph as the primary and only data storage.</p>
-
 <p>Looking back the past three weeks of building <em>Graphoverflow</em>, I feel that the journey was unexpectedly simple and straightforward. I have never built anything using a graph database in my entire life. Therefore when I started building this application I knew I was set out for a bumpy ride. However, the intuitive query language of Dgraph did the heavy lifting out of the box, and I did not have to struggle too much. <em>Graphoverflow</em> is not a simple application by any means, as it needs to retrieve and render a large amount of data with complex relationships, and has a built-in recommendation system. However, a quick analysis of the code base reveals that I only had to write 700 LOC (18%) on the server side, and 3300 LOC (82%) on the client side to ship it, excluding</p>
-
-<pre><code class="language-bash"># Server side
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># Server side</span>
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-JavaScript                       7             94             21            654
-JSON                             1              0              0             39
+JavaScript                       <span style="color:#099">7</span>             <span style="color:#099">94</span>             <span style="color:#099">21</span>            <span style="color:#099">654</span>
+JSON                             <span style="color:#099">1</span>              <span style="color:#099">0</span>              <span style="color:#099">0</span>             <span style="color:#099">39</span>
 -------------------------------------------------------------------------------
-SUM:                             8             94             21            693
+SUM:                             <span style="color:#099">8</span>             <span style="color:#099">94</span>             <span style="color:#099">21</span>            <span style="color:#099">693</span>
 -------------------------------------------------------------------------------
 
 
-# Client side
+<span style="color:#998;font-style:italic"># Client side</span>
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-JavaScript                      62            391             74           2880
-Sass                            17             91              1            461
+JavaScript                      <span style="color:#099">62</span>            <span style="color:#099">391</span>             <span style="color:#099">74</span>           <span style="color:#099">2880</span>
+Sass                            <span style="color:#099">17</span>             <span style="color:#099">91</span>              <span style="color:#099">1</span>            <span style="color:#099">461</span>
 -------------------------------------------------------------------------------
-SUM:                            79            482             75           3341
+SUM:                            <span style="color:#099">79</span>            <span style="color:#099">482</span>             <span style="color:#099">75</span>           <span style="color:#099">3341</span>
 -------------------------------------------------------------------------------
-</code></pre>
-
-<p>The simplicity of the code base clearly demonstrates that, with Dgraph, you can end up with a lot less complex application code for your non-trivial requirements.</p>
-
+</code></pre></div><p>The simplicity of the code base clearly demonstrates that, with Dgraph, you can end up with a lot less complex application code for your non-trivial requirements.</p>
 <h2 id="the-query-language-was-the-key">The Query Language Was The Key</h2>
-
-<p>I believe that <em>Graphoverflow</em> owes its simple code base and the fast iteration cycle to Dgraph&rsquo;s homebred query language, <a href="https://docs.dgraph.io/query-language/"><em>Graphql+-</em></a>. To me, the biggest benefit of the query language was that I was able to retrieve complex data by writing a single, and intuitive tree-like structure. I could spend less time worrying about what tables to create or join together to store and fetch the data that the frontend required. Instead, I could simply focus on polishing my front-end components, while relying on Dgraph&rsquo;s flexible schema system and its powerful query language.</p>
-
-<p><img src="/images/graphoverflow-question.png" alt="" /></p>
-
-<p>The inner workings of the question page shown above can shed lights on Dgraph&rsquo;s ability to retrieve complex data in a straightforward way. In order to render this page on the front-end, I needed to fetch <code>question</code>, and all of its <code>answers</code>. For all of them, I needed to fetch the total number of <code>upvotes</code> and <code>downvotes</code>, <code>viewCounts</code>, its <code>history</code>, <code>comments</code>, and those comments&rsquo; respective <code>scores</code>. Not only that but also I needed to fetch 30 <code>related questions</code> based on the tags attached to the displayed question. These data have complex schemas and interdependent relationships with one another. The queries I wrote, on the other hand, felt very straightforward to me.</p>
-
+<p>I believe that <em>Graphoverflow</em> owes its simple code base and the fast iteration cycle to Dgraph's homebred query language, <a href="https://docs.dgraph.io/query-language/"><em>Graphql+-</em></a>. To me, the biggest benefit of the query language was that I was able to retrieve complex data by writing a single, and intuitive tree-like structure. I could spend less time worrying about what tables to create or join together to store and fetch the data that the frontend required. Instead, I could simply focus on polishing my front-end components, while relying on Dgraph's flexible schema system and its powerful query language.</p>
+<p><img src="/images/graphoverflow-question.png" alt=""></p>
+<p>The inner workings of the question page shown above can shed lights on Dgraph's ability to retrieve complex data in a straightforward way. In order to render this page on the front-end, I needed to fetch <code>question</code>, and all of its <code>answers</code>. For all of them, I needed to fetch the total number of <code>upvotes</code> and <code>downvotes</code>, <code>viewCounts</code>, its <code>history</code>, <code>comments</code>, and those comments&rsquo; respective <code>scores</code>. Not only that but also I needed to fetch 30 <code>related questions</code> based on the tags attached to the displayed question. These data have complex schemas and interdependent relationships with one another. The queries I wrote, on the other hand, felt very straightforward to me.</p>
 <pre><code>{
   question(func: uid(0xa421) {
     Title {
@@ -511,31 +499,28 @@ SUM:                            79            482             75           3341
     ...
   }
 }
-</code></pre>
-
-<p>The above is the query responsible for fetching the <code>question</code>, its <code>answers</code>, and their relevant properties and children such as <code>comments</code>. GraphQL+- is comprised of the root node and its nested blocks, and when executed it returns a result in a subgraph format. A query can have multiple root nodes, and you can see the whole query <a href="https://github.com/dgraph-io/graphoverflow/blob/master/app/client/src/queries/Question.js#L131">here on GitHub</a>. In short, the above query returns a result shaped like the following code block. We can see that starting from the root node, <code>question</code>, Dgraph finds and returns all the children nodes represented by nested blocks.</p>
-
-<pre><code class="language-js">{
-  &quot;question&quot;: [
+</code></pre><p>The above is the query responsible for fetching the <code>question</code>, its <code>answers</code>, and their relevant properties and children such as <code>comments</code>. GraphQL+- is comprised of the root node and its nested blocks, and when executed it returns a result in a subgraph format. A query can have multiple root nodes, and you can see the whole query <a href="https://github.com/dgraph-io/graphoverflow/blob/master/app/client/src/queries/Question.js#L131">here on GitHub</a>. In short, the above query returns a result shaped like the following code block. We can see that starting from the root node, <code>question</code>, Dgraph finds and returns all the children nodes represented by nested blocks.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">{
+  <span style="color:#d14">&#34;question&#34;</span><span style="color:#000;font-weight:bold">:</span> [
     {
-      &quot;Timestamp&quot;: &quot;2015-10-06T15:34:33.75Z&quot;,
-      &quot;Title&quot;: [
+      <span style="color:#d14">&#34;Timestamp&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;2015-10-06T15:34:33.75Z&#34;</span>,
+      <span style="color:#d14">&#34;Title&#34;</span><span style="color:#000;font-weight:bold">:</span> [
         {
-          &quot;Text&quot;: &quot;How can I keep my cat off my keyboard?&quot;
+          <span style="color:#d14">&#34;Text&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;How can I keep my cat off my keyboard?&#34;</span>
         }
       ]
-      &quot;Body&quot;: [
+      <span style="color:#d14">&#34;Body&#34;</span><span style="color:#000;font-weight:bold">:</span> [
         {
-          &quot;Text&quot;: &quot;...&quot;
+          <span style="color:#d14">&#34;Text&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;...&#34;</span>
         }
       ],
-      &quot;ViewCount&quot;: 21767,
-      &quot;UpvoteCount&quot;: 169,
-      &quot;DownvoteCount&quot;: 2,
-      &quot;Comment&quot;: [ { ... }, ... ],
-      &quot;Has.Answer&quot;: [
+      <span style="color:#d14">&#34;ViewCount&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#099">21767</span>,
+      <span style="color:#d14">&#34;UpvoteCount&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#099">169</span>,
+      <span style="color:#d14">&#34;DownvoteCount&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#099">2</span>,
+      <span style="color:#d14">&#34;Comment&#34;</span><span style="color:#000;font-weight:bold">:</span> [ { ... }, ... ],
+      <span style="color:#d14">&#34;Has.Answer&#34;</span><span style="color:#000;font-weight:bold">:</span> [
         {
-          &quot;Comment&quot;: [ { ... }, ... ],
+          <span style="color:#d14">&#34;Comment&#34;</span><span style="color:#000;font-weight:bold">:</span> [ { ... }, ... ],
           ...
         },
         ...
@@ -543,113 +528,89 @@ SUM:                            79            482             75           3341
     }
   ]
 }
-</code></pre>
-
-<p><strong>Warning</strong></p>
-
+</code></pre></div><p><strong>Warning</strong></p>
 <p>Query syntax and features has changed in v1.0 release.
- For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
-
+For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
 <h2 id="using-in-react">Using in React</h2>
-
 <p>To query Dgraph and use the result in a React application, we can use the component lifecycle method provided by React. When a component responsible for displaying the question mounts to the DOM, <em>Graphoverflow</em> sends a query to Dgraph and displays a loading screen for a short while until the result arrives. Therefore, it handles the data fetching in the <a href="https://facebook.github.io/react/docs/react-component.html#componentdidmount"><code>compnentDidMount</code></a> lifecycle method which is invoked immediately after a component mounts. The simplified code looks like the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">import</span> React from <span style="color:#d14">&#39;react&#39;</span>;
+<span style="color:#000;font-weight:bold">import</span> { runQuery } from <span style="color:#d14">&#34;../lib/helpers&#34;</span>;
+<span style="color:#000;font-weight:bold">import</span> { getQuestionQuery } from <span style="color:#d14">&#34;../queries/Question&#34;</span>;
 
-<pre><code class="language-js">import React from 'react';
-import { runQuery } from &quot;../lib/helpers&quot;;
-import { getQuestionQuery } from &quot;../queries/Question&quot;;
-
-class Question extends React.Component {
+<span style="color:#000;font-weight:bold">class</span> Question <span style="color:#000;font-weight:bold">extends</span> React.Component {
   constructor(props) {
-    super(props);
+    <span style="color:#000;font-weight:bold">super</span>(props);
 
-    this.state = {
-      questionLoaded: false,
-      question: {}
+    <span style="color:#000;font-weight:bold">this</span>.state <span style="color:#000;font-weight:bold">=</span> {
+      questionLoaded<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">false</span>,
+      question<span style="color:#000;font-weight:bold">:</span> {}
     };
   }
 
   componentDidMount() {
-    const questionUID = this.props.match.params.uid;
-    const query = getQuestionQuery(questionUID);
+    <span style="color:#000;font-weight:bold">const</span> questionUID <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">this</span>.props.match.params.uid;
+    <span style="color:#000;font-weight:bold">const</span> query <span style="color:#000;font-weight:bold">=</span> getQuestionQuery(questionUID);
 
     runQuery(query).then(res =&gt; {
-      const question = res.question[0];
-      this.setState({ question, questionsLoaded: true });
+      <span style="color:#000;font-weight:bold">const</span> question <span style="color:#000;font-weight:bold">=</span> res.question[<span style="color:#099">0</span>];
+      <span style="color:#000;font-weight:bold">this</span>.setState({ question, questionsLoaded<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span> });
     })
   }
 
   ...
 }
-</code></pre>
-
-<p>Three things need to happen in <code>componentDidMount</code>: constructing a query for the question, sending the query to the server, storing the result so that it can be rendered. Let us look at this simple process step-by-step.</p>
-
+</code></pre></div><p>Three things need to happen in <code>componentDidMount</code>: constructing a query for the question, sending the query to the server, storing the result so that it can be rendered. Let us look at this simple process step-by-step.</p>
 <ul>
-<li>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</li>
+<li>
+<p>Since we need to fetch a question with a specific <code>_uid_</code>, we need to dynamically make a query string by interpolating string. <code>getQuestionQuery</code> is a factory that takes a <code>questionUID</code> and returns a string representing the query.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">function</span> getQuestionQuery(questionUID) {
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#d14">`</span><span style="color:#d14">
+</span><span style="color:#d14">    question(func: uid(</span><span style="color:#d14">${</span>questionUID<span style="color:#d14">}</span><span style="color:#d14">)) {
+</span><span style="color:#d14">      ...
+</span><span style="color:#d14">    }
+</span><span style="color:#d14">  </span><span style="color:#d14">`</span>;
+}
+</code></pre></div></li>
+<li>
+<p>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</p>
+</li>
 </ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">import</span> request from <span style="color:#d14">&#34;superagent&#34;</span>;
 
-<pre><code class="language-js">  function getQuestionQuery(questionUID) {
-    return `
-      question(func: uid(${questionUID})) {
-        ...
-      }
-    `;
-  }
-</code></pre>
+<span style="color:#000;font-weight:bold">function</span> runQuery(queryText) {
+  <span style="color:#000;font-weight:bold">const</span> endpointBaseURL <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;http://localhost:3030&#39;</span>;
 
-<ul>
-<li>Once we have the query, simply make an HTTP <code>POST</code> request to Dgraph server. <code>runQuery</code> is a helper method that returns a promise that resolves with the JSON response from Dgraph server. It uses <a href="https://github.com/visionmedia/superagent">superagent</a>, but you can surely use other solutions such as <a href="https://github.com/github/fetch">fetch</a>.</li>
-</ul>
-
-<pre><code class="language-js">import request from &quot;superagent&quot;;
-
-function runQuery(queryText) {
-  const endpointBaseURL = 'http://localhost:3030';
-
-  return request.post(`${endpointBaseURL}/query`).send(queryText).then(res =&gt; {
-    return JSON.parse(res.text);
+  <span style="color:#000;font-weight:bold">return</span> request.post(<span style="color:#d14">`</span><span style="color:#d14">${</span>endpointBaseURL<span style="color:#d14">}</span><span style="color:#d14">/query</span><span style="color:#d14">`</span>).send(queryText).then(res =&gt; {
+    <span style="color:#000;font-weight:bold">return</span> JSON.parse(res.text);
   });
 }
-</code></pre>
-
-<ul>
-<li>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component&rsquo;s state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</li>
+</code></pre></div><ul>
+<li>When we get the response, we store it in an application state so that the data can be rendered in the browser. <em>Graphoverflow</em> persists the data in component's state to keep the demonstration simple. However, you can easily integrate state management libraries such as <a href="https://github.com/reactjs/redux">Redux</a> or <a href="https://github.com/mobxjs/mobx">MobX</a> to this step.</li>
 </ul>
-
 <p>Having completed the above process in <code>componentDidMount</code>, now we can render the question page. Here is what <code>render</code> method of <code>Question</code> component looks like in a simplified way.</p>
-
-<pre><code class="language-js">render() {
-  const {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">render() {
+  <span style="color:#000;font-weight:bold">const</span> {
     question,
     questionLoaded,
-  } = this.state;
+  } <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">this</span>.state;
 
-  if (!questionLoaded) {
-    return &lt;Loading /&gt;;
+  <span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>questionLoaded) {
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">&lt;</span>Loading <span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">&gt;</span>;
   }
 
-  return (
-    &lt;div&gt;
-      &lt;QuestionLayout question={question} /&gt;
-    &lt;/div&gt;
+  <span style="color:#000;font-weight:bold">return</span> (
+    <span style="color:#000;font-weight:bold">&lt;</span>div<span style="color:#000;font-weight:bold">&gt;</span>
+      <span style="color:#000;font-weight:bold">&lt;</span>QuestionLayout question<span style="color:#000;font-weight:bold">=</span>{question} <span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">&gt;</span>
+    <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">d</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">v</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
   );
 }
-</code></pre>
-
-<p>Once I got the hang of the query language, it felt very natural using Dgraph with React simply because there was nothing new or paradigm-shifting. The process described above is exactly how I would use PostgreSQL or MongoDB in a purely client-side rendered Single Page Application.</p>
-
+</code></pre></div><p>Once I got the hang of the query language, it felt very natural using Dgraph with React simply because there was nothing new or paradigm-shifting. The process described above is exactly how I would use PostgreSQL or MongoDB in a purely client-side rendered Single Page Application.</p>
 <p>The mechanism described here can be adapted to support more advanced use cases such as server-side rendering; we can move the whole process into a static method of the component that returns a promise, and call it on the server side and delay the render until a response is fetched and promise resolved. We can even integrate Redux with ease so that the app state can be rehydrated on the client side.</p>
-
 <h2 id="best-practices">Best Practices</h2>
-
 <p>Through building <em>Graphoverflow</em>, I have come up with some practices that I believe will help keep your code base maintainable and save time. Those are based on my collective lessons from numerous trial, errors, and redesign attempts. Often a lack of documented practices is the biggest barrier hindering us from dipping our unfamiliar technologies and cultivating their benefits. The following practices will help you instantly get started with building fast modern web applications with Dgraph and React.</p>
-
 <h3 id="organize-your-queries-along-with-your-components">Organize Your Queries Along With Your Components</h3>
-
 <p>It is a good idea to couple together a component and all queries that component relies on for data. The reason is that you need to know the shape of JSON response from Dgraph server in order to render your components. And the shape of the response can vary for mainly two reasons. Names of predicates can change because a query can use an <a href="https://docs.dgraph.io/query-language/#alias">alias</a>. Alternatively, a nested block in a query might be omitted either by need or an error. Those situations can suddenly take away fields that your React component assumes are present. If you have a chain of attribute getters and one of those attributes is missing, you will end up chaining a getter on an <code>undefined</code>. Prior to React 16, such scenario can <a href="https://facebook.github.io/react/blog/2017/07/26/error-handling-in-react-16.html#behavior-in-react-15-and-earlier">lead to cryptic error messages</a> that are hard to debug.</p>
-
 <p>Here is an example of how a change in Dgraph response can cause an error in your React application. The query for the question page includes the following:</p>
-
 <pre><code>{
   question(func: uid(0xa421) {
     Title {
@@ -658,26 +619,20 @@ function runQuery(queryText) {
     ...
   }
 }
-</code></pre>
-
-<p>In the <code>Question</code> component, <em>Graphoverflow</em> renders the title while assuming the result has the shape of <code>{ question: { title: [ { text } ], ... } }</code>:</p>
-
-<pre><code class="language-js">class Question extends React.Component {
+</code></pre><p>In the <code>Question</code> component, <em>Graphoverflow</em> renders the title while assuming the result has the shape of <code>{ question: { title: [ { text } ], ... } }</code>:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">class</span> Question <span style="color:#000;font-weight:bold">extends</span> React.Component {
   ...
   render() {
     ...
 
-    return (
+    <span style="color:#000;font-weight:bold">return</span> (
       ...
-      &lt;h1 className=&quot;post-title&quot;&gt;{post.Title[0].Text}&lt;/h1&gt;
+      <span style="color:#000;font-weight:bold">&lt;</span>h1 className<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;post-title&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>{post.Title[<span style="color:#099">0</span>].Text}<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">h</span><span style="color:#a61717;background-color:#e3d2d2">1</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
       ...
     );
   }
 }
-</code></pre>
-
-<p>If we change the query to the following, the component will not work anymore because <code>post.Title</code> will be <code>undefined</code>.</p>
-
+</code></pre></div><p>If we change the query to the following, the component will not work anymore because <code>post.Title</code> will be <code>undefined</code>.</p>
 <pre><code>{
   question(func: uid(0xa421) {
     question_title as Title {
@@ -686,10 +641,7 @@ function runQuery(queryText) {
     ...
   }
 }
-</code></pre>
-
-<p>Your queries will evolve as your requirements change. Iterating on your query can be error-prone if the queries are scattered in a random manner without a formal structure. Therefore I recommend the following directory structure in your project to mitigate such issue and keep your code base maintainable.</p>
-
+</code></pre><p>Your queries will evolve as your requirements change. Iterating on your query can be error-prone if the queries are scattered in a random manner without a formal structure. Therefore I recommend the following directory structure in your project to mitigate such issue and keep your code base maintainable.</p>
 <pre><code>your_project
 ├── components
 │   ├── EditPost.js
@@ -700,124 +652,99 @@ function runQuery(queryText) {
 │   ├── Home.js
 │   └── Question.js
 ...
-</code></pre>
-
-<p>Within your component, import needed queries from the corresponding query file. This way, we can easily iterate on queries for your components in a reliable manner. It is clean and reassuring to have a separate, go-to file to see all the queries that your component is relying on. It keeps possible errors in check and makes debugging feasible in case of an error.</p>
-
+</code></pre><p>Within your component, import needed queries from the corresponding query file. This way, we can easily iterate on queries for your components in a reliable manner. It is clean and reassuring to have a separate, go-to file to see all the queries that your component is relying on. It keeps possible errors in check and makes debugging feasible in case of an error.</p>
 <h3 id="use-functions-to-dynamically-construct-queries">Use Functions to Dynamically Construct Queries</h3>
-
 <p>When your query needs to be built dynamically, write a function that takes values and returns a query string using those values. In other words, make a factory to dynamically generate queries rather than doing string interpolation directly in your component. Previously we have seen an example of such function that generates a query for a specific question:</p>
-
-<pre><code class="language-js">function getQuestionQuery(questionUID) {
-  return `
-    question(func: uid(${questionUID})) {
-      ...
-    }
-  `;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">function</span> getQuestionQuery(questionUID) {
+  <span style="color:#000;font-weight:bold">return</span> <span style="color:#d14">`</span><span style="color:#d14">
+</span><span style="color:#d14">    question(func: uid(</span><span style="color:#d14">${</span>questionUID<span style="color:#d14">}</span><span style="color:#d14">)) {
+</span><span style="color:#d14">      ...
+</span><span style="color:#d14">    }
+</span><span style="color:#d14">  </span><span style="color:#d14">`</span>;
 }
-</code></pre>
-
-<p>Many occasions will arise in which you need to generate a query dynamically. Most common cases are fetching a single resource by its unique identifier, or posting information while performing <a href="https://docs.dgraph.io/query-language/#mutations">mutations</a>. In such occasions, simply export functions like the example above from the appropriate query file that you have established following the previous best practice. Doing so allows you to keep all the queries in a single file in a clean way.</p>
-
+</code></pre></div><p>Many occasions will arise in which you need to generate a query dynamically. Most common cases are fetching a single resource by its unique identifier, or posting information while performing <a href="https://docs.dgraph.io/query-language/#mutations">mutations</a>. In such occasions, simply export functions like the example above from the appropriate query file that you have established following the previous best practice. Doing so allows you to keep all the queries in a single file in a clean way.</p>
 <h3 id="use-fragments-for-repeated-structures">Use Fragments for Repeated Structures</h3>
-
-<p>If queries for one of your components exhibits repeated structures, consider extracting them as fragments that can be reused. Doing so will allow us to avoid the mismatch between the shape of Dgraph response and your React component&rsquo;s expectation of it, a common pitfall that we already identified above.</p>
-
-<p><img src="/images/graphoverflow-node-cover.png" alt="" /></p>
-
+<p>If queries for one of your components exhibits repeated structures, consider extracting them as fragments that can be reused. Doing so will allow us to avoid the mismatch between the shape of Dgraph response and your React component's expectation of it, a common pitfall that we already identified above.</p>
+<p><img src="/images/graphoverflow-node-cover.png" alt=""></p>
 <p>As we can see from the picture, the <code>Home</code> component of <em>Graphoverflow</em> can fetch questions according to three different criteria: &lsquo;Recommended&rsquo;, &lsquo;Most Recent&rsquo;, and &lsquo;Hot&rsquo;. While these criteria fetch questions of different ilks, the returned fields for the questions must be consistent because a single React component is responsible for rendering a question item, no matter what criteria is used to fetch them.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">import</span> React from <span style="color:#d14">&#34;react&#34;</span>;
 
-<pre><code class="language-js">import React from &quot;react&quot;;
-
-const QuestionItem = ({ question, history }) =&gt; {
-  return (
-    &lt;li&gt;
+<span style="color:#000;font-weight:bold">const</span> QuestionItem <span style="color:#000;font-weight:bold">=</span> ({ question, history }) =&gt; {
+  <span style="color:#000;font-weight:bold">return</span> (
+    <span style="color:#000;font-weight:bold">&lt;</span>li<span style="color:#000;font-weight:bold">&gt;</span>
       ...
       {question.AnswerCount}
       ...
       {question.ViewCount}
       ...
-      &lt;Link to={questionLink} className=&quot;question-title&quot;&gt;
-        {JSON.stringify(question.Title[0].Text)}
-      &lt;/Link&gt;
-    &lt;/li&gt;
+      <span style="color:#000;font-weight:bold">&lt;</span>Link to<span style="color:#000;font-weight:bold">=</span>{questionLink} className<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;question-title&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
+        {JSON.stringify(question.Title[<span style="color:#099">0</span>].Text)}
+      <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">L</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">n</span><span style="color:#a61717;background-color:#e3d2d2">k</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+    <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">l</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
   );
 }
-</code></pre>
-
-<p>There are three different queries in <code>queries/Home.js</code>, all fetching data required for rendering <code>QuestionItem</code> while following different criteria.</p>
-
-<pre><code class="language-js">export const recommendedQuestionQuery = `{
-  ...
-  questions(...) {
-    _uid_
-    Title {
-      Text
-    }
-    ...
-  }
-}`;
-export const hotQuestionQuery = `{
-  ...
-  questions(...) {
-    _uid_
-    Title {
-      Text
-    }
-    ...
-  }
-}`;
-export const recentQuestionQuery = `{
-  ...
-  questions(...) {
-    _uid_
-    Title {
-      Text
-    }
-    ...
-  }
-}`;
-</code></pre>
-
-<p>If we happen to under-fetch a field for <code>questions</code> in one of these queries, the data for our React component will be incomplete, causing run-time errors. Therefore, it is much more sensible to abstract out the common parts as a &lsquo;fragment.&rsquo; Doing so can eliminate the chance of errors in the future iterations.</p>
-
-<pre><code class="language-js">const questionFragment = `
-_uid_
-Title {
-  Text
-}
-...
-`;
-export const recommendedQuestionQuery = `{
-  ...
-  questions(...) {
-    ${questionFragment}
-  }
-}`;
-export const hotQuestionQuery = `{
-  ...
-  questions(...) {
-    ${questionFragment}
-  }
-}`;
-export const recentQuestionQuery = `{
-  ...
-  questions(...) {
-    ${questionFragment}
-  }
-}`;
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
+</code></pre></div><p>There are three different queries in <code>queries/Home.js</code>, all fetching data required for rendering <code>QuestionItem</code> while following different criteria.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">export</span> <span style="color:#000;font-weight:bold">const</span> recommendedQuestionQuery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
+</span><span style="color:#d14">  ...
+</span><span style="color:#d14">  questions(...) {
+</span><span style="color:#d14">    _uid_
+</span><span style="color:#d14">    Title {
+</span><span style="color:#d14">      Text
+</span><span style="color:#d14">    }
+</span><span style="color:#d14">    ...
+</span><span style="color:#d14">  }
+</span><span style="color:#d14">}</span><span style="color:#d14">`</span>;
+<span style="color:#000;font-weight:bold">export</span> <span style="color:#000;font-weight:bold">const</span> hotQuestionQuery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
+</span><span style="color:#d14">  ...
+</span><span style="color:#d14">  questions(...) {
+</span><span style="color:#d14">    _uid_
+</span><span style="color:#d14">    Title {
+</span><span style="color:#d14">      Text
+</span><span style="color:#d14">    }
+</span><span style="color:#d14">    ...
+</span><span style="color:#d14">  }
+</span><span style="color:#d14">}</span><span style="color:#d14">`</span>;
+<span style="color:#000;font-weight:bold">export</span> <span style="color:#000;font-weight:bold">const</span> recentQuestionQuery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
+</span><span style="color:#d14">  ...
+</span><span style="color:#d14">  questions(...) {
+</span><span style="color:#d14">    _uid_
+</span><span style="color:#d14">    Title {
+</span><span style="color:#d14">      Text
+</span><span style="color:#d14">    }
+</span><span style="color:#d14">    ...
+</span><span style="color:#d14">  }
+</span><span style="color:#d14">}</span><span style="color:#d14">`</span>;
+</code></pre></div><p>If we happen to under-fetch a field for <code>questions</code> in one of these queries, the data for our React component will be incomplete, causing run-time errors. Therefore, it is much more sensible to abstract out the common parts as a &lsquo;fragment.&rsquo; Doing so can eliminate the chance of errors in the future iterations.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#000;font-weight:bold">const</span> questionFragment <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">
+</span><span style="color:#d14">_uid_
+</span><span style="color:#d14">Title {
+</span><span style="color:#d14">  Text
+</span><span style="color:#d14">}
+</span><span style="color:#d14">...
+</span><span style="color:#d14"></span><span style="color:#d14">`</span>;
+<span style="color:#000;font-weight:bold">export</span> <span style="color:#000;font-weight:bold">const</span> recommendedQuestionQuery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
+</span><span style="color:#d14">  ...
+</span><span style="color:#d14">  questions(...) {
+</span><span style="color:#d14">    </span><span style="color:#d14">${</span>questionFragment<span style="color:#d14">}</span><span style="color:#d14">
+</span><span style="color:#d14">  }
+</span><span style="color:#d14">}</span><span style="color:#d14">`</span>;
+<span style="color:#000;font-weight:bold">export</span> <span style="color:#000;font-weight:bold">const</span> hotQuestionQuery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
+</span><span style="color:#d14">  ...
+</span><span style="color:#d14">  questions(...) {
+</span><span style="color:#d14">    </span><span style="color:#d14">${</span>questionFragment<span style="color:#d14">}</span><span style="color:#d14">
+</span><span style="color:#d14">  }
+</span><span style="color:#d14">}</span><span style="color:#d14">`</span>;
+<span style="color:#000;font-weight:bold">export</span> <span style="color:#000;font-weight:bold">const</span> recentQuestionQuery <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
+</span><span style="color:#d14">  ...
+</span><span style="color:#d14">  questions(...) {
+</span><span style="color:#d14">    </span><span style="color:#d14">${</span>questionFragment<span style="color:#d14">}</span><span style="color:#d14">
+</span><span style="color:#d14">  }
+</span><span style="color:#d14">}</span><span style="color:#d14">`</span>;
+</code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>Building an application with Dgraph left me with a strange aftertaste. Usually, a new technology inevitably leaves a feeling of ennui, after the excitement of trying out something new eventually subsides. Yet this time, I felt something quite different. Perhaps it was a taste of delight, a hint at something exciting in the making.</p>
-
 <p>As a young developer, I often find myself in a vain pursuit of the newest and the shiniest piece of technology. In that hedonistic treadmill, I time and again stumbled upon many burgeoning technologies proclaiming to be the fastest, the newest, the most game-changing. Perhaps all those claims are justified in their own unique ways, but for the most part, it feels that they are merely clamoring for attention. In contrast, Dgraph seems to make a persuasive case with its well-designed query language alone.</p>
-
 <p>Dgraph has proven to work seamlessly with React, and its rich and intuitive query language allowed me to make and ship a Stack Overflow clone in a matter of weeks without a previous experience. The ease of iteration, coupled with the performance, indicates that Dgraph is a valuable addition to our tool belts for building modern web applications.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -868,9 +795,7 @@ export const recentQuestionQuery = `{
 	})
 </script>
 
-
 <p><em>You can try Graphoverflow on <a href="https://graphoverflow.dgraph.io">https://graphoverflow.dgraph.io</a> and view its source code on <a href="https://github.com/dgraph-io/graphoverflow">https://github.com/dgraph-io/graphoverflow</a>.</em></p>
-
 <p><em>Top image: <a href="https://images.nasa.gov/#/details-iss042e021664.html">International Space Station Night Europe</a></em></p></div>
           <div class="article-tag-list">
             

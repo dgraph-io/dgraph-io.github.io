@@ -94,8 +94,7 @@
 
   <meta name="twitter:title" content="Golang: Run multiple services on one port"/>
   <meta name="twitter:description" content="Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
-"/>
+In this post, I&#39;m going to brief about how to run multiple services via the same listener port."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -449,19 +448,13 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
             src="https://blog.dgraph.io/images/rover-cmux.jpg"
           >
           <div class="article-content"><p>Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.
-</p>
-
+In this post, I'm going to brief about how to run multiple services via the same listener port.</p>
 <p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.</p>
-
 <p><a href="https://github.com/soheilhy/cmux">Cmux</a> is a connection multiplexing library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their <a href="https://godoc.org/github.com/soheilhy/cmux">godoc</a>.</p>
-
 <p>Let us jump into the three simple steps with some code sample and get this working in a jiffy.</p>
-
 <p>First setup the different services as you would usually do. In our case we setup a gRPC service and an HTTP handler function.</p>
-
 <pre><code>// Setup gRPC server.
 type grpcServer struct{}
 
@@ -480,11 +473,8 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
   .
 
 }
-</code></pre>
-
-<p>Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
-Later we&rsquo;ll multiplex a single TCP listener into multiple listeners.</p>
-
+</code></pre><p>Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
+Later we'll multiplex a single TCP listener into multiple listeners.</p>
 <pre><code>// Wrapper functions to start serving different services.
 
 func serveGRPC(l net.Listener) {
@@ -500,13 +490,10 @@ func serveHTTP(l net.Listener) {
     log.Fatalf(&quot;While serving http request: %v&quot;, err)
   }
 }
-</code></pre>
-
-<p>Third, create a listener object and multiplex it using a cmux matcher.
-It&rsquo;ll read the header bytes of exchanges and figure out which service to trigger by giving us a new sub-listener (We just call it that, though it&rsquo;s actually just net.Listener) for every match.
+</code></pre><p>Third, create a listener object and multiplex it using a cmux matcher.
+It'll read the header bytes of exchanges and figure out which service to trigger by giving us a new sub-listener (We just call it that, though it's actually just net.Listener) for every match.
 We then call the services that we wrote earlier with these corresponding sub-listeners.
 Look at the following code sample to get a better hang of the above-mentioned steps.</p>
-
 <pre><code>func setupServer() {
   go worker.RunServer(*workerPort) // For internal communication.
 
@@ -550,12 +537,8 @@ Look at the following code sample to get a better hang of the above-mentioned st
     log.Fatal(err)
   }
 }
-</code></pre>
-
-<p>So, there we have it. A single port to cater to many services that you might be using.</p>
-
+</code></pre><p>So, there we have it. A single port to cater to many services that you might be using.</p>
 <p>Hope you had fun with this post and learnt something new. Thanks for reading and do let us know your thoughts and how it works out for you.</p>
-
 <div class="engage">
 	<p>
 		<strong>
@@ -605,7 +588,6 @@ Look at the following code sample to get a better hang of the above-mentioned st
 		}
 	})
 </script>
-
 
 <p><em>Top image: <a href="http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg">Mars 2020, Artist Concept Instrument</a></em></p></div>
           <div class="article-tag-list">

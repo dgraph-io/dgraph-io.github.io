@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hiring on Dgraph Blog</title>
@@ -19,9 +19,7 @@
       
       <guid>https://blog.dgraph.io/post/gru/</guid>
       <description>&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;
-&lt;/p&gt;</description>
+&lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&#39;t like the candidate had been at Google since early 2004. And he didn&#39;t like the candidate&#39;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&#39;t.&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-	<meta name="generator" content="Hugo 0.40.1" />
+	<meta name="generator" content="Hugo 0.62.2" />
   <meta charset="utf-8">
 
   
@@ -161,13 +161,18 @@
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</div>
+				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.
+As Badger is gaining popularity, we see the limitations of our initial choices.</div>
 				<div class="tags">
 					
 							
 							
+									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+							
 					
 							
+							
+									<a href="https://blog.dgraph.io/tags/transactions/">Transactions</a>
 							
 					
 				</div>
@@ -203,6 +208,8 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 				<div class="tags">
 					
 							
+							
+									<a href="https://blog.dgraph.io/tags/opinion/">opinion</a>
 							
 					
 				</div>
@@ -267,8 +274,12 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 					
 							
 							
+									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+							
 					
 							
+							
+									<a href="https://blog.dgraph.io/tags/boltdb/">BoltDB</a>
 							
 					
 				</div>
@@ -298,7 +309,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</div>
+				<div class="summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it's running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren't the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</div>
 				<div class="tags">
 					
 				</div>
@@ -328,7 +339,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
+				<div class="summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we've decided to freeze it until we reach v1.0.
 Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</div>
 				<div class="tags">
 					
@@ -359,8 +370,7 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.
-</p></div>
+				<div class="summary"><p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p></div>
 				<div class="tags">
 					
 				</div>
@@ -393,8 +403,7 @@ Part of ensuring stability and performance led us to try and load the entire Sta
 				<div class="summary"><p>One of the common use case in Go is to start a few goroutines to do some
 work. These goroutines block listening in on a channel, waiting for more work to
 arrive. At some point, you want to signal these goroutines to stop accepting
-more work and exit, so you can cleanly shut down the program.
-</p></div>
+more work and exit, so you can cleanly shut down the program.</p></div>
 				<div class="tags">
 					
 				</div>

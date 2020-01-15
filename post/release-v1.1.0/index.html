@@ -447,174 +447,117 @@ Set on this path, embracing open source all along the way, the first production-
             class="main__image"
             src="https://blog.dgraph.io/images/release-v1.1.0.jpg"
           >
-          <div class="article-content">
-
-<p>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness.
+          <div class="article-content"><p>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness.
 Dgraph is built as an effort to enable and simplify the development of scalable cloud applications that could continue to thrive even when the data is highly connected and involved.</p>
-
 <p>Set on this path, embracing open source all along the way, the first <a href="https://blog.dgraph.io/post/releasing-v1.0/">production-ready, major release v1.0.0</a> happened
 in December 2017. Since then, the feedback from the community and customers has prominently shaped the evolution of the product. Thanks to all of you!</p>
-
 <p>Also, along the way, we have hit a few major milestones.
 <a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">Raising Series A funding</a> and
 <a href="https://blog.dgraph.io/post/10k-github-stars/">Reaching 10K starts</a> tops the list.</p>
-
-<p>Dgraph&rsquo;s new release <a href="https://github.com/dgraph-io/dgraph/releases/tag/v1.1.0">v1.1.0 is here</a>.
+<p>Dgraph's new release <a href="https://github.com/dgraph-io/dgraph/releases/tag/v1.1.0">v1.1.0 is here</a>.
 The new version ships with a plethora of significant changes and new features. In this post, we will
 cover the most important ones, but you can find all the details in the
 <a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#110---2019-09-03">changelog</a>.</p>
-
 <h2 id="breaking-changes">Breaking changes</h2>
-
-<p>Before we go over the new features, let&rsquo;s cover the changes that could break your current code.
+<p>Before we go over the new features, let's cover the changes that could break your current code.
 We have only four breaking changes, so you might probably want to have a quick look at them.</p>
-
-<h4 id="1-removal-of-predicate-keyword">1. Removal of _predicate_ keyword</h4>
-
+<h4 id="1-removal-of-_predicate_-keyword">1. Removal of _predicate_ keyword</h4>
 <p>Due to long-standing performance and transactional concerns around
 <code>_predicate_</code>, the keyword has been removed in this release.</p>
-
 <p>We are working on providing an alternative mechanism to support our users while writing their
 queries. If you have specific needs or suggestions regarding this feature, please let us know
 by filing an issue on <a href="https://github.com/dgraph-io/dgraph">GitHub</a>.</p>
-
-<h4 id="2-change-in-behavior-of-in-delete-operations">2. Change in behavior of * in delete operations</h4>
-
+<h4 id="2-change-in-behavior-of--in-delete-operations">2. Change in behavior of * in delete operations</h4>
 <p>The delete operation with <code>*</code> only deletes the predicates which are part of the types associated with a given node.
-For instance, let&rsquo;s imagine we have a node
+For instance, let's imagine we have a node
 with UID <code>0x1</code> of type <code>Person</code>.</p>
-
 <pre><code>type Person {
     name: string 
     age: int
 }
-</code></pre>
-
-<p>To this node of type <code>Person</code>, we associate an extra predicate <code>salary</code> of type <code>int</code>.
+</code></pre><p>To this node of type <code>Person</code>, we associate an extra predicate <code>salary</code> of type <code>int</code>.
 Running a delete operation with wildcards would delete the <code>name</code> and <code>age</code> predicates, but not the <code>salary</code> predicate.</p>
-
 <pre><code>delete {
     &lt;0x1&gt; * * .
 }
-</code></pre>
-
-<p>As a logical consequence, running a delete operation with <code>*</code> on a node with no types would not delete anything.
+</code></pre><p>As a logical consequence, running a delete operation with <code>*</code> on a node with no types would not delete anything.
 This change is tied to the removal of  <code>_predicate_</code> mentioned above.</p>
-
 <h4 id="3-predicates-of-type-uid-lists-are-now-explicit">3. Predicates of type UID lists are now explicit</h4>
-
 <p>Before this release, it was not possible to say that a predicate could have a single UID value.
 This was caused by <code>foo: uid .</code> being interpreted as a predicate foo of type list of
 UIDs.</p>
-
 <p>In the new release, to indicate that a predicate has a list of UIDs associated with it you
 will need to use <code>[uid]</code>, as <code>uid</code> now means the value is a single UID.</p>
-
 <h4 id="4-http-header-changes">4. HTTP header changes</h4>
-
 <p>We have dropped support for the HTTP headers <code>X-Dgraph-CommitNow</code> and <code>X-Dgraph-MutationType</code>.
 Instead of <code>X-Dgraph-MutationType</code>, we now use the standard HTTP header <code>Content-Type</code>,
 and <code>X-Dgraph-CommitNow</code> is now a query parameter in the URL <code>commitNow=true</code>.</p>
-
-<p>This should only affect applications that are directly using Dgraph&rsquo;s REST endpoints.
+<p>This should only affect applications that are directly using Dgraph's REST endpoints.
 If you are using a client library, these changes should be fully transparent.</p>
-
 <h2 id="new-features">New Features</h2>
-
-<p>Now that we have covered the breaking changes, it&rsquo;s time to go over the exciting new features which
+<p>Now that we have covered the breaking changes, it's time to go over the exciting new features which
 are coming with v1.1.0.</p>
-
 <h4 id="a-new-type-system">A new type system</h4>
-
 <p>Starting with version 1.1.0, Dgraph provides support for types.
 Types allow grouping of nodes into sets describing the data associated with them.</p>
-
 <p>The type system follows the GraphQL syntax for defining the types.
 The fields in the types correspond to existing predicates in the schema, where their indexes are also defined.</p>
-
-<pre><code class="language-sh">type Student {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#0086b3">type</span> Student <span style="color:#000;font-weight:bold">{</span>
   name: string
   dob: datetime
   home_address: string
   year: int
-}
-</code></pre>
-
-<p>This type system is an early release and, among other features, doesn&rsquo;t support required
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>This type system is an early release and, among other features, doesn't support required
 (aka non-nullable) fields. Defining a field of type <code>string!</code> is supported but it will be considered
 exactly as <code>string</code> for now.</p>
-
 <p>Once a type has been defined, nodes can be given associated with the <code>dgraph.type</code> predicate.
 The new <code>type</code> function can be used in queries and filters to find the corresponding nodes.
 Here are the docs to learn more about the
 <a href="https://docs.dgraph.io/master/query-language/#type-system">type system in Dgraph</a>.</p>
-
 <h4 id="upsert-blocks">Upsert blocks</h4>
-
-<p>Dgraph doesn&rsquo;t have the concept of primary key. The upsert primitive is necessary to guarantee the uniqueness of the value for a predicate (like the <code>email</code> of a user),</p>
-
+<p>Dgraph doesn't have the concept of primary key. The upsert primitive is necessary to guarantee the uniqueness of the value for a predicate (like the <code>email</code> of a user),</p>
 <p>Previously to this release, upsert was a two-step operation:</p>
-
 <ol>
 <li>First, send a query to find whether a user exists with a given email.</li>
 <li>Then, if no user was found with that email, use a mutation to create it.</li>
 </ol>
-
 <p>With the new upsert block feature, upserts can be performed in one step. This simplifies the usage of client libraries to build applications, improves the performance by reducing the network calls, and enhances the developer experience around upserts.</p>
-
 <p>Here is the <a href="https://github.com/dgraph-io/flock/commit/b77b366c66c2805eabaf7828bd08ece68705a7c5">commit</a> on our flock project (a twitter clone build on Dgraph using Go) which illustrates the simplicity the new upsert block brings into application development on Dgraph.</p>
-
 <p><a href="https://docs.dgraph.io/master/mutations/#upsert-block">Here are the docs</a> to learn how to use upsert blocks.</p>
-
 <h2 id="enterprise-features">Enterprise features</h2>
-
 <h4 id="binary-backups">Binary Backups</h4>
-
-<p>Binary backups are part of Dgraph&rsquo;s <a href="https://docs.dgraph.io/master/enterprise-features">enterprise features</a>.
+<p>Binary backups are part of Dgraph's <a href="https://docs.dgraph.io/master/enterprise-features">enterprise features</a>.
 Backup can be stored directly on your on-premise or cloud storage systems and then they can
 be used to restore a new Dgraph cluster to the previous state.</p>
-
 <p>You can learn more about Binary Backups reading the
 <a href="https://docs.dgraph.io/master/enterprise-features/#binary-backups">Binary Backup documentation page</a>.</p>
-
 <h4 id="access-control-lists">Access Control Lists</h4>
-
 <p>Access Control Lists (ACL) provide access protection to your data stored in Dgraph.
 When the ACL feature is turned on, a client must authenticate with a username and password
 before executing any transactions and is only allowed to access the data permitted by the ACL rules.</p>
-
 <p>Check out the <a href="https://docs.dgraph.io/master/enterprise-features/#access-control-lists">docs</a>
 to learn more about ACLs.</p>
-
 <h2 id="ready-to-migrate">Ready to migrate?</h2>
-
 <p>If you are convinced that v1.1.0 is the future and you are ready to migrate, make sure you follow
 these steps.</p>
-
 <p>First, export the data from your current Dgraph cluster following the
 <a href="https://docs.dgraph.io/deploy/#export-database">database export documentation</a>.
 Make sure you keep this data somewhere safe, you will need it soon.</p>
-
 <p>Then, install v1.1.0 and either follow the <a href="https://docs.dgraph.io/deploy/#bulk-loader">bulk loader</a>
 documentation to import all the data back into the database before it starts serving traffic,
 or start your new cluster and use <a href="https://docs.dgraph.io/deploy/#live-loader">live loader</a>.</p>
-
 <p>Please, note that the UIDs will change during the export/import process, so any queries or mutations
 using explicit UIDs will fail. We recommend using <code>upsert</code> mutations instead.
 In future versions, UIDs will be preserved during the import/export process.</p>
-
 <h3 id="in-conclusion">In conclusion</h3>
-
 <p>We went through the highlights of the release including the new features and four breaking changes.
 To know more about all the changes, bug-fixes, and enhancements this release is shipped with,
 read the <a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#changelog">changelog</a>.</p>
-
 <p>This release is the result of years of evolution driven by the feedback from the community and our
-customers. We&rsquo;d like to take this opportunity to thank you all again for helping us make Dgraph even
+customers. We'd like to take this opportunity to thank you all again for helping us make Dgraph even
 better with every release.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -671,8 +614,12 @@ better with every release.</p>
             
                 
                 
+                    <a href="https://blog.dgraph.io/tags/release/">Release</a>
+                
             
                 
+                
+                    <a href="https://blog.dgraph.io/tags/devrel/">DevRel</a>
                 
             
           </div>
