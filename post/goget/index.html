@@ -73,13 +73,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
-
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -366,42 +362,28 @@ All this goes to show how much people enjoy Go native libraries."/>
     </svg>
   </div>
   <header id="page-header" class="page-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				  
-			<span class="topnav-stargazers-wrapper">
-			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-			</span>
-		  
-  
-		  	<span 
-				onclick="toggleVisibility()"  
-			  	class="search-button pull-right button button-dgraph-site button--outline"
-			>
-			<i class="fa fa-search" aria-hidden="true"></i>
-		  </span>
-  
-		  <a
-			  href="https://dgraph.io/"
-			  title="Dgraph Website"
-			  class="button button-dgraph-site button--outline pull-right"
-		  >
-			Dgraph.io
-		  </a>
-		</div>
-	  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
-	  <div id="searchbox"></div>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
 
-	</div>
-  
-	<script>
-		createSearch();
-	</script>
-  </header>
-  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -453,36 +435,51 @@ page</a> of Hacker News. And within three days, the
 Github repo received 1250 stars, having crossed 1500 by the time of this post. We have already
 merged <a href="https://github.com/dgraph-io/badger/graphs/contributors">contributions</a> and received
 <a href="https://github.com/dgraph-io/badger/issues">feedback</a> that we need to work on.</p>
+
 <p>All this goes to show how much people enjoy Go native libraries. They
-make things easier. Any tool, library or system written in Go can now just run <code>go get github.com/dgraph-io/badger</code>, and they have a fast, efficient key-value store to use.</p>
+make things easier. Any tool, library or system written in Go can now just run <code>go get
+github.com/dgraph-io/badger</code>, and they have a fast, efficient key-value store to use.</p>
+
 <p>Dgraph users have been asking us about embeddable and go gettable Dgraph for a while. After
 hearing from many different users independently, I decided to <a href="https://github.com/dgraph-io/dgraph/issues/673">create a Github
 issue</a> to track it.</p>
+
 <p>We had two dependencies on Cgo which prevented <code>go get</code>able Dgraph in the past:</p>
+
 <ol>
 <li>ICU library to do tokenization and full-text search.</li>
 <li>RocksDB as the key-value store.</li>
 </ol>
-<p>Back in Q1 2017, we got rid of C based ICU library and switched to using parts of Bleve. Bleve simplified our code base, at the cost of losing <a href="http://www.blevesearch.com/">CJK support</a>. But, we thought that's a trade-off we can live with for the time being.</p>
+
+<p>Back in Q1 2017, we got rid of C based ICU library and switched to using parts of Bleve. Bleve simplified our code base, at the cost of losing <a href="http://www.blevesearch.com/">CJK support</a>. But, we thought that&rsquo;s a trade-off we can live with for the time being.</p>
+
 <p>The second step of replacing RocksDB was a lot harder, and a lot more interesting journey,
 culminating in the release of Badger.</p>
+
 <p>Today, we <a href="https://github.com/dgraph-io/dgraph/commit/ed048d5d59248875c55ff5fbf14025e67f1a164c">pushed a
 change</a> to
 Dgraph master branch to switch to Badger. That single change resulted in 450K deleted lines and made Dgraph
 <code>go get</code>able. <strong>This is an exciting day for the Dgraph team, as it simplifies our lives as
 developers hugely.</strong></p>
-<p>Not only would we have simpler, faster builds and releases; we'd also have profiles going all the way down to
+
+<p>Not only would we have simpler, faster builds and releases; we&rsquo;d also have profiles going all the way down to
 the disk, and all the way out to the RAM. Every aspect of Dgraph system can now be tweaked for
-performance. No hard language boundaries, and that's powerful.</p>
+performance. No hard language boundaries, and that&rsquo;s powerful.</p>
+
 <blockquote>
 <p>I adore changes which delete more code than they add, while also gaining simplicity and functionality. This change is one of those.</p>
 </blockquote>
-<p><img src="/images/remove-badger-pr.png" alt="Dgraph PR to replace Badger">
-<a href="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5"><img src="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5.png" alt="asciicast"></a></p>
+
+<p><img src="/images/remove-badger-pr.png" alt="Dgraph PR to replace Badger" />
+<a href="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5"><img src="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5.png" alt="asciicast" /></a></p>
+
 <p><strong>Happy go getting!</strong> It needs a bit more work before Dgraph can be embedded in your Go code, but
 that is coming soon to master. It would be part of the v0.8 release.</p>
-<p><em>Disclaimer: Dgraph in master branch contains latest changes and isn't thoroughly tested. Use it at your own risk.</em></p>
-<hr>
+
+<p><em>Disclaimer: Dgraph in master branch contains latest changes and isn&rsquo;t thoroughly tested. Use it at your own risk.</em></p>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -532,6 +529,7 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="https://apod.nasa.gov/apod/ap060522.html">Canadarm aboard the ISS</a></em></p>
 </div>

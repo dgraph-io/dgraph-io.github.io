@@ -73,13 +73,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
-
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -97,42 +93,28 @@
 
 <body class="blog" data-gr-c-s-loaded="true">
   <header id="page-header" class="page-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				  
-			<span class="topnav-stargazers-wrapper">
-			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-			</span>
-		  
-  
-		  	<span 
-				onclick="toggleVisibility()"  
-			  	class="search-button pull-right button button-dgraph-site button--outline"
-			>
-			<i class="fa fa-search" aria-hidden="true"></i>
-		  </span>
-  
-		  <a
-			  href="https://dgraph.io/"
-			  title="Dgraph Website"
-			  class="button button-dgraph-site button--outline pull-right"
-		  >
-			Dgraph.io
-		  </a>
-		</div>
-	  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
-	  <div id="searchbox"></div>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
 
-	</div>
-  
-	<script>
-		createSearch();
-	</script>
-  </header>
-  
   <div class="content container">
     <div class="row">
       
@@ -170,7 +152,7 @@
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">At Dgraph, we're building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That's because it is.
+				<div class="summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
 This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</div>
 				<div class="tags">
 					

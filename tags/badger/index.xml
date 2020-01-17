@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Badger on Dgraph Blog</title>
@@ -19,7 +19,7 @@
       
       <guid>https://blog.dgraph.io/post/releasing-badger-v2/</guid>
       <description>Dgraph is an open-source, transactional, distributed, native Graph database. Dgraph is optimized for high-performance reads and writes. It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.
-Much of Dgraph&#39;s advanced performance capabilities come from Badger. Badger is the embedded key-value store that is responsible for storing all of Dgraph&#39;s data.
+Much of Dgraph&amp;rsquo;s advanced performance capabilities come from Badger. Badger is the embedded key-value store that is responsible for storing all of Dgraph&amp;rsquo;s data.
 Badger itself is not distributed, Dgraph implements a layer on top of it to provide the distributed capabilities.</description>
     </item>
     
@@ -29,7 +29,7 @@ Badger itself is not distributed, Dgraph implements a layer on top of it to prov
       <pubDate>Wed, 03 Jul 2019 11:00:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-v1.6.0-release/</guid>
-      <description>&lt;p&gt;It&#39;s been almost a years since BadgerDB v1.5.0 was released. While both the
+      <description>&lt;p&gt;It&amp;rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
@@ -52,7 +52,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
       <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</guid>
-      <description>At Dgraph, we&#39;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&#39;s because it is.
+      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
 This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
     </item>
     
@@ -62,8 +62,7 @@ This blog post is about Badger, the key-value database that makes it all happen 
       <pubDate>Thu, 05 Oct 2017 13:30:16 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-txn/</guid>
-      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.
-As Badger is gaining popularity, we see the limitations of our initial choices.</description>
+      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</description>
     </item>
     
     <item>

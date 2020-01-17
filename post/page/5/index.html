@@ -73,13 +73,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
-
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -97,42 +93,28 @@
 
 <body class="blog" data-gr-c-s-loaded="true">
   <header id="page-header" class="page-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				  
-			<span class="topnav-stargazers-wrapper">
-			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-			</span>
-		  
-  
-		  	<span 
-				onclick="toggleVisibility()"  
-			  	class="search-button pull-right button button-dgraph-site button--outline"
-			>
-			<i class="fa fa-search" aria-hidden="true"></i>
-		  </span>
-  
-		  <a
-			  href="https://dgraph.io/"
-			  title="Dgraph Website"
-			  class="button button-dgraph-site button--outline pull-right"
-		  >
-			Dgraph.io
-		  </a>
-		</div>
-	  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
-	  <div id="searchbox"></div>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
 
-	</div>
-  
-	<script>
-		createSearch();
-	</script>
-  </header>
-  
   <div class="content container">
     <div class="row">
       
@@ -160,8 +142,7 @@
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.
-As Badger is gaining popularity, we see the limitations of our initial choices.</div>
+				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</div>
 				<div class="tags">
 					
 							
@@ -308,7 +289,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it's running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren't the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</div>
+				<div class="summary">Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out.</div>
 				<div class="tags">
 					
 				</div>
@@ -338,7 +319,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we've decided to freeze it until we reach v1.0.
+				<div class="summary">Starting v0.8, we have aimed to focus purely on the stability and performance of Dgraph. Our feature set is at this point good enough for most users &ndash; so we&rsquo;ve decided to freeze it until we reach v1.0.
 Part of ensuring stability and performance led us to try and load the entire Stack Overflow on Dgraph; around 2 billion edges. With full-text search, reverses and other indices, this jumps between 6-8 billion edges; which poses unique challenges.</div>
 				<div class="tags">
 					

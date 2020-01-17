@@ -73,13 +73,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
-
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -97,42 +93,28 @@
 
 <body class="blog" data-gr-c-s-loaded="true">
   <header id="page-header" class="page-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				  
-			<span class="topnav-stargazers-wrapper">
-			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-			</span>
-		  
-  
-		  	<span 
-				onclick="toggleVisibility()"  
-			  	class="search-button pull-right button button-dgraph-site button--outline"
-			>
-			<i class="fa fa-search" aria-hidden="true"></i>
-		  </span>
-  
-		  <a
-			  href="https://dgraph.io/"
-			  title="Dgraph Website"
-			  class="button button-dgraph-site button--outline pull-right"
-		  >
-			Dgraph.io
-		  </a>
-		</div>
-	  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
-	  <div id="searchbox"></div>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
 
-	</div>
-  
-	<script>
-		createSearch();
-	</script>
-  </header>
-  
   <div class="content container">
     <div class="row">
       
@@ -217,7 +199,7 @@ At the time of writing, we’ve published six tutorial episodes, and you can fin
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph's datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
+				<div class="summary">I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&rsquo;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
 Bug Discovery While working on Flock, I observed that timestamp comparisons were not working correctly in Dgraph when the data or query had timezone information in it.</div>
 				<div class="tags">
 					
@@ -269,9 +251,8 @@ Bug Discovery While working on Flock, I observed that timestamp comparisons were
 			</div>
 			<div class="col-12 col-lg-9">
 				<div class="summary">Dgraph is celebrating the milestone of reaching 10,000 GitHub stars 🎉.
-This wouldn't have happened without all of you, so we want to thank the awesome community for being with us all the way along. This milestone comes at an exciting time for Dgraph.
-Let's do quick time-travel through our journey, gaze at our milestones, and wrap it up with a glance through the exciting things in the pipeline.
-Dgraph milestone timeline.</div>
+This wouldn&rsquo;t have happened without all of you, so we want to thank the awesome community for being with us all the way along. This milestone comes at an exciting time for Dgraph.
+Let&rsquo;s do quick time-travel through our journey, gaze at our milestones, and wrap it up with a glance through the exciting things in the pipeline.</div>
 				<div class="tags">
 					
 							

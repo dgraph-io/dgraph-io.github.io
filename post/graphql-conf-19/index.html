@@ -73,13 +73,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
-
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -93,8 +89,8 @@
   
 
   <meta name="twitter:title" content="Dgraph&#39;s recap of GraphQL Conf - Berlin 2019"/>
-  <meta name="twitter:description" content="We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&#39;t help ourselves from sharing this with Dgraph&#39;s community! This is the story of the GraphQL conference in Berlin.
- The GraphQL connection If you&#39;re wondering what does Dgraph has to do with GraphQL, here&#39;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early."/>
+  <meta name="twitter:description" content="We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&rsquo;t help ourselves from sharing this with Dgraph&rsquo;s community! This is the story of the GraphQL conference in Berlin.
+The GraphQL connection If you&rsquo;re wondering what does Dgraph has to do with GraphQL, here&rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -366,42 +362,28 @@
     </svg>
   </div>
   <header id="page-header" class="page-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				  
-			<span class="topnav-stargazers-wrapper">
-			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-			</span>
-		  
-  
-		  	<span 
-				onclick="toggleVisibility()"  
-			  	class="search-button pull-right button button-dgraph-site button--outline"
-			>
-			<i class="fa fa-search" aria-hidden="true"></i>
-		  </span>
-  
-		  <a
-			  href="https://dgraph.io/"
-			  title="Dgraph Website"
-			  class="button button-dgraph-site button--outline pull-right"
-		  >
-			Dgraph.io
-		  </a>
-		</div>
-	  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
-	  <div id="searchbox"></div>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
 
-	</div>
-  
-	<script>
-		createSearch();
-	</script>
-  </header>
-  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -447,106 +429,149 @@
             class="main__image"
             src="https://blog.dgraph.io/images/graphqlconf-19-4.JPG"
           >
-          <div class="article-content"><p>We took part in the recently held <a href="https://www.graphqlconf.org/">GraphQL conference</a> in Berlin.
+          <div class="article-content">
+
+<p>We took part in the recently held <a href="https://www.graphqlconf.org/">GraphQL conference</a> in Berlin.
 The experience was fascinating, and we were amazed by the high voltage
 enthusiasm in the GraphQL community.
-Now, we couldn't help ourselves from sharing this with Dgraph's community!
+Now, we couldn&rsquo;t help ourselves from sharing this with Dgraph&rsquo;s community!
 This is the story of the GraphQL conference in Berlin.</p>
-<hr>
+
+<hr />
+
 <h2 id="the-graphql-connection">The GraphQL connection</h2>
-<p>If you're wondering what does Dgraph has to do with GraphQL, here's the answer.
+
+<p>If you&rsquo;re wondering what does Dgraph has to do with GraphQL, here&rsquo;s the answer.
 Dgraph had set its eyes and placed its bet on GraphQL very early. Back in 2015,
 when GraphQL was still hot and new,
 we were intrigued by its intuitiveness and expressiveness to query application Graphs.</p>
+
 <p>But, the simplicity of GraphQL makes it infeasible to express all database
 operations with it. Rather than exposing a subset of functionalities through
 complete GraphQL spec compatibility, we chose to sway away a bit, and this led to
 GraphQL+-. This love affair with GraphQL over the years has been full of flavors.
 But it never has been bitter :) The GraphQL community constantly desired
 for the full spec compatibility. And we obliged.</p>
-<p><img src="/images/graphqlconf-19-7.jpeg" alt="GraphQL-request"></p>
+
+<p><img src="/images/graphqlconf-19-7.jpeg" alt="GraphQL-request" /></p>
+
 <p>Dgraph is currently a member of the GraphQL Foundation. As we head towards
 shipping a layer that would
 completely adhere to GraphQL spec, we decided it was time for us to participate
 more actively within the GraphQL community.</p>
-<hr>
+
+<hr />
+
 <h2 id="the-trip">The trip</h2>
+
 <p>The yearning to be amidst the community brought 5 of us from 4 different continents
 to fly to Berlin for the conference.</p>
+
 <p>For most of us in the team, it was our first time in Berlin. The liveliness and
 vivacity of Berlin are indeed limitless.</p>
-<p><img src="/images/graphqlconf-19-1.jpg" alt="Berlin"></p>
+
+<p><img src="/images/graphqlconf-19-1.jpg" alt="Berlin" /></p>
+
 <p>As a precursor to GraphQL conf, we attended the <a href="https://www.prisma.io/day/">Prisma day</a>. The interaction with the Prisma team and the community was wonderful.</p>
-<p><img src="/images/graphqlconf-19-9.jpg" alt="Berlin"></p>
-<hr>
+
+<p><img src="/images/graphqlconf-19-9.jpg" alt="Berlin" /></p>
+
+<hr />
+
 <h2 id="the-conference-day">The conference day</h2>
+
 <p>The first glimpse at the conference was thrilling! It was all set for a splendid show.
-<img src="/images/graphqlconf-19-5.jpg" alt="graphql-conf"></p>
+<img src="/images/graphqlconf-19-5.jpg" alt="graphql-conf" /></p>
+
 <p>The talks touched upon a diverse set of topics, here are the broad categories,</p>
+
 <h3 id="the-graphql-success-story">The GraphQL success story.</h3>
-<p>History and reasons why GraphQL kicked off in one's company or how GraphQL brings
-efficiency to their existing practices. These talks took us through the GraphQL journey,
-the set of pain points one faced in their organizations, and how the adoption of GraphQL solved it.</p>
+
+<p>History and reasons why GraphQL kicked off in one&rsquo;s company or how GraphQL brings
+ efficiency to their existing practices. These talks took us through the GraphQL journey,
+ the set of pain points one faced in their organizations, and how the adoption of GraphQL solved it.</p>
+
 <p>The co-creators of GraphQL, <a href="https://twitter.com/dlschafer">Dan Schafer</a> and
-<a href="https://twitter.com/leeb">Lee Byron</a> took the audience through their journey
-at Facebook during which GraphQL evolved</p>
+ <a href="https://twitter.com/leeb">Lee Byron</a> took the audience through their journey
+ at Facebook during which GraphQL evolved</p>
+
 <ul>
-<li>We're going to program like it's 1999 by <a href="https://twitter.com/leeb">Lee Byron</a></li>
+<li>We&rsquo;re going to program like it&rsquo;s 1999 by <a href="https://twitter.com/leeb">Lee Byron</a></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/ADEav6zlDjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/ADEav6zlDjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>GraphQL before GraphQL — <a href="https://twitter.com/dlschafer">Dan Schafer</a></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/gb1R-fWP1Yw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/gb1R-fWP1Yw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<hr>
+
+<hr />
+
 <ul>
 <li>Making Design More Human With GraphQL by <a href="https://twitter.com/braposo">Bernado Raposo</a></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/W_-RLshKCwE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/W_-RLshKCwE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>GraphQL Subscriptions at Scale for Real-time Monitoring Dashboard at VISA by
 <a href="https://twitter.com/email2vimalraj">Vimalraj Selvam</a></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/k4rX8wUYjmU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/k4rX8wUYjmU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<hr>
+
+<hr />
+
 <h3 id="tooling">Tooling</h3>
+
 <p>One of the real advantages of adhering to GraphQL spec is its rich ecosystem of tooling.</p>
-<p>Here's one such talk around GraphQL tooling,</p>
+
+<p>Here&rsquo;s one such talk around GraphQL tooling,</p>
+
 <ul>
 <li>Building Custom GraphQL Tooling For Your Team by <a href="https://twitter.com/stubailo">Sashko Stubailo</a></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/jegQWT-Wl64" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/jegQWT-Wl64" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<hr>
+
+<hr />
+
 <h3 id="the-scale-challenges">The scale challenges.</h3>
+
 <p>Some of the talks touched upon scaling challenges with GraphQL. These talks
-were particular interest to us. I'll dig more into why later in the article.</p>
+ were particular interest to us. I&rsquo;ll dig more into why later in the article.</p>
+
 <ul>
 <li><a href="https://twitter.com/mahoneymattj">Matt Mahoney</a> from Facebook spoke about scaling the GraphQL clients.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/Vo8nqjiKI3A" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/Vo8nqjiKI3A" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>This talk by <a href="https://twitter.com/jbaxleyiii">James Baxley</a> explains
@@ -554,9 +579,11 @@ how Apollo Federation aims to simplify the challenge of providing a unified
 GraphQL API gateway on top of multiple GraphQL microservices.·</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/Uw-Z1aUQvgg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/Uw-Z1aUQvgg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li><a href="https://twitter.com/__xuorig__">Marc</a> from Github also focuses on how having
@@ -566,30 +593,38 @@ its downsides. He
 shares views on what could be the right mixture.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/Vq0ajno-zgw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/Vq0ajno-zgw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>Adam D. I. Kramer from Facebook shares tips about maintaining backward
 compatibility as your GraphQL project grows big.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/FGCqA9PjVQk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/FGCqA9PjVQk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li><a href="https://twitter.com/jnwng">Jon Wong</a> from Coursera explains their strategies
 for scaling GraphQL adoption over the last few years.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/fmsDlaKTJZs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/fmsDlaKTJZs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<hr>
+
+<hr />
+
 <h3 id="the-community-projects-and-libs">The community projects and libs</h3>
+
 <ul>
 <li><a href="https://www.gatsbyjs.org/">Gatsby</a> is a free and open-source framework based
 on React that helps developers build blazing-fast websites and apps.
@@ -597,20 +632,24 @@ on React that helps developers build blazing-fast websites and apps.
 discussed how they use GraphQL to support querying data from hundreds of different source plugins.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/hXGziTHNTKY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/hXGziTHNTKY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li><a href="https://github.com/tartiflette/tartiflette">Tartiflette</a> is a new &ldquo;SDL First&rdquo;
 implementation built for Python 3.6+. <a href="https://twitter.com/tsunammis">Stan Chollet</a>
 talks about how the library was built based on his experience at Dailymotion
-running GraphQL API's.</li>
+running GraphQL API&rsquo;s.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/r070pi8np1M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/r070pi8np1M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li><a href="https://twitter.com/andimarek">Andreas Marek</a>, Creator and Maintainer
@@ -618,101 +657,138 @@ of <a href="https://github.com/graphql-java/graphql-java">GraphQL Java</a> shed
 light on execution strategies in GraqhQL client libraries.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/SOloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/SOloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<hr>
+
+<hr />
+
 <h3 id="best-practices">Best practices</h3>
+
 <ul>
 <li><a href="https://twitter.com/sachee">Sasha Solomon</a> from twitter on best practices around Error Handling in GraphQL.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/A5-H6MtTvqk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/A5-H6MtTvqk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li><a href="https://twitter.com/nikolasburk">Nikolas Burk</a> on Code first GraphQL Server Development with Prisma.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/OloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/OloBAdNCnyQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>SDL as an Artifact by <a href="https://twitter.com/tgriesser">Tim Griesser</a>.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/5oyWwjLpUS4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/5oyWwjLpUS4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>Kewei Qu from Facebook explains best practices learned from their massive migration efforts to GraphQL.</li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/YCmtNB61BS8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/YCmtNB61BS8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
+
 
 <ul>
 <li>Refactoring Your Mind From REST by <a href="https://twitter.com/builtbyproxy">Lachlan Young</a></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/xHLzguFd8Ug" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/xHLzguFd8Ug" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<p><img src="/images/graphqlconf-19-3.png" alt="collage"></p>
-<hr>
+
+<p><img src="/images/graphqlconf-19-3.png" alt="collage" /></p>
+
+<hr />
+
 <h3 id="the-graphql-documentary-screening">The GraphQL documentary screening</h3>
+
 <p>The GraphQL documentary screening was one of the highlights of the conference.</p>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/783ccP__No8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/783ccP__No8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<p><img src="/images/graphqlconf-19-6.jpeg" alt="GraphQL documentary"></p>
-<hr>
+
+<p><img src="/images/graphqlconf-19-6.jpeg" alt="GraphQL documentary" /></p>
+
+<hr />
+
 <h2 id="the-live-tweeting">The live-tweeting</h2>
-<p>We didn't miss the chance to live-tweet the event :) Here are the threads,</p>
+
+<p>We didn&rsquo;t miss the chance to live-tweet the event :) Here are the threads,</p>
+
 <ul>
 <li><a href="https://twitter.com/dgraphlabs/status/1141615202447835137">Day 1</a></li>
 <li><a href="https://twitter.com/dgraphlabs/status/1141973074742521856">Day 2</a></li>
 </ul>
-<hr>
+
+<hr />
+
 <h2 id="thank-you-note-to-the-organizers">Thank you note to the organizers.</h2>
-<p>The show was indeed a GraphQL carnival. A big shoutout to [Etel Sverdlov]
-(<a href="https://twitter.com/etelsverdlov),">https://twitter.com/etelsverdlov),</a> <a href="https://twitter.com/kromina_ek">Ekaterina Kromina</a>,
+
+<p>The show was indeed a GraphQL carnival. A big shoutout to <a href="https://twitter.com/etelsverdlov">Etel Sverdlov</a>, <a href="https://twitter.com/kromina_ek">Ekaterina Kromina</a>,
 and <a href="https://twitter.com/Batjohe">Johanna Dahlroos</a>. The three wonderful
 organizers who made the event a grand success.</p>
-<p><img src="/images/graphqlconf-19-8.JPG" alt="Organizers"></p>
-<hr>
+
+<p><img src="/images/graphqlconf-19-8.JPG" alt="Organizers" /></p>
+
+<hr />
+
 <h2 id="the-closing-notes">The closing notes</h2>
+
 <p>The adoption and growth of GraphQL have been tremendous. The community is very
 enthusiastic and dynamic. We are witnessing a trend wherein a large number of
 companies are gearing up to adopt GraphQL at scale.</p>
+
 <p>GraphQL encourages one to think, visualize, and query by imagining an entire
-organization's data as one big graph,
-and this changes the whole view of one's business domain. In a short period
+organization&rsquo;s data as one big graph,
+and this changes the whole view of one&rsquo;s business domain. In a short period
 post GraphQL adoption,
-one would be implicitly accustomed to think &ldquo;Graph&quot;ically! In due course,
+one would be implicitly accustomed to think &ldquo;Graph&rdquo;ically! In due course,
 there is a great possibility
 that the nature of the database and server-side workloads start to change.</p>
+
 <p>But it looks evident that amidst the GraphQL excitement, the new set of
 challenges that could potentially be posed by the change in the nature of
 workload at the database layer has been underplayed.</p>
+
 <p>The staggering adoption of GraphQL has renewed the need for a distributed engine
 which in one sweep could resolve arbitrary depth GraphQL queries, without having
 to compromise on the scale, throughput, and speed.</p>
+
 <p>Hence, we are excited about the way GraphQL has kicked off in the last couple of years.
 We look forward to making active participation and
 impactful contributions to the vibrant GraphQL community.</p>
+
 <p>We signed off with impressions of great experiences and the mandatory
 <a href="https://twitter.com/dgraphlabs/status/1142108053078196225">bye bye tweet</a> :)</p>
-<p><img src="/images/graphqlconf-19-2.png" alt="Bye Bye"></p>
-<hr>
+
+<p><img src="/images/graphqlconf-19-2.png" alt="Bye Bye" /></p>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>

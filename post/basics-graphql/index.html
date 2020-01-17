@@ -73,13 +73,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
 
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
-
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?55d4c90e461f71fcddcf518d86e26100'>
   <link
     rel="stylesheet"
     href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
@@ -365,42 +361,28 @@
     </svg>
   </div>
   <header id="page-header" class="page-header">
-	<div class="container">
-	  <div class="row">
-		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
-				  
-			<span class="topnav-stargazers-wrapper">
-			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
-			</span>
-		  
-  
-		  	<span 
-				onclick="toggleVisibility()"  
-			  	class="search-button pull-right button button-dgraph-site button--outline"
-			>
-			<i class="fa fa-search" aria-hidden="true"></i>
-		  </span>
-  
-		  <a
-			  href="https://dgraph.io/"
-			  title="Dgraph Website"
-			  class="button button-dgraph-site button--outline pull-right"
-		  >
-			Dgraph.io
-		  </a>
-		</div>
-	  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 offset-0 col-md-10 offset-md-1">
+        <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+				
+          <span class="topnav-stargazers-wrapper">
+            <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
+          </span>
+        
 
-	  <div id="searchbox"></div>
+        <a
+            href="https://dgraph.io/"
+            title="Dgraph Website"
+            class="button button-dgraph-site button--outline pull-right"
+        >
+          Dgraph.io
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
 
-	</div>
-  
-	<script>
-		createSearch();
-	</script>
-  </header>
-  
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -447,7 +429,9 @@
             src="https://blog.dgraph.io/images/atlantis-iss.jpg"
           >
           <div class="article-content"><p>Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the <a href="https://tour.dgraph.io/basic/1/">interactive tour it compliments</a>, but in further depth. You can also <a href="https://www.youtube.com/channel/UCghE41LR8nkKFlR3IFTRO4w?sub_confirmation=1">subscribe to our YouTube channel</a> if you would like to be posted when we release new videos.</p>
+
 <p>The screencast will cover topics such as:</p>
+
 <ul>
 <li>Querying data</li>
 <li>Basic schema</li>
@@ -458,12 +442,16 @@
 <li>Directives like <code>@cascade</code> and <code>@normalize</code></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/VM7METe3N3Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/VM7METe3N3Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
+
 <p>If you’re hungry to learn more about Dgraph, you can check out the other tours here at <a href="https://tour.dgraph.io/">https://tour.dgraph.io/</a> or find the full documentation at <a href="https://docs.dgraph.io/">https://docs.dgraph.io/</a>.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -513,6 +501,7 @@
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="https://www.nasa.gov/images/content/534909main_displayatlantisinspace.jpg">Space shuttle Atlantis at the International Space Station during STS-132 via NASA</a></em></p>
 </div>
