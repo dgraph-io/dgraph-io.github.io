@@ -32,12 +32,12 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
   
-    <title>Posts - Dgraph Blog</title>
-    <meta property='og:title' content="Posts - Dgraph Blog">
+    <title>tutorial - Dgraph Blog</title>
+    <meta property='og:title' content="tutorial - Dgraph Blog">
     <meta property="og:type" content="article">
   
 
-  <meta property="og:url" content="https://blog.dgraph.io/post/">
+  <meta property="og:url" content="https://blog.dgraph.io/tags/tutorial/">
   
   
 
@@ -86,7 +86,7 @@
       <meta name="twitter:image" content="https://blog.dgraph.io/images/diggy-lg.png"/>
   
 
-  <meta name="twitter:title" content="Posts"/>
+  <meta name="twitter:title" content="tutorial"/>
   <meta name="twitter:description" content="Engineering stories of building the world&#39;s best graph database Dgraph"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -118,269 +118,61 @@
   <div class="content container">
     <div class="row">
       
+        <nav aria-label="breadcrumb" class="breadcrumbs col-12 offset-0 col-lg-10 offset-lg-1">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Dgraph Blog</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <span class="tag-name">tutorial</span>
+              <span class="article-count">&nbsp;(9)</span>
+            </li>
+          </ol>
+        </nav>
+      
 
       <ul class="article__list col-12 offset-0 col-md-10 offset-md-1">
         
           <li class="article__item">
 	<div class="article__meta">
 		<span class="article__meta-item article__date">
-			Wed, Jul 19, 2017 by Manish Rai Jain
+			Thu, Apr 18, 2019 by Paul Коrzhyk
 
 
 		</span>
 	</div>
-	<a href="https://blog.dgraph.io/post/signal-and-wait/" class="clearfix">
-		<h3 class="article__title">Orchestrating signal and wait in Go</h3>
+	<a href="https://blog.dgraph.io/post/building-todo-list-react-dgraph/" class="clearfix">
+		<h3 class="article__title">Building a To-Do List React App with Dgraph</h3>
 	</a>
 		<div class="row">
 			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/signal-and-wait/" class="no-hover">
+				<a href="https://blog.dgraph.io/post/building-todo-list-react-dgraph/" class="no-hover">
 					<div
 							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/spacex-stages.jpg); ">
+							style="background-image: url(https://blog.dgraph.io/images/react-todomvc/react-localstore.png); ">
 					</div>
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary"><p>One of the common use case in Go is to start a few goroutines to do some
-work. These goroutines block listening in on a channel, waiting for more work to
-arrive. At some point, you want to signal these goroutines to stop accepting
-more work and exit, so you can cleanly shut down the program.</p></div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Mon, Jul 17, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="clearfix">
-		<h3 class="article__title">Running Stack Overflow on Dgraph</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/sql-vs-dgraph/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/reddragonmars.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college. It was being used at the company that we joined. It was such a common interview question that it no longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from. MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the same year).</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Fri, Jun 30, 2017 by Ashwin Ramesh
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/recommendation2/" class="clearfix">
-		<h3 class="article__title">Build a Realtime Recommendation Engine: Part 2</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/recommendation2/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/falconlanded.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">This is part 2 of a two-part series on recommendations using Dgraph. Check our part 1 here.
-In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users. There&rsquo;s a whole field of theory and practice in recommendation engines that we touched on, talking about content-based (based on properties of objects) and collaborative (based on similar users) filtering techniques based on a chapter from Stanford MOOC Minning Massive Datasets.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Thu, Jun 29, 2017 by Ashwin Ramesh
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/recommendation/" class="clearfix">
-		<h3 class="article__title">Build a Realtime Recommendation Engine: Part 1</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/recommendation/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/falcon.png); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">Preface In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the user.
-That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you don&rsquo;t even realize them.
-You wake up and open Facebook, which shows you a feed of articles that it has chosen for you based on your viewing history.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Mon, May 29, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/goget/" class="clearfix">
-		<h3 class="article__title">go get github.com/dgraph-io/dgraph/...</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/goget/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/arm.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">Thank you Go community for all the love that you showered on Badger. Within 8 hours of announcing Badger, the blog post made it to the first page of Hacker News. And within three days, the Github repo received 1250 stars, having crossed 1500 by the time of this post. We have already merged contributions and received feedback that we need to work on.
-All this goes to show how much people enjoy Go native libraries.</div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Sun, May 14, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/badger/" class="clearfix">
-		<h3 class="article__title">Introducing Badger: A fast key-value store written purely in Go</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/badger/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/juno.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
-We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</div>
+				<div class="summary">In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http &mdash; a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.
+The tutorial is split into several steps:
+ Creating a React App
+ Starting a local Dgraph server using docker-compose
+ Connecting to Dgraph from JavaScript and fetching data</div>
 				<div class="tags">
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+									<a href="https://blog.dgraph.io/tags/javascript/">JavaScript</a>
 							
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/rocksdb/">RocksDB</a>
+									<a href="https://blog.dgraph.io/tags/react/">React</a>
 							
 					
 							
 							
-									<a href="https://blog.dgraph.io/tags/hacker-news/">Hacker News</a>
+									<a href="https://blog.dgraph.io/tags/tutorial/">Tutorial</a>
 							
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Mon, Apr 10, 2017 by Tomasz Zdybał
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/string-matching/" class="clearfix">
-		<h3 class="article__title">String matching in Dgraph v0.7.5</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/string-matching/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/splitting-dunes.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary"><p>The recent release of Dgraph is packed with new features and improvements.
-Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
-All of these changes make Dgraph an excellent tool for working with multilingual applications.</p></div>
-				<div class="tags">
-					
-				</div>
-			</div>
-		</div>
-</li>
-
-        
-          <li class="article__item">
-	<div class="article__meta">
-		<span class="article__meta-item article__date">
-			Sun, Mar 26, 2017 by Manish Rai Jain
-
-
-		</span>
-	</div>
-	<a href="https://blog.dgraph.io/post/licensing/" class="clearfix">
-		<h3 class="article__title">Building a long lasting company around open-source</h3>
-	</a>
-		<div class="row">
-			<div class="col-12 col-lg-3 opening__image">
-				<a href="https://blog.dgraph.io/post/licensing/" class="no-hover">
-					<div
-							class="img_square"
-							style="background-image: url(https://blog.dgraph.io/images/peoplelandingonmars.jpg); ">
-					</div>
-				</a>
-			</div>
-			<div class="col-12 col-lg-9">
-				<div class="summary">Dgraph started with the idea that every startup should be able to have the same level of technology as run by big giants. We designed Dgraph from ground-up to allow data sharding, horizontal scalability, consistent replication, and a fast and distributed architecture.
-Update (Apr 2018): Dgraph has switched back to Apache 2.0, with a Commons clause restriction. See new post here.
-We also dream that graph database would no longer run as a secondary database.</div>
-				<div class="tags">
 					
 				</div>
 			</div>
@@ -396,7 +188,7 @@ We also dream that graph database would no longer run as a secondary database.</
     <div class="row">
       <div class="paginator col-12 offset-0 col-md-10 offset-md-1">
         
-          <a class="paginator__active" href="/post/page/5/">
+          <a class="paginator__active" href="/tags/tutorial/">
               &lt;Prev Page
           </a>
         
@@ -407,36 +199,12 @@ We also dream that graph database would no longer run as a secondary database.</
           
         
           
-            <a class="paginator__pages paginator__gray" href="/page/2/">2</a>
-          
-        
-          
-            <a class="paginator__pages paginator__gray" href="/page/3/">3</a>
-          
-        
-          
-            <a class="paginator__pages paginator__gray" href="/page/4/">4</a>
-          
-        
-          
-            <a class="paginator__pages paginator__gray" href="/page/5/">5</a>
-          
-        
-          
-            <a class="paginator__pages paginator__selected" href="/page/6/">6</a>
-          
-        
-          
-            <a class="paginator__pages paginator__gray" href="/page/7/">7</a>
-          
-        
-          
-            <a class="paginator__pages paginator__gray" href="/page/8/">8</a>
+            <a class="paginator__pages paginator__selected" href="/page/2/">2</a>
           
         
 
         
-          <a class="next paginator__active" href="/post/page/7/">
+          <a class="next paginator__gray">
               Next Page&gt;
           </a>
         
@@ -470,7 +238,7 @@ We also dream that graph database would no longer run as a secondary database.</
           <nav class="page-footer-nav">
             <h6 class="page-footer-nav__title">Community</h6>
             <ul class="page-footer-nav__list">
-              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/post/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
+              <li class="page-footer-nav__item"><a href="https://blog.dgraph.io/tags/tutorial/" title="Our thoughts" target="_blank" class="page-footer-nav__link">Blog</a></li>
               
               <li class="page-footer-nav__item"><a href="https://wiki.dgraph.io/" title="Documentation" target="_blank" class="page-footer-nav__link">Documentation</a></li>
               
