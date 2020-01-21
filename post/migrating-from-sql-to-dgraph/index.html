@@ -428,126 +428,107 @@
             class="main__image"
             src="https://blog.dgraph.io/images/migration.jpg"
           >
-          <div class="article-content">
-
-<p>Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users
+          <div class="article-content"><p>Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users
 of Dgraph have existing relational databases that they want to migrate from. In particular, we get
 asked a lot about how to migrate data from MySQL to Dgraph.  In this article, we present a tool that
 makes this migration really easy: all a user needs to do is write a small 3 lines configuration file
 and type in 2 commands. In essence, this tool bridges one of the best
 technologies of the 20th century with one of the best ones of the 21st (if you ask us).</p>
-
 <h3 id="two-ways-of-understanding-the-universe">Two ways of understanding the universe</h3>
-
-<p>Before we dive into the details, let&rsquo;s quickly glance over the data models of SQL databases and
+<p>Before we dive into the details, let's quickly glance over the data models of SQL databases and
 Dgraph.  Real life objects have certain attributes: a person has a name, age, and date of birth; a
 movie has a name, release date, and genre. SQL databases represent all the attributes of an object
 by storing them into a single row in a table. Dgraph, on the other hand, represents these attributes
 as edges around a node.</p>
-
 <p>Both systems work equally well if we stop here and consider attributes of objects as the only type
 of relationships in the universe.
 However, the real universe is more complex than that. The 2nd type of relationship is <em>between
 objects</em>.</p>
-
 <p>As a concrete example, an actor is a person that has starred in a number of movies; a movie has one
 or more directors, one or more writers, and a generally larger number of actors. In order to logically
 link a concept (e.g. a movie) with another (e.g. an actor), a SQL database would normally have
 separate tables to represent the relationships. Thus, finding the names of the people that starred in
 a given movie requires:</p>
-
 <ol>
 <li>locating the movie identifier <code>movie_id</code> by searching for its name in the <code>movie</code> table,</li>
 <li>finding the identifiers of the people who starred in that movie <code>person_id</code> from a second <code>acting</code> table, and finally</li>
 <li>finding the rows in the <code>people</code> table with the <code>people_id</code>s above and extracting the values in the <code>name</code> column.</li>
 </ol>
-
 <p>If that seems already cumbersome, you might now want to consider how much more difficult it can get
 for recursive relationships. Imagine there is a <code>people</code> table, and a <code>children</code> table mapping each
 <code>person_id</code> to the <code>person_id</code>s of their children. The logic to find all the descendants of a person
 with SQL is not trivial and requires a bunch of back and forth interactions between the application and the
 database.</p>
-
 <p>Graph Databases come to rescue in situations where SQL would have needed many nested join
 operations: in Dgraph, inter-object relationships are represented by <em>edges</em> and edge traversal from
 one node to another is supported as a first-class operation. <strong>This seemingly simple difference
 makes an entirely new class of operations possible</strong>. Finding all people who are related to a movie
-regardless of how they are related (using the <code>expand(_all_)</code> operation), finding all of a person&rsquo;s
+regardless of how they are related (using the <code>expand(_all_)</code> operation), finding all of a person's
 descendants regardless of how many generations they are apart (using the <code>@recurse</code> directive), finding the
 shortest connection path between two people in a social network (using the <code>shortest</code> function),
 etc. The possibilities are limitless.</p>
-
 <h3 id="meet-the-sql-to-dgraph-migration-tool">Meet the SQL to Dgraph migration tool</h3>
-
-<p>If you feel Dgraph is the right fit for your use case, let&rsquo;s dive a little deeper and see how the
+<p>If you feel Dgraph is the right fit for your use case, let's dive a little deeper and see how the
 migration tool works by studying an example. Below, you can see a <em>simplified</em> version of the
 database schema supporting StackOverflow:</p>
-
-<pre><code class="language-SQL">create table users (
-	Id int,
-	DisplayName varchar(200),
-	PRIMARY KEY (Id)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#000;font-weight:bold">create</span> <span style="color:#000;font-weight:bold">table</span> users (
+	Id <span style="color:#0086b3">int</span>,
+	DisplayName <span style="color:#0086b3">varchar</span>(<span style="color:#099">200</span>),
+	<span style="color:#000;font-weight:bold">PRIMARY</span> <span style="color:#000;font-weight:bold">KEY</span> (Id)
 );
 
-create table posts (
-	Id                    int,
-	AcceptedAnswerId      int NULL,
-	Body                  text,
-	OwnerUserId           int NULL,
-	LastEditorUserId      int NULL,
-	Title                 varchar(1000),
-	PRIMARY KEY (Id),
-	FOREIGN KEY (OwnerUserId) REFERENCES users (Id),
-	FOREIGN KEY (LastEditorUserId) REFERENCES users (Id),
-	FOREIGN KEY (AcceptedAnswerId) REFERENCES posts (Id)
+<span style="color:#000;font-weight:bold">create</span> <span style="color:#000;font-weight:bold">table</span> posts (
+	Id                    <span style="color:#0086b3">int</span>,
+	AcceptedAnswerId      <span style="color:#0086b3">int</span> <span style="color:#000;font-weight:bold">NULL</span>,
+	Body                  <span style="color:#0086b3">text</span>,
+	OwnerUserId           <span style="color:#0086b3">int</span> <span style="color:#000;font-weight:bold">NULL</span>,
+	LastEditorUserId      <span style="color:#0086b3">int</span> <span style="color:#000;font-weight:bold">NULL</span>,
+	Title                 <span style="color:#0086b3">varchar</span>(<span style="color:#099">1000</span>),
+	<span style="color:#000;font-weight:bold">PRIMARY</span> <span style="color:#000;font-weight:bold">KEY</span> (Id),
+	<span style="color:#000;font-weight:bold">FOREIGN</span> <span style="color:#000;font-weight:bold">KEY</span> (OwnerUserId) <span style="color:#000;font-weight:bold">REFERENCES</span> users (Id),
+	<span style="color:#000;font-weight:bold">FOREIGN</span> <span style="color:#000;font-weight:bold">KEY</span> (LastEditorUserId) <span style="color:#000;font-weight:bold">REFERENCES</span> users (Id),
+	<span style="color:#000;font-weight:bold">FOREIGN</span> <span style="color:#000;font-weight:bold">KEY</span> (AcceptedAnswerId) <span style="color:#000;font-weight:bold">REFERENCES</span> posts (Id)
 );
 
-create table comments (
-	Id           int,
-	PostId       int,
-	Text         varchar(1000),
-	UserId       int,
-	PRIMARY KEY (Id),
-	FOREIGN KEY (PostId) REFERENCES posts (Id),
-	FOREIGN KEY (UserId) REFERENCES users (Id)
+<span style="color:#000;font-weight:bold">create</span> <span style="color:#000;font-weight:bold">table</span> comments (
+	Id           <span style="color:#0086b3">int</span>,
+	PostId       <span style="color:#0086b3">int</span>,
+	<span style="color:#0086b3">Text</span>         <span style="color:#0086b3">varchar</span>(<span style="color:#099">1000</span>),
+	UserId       <span style="color:#0086b3">int</span>,
+	<span style="color:#000;font-weight:bold">PRIMARY</span> <span style="color:#000;font-weight:bold">KEY</span> (Id),
+	<span style="color:#000;font-weight:bold">FOREIGN</span> <span style="color:#000;font-weight:bold">KEY</span> (PostId) <span style="color:#000;font-weight:bold">REFERENCES</span> posts (Id),
+	<span style="color:#000;font-weight:bold">FOREIGN</span> <span style="color:#000;font-weight:bold">KEY</span> (UserId) <span style="color:#000;font-weight:bold">REFERENCES</span> users (Id)
 );
 
 
-create table votes(
-	Id           int,
-	PostId       int,
-	CreationDate varchar(100),
-	PRIMARY KEY (Id),
-	FOREIGN KEY (PostId) references posts (Id)
+<span style="color:#000;font-weight:bold">create</span> <span style="color:#000;font-weight:bold">table</span> votes(
+	Id           <span style="color:#0086b3">int</span>,
+	PostId       <span style="color:#0086b3">int</span>,
+	CreationDate <span style="color:#0086b3">varchar</span>(<span style="color:#099">100</span>),
+	<span style="color:#000;font-weight:bold">PRIMARY</span> <span style="color:#000;font-weight:bold">KEY</span> (Id),
+	<span style="color:#000;font-weight:bold">FOREIGN</span> <span style="color:#000;font-weight:bold">KEY</span> (PostId) <span style="color:#000;font-weight:bold">references</span> posts (Id)
 );
 
-</code></pre>
-
-<p>Each of the four tables stores objects that have their own attribute(s):</p>
-
+</code></pre></div><p>Each of the four tables stores objects that have their own attribute(s):</p>
 <ul>
 <li>A user in <code>users</code> has a <code>DisplayName</code>;</li>
 <li>A post in <code>posts</code> has a <code>Title</code> and a <code>Body</code>;</li>
 <li>A comment in <code>comments</code> has some <code>Text</code>;</li>
 <li>And a vote in <code>votes</code> has its <code>CreationDate</code>.</li>
 </ul>
-
 <p>Besides the basic attributes, the objects are also interconnected:</p>
-
 <ul>
 <li>A post in <code>posts</code> has an owner and hence a column <code>OwnerUserId</code> referencing a row in the <code>users</code> table.</li>
 <li>A comment belongs to a post and hence the <code>comments</code> table has a <code>PostId</code> column referencing
 a row in the <code>posts</code> table.</li>
 </ul>
-
-<p>To illustrate the migration process, we&rsquo;ve selected some sample rows from these tables. We will walk
+<p>To illustrate the migration process, we've selected some sample rows from these tables. We will walk
 through each table, and explain how they can be converted into <a href="https://www.w3.org/TR/n-quads/#n-quads-language">N-Quad</a> entries. The RDF
 N-Quad format is one of the formats that can be used for importing data into Dgraph (the other
 accepted format is <a href="https://docs.dgraph.io/master/mutations/#json-mutation-format">JSON</a>.)</p>
-
-<pre><code class="language-markdown">
-# users
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">
+<span style="color:#999"># users
+</span><span style="color:#999"></span>
 | Id    | DisplayName       |
 |-------|-------------------|
 |    -1 | NULL              |
@@ -556,84 +537,68 @@ accepted format is <a href="https://docs.dgraph.io/master/mutations/#json-mutati
 |  2089 | MrPhooky          |
 | 12370 | Paul Wesselkamper |
 
-# posts
-
+<span style="color:#999"># posts
+</span><span style="color:#999"></span>
 | Id    | AcceptedAnswerId | Body      | OwnerUserId | LastEditorUserId | Title     |
 |-------|------------------|-----------|-------------|------------------|-----------|
 |     9 |            11075 | &lt;p&gt;I try  |          14 |             2089 | How can.. |
 | 11075 |             NULL | &lt;p&gt;When I |       12370 |               -1 |           |
 
-# comments
-
+<span style="color:#999"># comments
+</span><span style="color:#999"></span>
 | Id | PostId | Text                                  | UserId |
 |----|--------|---------------------------------------|--------|
 |  4 |      9 | Of what fabric are the blankets made? |     15 |
 
-# votes
-
+<span style="color:#999"># votes
+</span><span style="color:#999"></span>
 | Id | PostId | CreationDate            |
 |----|--------|-------------------------|
 | 10 |      9 | 2014-12-09T00:00:00.000 |
 
-</code></pre>
-
-<h3 id="converting-sql-rows-to-rdf-n-quad-entries">Converting SQL rows to RDF N-Quad entries</h3>
-
+</code></pre></div><h3 id="converting-sql-rows-to-rdf-n-quad-entries">Converting SQL rows to RDF N-Quad entries</h3>
 <p>N-Quad entries have the format <code>&lt;subject&gt; &lt;predicate&gt; &lt;object&gt; .</code>, so the single row in the <code>comments</code>
 table is converted into the following N-Quad entries:</p>
-
-<pre><code class="language-RDF">_:comments.4 &lt;comments.Id&gt; &quot;4&quot; .
+<pre><code class="language-RDF" data-lang="RDF">_:comments.4 &lt;comments.Id&gt; &quot;4&quot; .
 _:comments.4 &lt;comments.Text&gt; &quot;Of what fabric are the blankets made?&quot; .
-</code></pre>
-
-<p>JSON equivalent (for reference):</p>
-
-<pre><code class="language-json">{
-  &quot;uid&quot;: &quot;_:comments.4&quot;,
-  &quot;comments.Id&quot;: 4,
-  &quot;comments.Text&quot;: &quot;Of what fabric are the blankets made?&quot;,
+</code></pre><p>JSON equivalent (for reference):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:comments.4&#34;</span>,
+  <span style="color:#000080">&#34;comments.Id&#34;</span>: <span style="color:#099">4</span>,
+  <span style="color:#000080">&#34;comments.Text&#34;</span>: <span style="color:#d14">&#34;Of what fabric are the blankets made?&#34;</span>,
 }
-</code></pre>
-
-<p>Take the first entry <code>_:comments.4 &lt;comments.Id&gt; &quot;4&quot; .</code> as an example:</p>
-
+</code></pre></div><p>Take the first entry <code>_:comments.4 &lt;comments.Id&gt; &quot;4&quot; .</code> as an example:</p>
 <ul>
 <li><code>_:comments.4</code> is the subject,</li>
 <li><code>comments.Id</code> is the predicate,</li>
 <li><code>&quot;4&quot;</code> is the object, and finally</li>
 <li><code>.</code> is the terminal symbol of each N-Quad statement.</li>
 </ul>
-
 <p>In Dgraph, a subject that begins with <code>_:</code> is called a <em>blank node label</em>, and it represents an object that is still to be created.</p>
-
 <p>Thus the two N-Quad entries tell Dgraph that</p>
-
 <ol>
 <li>a new object needs to be created for the comment,</li>
 <li>the new object has two attributes <code>comments.Id</code> and <code>comments.Text</code>, whose values are <code>&quot;4&quot;</code>, and <code>&quot;Of what...&quot;</code> respectively.</li>
 </ol>
-
 <p>Notice that the blank node label for a given object must be <em>unique</em> across all the generated N-Quad
 entries. To ensure uniqueness, we leverage the fact that the values in the primary key columns of a table
 are unique so we construct the blank node labels by appending the primary key values after the table
 name. The row in the <code>comments</code> table whose primary key is 4 has the blank node label
 <code>_:comments_4</code>. However some SQL tables do not have any primary keys. To solve the problem, we would
 maintain a counter to generate unique labels for each row in such tables.</p>
-
 <p>Another interesting design decision is that we dropped the values in the <code>PostId</code> and <code>UserId</code> columns, because they should be represented
 using edges in Dgraph. We will explain this in more details a little later.</p>
-
 <p>Going back to the four N-Quad entries, it demonstrates the first and second rule for the conversion:</p>
-
 <ul>
-<li><p>(1) To generate unique blank node labels, the values in the primary key columns are appended to table names if the table has a primary key; otherwise an increasing counter will be used.</p></li>
-
-<li><p>(2) Each SQL table cell except those in foreign key columns is stored under a predicate name, which is constructed by concatenating the table name and the corresponding column name.</p></li>
+<li>
+<p>(1) To generate unique blank node labels, the values in the primary key columns are appended to table names if the table has a primary key; otherwise an increasing counter will be used.</p>
+</li>
+<li>
+<p>(2) Each SQL table cell except those in foreign key columns is stored under a predicate name, which is constructed by concatenating the table name and the corresponding column name.</p>
+</li>
 </ul>
-
 <p>Similarly the 3 other tables &ldquo;posts&rdquo;, &ldquo;users&rdquo;, and &ldquo;votes&rdquo; can be converted by following the two rules:</p>
-
-<pre><code class="language-RDF">_:posts.9       &lt;posts.Body&gt;                &quot;&lt;p&gt;I try to use...&quot; .
+<pre><code class="language-RDF" data-lang="RDF">_:posts.9       &lt;posts.Body&gt;                &quot;&lt;p&gt;I try to use...&quot; .
 _:posts.9       &lt;posts.Id&gt;                  &quot;9&quot; .
 _:posts.9       &lt;posts.Title&gt;               &quot;How can I keep 2 blankets together on a bed?&quot; .
 _:posts.11075   &lt;posts.Body&gt;                &quot;&lt;p&gt;When I was in...&quot; .
@@ -651,42 +616,28 @@ _:users.12370   &lt;users.DisplayName&gt;         &quot;Paul Wesselkamper&quot; 
 _:users.12370   &lt;users.Id&gt;                  &quot;12370&quot; .
 _:votes.10      &lt;votes.CreationDate&gt;        &quot;2014-12-09T00:00:00.000&quot; .
 _:votes.10      &lt;votes.Id&gt;                  &quot;10&quot; .
-</code></pre>
-
-<p><em>Note</em>: the column formatting was added for your reading, the migration tool would not add the extra whitespaces.</p>
-
+</code></pre><p><em>Note</em>: the column formatting was added for your reading, the migration tool would not add the extra whitespaces.</p>
 <p>Besides the basic attributes, we also need N-Quad entries to represent the inter-object relationships.
 Consider how we converted the <code>PostId</code> and <code>UserId</code> foreign keys in the <code>comments</code> table:</p>
-
-<pre><code class="language-RDF">_:comments.4    &lt;comments.PostId&gt;          _:posts.9 .
+<pre><code class="language-RDF" data-lang="RDF">_:comments.4    &lt;comments.PostId&gt;          _:posts.9 .
 _:comments.4    &lt;comments.UserId&gt;          _:users.15 .
-</code></pre>
-
-<p>Taking the first N-Quad entry <code>_:comments.4 &lt;comments.PostId&gt; _:posts.9 .</code> as an example.  The
+</code></pre><p>Taking the first N-Quad entry <code>_:comments.4 &lt;comments.PostId&gt; _:posts.9 .</code> as an example.  The
 subject is a blank node <code>_:comments.4</code>. The predicate <code>comments.PostId</code> is again the table name concatenated with the
 column name. The object <code>_:posts.9</code> is different from a plain attribute value &ndash; it is the
 blank node label of a row in the <code>posts</code> table, and derived by looking up the value <code>9</code> in the <code>posts</code> table.</p>
-
 <p>From these entries come our 3rd rule of conversion:</p>
-
 <ul>
 <li>(3) Inter-object relationships are derived by following foreign key constraints, where the blank
 node labels in the N-Quad objects are calculated through lookups in the target table.</li>
 </ul>
-
 <p>Following this rule, we can establish relationships between posts and users, between posts and posts, and between votes and posts:</p>
-
-<pre><code class="language-RDF">_:posts.9 &lt;posts.AcceptedAnswerId&gt; _:posts.11075 .
+<pre><code class="language-RDF" data-lang="RDF">_:posts.9 &lt;posts.AcceptedAnswerId&gt; _:posts.11075 .
 _:posts.9 &lt;posts.OwnerUserId&gt; _:users.14 .
 _:posts.9 &lt;posts.LastEditorUserId&gt; _:users.2089 .
 _:votes.10 &lt;votes.PostId&gt; _:posts.9 .
-</code></pre>
-
-<h4 id="deriving-a-dgraph-schema-from-sql">Deriving a Dgraph schema from SQL</h4>
-
+</code></pre><h4 id="deriving-a-dgraph-schema-from-sql">Deriving a Dgraph schema from SQL</h4>
 <p>Besides converting the data, the migration tool also needs to derive the schema of each predicate.
 We have two simple rules for converting the schema:</p>
-
 <ul>
 <li>(1) For plain attributes, there is usually a one-to-one mapping between a SQL data type and the
 Dgraph datatype. For instance, the <code>Body</code> column in the <code>posts</code> table is of type <code>text</code>,
@@ -695,74 +646,54 @@ and hence, the predicate <code>posts.Id</code> is of type <code>string</code>:
 <li>(2) The predicates representing inter-object relationships, e.g. <code>posts.OwnerUserId.</code>, simply have the type
 <code>[uid]</code>, meaning following the predicate leads us to a set of other objects.</li>
 </ul>
-
 <p>These two rules give us the following schema when converting the SQL tables above:</p>
-
-<pre><code class="language-java">comments.Id: int .
-comments.Text: string .
-comments.PostId: [uid] .
-comments.UserId: [uid] .
-posts.Body: string .
-posts.Id: int .
-posts.Title: string .
-posts.AcceptedAnswerId: [uid] .
-posts.OwnerUserId: [uid] .
-posts.LastEditorUserId: [uid] .
-users.DisplayName: string .
-users.Id: int .
-votes.CreationDate: string .
-votes.Id: int .
-votes.PostId: [uid] .
-</code></pre>
-
-<p>Once the migration tool finishes, two files will have been created:</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">comments<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Id</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">.</span>
+comments<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Text</span><span style="color:#000;font-weight:bold">:</span> string <span style="color:#000;font-weight:bold">.</span>
+comments<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">PostId</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>uid<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">.</span>
+comments<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">UserId</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>uid<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">.</span>
+posts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Body</span><span style="color:#000;font-weight:bold">:</span> string <span style="color:#000;font-weight:bold">.</span>
+posts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Id</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">.</span>
+posts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Title</span><span style="color:#000;font-weight:bold">:</span> string <span style="color:#000;font-weight:bold">.</span>
+posts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">AcceptedAnswerId</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>uid<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">.</span>
+posts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">OwnerUserId</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>uid<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">.</span>
+posts<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">LastEditorUserId</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>uid<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">.</span>
+users<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">DisplayName</span><span style="color:#000;font-weight:bold">:</span> string <span style="color:#000;font-weight:bold">.</span>
+users<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Id</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">.</span>
+votes<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">CreationDate</span><span style="color:#000;font-weight:bold">:</span> string <span style="color:#000;font-weight:bold">.</span>
+votes<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Id</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">.</span>
+votes<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">PostId</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">[</span>uid<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">.</span>
+</code></pre></div><p>Once the migration tool finishes, two files will have been created:</p>
 <ul>
 <li>an RDF file is created containing all the N-Quad entries, and</li>
 <li>a schema file.</li>
 </ul>
-
 <p>The two files can then be imported into Dgraph via the <a href="https://docs.dgraph.io/deploy/#live-loader">Dgraph Live Loader</a>
-or <a href="https://docs.dgraph.io/deploy/#bulk-loader">Bulk Loader</a>. It&rsquo;s worth pointing out that sometimes you
+or <a href="https://docs.dgraph.io/deploy/#bulk-loader">Bulk Loader</a>. It's worth pointing out that sometimes you
 may want to customize the schema, e.g. adding an index to a predicate, or by
 changing an inter-object predicate from unidirectional to bidirectional links by adding the
 <code>@reverse</code> directive. If you would like such customizations, you should do it by editing
 the schema file generated by the migration tool before feeding the files to the Live Loader or Bulk Loader.</p>
-
 <h3 id="demo-time">Demo time!</h3>
-
-<p>It&rsquo;s time to sit back, relax, grab something to drink and enjoy a demo with the migration tool in action:</p>
-
-<video controls autoplay loop muted playsinline width="100%">
-  <source src="/images/migration-tool.mp4" type="video/mp4" />
-</video>
-
-<p>The step-by-step instructions for running the demo can be found <a href="https://github.com/dgraph-io/dgraph/tree/master/dgraph/cmd/migrate">here</a>.</p>
-
-<p>Besides the demo above, we&rsquo;ve tested the tool using a larger data set from the lifehacks site on <a href="https://archive.org/details/stackexchange">StackExchange</a>,
+<p>It's time to sit back, relax, grab something to drink and enjoy a demo with the migration tool in action:</p>
+<!-- raw HTML omitted -->
+<p>The step-by-step instructions for running the demo can be found [here][demo].</p>
+<p>Besides the demo above, we've tested the tool using a larger data set from the lifehacks site on <a href="https://archive.org/details/stackexchange">StackExchange</a>,
 which showed us that for a dataset with around 10,000 rows the migration takes around 12 seconds (might vary on your machine).</p>
-
 <h3 id="summary">Summary</h3>
-
 <p>To recap, we presented the design of a migration tool that exports SQL tables into NQuad entries.
 To make this blog easier to understand, we have simplified the problem, and left out some
 tricky details such as multi-column foreign key constraints.
 As a result, the gist of the design is straightforward and can be summarized into 3 rules:</p>
-
 <ol>
 <li>To generate unique blank node labels, the values in the primary key columns are appended to the table names if the table has a primary key; otherwise a counter is used.</li>
 <li>Each SQL table cell is stored under a predicate name, which is constructed by concatenating the table name and the corresponding column name.</li>
 <li>Inter-object relationships are derived by following foreign key constraints, where the blank nodes in the N-Quad objects are calculated through lookups in the target table.</li>
 </ol>
-
 <p>From there, the generated NQuad entries can be imported into Dgraph with the Live Loader or Bulk
 Loader.</p>
-
 <p>If you find this tool useful or have any suggestions for improvements, please drop us a note at
 <a href="https://discuss.dgraph.io/">our discussion forum.</a></p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -812,7 +743,6 @@ Loader.</p>
 		}
 	})
 </script>
-
 
 <p><em>Top image:</em></p>
 </div>
