@@ -470,12 +470,13 @@ accessing Dgraph databases.</p>
 </ol>
 <p>If you are already familiar with setting up a React application and want to skip
 straight to the Dgraph-specific part of the tutorial, you can start from <a href="#ref-docker-compose">Section 2</a>.</p>
-<h3 id="1-creating-a-react-app-a-idref-creating-appa">1. Creating a React App <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+<h3 id="1-creating-a-react-app-a-idref-creating-appa">1. Creating a React App <a id="ref-creating-app"></a></h3>
 <p>Nowadays it&rsquo;s pretty simple to get started with React, thanks to the awesome <code>create-react-app</code> script. Let&rsquo;s run it:</p>
 <pre><code>  npx create-react-app dgraph-react-todomvc
 </code></pre><p>(<code>npx</code> command is part a of the standard <a href="https://nodejs.org/en/download/">Node.js installation</a>.)</p>
-<p>[<!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
+<p>[<video autoplay loop muted playsinline width="100%"></p>
+  <source src="/images/react-todomvc/create-react-app.mp4" type="video/mp4" />
+</video>](/images/react-todomvc/create-react-app.svg)
 <h4 id="verifying-the-new-app">Verifying the new app</h4>
 <p>Let&rsquo;s compile and test our application. Like most tasks with <code>create-react-app</code> we need only one command to run
 the development server and it will even open a browser window for us:</p>
@@ -530,7 +531,7 @@ the ready made React components from the <a href="https://github.com/tastejs/tod
 <p>It&rsquo;s another hairy but straightforward refactoring, so let&rsquo;s not spend too much time on it.</p>
 <p>After the dust settled our app can respond to the user input, show and store some to-dos:</p>
 <p><img src="/images/react-todomvc/react-localstore.png" alt="React App with LocalStore"></p>
-<h3 id="2-starting-a-local-dgraph-server-a-idref-docker-composea">2. Starting a local Dgraph server <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+<h3 id="2-starting-a-local-dgraph-server-a-idref-docker-composea">2. Starting a local Dgraph server <a id="ref-docker-compose"></a></h3>
 <p>There are many ways to <a href="https://docs.dgraph.io/get-started/">install and run Dgraph</a> depending on your machine setup.
 I personally prefer to use <a href="https://docs.docker.com/compose/gettingstarted/"><code>docker-compose</code></a> as it keeps all of the configuration in one file.</p>
 <p>First, let&rsquo;s create a <code>docker-compose.yml</code> configuration file.
@@ -583,9 +584,10 @@ one simple command:</p>
 </code></pre><p>I usually run it in a separate terminal so I can check the server output at any time or
 shutdown everything by pressing <code>Ctrl+C</code>.</p>
 <p>The output of <code>docker-compose</code> will be a bit noisy, but should look something like this:</p>
-<p>[<!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<h4 id="viewing-database-with-ratel-a-idref-test-ratela">Viewing database with Ratel <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
+<p>[<video autoplay loop muted playsinline width="100%"></p>
+  <source src="/images/react-todomvc/docker-compose-up.mp4" type="video/mp4" />
+</video>](/images/react-todomvc/docker-compose-up.svg)
+<h4 id="viewing-database-with-ratel-a-idref-test-ratela">Viewing database with Ratel <a id="ref-test-ratel"></a></h4>
 <p>It sure looks like it&rsquo;s doing something how do we know if it works as expected?
 Let&rsquo;s fire up a web browser and give Ratel a try &mdash; Dgraph&rsquo;s web UI.</p>
 <p>Opening <a href="http://localhost:8000">http://localhost:8000</a> should take you to
@@ -593,7 +595,7 @@ the Ratel loading screen.</p>
 <p>From there you can click on <a href="http://localhost:8000/?latest">🚀 Launch Latest</a> to load
 the latest stable version of Ratel and run some queries:</p>
 <p><img src="/images/react-todomvc/ratel.gif" alt="Ratel first steps"></p>
-<h3 id="3-connecting-to-dgraph-from-javascript-and-fetching-data-a-idref-fetch-dataa">3. Connecting to Dgraph from JavaScript and fetching data <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+<h3 id="3-connecting-to-dgraph-from-javascript-and-fetching-data-a-idref-fetch-dataa">3. Connecting to Dgraph from JavaScript and fetching data <a id="ref-fetch-data"></a></h3>
 <p>Dgraph team has built <a href="https://docs.dgraph.io/clients/">client libraries</a> for various languages.
 Since we are building a web app without a backend server, and JavaScript in the browser
 is very restricted in what it is allowed to do, we will be using
@@ -682,7 +684,7 @@ the following mutation:</p>
 <p><img src="/images/react-todomvc/ratel-mutation.png" alt="Mutation result in Ratel"></p>
 <p>Note that we needed to click the &ldquo;Mutate&rdquo; radio button.</p>
 <p>Ratel also lets us test the query our application is sending:</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted -->
+<p><a id="ref-img-ratel-query"></a>
 <img src="/images/react-todomvc/ratel-query.png" alt="Query result in Ratel"></p>
 <p>Now, after we made sure we have the right data in the database, let&rsquo;s see if
 our application is accessing it correctly:</p>
@@ -726,7 +728,7 @@ or by refreshing our TodoMVC app:</p>
 </tr>
 </tbody>
 </table>
-<h3 id="4-storing-data-in-dgraph-a-idref-write-dataa">4. Storing data in Dgraph <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+<h3 id="4-storing-data-in-dgraph-a-idref-write-dataa">4. Storing data in Dgraph <a id="ref-write-data"></a></h3>
 <p>We have learned how to query Dgraph for data and show results to the user.
 The only missing piece of the puzzle is writing our to-dos to Dgraph so they don&rsquo;t get lost
 every time our users close a browser tab.</p>
@@ -818,9 +820,11 @@ can remove unnecessary data.</p>
 <p>Methods that change completion status, <code>toggle(...)</code> and <code>toggleAll(...)</code>, also need to be rewritten
 to use Dgraph transactions, but this exercise is <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/876b5af1e99308c42bbcb72ffe3082dbbd6e5914">left to the reader ;)</a>.</p>
 <p>Here&rsquo;s the final product:</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!-- ffmpeg script to convert gif to mp4 https://gist.github.com/ingramchen/e2af352bf8b40bb88890fba4f47eccd0 -->
+<!-- not as simple as "ffmpeg -i a.gif a.mp4" because that doesn't work in Firefox -->
+<video autoplay loop muted playsinline width="100%">
+  <source src="/images/react-todomvc/todos-livedemo.mp4" type="video/mp4" />
+</video>
 <h3 id="summary">Summary</h3>
 <p>We have built a web app that is capable of accessing Dgraph to store and display data.
 To do that we have learned how to run Dgraph inside Docker containers, adjusted schema in Ratel,

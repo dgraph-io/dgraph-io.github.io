@@ -1030,10 +1030,46 @@ How about the geo-location querying capabilities?</p>
 	})
 </script>
 
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<script src="//unpkg.com/clipboard@2.0.4"></script>
+<script src="/js/tutorial-3.js"></script>
+<style>
+  pre.with-expand {
+    position: relative;
+    max-height: 300px;
+    overflow: hidden;
+  }
+
+  pre.with-expand .expander {
+    color: #ccc;
+    cursor: pointer;
+    padding: 32px 0 2px;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75));
+  }
+
+  pre.with-expand.expanded {
+    max-height: unset;
+  }
+  pre.with-expand.expanded .expander {
+    display: none;
+  }
+
+  .copy-btn {
+    background: #fff;
+    border: 1px solid #666;
+    border-radius: 2px;
+    cursor: pointer;
+    display: block;
+    padding: 2px 6px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+</style>
 </div>
           <div class="article-tag-list">
             

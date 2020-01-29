@@ -468,10 +468,14 @@ against Netflix might be hard, in this two-part series, we&rsquo;ll explain the 
 engine. We&rsquo;ll show how you can build recommendations via two approaches: Content-based filtering and
 Collaborative filtering. And, how you can use Dgraph to bring recommendations to your app without breaking a
 sweat.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 <p>For this, we&rsquo;ll make use of Dgraph&rsquo;s query variables. To learn more about variables, head over to
 <a href="https://tour.dgraph.io/blocksvars/1/">Dgraph tour</a> &mdash; <em>if you are new to Dgraph variables, you
 really should check them out first before diving in here.</em></p>
@@ -782,11 +786,14 @@ Dgraph.</p>
 <p>$$x_1 &hellip; x_n$$ and $$y_1 &hellip; y_n$$</p>
 <p>the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.</p>
 <p><img src="/images/cosine_diff.png" alt="cosine difference"></p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+what's wrong with this???
+$$\frac{\sum_{i=1}^n{x_iy_i}}{\sqrt{\sum_{i=1}^n{x_i^2}}\cdot \sqrt{\sum_{i=1}^n{y_i^2}}}$$
+If I paste it into http://www.hostmath.com/ I get what I want
+-->
 <p>In our case the $x$'s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
 <p><img src="/images/cosine_diff_movies.png" alt="cosine difference"></p>
-<!-- raw HTML omitted -->
+<!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} -->
 <p>That factors in both the intersecting genres as well as the similarity of the average ratings.</p>
 <p>As a single Dgraph query, that looks like this.</p>
 <pre><code>{

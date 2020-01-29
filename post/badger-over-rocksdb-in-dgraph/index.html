@@ -548,7 +548,7 @@ rebuilding the same in Dgraph (like <a href="#anchor-managed">Managed mode</a>).
 change which is generic enough and can be used by a wide-array of users, should
 lie in Badger.</strong></p>
 <p>So, let&rsquo;s have a look at these unique features.</p>
-<h4 id="acid-ssi-transactions-a-idanchor-acida">ACID SSI Transactions <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
+<h4 id="acid-ssi-transactions-a-idanchor-acida">ACID SSI Transactions <a id="anchor-acid"></a></h4>
 <p>Dgraph relies heavily on the transactional nature of Badger. Badger provides
 <a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">multiple version concurrency control</a>, snapshots and strong <a href="https://en.wikipedia.org/wiki/ACID_(computer_science)">ACID</a>
 transactional guarantees. It provides serializable snapshot isolation (<a href="https://wiki.postgresql.org/wiki/SSI">SSI</a>)
@@ -574,7 +574,7 @@ unique information about the values without fetching them: value identification
 of data without ever touching the values. And use the identification bits to
 support the <a href="https://docs.dgraph.io/query-language/#has">has function</a>. We also use this in the Stream framework,
 described later.</p>
-<h4 id="3d-access-key-value-versions-a-idanchor-3da">3D Access (Key-Value-Versions) <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
+<h4 id="3d-access-key-value-versions-a-idanchor-3da">3D Access (Key-Value-Versions) <a id="anchor-3d"></a></h4>
 <p>Badger is probably the only key-value database which exposes the
 versions of the values to the user. When opening a Badger DB, you can set the
 <code>options.NumVersionsToKeep</code>. We set this by default to 1 in Badger, but in
@@ -600,7 +600,7 @@ advance, picking only those which might have the key (multiple versions of the
 key could lie across multiple levels in the LSM tree). This is more efficient
 than typical iteration.</p>
 <p>In Dgraph, whenever we need to read a key, we use this iterator.</p>
-<h4 id="value-identification-bits-a-idanchor-vida">Value Identification Bits <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
+<h4 id="value-identification-bits-a-idanchor-vida">Value Identification Bits <a id="anchor-vid"></a></h4>
 <p>Badger allows users to specify an optional byte when storing keys and values,
 exposed via <code>Txn.SetWithMeta</code>.  This byte can be used to uniquely identify the
 type of the value. In Dgraph, we use this byte in all our writes, to identify
@@ -628,7 +628,7 @@ unbounded to TBs in size. But we know our users are not all on SSDs, using
 a range of different devices (or network drives) with varying capabilities of
 IOPS. So the <code>ValueThreshold</code> of 1KB gives us a sweet spot where our writes are
 still fast, while our reads require less random reads from the value log.</p>
-<h4 id="managed-mode-a-idanchor-manageda">Managed Mode <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
+<h4 id="managed-mode-a-idanchor-manageda">Managed Mode <a id="anchor-managed"></a></h4>
 <p>Badger was written to support building another DB on top of it. That knowledge
 is part of Badger&rsquo;s DNA. It provides a unique mode, called <em>managed mode</em> &mdash;
 which allows a user to specify the version a key-value gets written at.
@@ -641,7 +641,7 @@ in Badger.</strong></p>
 <code>db.NewTransactionAt</code>, <code>db.NewStreamAt</code>, etc. to support this use case.</p>
 <p>In <em>normal mode</em>, Badger relies on an internal <code>Oracle</code> to hand out
 monotonically increasing timestamps. This is what most users of Badger use.</p>
-<h4 id="stream-framework-a-idanchor-streama">Stream Framework <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
+<h4 id="stream-framework-a-idanchor-streama">Stream Framework <a id="anchor-stream"></a></h4>
 <p>A key-value database&rsquo;s job is not just to store data, but also to allow very fast
 ways to access that data. Typical ways of accessing data provided by most DBs
 are <code>Txn.Get</code>, or <code>Txn.Iterator</code>, etc. But Dgraph deals with a lot of data

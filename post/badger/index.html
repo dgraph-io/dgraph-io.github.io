@@ -519,7 +519,7 @@ stores allow efficient updates, point lookups and range queries.</p>
 based. The main advantage LSM trees have is that all the foreground writes happen in memory, and all
 background writes maintain sequential access patterns. Thus they achieve a very high write
 throughput. On the other hand, small updates on B+-trees involve repeated random disk writes, and
-hence are unable to maintain high throughput write workload<!-- raw HTML omitted -->1<!-- raw HTML omitted -->.</p>
+hence are unable to maintain high throughput write workload<sup>1</sup>.</p>
 <p>To deliver high write performance, LSM-trees batch key-value pairs and write them sequentially.
 Then, to enable efficient lookups, LSM-trees continuously read, sort and write key-value pairs in
 the background. This is known as a <code>compaction</code>. LSM-trees do this over many levels, each level
@@ -743,7 +743,7 @@ slower to load data to <a href="https://github.com/dgraph-io/badger">Badger</a>.
 larger than RocksDB because <a href="https://github.com/dgraph-io/badger">Badger</a> doesn&rsquo;t run compression on LSM tree. This should be easy to add
 on if needed, and would make a great first-time contributor project.</p>
 <h3 id="b-tree-approach">B+ tree approach</h3>
-<p><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Recent improvements to SSDs might make B+-trees a viable option.
+<p><sup>1</sup> Recent improvements to SSDs might make B+-trees a viable option.
 Since WiscKey paper was written, SSDs have made huge gains in random write performance. A new
 interesting direction would be to combine the value log approach, and keep only keys and value
 pointers in the B+-tree. This would trade LSM tree read-sort-merge sequential write compactions with
