@@ -447,86 +447,114 @@ We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than Rock
             class="main__image"
             src="https://blog.dgraph.io/images/juno.jpg"
           >
-          <div class="article-content"><p>We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
+          <div class="article-content">
+
+<p>We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
 purely in Go language.  It is based upon <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WiscKey paper included in USENIX FAST
 2016</a>. This design is
 highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both
 the sequential and the random performance of SSDs.</p>
+
 <p><strong>We call it <a href="https://github.com/dgraph-io/badger">Badger</a>.</strong> Based on benchmarks, <a href="https://github.com/dgraph-io/badger">Badger</a> is at least <strong>3.5x faster than RocksDB</strong> when
 doing random reads.  For value sizes between 128B to 16KB, data loading is 0.86x - 14x faster
 compared to RocksDB, with <a href="https://github.com/dgraph-io/badger">Badger</a> gaining significant ground as value size increases. On the flip
 side, <a href="https://github.com/dgraph-io/badger">Badger</a> is currently slower for range key-value iteration, but that has a lot of room for
 optimization.</p>
+
 <h2 id="background-and-motivation">Background and Motivation</h2>
+
 <h3 id="word-about-rocksdb">Word about RocksDB</h3>
+
 <p>RocksDB is the most popular and probably the most efficient key-value store in the market. It originated
 in Google as SSTable which formed the basis for Bigtable, then got released as LevelDB. Facebook
 then improved LevelDB to add concurrency and optimizations for SSDs and released that as
-RocksDB. Work on RocksDB has been continuously going on for many years now, and it's used in
+RocksDB. Work on RocksDB has been continuously going on for many years now, and it&rsquo;s used in
 production at Facebook and many other companies.</p>
-<p>So naturally, if you need a key-value store, you'd gravitate towards RocksDB. It's a
+
+<p>So naturally, if you need a key-value store, you&rsquo;d gravitate towards RocksDB. It&rsquo;s a
 solid piece of technology, and it works. The biggest issue with using RocksDB is that it is written in <code>C++</code>;
 requiring the use of Cgo to be called via Go.</p>
+
 <h3 id="cgo-the-necessary-evil">Cgo: The necessary evil</h3>
-<p>At Dgraph, we have been using RocksDB via Cgo since we started. And we've faced many issues over
+
+<p>At Dgraph, we have been using RocksDB via Cgo since we started. And we&rsquo;ve faced many issues over
 time due to this dependency. <a href="https://dave.cheney.net/2016/01/18/cgo-is-not-go">Cgo is not Go</a>, but
 when there are better libraries in C++ than Go, Cgo is a necessary evil.</p>
-<p>The problem is, Go CPU profiler doesn't see beyond Cgo calls. Go memory profiler takes it one step
+
+<p>The problem is, Go CPU profiler doesn&rsquo;t see beyond Cgo calls. Go memory profiler takes it one step
 further. Forget about giving you memory usage breakdown in Cgo space, Go memory profiler fails to
 even notice the presence of Cgo code. Any memory used by Cgo would not even make it to the memory
-profiler. Other tools like Go race detector, don't work either.</p>
+profiler. Other tools like Go race detector, don&rsquo;t work either.</p>
+
 <p>Cgo has caused us <code>pthread_create</code> issues in Go1.4, and then again in Go1.5, due to a bug
 regression. Lightweight goroutines become expensive pthreads when Cgo is involved, and we had to
 modify how we were writing data to RocksDB to avoid assigning too many goroutines.</p>
+
 <p>Cgo has caused us memory leaks. Who owns and manages memory when making calls is just not clear.
-Go, and C are at the opposite spectrums. <strong>One doesn't let you free memory, the other
+Go, and C are at the opposite spectrums. <strong>One doesn&rsquo;t let you free memory, the other
 requires it.</strong> So, you make a Go call, but then forget to <code>Free()</code>, and nothing breaks. <em>Except much later.</em></p>
+
 <p>Cgo has given us a unmaintainable code. Cgo makes code ugly. The Cgo layer between RocksDB was the one piece of code no one in the team wanted to touch.</p>
+
 <p>Surely, we fixed the memory leaks in our API usage over time. In fact, I <em>think</em> we have fixed them
-all by now, but I can't be sure. Go memory profiler would never tell you. And every time someone
+all by now, but I can&rsquo;t be sure. Go memory profiler would never tell you. And every time someone
 complains about Dgraph taking up more memory or crashing due to OOM, it makes me nervous that this
 is a memory leak issue.</p>
+
 <h3 id="huge-undertaking">Huge undertaking</h3>
+
 <p>Everyone I told about our woes with Cgo, told me that we should just work on fixing those issues.
 Writing a key-value store which can provide the same performance as RocksDB is a huge undertaking, not
-worth our effort. Even my team wasn't sure. I had my doubts as well.</p>
+worth our effort. Even my team wasn&rsquo;t sure. I had my doubts as well.</p>
+
 <p>I have great respect for any piece of technology which has been iterated upon by the smartest
 engineers on the face of the planet for years. RocksDB is that. And if I was writing Dgraph in C++,
-I'd happily use it.</p>
+I&rsquo;d happily use it.</p>
+
 <blockquote>
 <p>But, I just hate ugly code.</p>
 </blockquote>
+
 <p>And I hate recurring bugs. No amount of effort would have ensured that we would no longer have any
 more issues with using RocksDB via Cgo. I wanted a clean slate, and my profiler tools back. Building
 a key-value store in Go from scratch was the only way to achieve it.</p>
-<p>I looked around. The existing key-value stores written in Go didn't even come close to RocksDB's
-performance. And that's a deal breaker. <strong>You don't trade performance for cleanliness. You demand
+
+<p>I looked around. The existing key-value stores written in Go didn&rsquo;t even come close to RocksDB&rsquo;s
+performance. And that&rsquo;s a deal breaker. <strong>You don&rsquo;t trade performance for cleanliness. You demand
 both.</strong></p>
-<p>So, I decided we will replace our dependency on RocksDB, but given this isn't a priority for Dgraph,
+
+<p>So, I decided we will replace our dependency on RocksDB, but given this isn&rsquo;t a priority for Dgraph,
 none of the team members should work on it. This would be a side project that only I will
 undertake. I started reading up about B+ and LSM trees, recent improvements to their design, and
 came across WiscKey paper. It had great promising ideas. I decided to spend a month away from core
 Dgraph, building <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
-<p><em>That's not how it went.</em> I couldn't spend a month away from Dgraph. Between all the founder duties,
-I couldn't fully dedicate time to coding either.  <a href="https://github.com/dgraph-io/badger">Badger</a> developed during my spurts of coding
+
+<p><em>That&rsquo;s not how it went.</em> I couldn&rsquo;t spend a month away from Dgraph. Between all the founder duties,
+I couldn&rsquo;t fully dedicate time to coding either.  <a href="https://github.com/dgraph-io/badger">Badger</a> developed during my spurts of coding
 activity, and one of the team members&rsquo; part-time contributions. Work started end January, and now I
-think it's in a good state to be trialed by the Go community.</p>
+think it&rsquo;s in a good state to be trialed by the Go community.</p>
+
 <h2 id="lsm-trees">LSM trees</h2>
-<p>Before we delve into <a href="https://github.com/dgraph-io/badger">Badger</a>, let's understand key-value store
+
+<p>Before we delve into <a href="https://github.com/dgraph-io/badger">Badger</a>, let&rsquo;s understand key-value store
 designs. They play an important role in data-intensive applications including databases. Key-value
 stores allow efficient updates, point lookups and range queries.</p>
+
 <p>There are two popular types of implementations: Log-structured merge (LSM) tree based, and B+ tree
 based. The main advantage LSM trees have is that all the foreground writes happen in memory, and all
 background writes maintain sequential access patterns. Thus they achieve a very high write
 throughput. On the other hand, small updates on B+-trees involve repeated random disk writes, and
-hence are unable to maintain high throughput write workload<!-- raw HTML omitted -->1<!-- raw HTML omitted -->.</p>
+hence are unable to maintain high throughput write workload<sup>1</sup>.</p>
+
 <p>To deliver high write performance, LSM-trees batch key-value pairs and write them sequentially.
 Then, to enable efficient lookups, LSM-trees continuously read, sort and write key-value pairs in
 the background. This is known as a <code>compaction</code>. LSM-trees do this over many levels, each level
 holding a factor more data than the previous, typically <code>size of Li+1 = 10 x size of Li</code>.</p>
+
 <p>Within a single
 level, the key-values get written into files of fixed size, in a sorted order. Except level zero,
 all other levels have zero overlaps between keys stored in files at the same level.</p>
+
 <p>Each level has a maximum capacity. As a level <code>Li</code> fills up, its data gets merged with data from
 lower level <code>Li+1</code> and files in <code>Li</code> deleted to make space for more incoming data. As data flows
 from level zero to level one, two, and so on, the same data is re-written multiple times throughout
@@ -534,105 +562,140 @@ its lifetime. Each key update causes many writes until data eventually settles.
 This constitutes <em>write amplification</em>. For a 7 level LSM tree, with 10x size increase factor, this
 can be 60; 10 for each transition from L1-&gt;L2, L2-&gt;L3, and so on, ignoring L0 due to special
 handling.</p>
+
 <p>Conversely, to read a key from LSM tree, all the levels need to be checked. If present in multiple
 levels, the version of key at level closer to zero is picked (this version is more up to date).
 Thus, a single key lookup causes many reads over files, this constitutes <em>read amplification</em>. WiscKey
 paper estimates this to be 336 for a 1-KB key-value pair.</p>
+
 <p>LSMs were designed around hard drives. In HDDs, random I/Os are over 100x slower than sequential
 ones. Thus, running compactions to continually sort keys and enable efficient lookups is an
 excellent trade-off.</p>
-<p><img src="/images/nvme-ssd-960pro.jpg" alt="NVMe SSD Samsung 960 pro"></p>
+
+<p><img src="/images/nvme-ssd-960pro.jpg" alt="NVMe SSD Samsung 960 pro" /></p>
+
 <p>However, SSDs are fundamentally different from HDDs. The difference between their sequential and
 random reads are not nearly as large as HDDs. In fact, top of the line SSDs like <a href="http://www.anandtech.com/show/10754/samsung-960-pro-ssd-review">Samsung 960
 Pro</a> can provide 440K random read
 operations per second, with 4KB block size. Thus, an LSM-tree that performs a large number of
 sequential writes to reduce later random reads is wasting bandwidth needlessly.</p>
+
 <h2 id="badger">Badger</h2>
+
 <p><strong><a href="https://github.com/dgraph-io/badger">Badger</a> is a simple, efficient, and persistent key-value store.</strong>  Inspired by the simplicity of
 LevelDB, it provides <code>Get</code>, <code>Set</code>, <code>Delete</code>, and <code>Iterate</code> functions. On top of it, it adds
 <code>CompareAndSet</code> and <code>CompareAndDelete</code> atomic operations (<a href="https://godoc.org/github.com/dgraph-io/badger">see GoDoc</a>). It does not aim to be a database and hence
 does not provide transactions, versioning or snapshots.  Those things can be easily built on top of
 <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
+
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> separates keys from values. The keys are stored in LSM tree, while the values are stored in a
 write-ahead log called the <em>value log</em>. Keys tend to be smaller than values. Thus this set up produces
 much smaller LSM trees. When required, the values are directly read from the log stored on SSD,
 utilizing its vastly superior random read performance.</p>
+
 <h3 id="guiding-principles">Guiding principles</h3>
-<p>These are the guiding principles that decide the design, what goes in and what doesn't in Badger.</p>
+
+<p>These are the guiding principles that decide the design, what goes in and what doesn&rsquo;t in Badger.</p>
+
 <ul>
 <li>Write it purely in Go language.</li>
 <li>Use the latest research to build the fastest key-value store.</li>
 <li>Keep it simple, stupid.</li>
 <li>SSD-centric design.</li>
 </ul>
+
 <h3 id="key-value-separation">Key-Value separation</h3>
+
 <p>The major performance cost of LSM-trees is the compaction process. During compactions, multiple
 files are read into memory, sorted, and written back. Sorting is essential for efficient retrieval,
-for both key lookups and range iterations. With sorting, the key lookups would only require accessing at most one file per level (excluding level zero, where we'd need to check all the files).
+for both key lookups and range iterations. With sorting, the key lookups would only require accessing at most one file per level (excluding level zero, where we&rsquo;d need to check all the files).
 Iterations would result in sequential access to multiple files.</p>
+
 <p>Each file is of fixed size, to enhance caching. Values tend to be larger than keys. When you store
 values along with the keys, the amount of data that needs to be compacted grows significantly.</p>
+
 <p>In <a href="https://github.com/dgraph-io/badger">Badger</a>, only a pointer to the value in the value log is stored alongside the key. <a href="https://github.com/dgraph-io/badger">Badger</a> employs
 <em>delta encoding</em> for keys to reduce the effective size even further. Assuming 16 bytes per key
 and 16 bytes per value pointer, <strong>a single 64MB file can store two million key-value pairs.</strong></p>
+
 <h3 id="write-amplification">Write Amplification</h3>
+
 <p>Thus, the LSM tree generated by <a href="https://github.com/dgraph-io/badger">Badger</a> is much smaller than
 that of RocksDB. This smaller LSM-tree reduces the number of levels, and hence number of compactions
-required to achieve stability. Also, values are not moved along with keys, because they're elsewhere
-in value log. Assuming 1KB value and 16 byte keys, the effective write amplification per level is <code>(10*16 + 1024)/(16 + 1024) ~ 1.14</code>, a much smaller fraction.</p>
+required to achieve stability. Also, values are not moved along with keys, because they&rsquo;re elsewhere
+in value log. Assuming 1KB value and 16 byte keys, the effective write amplification per level is <code>(10*16 +
+1024)/(16 + 1024) ~ 1.14</code>, a much smaller fraction.</p>
+
 <p>You can see the performance gains of this approach compared to RocksDB as the value size increases;
 where loading data to <a href="https://github.com/dgraph-io/badger">Badger</a> takes factors less time (see Benchmarks below).</p>
+
 <h3 id="read-amplification">Read Amplification</h3>
+
 <p>As mentioned above, the size of LSM tree generated by <a href="https://github.com/dgraph-io/badger">Badger</a> is much smaller. Each file at each
 level stores lots more keys than typical LSM trees. Thus, for the same amount of data, fewer levels
 get filled up. A typical key lookup requires reading all files in level zero, and one file per level
 from level one and onwards. With <a href="https://github.com/dgraph-io/badger">Badger</a>, filling fewer levels means, fewer files need to be read to
 lookup a key. Once key (along with value pointer) is fetched, the value can be fetched by doing
 random read in value log stored on SSD.</p>
-<p>Furthermore, during benchmarking, we found that <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM
+
+<p>Furthermore, during benchmarking, we found that <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM
 tree is so small, it can easily fit in RAM. For 1KB values and 75 million 22 byte keys, the raw size
-of the entire dataset is 72 GB. <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM tree size for
+of the entire dataset is 72 GB. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree size for
 this setup is a mere 1.7G, which can easily fit into RAM.  This is what causes
-<a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s random key lookup performance to be at least 3.5x
-faster, and <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s key-only iteration to be blazingly
+<a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s random key lookup performance to be at least 3.5x
+faster, and <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-only iteration to be blazingly
 faster than RocksDB.</p>
+
 <h3 id="crash-resilience">Crash resilience</h3>
+
 <p>LSM trees write all the updates in memory first in memtables. Once they fill up, memtables get
 swapped over to immutable memtables, which eventually get written out to files in level zero on
 disk.</p>
+
 <p>In the case of a crash, all the recent updates still in memory tables would be lost.
 Key-value stores deal with this issue, by first writing all the updates in a write-ahead log. <a href="https://github.com/dgraph-io/badger">Badger</a>
-has a write-ahead log, it's called value log.</p>
+has a write-ahead log, it&rsquo;s called value log.</p>
+
 <p>Just like a typical write-ahead log, before any update is applied to LSM tree, it gets written to
 value log first. In the case of a crash, <a href="https://github.com/dgraph-io/badger">Badger</a> would iterate over the recent updates in value log, and
 apply them back to the LSM tree.</p>
+
 <p>Instead of iterating over the entire value log, <a href="https://github.com/dgraph-io/badger">Badger</a> puts a pointer to the latest value in each
 memtable. Effectively, the latest memtable which made its way to disk would have a value pointer,
 before which all the updates have already made their way to disk. Thus, we can replay from this
 pointer onwards, and reapply all the updates to LSM tree to get all our updates back.</p>
+
 <h3 id="overall-size">Overall size</h3>
-<p>RocksDB applies block compression to reduce the size of LSM tree. <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM tree is much smaller in
-comparison and can be stored in RAM entirely, so it doesn't need to do any compression on the tree. However,
+
+<p>RocksDB applies block compression to reduce the size of LSM tree. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree is much smaller in
+comparison and can be stored in RAM entirely, so it doesn&rsquo;t need to do any compression on the tree. However,
 the size of value log can grow quite quickly.  Each update is a new entry in the value log, and
 therefore multiple updates for the same key take up space multiple times.</p>
+
 <p>To deal with this, <a href="https://github.com/dgraph-io/badger">Badger</a> does two things. It allows compressing values in value log. Instead of
 compressing multiple key-values together, we only compress each key-value individually. This
 provides the best possible random read performance. The client can set it so compression is
 only done if the key-value size is over an adjustable threshold, set by default to 1KB.</p>
+
 <p>Secondly, <a href="https://github.com/dgraph-io/badger">Badger</a> runs value garbage collection. This runs periodically and samples a 100MB size of a
 randomly selected value log file. It checks if at least a significant chunk of it should be
 discarded, due to newer updates in later logs. If so, the valid key-value pairs would be appended to
 the log, the older file discarded, and the value pointers updated in the LSM tree. The downside is,
-this adds more work for LSM tree; so shouldn't be run when loading a huge data set. More work is
+this adds more work for LSM tree; so shouldn&rsquo;t be run when loading a huge data set. More work is
 required to only trigger this garbage collection to run during periods of little client
 activity.</p>
+
 <h3 id="hardware-costs">Hardware Costs</h3>
+
 <p>But, given the fact that SSDs are getting cheaper and cheaper, using extra space in SSD is
 almost nothing compared to having to store and serve a major chunk of LSM tree from memory. Consider this:</p>
-<p>For 1KB values, 75 million 16 byte keys, RocksDB's LSM tree is 50GB in size. <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s value log is
+
+<p>For 1KB values, 75 million 16 byte keys, RocksDB&rsquo;s LSM tree is 50GB in size. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s value log is
 74GB (without value compression), and LSM tree is 1.7GB. Extrapolating it three times, we get 225 million
 keys, RocksDB size of 150GB and <a href="https://github.com/dgraph-io/badger">Badger</a> size of 222GB value log, and 5.1GB LSM tree.</p>
+
 <p>Using Amazon AWS US East (Ohio) datacenter:</p>
+
 <ul>
 <li>To achieve a random read performance equivalent of <a href="https://github.com/dgraph-io/badger">Badger</a> (at least 3.5x faster), RocksDB would need to
 be run on an <code>r3.4xlarge</code> instance, which provides 122 GB of RAM for <code>$1.33</code> per hour; so most of its
@@ -641,17 +704,22 @@ LSM tree can fit into memory.</li>
 (<a href="https://linux.die.net/man/1/fio"><code>fio</code></a> test: 100K IOPS for 4KB block size), with 15.25GB RAM for <code>$0.156</code> per hour.</li>
 <li>The cost of running <a href="https://github.com/dgraph-io/badger">Badger</a> is thus, <strong>8.5x cheaper</strong> than running RocksDB on EC2, on-demand.</li>
 <li>Going 1-year term all upfront payment, this is $6182 for RocksDB v/s $870 for <a href="https://github.com/dgraph-io/badger">Badger</a>, still 7.1x
-cheaper. <strong>That's a whopping 86% saving.</strong></li>
+cheaper. <strong>That&rsquo;s a whopping 86% saving.</strong></li>
 </ul>
+
 <h2 id="benchmarks">Benchmarks</h2>
+
 <h3 id="setup">Setup</h3>
+
 <p>We rented a storage optimized <a href="https://aws.amazon.com/ec2/instance-types/">i3.large
 instance</a> from Amazon AWS, which provides 450GB NVMe
 SSD storage, 2 virtual cores along with 15.25GB RAM. This instance provides local SSD, which we
 tested via <a href="https://linux.die.net/man/1/fio"><code>fio</code></a> to sustain close to 100K random read IOPS for 4KB
 block sizes.</p>
+
 <p>The data sets were chosen to generate sizes too big to fit entirely in RAM, in either RocksDB
 or <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
+
 <table>
 <thead>
 <tr>
@@ -660,17 +728,20 @@ or <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
 <th>Raw data size</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>128B</td>
 <td>250M</td>
 <td>35GB</td>
 </tr>
+
 <tr>
 <td>1024B</td>
 <td>75M</td>
 <td>73GB</td>
 </tr>
+
 <tr>
 <td>16KB</td>
 <td>5M</td>
@@ -678,91 +749,120 @@ or <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
 </tr>
 </tbody>
 </table>
+
 <p>We then loaded data one by one, first in RocksDB then in <a href="https://github.com/dgraph-io/badger">Badger</a>, never running the loaders
 concurrently. This gave us the data loading times and output sizes. For random <code>Get</code> and <code>Iterate</code>,
 we used Go benchmark tests and ran them for 3 minutes, going down to 1 minute for 16KB values.</p>
+
 <p>All the code for benchmarking is available <a href="https://github.com/dgraph-io/badger-bench">in this
 repo</a>. All the commands ran and
 their measurements recorded are available in <a href="https://github.com/dgraph-io/badger-bench/blob/master/BENCH-rocks.txt">this log
 file</a>. The
 charts and their data is <a href="https://docs.google.com/a/dgraph.io/spreadsheets/d/1x8LUw_85g8Jo9jFtbAwuXrLm_DB1SOG8QCTSjXj8Hk0/edit?usp=sharing">viewable
 here</a>.</p>
+
 <h3 id="results">Results</h3>
+
 <p>In the following benchmarks, we measured 4 things:</p>
+
 <ul>
 <li>Data loading performance</li>
 <li>Output size</li>
 <li>Random key lookup performance (<code>Get</code>)</li>
 <li>Sorted range iteration performance (<code>Iterate</code>)</li>
 </ul>
+
 <p>All the 4 measurements are visualized in the following charts.
-<img src="/images/badger-benchmarks.png" alt="Badger benchmarks"></p>
-<p><strong>Data loading performance:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s key-value separation design shows huge performance gains as
+<img src="/images/badger-benchmarks.png" alt="[Badger](https://github.com/dgraph-io/badger) benchmarks" /></p>
+
+<p><strong>Data loading performance:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-value separation design shows huge performance gains as
 value sizes increase. For value sizes of 1KB and 16KB, <a href="https://github.com/dgraph-io/badger">Badger</a> achieves 4.5x and 11.7x more
 throughput than RocksDB. For smaller values, like 16 bytes not shown here, <a href="https://github.com/dgraph-io/badger">Badger</a> can be 2-3x
 slower, due to slower compactions (see further work).</p>
+
 <p><strong>Store size:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a> generates much smaller LSM tree, but a larger value size log. The size of
-<a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM tree is proportional only to the number of keys, not values. Thus, <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM
+<a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree is proportional only to the number of keys, not values. Thus, <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM
 tree decreases in size as we progress from 128B to 16KB. In all three scenarios, <a href="https://github.com/dgraph-io/badger">Badger</a> produced an
 LSM tree which could fit entirely in RAM of the target server.</p>
-<p><strong>Random read latency:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s <code>Get</code> latency is only 18% to 27% of RocksDB's <code>Get</code>
-latency. <strong>In our opinion, this is the biggest win of this design.</strong> This happens because <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s
+
+<p><strong>Random read latency:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s <code>Get</code> latency is only 18% to 27% of RocksDB&rsquo;s <code>Get</code>
+latency. <strong>In our opinion, this is the biggest win of this design.</strong> This happens because <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s
 entire LSM tree can fit into RAM, significantly decreasing the amount of time it takes to find the
 right tables, check their bloom filters, pick the right blocks and retrieve the key. Value retrieval is then
 a single SSD <code>file.pread</code> away.</p>
-<p>In contrast, RocksDB can't fit the entire tree in memory. Even assuming it can keep the table index
+
+<p>In contrast, RocksDB can&rsquo;t fit the entire tree in memory. Even assuming it can keep the table index
 and bloom filters in memory, it would need to fetch the entire blocks from disk, decompress them,
-then do key-value retrieval (<a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s smaller LSM tree avoids
+then do key-value retrieval (<a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s smaller LSM tree avoids
 the need for compression). This obviously takes longer, and given lack of data access locality,
-caching isn't as effective.</p>
-<p><strong>Range iteration latency:</strong>  <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s range iteration is
-significantly slower than RocksDB's range iteration, when values are also retrieved from SSD. <em>We
-didn't expect this, and still don't quite understand it.</em> We expected some slowdown due to the need
+caching isn&rsquo;t as effective.</p>
+
+<p><strong>Range iteration latency:</strong>  <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s range iteration is
+significantly slower than RocksDB&rsquo;s range iteration, when values are also retrieved from SSD. <em>We
+didn&rsquo;t expect this, and still don&rsquo;t quite understand it.</em> We expected some slowdown due to the need
 to do IOPS on SSD, while RocksDB does purely serial reads. But, given the 100K IOPS <code>i3.large</code>
-instance is capable of, we didn't even come close to using that bandwidth, despite pre-fetching.
+instance is capable of, we didn&rsquo;t even come close to using that bandwidth, despite pre-fetching.
 This needs further work and investigation.</p>
-<p>On the other end of the spectrum, <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s key-only iteration is blazingly faster than RocksDB or key-value
+
+<p>On the other end of the spectrum, <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-only iteration is blazingly faster than RocksDB or key-value
 iteration (latency is shown by the almost invisible red bar). This is quite useful in certain use
 cases we have at Dgraph, where we iterate over the keys, run filters and only retrieve values for a
 much smaller subset of keys.</p>
+
 <h2 id="further-work">Further work</h2>
+
 <h3 id="speed-of-range-iteration">Speed of range iteration</h3>
+
 <p>While <a href="https://github.com/dgraph-io/badger">Badger</a> can do key-only iteration blazingly fast, things slow down when it
-also needs to do value lookups. Theoretically, this shouldn't be the case. Amazon's i3.large disk
+also needs to do value lookups. Theoretically, this shouldn&rsquo;t be the case. Amazon&rsquo;s i3.large disk
 optimized instance can do 100,000 4KB block random reads per second. Based on this, we should be
 able to iterate 100K key-value pairs per second, in other terms six million key-value pairs per minute.</p>
-<p>However, <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s current implementation doesn't produce SSD
+
+<p>However, <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s current implementation doesn&rsquo;t produce SSD
 random read requests even close to this limit, and the key-value iteration suffers as a result.
-There's a lot of room for optimization in this space.</p>
+There&rsquo;s a lot of room for optimization in this space.</p>
+
 <h3 id="speed-of-compactions">Speed of compactions</h3>
+
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> is currently slower when it comes to running
 compactions compared to RocksDB. Due to this, for a dataset purely containing smaller values, it is
 slower to load data to <a href="https://github.com/dgraph-io/badger">Badger</a>. This needs more optimization.</p>
+
 <h3 id="lsm-tree-compression">LSM tree compression</h3>
+
 <p>Again in a dataset purely containing smaller values, the size of LSM tree would be significantly
-larger than RocksDB because <a href="https://github.com/dgraph-io/badger">Badger</a> doesn't run compression on LSM tree. This should be easy to add
+larger than RocksDB because <a href="https://github.com/dgraph-io/badger">Badger</a> doesn&rsquo;t run compression on LSM tree. This should be easy to add
 on if needed, and would make a great first-time contributor project.</p>
+
 <h3 id="b-tree-approach">B+ tree approach</h3>
-<p><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Recent improvements to SSDs might make B+-trees a viable option.
+
+<p><sup>1</sup> Recent improvements to SSDs might make B+-trees a viable option.
 Since WiscKey paper was written, SSDs have made huge gains in random write performance. A new
 interesting direction would be to combine the value log approach, and keep only keys and value
 pointers in the B+-tree. This would trade LSM tree read-sort-merge sequential write compactions with
 many random writes per key update and might achieve the same write throughput as LSM for a much
 simpler design.</p>
+
 <h2 id="conclusion">Conclusion</h2>
+
 <p>We have built an efficient key-value store, which can compete in performance against top of the line
 key-value stores in market. It is currently rough around the edges, but provides a solid platform
 for any industrial application, be it data storage or building another database.</p>
-<p>We will be replacing Dgraph's dependency on RocksDB soon with
+
+<p>We will be replacing Dgraph&rsquo;s dependency on RocksDB soon with
 <a href="https://github.com/dgraph-io/badger">Badger</a>; making our builds easier, faster, making Dgraph
 cross-platform and paving the way for embeddable Dgraph. The biggest win of using
 <a href="https://github.com/dgraph-io/badger">Badger</a> is <strong>a performant Go native key-value store.</strong> The
 nice side-effects are <strong>~4 times faster <code>Get</code> and a potential 86% reduction in AWS bills,</strong> due to
 less reliance on RAM and more reliance on ever faster and cheaper SSDs.</p>
+
 <p>So try out <a href="https://github.com/dgraph-io/badger">Badger</a> in your project, and let us know your experience.</p>
+
 <p><em>P.S. Special thanks to <a href="https://research.google.com/pubs/SanjayGhemawat.html">Sanjay Ghemawat</a> and
 <a href="http://pages.cs.wisc.edu/~ll/">Lanyue Lu</a> for responding to my questions about design choices.</em></p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -812,6 +912,7 @@ less reliance on RAM and more reliance on ever faster and cheaper SSDs.</p>
 		}
 	})
 </script>
+
 
 <p><em>Top image: Juno spacecraft is the <a href="http://www.livescience.com/32655-whats-the-fastest-spacecraft-ever.html">fastest moving human made
 object</a>, traveling at a

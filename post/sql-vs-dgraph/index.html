@@ -93,7 +93,7 @@
   
 
   <meta name="twitter:title" content="Running Stack Overflow on Dgraph"/>
-  <meta name="twitter:description" content="We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college. It was being used at the company that we joined. It was such a common interview question that it no longer is. We don&#39;t have just one, but an array of SQL databases to choose from. MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the same year)."/>
+  <meta name="twitter:description" content="We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college. It was being used at the company that we joined. It was such a common interview question that it no longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from. MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the same year)."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -446,47 +446,61 @@
             class="main__image"
             src="https://blog.dgraph.io/images/reddragonmars.jpg"
           >
-          <div class="article-content"><p>We have been taught, conditioned, trained to use SQL all our lives as engineers.
+          <div class="article-content">
+
+<p>We have been taught, conditioned, trained to use SQL all our lives as engineers.
 It was there in schools, there when we went to college. It was being used at the
 company that we joined. It was such a common interview question that it no
-longer is. We don't have just one, but an array of SQL databases to choose from.
+longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from.
 MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the
 same year). PostgreSQL was released one year later. In contrast, MariaDB was
 released in 2009.</p>
-<p>What's amazing about SQL is its sheer simplicity. <em>Select something where
+
+<p>What&rsquo;s amazing about SQL is its sheer simplicity. <em>Select something where
 something, order by something, limit by some number.</em> This query probably
 represents most DB queries run on the planet. You can achieve the same thing
 with a single bash command over CSV files. <em>I joke that SQL DBs are a sort of
 glorified CSV file servers.</em></p>
-<p>But, that's also where lies its weakness. Its sheer simplicity. <strong>Because SQL
+
+<p>But, that&rsquo;s also where lies its weakness. Its sheer simplicity. <strong>Because SQL
 does fewer things, application developers need to write more logic.</strong></p>
+
 <h3 id="the-alternative">The alternative</h3>
+
 <p><strong>Dgraph does joins.</strong> Being a graph database, join is a <em>first-class</em> citizen
-in Dgraph. It's optimized for expanding, intersecting and combining results from
+in Dgraph. It&rsquo;s optimized for expanding, intersecting and combining results from
 multiple entity types <em>very fast</em>. In fact, the internal mechanisms are exactly
 how search engines work.</p>
+
 <p><strong>Dgraph does recursions.</strong> Recursion is essentially an edge traversal.
 Traversing edges is very integral to Dgraph. Expanding out from a node is an
 O(1) time complexity operation, a look up in hash map, or a single
 read from disk.</p>
+
 <p><strong>Dgraph supports flexible schema.</strong> Dgraph separates storage layer from schema
 layer. A developer can choose how much schema enforcement they want. Modifying
 data types do not require data rewrite; and because (the equivalent of)
 <em>tables</em> are sparse in a graph database, one does not need to fit everything
 into predefined columns, or deal with <code>NULL</code>s.</p>
+
 <h3 id="stack-overflow">Stack Overflow</h3>
-<p>To put something concrete up for discussion, we'll see how data gets arranged in
+
+<p>To put something concrete up for discussion, we&rsquo;ll see how data gets arranged in
 SQL and compare that with how it would be arranged in Dgraph. Folks at Stack
 Exchange generously provide <a href="https://archive.org/details/stackexchange">dumps of their
 data</a>, and <a href="https://ia800500.us.archive.org/22/items/stackexchange/readme.txt">the
 schema</a> that
 they use run the site over SQL.</p>
-<p>We'll pick the schema that they use to store and
+
+<p>We&rsquo;ll pick the schema that they use to store and
 serve the data that millions of developers browse through every day, and compare
 that against how it would be if Dgraph were the underlying database instead of
 SQL.</p>
-<p><strong>Let's start with the User schema,</strong> and see how SQL would compare with Dgraph.</p>
+
+<p><strong>Let&rsquo;s start with the User schema,</strong> and see how SQL would compare with Dgraph.</p>
+
 <p><strong>User</strong></p>
+
 <table>
 <thead>
 <tr>
@@ -494,62 +508,78 @@ SQL.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>Reputation</td>
 <td>Reputation</td>
 </tr>
+
 <tr>
 <td>CreationDate</td>
 <td>CreationDate</td>
 </tr>
+
 <tr>
 <td>DisplayName</td>
 <td>DisplayName</td>
 </tr>
+
 <tr>
 <td>LastAccessDate</td>
 <td>LastAccessDate</td>
 </tr>
+
 <tr>
 <td>Location</td>
 <td>Location</td>
 </tr>
+
 <tr>
 <td>AboutMe</td>
 <td>AboutMe</td>
 </tr>
+
 <tr>
 <td>Age</td>
 <td>Age</td>
 </tr>
+
 <tr>
 <td>Views</td>
 <td>Views</td>
 </tr>
+
 <tr>
 <td>UpVotes</td>
 <td></td>
 </tr>
+
 <tr>
 <td>DownVotes</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>Here we have user's reputation, creation date, display name, last access date,
+
+<p>Here we have user&rsquo;s reputation, creation date, display name, last access date,
 location, about, age (<em>not date of birth?</em>) and views (not tracking every single
 page access, just a counter). All those are base data, i.e. new and unique data
 that we must store.</p>
+
 <p>Then, the table has counts of upvotes and downvotes. But, those are being stored
 elsewhere in <code>Vote</code> table. These fields here are pre-computed counts to avoid
 doing joins with <code>Vote</code> table when querying for a user.</p>
-<p>Dgraph doesn't need to store these. It can do counts and sorts on them via
+
+<p>Dgraph doesn&rsquo;t need to store these. It can do counts and sorts on them via
 queries efficiently.</p>
-<p><strong>Let's look at the Versioning and Post table,</strong> where most of the action happens.
+
+<p><strong>Let&rsquo;s look at the Versioning and Post table,</strong> where most of the action happens.
 These tables store the questions, answers, tags, ownership, and authorship
 information.</p>
+
 <p><strong>Versioning</strong></p>
+
 <table>
 <thead>
 <tr>
@@ -557,30 +587,37 @@ information.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>TypeId</td>
 <td>Type</td>
 </tr>
+
 <tr>
 <td>PostId</td>
 <td>Post (point to Post)</td>
 </tr>
+
 <tr>
 <td>CreationDate</td>
 <td>CreationDate</td>
 </tr>
+
 <tr>
 <td>Author</td>
 <td>Author</td>
 </tr>
+
 <tr>
 <td>Text</td>
 <td>Text</td>
 </tr>
 </tbody>
 </table>
+
 <p><strong>Post</strong></p>
+
 <table>
 <thead>
 <tr>
@@ -588,91 +625,113 @@ information.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>TypeId</td>
 <td>Type</td>
 </tr>
+
 <tr>
 <td>ParentId</td>
 <td>Has.Answer</td>
 </tr>
+
 <tr>
 <td>AcceptedAnswerId</td>
 <td>Chosen.Answer</td>
 </tr>
+
 <tr>
 <td>Title (duplicate of versioning)</td>
 <td>Title (point to Version)</td>
 </tr>
+
 <tr>
 <td>Body  (duplicate of versioning)</td>
 <td>Body  (point to Version)</td>
 </tr>
+
 <tr>
 <td>Tags  (duplicate of versioning)</td>
 <td>Tags  (point to Version)</td>
 </tr>
+
 <tr>
 <td>OwnerUserId</td>
 <td>Owner (point to User)</td>
 </tr>
+
 <tr>
 <td>Score</td>
 <td>Score</td>
 </tr>
+
 <tr>
 <td>LastEditorUserId</td>
 <td></td>
 </tr>
+
 <tr>
 <td>LastEditDate</td>
 <td></td>
 </tr>
+
 <tr>
 <td>LastActivityDate</td>
 <td></td>
 </tr>
+
 <tr>
 <td>CommentCount</td>
 <td></td>
 </tr>
+
 <tr>
 <td>AnswerCount</td>
 <td></td>
 </tr>
+
 <tr>
 <td>FavoriteCount</td>
 <td></td>
 </tr>
+
 <tr>
 <td>CreationDate</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+
 <p>Version table is pretty straightforward. It stores type, post id, creation date,
 author, and text. Instead of storing ids, Dgraph creates a relationship
 from Version to Post.</p>
+
 <p>Post table is the interesting one, and <em>shows how much data duplication needed
 to happen to avoid joins.</em> We have the text of title, body, and tags from the latest
-version stored in this table. In fact, the latest version isn't even written.
+version stored in this table. In fact, the latest version isn&rsquo;t even written.
 Version only gets created when a user modifies the title, body or tags. And
 because of this requirement to proxy for Version table, Post table stores last
 editor, last edit date, which would become the author and creation date
 respectively when moved to Version table.</p>
+
 <p>All these fields are unnecessary in Dgraph. Dgraph can directly store an edge to
 the Version node which contains the text of title and body. We chose to store
 tags differently. For each tag, we create a node and create an edge between the
 post and the tag. This allows us to run aggregations over tags, and find the
 most popular and most related tags easily.</p>
+
 <p>Then, we have pre-computed counts of comments, answers, and favorites. Dgraph can
 generate all this at query time efficiently; using them to do sorting as well.
-So, they don't need to be pre-computed in Dgraph.</p>
+So, they don&rsquo;t need to be pre-computed in Dgraph.</p>
+
 <p>CreationDate and LastActivityDate are both redundant information, that can be
 deduced by doing recursion. They form good candidates for optimization later on,
 but are not needed and hence are not present in Dgraph.</p>
+
 <p><strong>Comment, Vote</strong></p>
+
 <table>
 <thead>
 <tr>
@@ -680,60 +739,81 @@ but are not needed and hence are not present in Dgraph.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>PostId (Vote/Comment -&gt; Post)</td>
 <td>(New edge from Post -&gt; Vote/Comment)</td>
 </tr>
+
 <tr>
 <td>Timestamp</td>
 <td>Timestamp</td>
 </tr>
+
 <tr>
 <td>Author</td>
 <td>Author</td>
 </tr>
+
 <tr>
 <td>VoteType (for Vote)</td>
 <td>Score (for both Vote and Comment)</td>
 </tr>
+
 <tr>
 <td>Text     (for Comment)</td>
 <td>Text  (for Comment)</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Finally, we have the comment and vote tables.</strong> Because SQL doesn't store
+
+<p><strong>Finally, we have the comment and vote tables.</strong> Because SQL doesn&rsquo;t store
 lists of things in a single row, you must create another table and point it back
-to the original row.  A post contains comments. But in SQL, it's the reverse. A
-comment table row points to the post.  This is such a common hack that it's no
+to the original row.  A post contains comments. But in SQL, it&rsquo;s the reverse. A
+comment table row points to the post.  This is such a common hack that it&rsquo;s no
 longer considered one.</p>
+
 <p>In Dgraph, a Post has an edge to the vote or comment, not the other way round.</p>
-<p><strong>This is how the final Dgraph schema looks.</strong> It's a lot simpler than SQL.</p>
-<p><img src="/images/schema.png" alt="Dgraph Schema"></p>
+
+<p><strong>This is how the final Dgraph schema looks.</strong> It&rsquo;s a lot simpler than SQL.</p>
+
+<p><img src="/images/schema.png" alt="Dgraph Schema" /></p>
+
 <p><em>In fact, SQL schema complexity increases rapidly as the relationships among
 data increase.</em> Each relationship would inadvertently require joins, which would
 then need to be avoided by duplicating more information across tables. All this
 adds a significant amount of application logic to deal with.</p>
+
 <p><strong>Conversely, in a graph database like Dgraph, schema is a pretty close
 representation of your mind map.</strong></p>
+
 <h3 id="queries">Queries</h3>
+
 <p>In the previous section, we saw that Dgraph schema is a lot simpler than the
-equivalent SQL schema. In this section, we'll see why that is the case, and how
-Dgraph's GraphQL inspired query language makes it easy to render various
+equivalent SQL schema. In this section, we&rsquo;ll see why that is the case, and how
+Dgraph&rsquo;s GraphQL inspired query language makes it easy to render various
 Stack Overflow (referred to as SO) components.</p>
+
 <p><em>Disclaimer: While reading the queries, note that these queries are just our
-approximations of how SO works. We don't work there, and thence, certain things
+approximations of how SO works. We don&rsquo;t work there, and thence, certain things
 like ranking formulas are just put together to represent the power of the query
-language. It's not what SO uses.</em></p>
-<p><strong>Let's start with the home page.</strong> We want to render 100 questions, and
+language. It&rsquo;s not what SO uses.</em></p>
+
+<p><strong>Let&rsquo;s start with the home page.</strong> We want to render 100 questions, and
 all the associated meta information that SO shows.</p>
+
 <p><strong>Warning</strong></p>
+
 <p>Query syntax and features has changed in v1.0 release.
-For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
+ For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
+
 <p><strong>Question Div</strong></p>
+
 <p>This is the corresponding query fragment to retrieve the data to render one question div.</p>
-<p><img src="/images/homepage-question.png" alt="Home page question"></p>
+
+<p><img src="/images/homepage-question.png" alt="Home page question" /></p>
+
 <pre><code>_uid_  # Unique identifier
 
 UpvoteCount: count(Upvote)      # Counts the number of Upvote edges.
@@ -764,15 +844,23 @@ Has.Answer(orderdesc: Timestamp, first: 1) {  # Picks the most recent answer.
     _uid_
   }
 }
-</code></pre><p>Now that we have the question fragment let's see how to retrieve a list of
+</code></pre>
+
+<p>Now that we have the question fragment let&rsquo;s see how to retrieve a list of
 questions depending upon the various tabs that SO shows.</p>
+
 <p><strong>Latest 100 questions</strong></p>
+
 <pre><code># All nodes of type question, in descending order by Timestamp, limit by 100.
 questions(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 100) {
   ${questionFragment}
 }
-</code></pre><p><strong>Top 100 hot questions</strong></p>
-<p><img src="/images/homepage-hot-questions.png" alt="Home page hot questions"></p>
+</code></pre>
+
+<p><strong>Top 100 hot questions</strong></p>
+
+<p><img src="/images/homepage-hot-questions.png" alt="Home page hot questions" /></p>
+
 <pre><code># Get the latest 1000 questions.
 var(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 1000) {
   Has.Answer {            # Get their answers
@@ -793,9 +881,14 @@ var(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 1000) {
 questions(id: var(score), orderdesc: var(score), first: 100) {
   ${questionFragment}
 }
-</code></pre><p><strong>Top Tags</strong></p>
-<p><img src="/images/homepage-toptags.png" alt="Top tags"></p>
+</code></pre>
+
+<p><strong>Top Tags</strong></p>
+
+<p><img src="/images/homepage-toptags.png" alt="Top tags" /></p>
+
 <p>To get the most frequently used tags, we can run this query.</p>
+
 <pre><code>t as var(func: eq(Type, &quot;Tag&quot;)) {  # Retrieve all tags. Assign it to variable t.
   c as count(~Tag)  # For each tag, count the number of incoming edges.
                     # This gives us the number of times each tag is used.
@@ -809,18 +902,25 @@ topTags(id: var(t), orderdesc: var(c), first: 10) {
   QuestionCount: var(c)  # Reusing variable c, retrieve the number of times tag is used.
       # Note that only questions have tags. Hence we use QuestionCount alias.
 }
-</code></pre><p>Depending upon the number of tags, this query might be a tad slow. The most
-popular tags don't change that often. So, this is a good candidate for caching
+</code></pre>
+
+<p>Depending upon the number of tags, this query might be a tad slow. The most
+popular tags don&rsquo;t change that often. So, this is a good candidate for caching
 in application. But, even so, the amount of application code that needs to go in
 to generate the list of most popular tags is very little (run the query, cache
 the results).</p>
-<p><img src="/images/question.png" alt="Question"></p>
-<p><strong>Now let's see how to render the question page.</strong> This is one complex page, with
-many components, touching almost all the tables in SQL. We'll see how we can get
+
+<p><img src="/images/question.png" alt="Question" /></p>
+
+<p><strong>Now let&rsquo;s see how to render the question page.</strong> This is one complex page, with
+many components, touching almost all the tables in SQL. We&rsquo;ll see how we can get
 all the information in a single query to Dgraph.</p>
-<p>Before we dig into the question query, let's create a bunch of reusable
+
+<p>Before we dig into the question query, let&rsquo;s create a bunch of reusable
 fragments.</p>
+
 <p><strong>Version Fragment</strong></p>
+
 <pre><code>Author {       # Retrieve Author node.
   DisplayName  # Retrieve their display name, reputation, and identifier.
   Reputation
@@ -829,7 +929,10 @@ fragments.</p>
 Type  # Retrieve type, text and timestamp of Version.
 Text
 Timestamp
-</code></pre><p><strong>Comment Fragment</strong></p>
+</code></pre>
+
+<p><strong>Comment Fragment</strong></p>
+
 <pre><code>_uid_
 Author {       # Retrive Author node.
   _uid_        # Retrieve their display name and identifier.
@@ -838,7 +941,10 @@ Author {       # Retrive Author node.
 Text  # Retrieve Text, Score and Timestamp of Comment (no versioning here).
 Score
 Timestamp
-</code></pre><p><strong>Answer Fragment</strong></p>
+</code></pre>
+
+<p><strong>Answer Fragment</strong></p>
+
 <pre><code># Answer is represented as a Post node.
 _uid_
 
@@ -869,7 +975,10 @@ History: ~Post(orderdesc: Timestamp, first: 1) {
 Comment {             # Get the Comment nodes.
   ${CommentFragment}  # Retrieve further details per Comment using fragment above.
 }
-</code></pre><p><strong>Question</strong></p>
+</code></pre>
+
+<p><strong>Question</strong></p>
+
 <pre><code>{
   var (id: ${questionUID}) {  # Retrieve the question node.
     Has.Answer {              # Retrieve the answers.
@@ -931,13 +1040,20 @@ Comment {             # Get the Comment nodes.
     }
   }
 }
-</code></pre><p>If the query above looks complex, don't worry about it. Just read the comments, and get a sense for how we retrieve each piece of data that we need to render on the page. SO question page as mentioned before is pretty complex requiring recursions to retrieve all details of questions, comments, votes, owner, last editor. Similarly, we need answers, their comments, votes, owner, last editor. On top of that, we can sort the answers displayed by a score generated from vote counts. We can even limit the number of comments displayed if required.</p>
-<p>With SQL DB, all of this logic would have needed to be baked into the application. But, with Dgraph, the query language is so powerful that it can all be generated right within the database: doing recursions, computing counts, putting them to generate scores and then sort by these scores. This cuts down heavily on the application code, letting a developer focus on the feature set and the best way to render the data. And <strong>that's powerful!</strong></p>
+</code></pre>
+
+<p>If the query above looks complex, don&rsquo;t worry about it. Just read the comments, and get a sense for how we retrieve each piece of data that we need to render on the page. SO question page as mentioned before is pretty complex requiring recursions to retrieve all details of questions, comments, votes, owner, last editor. Similarly, we need answers, their comments, votes, owner, last editor. On top of that, we can sort the answers displayed by a score generated from vote counts. We can even limit the number of comments displayed if required.</p>
+
+<p>With SQL DB, all of this logic would have needed to be baked into the application. But, with Dgraph, the query language is so powerful that it can all be generated right within the database: doing recursions, computing counts, putting them to generate scores and then sort by these scores. This cuts down heavily on the application code, letting a developer focus on the feature set and the best way to render the data. And <strong>that&rsquo;s powerful!</strong></p>
+
 <p><strong>Full Text Search</strong></p>
+
 <p>Dgraph also supports regular expression and full-text search in many languages.
 You can create an index on string edges, to achieve this. In this case, we
 created a full-text index on the <code>Text</code> edge.</p>
+
 <p><code>Text: string @index(fulltext) .</code> line from schema.txt.</p>
+
 <pre><code>{
   var(func: anyoftext(Text, &quot;${searchQuery}&quot;)) @cascade {
   # All Version nodes which have any of the text in search query.
@@ -992,35 +1108,47 @@ created a full-text index on the <code>Text</code> edge.</p>
     Timestamp
   }
 }
-</code></pre><h3 id="summary">Summary</h3>
+</code></pre>
+
+<h3 id="summary">Summary</h3>
+
 <p>In this post, we showed you how a SQL schema compares against the equivalent
 schema in Dgraph, basing our analysis on Stack Overflow data. We then picked
 pages from Stack Overflow and showed you queries to retrieve all the data
 necessary to render those pages.</p>
+
 <p>As you can see, Dgraph schema is significantly simpler than SQL, utilizing zero
 or little schema hacks, pre-computation or duplication of data. Also,
 Dgraph query language is way more powerful than SQL, handling most of the
 complexity of recursive data retrieval, ranking and sorting within the database,
 allowing the application to focus solely on the feature set and rendering of
 data.</p>
+
 <p>Dgraph being a graph database provides sparsely populated fields and easy schema
 manipulation, which allows developers to modify data types as they iterate over
 their application, removing the need to do complex <em>upgrades</em> of the entire system.</p>
+
 <p>Not only that, Dgraph makes it a lot faster for developers to iterate.
 Modifying Dgraph queries is a lot cheaper operation for a developer,
 than modifying the backend code; and Dgraph provides a nice UI to allow for
 this.</p>
+
 <p>Finally, Dgraph supports regular expressions, term matching, full-text search
 and equality matching for string types. All Dgraph edges are unidirectional, but
 Dgraph allows you to specify creating reverses automatically, to aid in data
 retrieval. It also supports indexing various other data types, like int, float,
 datetime, etc.; very useful to build applications today.</p>
+
 <p>Overall, this post sheds light on why we think a graph database like Dgraph is a
 better choice for developers today. It simplifies the data model,
 significantly cuts down on the backend code, and allows faster iteration.</p>
+
 <h3 id="links">Links</h3>
-<p>All the data generation, querying and rendering code is located at <a href="https://github.com/dgraph-io/graphoverflow">Dgraph's Graph Overflow repository</a>. Dgraph query language spec is <a href="https://docs.dgraph.io/query-language/">located here</a>. Graph overflow site is still a work in progress, and we'll put it up at dgraph.io soon.</p>
-<hr>
+
+<p>All the data generation, querying and rendering code is located at <a href="https://github.com/dgraph-io/graphoverflow">Dgraph&rsquo;s Graph Overflow repository</a>. Dgraph query language spec is <a href="https://docs.dgraph.io/query-language/">located here</a>. Graph overflow site is still a work in progress, and we&rsquo;ll put it up at dgraph.io soon.</p>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -1070,6 +1198,7 @@ significantly cuts down on the backend code, and allows faster iteration.</p>
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="http://www.spacex.com/dragon">Dragon</a> is a next-generation spacecraft designed to take humans to Mars.</em></p>
 </div>

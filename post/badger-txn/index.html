@@ -93,8 +93,7 @@
   
 
   <meta name="twitter:title" content="Concurrent ACID Transactions in Badger"/>
-  <meta name="twitter:description" content="When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.
-As Badger is gaining popularity, we see the limitations of our initial choices."/>
+  <meta name="twitter:description" content="When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -447,29 +446,54 @@ As Badger is gaining popularity, we see the limitations of our initial choices."
             class="main__image"
             src="https://blog.dgraph.io/images/hubble_atom.jpg"
           >
-          <div class="article-content"><p>When we started working on <a href="https://github.com/dgraph-io/badger">Badger</a>, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
-<p>As <a href="https://github.com/dgraph-io/badger">Badger</a> is gaining popularity, we see the limitations of our initial choices. The choice to not add transactions caused issues for many users. In fact, that's something we are witnessing in Dgraph as well. So, we decided to support transactions in <a href="https://github.com/dgraph-io/badger">Badger</a> (and successively in Dgraph).</p>
-<p>For a good design, we spent time reading through six popular papers on the subject. In particular, Yabandeh's <a href="https://dl.acm.org/citation.cfm?id=2168853">A Critique of Snapshot Isolation</a> provided a sound basis for allowing execution of transactions concurrently, delivering <a href="https://en.wikipedia.org/wiki/Snapshot_isolation">serializable snapshot isolation</a>, avoiding write-skews. While this paper is designed for distributed systems, its applicability extends to any single node system wanting to support concurrent transactional execution.</p>
+          <div class="article-content">
+
+<p>When we started working on <a href="https://github.com/dgraph-io/badger">Badger</a>, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</p>
+
+<p>As <a href="https://github.com/dgraph-io/badger">Badger</a> is gaining popularity, we see the limitations of our initial choices. The choice to not add transactions caused issues for many users. In fact, that&rsquo;s something we are witnessing in Dgraph as well. So, we decided to support transactions in <a href="https://github.com/dgraph-io/badger">Badger</a> (and successively in Dgraph).</p>
+
+<p>For a good design, we spent time reading through six popular papers on the subject. In particular, Yabandeh&rsquo;s <a href="https://dl.acm.org/citation.cfm?id=2168853">A Critique of Snapshot Isolation</a> provided a sound basis for allowing execution of transactions concurrently, delivering <a href="https://en.wikipedia.org/wiki/Snapshot_isolation">serializable snapshot isolation</a>, avoiding write-skews. While this paper is designed for distributed systems, its applicability extends to any single node system wanting to support concurrent transactional execution.</p>
+
 <h2 id="acid-transactions">ACID Transactions</h2>
+
 <p>Transactions in <a href="https://github.com/dgraph-io/badger">Badger</a> execute concurrently. When they start, they pick up a read timestamp from an in-memory <code>oracle</code>.  <a href="https://github.com/dgraph-io/badger">Badger</a> now supports <a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">MVCC</a>, so all reads are done based on this timestamp. As reads are performed, we store a fingerprint of the key (fingerprint instead of the key to save space. In a very rare case, this can lead to a false negative conflict detection, aborting a transaction, requiring a retry).  In a read-only transaction, we avoid tracking reads altogether. This prevents a memory blowup if you are taking a snapshot or backup of <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
-<p>As writes are performed in the transaction, we maintain an internal cache of these writes within the transaction. Thus, any follow up reads on the same key by this transaction would see this write. But, other transactions won't, providing <strong>Isolation and Consistency.</strong></p>
+
+<p>As writes are performed in the transaction, we maintain an internal cache of these writes within the transaction. Thus, any follow up reads on the same key by this transaction would see this write. But, other transactions won&rsquo;t, providing <strong>Isolation and Consistency.</strong></p>
+
 <p>Finally, when <code>Commit</code> is called, we send our read fingerprints to Oracle and ask for a commit timestamp. Oracle will check if the read rows have since been updated (<code>row commit ts &gt; txn read ts</code>). If so, it would return a conflict, and the transaction would abort. This is indicated by Commit method returning an <code>ErrConflict</code> error.</p>
-<p>If no conflict were detected, Oracle would assign a new unique commit timestamp, and update a local in-memory commit map with all the written keys&rsquo; fingerprints and this commit timestamp. Thus, any future commits would be checked against these updates for conflict detection. Note that even if the transaction fails later (due to a write to disk failure), having this commit record in memory doesn't cause any logical issues.</p>
-<p>At this point, each key is suffixed with the commit timestamp, to provide <a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">multiversion concurrency control</a>. Thus, <a href="https://github.com/dgraph-io/badger">Badger</a> won't overwrite any data.</p>
+
+<p>If no conflict were detected, Oracle would assign a new unique commit timestamp, and update a local in-memory commit map with all the written keys&rsquo; fingerprints and this commit timestamp. Thus, any future commits would be checked against these updates for conflict detection. Note that even if the transaction fails later (due to a write to disk failure), having this commit record in memory doesn&rsquo;t cause any logical issues.</p>
+
+<p>At this point, each key is suffixed with the commit timestamp, to provide <a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">multiversion concurrency control</a>. Thus, <a href="https://github.com/dgraph-io/badger">Badger</a> won&rsquo;t overwrite any data.</p>
+
 <p>Once we have a commit timestamp, the writes from this and other transactions are queued in a channel, batched up, and written to value log. Once value log write is successful, we are assured of <strong>Durability.</strong> In case of a crash, a value log replay would be able to pick up these transactions.</p>
-<p>Once written to value log, the LSM tree would be updated, making these writes visible to future transactions.  If writing to value log fails, however, the writes won't make it to LSM tree, and the transaction is abandoned.  Because LSM tree wasn't updated, the writes won't be visible to any other transaction, thus ensuring <strong>Atomicity.</strong></p>
+
+<p>Once written to value log, the LSM tree would be updated, making these writes visible to future transactions.  If writing to value log fails, however, the writes won&rsquo;t make it to LSM tree, and the transaction is abandoned.  Because LSM tree wasn&rsquo;t updated, the writes won&rsquo;t be visible to any other transaction, thus ensuring <strong>Atomicity.</strong></p>
+
 <p>Oracle keeps track of commit-pending transactions in a min heap. Once the transaction is successfully committed, Oracle would advance its read timestamp.  Any new transactions would now start from this version.</p>
-<p>This particular strategy is different from Yabandeh's paper, where typically locks are acquired upfront on the keys which are written. Given <a href="https://github.com/dgraph-io/badger">Badger</a> isn't a distributed database and isn't marred by the unreliability of network, we could simplify the implementation considerably by using a min heap to update read timestamp.</p>
+
+<p>This particular strategy is different from Yabandeh&rsquo;s paper, where typically locks are acquired upfront on the keys which are written. Given <a href="https://github.com/dgraph-io/badger">Badger</a> isn&rsquo;t a distributed database and isn&rsquo;t marred by the unreliability of network, we could simplify the implementation considerably by using a min heap to update read timestamp.</p>
+
 <h2 id="performance">Performance</h2>
+
 <p>To quickly benchmark the performance of <a href="https://github.com/dgraph-io/badger">Badger</a> writes, we wrote 1M key-value pairs, values being of different sizes. <em>We set synchronous writes to true.</em> We ran this for <a href="https://github.com/dgraph-io/badger">Badger</a>, Bolt, and LMDB.</p>
-<p><img src="/images/txnwrites.png" alt="1M keys written benchmark"></p>
+
+<p><img src="/images/txnwrites.png" alt="1M keys written benchmark" /></p>
+
 <p>In absolute numbers, <a href="https://github.com/dgraph-io/badger">Badger</a> wrote 1M keys with 128B and 1kB value in 10 and 16 seconds. For 16kB values, <a href="https://github.com/dgraph-io/badger">Badger</a> took 1m20s to write 1M keys.</p>
-<p><a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s write throughput using ACID transactions was at least 2-5x faster than Bolt. Compared to LMDB, <a href="https://github.com/dgraph-io/badger">Badger</a> was 2x quicker in two of the three test cases.</p>
+
+<p><a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s write throughput using ACID transactions was at least 2-5x faster than Bolt. Compared to LMDB, <a href="https://github.com/dgraph-io/badger">Badger</a> was 2x quicker in two of the three test cases.</p>
+
 <p>You can see the spreadsheet <a href="https://docs.google.com/spreadsheets/d/1LVbKvsFDzEvL7X0Ig35JkUCaQyqFFu1FuLO9OwTnN0E/edit?usp=sharing">here</a>, and the benchmark log <a href="https://github.com/dgraph-io/badger-bench/blob/master/write_benchmarks">here</a>.</p>
+
 <h2 id="conclusion">Conclusion</h2>
-<p>This is a huge API change in <a href="https://github.com/dgraph-io/badger">Badger</a>. In fact, we ripped up all the existing APIs from <code>KV struct</code>, into the new <code>Txn struct</code>. While doing so, we also got rid of certain APIs like <code>CompareAndSet</code> and <code>SetIfAbsent</code>, which are no longer required given transactions. At the same time, we're renamed <code>Badger.KV</code> to <code>Badger.DB</code>, which at this point, <a href="https://github.com/dgraph-io/badger">Badger</a> is. <strong>An ACID compliant database providing concurrent transactions and serializable snapshot isolation.</strong></p>
+
+<p>This is a huge API change in <a href="https://github.com/dgraph-io/badger">Badger</a>. In fact, we ripped up all the existing APIs from <code>KV struct</code>, into the new <code>Txn struct</code>. While doing so, we also got rid of certain APIs like <code>CompareAndSet</code> and <code>SetIfAbsent</code>, which are no longer required given transactions. At the same time, we&rsquo;re renamed <code>Badger.KV</code> to <code>Badger.DB</code>, which at this point, <a href="https://github.com/dgraph-io/badger">Badger</a> is. <strong>An ACID compliant database providing concurrent transactions and serializable snapshot isolation.</strong></p>
+
 <p>We hope you enjoy these changes and use <a href="https://github.com/dgraph-io/badger">Badger</a> in your project!</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -519,6 +543,7 @@ As Badger is gaining popularity, we see the limitations of our initial choices."
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="https://www.nasa.gov/image-feature/goddard/hubble-view-of-a-galaxy-resembling-an-atomic-nucleus">Hubble View of a Galaxy Resembling an Atomic Nucleus</a></em></p>
 </div>

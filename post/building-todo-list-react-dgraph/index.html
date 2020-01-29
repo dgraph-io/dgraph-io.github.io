@@ -95,9 +95,9 @@
   <meta name="twitter:title" content="Building a To-Do List React App with Dgraph"/>
   <meta name="twitter:description" content="In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http &mdash; a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.
 The tutorial is split into several steps:
-  Creating a React App
-  Starting a local Dgraph server using docker-compose
-  Connecting to Dgraph from JavaScript and fetching data"/>
+ Creating a React App
+ Starting a local Dgraph server using docker-compose
+ Connecting to Dgraph from JavaScript and fetching data"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -450,91 +450,136 @@ The tutorial is split into several steps:
             class="main__image"
             src="https://blog.dgraph.io/images/react-todomvc/react-localstore.png"
           >
-          <div class="article-content"><p>In this tutorial we will build a To-Do List application using <a href="https://reactjs.org/">React</a> JavaScript library and Dgraph as a backend database.
+          <div class="article-content">
+
+<p>In this tutorial we will build a To-Do List application using <a href="https://reactjs.org/">React</a> JavaScript library and Dgraph as a backend database.
 We will use <a href="https://github.com/dgraph-io/dgraph-js-http">dgraph-js-http</a> &mdash; a library designed to greatly simplify the life of JavaScript developers when
 accessing Dgraph databases.</p>
+
 <p>The tutorial is split into several steps:</p>
+
 <ol>
-<li>
-<p><a href="#ref-creating-app">Creating a React App</a></p>
-</li>
-<li>
-<p><a href="#ref-docker-compose">Starting a local Dgraph server using docker-compose</a></p>
-</li>
-<li>
-<p><a href="#ref-fetch-data">Connecting to Dgraph from JavaScript and fetching data</a></p>
-</li>
-<li>
-<p><a href="#ref-write-data">Storing data in Dgraph</a></p>
-</li>
+<li><p><a href="#ref-creating-app">Creating a React App</a></p></li>
+
+<li><p><a href="#ref-docker-compose">Starting a local Dgraph server using docker-compose</a></p></li>
+
+<li><p><a href="#ref-fetch-data">Connecting to Dgraph from JavaScript and fetching data</a></p></li>
+
+<li><p><a href="#ref-write-data">Storing data in Dgraph</a></p></li>
 </ol>
+
 <p>If you are already familiar with setting up a React application and want to skip
 straight to the Dgraph-specific part of the tutorial, you can start from <a href="#ref-docker-compose">Section 2</a>.</p>
-<h3 id="1-creating-a-react-app-a-idref-creating-appa">1. Creating a React App <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
-<p>Nowadays it's pretty simple to get started with React, thanks to the awesome <code>create-react-app</code> script. Let's run it:</p>
+
+<h3 id="1-creating-a-react-app-a-id-ref-creating-app-a">1. Creating a React App <a id="ref-creating-app"></a></h3>
+
+<p>Nowadays it&rsquo;s pretty simple to get started with React, thanks to the awesome <code>create-react-app</code> script. Let&rsquo;s run it:</p>
+
 <pre><code>  npx create-react-app dgraph-react-todomvc
-</code></pre><p>(<code>npx</code> command is part a of the standard <a href="https://nodejs.org/en/download/">Node.js installation</a>.)</p>
-<p>[<!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
+</code></pre>
+
+<p>(<code>npx</code> command is part a of the standard <a href="https://nodejs.org/en/download/">Node.js installation</a>.)</p>
+
+<p><a href="/images/react-todomvc/create-react-app.svg"><video autoplay loop muted playsinline width="100%">
+  <source src="/images/react-todomvc/create-react-app.mp4" type="video/mp4" />
+</video></a></p>
+
 <h4 id="verifying-the-new-app">Verifying the new app</h4>
-<p>Let's compile and test our application. Like most tasks with <code>create-react-app</code> we need only one command to run
+
+<p>Let&rsquo;s compile and test our application. Like most tasks with <code>create-react-app</code> we need only one command to run
 the development server and it will even open a browser window for us:</p>
+
 <pre><code>  yarn start
-</code></pre><p><img src="/images/react-todomvc/helloworld.png" alt="Empty React App"></p>
-<p>Once we've made sure everything is working as expected it's a good time to save our progress so far to a version control system.
-At Dgraph we're using <a href="https://github.com/">GitHub</a> so I will just commit everything with Git:</p>
+</code></pre>
+
+<p><img src="/images/react-todomvc/helloworld.png" alt="Empty React App" /></p>
+
+<p>Once we&rsquo;ve made sure everything is working as expected it&rsquo;s a good time to save our progress so far to a version control system.
+At Dgraph we&rsquo;re using <a href="https://github.com/">GitHub</a> so I will just commit everything with Git:</p>
+
 <pre><code> git commit -am 'Output of the create-react-app'
-</code></pre><p>And since I've created a public repository, you can <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commits/master">view and clone</a>  all steps of this tutorial at any time.
-(I won't digress on how I did this, as it goes beyond the scope of this tutorial.)</p>
+</code></pre>
+
+<p>And since I&rsquo;ve created a public repository, you can <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commits/master">view and clone</a>  all steps of this tutorial at any time.
+(I won&rsquo;t digress on how I did this, as it goes beyond the scope of this tutorial.)</p>
+
 <h4 id="adding-custom-code">Adding custom code</h4>
-<p>So far we've been generating boilerplate code not specific to the to-do application we're building.
-It's time to make our app more unique, but as the first step, let's just delete all the styling we're not going to need.</p>
-<p>As this is not a very creative process (quite the opposite of creative, actually) I won't go into details.
+
+<p>So far we&rsquo;ve been generating boilerplate code not specific to the to-do application we&rsquo;re building.
+It&rsquo;s time to make our app more unique, but as the first step, let&rsquo;s just delete all the styling we&rsquo;re not going to need.</p>
+
+<p>As this is not a very creative process (quite the opposite of creative, actually) I won&rsquo;t go into details.
 You can <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/a18d1fd958ccc3c8d38940478746cf22c83c772f">view</a> the changed files on GitHub.</p>
+
 <h4 id="connecting-todomvc-styles">Connecting TodoMVC styles</h4>
-<p>Since I'm not a designer, but still like my apps to look pretty, I'm going to
+
+<p>Since I&rsquo;m not a designer, but still like my apps to look pretty, I&rsquo;m going to
 use high quality off-the-shelf <a href="https://github.com/tastejs/todomvc-app-css">CSS styles</a>, released by the <a href="http://todomvc.com/">TodoMVC team</a>.</p>
+
 <p>Adding those to the project is as easy as</p>
+
 <pre><code> yarn add todomvc-app-css
-</code></pre><p>We also need to load the new styles onto the page, by importing them in the <code>App.js</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  <span style="color:#000;font-weight:bold">import</span> <span style="color:#d14">&#39;todomvc-app-css/index.css&#39;</span>
-</code></pre></div><p>And after these two changes we can write some HTML to use the styles.
-Let's update our main <code>render()</code> method to do just that (also in the <code>App.js</code>):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  ...
+</code></pre>
+
+<p>We also need to load the new styles onto the page, by importing them in the <code>App.js</code>:</p>
+
+<pre><code class="language-javascript">  import 'todomvc-app-css/index.css'
+</code></pre>
+
+<p>And after these two changes we can write some HTML to use the styles.
+Let&rsquo;s update our main <code>render()</code> method to do just that (also in the <code>App.js</code>):</p>
+
+<pre><code class="language-javascript">  ...
   render() {
-    <span style="color:#000;font-weight:bold">return</span> (
-      <span style="color:#000;font-weight:bold">&lt;</span>div<span style="color:#000;font-weight:bold">&gt;</span>
-        <span style="color:#000;font-weight:bold">&lt;</span>header className<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;header&#34;</span><span style="color:#000;font-weight:bold">&gt;</span>
-          <span style="color:#000;font-weight:bold">&lt;</span>h1<span style="color:#000;font-weight:bold">&gt;</span>todos<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">h</span><span style="color:#a61717;background-color:#e3d2d2">1</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
-          <span style="color:#000;font-weight:bold">&lt;</span>input
-            className<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;new-todo&#34;</span>
-            placeholder<span style="color:#000;font-weight:bold">=</span><span style="color:#d14">&#34;What needs to be done?&#34;</span>
-            autoFocus<span style="color:#000;font-weight:bold">=</span>{<span style="color:#000;font-weight:bold">true</span>}
-          <span style="color:#000;font-weight:bold">/</span><span style="color:#000;font-weight:bold">&gt;</span>
-        <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">h</span><span style="color:#a61717;background-color:#e3d2d2">e</span><span style="color:#a61717;background-color:#e3d2d2">a</span><span style="color:#a61717;background-color:#e3d2d2">d</span><span style="color:#a61717;background-color:#e3d2d2">e</span><span style="color:#a61717;background-color:#e3d2d2">r</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
-      <span style="color:#000;font-weight:bold">&lt;</span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">d</span><span style="color:#a61717;background-color:#e3d2d2">i</span><span style="color:#a61717;background-color:#e3d2d2">v</span><span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+    return (
+      &lt;div&gt;
+        &lt;header className=&quot;header&quot;&gt;
+          &lt;h1&gt;todos&lt;/h1&gt;
+          &lt;input
+            className=&quot;new-todo&quot;
+            placeholder=&quot;What needs to be done?&quot;
+            autoFocus={true}
+          /&gt;
+        &lt;/header&gt;
+      &lt;/div&gt;
     )
   }
   ...
-</code></pre></div><p>Now, since we still have our dev server running in the background (the one we started with <code>yarn start</code>), our app will get live reloaded and start to look pretty fancy:</p>
-<p><img src="/images/react-todomvc/css-added.png" alt="Dummy page with fancy CSS"></p>
-<p>Sadly it isn't doing anything useful but we'll get to that in a minute.</p>
-<p>I've also made small tweaks to the <code>index.html</code> but those are fairly self-explanatory,
+</code></pre>
+
+<p>Now, since we still have our dev server running in the background (the one we started with <code>yarn start</code>), our app will get live reloaded and start to look pretty fancy:</p>
+
+<p><img src="/images/react-todomvc/css-added.png" alt="Dummy page with fancy CSS" /></p>
+
+<p>Sadly it isn&rsquo;t doing anything useful but we&rsquo;ll get to that in a minute.</p>
+
+<p>I&rsquo;ve also made small tweaks to the <code>index.html</code> but those are fairly self-explanatory,
 and can be seen in the <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/1fbbda8263cb6c7ca0a6c910619080d50a5c2340#diff-528c3923d718a8860f5d8c05c3931c55">git history</a>.</p>
+
 <h4 id="adding-react-components">Adding React Components</h4>
-<p>There's just one more step before we get to the juicy bit - using Dgraph.
+
+<p>There&rsquo;s just one more step before we get to the juicy bit - using Dgraph.
 Trust me, I want to start telling you about it ASAP.</p>
-<p>So, without further ado, let's get our frontend code done with by copying
+
+<p>So, without further ado, let&rsquo;s get our frontend code done with by copying
 the ready made React components from the <a href="https://github.com/tastejs/todomvc/tree/gh-pages/examples/react">TodoMVC React Example</a>.</p>
-<p>The <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/68a12fbb484db71c1ef988e16ba2febf39ea27a3">files I've added</a> are somewhat different to the &ldquo;official&rdquo; TodoMVC React code because I've modified the source to use all the shiny new features of modern JavaScript, Babel and Webpack: classes, modules, lambda functions, let/const keywords etc.</p>
-<p>It's another hairy but straightforward refactoring, so let's not spend too much time on it.</p>
+
+<p>The <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/68a12fbb484db71c1ef988e16ba2febf39ea27a3">files I&rsquo;ve added</a> are somewhat different to the &ldquo;official&rdquo; TodoMVC React code because I&rsquo;ve modified the source to use all the shiny new features of modern JavaScript, Babel and Webpack: classes, modules, lambda functions, let/const keywords etc.</p>
+
+<p>It&rsquo;s another hairy but straightforward refactoring, so let&rsquo;s not spend too much time on it.</p>
+
 <p>After the dust settled our app can respond to the user input, show and store some to-dos:</p>
-<p><img src="/images/react-todomvc/react-localstore.png" alt="React App with LocalStore"></p>
-<h3 id="2-starting-a-local-dgraph-server-a-idref-docker-composea">2. Starting a local Dgraph server <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+
+<p><img src="/images/react-todomvc/react-localstore.png" alt="React App with LocalStore" /></p>
+
+<h3 id="2-starting-a-local-dgraph-server-a-id-ref-docker-compose-a">2. Starting a local Dgraph server <a id="ref-docker-compose"></a></h3>
+
 <p>There are many ways to <a href="https://docs.dgraph.io/get-started/">install and run Dgraph</a> depending on your machine setup.
 I personally prefer to use <a href="https://docs.docker.com/compose/gettingstarted/"><code>docker-compose</code></a> as it keeps all of the configuration in one file.</p>
-<p>First, let's create a <code>docker-compose.yml</code> configuration file.
-It's up to you where you want to keep it, for our project the folder <code>dgraph-react-todomvc/dgraph/</code> seems logical.</p>
+
+<p>First, let&rsquo;s create a <code>docker-compose.yml</code> configuration file.
+It&rsquo;s up to you where you want to keep it, for our project the folder <code>dgraph-react-todomvc/dgraph/</code> seems logical.</p>
+
 <pre><code>version: &quot;3.2&quot;
 services:
   zero:
@@ -577,91 +622,139 @@ services:
 
 volumes:
   dgraph:
-</code></pre><p>Then we can fire up all three processes (Dgraph Alpha, Zero and Ratel) with
+</code></pre>
+
+<p>Then we can fire up all three processes (Dgraph Alpha, Zero and Ratel) with
 one simple command:</p>
+
 <pre><code>  docker-compose up
-</code></pre><p>I usually run it in a separate terminal so I can check the server output at any time or
+</code></pre>
+
+<p>I usually run it in a separate terminal so I can check the server output at any time or
 shutdown everything by pressing <code>Ctrl+C</code>.</p>
+
 <p>The output of <code>docker-compose</code> will be a bit noisy, but should look something like this:</p>
-<p>[<!-- raw HTML omitted --></p>
-<!-- raw HTML omitted -->
-<h4 id="viewing-database-with-ratel-a-idref-test-ratela">Viewing database with Ratel <!-- raw HTML omitted --><!-- raw HTML omitted --></h4>
-<p>It sure looks like it's doing something how do we know if it works as expected?
-Let's fire up a web browser and give Ratel a try &mdash; Dgraph's web UI.</p>
+
+<p><a href="/images/react-todomvc/docker-compose-up.svg"><video autoplay loop muted playsinline width="100%">
+  <source src="/images/react-todomvc/docker-compose-up.mp4" type="video/mp4" />
+</video></a></p>
+
+<h4 id="viewing-database-with-ratel-a-id-ref-test-ratel-a">Viewing database with Ratel <a id="ref-test-ratel"></a></h4>
+
+<p>It sure looks like it&rsquo;s doing something how do we know if it works as expected?
+Let&rsquo;s fire up a web browser and give Ratel a try &mdash; Dgraph&rsquo;s web UI.</p>
+
 <p>Opening <a href="http://localhost:8000">http://localhost:8000</a> should take you to
 the Ratel loading screen.</p>
+
 <p>From there you can click on <a href="http://localhost:8000/?latest">🚀 Launch Latest</a> to load
 the latest stable version of Ratel and run some queries:</p>
-<p><img src="/images/react-todomvc/ratel.gif" alt="Ratel first steps"></p>
-<h3 id="3-connecting-to-dgraph-from-javascript-and-fetching-data-a-idref-fetch-dataa">3. Connecting to Dgraph from JavaScript and fetching data <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+
+<p><img src="/images/react-todomvc/ratel.gif" alt="Ratel first steps" /></p>
+
+<h3 id="3-connecting-to-dgraph-from-javascript-and-fetching-data-a-id-ref-fetch-data-a">3. Connecting to Dgraph from JavaScript and fetching data <a id="ref-fetch-data"></a></h3>
+
 <p>Dgraph team has built <a href="https://docs.dgraph.io/clients/">client libraries</a> for various languages.
 Since we are building a web app without a backend server, and JavaScript in the browser
 is very restricted in what it is allowed to do, we will be using
 <a href="https://github.com/dgraph-io/dgraph-js-http">dgraph-js-http</a>.</p>
-<p>You may have noticed there's also <a href="https://github.com/dgraph-io/dgraph-js">dgraph-js</a>
+
+<p>You may have noticed there&rsquo;s also <a href="https://github.com/dgraph-io/dgraph-js">dgraph-js</a>
 available via <code>npm</code>.</p>
+
 <p>The main difference between the two is <code>dgraph-js-http</code> communicates with Dgraph via
 HTTP queries and <code>dgraph-js</code> uses network sockets and <a href="https://grpc.io/">gRPC</a>.
-gRPC is more efficient, but currently there's no network sockets API available to webpages.
+gRPC is more efficient, but currently there&rsquo;s no network sockets API available to webpages.
 Therefore <code>dgraph-js-http</code> is our only option.
-For many use cases, the difference in performance is negligible so let's start building our
+For many use cases, the difference in performance is negligible so let&rsquo;s start building our
 application around the HTTP protocol.</p>
-<h4 id="installing-dgraph-js-http">Installing <code>dgraph-js-http</code></h4>
-<p>As with any other npm package, adding <code>dgraph-js-http</code> to our project is super simple:</p>
-<pre><code>  yarn install dgraph-js-http
-</code></pre><p>And after yarn has downloaded the latest version of the package, we can import it
-in our <code>TodoModel.js</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#000;font-weight:bold">import</span> <span style="color:#000;font-weight:bold">*</span> as dgraph from <span style="color:#d14">&#39;dgraph-js-http&#39;</span>
-</code></pre></div><p>In order to communicate with Dgraph we need to create an instance of the <code>DgraphClient</code>.
-Let's do it inside our <code>TodoModel</code> constructor:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  <span style="color:#000;font-weight:bold">const</span> clientStub <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> dgraph.DgraphClientStub(<span style="color:#d14">&#34;http://localhost:8080&#34;</span>)
-  <span style="color:#000;font-weight:bold">this</span>.dgraph <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> dgraph.DgraphClient(clientStub)
-</code></pre></div><p>With a client object ready we can fetch to-dos using a <a href="https://docs.dgraph.io/query-language/">GraphQL+- query</a>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  async fetchTodos() {
-    <span style="color:#000;font-weight:bold">const</span> query <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">`</span><span style="color:#d14">{
-</span><span style="color:#d14">      todos(func: has(is_todo))
-</span><span style="color:#d14">      {
-</span><span style="color:#d14">        uid
-</span><span style="color:#d14">        title
-</span><span style="color:#d14">        completed
-</span><span style="color:#d14">      }
-</span><span style="color:#d14">    }</span><span style="color:#d14">`</span>
-    <span style="color:#000;font-weight:bold">const</span> res <span style="color:#000;font-weight:bold">=</span> await <span style="color:#000;font-weight:bold">this</span>.dgraph.newTxn().query(query)
-    <span style="color:#000;font-weight:bold">return</span> res.data.todos <span style="color:#000;font-weight:bold">||</span> []
-  }
-</code></pre></div><p>We also need to call <code>fetchTodos()</code> when our web app is loaded, store its result
-inside the model, and also get rid of the no-longer-needed localStorage code.</p>
-<p>For the former task I've created a helper method <code>fetchAndInform()</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  async fetchAndInform() {
-    <span style="color:#000;font-weight:bold">this</span>.todos <span style="color:#000;font-weight:bold">=</span> await <span style="color:#000;font-weight:bold">this</span>.fetchTodos()
-    <span style="color:#000;font-weight:bold">this</span>.inform()
-  }
-</code></pre></div><p>And placed it as the last call in the <code>TodoModel</code> constructor:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  constructor() {
-    <span style="color:#000;font-weight:bold">const</span> clientStub <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> dgraph.DgraphClientStub(<span style="color:#d14">&#34;http://localhost:8080&#34;</span>)
-    <span style="color:#000;font-weight:bold">this</span>.dgraph <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> dgraph.DgraphClient(clientStub)
 
-    <span style="color:#000;font-weight:bold">this</span>.todos <span style="color:#000;font-weight:bold">=</span> []
-    <span style="color:#000;font-weight:bold">this</span>.fetchAndInform()
+<h4 id="installing-dgraph-js-http">Installing <code>dgraph-js-http</code></h4>
+
+<p>As with any other npm package, adding <code>dgraph-js-http</code> to our project is super simple:</p>
+
+<pre><code>  yarn install dgraph-js-http
+</code></pre>
+
+<p>And after yarn has downloaded the latest version of the package, we can import it
+in our <code>TodoModel.js</code>:</p>
+
+<pre><code class="language-javascript">import * as dgraph from 'dgraph-js-http'
+</code></pre>
+
+<p>In order to communicate with Dgraph we need to create an instance of the <code>DgraphClient</code>.
+Let&rsquo;s do it inside our <code>TodoModel</code> constructor:</p>
+
+<pre><code class="language-javascript">  const clientStub = new dgraph.DgraphClientStub(&quot;http://localhost:8080&quot;)
+  this.dgraph = new dgraph.DgraphClient(clientStub)
+</code></pre>
+
+<p>With a client object ready we can fetch to-dos using a <a href="https://docs.dgraph.io/query-language/">GraphQL+- query</a>:</p>
+
+<pre><code class="language-javascript">  async fetchTodos() {
+    const query = `{
+      todos(func: has(is_todo))
+      {
+        uid
+        title
+        completed
+      }
+    }`
+    const res = await this.dgraph.newTxn().query(query)
+    return res.data.todos || []
   }
-</code></pre></div><p>As the final touch, we can stop manually generating unique <code>id</code>s and
-start using much more compact and efficient Dgraph's <code>uid</code> field:</p>
-<p><img src="/images/react-todomvc/uid-diff.svg" alt="Use uid instead of id"></p>
-<p>All the major changes I've outlined above and some minor cleanups I've omitted
+</code></pre>
+
+<p>We also need to call <code>fetchTodos()</code> when our web app is loaded, store its result
+inside the model, and also get rid of the no-longer-needed localStorage code.</p>
+
+<p>For the former task I&rsquo;ve created a helper method <code>fetchAndInform()</code>:</p>
+
+<pre><code class="language-javascript">  async fetchAndInform() {
+    this.todos = await this.fetchTodos()
+    this.inform()
+  }
+</code></pre>
+
+<p>And placed it as the last call in the <code>TodoModel</code> constructor:</p>
+
+<pre><code class="language-javascript">  constructor() {
+    const clientStub = new dgraph.DgraphClientStub(&quot;http://localhost:8080&quot;)
+    this.dgraph = new dgraph.DgraphClient(clientStub)
+
+    this.todos = []
+    this.fetchAndInform()
+  }
+</code></pre>
+
+<p>As the final touch, we can stop manually generating unique <code>id</code>s and
+start using much more compact and efficient Dgraph&rsquo;s <code>uid</code> field:</p>
+
+<p><img src="/images/react-todomvc/uid-diff.svg" alt="Use uid instead of id" /></p>
+
+<p>All the major changes I&rsquo;ve outlined above and some minor cleanups I&rsquo;ve omitted
 are available in this <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/042ee296283f10994fa35e2ba6e0e6b98a06168d">GitHub commit</a>.</p>
+
 <h4 id="adding-test-data-to-dgraph">Adding test data to Dgraph</h4>
-<p>So we've written a bit of code, removed a bit more, but how do we know if it's actually
+
+<p>So we&rsquo;ve written a bit of code, removed a bit more, but how do we know if it&rsquo;s actually
 working as expected?</p>
+
 <p>If we simply reload the web app we will see an empty to-do list.
 Any items we add via the UI disappear on browser refresh.</p>
-<p>That is happening because our Dgraph database is empty at the moment and we haven't
+
+<p>That is happening because our Dgraph database is empty at the moment and we haven&rsquo;t
 coded our components to populate it yet.</p>
+
 <p>Every time the page is refreshed our query returns an empty set of to-dos, and
 that is what we see on the webpage.</p>
+
 <p>Since we have the Ratel UI (we <a href="#ref-test-ratel">have already played with it</a>)
 we can easily add some test data.</p>
-<p>Let's open our local Ratel instance (<a href="http://localhost:8000/?latest">http://localhost:8000/?latest</a>) and execute
+
+<p>Let&rsquo;s open our local Ratel instance (<a href="http://localhost:8000/?latest">http://localhost:8000/?latest</a>) and execute
 the following mutation:</p>
+
 <pre><code>{
   &quot;set&quot;: [
     {
@@ -678,40 +771,60 @@ the following mutation:</p>
     }
   ]
 }
-</code></pre><p>In Ratel the successful response should look like this:</p>
-<p><img src="/images/react-todomvc/ratel-mutation.png" alt="Mutation result in Ratel"></p>
+</code></pre>
+
+<p>In Ratel the successful response should look like this:</p>
+
+<p><img src="/images/react-todomvc/ratel-mutation.png" alt="Mutation result in Ratel" /></p>
+
 <p>Note that we needed to click the &ldquo;Mutate&rdquo; radio button.</p>
+
 <p>Ratel also lets us test the query our application is sending:</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted -->
-<img src="/images/react-todomvc/ratel-query.png" alt="Query result in Ratel"></p>
-<p>Now, after we made sure we have the right data in the database, let's see if
+
+<p><a id="ref-img-ratel-query"></a>
+<img src="/images/react-todomvc/ratel-query.png" alt="Query result in Ratel" /></p>
+
+<p>Now, after we made sure we have the right data in the database, let&rsquo;s see if
 our application is accessing it correctly:</p>
-<p><img src="/images/react-todomvc/app-badschema.png" alt="To-do items marked as completed"></p>
+
+<p><img src="/images/react-todomvc/app-badschema.png" alt="To-do items marked as completed" /></p>
+
 <p>This is almost perfect, except our mutation said only the second to-do was completed,
 but the first was not. Why did this happen?</p>
+
 <p>If you take a closer look at the Ratel query <a href="#ref-img-ratel-query">screenshot</a> above,
 you will notice that <code>completed</code> is returned as a JSON string, not a boolean:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  ...
+
+<pre><code class="language-javascript">  ...
       {
-        <span style="color:#d14">&#34;uid&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;0x3&#34;</span>,
-        <span style="color:#d14">&#34;title&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;First Todo&#34;</span>,
-        <span style="color:#d14">&#34;completed&#34;</span><span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;false&#34;</span>
+        &quot;uid&quot;: &quot;0x3&quot;,
+        &quot;title&quot;: &quot;First Todo&quot;,
+        &quot;completed&quot;: &quot;false&quot;
       },
   ...
-</code></pre></div><p>That second pair of double quotes does matter in the line <code>&quot;completed&quot;: &quot;false&quot;</code>.
+</code></pre>
+
+<p>That second pair of double quotes does matter in the line <code>&quot;completed&quot;: &quot;false&quot;</code>.
 We have not yet told Dgraph to parse the values of <code>completed</code> as booleans,
 so Dgraph is storing and returning them as strings. To change that we will need to adjust Schema.</p>
+
 <h4 id="modifying-schema-with-ratel">Modifying Schema with Ratel</h4>
+
 <p>As we have determined, we need to tell Dgraph to convert the <code>completed</code> predicate
 from string to boolean.</p>
+
 <p>Ratel has full support for managing Dgraph schemas, so such changes takes
 only a handful of clicks:</p>
-<p><img src="/images/react-todomvc/alter-schema.png" alt="Modifying schemas with Ratel"></p>
-<p>After we've modified the schema Dgraph takes care of the rest &mdash; it will migrate
+
+<p><img src="/images/react-todomvc/alter-schema.png" alt="Modifying schemas with Ratel" /></p>
+
+<p>After we&rsquo;ve modified the schema Dgraph takes care of the rest &mdash; it will migrate
 existing data to the new type and will start responding to new queries with values
 coerced to the right data type.</p>
+
 <p>We can verify that this is actually happening by re-running the query in Ratel,
 or by refreshing our TodoMVC app:</p>
+
 <table>
 <thead>
 <tr>
@@ -719,117 +832,157 @@ or by refreshing our TodoMVC app:</p>
 <th>TodoMVC</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
-<td><a href="/images/react-todomvc/ratel-goodschema.png"><img src="/images/react-todomvc/ratel-goodschema.png" alt="Correct data type in Ratel"></a></td>
-<td><a href="/images/react-todomvc/app-goodschema.png"><img src="/images/react-todomvc/app-goodschema.png" alt="Correct completed status in TodoMVC"></a></td>
+<td><a href="/images/react-todomvc/ratel-goodschema.png"><img src="/images/react-todomvc/ratel-goodschema.png" alt="Correct data type in Ratel" /></a></td>
+<td><a href="/images/react-todomvc/app-goodschema.png"><img src="/images/react-todomvc/app-goodschema.png" alt="Correct completed status in TodoMVC" /></a></td>
 </tr>
 </tbody>
 </table>
-<h3 id="4-storing-data-in-dgraph-a-idref-write-dataa">4. Storing data in Dgraph <!-- raw HTML omitted --><!-- raw HTML omitted --></h3>
+
+<h3 id="4-storing-data-in-dgraph-a-id-ref-write-data-a">4. Storing data in Dgraph <a id="ref-write-data"></a></h3>
+
 <p>We have learned how to query Dgraph for data and show results to the user.
-The only missing piece of the puzzle is writing our to-dos to Dgraph so they don't get lost
+The only missing piece of the puzzle is writing our to-dos to Dgraph so they don&rsquo;t get lost
 every time our users close a browser tab.</p>
-<p>Let's start by sending newly created to-dos to Dgraph, and then we'll write code for updating or deleting the existing ones.</p>
+
+<p>Let&rsquo;s start by sending newly created to-dos to Dgraph, and then we&rsquo;ll write code for updating or deleting the existing ones.</p>
+
 <h4 id="creating-new-to-do-items-in-dgraph">Creating new to-do items in Dgraph</h4>
-<p>We represent to-do items as graph nodes. To create a new node we'll need a transaction, and a mutation:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  async addTodo(title) {
-    <span style="color:#000;font-weight:bold">try</span> {
-      <span style="color:#000;font-weight:bold">const</span> res <span style="color:#000;font-weight:bold">=</span> await <span style="color:#000;font-weight:bold">this</span>.dgraph.newTxn().mutate({
-        setJson<span style="color:#000;font-weight:bold">:</span> {
-          uid<span style="color:#000;font-weight:bold">:</span> <span style="color:#d14">&#34;_:newTodo&#34;</span>,
-          is_todo<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span>,
+
+<p>We represent to-do items as graph nodes. To create a new node we&rsquo;ll need a transaction, and a mutation:</p>
+
+<pre><code class="language-javascript">  async addTodo(title) {
+    try {
+      const res = await this.dgraph.newTxn().mutate({
+        setJson: {
+          uid: &quot;_:newTodo&quot;,
+          is_todo: true,
           title,
-          completed<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">false</span>,
+          completed: false,
         },
-        commitNow<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span>,
+        commitNow: true,
       })
 
-      console.info(<span style="color:#d14">&#39;Created new to-do with uid&#39;</span>, res.data.uids.newTodo)
-    } <span style="color:#000;font-weight:bold">catch</span> (error) {
-      alert(<span style="color:#d14">&#39;Database write failed!&#39;</span>)
-      console.error(<span style="color:#d14">&#39;Network error&#39;</span>, error)
-    } <span style="color:#000;font-weight:bold">finally</span> {
-      <span style="color:#000;font-weight:bold">this</span>.fetchAndInform()
+      console.info('Created new to-do with uid', res.data.uids.newTodo)
+    } catch (error) {
+      alert('Database write failed!')
+      console.error('Network error', error)
+    } finally {
+      this.fetchAndInform()
     }
   }
-</code></pre></div><p><code>commitNow</code> informs Dgraph that this transaction will not modify any more data and
+</code></pre>
+
+<p><code>commitNow</code> informs Dgraph that this transaction will not modify any more data and
 should be committed right away.</p>
-<p>In a more complex application we could set it to <code>false</code> (or omit it altogether) if we planned to perform more reads or mutations. In that case we'd have to manually call
+
+<p>In a more complex application we could set it to <code>false</code> (or omit it altogether) if we planned to perform more reads or mutations. In that case we&rsquo;d have to manually call
 <a href="https://github.com/dgraph-io/dgraph-js-http#commit-a-transaction"><code>commit()</code></a> at the right moment.</p>
+
 <p>Note how the response object contains the <code>uid</code> of the newly created item.
 Since we used the alias <code>&quot;_:newTodo&quot;</code> in our <code>setJson</code> mutation, the uid of that node
 is stored in the <code>uids.newTodo</code> of the response data.</p>
+
 <p>Our application can now write data to Dgraph, and we can see auto-incremented <code>uid</code> values printed to console:</p>
-<p><img src="/images/react-todomvc/create-todo.png" alt="Creating to-dos in Dgraph"></p>
+
+<p><img src="/images/react-todomvc/create-todo.png" alt="Creating to-dos in Dgraph" /></p>
+
 <p>You can also go to Ratel and re-run our query &mdash; the new to-dos will appear in the response.</p>
+
 <h4 id="deleting-nodes-from-dgraph">Deleting nodes from Dgraph</h4>
+
 <p>Code to delete a to-do is very similar to that for creating a to-do.
 We only need to specify a <code>uid</code> of the node being deleted, and use the <code>deleteJson</code> field
 on the mutation object:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  async destroy(todo) {
-    <span style="color:#000;font-weight:bold">try</span> {
-      await <span style="color:#000;font-weight:bold">this</span>.dgraph.newTxn().mutate({
-        deleteJson<span style="color:#000;font-weight:bold">:</span> {
-          uid<span style="color:#000;font-weight:bold">:</span> todo.uid
+
+<pre><code class="language-javascript">  async destroy(todo) {
+    try {
+      await this.dgraph.newTxn().mutate({
+        deleteJson: {
+          uid: todo.uid
         },
-        commitNow<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span>,
+        commitNow: true,
       })
-    } <span style="color:#000;font-weight:bold">catch</span> (error) {
-      alert(<span style="color:#d14">&#39;Database write failed!&#39;</span>)
-      console.error(<span style="color:#d14">&#39;Network error&#39;</span>, error)
-    } <span style="color:#000;font-weight:bold">finally</span> {
-      <span style="color:#000;font-weight:bold">this</span>.fetchAndInform()
+    } catch (error) {
+      alert('Database write failed!')
+      console.error('Network error', error)
+    } finally {
+      this.fetchAndInform()
     }
   }
-</code></pre></div><p>Deleting multiple to-dos for the <code>clearCompleted()</code> method can be done by passing an
+</code></pre>
+
+<p>Deleting multiple to-dos for the <code>clearCompleted()</code> method can be done by passing an
 array in the <code>deleteJson</code>:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    ...
-    <span style="color:#000;font-weight:bold">const</span> uidsToDelete <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">this</span>.todos
+
+<pre><code class="language-javascript">    ...
+    const uidsToDelete = this.todos
         .filter(({ completed }) =&gt; completed)
         .map(({ uid }) =&gt; ({ uid }))
 
-    await <span style="color:#000;font-weight:bold">this</span>.dgraph.newTxn().mutate({
-      deleteJson<span style="color:#000;font-weight:bold">:</span> uidsToDelete,
-      commitNow<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span>,
+    await this.dgraph.newTxn().mutate({
+      deleteJson: uidsToDelete,
+      commitNow: true,
     })
     ...
-</code></pre></div><h4 id="updating-data-in-dgraph">Updating data in Dgraph</h4>
+</code></pre>
+
+<h4 id="updating-data-in-dgraph">Updating data in Dgraph</h4>
+
 <p>Our application can create new to-dos in the database, can read the data back, and
 can remove unnecessary data.</p>
-<p>We just need to enable our users to edit their existing to-dos and we're done!</p>
+
+<p>We just need to enable our users to edit their existing to-dos and we&rsquo;re done!</p>
+
 <p>As you may have guessed already, editing a node property is just another transaction:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  async save(todoToSave, newTitle) {
-    <span style="color:#000;font-weight:bold">try</span> {
-      await <span style="color:#000;font-weight:bold">this</span>.dgraph.newTxn().mutate({
-        setJson<span style="color:#000;font-weight:bold">:</span> {
-          uid<span style="color:#000;font-weight:bold">:</span> todoToSave.uid,
-          title<span style="color:#000;font-weight:bold">:</span> newTitle,
+
+<pre><code class="language-javascript">  async save(todoToSave, newTitle) {
+    try {
+      await this.dgraph.newTxn().mutate({
+        setJson: {
+          uid: todoToSave.uid,
+          title: newTitle,
         },
-        commitNow<span style="color:#000;font-weight:bold">:</span> <span style="color:#000;font-weight:bold">true</span>,
+        commitNow: true,
       })
-    } <span style="color:#000;font-weight:bold">catch</span> (error) {
-      console.error(<span style="color:#d14">&#39;Network error&#39;</span>, error)
-    } <span style="color:#000;font-weight:bold">finally</span> {
-      <span style="color:#000;font-weight:bold">this</span>.fetchAndInform()
+    } catch (error) {
+      console.error('Network error', error)
+    } finally {
+      this.fetchAndInform()
     }
   }
-</code></pre></div><p>We don't need to pass the entire object back to Dgraph. We only include the new value for <code>title</code> in our mutation. Other predicates (such as <code>completed</code>) will have their values preserved.</p>
+</code></pre>
+
+<p>We don&rsquo;t need to pass the entire object back to Dgraph. We only include the new value for <code>title</code> in our mutation. Other predicates (such as <code>completed</code>) will have their values preserved.</p>
+
 <p>Methods that change completion status, <code>toggle(...)</code> and <code>toggleAll(...)</code>, also need to be rewritten
 to use Dgraph transactions, but this exercise is <a href="https://github.com/dgraph-io/dgraph-react-todomvc/commit/876b5af1e99308c42bbcb72ffe3082dbbd6e5914">left to the reader ;)</a>.</p>
-<p>Here's the final product:</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+
+<p>Here&rsquo;s the final product:</p>
+
+<!-- ffmpeg script to convert gif to mp4 https://gist.github.com/ingramchen/e2af352bf8b40bb88890fba4f47eccd0 -->
+
+<!-- not as simple as "ffmpeg -i a.gif a.mp4" because that doesn't work in Firefox -->
+
+<video autoplay loop muted playsinline width="100%">
+  <source src="/images/react-todomvc/todos-livedemo.mp4" type="video/mp4" />
+</video>
+
 <h3 id="summary">Summary</h3>
+
 <p>We have built a web app that is capable of accessing Dgraph to store and display data.
 To do that we have learned how to run Dgraph inside Docker containers, adjusted schema in Ratel,
 and learned how to send GraphQL+- queries to read data and to commit transactions in order to insert or modify data in Dgraph.</p>
+
 <p>There are many more things a developer of a real-life application would need to implement.
-Most notably I've omitted access control and backups, among other things.
+Most notably I&rsquo;ve omitted access control and backups, among other things.
 However, I hope this tutorial gave you an interesting and useful starting point for
 creating your own Dgraph-powered applications.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
