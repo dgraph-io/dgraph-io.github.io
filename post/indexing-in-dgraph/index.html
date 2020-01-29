@@ -447,13 +447,10 @@ Dgraph supports indexing natively, which means common use cases around full-text
             class="main__image"
             src="https://blog.dgraph.io/images/iss.jpg"
           >
-          <div class="article-content">
-
-<p>One of the cornerstones of Dgraph is that it allows a <em>flexible</em> schema, which
+          <div class="article-content"><p>One of the cornerstones of Dgraph is that it allows a <em>flexible</em> schema, which
 can be modified in a live system, without any downtime. This involves changing
 data types and adding or removing indices with a single <code>ALTER</code> command to match
 the needs of an application developer.</p>
-
 <p>Dgraph supports indexing natively, which means common use cases around full-text
 search, regular expressions, date matching, geolocation queries, etc. can all be
 executed within Dgraph, while maintaining transactional guarantees. That is,
@@ -462,17 +459,13 @@ updated and available to be queried. Indices are important to provide access to
 various <a href="https://docs.dgraph.io/query-language/#functions">functions</a> that Dgraph supports.  Users can specify the types of
 indices they want to build along with their schema.  For example, take a look at
 the following schema:</p>
-
 <pre><code>name: string @index(term, exact) .
 post: string @index(fulltext) .
-</code></pre>
-
-<p>The schema specifies two predicates. The <code>name</code> predicate has indices to check
+</code></pre><p>The schema specifies two predicates. The <code>name</code> predicate has indices to check
 for equality and for terms in a name.  The <code>post</code> predicate on the other hand
 generates an index that understands full text and is capable of checking for
 related word (e.g a search for the word think would return posts with the word
 thinking).</p>
-
 <p>To build indices, Dgraph exposes a simple <a href="https://github.com/dgraph-io/dgraph/blob/7fa6c17568e475ac209f4f04cd3ac011a1b4677a/tok/tok.go#L56-L80">interface</a>, called <code>Tokenizer</code>.
 Every tokenizer has a unique name and identifier, supports a certain type of
 data (int, float, string, date, geo, etc.), and is sortable and/or lossy. That
@@ -481,15 +474,12 @@ answers if the output from the tokenizer can be used to run inequality functions
 above case, <code>exact</code> index tokenizer is sortable, and not lossy. <code>term</code>
 tokenizer is not sortable and is lossy. Dgraph internally uses these to
 determine how to best execute various queries.</p>
-
 <p>Dgraph currently supports 13 tokenizers in total, including <code>trigram</code> for
 regular expressions and <code>geo</code> for geolocation indexing. It also
 allows users to further extend this list by creating their own <a href="https://docs.dgraph.io/query-language#indexing-with-custom-tokenizers">custom</a> tokenizers
 and attaching them to Dgraph process via Go plugins. You can see the available
 tokenizers and the functions they support <a href="https://docs.dgraph.io/query-language#indexing">here</a>.</p>
-
 <h3 id="problem">Problem</h3>
-
 <p>Previously, when the schema was updated, Dgraph searched if the list of
 tokenizers (i.e <code>term</code>, <code>fulltext</code>) had changed and regenerated the entire index
 if that was the case.  A tokenizer refers to a strategy that is used to generate
@@ -498,7 +488,6 @@ was added, the <code>exact</code> tokenizer would generate a single token with
 value <code>Barack Obama</code> while the term tokenizer would generate two tokens
 (<code>Barack</code> and <code>Obama</code>).  These tokens are used to generate a key that links
 the token to the node containing the original data.</p>
-
 <p>Rebuilding the entire index meant that Dgraph was performing a lot of extra work
 in cases where only a portion of the previous tokenizers were added or removed.
 As part of our continuous efforts to improve Dgraph, starting with upcoming
@@ -506,194 +495,174 @@ version 1.0.12, only the parts of the predicate index that need to be modified
 are affected by schema updates. Along the way, we have refactored the reindexing
 logic to make it follow better coding practices and a more strict separation of
 concerns.</p>
-
 <p>This blog entry will explore some of the strategies we used to clean up the code
 and eventually support partial reindexing.</p>
-
 <h3 id="indexing-showcase">Indexing showcase</h3>
-
 <p>First let&rsquo;s add two new predicates, <code>name</code> and <code>inner_thoughts</code>. Let&rsquo;s index <code>inner_thoughts</code> with the <code>fulltext</code> tokenizer.</p>
-
-<p><img src="/images/reindexing_1.gif" alt="Step 1" /></p>
-
+<p><img src="/images/reindexing_1.gif" alt="Step 1"></p>
 <p>Let&rsquo;s add a new node named &ldquo;Honey Badger&rdquo; and add its thoughts to the database.
 Afterwards, we can query its thoughts using the <code>fulltext</code> capabilities.
 For example, a search for &ldquo;getting&rdquo; will return this node because the words &ldquo;get&rdquo; and &ldquo;got&rdquo; appear inside the values of <code>inner_thoughts</code>.</p>
-
-<p><img src="/images/reindexing_2.gif" alt="Step 2" /></p>
-
+<p><img src="/images/reindexing_2.gif" alt="Step 2"></p>
 <p>Let&rsquo;s delete some of the indices.
 Afterwards, the previous query does not work anymore because it requires the <code>fulltext</code> index to function properly.</p>
-
-<p><img src="/images/reindexing_3.gif" alt="Step 3" /></p>
-
+<p><img src="/images/reindexing_3.gif" alt="Step 3"></p>
 <p>From the logs, we can observe that only the indices that changed were touched by the reindexing process.</p>
-
-<pre><code class="language-text">Logs for adding schema (set fulltext on inner_thoughts and exact, term on name):
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Logs for adding schema (set fulltext on inner_thoughts and exact, term on name):
 
 I0128 19:33:13.908820       1 index.go:700] Deleting index for attr inner_thoughts and tokenizers []
 I0128 19:33:13.908853       1 index.go:718] Rebuilding index for attr inner_thoughts and tokenizers [fulltext]
-I0128 19:33:13.908958       1 mutation.go:146] Done schema update predicate:&quot;inner_thoughts&quot; value_type:STRING directive:INDEX tokenizer:&quot;fulltext&quot; list:true
+I0128 19:33:13.908958       1 mutation.go:146] Done schema update predicate:&#34;inner_thoughts&#34; value_type:STRING directive:INDEX tokenizer:&#34;fulltext&#34; list:true
 I0128 19:33:13.912481       1 index.go:700] Deleting index for attr name and tokenizers []
 I0128 19:33:13.912511       1 index.go:718] Rebuilding index for attr name and tokenizers [exact term]
-I0128 19:33:13.912672       1 mutation.go:146] Done schema update predicate:&quot;name&quot; value_type:STRING directive:INDEX tokenizer:&quot;exact&quot; tokenizer:&quot;term&quot;
+I0128 19:33:13.912672       1 mutation.go:146] Done schema update predicate:&#34;name&#34; value_type:STRING directive:INDEX tokenizer:&#34;exact&#34; tokenizer:&#34;term&#34;
 
 ...
 
 Logs for modifying schema (deleted fulltext on inner_thoughts and exact on name):
 
 I0128 19:33:40.578193       1 index.go:700] Deleting index for attr inner_thoughts and tokenizers [fulltext]
-I0128 19:33:40.578261       1 mutation.go:146] Done schema update predicate:&quot;inner_thoughts&quot; value_type:STRING list:true
+I0128 19:33:40.578261       1 mutation.go:146] Done schema update predicate:&#34;inner_thoughts&#34; value_type:STRING list:true
 I0128 19:33:40.581631       1 index.go:700] Deleting index for attr name and tokenizers [term]
-I0128 19:33:40.581695       1 mutation.go:146] Done schema update predicate:&quot;name&quot; value_type:STRING directive:INDEX tokenizer:&quot;exact&quot;
-</code></pre>
-
-<h3 id="overview-of-the-previous-code">Overview of the previous code</h3>
-
+I0128 19:33:40.581695       1 mutation.go:146] Done schema update predicate:&#34;name&#34; value_type:STRING directive:INDEX tokenizer:&#34;exact&#34;
+</code></pre></div><h3 id="overview-of-the-previous-code">Overview of the previous code</h3>
 <p>Previously, reindexing logic was split among three files.</p>
-
 <ul>
-<li><p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/mutation.go">worker/mutation.go</a>:
+<li>
+<p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/mutation.go">worker/mutation.go</a>:
 This file decided whether the reindexing needed to happen by comparing the old and new schema updates.
-The logic was different depending on whether the schema previously existed, further complicating things.</p></li>
-
-<li><p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/index.go">worker/index.go</a>:
+The logic was different depending on whether the schema previously existed, further complicating things.</p>
+</li>
+<li>
+<p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/index.go">worker/index.go</a>:
 This file contained the reindexing functions that were called by <code>worker/mutation.go</code>.
-These functions in turn were just very light wrappers around the functions in the <code>postings</code> package that do most of the work.</p></li>
-
-<li><p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/posting/index.go">posting/index.go</a>:
-This file contained the main logic to delete and rebuild the indices.</p></li>
+These functions in turn were just very light wrappers around the functions in the <code>postings</code> package that do most of the work.</p>
+</li>
+<li>
+<p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/posting/index.go">posting/index.go</a>:
+This file contained the main logic to delete and rebuild the indices.</p>
+</li>
 </ul>
-
 <h3 id="refactoring">Refactoring</h3>
-
 <p>Before I embarked on the main task of supporting partial reindexing, I refactored the existing logic.
 Out of the gate, there were several avenues to simplify the logic.</p>
-
 <ul>
-<li><p><code>worker/index.go</code> could be removed entirely.
-The file was little more than a wrapper around other functions and obfuscated the logic without offering a compelling argument to keep using it.</p></li>
-
-<li><p><code>posting/index.go</code> had multiple entry points to delete and rebuild each type of index (i.e reverse or count indices).
-Instead, there should only be one exported function which decides which of these other functions should be called.</p></li>
-
-<li><p><code>worker/mutation.go</code> had different logic for new predicates than for predicates that existed already, even though a lot of this logic was replicated.
+<li>
+<p><code>worker/index.go</code> could be removed entirely.
+The file was little more than a wrapper around other functions and obfuscated the logic without offering a compelling argument to keep using it.</p>
+</li>
+<li>
+<p><code>posting/index.go</code> had multiple entry points to delete and rebuild each type of index (i.e reverse or count indices).
+Instead, there should only be one exported function which decides which of these other functions should be called.</p>
+</li>
+<li>
+<p><code>worker/mutation.go</code> had different logic for new predicates than for predicates that existed already, even though a lot of this logic was replicated.
 This file was also tasked with comparing the old and new schemas and deciding whether each type of index needs to be rebuilt.
-However, this is something that could be easily be done in <code>posting/index.go</code>, which would hide a lot of complexity from the <code>worker</code> package.</p></li>
+However, this is something that could be easily be done in <code>posting/index.go</code>, which would hide a lot of complexity from the <code>worker</code> package.</p>
+</li>
 </ul>
-
 <p>The basic idea behind the refactor was to let <code>worker/mutation.go</code> simply compile a list of the required information to perform the rebuild and move most of the logic to <code>posting/index.go</code>.</p>
-
 <p>I settled on the following struct:</p>
-
-<pre><code class="language-go">type IndexRebuild struct {
-	Attr          string // Predicate name.
-	StartTs       uint64 // Start timestamp of the current transaction.
-	OldSchema     *pb.SchemaUpdate
-	CurrentSchema *pb.SchemaUpdate
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">type</span> IndexRebuild <span style="color:#000;font-weight:bold">struct</span> {
+	Attr          <span style="color:#458;font-weight:bold">string</span> <span style="color:#998;font-style:italic">// Predicate name.
+</span><span style="color:#998;font-style:italic"></span>	StartTs       <span style="color:#458;font-weight:bold">uint64</span> <span style="color:#998;font-style:italic">// Start timestamp of the current transaction.
+</span><span style="color:#998;font-style:italic"></span>	OldSchema     <span style="color:#000;font-weight:bold">*</span>pb.SchemaUpdate
+	CurrentSchema <span style="color:#000;font-weight:bold">*</span>pb.SchemaUpdate
 }
-</code></pre>
-
-<p>This struct has a single method called <code>Run</code> that executes the entire reindexing process, which allowed me to get rid of the file <code>worker/index.go</code>.
+</code></pre></div><p>This struct has a single method called <code>Run</code> that executes the entire reindexing process, which allowed me to get rid of the file <code>worker/index.go</code>.
 The functions that rebuild each type of index are called by <code>Run</code>, thus preventing the caller from being exposed to unnecessary details.</p>
-
 <p>Each of these functions, figures out what operation (i.e. no-op, delete index, or rebuild index) needs to be performed.
 These functions share a similar pattern, expressed here in pseudo-code.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">type</span> indexOp <span style="color:#458;font-weight:bold">int</span>
 
-<pre><code class="language-go">type indexOp int
+<span style="color:#000;font-weight:bold">const</span> (
+	indexNoop    indexOp = <span style="color:#000;font-weight:bold">iota</span> <span style="color:#998;font-style:italic">// Index should be left alone.
+</span><span style="color:#998;font-style:italic"></span>	indexDelete          = <span style="color:#000;font-weight:bold">iota</span> <span style="color:#998;font-style:italic">// Index should be deleted.
+</span><span style="color:#998;font-style:italic"></span>	indexRebuild         = <span style="color:#000;font-weight:bold">iota</span> <span style="color:#998;font-style:italic">// Index should be deleted and rebuilt.
+</span><span style="color:#998;font-style:italic"></span>)
 
-const (
-	indexNoop    indexOp = iota // Index should be left alone.
-	indexDelete          = iota // Index should be deleted.
-	indexRebuild         = iota // Index should be deleted and rebuilt.
-)
+<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">performRebuildOfSomeIndexType</span>(rb <span style="color:#000;font-weight:bold">*</span>IndexRebuild) err {
+	op <span style="color:#000;font-weight:bold">:=</span> rb.<span style="color:#900;font-weight:bold">needsIndexRebuildOfThisType</span>()
 
-func performRebuildOfSomeIndexType(rb *IndexRebuild) err {
-	op := rb.needsIndexRebuildOfThisType()
-
-	// Nothing to do so just return
-	if op == indexNoop {
-		return nil
+	<span style="color:#998;font-style:italic">// Nothing to do so just return
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> op <span style="color:#000;font-weight:bold">==</span> indexNoop {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
 	}
 
-	// Logic to delete the index goes here
-
-	// In this case the index only needs to be deleted. For example, in the case
-	// a predicate is deleted entirely.
-	if op == indexDelete {
-		return nil
+	<span style="color:#998;font-style:italic">// Logic to delete the index goes here
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#998;font-style:italic">// In this case the index only needs to be deleted. For example, in the case
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#998;font-style:italic">// a predicate is deleted entirely.
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> op <span style="color:#000;font-weight:bold">==</span> indexDelete {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
 	}
 
-	// Logic to rebuild the index goes here
-}
-</code></pre>
-
-<p><code>indexOp</code> is central to how I was able to get rid of the duplicate logic.
+	<span style="color:#998;font-style:italic">// Logic to rebuild the index goes here
+</span><span style="color:#998;font-style:italic"></span>}
+</code></pre></div><p><code>indexOp</code> is central to how I was able to get rid of the duplicate logic.
 In the refactored code, a value of <code>indexRebuild</code> is returned when the schema is new or when the index needs to be rebuilt.
 Thus, both cases can be handled by the same logic.
 <code>indexNoop</code> and <code>indexDelete</code> do not cause the code to go into separate methods or large branches but rather cause the function to exit early depending on the circumstances.</p>
-
 <h3 id="implementing-partial-reindexing">Implementing partial reindexing</h3>
-
 <p>At this point I had cleaned up the code, but functionally Dgraph worked just as
 before.  The function that adds the index tokens is called <code>addIndexMutations</code>
 and is located inside <code>posting/index.go</code>.  At this point the function generated
 the new index using the complete list of tokenizers from the schema. So in order
 to support partial reindexing I did the following.</p>
-
 <ul>
-<li><p><code>needsIndexRebuild</code> was changed to not just an operation but a list of
+<li>
+<p><code>needsIndexRebuild</code> was changed to not just an operation but a list of
 tokenizers whose tokens need to be deleted and a list of tokenizers whose
 tokens need to be rebuilt.
 These lists are computed by calculating the difference between the set of
-current and previous tokenizers.</p></li>
-
-<li><p>The function that deletes the existing index was modified so that it accepts the name of a tokenizer.
+current and previous tokenizers.</p>
+</li>
+<li>
+<p>The function that deletes the existing index was modified so that it accepts the name of a tokenizer.
 This new function only deletes the entries that were previously added by that
 tokenizer.  Deletion happens by calling that function over all the tokenizers
-marked for deletion.</p></li>
-
-<li><p><code>addIndexMutations</code> was changed to receive a list of tokenizers as a new argument (or rather, a new field in the struct passed to the function).
-Only these tokenizers will be used to generate the tokens that need to be added to the index.</p></li>
+marked for deletion.</p>
+</li>
+<li>
+<p><code>addIndexMutations</code> was changed to receive a list of tokenizers as a new argument (or rather, a new field in the struct passed to the function).
+Only these tokenizers will be used to generate the tokens that need to be added to the index.</p>
+</li>
 </ul>
-
 <h3 id="lessons-learned">Lessons learned</h3>
-
 <ul>
-<li><p><strong>Interfaces should be as small as possible</strong>: Previously, the <code>worker</code>
+<li>
+<p><strong>Interfaces should be as small as possible</strong>: Previously, the <code>worker</code>
 package was exposed to a lot of the internal details of the logic inside the
 <code>postings</code> package.
 The split not only caused the code to be more difficult to understand but it
 made the code brittle since changes inside of <code>posting</code> required changes to
 other packages.  After refactoring, the changes to support partial reindexing
 were completely transparent to other packages to the point I did not have to
-modify <code>worker/mutations.go</code> at all.</p></li>
-
-<li><p><strong>Structs are your friends</strong>: Functions arguments and return values can
+modify <code>worker/mutations.go</code> at all.</p>
+</li>
+<li>
+<p><strong>Structs are your friends</strong>: Functions arguments and return values can
 quickly get out of hand. The more arguments or return values a function has the
 more brittle it becomes during refactorings.  Structs are a great way to reduce
 the number of arguments or return values by allowing us to aggregate related
 values under a single value.  We give up a little safety since the compiler will
 not know which of the struct&rsquo;s members are required to be passed or returned.
-However, the flexibility is worth the extra error-checking code.</p></li>
-
-<li><p><strong>Refactoring pays off</strong>: As mentioned above, investing time in simplifying
+However, the flexibility is worth the extra error-checking code.</p>
+</li>
+<li>
+<p><strong>Refactoring pays off</strong>: As mentioned above, investing time in simplifying
 the code eventually helped me implement partial reindexing a great deal. I could
 have tackled this task without refactoring, but I would only have made it more
-difficult for myself and for future contributors.</p></li>
+difficult for myself and for future contributors.</p>
+</li>
 </ul>
-
 <h3 id="conclusion">Conclusion</h3>
-
 <p>As we strive to improve the performance of Dgraph, it is also important that we
 manage and reduce the complexity of the code and follow best practices to the
 best of our ability.  Not only does that make our jobs easier, but it makes our
 codebase more welcoming to newcomers.</p>
-
 <p>As always, we welcome contributions and pull requests from the community.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -743,7 +712,6 @@ codebase more welcoming to newcomers.</p>
 		}
 	})
 </script>
-
 
 <p><em>Top image: <a href="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/44911459904_375bc02163_k.jpg">20 Years Ago, Construction Began on the International Space Station</a></em></p>
 </div>

@@ -448,116 +448,71 @@ Badger itself is not distributed, Dgraph implements a layer on top of it to prov
             class="main__image"
             src="https://blog.dgraph.io/images/badger2.jpg"
           >
-          <div class="article-content">
-
-<p>Dgraph is an open-source, transactional, distributed, native Graph database.
+          <div class="article-content"><p>Dgraph is an open-source, transactional, distributed, native Graph database.
 Dgraph is optimized for high-performance reads and writes.
 It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.</p>
-
 <p>Much of Dgraph&rsquo;s advanced performance capabilities come from <a href="https://github.com/dgraph-io/badger">Badger</a>.
 Badger is the embedded key-value store that is responsible for storing all of Dgraph&rsquo;s data.</p>
-
 <p>Badger itself is not distributed, Dgraph implements a layer on top of it to provide the distributed capabilities.</p>
-
 <p>We didn&rsquo;t build Badger at the outset.
 We started with RocksDB as the datastore underneath.
 But it was evident in a short while that Dgraph needs specialized storage like Badger.
 If you&rsquo;re curious to know the motivations for building Badger, <a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/">here is an article</a> from Dgraph&rsquo;s founder Manish R Jain.</p>
-
 <p>A few months ago, <a href="https://blog.dgraph.io/post/badger-v1.6.0-release/">v1.6.0 of Badger was released</a>.
 It had some significant performance improvements.</p>
-
 <p>Now, <a href="https://github.com/dgraph-io/badger/releases/tag/v2.0.0">Badger v2.0 is here</a>!
 This release is shipped with some exciting features like encryption at rest, compression, and caching.</p>
-
 <p>Also, there are no breaking API changes since v1.6.0.
 For previous versions, you should look at the <a href="https://github.com/dgraph-io/badger/blob/master/CHANGELOG.md#160---2019-07-01">release notes for v1.6.0</a>, since that version did contain breaking changes.</p>
-
 <p>There&rsquo;s a non-API breaking change due to the adoption of Go modules. To use Badger v2, you&rsquo;ll have to use Go modules in your project too.</p>
-
 <p>Let&rsquo;s glance through the notable features and some noteworthy enhancements introduced with this release.
 If you want to find the complete list of fixes, enhancements, and features, check out the <a href="https://github.com/dgraph-io/badger/blob/master/CHANGELOG.md#200---2019-11-12">change log</a>.</p>
-
 <p>Let&rsquo;s start with the brand new features introduced in this release of Badger.</p>
-
 <h3 id="data-cache-with-ristretto">Data cache with Ristretto</h3>
-
 <p>We <a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/">recently released Ristretto</a>, a high-performance cache in Go.</p>
-
 <p>With this release, Ristretto is <a href="https://github.com/dgraph-io/badger/pull/1066">integrated with Badger</a>.
 This integration speeds up lookups and iterations significantly.</p>
-
 <p>The cache is enabled by default, and you can set its size using the <a href="https://godoc.org/github.com/dgraph-io/badger#Options">WithMaxCacheSize</a> API.</p>
-
 <h3 id="data-compression">Data compression</h3>
-
 <p>Data compression is another <a href="https://github.com/dgraph-io/badger/pull/1013">key feature introduced in this release</a>.</p>
-
 <p>It saves storage space by compressing every block of data using one of the two compression algorithms provided.
 Only the SST files are compressed, not the files in the vlog.</p>
-
 <p>This option doesn&rsquo;t affect existing tables. Only the newly created tables are compressed.</p>
-
 <p>Compression is enabled by default.</p>
-
 <p>Badger supports two compression algorithms: <code>zstd</code> and <code>snappy</code>.</p>
-
 <p>It uses the <code>zstd</code> compression algorithm when Badger is built with <code>Cgo</code> enabled.
 When built without Cgo enabled, it uses the <code>snappy</code> algorithm.</p>
-
 <h3 id="encryption-at-rest">Encryption at rest</h3>
-
 <p>With a key focus on security, Badger now provides an option to <a href="https://github.com/dgraph-io/badger/pull/1042">encrypt its data</a>!</p>
-
 <p>To use encryption, you need to provide Badger an encryption key using the <a href="htps://godoc.org/github.com/dgraph-io/badger#Options.WithEncryptionKey">Options.WithEncryptionKey</a> API.</p>
-
 <p>Badger uses a different key to encrypt the data, these are called data keys, and they are auto-generated.</p>
-
 <p>The data key expires at regular intervals, and Badger auto-generates a new one every time it expires.
 The new data will be encrypted using the new data key, while the rest of the data still be encrypted with the data keys generated before.
 The expiry time for the data key is configurable using the <a href="https://godoc.org/github.com/dgraph-io/badger#Options.WithEncryptionKeyRotationDuration"><code>Options.WithEncryptionKeyRotationDuration</code></a> function.</p>
-
 <p>Badger stores the history of the data keys generated.
 All of them are encrypted using the encryption key, which you provided initially.</p>
-
 <p>The two-step encryption process, by design, provides an additional layer of security by allowing you to rotate keys frequently without having to re-encrypt your dataset.</p>
-
 <h3 id="ready-to-migrate">Ready to migrate?</h3>
-
 <p>Some of the performance enhancements have resulted in data format changes.
 Hence you cannot run this new version of Badger right out of the box on top of the data from the older versions.
 You need to migrate the data to the new to v2.0.</p>
-
 <p>Here&rsquo;s how to do it:</p>
-
 <p><strong>Step 1:</strong> Export the data from the older version of Badger.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">badger backup --dir path/to/badger/directory -f badger.backup
+</code></pre></div><p><strong>Step 2:</strong> Install  v2.0 of Badger. You can find the new binary in <code>$GOBIN</code> after the installation.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">go get -u github.com/dgraph-io/badger
 
-<pre><code class="language-sh">badger backup --dir path/to/badger/directory -f badger.backup
-</code></pre>
-
-<p><strong>Step 2:</strong> Install  v2.0 of Badger. You can find the new binary in <code>$GOBIN</code> after the installation.</p>
-
-<pre><code class="language-sh">go get -u github.com/dgraph-io/badger
-
-cd $GOPATH/src/github.com/dgraph-io/badger
+<span style="color:#0086b3">cd</span> <span style="color:#008080">$GOPATH</span>/src/github.com/dgraph-io/badger
 
 git checkout v2.0.0
 
-cd badger &amp;&amp; go install
-</code></pre>
-
-<p><strong>Step 3:</strong> Import the data back to Badger 2.0.</p>
-
-<pre><code class="language-sh">badger restore --dir path/to/new/badger/directory -f badger.backup
-</code></pre>
-
-<h3 id="thanks">Thanks</h3>
-
+<span style="color:#0086b3">cd</span> badger <span style="color:#000;font-weight:bold">&amp;&amp;</span> go install
+</code></pre></div><p><strong>Step 3:</strong> Import the data back to Badger 2.0.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">badger restore --dir path/to/new/badger/directory -f badger.backup
+</code></pre></div><h3 id="thanks">Thanks</h3>
 <p>The new features in this release are born out of requests from our community and enterprise users.</p>
-
 <p>We take this opportunity to thank all of our contributors and users.
 It&rsquo;s because of all of you BadgerDB is getting better with useful features, enhancements, and fixes in every release.</p>
-
 <p>Do give BadgerDB 2.0 a try and let us know your feedback.</p>
 </div>
           <div class="article-tag-list">

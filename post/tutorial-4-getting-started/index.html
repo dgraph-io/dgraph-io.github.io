@@ -449,255 +449,200 @@ Strings and languages Strings values in Dgraph are of UTF-8 format. Dgraph also 
             class="main__image"
             src="https://blog.dgraph.io/images/tutorials/4/andromeda.jpg"
           >
-          <div class="article-content">
-
-<p>Welcome to the fourth episode of getting started with Dgraph.</p>
-
+          <div class="article-content"><p>Welcome to the fourth episode of getting started with Dgraph.</p>
 <p>In the previous episode, we learned about Datatypes, Indexing, Filtering, and Reverse traversals in Dgraph.</p>
-
 <p>In this episode, we&rsquo;ll learn about using multi-language strings and operations on them using the language tags.</p>
-
 <h4 id="strings-and-languages">Strings and languages</h4>
-
 <p>Strings values in Dgraph are of UTF-8 format.
 Dgraph also supports values for string predicate types in multiple languages.
 The multi-lingual capability is particularly useful to build features, which requires you to store the same information in multiple languages.</p>
-
 <p>Let&rsquo;s learn more about them!</p>
-
 <p>Let&rsquo;s start with building a simple food review Graph.
 Here&rsquo;s the Graph model.
-<img src="/images/tutorials/4/a-graph-model.jpg" alt="model" /></p>
-
+<img src="/images/tutorials/4/a-graph-model.jpg" alt="model"></p>
 <p>The above Graph has three entities: Food, Comment, and Country.</p>
-
 <p>The nodes in the Graph represent these entities.</p>
-
 <p>For the rest of the tutorial, let&rsquo;s call the node representing a food item as a <code>food</code> node.
 The node representing a review comment as a <code>review</code> node, and the node representing the country of origin as a <code>country</code> node.</p>
-
 <p>Here&rsquo;s the relationship between them:</p>
-
 <ul>
 <li>Every food item is connected to its reviews via the <code>review</code> edge.</li>
 <li>Every food item is connected to its country of origin via the <code>origin</code> edge.</li>
 </ul>
-
 <p>Let&rsquo;s add some reviews for some fantastic dishes!</p>
-
 <p>How about spicing it up a bit before we do that?</p>
-
 <p>Let&rsquo;s add the reviews for these dishes in the native language of their country of origin.</p>
-
 <p>Let&rsquo;s go, amigos!</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;food_name&quot;: &quot;Hamburger&quot;,
-      &quot;review&quot;: [
+      <span style="color:#000080">&#34;food_name&#34;</span>: <span style="color:#d14">&#34;Hamburger&#34;</span>,
+      <span style="color:#000080">&#34;review&#34;</span>: [
         {
-          &quot;comment&quot;: &quot;Tastes very good&quot;
+          <span style="color:#000080">&#34;comment&#34;</span>: <span style="color:#d14">&#34;Tastes very good&#34;</span>
         }
       ],
-      &quot;origin&quot;: [
+      <span style="color:#000080">&#34;origin&#34;</span>: [
         {
-          &quot;country&quot;: &quot;United states of America&quot;
+          <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;United states of America&#34;</span>
         }
       ]
     },
     {
-      &quot;food_name&quot;: &quot;Carrillada&quot;,
-      &quot;review&quot;: [
+      <span style="color:#000080">&#34;food_name&#34;</span>: <span style="color:#d14">&#34;Carrillada&#34;</span>,
+      <span style="color:#000080">&#34;review&#34;</span>: [
         {
-          &quot;comment&quot;: &quot;Sabe muy sabroso&quot;
+          <span style="color:#000080">&#34;comment&#34;</span>: <span style="color:#d14">&#34;Sabe muy sabroso&#34;</span>
         }
       ],
-      &quot;origin&quot;: [
+      <span style="color:#000080">&#34;origin&#34;</span>: [
         {
-          &quot;country&quot;: &quot;Spain&quot;
+          <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;Spain&#34;</span>
         }
       ]
     },
     {
-      &quot;food_name&quot;: &quot;Pav Bhaji&quot;,
-      &quot;review&quot;: [
+      <span style="color:#000080">&#34;food_name&#34;</span>: <span style="color:#d14">&#34;Pav Bhaji&#34;</span>,
+      <span style="color:#000080">&#34;review&#34;</span>: [
         {
-          &quot;comment&quot;: &quot;स्वाद बहुत अच्छा है&quot;
+          <span style="color:#000080">&#34;comment&#34;</span>: <span style="color:#d14">&#34;स्वाद बहुत अच्छा है&#34;</span>
         }
       ],
-      &quot;origin&quot;: [
+      <span style="color:#000080">&#34;origin&#34;</span>: [
         {
-          &quot;country&quot;: &quot;India&quot;
+          <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;India&#34;</span>
         }
       ]
     },
     {
-      &quot;food_name&quot;: &quot;Borscht&quot;,
-      &quot;review&quot;: [
+      <span style="color:#000080">&#34;food_name&#34;</span>: <span style="color:#d14">&#34;Borscht&#34;</span>,
+      <span style="color:#000080">&#34;review&#34;</span>: [
         {
-          &quot;comment&quot;: &quot;очень вкусно&quot;
+          <span style="color:#000080">&#34;comment&#34;</span>: <span style="color:#d14">&#34;очень вкусно&#34;</span>
         }
       ],
-      &quot;origin&quot;: [
+      <span style="color:#000080">&#34;origin&#34;</span>: [
         {
-          &quot;country&quot;: &quot;Russia&quot;
+          <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;Russia&#34;</span>
         }
       ]
     },
     {
-      &quot;food_name&quot;: &quot;mapo tofu&quot;,
-      &quot;review&quot;: [
+      <span style="color:#000080">&#34;food_name&#34;</span>: <span style="color:#d14">&#34;mapo tofu&#34;</span>,
+      <span style="color:#000080">&#34;review&#34;</span>: [
         {
-          &quot;comment&quot;: &quot;真好吃&quot;
+          <span style="color:#000080">&#34;comment&#34;</span>: <span style="color:#d14">&#34;真好吃&#34;</span>
         }
       ],
-      &quot;origin&quot;: [
+      <span style="color:#000080">&#34;origin&#34;</span>: [
         {
-          &quot;country&quot;: &quot;China&quot;
+          <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;China&#34;</span>
         }
       ]
     }
   ]
 }
-</code></pre>
-
-<p><em>Note: If this mutation syntax is new to you, refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first tutorial</a> to learn basics of mutation in Dgraph.</em></p>
-
+</code></pre></div><p><em>Note: If this mutation syntax is new to you, refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first tutorial</a> to learn basics of mutation in Dgraph.</em></p>
 <p>Here&rsquo;s our Graph!
-<img src="/images/tutorials/4/a-full-graph.png" alt="full graph" /></p>
-
+<img src="/images/tutorials/4/a-full-graph.png" alt="full graph"></p>
 <p>Our Graph has:</p>
-
 <ul>
 <li>Five blue food nodes.</li>
 <li>The green nodes represent the country of origin of these food items.</li>
 <li>The reviews of the food items are in pink.</li>
 </ul>
-
 <p>You can also see that Dgraph has auto-detected the data types of the predicates.
 You can check that out from the schema tab.
-<img src="/images/tutorials/4/c-schema.png" alt="full graph" />
+<img src="/images/tutorials/4/c-schema.png" alt="full graph">
 <em>Note: Check out the <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">previous tutorial</a> to know more about data types in Dgraph.</em></p>
-
 <p>Let&rsquo;s write a query to fetch all the food items, their reviews, and their country of origin.</p>
-
 <p>Go to the query tab, paste the query, and click Run.</p>
-
-<pre><code class="language-graphql">{
-  food_review(func: has(food_name)) {
-    food_name
-      review {
-        comment
-      }
-      origin {
-        country
-      }
-  }
-}
-</code></pre>
-
-<p><em>Note: Check the <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">second tutorial</a> if you want to learn more about traversal queries like the above one</em></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>food_review(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(food_name))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>food_name<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>review<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>comment<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>origin<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>country<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><em>Note: Check the <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">second tutorial</a> if you want to learn more about traversal queries like the above one</em></p>
 <p>Now, Let&rsquo;s fetch only the food items and their reviews,</p>
-
-<pre><code class="language-graphql">{
-  food_review(func: has(food_name)) {
-    food_name
-      review {
-        comment
-      }
-  }
-}
-</code></pre>
-
-<p>As expected, these comments are in different languages.
-<img src="/images/tutorials/4/b-comments.png" alt="full graph" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>food_review(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(food_name))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>food_name<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>review<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>comment<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>As expected, these comments are in different languages.
+<img src="/images/tutorials/4/b-comments.png" alt="full graph"></p>
 <p>But can we fetch the reviews based on their language?
 Can we write a query which says: <em>Hey Dgraph, can you give me only the reviews written in Chinese?</em></p>
-
 <p>That&rsquo;s possible, but only if you provide additional information about the language of the string data.
 You can do so by using language tags.
 While adding the string data using mutations, you can use the language tags to specify the language of the string predicates.</p>
-
 <p>Let&rsquo;s see the language tags in action!</p>
-
 <p>I&rsquo;ve heard that Sushi is yummy! Let&rsquo;s add a review for <code>Sushi</code> in more than one language.
 We&rsquo;ll be writing the review in three different languages: English, Japanese, and Russian.</p>
-
 <p>Here&rsquo;s the mutation to do so.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;food_name&quot;: &quot;Sushi&quot;,
-      &quot;review&quot;: [
+      <span style="color:#000080">&#34;food_name&#34;</span>: <span style="color:#d14">&#34;Sushi&#34;</span>,
+      <span style="color:#000080">&#34;review&#34;</span>: [
         {
-          &quot;comment&quot;: &quot;Tastes very good&quot;,
-          &quot;comment@jp&quot;: &quot;とても美味しい&quot;,
-          &quot;comment@ru&quot;: &quot;очень вкусно&quot;
+          <span style="color:#000080">&#34;comment&#34;</span>: <span style="color:#d14">&#34;Tastes very good&#34;</span>,
+          <span style="color:#000080">&#34;comment@jp&#34;</span>: <span style="color:#d14">&#34;とても美味しい&#34;</span>,
+          <span style="color:#000080">&#34;comment@ru&#34;</span>: <span style="color:#d14">&#34;очень вкусно&#34;</span>
         }
       ],
-      &quot;origin&quot;: [
+      <span style="color:#000080">&#34;origin&#34;</span>: [
         {
-          &quot;country&quot;: &quot;Japan&quot;
+          <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;Japan&#34;</span>
         }
       ]
     }
   ]
 }
-</code></pre>
-
-<p>Let&rsquo;s take a closer look at how we assigned values for the <code>comment</code> predicate in different languages.</p>
-
+</code></pre></div><p>Let&rsquo;s take a closer look at how we assigned values for the <code>comment</code> predicate in different languages.</p>
 <p>We used the language tags (@ru, @jp) as a suffix for the <code>comment</code> predicate.</p>
-
 <p>In the above mutation:</p>
-
 <ul>
-<li><p>We used the <code>@ru</code> language tag to add the comment in Russian: <code>&quot;comment@ru&quot;: &quot;очень вкусно&quot;</code>.</p></li>
-
-<li><p>We used the <code>@jp</code> language tag to add the comment in Japanese: <code>&quot;comment@jp&quot;: &quot;とても美味しい&quot;</code>.</p></li>
-
-<li><p>The comment in <code>English</code> is untagged: <code>&quot;comment&quot;: &quot;Tastes very good&quot;</code>.</p></li>
+<li>
+<p>We used the <code>@ru</code> language tag to add the comment in Russian: <code>&quot;comment@ru&quot;: &quot;очень вкусно&quot;</code>.</p>
+</li>
+<li>
+<p>We used the <code>@jp</code> language tag to add the comment in Japanese: <code>&quot;comment@jp&quot;: &quot;とても美味しい&quot;</code>.</p>
+</li>
+<li>
+<p>The comment in <code>English</code> is untagged: <code>&quot;comment&quot;: &quot;Tastes very good&quot;</code>.</p>
+</li>
 </ul>
-
 <p>In the mutation above, Dgraph creates a new node for the reviews, and stores <code>comment</code>, <code>comment@ru</code>, and <code>comment@jp</code> in different predicates inside the same node.</p>
-
 <p><em>Note: If you&rsquo;re not clear about basic terminology like <code>predicates</code>, do read the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first tutorial</a>.</em></p>
-
 <p>Let&rsquo;s run the above mutation.</p>
-
 <p>Go to the mutate tab, paste the mutation, and click Run.</p>
-
-<p><img src="/images/tutorials/4/d-lang-error.png" alt="lang error" /></p>
-
+<p><img src="/images/tutorials/4/d-lang-error.png" alt="lang error"></p>
 <p>We got an error! Using the language tag requires you to add the <code>@lang</code> directive to the schema.</p>
-
 <p>Follow the instructions below to add the <code>@lang</code> directive to the <code>comment</code> predicate.</p>
-
 <ul>
 <li>Go to the Schema tab.</li>
 <li>Click on the <code>comment</code> predicate.</li>
 <li>Tick mark the <code>lang</code> directive.</li>
 <li>Click on the <code>Update</code> button.</li>
 </ul>
-
-<p><img src="/images/tutorials/4/e-update-lang.png" alt="lang error" /></p>
-
+<p><img src="/images/tutorials/4/e-update-lang.png" alt="lang error"></p>
 <p>Let&rsquo;s re-run the mutation.
-<img src="/images/tutorials/4/f-mutation-success.png" alt="lang error" /></p>
-
+<img src="/images/tutorials/4/f-mutation-success.png" alt="lang error"></p>
 <p>Success!</p>
-
 <p>Again, remember that using the above mutation, we have added only one review for Sushi, not three different reviews!</p>
-
 <p>But, if you want to add three different reviews, here&rsquo;s how you do it.</p>
-
 <p>Adding the review in the format below creates three nodes, one for each of the comments.
 But, do it only when you&rsquo;re adding a new review, not to represent the same review in different languages.</p>
-
 <pre><code>&quot;review&quot;: [
   {
     &quot;comment&quot;: &quot;Tastes very good&quot;
@@ -709,87 +654,59 @@ But, do it only when you&rsquo;re adding a new review, not to represent the same
     &quot;comment@ru&quot;: &quot;очень вкусно&quot;
   }
  ]
-</code></pre>
-
-<p>Dgraph allows any strings to be used as language tags.
+</code></pre><p>Dgraph allows any strings to be used as language tags.
 But, it is highly recommended only to use the ISO standard code for language tags.</p>
-
 <p>By following the standard, you eliminate the need to communicate the tags to your team or to document it somewhere.
 <a href="https://www.w3schools.com/tags/ref_language_codes.asp">Click here</a> to see the list of ISO standard codes for language tags.</p>
-
 <p>In our next section, let&rsquo;s make use of the language tags in our queries.</p>
-
 <h4 id="querying-using-language-tags">Querying using language tags.</h4>
-
 <p>Let&rsquo;s obtain the review comments only for <code>Sushi</code>.</p>
-
 <p>In the <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">previous article</a>, we learned about using the <code>eq</code> operator and the <code>hash</code> index to query for string predicate values.</p>
-
 <p>Using that knowledge, let&rsquo;s first add the <code>hash</code> index for the <code>food_name</code> predicate.
-<img src="/images/tutorials/4/g-hash.png" alt="hash index" /></p>
-
+<img src="/images/tutorials/4/g-hash.png" alt="hash index"></p>
 <p>Now, go to the query tab, paste the query in the text area, and click Run.</p>
-
-<pre><code class="language-graphql">{
-  food_review(func: eq(food_name,&quot;Sushi&quot;)) {
-    food_name
-      review {
-        comment
-      }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/4/h-comment.png" alt="hash index" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>food_review(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(food_name,<span style="color:#d14">&#34;Sushi&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>food_name<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>review<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>comment<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/4/h-comment.png" alt="hash index"></p>
 <p>By default, the query only returns the untagged comment.</p>
-
 <p>But you can use the language tag to query specifically for a review comment in a given language.</p>
-
 <p>Let&rsquo;s query for a review for <code>Sushi</code> in Japanese.</p>
-
-<pre><code class="language-graphql">{
-  food_review(func: eq(food_name,&quot;Sushi&quot;)) {
-    food_name
-    review {
-      comment@jp
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/4/i-japanese.png" alt="Japanese" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>food_review(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(food_name,<span style="color:#d14">&#34;Sushi&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>food_name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>review<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>comment<span style="color:#3c5d5d;font-weight:bold">@jp</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/4/i-japanese.png" alt="Japanese"></p>
 <p>Now, let&rsquo;s query for a review for <code>Sushi</code> in Russian.</p>
-
-<pre><code class="language-graphql">{
-  food_review(func: eq(food_name,&quot;Sushi&quot;)) {
-    food_name
-    review {
-      comment@ru
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/4/j-russian.png" alt="Russian" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>food_review(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(food_name,<span style="color:#d14">&#34;Sushi&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>food_name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>review<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>comment<span style="color:#3c5d5d;font-weight:bold">@ru</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/4/j-russian.png" alt="Russian"></p>
 <p>You can also fetch all the comments for <code>Sushi</code> written in any language.</p>
-
-<pre><code class="language-graphql">{
-  food_review(func: eq(food_name,&quot;Sushi&quot;)) {
-    food_name
-    review {
-      comment@*
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/4/k-star.png" alt="Russian" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>food_review(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(food_name,<span style="color:#d14">&#34;Sushi&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>food_name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>review<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>comment<span style="color:#a61717;background-color:#e3d2d2">@</span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/4/k-star.png" alt="Russian"></p>
 <p>Here is the table with the syntax for various ways of making use of language tags while querying.</p>
-
 <table>
 <thead>
 <tr>
@@ -797,82 +714,59 @@ But, it is highly recommended only to use the ISO standard code for language tag
 <th>Result</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>comment</td>
 <td>Look for an untagged string; return nothing if no untagged review exists.</td>
 </tr>
-
 <tr>
 <td>comment@.</td>
 <td>Look for an untagged string, if not found, then return review in any language. But, this returns only a single value.</td>
 </tr>
-
 <tr>
 <td>comment@jp</td>
 <td>Look for comment tagged <code>@jp</code>. If not found, the query returns nothing.</td>
 </tr>
-
 <tr>
 <td>comment@ru</td>
 <td>Look for comment tagged <code>@ru</code>. If not found, the query returns nothing.</td>
 </tr>
-
 <tr>
 <td>name@jp:.</td>
 <td>Look for comment tagged <code>@jp</code> first. If not found, then find the untagged comment. If that&rsquo;s not found too, return anyone comment in other languages.</td>
 </tr>
-
 <tr>
 <td>name@jp:ru</td>
 <td>Look for comment tagged <code>@jp</code>, then <code>@ru</code>. If neither is found, it returns nothing.</td>
 </tr>
-
 <tr>
 <td>name@jp:ru:.</td>
 <td>Look for comment tagged <code>@jp</code>, then <code>@ru</code>. If both not found, then find the untagged comment. If that&rsquo;s not found too, return any other comment if it exists.</td>
 </tr>
-
 <tr>
 <td>name@*</td>
 <td>Return all the language tags, including the untagged.</td>
 </tr>
 </tbody>
 </table>
-
 <p>If you remember, we had initially added a Russian dish <code>Borscht</code> with its review in <code>Russian</code>.</p>
-
-<p><img src="/images/tutorials/4/l-russian.png" alt="Russian" /></p>
-
+<p><img src="/images/tutorials/4/l-russian.png" alt="Russian"></p>
 <p>If you notice, we haven&rsquo;t used the language tag <code>@ru</code> for the review written in Russian.</p>
-
 <p>Hence, if we query for all the reviews written in <code>Russian</code>, the review for <code>Borscht</code> doesn&rsquo;t make it to the list.</p>
-
 <p>Only the review for <code>Sushi,</code> written in <code>Russian</code>, makes it to the list.</p>
-
-<p><img src="/images/tutorials/4/m-sushi.png" alt="Russian" /></p>
-
+<p><img src="/images/tutorials/4/m-sushi.png" alt="Russian"></p>
 <p>So, here&rsquo;s the lesson of the day!</p>
-
 <blockquote>
 <p>If you are representing the same information in different languages, don&rsquo;t forget to add your language tags!</p>
 </blockquote>
-
 <h4 id="summary">Summary</h4>
-
 <p>In this tutorial, we learned about using multi-language string and operations on them using the language tags.</p>
-
 <p>The usage of tags is not just restricted to multi-lingual strings.
 Language tags are just a use case of Dgraph&rsquo;s capability to tag data.</p>
-
 <p>In the next tutorial, we&rsquo;ll continue our quest into the string types in Dgraph.
 We&rsquo;ll explore the string type indices in detail.</p>
-
 <p>Sounds interesting?</p>
-
 <p>See you all soon in the next tutorial. Till then, happy Graphing!</p>
-
 <div class="engage">
 	<p>
 		<strong>
@@ -923,48 +817,10 @@ We&rsquo;ll explore the string type indices in detail.</p>
 	})
 </script>
 
-
-<script src="//unpkg.com/clipboard@2.0.4"></script>
-<script src="/js/tutorial-3.js"></script>
-
-<style>
- pre.with-expand {
- position: relative;
- max-height: 300px;
- overflow: hidden;
- }
-
- pre.with-expand .expander {
- color: #ccc;
- cursor: pointer;
- padding: 32px 0 2px;
- position: absolute;
- text-align: center;
- bottom: 0;
- left: 0;
- right: 0;
- background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75));
- }
-
- pre.with-expand.expanded {
- max-height: unset;
- }
- pre.with-expand.expanded .expander {
- display: none;
- }
-
- .copy-btn {
- background: #fff;
- border: 1px solid #666;
- border-radius: 2px;
- cursor: pointer;
- display: block;
- padding: 2px 6px;
- position: absolute;
- top: 4px;
- right: 4px;
- }
-</style>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 </div>
           <div class="article-tag-list">
             

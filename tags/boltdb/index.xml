@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Boltdb on Dgraph Blog</title>
+    <title>BoltDB on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/boltdb/</link>
-    <description>Recent content in Boltdb on Dgraph Blog</description>
+    <description>Recent content in BoltDB on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
