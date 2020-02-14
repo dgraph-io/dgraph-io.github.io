@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Fri, 14 Feb 2020 19:59:00 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2020 20:30:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>DevRel</title>
       <link>https://blog.dgraph.io/tags/devrel/</link>
-      <pubDate>Fri, 14 Feb 2020 19:59:00 +0530</pubDate>
+      <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/tags/devrel/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>tutorial</title>
       <link>https://blog.dgraph.io/tags/tutorial/</link>
-      <pubDate>Fri, 14 Feb 2020 19:59:00 +0530</pubDate>
+      <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/tags/tutorial/</guid>
       <description></description>
@@ -49,7 +49,7 @@
     </item>
     
     <item>
-      <title>GraphQL</title>
+      <title>graphql</title>
       <link>https://blog.dgraph.io/tags/graphql/</link>
       <pubDate>Tue, 10 Dec 2019 14:30:00 +0530</pubDate>
       

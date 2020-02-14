@@ -4,36 +4,36 @@
   
   <url>
     <loc>https://blog.dgraph.io/tags/devrel/</loc>
-    <lastmod>2020-02-14T19:59:00+05:30</lastmod>
+    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2020-02-14T19:59:00+05:30</lastmod>
+    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/tutorial-8-getting-started/</loc>
-    <lastmod>2020-02-14T19:59:00+05:30</lastmod>
+    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2020-02-14T19:59:00+05:30</lastmod>
+    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/</loc>
-    <lastmod>2020-02-14T19:59:00+05:30</lastmod>
+    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/tutorial/</loc>
-    <lastmod>2020-02-14T19:59:00+05:30</lastmod>
+    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
     <priority>0</priority>
   </url>
   
@@ -70,14 +70,14 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/graphql/</loc>
+    <loc>https://blog.dgraph.io/post/graphql-summit-19/</loc>
     <lastmod>2019-12-10T14:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/post/graphql-summit-19/</loc>
+    <loc>https://blog.dgraph.io/tags/graphql/</loc>
     <lastmod>2019-12-10T14:30:00+05:30</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
