@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jan 2020 20:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 14 Feb 2020 20:00:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,12 +15,12 @@
     <item>
       <title>Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features</title>
       <link>https://blog.dgraph.io/post/tutorial-8-getting-started/</link>
-      <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
+      <pubDate>Fri, 14 Feb 2020 20:00:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/post/tutorial-8-getting-started/</guid>
       <description>Welcome to the eighth episode of getting started with Dgraph.
 In the previous episode, we learned about building a twitter-like user-search feature using Dgraph&amp;rsquo;s fuzzy search.
-In this episode, we&amp;rsquo;ll build a graph of tourist locations around San Franciso and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&amp;rsquo;s geolocation capabilities.
+In this episode, we&amp;rsquo;ll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&amp;rsquo;s geolocation capabilities.
 You might have used Google to find the restaurants near you or to find the shopping centres within a mile of your current location.</description>
     </item>
     

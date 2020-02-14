@@ -95,7 +95,7 @@
   <meta name="twitter:title" content="Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features"/>
   <meta name="twitter:description" content="Welcome to the eighth episode of getting started with Dgraph.
 In the previous episode, we learned about building a twitter-like user-search feature using Dgraph&rsquo;s fuzzy search.
-In this episode, we&rsquo;ll build a graph of tourist locations around San Franciso and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&rsquo;s geolocation capabilities.
+In this episode, we&rsquo;ll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&rsquo;s geolocation capabilities.
 You might have used Google to find the restaurants near you or to find the shopping centres within a mile of your current location."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -413,7 +413,7 @@ You might have used Google to find the restaurants near you or to find the shopp
             <div class="article__meta">
               <span class="article__meta-item article__date">
                 
-                  Tue, Jan 28, 2020
+                  Fri, Feb 14, 2020
                  by
                 Karthic Rao
 
@@ -455,7 +455,7 @@ You might have used Google to find the restaurants near you or to find the shopp
 
 <p>In the <a href="https://blog.dgraph.io/post/tutorial-7-getting-started/">previous episode</a>, we learned about building a twitter-like user-search feature using <a href="https://docs.dgraph.io/query-language/#fuzzy-matching">Dgraph&rsquo;s fuzzy search</a>.</p>
 
-<p>In this episode, we&rsquo;ll build a graph of tourist locations around San Franciso and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&rsquo;s geolocation capabilities.</p>
+<p>In this episode, we&rsquo;ll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&rsquo;s geolocation capabilities.</p>
 
 <p>You might have used Google to find the restaurants near you or to find the shopping centres within a mile of your current location.
 Applications like these make use of your geolocation data.</p>
@@ -2005,8 +2005,8 @@ You can visit our <a href="(https://blog.dgraph.io/post/tutorial-3-getting-start
 <p>We have the filter to select only the <code>hotels</code> while we traverse the <code>location type nodes</code>.
 Can we cascade or bubble up the filter to the root level, so that, we only have <code>hotels</code> in the final result?</p>
 
-<p>Yes you can! You can do by using the <code>@cascade</code> directive.
-The <code>@cascade</code> directive helps you <code>cascade</code> or <code>bubble up</code> the filters applied to your innner query traversals to the root level nodes, by doing so, we get only the locations of <code>hotels</code> in our result.</p>
+<p>Yes, you can! You can do by using the <code>@cascade</code> directive.
+The <code>@cascade</code> directive helps you <code>cascade</code> or <code>bubble up</code> the filters applied to your inner query traversals to the root level nodes, by doing so, we get only the locations of <code>hotels</code> in our result.</p>
 
 <pre><code class="language-graphql">{
   find_hotel(func: near(location, [-122.479784,37.82883295],7000)) @cascade {
