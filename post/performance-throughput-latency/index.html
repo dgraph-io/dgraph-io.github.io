@@ -449,20 +449,26 @@
           >
           <div class="article-content"><p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
+
 <h2 id="the-dataset">The Dataset</h2>
+
 <p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
 On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
 It is an ideal data set to test the performance of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .
 We decided not to use the entire data set as it wasn&rsquo;t necessary for our goal here.</p>
+
 <p>Given our love for movies, we narrowed it down to the film data.
 We ran some scripts and filtered in the movie data only.
 All the data and scripts are present in <a href="https://github.com/dgraph-io/benchmarks/tree/master/data">our benchmarks repository</a>.
 There are two million nodes, which represent directors, actors, films and all the other objects in the database.
 Moreover, 21 million edges (including 4M edges for names) are representing the relationships between actors, films, directors and all the other nodes in the database.</p>
-<hr>
+
+<hr />
+
 <p>Some interesting information about this data:</p>
+
 <pre><code># film.film --{film.film.starring}--&gt; [mediator] --{film.performance.actor}--&gt; film.actor
 # Film --&gt; Mediator
 $ zgrep &quot;&lt;film.film.starring&gt;&quot; rdf-films.gz | wc -l
@@ -499,112 +505,159 @@ $ zcat langnames.gz | awk '{print $1}' | uniq | sort | uniq | wc -l
 # Total number of countries.
 $ zgrep &quot;&lt;film.film.country&gt;&quot; rdf-films.gz | awk '{print $3}' | uniq | sort | uniq | wc -l
 304
-</code></pre><hr>
+</code></pre>
+
+<hr />
+
 <p>This data set contains information about ~480K actors, ~100K directors and ~240K films.
 Some example of entries in the dataset are :</p>
+
 <pre><code>&lt;m.0102j2vq&gt; &lt;film.actor.film&gt; &lt;m.011kyqsq&gt; .
 &lt;m.0102xz6t&gt; &lt;film.performance.film&gt; &lt;m.0kv00q&gt; .
 &lt;m.050llt&gt; &lt;type.object.name&gt; “Aishwarya Rai Bachchan”@hr .
 &lt;m.0bxtg&gt; &lt;type.object.name&gt; “Tom Hanks”@es .
-</code></pre><h2 id="terminology">Terminology</h2>
+</code></pre>
+
+<h2 id="terminology">Terminology</h2>
+
 <ul>
 <li>Throughput: Number of queries served by the server per second and received by the client</li>
 <li>Latency: Difference between the time when the server received the request and the time it finished processing the request</li>
 <li>95 percentile latency: The worst case latency which 95 percentage of users that query the database face</li>
 <li>50 percentile latency: The worst case latency which half the users that query the database face</li>
 </ul>
+
 <h2 id="setup">Setup</h2>
+
 <p>All the testing was done on GCE instances. Each machine had 30GB of SSD and at least 7.5 GB of RAM. The number of cores varied depending on the experiments performed.</p>
+
 <p>The tests were run for 1-minute intervals during which all the parallel connections made requests to the database.
 This was repeated ten times and throughput, mean latency, 95th percentile latency, 50th percentile latency were measured.
 Note that for user-facing systems, measuring percentile latency is better than mean latency as the average can be skewed by outliers.</p>
+
 <p>In a multi-node cluster set up, the queries were distributed among each node in a round-robin fashion.
 Note that no single machine contains all the data to answer these queries, in a multi-node cluster.
 They still have to communicate with each other to respond to the queries.</p>
+
 <h2 id="variables">Variables</h2>
+
 <p>The parameters that were varied were:</p>
+
 <ol>
 <li>A number of parallel connections to the database. In Go, this equated to the number of goroutines a client would have. Each goroutine would run in an infinite loop, querying the database via a blocking function.</li>
 <li>Number of cores per server</li>
 <li>Number of servers in the cluster</li>
 </ol>
+
 <p>This gave us an idea of what to expect from the system and would help in predicting the configuration required to handle a given load.</p>
+
 <h2 id="queries">Queries</h2>
+
 <p>We ran broadly 2 categories of queries.</p>
+
 <ul>
-<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
-</ul>
+<li><p>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</p>
+
 <pre><code>{
-  me ( _xid_ : XID ) {
+me ( _xid_ : XID ) {
+type.object.name.en
+film.actor.film {
+  film.performance.film {
     type.object.name.en
-    film.actor.film {
-      film.performance.film {
-        type.object.name.en
-      }
-    }
   }
 }
-</code></pre><ul>
-<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
-</ul>
+}
+}
+</code></pre></li>
+
+<li><p>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</p>
+
 <pre><code>{
-  me ( _xid_ : XID ) {
+me ( _xid_ : XID ) {
+type.object.name.en
+film.director.film {
+  film.film.genre {
     type.object.name.en
-    film.director.film {
-      film.film.genre {
-        type.object.name.en
-      }
-    }
   }
 }
-</code></pre><p>During each iteration, either an actor or a director category was chosen randomly.
+}
+}
+</code></pre></li>
+</ul>
+
+<p>During each iteration, either an actor or a director category was chosen randomly.
 Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
+
 <h2 id="performance">Performance</h2>
+
 <p>Let us look at some graphs obtained by varying the machine specs and the number of nodes in the cluster under different loads.</p>
+
 <h3 id="vary-the-number-of-cores-in-a-single-instance">Vary the number of cores in a single instance</h3>
-<p><img src="/images/cores_thru.jpg" alt="Throughput on varying number of cores"></p>
-<p><img src="/images/cores_lat_50.jpg" alt="50 percentile latency on varying number of cores"></p>
-<p><img src="/images/cores_lat_95.jpg" alt="95 percentile latency on varying number of cores"></p>
-<p><img src="/images/cores_lat_mean.jpg" alt="mean latency on varying number of cores"></p>
+
+<p><img src="/images/cores_thru.jpg" alt="Throughput on varying number of cores" /></p>
+
+<p><img src="/images/cores_lat_50.jpg" alt="50 percentile latency on varying number of cores" /></p>
+
+<p><img src="/images/cores_lat_95.jpg" alt="95 percentile latency on varying number of cores" /></p>
+
+<p><img src="/images/cores_lat_mean.jpg" alt="mean latency on varying number of cores" /></p>
+
 <ul>
 <li>With the same number of cores, when we increase the number of connections, i.e. load on the system, the throughput as well as the latency increase.</li>
 <li>Throughput increases till some point and then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
 <li>As expected, the latency increases almost linearly with the number of connections.</li>
 <li>When we increase the number of cores, the latency decreases and the throughput increases.</li>
 </ul>
+
 <h3 id="vary-number-of-instances">Vary number of instances</h3>
-<p><img src="/images/topo_thru.jpg" alt="Throughput on varying number of instances"></p>
-<p><img src="/images/dist_lat_50.jpg" alt="50 percentile latency on varying number of instances"></p>
-<p><img src="/images/dist_lat_95.jpg" alt="95 percentile latency on varying number of instances"></p>
-<p><img src="/images/dist_lat_mean.jpg" alt="mean latency on varying number of instances"></p>
+
+<p><img src="/images/topo_thru.jpg" alt="Throughput on varying number of instances" /></p>
+
+<p><img src="/images/dist_lat_50.jpg" alt="50 percentile latency on varying number of instances" /></p>
+
+<p><img src="/images/dist_lat_95.jpg" alt="95 percentile latency on varying number of instances" /></p>
+
+<p><img src="/images/dist_lat_mean.jpg" alt="mean latency on varying number of instances" /></p>
+
 <ul>
 <li>When we increase the number of parallel connections, the throughput increases, but then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
 <li>The latency increases almost linearly with the number of connections.</li>
 <li>Latency in the case of a single instance is observed to be the equal to (or a bit lower than) that of distributed configurations as the former doesn’t require any network calls. However, as the number of requests/load increase, the cumulative computational power comes into play and overshadows the latency incurred due to network calls. Hence, the latency reduces in the distributed version under higher loads.</li>
 <li>On comparing across the one, two and five node clusters, we can see that the latency, as well as the throughput, are better for configurations with a higher number of nodes, i.e., when there is more computational capacity at disposal. The throughput increases as we have greater computational power and can handle more queries.</li>
 </ul>
+
 <h2 id="conclusion">Conclusion</h2>
+
 <p>From the above experiments, we can see a relationship between the throughput, latency and the overall computational power of the cluster.
 The graphs show that the throughput increases as the computational power increases.
 Which can be achieved either by increasing the number of cores on each server or the number of nodes in the cluster.</p>
+
 <p>The latency increases as the amount of load on the database increases.
 However, the rate of the increase differs based on how much computational power we have available.</p>
+
 <p>This experiment also shows that there is a limit on how much computational power a single node can have, and once we reach that limit, scaling horizontally is the right option.
 Not only that, but it also proves that scaling horizontally improves the performance.
 Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.</p>
+
 <p>Based on this experiment, our recommendation for running <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  would be:</p>
+
 <ul>
 <li>Use as many cores as possible</li>
 <li>Have the servers geographically close-by so that network latency is reduced</li>
 <li>Distribute the data among servers and query them in a round-robin fashion for greater throughput</li>
 </ul>
+
 <p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is scalable.</strong></p>
+
 <p>Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!</p>
+
 <p><em>This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
 The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0">available for download here</a>.</em></p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -654,6 +707,7 @@ The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_The
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></em></p></div>
           <div class="article-tag-list">

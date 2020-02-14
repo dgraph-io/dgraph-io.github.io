@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tutorial on Dgraph Blog</title>
@@ -7,13 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Fri, 17 Jan 2020 20:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2020 20:30:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Getting started with Dgraph tutorials series - 7: Searching user names using the fuzzy search on social graphs.</title>
+      <title>Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features</title>
+      <link>https://blog.dgraph.io/post/tutorial-8-getting-started/</link>
+      <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-8-getting-started/</guid>
+      <description>Welcome to the eighth episode of getting started with Dgraph.
+In the previous episode, we learned about building a twitter-like user-search feature using Dgraph&amp;rsquo;s fuzzy search.
+In this episode, we&amp;rsquo;ll build a graph of tourist locations around San Franciso and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&amp;rsquo;s geolocation capabilities.
+You might have used Google to find the restaurants near you or to find the shopping centres within a mile of your current location.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 7: Give your users powerful search results with fuzzy search on graph</title>
       <link>https://blog.dgraph.io/post/tutorial-7-getting-started/</link>
       <pubDate>Fri, 17 Jan 2020 20:30:00 +0530</pubDate>
       
@@ -99,7 +111,7 @@ In this episode, we&amp;rsquo;ll build the above Graph and learn more about oper
       <description>Welcome to getting started with Dgraph. Dgraph is an open-source, transactional, distributed, native Graph Database. Here is the first episode of the tutorial series on using Dgraph.
 In this tutorial, we&amp;rsquo;ll learn how to build the following graph on Dgraph,
 In the process, we&amp;rsquo;ll learn about:
- Running Dgraph using the dgraph/standalone docker image. Running the following basic operations using Dgraph&amp;rsquo;s UI Ratel, Creating a node. Creating an edge between two nodes.</description>
+ Running Dgraph using the dgraph/standalone docker image. Running the following basic operations using Dgraph&amp;rsquo;s UI Ratel,  Creating a node. Creating an edge between two nodes.</description>
     </item>
     
     <item>
@@ -110,9 +122,9 @@ In the process, we&amp;rsquo;ll learn about:
       <guid>https://blog.dgraph.io/post/building-todo-list-react-dgraph/</guid>
       <description>In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http &amp;mdash; a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.
 The tutorial is split into several steps:
-  Creating a React App
-  Starting a local Dgraph server using docker-compose
-  Connecting to Dgraph from JavaScript and fetching data</description>
+ Creating a React App
+ Starting a local Dgraph server using docker-compose
+ Connecting to Dgraph from JavaScript and fetching data</description>
     </item>
     
   </channel>
