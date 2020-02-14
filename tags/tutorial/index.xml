@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tutorial on Dgraph Blog</title>
+    <title>tutorial on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/tutorial/</link>
-    <description>Recent content in Tutorial on Dgraph Blog</description>
+    <description>Recent content in tutorial on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Fri, 14 Feb 2020 20:00:00 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 14 Feb 2020 19:59:00 +0530</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features</title>
       <link>https://blog.dgraph.io/post/tutorial-8-getting-started/</link>
-      <pubDate>Fri, 14 Feb 2020 20:00:00 +0530</pubDate>
+      <pubDate>Fri, 14 Feb 2020 19:59:00 +0530</pubDate>
       
       <guid>https://blog.dgraph.io/post/tutorial-8-getting-started/</guid>
       <description>Welcome to the eighth episode of getting started with Dgraph.
