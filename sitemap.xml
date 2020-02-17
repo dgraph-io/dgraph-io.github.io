@@ -1,17 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>https://blog.dgraph.io/tags/devrel/</loc>
     <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
     <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -22,19 +20,16 @@
   <url>
     <loc>https://blog.dgraph.io/post/</loc>
     <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/</loc>
     <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/tutorial/</loc>
     <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -45,7 +40,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/dgraph/</loc>
     <lastmod>2020-01-08T21:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -56,7 +50,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/release/</loc>
     <lastmod>2019-12-17T07:00:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -70,14 +63,13 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/post/graphql-summit-19/</loc>
+    <loc>https://blog.dgraph.io/tags/graphql/</loc>
     <lastmod>2019-12-10T14:30:00+05:30</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/graphql/</loc>
+    <loc>https://blog.dgraph.io/post/graphql-summit-19/</loc>
     <lastmod>2019-12-10T14:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -88,7 +80,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/badger/</loc>
     <lastmod>2019-11-18T06:30:00-07:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -124,19 +115,16 @@
   <url>
     <loc>https://blog.dgraph.io/tags/cache/</loc>
     <lastmod>2019-09-19T23:13:13-07:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/go/</loc>
     <lastmod>2019-09-19T23:13:13-07:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/hacker-news/</loc>
     <lastmod>2019-09-19T23:13:13-07:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -147,7 +135,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/reddit/</loc>
     <lastmod>2019-09-19T23:13:13-07:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -168,7 +155,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/graphqlconf/</loc>
     <lastmod>2019-08-16T14:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -179,13 +165,11 @@
   <url>
     <loc>https://blog.dgraph.io/tags/engineering/</loc>
     <lastmod>2019-08-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/indexing/</loc>
     <lastmod>2019-08-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -201,7 +185,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/github/</loc>
     <lastmod>2019-07-16T01:23:05+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -220,15 +203,13 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/sql/</loc>
+    <loc>https://blog.dgraph.io/tags/migration/</loc>
     <lastmod>2019-05-30T00:08:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/migration/</loc>
+    <loc>https://blog.dgraph.io/tags/sql/</loc>
     <lastmod>2019-05-30T00:08:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -239,19 +220,16 @@
   <url>
     <loc>https://blog.dgraph.io/tags/javascript/</loc>
     <lastmod>2019-04-18T00:00:00+11:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/react/</loc>
     <lastmod>2019-04-18T00:00:00+11:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/acl/</loc>
     <lastmod>2019-04-03T00:06:20-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -267,25 +245,21 @@
   <url>
     <loc>https://blog.dgraph.io/tags/freebase/</loc>
     <lastmod>2019-02-13T19:49:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/google/</loc>
     <lastmod>2019-02-13T19:49:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/knowledge-graph/</loc>
     <lastmod>2019-02-13T19:49:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/metaweb/</loc>
     <lastmod>2019-02-13T19:49:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -296,7 +270,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/optimization/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -307,7 +280,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/rocksdb/</loc>
     <lastmod>2019-01-24T10:00:00-08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -348,7 +320,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/transactions/</loc>
     <lastmod>2017-10-05T13:30:16+11:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -359,7 +330,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/opinion/</loc>
     <lastmod>2017-10-03T13:20:35+11:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -375,7 +345,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/boltdb/</loc>
     <lastmod>2017-09-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -436,13 +405,11 @@
   <url>
     <loc>https://blog.dgraph.io/tags/benchmark/</loc>
     <lastmod>2017-01-23T18:07:44+11:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/neo4j/</loc>
     <lastmod>2017-01-23T18:07:44+11:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -473,7 +440,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/gru/</loc>
     <lastmod>2016-07-21T11:53:04+10:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -484,7 +450,6 @@
   <url>
     <loc>https://blog.dgraph.io/tags/hiring/</loc>
     <lastmod>2016-07-21T11:53:04+10:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -514,7 +479,6 @@
   
   <url>
     <loc>https://blog.dgraph.io/categories/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>
