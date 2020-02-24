@@ -564,7 +564,7 @@ go test -v -bench=Neo -benchtime=10s .
 <p><strong>Note:</strong> If the test id has a <code>P</code> suffix, it was run in parallel.</p>
 <h4 id="read-only-benchmarks">Read-only benchmarks</h4>
 <p><em>Query caching turned off for Neo4j</em>
-<img src="/images/read-no-cache.png%22" alt="Dgraph vs Neo4j Read-write"></p>
+<img src="/images/read-no-cache.png" alt="Dgraph vs Neo4j Read-write"></p>
 <p><em>Query caching on for Neo4j</em>
 <img src="/images/read-cache.png" alt="Dgraph vs Neo4j Read-write"></p>
 <p>Queries to Dgraph took the same amount of time, as expected in the both cases. But, Neo4j query latency was at least <em>halved</em>. That's not surprising given all the subsequent runs were using query cache. <strong>Thence, Neo4j latency was better than Dgraph with query caching turned on, and worse when off.</strong></p>
