@@ -4,24 +4,24 @@
   <meta charset="utf-8">
 
   
-  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-touch-icon-76x76.png">
 
-  <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon-180x180.png">
 
-  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="/assets/favicons/favicon-194x194.png" sizes="194x194">
-  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
 
-  <link rel="mask-icon" href="/assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
+  <link rel="mask-icon" href="assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
   <link rel="shortcut icon" href="/images/favicon.ico">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
 
   
     <title>Badger vs LMDB vs BoltDB: Benchmarking key-value databases in Go - Dgraph Blog</title>
@@ -39,7 +39,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/badger-lmdb-boltdb/">
   
-  <meta property="og:image" content="https://blog.dgraph.io//images/pia21778.png">
+  <meta property="og:image" content="https://blog.dgraph.io/images/pia21778.png">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -79,16 +79,16 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/pia21778.png"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io/images/pia21778.png"/>
     
   
 
@@ -444,9 +444,11 @@
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io//images/pia21778.png"
+            src="https://blog.dgraph.io/images/pia21778.png"
           >
-          <div class="article-content"><p>If you have been following us, you may know that we <a href="https://blog.dgraph.io/post/badger/">released
+          <div class="article-content">
+
+<p>If you have been following us, you may know that we <a href="https://blog.dgraph.io/post/badger/">released
 Badger</a> a few months ago. Badger is a simple, efficient, and
 persistent key-value store, written in <a href="http://n-gate.com/hackernews/2017/05/14/"><em>a hipster language</em></a>. Even though
 it is not at v1.0 yet, we have already received a great response from the
@@ -455,33 +457,43 @@ there have been
 <a href="https://www.reddit.com/r/golang/comments/6b57aa/badger_a_faster_kv_store/">lots</a>
 <a href="https://www.reddit.com/r/golang/comments/6jm2db/badger_fastest_keyvalue_store_in_go/">of</a> <a href="https://news.ycombinator.com/item?id=14335931">discussions</a> online
 since the release announcement.</p>
+
 <p>Our <a href="https://blog.dgraph.io/post/badger/">launch post</a> contained benchmarks evaluating Badger against <a href="http://rocksdb.org/">RocksDB</a>.
 RocksDB was the store we were using before we decided to replace it and write
 our own, so it made sense to benchmark against it. However, a lot of
 people <a href="https://twitter.com/tobym/status/882760757615759361">have</a> <a href="https://www.reddit.com/r/golang/comments/6jm2db/badger_fastest_keyvalue_store_in_go/">been</a> <a href="https://twitter.com/hyc_symas/status/884001285879599104">curious</a> about how Badger fares against stores like
 <a href="https://symas.com/lmdb/">LMDB</a> and <a href="https://github.com/boltdb/bolt">BoltDB</a>.</p>
+
 <p>In the launch post, we had mentioned that recent improvements
 to SSDs might make B+-trees a viable option for high write throughput.
 Also, the reason B+ trees are considered good for reads is that they have low read
-amplification. Badger's design also provides for a significantly lower read
+amplification. Badger&rsquo;s design also provides for a significantly lower read
 amplification compared to other LSM tree based key-value stores. So, we decided
 it was worth benchmarking Badger against these stores.</p>
+
 <p><em>It will be helpful if you have read our <a href="https://blog.dgraph.io/post/badger/">earlier post</a> from when
 we launched Badger, but it is not required.</em></p>
+
 <p><strong>Based on our benchmarks,</strong> Badger is at least 1.7✕-22.3✕ faster than LMDB and BoltDB
 when doing random writes. Sorted range iteration is a bit slower when value
 size is small, but as value sizes increase, Badger is 4✕-111✕ times faster. On
 the flip side, Badger is currently up to 1.9✕ slower when doing random reads.</p>
-<p>Thus, Badger's unique design significantly outperforms these stores on write
+
+<p>Thus, Badger&rsquo;s unique design significantly outperforms these stores on write
 throughput and iteration latency, while being only slightly slower when it comes
 to random reads.</p>
-<hr>
+
+<hr />
+
 <h2 id="some-notes-about-architecture">Some notes about architecture</h2>
+
 <h3 id="lmdb-and-boltdb">LMDB and BoltDB</h3>
+
 <p>BoltDB started out as a port of LMDB to Go but has somewhat diverged since then.
 While LMDB heavily focuses on raw performance, Bolt has focused on simplicity
 and ease of use. However, they both share the same design, so describing LMDB should
 be sufficient.</p>
+
 <p>LMDB provides a key-value stored using <a href="https://en.wikipedia.org/wiki/B%2B_tree">B+ trees</a>. It has ACID
 semantics and support for transactions. It does not do any background work and
 has a crash resilient design that uses <a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">MVCC</a> instead of locking. This means readers
@@ -489,12 +501,16 @@ operate on an isolated snapshot of the database and don’t block. The codebase
 is quite small and portable, so LMDB runs across multiple platforms including
 Android, BSD, and Solaris. This <a href="https://www.youtube.com/watch?v=tEa5sAh-kVk&amp;t=10s">talk by Howard Chu</a> at Databaseology
 2015 goes into much more details about LMDB’s design.</p>
+
 <p>It is generally understood that B+ tree based stores are ideal for workloads
 which are read intensive.</p>
+
 <h3 id="badger">Badger</h3>
+
 <p>Badger belongs to a family of key-value stores that are characterized by a
 design that uses a <a href="https://en.wikipedia.org/wiki/Log-structured_merge-tree">log-structured merge-tree</a> (LSM tree). Popular
 stores in this category include <a href="https://github.com/google/leveldb">LevelDB</a> and <a href="http://rocksdb.org/">RocksDB</a>.</p>
+
 <p>LSM tree based stores provide high write performance by sequentially writing
 key-value pairs in memory in the foreground, and then arranging them in
 multi-tiered levels on disk in the background. This approach is not without
@@ -502,10 +518,12 @@ tradeoffs though. Values are written multiple times when arranging them in the
 tree (known as <em>write amplification</em>) and a single read might need to read
 multiple levels in the LSM tree before finding a value (known as <em>read
 amplification</em>).</p>
+
 <p>Badger’s design is based on a paper titled <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">‘WiscKey: Separating Keys
 from Values in SSD-conscious Storage’</a> (referred to as the WISCKEY
 paper from now on). Here is an excerpt from the paper touching on the key
 design aspects:</p>
+
 <blockquote>
 <p><em>“To realize an SSD-optimized key-value store,
 WiscKey includes four critical ideas. First, WiscKey separates keys from
@@ -517,7 +535,8 @@ garbage collection techniques to efficiently manage the value log. Finally,
 WiscKey optimizes performance by removing the LSM-tree log without sacrificing
 consistency, thus reducing system-call overhead from small writes.”</em></p>
 </blockquote>
-<p><strong>Badger's design reduces both the read and write amplification</strong> seen in other LSM
+
+<p><strong>Badger&rsquo;s design reduces both the read and write amplification</strong> seen in other LSM
 tree based stores. Keys tend to be much smaller in size than values, so by
 separating keys from values and prefix-diffing the keys, Badger significantly
 reduces the size of LSM tree.
@@ -525,18 +544,26 @@ Badger does not acquire any global mutex locks, allowing reads to happen
 concurrently while writes are going on, to achieve a high read-write throughput.
 It is very crash resilient, as we tested and explained in <a href="https://blog.dgraph.io/post/alice/">this blog
 post</a>.</p>
+
 <p>While there are differences in implementation, design details are available
 in <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">the paper</a>. It also contains a good overview of LSM trees and databases
 using them.</p>
-<hr>
+
+<hr />
+
 <h2 id="benchmarking">Benchmarking</h2>
+
 <h3 id="setup">Setup</h3>
+
 <p>The benchmarking setup was identical to the one we used when benchmarking
 Badger <a href="https://blog.dgraph.io/post/badger/">against RocksDB</a>. Therefore the numbers should be
 comparable as well. We have made many optimizations, fixes, and improvements to
 Badger since, which should reflect in the numbers below.</p>
+
 <h3 id="methodology">Methodology</h3>
+
 <p>To benchmark the stores, we measured 4 things:</p>
+
 <ul>
 <li><strong>Data loading performance</strong>:  Populating the database with a pre-specified
 number of keys.</li>
@@ -547,8 +574,10 @@ using Go benchmarking tools, and an average was taken</em>).</li>
 <li><strong>Sorted Range Iteration Performance</strong>: Iterating through 2 million keys in
 sorted order.</li>
 </ul>
+
 <p>We performed benchmarks on 3 different data sets, varying the number of keys
 and the value size (in bytes) associated with the keys.</p>
+
 <table>
 <thead>
 <tr>
@@ -557,17 +586,20 @@ and the value size (in bytes) associated with the keys.</p>
 <th>Num Keys (Each Key = 22 bytes)</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>Data Set 1</td>
 <td>128</td>
 <td>250M</td>
 </tr>
+
 <tr>
 <td>Data Set 2</td>
 <td>1024 (1kb)</td>
 <td>75M</td>
 </tr>
+
 <tr>
 <td>Data Set 3</td>
 <td>16384 (16kb)</td>
@@ -575,38 +607,45 @@ and the value size (in bytes) associated with the keys.</p>
 </tr>
 </tbody>
 </table>
+
 <h4 id="hardware">Hardware</h4>
+
 <p>All benchmarks were done on a dedicated AWS EC2 i3.large instance (us-east-2
 region) running Ubuntu Server 16.04 LTS (HVM) with 16GB RAM. This instance
 comes with a locally mounted 470GB SSD drive. The benchmarks were performed on
 data stored on the local SSD, which provides 100K IOPS with 4KB block sizes.
 Note that the root and home directories are mounted on EBS storage which has
 very low IOPS.</p>
+
 <p>We deliberately chose an instance with RAM size (16GB) lesser than the data set
 sizes. This provides a good setup for benchmarking and is representative of our
 use-cases for Badger, where data sizes are several times the size of RAM
 available.</p>
+
 <h4 id="software">Software</h4>
+
 <h5 id="lmdb"><strong>LMDB</strong></h5>
+
 <p>We used the <a href="https://github.com/bmatsuo/lmdb-go">lmdb-go</a> bindings to LMDB, which comes with its own embedded copy
 of the lmdb C source code. It is the most up to date binding available in Go
 and is <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb">well documented</a>.</p>
+
 <p><strong>Thanks to Howard Chu</strong> for looking at the benchmarking code for lmdb-go. He
-helped us <a href="https://github.com/dgraph-io/badger-bench/pull/5">tune the code</a>, and also <a href="https://github.com/bmatsuo/lmdb-go/issues/118">pointed
+helped us <a href="https://github.com/dgraph-io/badger-bench/pull/5">tune the code</a>, and also <a href="https://github.com/bmatsuo/lmdb-go/issues/118#issuecomment-325449496">pointed
 out</a> that we should be using <code>lmdb.NoReadahead</code> flag
 in our benchmarks when data size is larger than RAM.</p>
+
 <p>We ran into a couple of issues with LMDB APIs:</p>
+
 <ul>
-<li>
-<p>Several hours into populating data into LMDB for one of our benchmarks, we
+<li><p>Several hours into populating data into LMDB for one of our benchmarks, we
 suddenly saw a crash. After investigation, we realized that LMDB needs a
 configuration value for the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#Env.SetMapSize">maximum map size</a> of the database.
 This needs to be determined upfront while opening the database. LMDB will not expand
 automatically as data size increases. To get around it, we set it to a
-calculated large number and re-populated the data.</p>
-</li>
-<li>
-<p>During our initial benchmarking runs, the hit ratio (found vs. miss) and hence
+calculated large number and re-populated the data.</p></li>
+
+<li><p>During our initial benchmarking runs, the hit ratio (found vs. miss) and hence
 read performance of LMDB was significantly affected by the value of
 GOMAXPROCS. We could not figure out why this was happening. This issue got
 compounded by an oversight in our code which was correctly handling error
@@ -618,89 +657,108 @@ Go perspective, this is strange.</strong> This would require tracking how many
 concurrent reads are going on at a given moment, and restrict them to a
 pre-specified number. In a highly concurrent Go based system like Dgraph, this
 would be a severe limitation. We got around the limitation by setting the
-maximum number of readers to a number based on the benchmarks.</p>
-</li>
+maximum number of readers to a number based on the benchmarks.</p></li>
 </ul>
+
 <p>While none of these limitations are deal breakers, they do present unfamiliar
 obstacles for a Go programmer using LMDB.  In comparison, BoltDB and Badger
 do not require you to specify a maximum map size, or a maximum number of readers in
 advance.</p>
+
 <h5 id="bolt"><strong>Bolt</strong></h5>
+
 <p>We used the BoltDB source <a href="https://github.com/boltdb/bolt">hosted on Github</a>. Note that there is a
 fork of BoltDB, called <a href="https://github.com/coreos/bbolt">bbolt</a> maintained by CoreOS. However, we decided to stick to
 the original version which is considered complete by its maintainer. We did not
 run into any issues when using BoltDB APIs. They are clean and well documented.</p>
+
 <h5 id="badger-1"><strong>Badger</strong></h5>
+
 <p>We ran the benchmarks against code in <a href="https://github.com/dgraph-io/badger">Badger repo</a> on Github, at
 commit <a href="https://github.com/dgraph-io/badger/tree/64df7f57d9ee20d7b28de4a3eea90bf8d7310a77">64df7f5</a>. This included a significant change in
 the way we read the value log, where we switched from using standard file I/O
 to memory-mapping the files before reading. We will cover this in more detail
 in the sections below.</p>
+
 <h4 id="code">Code</h4>
+
 <p>All the benchmarking code and results are available on Github in the
 <a href="https://github.com/dgraph-io/badger-bench">badger-bench</a> repo. To make the benchmarks transparent and repeatable, we have
 recorded all the steps in detail in our <a href="https://github.com/dgraph-io/badger-bench/blob/master/BENCH-lmdb-bolt.md">benchmarking log</a>.</p>
+
 <h3 id="results">Results</h3>
+
 <p>Numbers and charts can also be found in <a href="https://docs.google.com/spreadsheets/d/1Hz9XHk8v45qHhjr2DwXhblrhtg7pMim-GRLYNqRKCK0/edit?usp=sharing">this spreadsheet</a>.</p>
+
 <h4 id="data-loading">Data Loading</h4>
-<p><a href="/images/lmdb-bolt-bench/data-loading.png"><img src="/images/lmdb-bolt-bench/data-loading.png" alt="Data loading performance"></a></p>
+
+<p><a href="/images/lmdb-bolt-bench/data-loading.png"><img src="/images/lmdb-bolt-bench/data-loading.png" alt="Data loading performance" /></a></p>
+
 <p>The results of this benchmark are pretty unequivocal. <strong>Badger is significantly
 faster than both LMDB and BoltDB in loading data.</strong> The factor of speedup ranges
 from 1.7✕ to 22.3✕. Bolt DB degrades pretty badly in the 16kb data set with a
 throughput of only 32000 key-value pairs a minute.</p>
+
 <p>B+ trees do not have very good write performance, and these benchmarks
 support that claim. Writing KV pairs randomly to Bolt or LMDB leads to a lot
 of random seeks on the disk. Badger, on the other hand, writes to an LSM tree where all writes are sequential. Moreover, the actual values are written in a log elsewhere using sequential writes. This leads to much better disk utilization and throughput.</p>
+
 <p>Some additional technical notes:</p>
+
 <ul>
-<li>
-<p>Badger provides an API method called <a href="https://godoc.org/github.com/dgraph-io/badger#KV.BatchSet"><code>BatchSet</code></a> which
+<li><p>Badger provides an API method called <a href="https://godoc.org/github.com/dgraph-io/badger#KV.BatchSet"><code>BatchSet</code></a> which
 batches up a series of writes to the value log. This can significantly speed
-up bulk-loading. BoltDB and lmdb-go do not have an equivalent API.</p>
-</li>
-<li>
-<p>BoltDB provides an API method called <a href="https://godoc.org/github.com/boltdb/bolt#DB.Batch"><code>Batch()</code></a>, which can be
+up bulk-loading. BoltDB and lmdb-go do not have an equivalent API.</p></li>
+
+<li><p>BoltDB provides an API method called <a href="https://godoc.org/github.com/boltdb/bolt#DB.Batch"><code>Batch()</code></a>, which can be
 used to achieve some concurrency while writing to it. The results
 above are using this call, but we did not notice a very significant
-difference for this specific benchmark.</p>
-</li>
-<li>
-<p>lmdb-go has a limitation in its API when it comes to writing to the
+difference for this specific benchmark.</p></li>
+
+<li><p>lmdb-go has a limitation in its API when it comes to writing to the
 store using multiple goroutines. Here is what the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#hdr-Caveats">API docs
 say</a>: <em>Write transactions (those created without the
 <code>Readonly</code> flag) must be created in a goroutine that has been locked to its
 thread by calling the function <code>runtime.LockOSThread</code>. Furthermore all
 methods on such transactions must be called from the goroutine which created
 them. This is a fundamental limitation of LMDB even when using the <a href="https://godoc.org/github.com/bmatsuo/lmdb-go/lmdb#hdr-Environment">NoTLS</a>
-flag (which the package always uses).</em></p>
-</li>
+flag (which the package always uses).</em></p></li>
 </ul>
+
 <h4 id="data-set-size">Data Set Size</h4>
-<p><a href="/images/lmdb-bolt-bench/data-size.png"><img src="/images/lmdb-bolt-bench/data-size.png" alt="Data set size"></a></p>
+
+<p><a href="/images/lmdb-bolt-bench/data-size.png"><img src="/images/lmdb-bolt-bench/data-size.png" alt="Data set size" /></a></p>
+
 <p>We did not notice any patterns w.r.t. final data set sizes among the stores.
 Bolt and LMDB store data in one large file and keys and values are stored
 together. Badger stores data in two different kinds of files: one for LSM data
 which contains keys and pointer to values, and value log files which contain the
 actual values.</p>
+
 <h4 id="random-key-lookup">Random Key Lookup</h4>
-<p><a href="/images/lmdb-bolt-bench/random-lookup.png"><img src="/images/lmdb-bolt-bench/random-lookup.png" alt="Random Key Lookup latency"></a></p>
+
+<p><a href="/images/lmdb-bolt-bench/random-lookup.png"><img src="/images/lmdb-bolt-bench/random-lookup.png" alt="Random Key Lookup latency" /></a></p>
+
 <p><strong>LMDB has the lowest read latencies</strong> across all the data sets.
 Badger goes neck-to-neck against LMDB in 1kB value, but in
 other values are up to 2x slow.
 BoltDB, on the other hand, has lower latencies than Badger for the 128B and 16kB
 datasets but shows higher latency in the 1kB data set.</p>
+
 <p>We were pleasantly surprised by these results. <strong>Badger holds pretty well</strong>
 against both the stores, never performing particularly worse than others, and at
 least in one instance, beating BoltDB. This is a particularly important feat
 because random key lookup is the weakest spot for LSM based KV stores.  LSM-tree
 suffers from read-amplification. It needs to look for the key in multiple places
 before returning.</p>
-<p>Badger's design handles read amplification in two ways. It first significantly
+
+<p>Badger&rsquo;s design handles read amplification in two ways. It first significantly
 reduces the size of LSM tree by separating keys from values, and secondly,
 minimizes the latency by keeping the (much smaller) LSM tree entirely in RAM.
 This makes Badger much faster than other LSM-tree based key-value stores like
 RocksDB and a lot more competitive with B+-trees.</p>
-<p><em>Note that LMDB was slower in our initial benchmarks before Howard Chu <a href="https://github.com/bmatsuo/lmdb-go/issues/118">pointed
+
+<p><em>Note that LMDB was slower in our initial benchmarks before Howard Chu <a href="https://github.com/bmatsuo/lmdb-go/issues/118#issuecomment-325449496">pointed
 out</a> that we should be setting the
 <code>lmdb.NoReadahead</code> flag when opening the store. This got us thinking, and we
 realized that this could apply to Badger as well. We already had a feature
@@ -708,14 +766,18 @@ request to memory-map the value log files. We decided to <a href="https://github
 shot</a>, and also disabled readahead using the <code>madvise</code> system
 call. When we ran the benchmarks for the 16kB dataset after this change, we
 were able to reduce the latency from  22µs to 3.8µs.</em></p>
+
 <h4 id="sorted-range-iteration">Sorted Range Iteration</h4>
-<p><a href="/images/lmdb-bolt-bench/range-iteration.png"><img src="/images/lmdb-bolt-bench/range-iteration.png" alt="Sorted range iteration"></a></p>
+
+<p><a href="/images/lmdb-bolt-bench/range-iteration.png"><img src="/images/lmdb-bolt-bench/range-iteration.png" alt="Sorted range iteration" /></a></p>
+
 <p>For the data store with 128B value size, Badger is about 1.5✕-1.6✕ slower than
 lmdb-go and BoltDB. However, Badger’s performance improves as value sizes get
 bigger. <strong>Badger is anywhere between 4✕-111✕ times faster</strong> when iterating over
 data stores with 1kb and 16kb value size. Badger’s design allows it to prefetch
 values in the background during iteration. This is controlled by an option and
 is enabled by default. The <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WISCKEY paper</a> touches upon this:</p>
+
 <blockquote>
 <p><em>“To make range queries efficient, WiscKey leverages
 the parallel I/O characteristic of SSD devices to prefetch
@@ -725,58 +787,68 @@ attention for efficient retrieval. So long as keys are retrieved
 efficiently, range queries can use parallel random
 reads for efficiently retrieving values.”</em></p>
 </blockquote>
+
 <p>In our <a href="https://blog.dgraph.io/post/badger/">launch post</a>, we mentioned that there were shortcomings with iteration in
 Badger because we were unable to realize the high SSD IOPS via Go. After much
 <a href="https://groups.google.com/forum/#!topic/golang-nuts/jPb_h3TvlKE/discussion">discussion and digging</a>, we realized that setting
 GOMAXPROCS to a high enough number (say 128), allows us to realize the high
 IOPS, making Badger significantly faster for key-value iterations.</p>
+
 <p>Badger’s iterator API also allows what we call <strong><em>key-only</em> iteration.</strong> In this
 mode, we iterate only over the LSM tree and do not read the values in the value
 log files at all. This means that most of the time, iterations do not touch the
 disk and happen blazingly fast. This functionality is unique to Badger among
 all the other key-value stores compared.</p>
+
 <p>Key-only iterations are very useful in various applications which only need to
 iterate over keys, for splitting tablets or estimating data sizes based on key
 prefixes. At Dgraph, we use them to estimate the size of tablets, run filters and only
 retrieve values for a much smaller subset of keys.</p>
+
 <h2 id="conclusion">Conclusion</h2>
+
 <ul>
-<li>
-<p><strong>LMDB</strong> implementation in Go outperformed both BoltDB and Badger in terms of
+<li><p><strong>LMDB</strong> implementation in Go outperformed both BoltDB and Badger in terms of
 random read latency, but was significantly slower for sorted range iteration
 and had several mind-boggling API limitations. If you have a random read
-intensive workload, LMDB Go might be a suitable store for you.</p>
-</li>
-<li>
-<p><strong>BoltDB</strong> didn't really stand apart in any of the four criteria. It was the
+intensive workload, LMDB Go might be a suitable store for you.</p></li>
+
+<li><p><strong>BoltDB</strong> didn&rsquo;t really stand apart in any of the four criteria. It was the
 slowest in data loading, fell well behind Badger in sorted range iteration
 (though outperformed LMDB), and gave conflicting results w.r.t. random key lookup.
 However, it did have a clean and well-documented APIs and supports ACID
-transactions.</p>
+transactions.</p></li>
+</ul>
+
 <p><strong>One of the big reasons</strong> we wrote Badger was that we were having difficulty understanding the behavior of Cgo APIs accessing RocksDB
-from within Go. Using a store written in pure Go allows better visibility
-into what’s going on using Go’s profiling tools. It also allows more
-convenient control over concurrent operations using Go’s native support for
-goroutines. So BoltDB and Badger might be better choices over LMDB in this scenario.</p>
-</li>
-<li>
-<p><strong>Badger</strong> significantly outperformed its competition in both write throughput and
+  from within Go. Using a store written in pure Go allows better visibility
+  into what’s going on using Go’s profiling tools. It also allows more
+  convenient control over concurrent operations using Go’s native support for
+  goroutines. So BoltDB and Badger might be better choices over LMDB in this scenario.</p>
+
+<ul>
+<li><strong>Badger</strong> significantly outperformed its competition in both write throughput and
 sorted range iteration. It performed slightly worse in random key lookup but
 did not deteriorate in performance as badly as competition did in other
 categories.  For a workload which has a mix of reads and writes in any
-proportion (even 90-10), Badger is a <strong>clear choice.</strong></p>
-</li>
+proportion (even 90-10), Badger is a <strong>clear choice.</strong></li>
 </ul>
+
 <h2 id="further-work">Further Work</h2>
+
 <p>At this point, the biggest aim for Badger is to stabilize the API and bring it
-past v1.0. Various projects like <a href="https://ipfs.io/">IPFS</a> use Badger, and there's an outstanding
+past v1.0. Various projects like <a href="https://ipfs.io/">IPFS</a> use Badger, and there&rsquo;s an outstanding
 Github issue to integrate Badger with <a href="https://github.com/blevesearch/bleve/issues/591">Bleve</a>.</p>
+
 <p>Also, we are considering adding transactional support into Badger.
 So, if you think it would be useful to you, <a href="https://github.com/dgraph-io/badger/issues/230">let us know</a>.</p>
+
 <h2 id="parting-thoughts">Parting thoughts</h2>
+
 <p>In this post, we have done a comprehensive survey of how <a href="https://github.com/dgraph-io/badger">Badger</a> compares
 against two popular options for key-value stores in Go. <a href="https://github.com/dgraph-io/badger">Badger</a> is still quite
 new, and we are excited about what lies ahead for the project.</p>
+
 <p>We put months of effort into ensuring the benchmarks were impartial, correctly
 set up and executed. Many a times this process was laborious and frustrating, but we
 were excited about the possibility of learning a few things from other
@@ -784,10 +856,13 @@ key-value stores and improving Badger; <em>which we did</em>.  These benchmarks 
 even more convinced of the effort that Dgraph team has put into building Badger
 from scratch. We have built a solid offering not only to be used within Dgraph,
 but for anyone looking for a key-value store in Go.</p>
+
 <p>We would love to hear from you regarding what you think we should be focusing
 on in the future. If you have any comments or questions, please head to
 <a href="https://discuss.dgraph.io/t/badger-vs-lmdb-vs-boltdb-benchmarking-key-value-databases-in-go-dgraph-blog/1777">discuss.dgraph.io</a>.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -837,6 +912,7 @@ on in the future. If you have any comments or questions, please head to
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="https://www.nasa.gov/image-feature/jpl/pia21778/jupiter-a-new-point-of-view">Jupiter: A new point of view</a></em></p>
 </div>
@@ -1092,10 +1168,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='https://blog.dgraph.io/css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='https://blog.dgraph.io/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script
