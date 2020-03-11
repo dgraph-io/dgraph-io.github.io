@@ -4,24 +4,24 @@
   <meta charset="utf-8">
 
   
-  <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-touch-icon-76x76.png">
 
-  <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-touch-icon-180x180.png">
 
-  <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
   <link rel="icon" type="image/png" href="/assets/favicons/favicon-194x194.png" sizes="194x194">
-  <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
 
-  <link rel="mask-icon" href="assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
+  <link rel="mask-icon" href="/assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
   <link rel="shortcut icon" href="/images/favicon.ico">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io/index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
 
   
     <title>String matching in Dgraph v0.7.5 - Dgraph Blog</title>
@@ -39,7 +39,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/string-matching/">
   
-  <meta property="og:image" content="https://blog.dgraph.io/images/splitting-dunes.jpg">
+  <meta property="og:image" content="https://blog.dgraph.io//images/splitting-dunes.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -79,16 +79,16 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io//css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io/images/splitting-dunes.jpg"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io//images/splitting-dunes.jpg"/>
     
   
 
@@ -446,104 +446,72 @@ All of these changes make Dgraph an excellent tool for working with multilingual
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io/images/splitting-dunes.jpg"
+            src="https://blog.dgraph.io//images/splitting-dunes.jpg"
           >
           <div class="article-content"><p>The recent release of Dgraph is packed with new features and improvements.
 Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
 All of these changes make Dgraph an excellent tool for working with multilingual applications.</p>
-
 <h3 id="values-in-many-languages">Values in Many Languages</h3>
-
-<p>We&rsquo;re working hard to keep the query language easy to use and clean.
+<p>We're working hard to keep the query language easy to use and clean.
 Dgraph, in v0.7.5, adopted and extended the language tag syntax from the RDF N-Quads standard.
 It is intuitive, well-known, and was partially supported in previous versions (during data loading).</p>
-
-<p>Let&rsquo;s start from the beginning - the data.
+<p>Let's start from the beginning - the data.
 Dgraph uses RDF N-Quads for data loading and backup.
 String literals in N-Quads may be followed by the <code>@</code> sign and language tag, e.g. <code>&quot;badger&quot;@en</code> or <code>&quot;Dachs&quot;@de</code>.
 Multiple such literals may be used as a value for a single entity/attribute pair.</p>
-
 <p>When querying for a predicate with multiple values, the user is able to use the <code>@lang</code> notation known from RDF N-Quads.
 Many languages can be specified in a list of preference, e.g. <code>@en:de</code> denotes that preferred language is English, but if such a value is not present, a value in German should be returned.</p>
-
 <p>Language can also be specified in functions, which is important especially for full text search.</p>
-
 <h3 id="example-data">Example Data</h3>
-
 <p>The dataset used in all examples is the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz">Freebase film data</a>.
 As this post is string-oriented, queries are focused on movie titles in multiple languages, and no other information is retrieved.
-As we don&rsquo;t have information about type of <code>name</code>, we use filtering to select only the movie titles, and to limit the number of results a bit - <code>@filter(gt(count(genre), 1))</code>.</p>
-
+As we don't have information about type of <code>name</code>, we use filtering to select only the movie titles, and to limit the number of results a bit - <code>@filter(gt(count(genre), 1))</code>.</p>
 <p>The schema for <code>name</code> field is very simple - it defines 3 types of indexes:</p>
-
 <pre><code>curl localhost:8080/query -XPOST -d $'
 mutation {
   schema {
     name: string @index(term, fulltext, exact) .
   }
 }' | python -m json.tool | less
-</code></pre>
-
-<p><code>term</code> index is used for term matching with the <code>allofterms</code> and <code>anyofterms</code> functions.
+</code></pre><p><code>term</code> index is used for term matching with the <code>allofterms</code> and <code>anyofterms</code> functions.
 Note that it was the only string index available in previous releases of Dgraph.</p>
-
 <p><code>fulltext</code> index uses matching with language specific stemming and stopwords.
-One thing worth noting is, that values indexed with <code>fulltext</code> are processed according to their&rsquo;s language (if they are tagged). If values are untagged, English is used as a default language.</p>
-
+One thing worth noting is, that values indexed with <code>fulltext</code> are processed according to their's language (if they are tagged). If values are untagged, English is used as a default language.</p>
 <p><code>exact</code> index is used for regular expression matching.</p>
-
 <h3 id="full-text-search-fts">Full Text Search (FTS)</h3>
-
 <h5 id="very-short-introduction-to-natural-language-processing-nlp">Very Short Introduction to Natural Language Processing (NLP)</h5>
-
 <p>By definition (from <a href="https://en.wikipedia.org/wiki/Full-text_search">Wikipedia</a>):</p>
-
-<pre><code class="language-html">In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
-</code></pre>
-
-<p>This may sound trivial, but it&rsquo;s not.
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
+</code></pre></div><p>This may sound trivial, but it's not.
 Searching for exact form of the word is not always satisfying for the user.
 For example, nouns can be singular or plural, verbs have grammatical tenses, etc., and the user may be interested in all values related to the word in any inflected or derived form.</p>
-
 <p>The simple but powerful idea is to find a method, that can transform all the forms of a word to some common base.
 This process is called <strong>stemming</strong>.
 For many natural languages (including English) stemmers may be implemented using a set of well known grammatical rules.
 There are also languages (like Polish) where a dictionary based approach is required (i.e. inflected form -&gt; stem mapping).</p>
-
 <p>Only for languages with well known grammatical rules are stemmers are widely available.</p>
-
 <p>Another problem with search are the words that are common, like <code>the</code>, <code>is</code>, or <code>at</code>.
 In most cases, searching for them gives an enormous amount of results which are useless.
 Those words are called <strong>stop words</strong>.
 Again, stop words are language specific.
 The common method of handling those words is just to remove them from the search.</p>
-
-<h5 id="dgraph-fts-nlp-processing">Dgraph FTS/NLP Processing</h5>
-
+<h5 id="dgraph-ftsnlp-processing">Dgraph FTS/NLP Processing</h5>
 <p>The following steps are applied to both data (while indexing), and the query pattern:</p>
-
 <ol>
 <li>Tokenization - text is divided into words.</li>
 <li>Normalization - all letters are transformed to lowercase. <a href="http://unicode.org/reports/tr15/">Unicode Normalization</a> is applied.</li>
 <li>Stop words are removed.</li>
 <li>Stemming is applied.</li>
 </ol>
-
 <p>Since stop words contain inflected forms, they are removed before stemming.</p>
-
 <h5 id="full-text-search-functions">Full Text Search Functions</h5>
-
 <p>There are two new functions that provide basic support for full text search:</p>
-
 <ol>
 <li><code>alloftext</code> - searches for values that contain all the specified words (using NLP).</li>
 <li><code>anyoftext</code> - searches for values that contain one or more of the specified tokens (using NLP).</li>
 </ol>
-
 <h5 id="examples">Examples</h5>
-
-<p>Let&rsquo;s query for <code>white or maybe black</code>, using the term matching function <code>allofterms</code>.</p>
-
+<p>Let's query for <code>white or maybe black</code>, using the term matching function <code>allofterms</code>.</p>
 <p>
 
 <div class="runnable" data-checksum="a2c60948e744862d6b1a13236ada9dd9" data-initial="{
@@ -682,7 +650,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -713,7 +681,6 @@ public class DgraphMain {
 
 The query gives no results.
 It may be worth trying less strict match with <code>alloftext</code> function:</p>
-
 
 
 <div class="runnable" data-checksum="5d5001b78c162fe12067167cabc9bab5" data-initial="{
@@ -852,7 +819,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -881,13 +848,10 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>Query returns 59 results.
 This example shows that removing a stop word may help in some cases.</p>
-
 <p>In context of NLP, English is quite easy - there are no diacritics, and inflection is rather simple.
-So let&rsquo;s try similar query in German:</p>
-
+So let's try similar query in German:</p>
 
 
 <div class="runnable" data-checksum="ae14be08ee0c46175f71b7918ee1dcd0" data-initial="{
@@ -1026,7 +990,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -1055,11 +1019,8 @@ public class DgraphMain {
   </div>
 </div>
 
-
-<p>Again, the query doesn&rsquo;t return any results.</p>
-
-<p>Now let&rsquo;s try the NLP-enabled version of this query:</p>
-
+<p>Again, the query doesn't return any results.</p>
+<p>Now let's try the NLP-enabled version of this query:</p>
 
 
 <div class="runnable" data-checksum="3ae8ed3ca59fc7f3927a4ca09377ab47" data-initial="{
@@ -1198,7 +1159,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -1227,19 +1188,14 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>This returns 4 results.</p>
-
-<p>It&rsquo;s worth noting the inflected forms of <code>schwarz</code> - <code>schwarzes</code> and <code>Schwartze</code>.
+<p>It's worth noting the inflected forms of <code>schwarz</code> - <code>schwarzes</code> and <code>Schwartze</code>.
 Also the <code>Wei\u00dfer</code> is interesting - <code>\u00df</code> is the escaped Unicode value of <a href="https://en.wikipedia.org/wiki/%C3%9F">grapheme <code>ß</code></a>.
 <code>weiss</code> matched <code>Weißer</code> - the form is inflected, and grapheme equivalency is preserved.
 Like in the English example, the stop word (<code>oder</code>) is ignored.</p>
-
 <h5 id="gotchas">Gotchas</h5>
-
 <p>In some cases, natural language processing can lead to surprising results.
-Let&rsquo;s search for the answer to the famous question: <code>To be, or not to be?</code>:</p>
-
+Let's search for the answer to the famous question: <code>To be, or not to be?</code>:</p>
 
 
 <div class="runnable" data-checksum="aadb70fa6d64fde240a20a76965babec" data-initial="{
@@ -1366,7 +1322,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -1395,9 +1351,7 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>The query gives no results, while the term matching query:</p>
-
 
 
 <div class="runnable" data-checksum="dd1fdb51dcb706bd6314b6e67b0d9118" data-initial="{
@@ -1524,7 +1478,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -1553,18 +1507,12 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>gives two results:</p>
-
 <p>What happened? <code>To be, or not to be?</code> consists of stop words only.
 After FTS/NLP processing, there are no movies that match the query.</p>
-
 <h3 id="regular-expressions-regexp">Regular Expressions (regexp)</h3>
-
 <p>Regular expressions are extremely useful for creating sophisticated matchers.</p>
-
 <p>For example, all titles starting with a word containing <code>night</code> but not <code>knight</code> may be matched using following query:</p>
-
 
 
 <div class="runnable" data-checksum="23ed524490f96aec36c54a4a839190a0" data-initial="{
@@ -1703,7 +1651,7 @@ public class DgraphMain {
             </div>
           </div>
 
-          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io/images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
+          <div class="runnable-content runnable-output" style="background: url('https://blog.dgraph.io//images/dgraph-black.png'); background-repeat: no-repeat; background-position: center; background-color: #fff;">
             <pre class="output-container empty"><code class="output" tabindex="-1"></code></pre>
           </div>
 
@@ -1732,19 +1680,13 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>There are 502 results in the test dataset.</p>
-
 <h3 id="summary">Summary</h3>
-
 <p>Dgraph supports extensive, and useful methods of string matching.</p>
-
 <p>Natural language processing, employed for full text search, may be the best choice for lookup based on users input.
 If more strict matching is required, term matching should give good results.
 And to get the most precise results of complicated text searches, regular expressions can be used.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -1794,7 +1736,6 @@ And to get the most precise results of complicated text searches, regular expres
 		}
 	})
 </script>
-
 
 <p><em>Top image: <a href="https://www.nasa.gov/image-feature/jpl/pia21572/the-splitting-of-the-dunes">The Splitting of the Dunes</a></em></p></div>
           <div class="article-tag-list">
@@ -2016,10 +1957,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='https://blog.dgraph.io/css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='https://blog.dgraph.io/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script
