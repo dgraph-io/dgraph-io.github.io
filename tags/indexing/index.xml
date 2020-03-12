@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Indexing on Dgraph Blog</title>
+    <title>indexing on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/indexing/</link>
-    <description>Recent content in Indexing on Dgraph Blog</description>
+    <description>Recent content in indexing on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/post/datetime-indexes-dgraph/</guid>
-      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&#39;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
+      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&amp;rsquo;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
 Bug Discovery While working on Flock, I observed that timestamp comparisons were not working correctly in Dgraph when the data or query had timezone information in it.</description>
     </item>
     

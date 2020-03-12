@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Go on Dgraph Blog</title>
+    <title>go on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/go/</link>
-    <description>Recent content in Go on Dgraph Blog</description>
+    <description>Recent content in go on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
@@ -19,7 +19,7 @@
       
       <guid>https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/</guid>
       <description>This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a star.
-With over six months of research and development, we&#39;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios.</description>
+With over six months of research and development, we&amp;rsquo;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios.</description>
     </item>
     
     <item>
@@ -28,7 +28,7 @@ With over six months of research and development, we&#39;re proud to announce th
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/post/datetime-indexes-dgraph/</guid>
-      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&#39;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
+      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&amp;rsquo;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
 Bug Discovery While working on Flock, I observed that timestamp comparisons were not working correctly in Dgraph when the data or query had timezone information in it.</description>
     </item>
     
@@ -58,7 +58,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
- This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
+This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
 Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.</description>
     </item>
     

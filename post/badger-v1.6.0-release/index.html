@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/index.xml">
 
   
     <title>Releasing BadgerDB v1.6.0 - Dgraph Blog</title>
@@ -39,7 +39,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/badger-v1.6.0-release/">
   
-  <meta property="og:image" content="https://blog.dgraph.io//images/landing-soyuz.png">
+  <meta property="og:image" content="/images/landing-soyuz.png">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,11 +48,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
   <link
-    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    href='/css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
     rel="stylesheet"
   />
   <link
-    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    href='/css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
     rel="stylesheet"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -79,21 +79,21 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/landing-soyuz.png"/>
+      <meta name="twitter:image" content="/images/landing-soyuz.png"/>
     
   
 
   <meta name="twitter:title" content="Releasing BadgerDB v1.6.0"/>
-  <meta name="twitter:description" content="It&#39;s been almost a years since BadgerDB v1.5.0 was released. While both the
+  <meta name="twitter:description" content="It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
@@ -448,46 +448,59 @@ week!"/>
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io//images/landing-soyuz.png"
+            src="/images/landing-soyuz.png"
           >
-          <div class="article-content"><p>It's been almost a years since BadgerDB v1.5.0 was released. While both the
+          <div class="article-content"><p>It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
 week!</p>
-<h3 id="badgerdb-v160">BadgerDB v1.6.0</h3>
+
+<h3 id="badgerdb-v1-6-0">BadgerDB v1.6.0</h3>
+
 <p>The API of BadgerDB has changed slowly over the last year and, while we tried to
 keep backward incompatible changes to a minimum, some features were deprecated
 and replaced by improved solutions supported by the community.</p>
+
 <p>So <strong>please note that v1.6.0 is not fully backward compatible with v1.5.0.</strong> The
-changes you'll need to perform to migrate from v1.5 to v1.6 are pretty minimal
+changes you&rsquo;ll need to perform to migrate from v1.5 to v1.6 are pretty minimal
 and only at API level. From a data storage point of view, both versions are
 completely compatible and a database created with v1.5 can be read and managed
 without any hiccups with v1.6.</p>
+
 <h3 id="new-features">New Features</h3>
-<p>Let's see which are the most important features that have been added since 1.5.
+
+<p>Let&rsquo;s see which are the most important features that have been added since 1.5.
 For a detailed list of the changes to the Badger API, you can read the
 <a href="https://github.com/dgraph-io/badger/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
+
 <h4 id="faster-writes-with-writebatch">Faster writes with WriteBatch</h4>
+
 <p>Most users write to Badger in a serial loop, one transaction per iteration.
 Badger is built with the idea of high write throughput with many transactions
 happening concurrently.  Writing to Badger one transaction at a time is not
-always the most performant way. That's why we introduced a new API which will
+always the most performant way. That&rsquo;s why we introduced a new API which will
 help you batching writes to Badger: WriteBatch.</p>
+
 <p>WriteBatch would automatically batch up multiple serial writes into one
 transaction, send it to be executed asynchronously and continue picking up more
 writes.</p>
+
 <p>In <a href="https://discuss.dgraph.io/t/badgerdb-v1-5-5-and-v2-0-0-rc1-are-now-released/4645/2">our benchmarks</a>, the new API allowed us to write keys at a
 speed almost 7 times faster than what we can do with a single write per
 transaction. Your own numbers might vary, but we do expect this new API to be of
 great help for those looking to squeeze that extra performance from Badger.</p>
-<h4 id="write-at-16-gbps-with-streamwriter">Write at 1.6 Gbps with StreamWriter</h4>
+
+<h4 id="write-at-1-6-gbps-with-streamwriter">Write at 1.6 Gbps with StreamWriter</h4>
+
 <p>While <code>WriteBatch</code> will help pretty much in every situation where blind writes
 need to be done as quickly as possible. But, for some more specific use cases we
 have come up with an even faster solution: StreamWriter.</p>
+
 <p>StreamWriter was designed to be the complementary API to Stream, and can be used
 to bootstrap new instances of Badger or stream it over the network. In Dgraph,
 if a server loses data or falls behind, we send a snapshot over using this API.</p>
+
 <p>StreamWriter can write multiple streams, as long as each stream contains sorted
 keys and the streams are non-overlapping. <em>The output from badger.Stream
 framework provides that guarantee.</em> StreamWriter works by avoiding LSM tree
@@ -495,76 +508,106 @@ compactions, instead building SSTables and arranging them directly in the many
 levels of the tree.  This can write almost as fast as disk allows. Our
 <a href="https://github.com/dgraph-io/badger/commit/1725096e24a2bbf932d14808e57d78d296753606">experiments</a> show writes at a rate of 200MBps, writing over 1 billion
 keys in around 3m20s.</p>
+
 <p>This code demonstrates how to copy a dataset onto a new database with
 <code>Stream</code> and <code>StreamWriter</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">streamCopy</span>(dest, orig <span style="color:#000;font-weight:bold">*</span>badger.DB) <span style="color:#458;font-weight:bold">error</span> {
-    sw <span style="color:#000;font-weight:bold">:=</span> dest.<span style="color:#900;font-weight:bold">NewStreamWriter</span>()
-    <span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> sw.<span style="color:#900;font-weight:bold">Prepare</span>(); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
-        <span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">Wrap</span>(err, <span style="color:#d14">&#34;could not prepare stream writer&#34;</span>)
 
-    s <span style="color:#000;font-weight:bold">:=</span> orig.<span style="color:#900;font-weight:bold">NewStream</span>()
+<pre><code class="language-go">func streamCopy(dest, orig *badger.DB) error {
+    sw := dest.NewStreamWriter()
+    if err := sw.Prepare(); err != nil {
+        return errors.Wrap(err, &quot;could not prepare stream writer&quot;)
+
+    s := orig.NewStream()
     s.Send = sw.Write
 
-    <span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> s.<span style="color:#900;font-weight:bold">Orchestrate</span>(context.<span style="color:#900;font-weight:bold">Background</span>()); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
-        <span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">Wrap</span>(err, <span style="color:#d14">&#34;could not orchestrate writes&#34;</span>)
+    if err := s.Orchestrate(context.Background()); err != nil {
+        return errors.Wrap(err, &quot;could not orchestrate writes&quot;)
 
-    <span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> sw.<span style="color:#900;font-weight:bold">Flush</span>(); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
-        <span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">Wrap</span>(err, <span style="color:#d14">&#34;could not flush stream writer&#34;</span>)
+    if err := sw.Flush(); err != nil {
+        return errors.Wrap(err, &quot;could not flush stream writer&quot;)
 
-    <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
+    return nil
 }
-</code></pre></div><p><code>StreamWriter</code> can be used without <code>Stream</code> itself, but make sure you read the
+</code></pre>
+
+<p><code>StreamWriter</code> can be used without <code>Stream</code> itself, but make sure you read the
 documentation and understand the constraints on how <code>Write</code> should be called.</p>
+
 <h4 id="be-notified-of-changes-in-the-db-with-subscribe">Be notified of changes in the DB with Subscribe</h4>
-<p>Once you've opened a BadgerDB you can easily set up a subscription so every time
+
+<p>Once you&rsquo;ve opened a BadgerDB you can easily set up a subscription so every time
 a key changes a function of your choice will be called. You can choose what
-specific key ranges you'd like to observe, or simply give an empty prefix to
+specific key ranges you&rsquo;d like to observe, or simply give an empty prefix to
 subscribe to all key changes.</p>
+
 <p>For a complete example of the functionality, check out <a href="http://godoc.org/github.com/dgraph-io/badger/#DB.Subscribe">this
 example</a> in the
 documentation.</p>
+
 <h4 id="new-options-api">New Options API</h4>
+
 <p>In the search of more intuitive APIs, we decided to provide a new way of
 creating the <code>badger.Options</code> passed to <code>badger.Open</code> and others.</p>
+
 <p>We made <code>DefaultOptions</code> a function that receives the path where the database is
 stored as a parameter. Once you got those default options, you can modify
 specific bits by using the also new builder API.</p>
+
 <p>So for instance, the code needed to open a Badger DB in read-only mode in
 previous versions was:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">opts <span style="color:#000;font-weight:bold">:=</span> badger.Options
-opts.Dir = <span style="color:#d14">&#34;/tmp/db&#34;</span>
-opts.ValueDir = <span style="color:#d14">&#34;tmp/db&#34;</span>
-opts.ReadOnly = <span style="color:#000;font-weight:bold">true</span>
-db, err <span style="color:#000;font-weight:bold">:=</span> badger.<span style="color:#900;font-weight:bold">Open</span>(opts)
-</code></pre></div><p>With the new builder API, the code becomes less verbose.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">db, err <span style="color:#000;font-weight:bold">:=</span> badger.<span style="color:#900;font-weight:bold">Open</span>(badger.<span style="color:#900;font-weight:bold">DefaultOpts</span>(<span style="color:#d14">&#34;/tmp/db&#34;</span>).<span style="color:#900;font-weight:bold">WithReadOnly</span>(<span style="color:#000;font-weight:bold">true</span>))
-</code></pre></div><h4 id="new-entry-api">New Entry API</h4>
-<p>Similarly to Options, we've removed some methods in <code>badger.Txn</code> and replaced
+
+<pre><code class="language-go">opts := badger.Options
+opts.Dir = &quot;/tmp/db&quot;
+opts.ValueDir = &quot;tmp/db&quot;
+opts.ReadOnly = true
+db, err := badger.Open(opts)
+</code></pre>
+
+<p>With the new builder API, the code becomes less verbose.</p>
+
+<pre><code class="language-go">db, err := badger.Open(badger.DefaultOpts(&quot;/tmp/db&quot;).WithReadOnly(true))
+</code></pre>
+
+<h4 id="new-entry-api">New Entry API</h4>
+
+<p>Similarly to Options, we&rsquo;ve removed some methods in <code>badger.Txn</code> and replaced
 them by a new builder API on <code>badger.Entry</code>. The methods <code>SetWithDiscard</code>,
 <code>SetWithmeta</code>, and <code>SetWithTTL</code> have been removed. New <code>badger.Entry</code>
 methods <code>WithDiscard</code>, <code>WithMeta</code>, and <code>WithTTL</code> provide the same functionality
 and can be used with the <code>badger.Txn.SetEntry</code>.</p>
+
 <p>The benefit of this approach is that it allows all the permutations of <code>SetWith</code>
 without having to introduce an API covering each.</p>
+
 <p>For instance, in previous versions, the code to set a transaction with TTL of 1
 second was the following:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    err <span style="color:#000;font-weight:bold">:=</span> db.<span style="color:#900;font-weight:bold">Update</span>(<span style="color:#000;font-weight:bold">func</span>(txn <span style="color:#000;font-weight:bold">*</span>badger.Txn) <span style="color:#458;font-weight:bold">error</span> {
-        <span style="color:#000;font-weight:bold">return</span> txn.<span style="color:#900;font-weight:bold">SetWithTTL</span>(key, value, <span style="color:#099">1</span><span style="color:#000;font-weight:bold">*</span>time.Second)
+
+<pre><code class="language-go">    err := db.Update(func(txn *badger.Txn) error {
+        return txn.SetWithTTL(key, value, 1*time.Second)
     })
-</code></pre></div><p>With the builder API on Entry, you would now write the following:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    db.<span style="color:#900;font-weight:bold">Update</span>(<span style="color:#000;font-weight:bold">func</span>(txn <span style="color:#000;font-weight:bold">*</span>badger.Txn) <span style="color:#458;font-weight:bold">error</span> {
-        <span style="color:#000;font-weight:bold">return</span> txn.<span style="color:#900;font-weight:bold">SetEntry</span>(badger.<span style="color:#900;font-weight:bold">NewEntry</span>(key, value).<span style="color:#900;font-weight:bold">WithTTL</span>(<span style="color:#099">1</span> <span style="color:#000;font-weight:bold">*</span> time.Second))
+</code></pre>
+
+<p>With the builder API on Entry, you would now write the following:</p>
+
+<pre><code class="language-go">    db.Update(func(txn *badger.Txn) error {
+        return txn.SetEntry(badger.NewEntry(key, value).WithTTL(1 * time.Second))
     })
-</code></pre></div><p>This change also makes it possible to set both TTL and Meta, which wasn't the
+</code></pre>
+
+<p>This change also makes it possible to set both TTL and Meta, which wasn&rsquo;t the
 case before, as shown in issues <a href="https://github.com/dgraph-io/badger/issues/774">#774</a>
 and <a href="https://github.com/dgraph-io/badger/issues/332">#332</a>.</p>
+
 <h3 id="thanks">Thanks!</h3>
+
 <p>BadgerDB is an open source project and as such, we depend on your
 contributions. So we wanted to take a minute to thank all of our contributors.
 No matter whether you contributed code, documentation, reported issues, or
 simply starred the project on GitHub, you made the project better and we thank
 you all for that!</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -615,18 +658,19 @@ you all for that!</p>
 	})
 </script>
 
+
 <p>Top image: <a href="https://www.flickr.com/photos/nasahqphoto/39641281455/in/album-72157693123365554/">Expedition 54 Soyuz MS-06 Landing by NASA</a></p></div>
           <div class="article-tag-list">
             
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/badger/">Badger</a>
+                    <a href="https://blog.dgraph.io/tags/badger/">badger</a>
                 
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/release/">Release</a>
+                    <a href="https://blog.dgraph.io/tags/release/">release</a>
                 
             
           </div>
@@ -803,9 +847,9 @@ you all for that!</p>
   
 </div>
 
-    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script src="/js/clipboard.min.js"></script>
     <script
-      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+      src='/js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
     ></script>
     <script>
       hljs.initHighlightingOnLoad();
@@ -848,10 +892,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='/css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script

@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/index.xml">
 
   
     <title>Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals. - Dgraph Blog</title>
@@ -39,7 +39,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/tutorial-3-getting-started/">
   
-  <meta property="og:image" content="https://blog.dgraph.io//images/tutorials/1/kepler.jpg">
+  <meta property="og:image" content="/images/tutorials/1/kepler.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,11 +48,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
   <link
-    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    href='/css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
     rel="stylesheet"
   />
   <link
-    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    href='/css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
     rel="stylesheet"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -79,23 +79,23 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/tutorials/1/kepler.jpg"/>
+      <meta name="twitter:image" content="/images/tutorials/1/kepler.jpg"/>
     
   
 
   <meta name="twitter:title" content="Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals."/>
   <meta name="twitter:description" content="Welcome to the third episode of getting started with Dgraph. In the previous episode of the tutorial, we learned about the CRUD operations using UIDs. We also learned about traversals and recursive traversals.
-In this tutorial, we&#39;ll learn about Dgraph&#39;s basic types and how to query for them. Specifically, we&#39;ll learn about:
- Basic data types in Dgraph. Querying for predicate values. Indexing. Filtering nodes. Traversing in reverse direction.  Here&#39;s the complimentary video for this blog post."/>
+In this tutorial, we&rsquo;ll learn about Dgraph&rsquo;s basic types and how to query for them. Specifically, we&rsquo;ll learn about:
+ Basic data types in Dgraph. Querying for predicate values. Indexing. Filtering nodes. Traversing in reverse direction.  Here&rsquo;s the complimentary video for this blog post."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -446,13 +446,17 @@ In this tutorial, we&#39;ll learn about Dgraph&#39;s basic types and how to quer
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io//images/tutorials/1/kepler.jpg"
+            src="/images/tutorials/1/kepler.jpg"
           >
-          <div class="article-content"><p>Welcome to the third episode of getting started with Dgraph.
+          <div class="article-content">
+
+<p>Welcome to the third episode of getting started with Dgraph.
 In the <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">previous episode</a> of the tutorial, we learned about the CRUD operations using UIDs.
 We also learned about traversals and recursive traversals.</p>
-<p>In this tutorial, we'll learn about Dgraph's basic types and how to query for them.
-Specifically, we'll learn about:</p>
+
+<p>In this tutorial, we&rsquo;ll learn about Dgraph&rsquo;s basic types and how to query for them.
+Specifically, we&rsquo;ll learn about:</p>
+
 <ul>
 <li>Basic data types in Dgraph.</li>
 <li>Querying for predicate values.</li>
@@ -460,151 +464,164 @@ Specifically, we'll learn about:</p>
 <li>Filtering nodes.</li>
 <li>Traversing in reverse direction.</li>
 </ul>
-<p>Here's the complimentary video for this blog post. It'll walk you through the steps of this getting started episode.</p>
+
+<p>Here&rsquo;s the complimentary video for this blog post. It&rsquo;ll walk you through the steps of this getting started episode.</p>
+
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/f401or0hg5E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/f401or0hg5E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<p>Let's start by building the following graph of a simple blog application.
-Here's the Graph model of our application</p>
-<p><img src="/images/tutorials/3/a-main-graph.JPG" alt="main graph model"></p>
+
+<p>Let&rsquo;s start by building the following graph of a simple blog application.
+Here&rsquo;s the Graph model of our application</p>
+
+<p><img src="/images/tutorials/3/a-main-graph.JPG" alt="main graph model" /></p>
+
 <p>The above graph has three entities: Author, Blog posts, and Tags.
 The nodes in the graph represent these entities.
-For the rest of the tutorial, we'll call the node representing a blog as a <code>blog post</code> node.
+For the rest of the tutorial, we&rsquo;ll call the node representing a blog as a <code>blog post</code> node.
 And the node presenting a <code>tag</code> as a <code>tag node</code>, and so on.</p>
+
 <p>You can see from the graph model that these entities are related:</p>
+
 <ul>
 <li>Every Author has one or more blog posts.</li>
 </ul>
+
 <p>The <code>published</code> edge relates the blogs to their authors.
 These edges start from an <code>author node</code> and point to a <code>blog post</code> node.</p>
+
 <ul>
 <li>Every Blog post has one or more tags.</li>
 </ul>
+
 <p>The <code>tagged</code> edge relates the blog posts to their tags.
-These edges emerge from a <code>blog post node</code> and point to a <code>tag node</code>.</p>
-<p>Let's build our Graph.</p>
+ These edges emerge from a <code>blog post node</code> and point to a <code>tag node</code>.</p>
+
+<p>Let&rsquo;s build our Graph.</p>
+
 <p>Go to Ratel, click on the mutate tab, paste the following mutation, and click Run.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
- <span style="color:#000080">&#34;set&#34;</span>: [
+
+<pre><code class="language-json">{
+ &quot;set&quot;: [
   {
-   <span style="color:#000080">&#34;author_name&#34;</span>: <span style="color:#d14">&#34;John Campbell&#34;</span>,
-   <span style="color:#000080">&#34;rating&#34;</span>: <span style="color:#099">4.1</span>,
-   <span style="color:#000080">&#34;published&#34;</span>: [
+   &quot;author_name&quot;: &quot;John Campbell&quot;,
+   &quot;rating&quot;: 4.1,
+   &quot;published&quot;: [
     {
-     <span style="color:#000080">&#34;title&#34;</span>: <span style="color:#d14">&#34;Dgraph&#39;s recap of GraphQL Conf - Berlin 2019&#34;</span>,
-     <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;https://blog.dgraph.io/post/graphql-conf-19/&#34;</span>,
-     <span style="color:#000080">&#34;content&#34;</span>: <span style="color:#d14">&#34;We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn’t help ourselves from sharing this with Dgraph’s community! This is the story of the GraphQL conference in Berlin.&#34;</span>,
-     <span style="color:#000080">&#34;likes&#34;</span>: <span style="color:#099">100</span>,
-     <span style="color:#000080">&#34;dislikes&#34;</span>: <span style="color:#099">4</span>,
-     <span style="color:#000080">&#34;publish_time&#34;</span>: <span style="color:#d14">&#34;2018-06-25T02:30:00&#34;</span>,
-     <span style="color:#000080">&#34;tagged&#34;</span>: [
+     &quot;title&quot;: &quot;Dgraph's recap of GraphQL Conf - Berlin 2019&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/graphql-conf-19/&quot;,
+     &quot;content&quot;: &quot;We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn’t help ourselves from sharing this with Dgraph’s community! This is the story of the GraphQL conference in Berlin.&quot;,
+     &quot;likes&quot;: 100,
+     &quot;dislikes&quot;: 4,
+     &quot;publish_time&quot;: &quot;2018-06-25T02:30:00&quot;,
+     &quot;tagged&quot;: [
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphql&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;graphql&#34;</span>
+       &quot;uid&quot;: &quot;_:graphql&quot;,
+       &quot;tag_name&quot;: &quot;graphql&quot;
       },
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:devrel&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;devrel&#34;</span>
+       &quot;uid&quot;: &quot;_:devrel&quot;,
+       &quot;tag_name&quot;: &quot;devrel&quot;
       }
      ]
     },
     {
-     <span style="color:#000080">&#34;title&#34;</span>: <span style="color:#d14">&#34;Dgraph Labs wants you!&#34;</span>,
-     <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;https://blog.dgraph.io/post/hiring-19/&#34;</span>,
-     <span style="color:#000080">&#34;content&#34;</span>: <span style="color:#d14">&#34;We recently announced our successful Series A fundraise and, since then, many people have shown interest to join our team. We are very grateful to have so many people interested in joining our team! We also realized that the job openings were neither really up to date nor covered all of the roles that we are looking for. This is why we decided to spend some time rewriting them and the result is these six new job openings!.&#34;</span>,
-     <span style="color:#000080">&#34;likes&#34;</span>: <span style="color:#099">60</span>,
-     <span style="color:#000080">&#34;dislikes&#34;</span>: <span style="color:#099">2</span>,
-     <span style="color:#000080">&#34;publish_time&#34;</span>: <span style="color:#d14">&#34;2018-08-25T03:45:00&#34;</span>,
-     <span style="color:#000080">&#34;tagged&#34;</span>: [
+     &quot;title&quot;: &quot;Dgraph Labs wants you!&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/hiring-19/&quot;,
+     &quot;content&quot;: &quot;We recently announced our successful Series A fundraise and, since then, many people have shown interest to join our team. We are very grateful to have so many people interested in joining our team! We also realized that the job openings were neither really up to date nor covered all of the roles that we are looking for. This is why we decided to spend some time rewriting them and the result is these six new job openings!.&quot;,
+     &quot;likes&quot;: 60,
+     &quot;dislikes&quot;: 2,
+     &quot;publish_time&quot;: &quot;2018-08-25T03:45:00&quot;,
+     &quot;tagged&quot;: [
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:hiring&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;hiring&#34;</span>
+       &quot;uid&quot;: &quot;_:hiring&quot;,
+       &quot;tag_name&quot;: &quot;hiring&quot;
       },
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:careers&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;careers&#34;</span>
+       &quot;uid&quot;: &quot;_:careers&quot;,
+       &quot;tag_name&quot;: &quot;careers&quot;
       }
      ]
     }
    ]
   },
   {
-   <span style="color:#000080">&#34;author_name&#34;</span>: <span style="color:#d14">&#34;John Travis&#34;</span>,
-   <span style="color:#000080">&#34;rating&#34;</span>: <span style="color:#099">4.5</span>,
-   <span style="color:#000080">&#34;published&#34;</span>: [
+   &quot;author_name&quot;: &quot;John Travis&quot;,
+   &quot;rating&quot;: 4.5,
+   &quot;published&quot;: [
     {
-     <span style="color:#000080">&#34;title&#34;</span>: <span style="color:#d14">&#34;How Dgraph Labs Raised Series A&#34;</span>,
-     <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/&#34;</span>,
-     <span style="color:#000080">&#34;content&#34;</span>: <span style="color:#d14">&#34;I’m really excited to announce that Dgraph has raised $11.5M in Series A funding. This round is led by Redpoint Ventures, with investment from our previous lead, Bain Capital Ventures, and participation from all our existing investors – Blackbird, Grok and AirTree. With this round, Satish Dharmaraj joins Dgraph’s board of directors, which includes Salil Deshpande from Bain and myself. Their guidance is exactly what we need as we transition from building a product to bringing it to market. So, thanks to all our investors!.&#34;</span>,
-     <span style="color:#000080">&#34;likes&#34;</span>: <span style="color:#099">139</span>,
-     <span style="color:#000080">&#34;dislikes&#34;</span>: <span style="color:#099">6</span>,
-     <span style="color:#000080">&#34;publish_time&#34;</span>: <span style="color:#d14">&#34;2019-07-11T01:45:00&#34;</span>,
-     <span style="color:#000080">&#34;tagged&#34;</span>: [
+     &quot;title&quot;: &quot;How Dgraph Labs Raised Series A&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/&quot;,
+     &quot;content&quot;: &quot;I’m really excited to announce that Dgraph has raised $11.5M in Series A funding. This round is led by Redpoint Ventures, with investment from our previous lead, Bain Capital Ventures, and participation from all our existing investors – Blackbird, Grok and AirTree. With this round, Satish Dharmaraj joins Dgraph’s board of directors, which includes Salil Deshpande from Bain and myself. Their guidance is exactly what we need as we transition from building a product to bringing it to market. So, thanks to all our investors!.&quot;,
+     &quot;likes&quot;: 139,
+     &quot;dislikes&quot;: 6,
+     &quot;publish_time&quot;: &quot;2019-07-11T01:45:00&quot;,
+     &quot;tagged&quot;: [
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:annoucement&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;annoucement&#34;</span>
+       &quot;uid&quot;: &quot;_:annoucement&quot;,
+       &quot;tag_name&quot;: &quot;annoucement&quot;
       },
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:funding&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;funding&#34;</span>
+       &quot;uid&quot;: &quot;_:funding&quot;,
+       &quot;tag_name&quot;: &quot;funding&quot;
       }
      ]
     },
     {
-     <span style="color:#000080">&#34;title&#34;</span>: <span style="color:#d14">&#34;Celebrating 10,000 GitHub Stars&#34;</span>,
-     <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;https://blog.dgraph.io/post/10k-github-stars/&#34;</span>,
-     <span style="color:#000080">&#34;content&#34;</span>: <span style="color:#d14">&#34;Dgraph is celebrating the milestone of reaching 10,000 GitHub stars 🎉. This wouldn’t have happened without all of you, so we want to thank the awesome community for being with us all the way along. This milestone comes at an exciting time for Dgraph.&#34;</span>,
-     <span style="color:#000080">&#34;likes&#34;</span>: <span style="color:#099">33</span>,
-     <span style="color:#000080">&#34;dislikes&#34;</span>: <span style="color:#099">12</span>,
-     <span style="color:#000080">&#34;publish_time&#34;</span>: <span style="color:#d14">&#34;2017-03-11T01:45:00&#34;</span>,
-     <span style="color:#000080">&#34;tagged&#34;</span>: [
+     &quot;title&quot;: &quot;Celebrating 10,000 GitHub Stars&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/10k-github-stars/&quot;,
+     &quot;content&quot;: &quot;Dgraph is celebrating the milestone of reaching 10,000 GitHub stars 🎉. This wouldn’t have happened without all of you, so we want to thank the awesome community for being with us all the way along. This milestone comes at an exciting time for Dgraph.&quot;,
+     &quot;likes&quot;: 33,
+     &quot;dislikes&quot;: 12,
+     &quot;publish_time&quot;: &quot;2017-03-11T01:45:00&quot;,
+     &quot;tagged&quot;: [
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:devrel&#34;</span>
+       &quot;uid&quot;: &quot;_:devrel&quot;
       },
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:annoucement&#34;</span>
+       &quot;uid&quot;: &quot;_:annoucement&quot;
       }
      ]
     }
    ]
   },
   {
-   <span style="color:#000080">&#34;author_name&#34;</span>: <span style="color:#d14">&#34;Katie Perry&#34;</span>,
-   <span style="color:#000080">&#34;rating&#34;</span>: <span style="color:#099">3.9</span>,
-   <span style="color:#000080">&#34;published&#34;</span>: [
+   &quot;author_name&quot;: &quot;Katie Perry&quot;,
+   &quot;rating&quot;: 3.9,
+   &quot;published&quot;: [
     {
-     <span style="color:#000080">&#34;title&#34;</span>: <span style="color:#d14">&#34;Migrating data from SQL to Dgraph!&#34;</span>,
-     <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/&#34;</span>,
-     <span style="color:#000080">&#34;content&#34;</span>: <span style="color:#d14">&#34;Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from. In particular, we get asked a lot about how to migrate data from MySQL to Dgraph. In this article, we present a tool that makes this migration really easy: all a user needs to do is write a small 3 lines configuration file and type in 2 commands. In essence, this tool bridges one of the best technologies of the 20th century with one of the best ones of the 21st (if you ask us).&#34;</span>,
-     <span style="color:#000080">&#34;likes&#34;</span>: <span style="color:#099">20</span>,
-     <span style="color:#000080">&#34;dislikes&#34;</span>: <span style="color:#099">1</span>,
-     <span style="color:#000080">&#34;publish_time&#34;</span>: <span style="color:#d14">&#34;2018-08-25T01:44:00&#34;</span>,
-     <span style="color:#000080">&#34;tagged&#34;</span>: [
+     &quot;title&quot;: &quot;Migrating data from SQL to Dgraph!&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/&quot;,
+     &quot;content&quot;: &quot;Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from. In particular, we get asked a lot about how to migrate data from MySQL to Dgraph. In this article, we present a tool that makes this migration really easy: all a user needs to do is write a small 3 lines configuration file and type in 2 commands. In essence, this tool bridges one of the best technologies of the 20th century with one of the best ones of the 21st (if you ask us).&quot;,
+     &quot;likes&quot;: 20,
+     &quot;dislikes&quot;: 1,
+     &quot;publish_time&quot;: &quot;2018-08-25T01:44:00&quot;,
+     &quot;tagged&quot;: [
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:tutorial&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;tutorial&#34;</span>
+       &quot;uid&quot;: &quot;_:tutorial&quot;,
+       &quot;tag_name&quot;: &quot;tutorial&quot;
       }
      ]
     },
     {
-     <span style="color:#000080">&#34;title&#34;</span>: <span style="color:#d14">&#34;Building a To-Do List React App with Dgraph&#34;</span>,
-     <span style="color:#000080">&#34;url&#34;</span>: <span style="color:#d14">&#34;https://blog.dgraph.io/post/building-todo-list-react-dgraph/&#34;</span>,
-     <span style="color:#000080">&#34;content&#34;</span>: <span style="color:#d14">&#34;In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http — a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.&#34;</span>,
-     <span style="color:#000080">&#34;likes&#34;</span>: <span style="color:#099">97</span>,
-     <span style="color:#000080">&#34;dislikes&#34;</span>: <span style="color:#099">5</span>,
-     <span style="color:#000080">&#34;publish_time&#34;</span>: <span style="color:#d14">&#34;2019-02-11T03:33:00&#34;</span>,
-     <span style="color:#000080">&#34;tagged&#34;</span>: [
+     &quot;title&quot;: &quot;Building a To-Do List React App with Dgraph&quot;,
+     &quot;url&quot;: &quot;https://blog.dgraph.io/post/building-todo-list-react-dgraph/&quot;,
+     &quot;content&quot;: &quot;In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http — a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.&quot;,
+     &quot;likes&quot;: 97,
+     &quot;dislikes&quot;: 5,
+     &quot;publish_time&quot;: &quot;2019-02-11T03:33:00&quot;,
+     &quot;tagged&quot;: [
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:tutorial&#34;</span>
+       &quot;uid&quot;: &quot;_:tutorial&quot;
       },
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:devrel&#34;</span>
+       &quot;uid&quot;: &quot;_:devrel&quot;
       },
       {
-       <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:javascript&#34;</span>,
-       <span style="color:#000080">&#34;tag_name&#34;</span>: <span style="color:#d14">&#34;javascript&#34;</span>
+       &quot;uid&quot;: &quot;_:javascript&quot;,
+       &quot;tag_name&quot;: &quot;javascript&quot;
       }
      ]
     }
@@ -612,38 +629,56 @@ These edges emerge from a <code>blog post node</code> and point to a <code>tag n
   }
  ]
 }
-</code></pre></div><p>Our Graph is ready!</p>
-<p><img src="/images/tutorials/3/l-fullgraph-2.png" alt="rating-blog-rating"></p>
+</code></pre>
+
+<p>Our Graph is ready!</p>
+
+<p><img src="/images/tutorials/3/l-fullgraph-2.png" alt="rating-blog-rating" /></p>
+
 <p>Our Graph has:</p>
+
 <ul>
 <li>Three blue author nodes.</li>
 <li>Each author has two blog posts each, six in total, which are represented by the green nodes.</li>
 <li>The tags of the blog posts are in pink.
 You can see that there are 8 unique tags, and some of the blogs share a common tag.</li>
 </ul>
+
 <h4 id="data-types-for-predicates">Data types for predicates</h4>
+
 <p>Dgraph automatically detects the data type of its predicates.
 You can see the auto-detected data types using the Ratel UI.</p>
+
 <p>Click on the schema tab on the left and then check the <code>Type</code> column.
-You'll see the predicate names and their corresponding data types.</p>
-<p><img src="/images/tutorials/3/a-initial.png" alt="rating-blog-rating"></p>
+You&rsquo;ll see the predicate names and their corresponding data types.</p>
+
+<p><img src="/images/tutorials/3/a-initial.png" alt="rating-blog-rating" /></p>
+
 <p>These data types include <code>string</code>, <code>float</code>, and <code>int</code> and <code>uid</code>.
 Besides them, Dgraph also offers three more basic data types: <code>geo</code>, <code>dateTime</code>, and <code>bool</code>.</p>
+
 <p>The <code>uid</code> type represents predicates between two nodes.
 In other words, they represent edges connecting two nodes.</p>
+
 <p>You might have noticed that the <code>published</code> and <code>tagged</code> predicates are of type <code>uid</code> array (<code>[uid]</code>).
 UID arrays represent a collection of UIDs.
 This is used to represent one to many relationships.</p>
+
 <p>For instance, we know that an author can publish more than one blog.
 Hence, there could be more than one <code>published</code> edge emerging from a given <code>author</code> node.
 Each pointing to a different blog post of the author.</p>
-<p>Dgraph's <a href="https://blog.dgraph.io/post/release-v1.1.0/">v1.1 release</a> introduced type system feature.
+
+<p>Dgraph&rsquo;s <a href="https://blog.dgraph.io/post/release-v1.1.0/">v1.1 release</a> introduced type system feature.
 This feature made it possible to create custom data types by grouping one or more predicates.
-But in this tutorial, we'll only focus on the basic data types.</p>
+But in this tutorial, we&rsquo;ll only focus on the basic data types.</p>
+
 <p>Also, notice that there are no entries in the indices column.
-We'll talk about indices in detail shortly.</p>
+We&rsquo;ll talk about indices in detail shortly.</p>
+
 <h4 id="querying-for-predicate-values">Querying for predicate values</h4>
-<p>First, let's query for all the Authors and their ratings.</p>
+
+<p>First, let&rsquo;s query for all the Authors and their ratings.</p>
+
 <pre><code>{
   authors_and_ratings(func: has(author_name)) {
     uid
@@ -651,14 +686,20 @@ We'll talk about indices in detail shortly.</p>
     rating
   }
 }
-</code></pre><p><img src="/images/tutorials/3/a-find-rating-2.png" alt="authors"></p>
+</code></pre>
+
+<p><img src="/images/tutorials/3/a-find-rating-2.png" alt="authors" /></p>
+
 <p>Refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first episode</a> if you have any questions related to the structure of the query in general.</p>
+
 <p>We have 3 authors in total in our dataset.
-Now, let's find the best authors.
-Let's query for authors whose rating is 4.0 or more.</p>
+Now, let&rsquo;s find the best authors.
+Let&rsquo;s query for authors whose rating is 4.0 or more.</p>
+
 <p>In order to achieve it, we need a way to select nodes that meet certain criteria (e.g., rating &gt; 4.0).
-You can do so by using Dgraph's built-in comparator functions.
-Here's the list of comparator functions available in Dgraph.</p>
+You can do so by using Dgraph&rsquo;s built-in comparator functions.
+Here&rsquo;s the list of comparator functions available in Dgraph.</p>
+
 <table>
 <thead>
 <tr>
@@ -666,34 +707,42 @@ Here's the list of comparator functions available in Dgraph.</p>
 <th>Full form</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>eq</td>
 <td>equals to</td>
 </tr>
+
 <tr>
 <td>lt</td>
 <td>less than</td>
 </tr>
+
 <tr>
 <td>le</td>
 <td>less than or equal to</td>
 </tr>
+
 <tr>
 <td>gt</td>
 <td>greater than</td>
 </tr>
+
 <tr>
 <td>ge</td>
 <td>greater than or equal to</td>
 </tr>
 </tbody>
 </table>
+
 <p>There are a total of five comparator functions in Dgraph.
 You can use any of them alongside the <code>func</code> keyword in your queries.</p>
+
 <p>The comparator function take two arguments.
 One is the predicate name, and the other is its value to compare.
 Here are a few examples.</p>
+
 <table>
 <thead>
 <tr>
@@ -701,44 +750,61 @@ Here are a few examples.</p>
 <th>Description</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>func: eq(age, 60)</td>
 <td>Return nodes with <code>age</code> predicate equal to 60.</td>
 </tr>
+
 <tr>
 <td>func: gt(likes, 100)</td>
 <td>Return nodes with a value of <code>likes</code> predicate greater than 100.</td>
 </tr>
+
 <tr>
 <td>func: le(dislikes, 10)</td>
 <td>Return nodes with a value of <code>dislikes</code> predicates less than or equal to 10.</td>
 </tr>
 </tbody>
 </table>
+
 <p>Now, guess the comparator function we should use to select <code>author nodes</code> with a rating of 4.0 or more.</p>
-<p>If you think it should be <code>greater than or equal to(ge)</code> function, then you're right!</p>
-<p>Let's try it out.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>best_authors(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ge</span>(rating,<span style="color:#bbb"> </span>4<span style="color:#099">.0</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>uid<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>author_name<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>rating<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/b-index-missing.png" alt="index missing"></p>
+
+<p>If you think it should be <code>greater than or equal to(ge)</code> function, then you&rsquo;re right!</p>
+
+<p>Let&rsquo;s try it out.</p>
+
+<pre><code class="language-graphql">{
+  best_authors(func: ge(rating, 4.0)) {
+    uid
+    author_name
+    rating
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/b-index-missing.png" alt="index missing" /></p>
+
 <p>We got an error! The index for the <code>rating</code> predicate is missing.
-You cannot query for the value of a predicate unless you've added an index for it.</p>
-<p>Let's learn more about indices in Dgraph and also how to add them.</p>
+You cannot query for the value of a predicate unless you&rsquo;ve added an index for it.</p>
+
+<p>Let&rsquo;s learn more about indices in Dgraph and also how to add them.</p>
+
 <h4 id="indexing-in-dgraph">Indexing in Dgraph</h4>
+
 <p>Indices are used to speed up your queries on predicates.
 They have to be explicitly added to a predicate when they are required.
 That is, only when you need to query for the value of a predicate.</p>
-<p>Also, there's no need to anticipate the indices to be added right at the beginning.
+
+<p>Also, there&rsquo;s no need to anticipate the indices to be added right at the beginning.
 You can add them as you go.</p>
+
 <p>Dgraph offers different types of indices.
 The choice of the index to be added depends on the data type of the predicate.</p>
+
 <p>Here is the table containing data types and the set of indices that can be applied to them.</p>
+
 <table>
 <thead>
 <tr>
@@ -746,246 +812,346 @@ The choice of the index to be added depends on the data type of the predicate.</
 <th>Available index types</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>int</td>
 <td>int</td>
 </tr>
+
 <tr>
 <td>float</td>
 <td>float</td>
 </tr>
+
 <tr>
 <td>string</td>
 <td>hash, exact, term, fulltext, trigram</td>
 </tr>
+
 <tr>
 <td>bool</td>
 <td>bool</td>
 </tr>
+
 <tr>
 <td>geo</td>
 <td>geo</td>
 </tr>
+
 <tr>
 <td>dateTime</td>
 <td>year, month, day, hour</td>
 </tr>
 </tbody>
 </table>
+
 <p>Only <code>string</code> and <code>dateTime</code> data types have an option for more than one index type.</p>
-<p>Let's create an index on the rating predicate.
+
+<p>Let&rsquo;s create an index on the rating predicate.
 Ratel UI makes it super simple to add an index.</p>
-<p>Here's the sequence of steps:</p>
+
+<p>Here&rsquo;s the sequence of steps:</p>
+
 <ul>
 <li>Go to the schema tab on the left.</li>
 <li>Click on the <code>rating</code> predicate from the list.</li>
 <li>Tick the index option in the Properties UI on the right.</li>
 </ul>
-<p><img src="/images/tutorials/3/c-add-schema.png" alt="Add schema"></p>
+
+<p><img src="/images/tutorials/3/c-add-schema.png" alt="Add schema" /></p>
+
 <p>We successfully added the index for <code>rating</code> predicate!
-Let's rerun our previous query.</p>
-<p><img src="/images/tutorials/3/d-rating-query.png" alt="rating"></p>
+Let&rsquo;s rerun our previous query.</p>
+
+<p><img src="/images/tutorials/3/d-rating-query.png" alt="rating" /></p>
+
 <p>We successfully queried for author nodes with a rating of 4.0 or more.</p>
+
 <p>How about we also fetch the blog posts of these authors?</p>
+
 <p>We already know that the <code>published</code> edge points from an <code>author</code> node to a <code>blog post</code> node.
 So fetching the blog posts of the <code>author</code> nodes is simple.
 We need to just traverse the <code>published</code> edge starting from the <code>author</code> nodes.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>authors_and_ratings(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ge</span>(rating,<span style="color:#bbb"> </span>4<span style="color:#099">.0</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>uid<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>author_name<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>rating<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>published<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>content<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>dislikes<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/e-rating-blog.png" alt="rating-blog-rating">
+
+<pre><code class="language-graphql">{
+  authors_and_ratings(func: ge(rating, 4.0)) {
+    uid
+    author_name
+    rating
+    published {
+      title
+      content
+      dislikes
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/e-rating-blog.png" alt="rating-blog-rating" />
 <em>Check out our <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">previous tutorial</a> if you have questions around graph traversal queries.</em></p>
-<p>Similarly, let's extend our previous query to fetch the tags of these blog posts.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>authors_and_ratings(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ge</span>(rating,<span style="color:#bbb"> </span>4<span style="color:#099">.0</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>uid<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>author_name<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>rating<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>published<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>content<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>dislikes<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>tagged<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/m-four-blogs.png" alt="rating-blog-rating">
+
+<p>Similarly, let&rsquo;s extend our previous query to fetch the tags of these blog posts.</p>
+
+<pre><code class="language-graphql">{
+  authors_and_ratings(func: ge(rating, 4.0)) {
+    uid
+    author_name
+    rating
+    published {
+      title
+      content
+      dislikes
+      tagged {
+        tag_name
+      }
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/m-four-blogs.png" alt="rating-blog-rating" />
 <em>Note: Author nodes are in blue, blogs posts in green, and tags in pink.</em></p>
+
 <p>We have two authors, four blog posts, and their tags in the result.</p>
-<p>If you take a closer look at the result, there's a blog post with 12 dislikes.</p>
-<p><img src="/images/tutorials/3/i-dislikes-2.png" alt="Dislikes"></p>
-<p>Let's filter and fetch only the popular blog posts.
-Let's query for only those blog posts with fewer than 10 dislikes.</p>
+
+<p>If you take a closer look at the result, there&rsquo;s a blog post with 12 dislikes.</p>
+
+<p><img src="/images/tutorials/3/i-dislikes-2.png" alt="Dislikes" /></p>
+
+<p>Let&rsquo;s filter and fetch only the popular blog posts.
+Let&rsquo;s query for only those blog posts with fewer than 10 dislikes.</p>
+
 <p>To achieve that, we need to express the following statement as a query to Dgraph:
 <em>Hey, traverse the <code>published</code> edge, but only return those blogs with fewer than 10 dislikes</em></p>
+
 <p>Can we also filter the nodes during traversals?
-Yes, we can! Let's learn how to do that in our next section.</p>
+Yes, we can! Let&rsquo;s learn how to do that in our next section.</p>
+
 <h4 id="filtering-traversals">Filtering traversals</h4>
+
 <p>We can filter the result of traversals by using the <code>@filter</code> directive.</p>
-<p>You can use any of the Dgraph's comparator functions with the <code>@filter</code> directive.</p>
+
+<p>You can use any of the Dgraph&rsquo;s comparator functions with the <code>@filter</code> directive.</p>
+
 <p>You should use the <code>lt</code> comparator to filter for only those blog posts with fewer than 10 dislikes.</p>
-<p>Here's the query.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>authors_and_ratings(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ge</span>(rating,<span style="color:#bbb"> </span>4<span style="color:#099">.0</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>author_name<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>rating<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>published<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@filter</span>(lt(dislikes,<span style="color:#bbb"> </span>10))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>likes<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>dislikes<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>tagged<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/j-dislike-index-2.png" alt="Dislikes"></p>
+
+<p>Here&rsquo;s the query.</p>
+
+<pre><code class="language-graphql">{
+  authors_and_ratings(func: ge(rating, 4.0)) {
+    author_name
+    rating
+
+    published @filter(lt(dislikes, 10)) {
+      title
+      likes
+      dislikes
+      tagged {
+        tag_name
+      }
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/j-dislike-index-2.png" alt="Dislikes" /></p>
+
 <p>Oops! We forgot to add the index for the dislike predicate!</p>
+
 <p>Go to the Schema tab, find the <code>dislikes</code> predicate, add the index from the UI.</p>
-<p><img src="/images/tutorials/3/g-dislike-index-3.png" alt="Add index">
+
+<p><img src="/images/tutorials/3/g-dislike-index-3.png" alt="Add index" />
 <em>Note: Notice that the <code>dislike</code> predicate is of integer type.</em></p>
-<p>Let's rerun the query.</p>
-<p><img src="/images/tutorials/3/n-three-blogs.png" alt="rating-blog-rating"></p>
+
+<p>Let&rsquo;s rerun the query.</p>
+
+<p><img src="/images/tutorials/3/n-three-blogs.png" alt="rating-blog-rating" /></p>
+
 <p>Now, we only have three blogs in the result.
 The blog with 12 dislikes is filtered out.</p>
+
 <p>Notice that the blog posts are associated with a series of tags.</p>
-<p>Let's run the following query and find all the tags in the database.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#000;font-weight:bold">{</span>
-  all_tags<span style="color:#000;font-weight:bold">(</span>func: has<span style="color:#000;font-weight:bold">(</span>tag_name<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+
+<p>Let&rsquo;s run the following query and find all the tags in the database.</p>
+
+<pre><code class="language-sh">{
+  all_tags(func: has(tag_name)) {
     tag_name
-  <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
-</code></pre></div><p><img src="/images/tutorials/3/o-tags.png" alt="tags"></p>
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/o-tags.png" alt="tags" /></p>
+
 <p>We got all the tags in the database.
-My favorite tag is <code>devrel</code>. What's yours?</p>
-<p>In our next section, let's find all the blog posts which are tagged <code>devrel</code>.</p>
+My favorite tag is <code>devrel</code>. What&rsquo;s yours?</p>
+
+<p>In our next section, let&rsquo;s find all the blog posts which are tagged <code>devrel</code>.</p>
+
 <h4 id="querying-string-predicates">Querying string predicates</h4>
+
 <p>The <code>tag_name</code> predicate represents the name of a tag.
 It is of type <code>string</code>.
 Here are the steps to fetch all blog posts which are tagged <code>devrel</code>.</p>
+
 <ul>
 <li>Find the root node with the value of <code>tag_name</code> predicate set to <code>devrel</code>.
 We can use the <code>eq</code> comparator function to do so.</li>
-<li>Don't forget to add an index to the <code>tag_name</code> predicate before you run the query.</li>
+<li>Don&rsquo;t forget to add an index to the <code>tag_name</code> predicate before you run the query.</li>
 <li>Traverse starting from the node for <code>devrel</code> tag along the <code>tagged</code> edge.</li>
 </ul>
-<p>Let's start by adding an index to the <code>tag_name</code> predicate.
+
+<p>Let&rsquo;s start by adding an index to the <code>tag_name</code> predicate.
 Go to Ratel, click <code>tag_name</code> predicate from the list.</p>
-<p><img src="/images/tutorials/3/p-string-index-2.png" alt="string index"></p>
+
+<p><img src="/images/tutorials/3/p-string-index-2.png" alt="string index" /></p>
+
 <p>You can see that there are five choices for indices that can be applied to any <code>string</code> predicate.
 The <code>fulltext</code>, <code>term</code>, and <code>trigram</code> are advanced string indices.
-We'll discuss them in detail in our next episode.</p>
+We&rsquo;ll discuss them in detail in our next episode.</p>
+
 <p>There are a few constraints around the use of string type indices and the comparator functions.</p>
+
 <p>For example, only the <code>exact</code> index is compatible with <code>le</code>, <code>ge</code>,<code>lt</code>, and <code>gt</code> built-in functions.
 If you set a string predicate with any other index and run the above comparators, the query fails.</p>
+
 <p>Although, any of the five string type indices are compatible with the <code>eq</code> function.
 The <code>hash</code> index would normally be the most performant to be used with the <code>eq</code> comparator.</p>
-<p>Let's add the <code>hash</code> index to the <code>tag_name</code> predicate.
-<img src="/images/tutorials/3/m-hash.png" alt="string index"></p>
-<p>Let's use the <code>eq</code> comparator, and fetch the root node with <code>tag_name</code> set to <code>devrel</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>devrel_tag(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(tag_name,<span style="color:#d14">&#34;devrel&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/q-devrel-2.png" alt="string index"></p>
+
+<p>Let&rsquo;s add the <code>hash</code> index to the <code>tag_name</code> predicate.
+<img src="/images/tutorials/3/m-hash.png" alt="string index" /></p>
+
+<p>Let&rsquo;s use the <code>eq</code> comparator, and fetch the root node with <code>tag_name</code> set to <code>devrel</code>.</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/q-devrel-2.png" alt="string index" /></p>
+
 <p>We finally have the node we wanted!</p>
+
 <p>We know that the <code>blog post</code> nodes are connected to their <code>tag nodes</code> via the <code>tagged</code> edges.</p>
+
 <p>Do you think that a traversal from the node for <code>devrel</code> tag should give us the blog posts?</p>
-<p>Let's try it out!</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>devrel_tag(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(tag_name,<span style="color:#d14">&#34;devrel&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>tagged<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>content<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p>Looks like the query didn't work! It didn't return us the blog posts!
-Don't be surprised as this is expected.</p>
-<p>Let's observe our Graph model again.</p>
-<p><img src="/images/tutorials/3/a-main-graph.JPG" alt="main graph model"></p>
+
+<p>Let&rsquo;s try it out!</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
+      tagged {
+        title
+        content
+    }
+  }
+}
+</code></pre>
+
+<p>Looks like the query didn&rsquo;t work! It didn&rsquo;t return us the blog posts!
+Don&rsquo;t be surprised as this is expected.</p>
+
+<p>Let&rsquo;s observe our Graph model again.</p>
+
+<p><img src="/images/tutorials/3/a-main-graph.JPG" alt="main graph model" /></p>
+
 <p>We know that the edges in Dgraph have directions.
 You can see that the <code>tagged</code> edge points from a <code>blog post</code> node to a <code>tag</code> node.</p>
+
 <p>Traversing along the direction of an edge is natural to Dgraph.
 Hence, you can traverse from any <code>blog post node</code> to their <code>tag node</code> via the <code>tagged</code> edge.</p>
+
 <p>But to traverse the other way around requires you to move opposite to the direction of the edge.
 You can still do so by adding a tilde(~) sign in your query.
 The tilde(~) has to be added at the beginning of the name of the edge to be traversed.</p>
-<p>Let's add the <code>tilde (~)</code> at the beginning of the <code>tagged</code> edge and initiate a reverse edge traversal.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>devrel_tag(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(tag_name,<span style="color:#d14">&#34;devrel&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#a61717;background-color:#e3d2d2">~</span>tagged<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>content<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/r-reverse-2.png" alt="string index">
+
+<p>Let&rsquo;s add the <code>tilde (~)</code> at the beginning of the <code>tagged</code> edge and initiate a reverse edge traversal.</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
+
+    ~tagged {
+      title
+      content
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/r-reverse-2.png" alt="string index" />
 We got an error!</p>
+
 <p>Reverse traversals require an index on their predicate.</p>
-<p>Let's go to Ratel and add the <code>reverse</code> index to the edge.
-<img src="/images/tutorials/3/r-reverse-1.png" alt="string index"></p>
-<p>Let's re-run the reverse edge traversal.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>devrel_tag(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(tag_name,<span style="color:#bbb"> </span><span style="color:#d14">&#34;devrel&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#a61717;background-color:#e3d2d2">~</span>tagged<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>content<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/s-devrel-blogs.png" alt="uid index">
-<img src="/images/tutorials/3/s-devrel-blogs-2.png" alt="uid index">
+
+<p>Let&rsquo;s go to Ratel and add the <code>reverse</code> index to the edge.
+<img src="/images/tutorials/3/r-reverse-1.png" alt="string index" /></p>
+
+<p>Let&rsquo;s re-run the reverse edge traversal.</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name, &quot;devrel&quot;)) {
+    tag_name
+
+    ~tagged {
+      title
+      content
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/s-devrel-blogs.png" alt="uid index" />
+<img src="/images/tutorials/3/s-devrel-blogs-2.png" alt="uid index" />
 Phew! Now we got all the blog posts that are tagged <code>devrel</code>.</p>
+
 <p>Similarly, you can extend the query to also find the authors of these blog posts.
 It requires you to reverse traverse the <code>published</code> predicate.</p>
-<p>Let's add the reverse index to the <code>published</code> edge.
-<img src="/images/tutorials/3/t-reverse-published.png" alt="uid index"></p>
-<p>Now, let's run the following query.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>devrel_tag(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">eq</span>(tag_name,<span style="color:#d14">&#34;devrel&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>tag_name<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#a61717;background-color:#e3d2d2">~</span>tagged<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>title<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>content<span style="color:#bbb">
-</span><span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#a61717;background-color:#e3d2d2">~</span>published<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>author_name<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/3/u-author-reverse-1.png" alt="uid index">
-<img src="/images/tutorials/3/u-author-reverse-2.png" alt="uid index"></p>
+
+<p>Let&rsquo;s add the reverse index to the <code>published</code> edge.
+<img src="/images/tutorials/3/t-reverse-published.png" alt="uid index" /></p>
+
+<p>Now, let&rsquo;s run the following query.</p>
+
+<pre><code class="language-graphql">{
+  devrel_tag(func: eq(tag_name,&quot;devrel&quot;)) {
+    tag_name
+
+    ~tagged {
+      title
+      content
+
+      ~published {
+        author_name
+      }
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/3/u-author-reverse-1.png" alt="uid index" />
+<img src="/images/tutorials/3/u-author-reverse-2.png" alt="uid index" /></p>
+
 <p>With our previous query, we just traversed the entire graph in the reverse order.
 Starting from the tag nodes, we traversed up to the author nodes.</p>
+
 <h4 id="summary">Summary</h4>
+
 <p>In this tutorial, we learned about basic types, indices, filtering, and reverse edge traversals.</p>
+
 <p>Before we wrap up, here’s a sneak peek into our next tutorial.</p>
+
 <p>Did you know that Dgraph offers advanced text search capabilities?
 How about the geo-location querying capabilities?</p>
+
 <p>Sounds interesting?</p>
+
 <p>See you all soon in the next tutorial. Till then, happy Graphing!</p>
+
 <div class="engage">
 	<p>
 		<strong>
@@ -1036,10 +1202,48 @@ How about the geo-location querying capabilities?</p>
 	})
 </script>
 
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+
+<script src="//unpkg.com/clipboard@2.0.4"></script>
+<script src="/js/tutorial-3.js"></script>
+
+<style>
+  pre.with-expand {
+    position: relative;
+    max-height: 300px;
+    overflow: hidden;
+  }
+
+  pre.with-expand .expander {
+    color: #ccc;
+    cursor: pointer;
+    padding: 32px 0 2px;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75));
+  }
+
+  pre.with-expand.expanded {
+    max-height: unset;
+  }
+  pre.with-expand.expanded .expander {
+    display: none;
+  }
+
+  .copy-btn {
+    background: #fff;
+    border: 1px solid #666;
+    border-radius: 2px;
+    cursor: pointer;
+    display: block;
+    padding: 2px 6px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+</style>
 </div>
           <div class="article-tag-list">
             
@@ -1051,7 +1255,7 @@ How about the geo-location querying capabilities?</p>
             
                 
                 
-                    <a href="https://blog.dgraph.io/tags/devrel/">DevRel</a>
+                    <a href="https://blog.dgraph.io/tags/devrel/">devrel</a>
                 
             
           </div>
@@ -1228,9 +1432,9 @@ How about the geo-location querying capabilities?</p>
   
 </div>
 
-    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script src="/js/clipboard.min.js"></script>
     <script
-      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+      src='/js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
     ></script>
     <script>
       hljs.initHighlightingOnLoad();
@@ -1273,10 +1477,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='/css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script

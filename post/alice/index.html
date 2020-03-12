@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/index.xml">
 
   
     <title>Making Badger Crash Resilient with ALICE - Dgraph Blog</title>
@@ -39,7 +39,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/alice/">
   
-  <meta property="og:image" content="https://blog.dgraph.io//images/galileo-jupiter.jpg">
+  <meta property="og:image" content="/images/galileo-jupiter.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,11 +48,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
   <link
-    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    href='/css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
     rel="stylesheet"
   />
   <link
-    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    href='/css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
     rel="stylesheet"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -79,21 +79,21 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/galileo-jupiter.jpg"/>
+      <meta name="twitter:image" content="/images/galileo-jupiter.jpg"/>
     
   
 
   <meta name="twitter:title" content="Making Badger Crash Resilient with ALICE"/>
-  <meta name="twitter:description" content="Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&#39;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&#39;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out."/>
+  <meta name="twitter:description" content="Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception. If it&rsquo;s running on Linux, a kernel panic could occur. If on Windows, a STOP error could occur, displaying the infamous BSOD. Even then, crashes aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be absent), or the power could go out."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -444,62 +444,76 @@
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io//images/galileo-jupiter.jpg"
+            src="/images/galileo-jupiter.jpg"
           >
-          <div class="article-content"><p>Crashes can occur for many different reasons and can manifest themselves in
+          <div class="article-content">
+
+<p>Crashes can occur for many different reasons and can manifest themselves in
 many different forms. A program can experience a segfault or uncaught
-exception.  If it's running on Linux, a kernel panic could occur.  If on
+exception.  If it&rsquo;s running on Linux, a kernel panic could occur.  If on
 Windows, a STOP error could occur, displaying the infamous
 <a href="https://en.wikipedia.org/wiki/Blue_Screen_of_Death">BSOD</a>.  Even then, crashes
-aren't the only thing you have to worry about. The UPS could fail (or be
+aren&rsquo;t the only thing you have to worry about. The UPS could fail (or be
 absent), or the power could go out.  Someone could be walking through the data
 center and trip over a power cord.  In short, any program can terminate
 prematurely and unexpectedly.</p>
+
 <p>When a database crashes, what happens to your data? If your database has a high
 level of crash resilience, your data is safe. The database can be started up
-again, and you're pretty much good to go. You might have to rerun the last few
+again, and you&rsquo;re pretty much good to go. You might have to rerun the last few
 mutations you made before the crash, but for the most part, your data is still
 intact. But what about databases with low levels of crash resilience? I <em>hope</em>
 you make regular backups, because your database might not even start up.</p>
+
 <p>At Dgraph Labs, current efforts are being spent ramping up towards a 1.0
 version of our flagship product, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is already very stable, but we
 want to go the extra mile and make it robust and rock solid, even under rare
 and unlikely scenarios.</p>
+
 <p><a href="https://github.com/dgraph-io/dgraph">Dgraph</a> relies on
 <a href="https://github.com/dgraph-io/badger">Badger</a> (our key value store) to persist
 its data. This is an obvious place to look when it comes to making the whole
 system resilient against crashes.  This blog post will explore the area of
 crash resilience. It will look at a tool called ALICE, and how we used it to
 improve the crash resilience of <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
+
 <h2 id="background-and-motivation">Background and Motivation</h2>
+
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> contains a write ahead value log,
 which is replayed when <a href="https://github.com/dgraph-io/badger">Badger</a> starts up.
 You can read more about the internals of
 <a href="https://github.com/dgraph-io/badger">Badger</a>
 <a href="https://open.dgraph.io/post/badger/">here</a>.</p>
+
 <p>The design of <a href="https://github.com/dgraph-io/badger">Badger</a> is based on a paper
 titled <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WiscKey: Separating Keys from Values in SSD-conscious
 Storage</a>.
 This paper discusses a property of modern file systems that aids in creating
 crash resilient systems:</p>
+
 <p><em>[There is] an interesting property of modern file systems (such as ext4,
 btrfs, and xfs). &hellip;  Consider a file that contains [a] sequence of bytes &hellip;
 and the user appends &hellip; to it. If a crash happens, &hellip; only some prefix of the
 appended bytes will be added to the end of the file. &hellip; It is not possible for
 random bytes or a non-prefix subset of the appended bytes to be added to the
 file.</em></p>
+
 <p>We wanted to use this interesting file system property to improve
 <a href="https://github.com/dgraph-io/badger">Badger</a>.  Specifically, to increase the
 crash resilience of the value log.</p>
+
 <p>We decided to add an entry checksum to each value log entry. The idea was that
 this would enable us to detect short appends during log file replay so that we
 could truncate the value log at the end of the last good entry and continue
 with the normal start up procedure.</p>
+
 <p>This task was one of the <a href="https://github.com/dgraph-io/badger/pull/148">first things that I worked
 on</a> when I started at Dgraph Labs
 a couple of weeks ago.</p>
+
 <h2 id="enter-alice">Enter ALICE</h2>
+
 <p>After adding checksums to <a href="https://github.com/dgraph-io/badger">Badger</a>, I
 started looking at papers from the same authors as the WiscKey paper. I came a
 cross a paper titled <a href="http://research.cs.wisc.edu/adsl/Publications/alice-osdi14.pdf">All File Systems Are Not Created Equal</a>: On the Complexity
@@ -512,6 +526,7 @@ program that manifests itself when the program starts up after a system crash.
 The main use of ALICE is to help programmers make their programs more robust and
 resilient to crashes. ALICE will be explained in greater detail later in this
 blog post.</p>
+
 <p>ALICE helped identify two different crash vulnerabilities in
 <a href="https://github.com/dgraph-io/badger">Badger</a> and even hinted towards how those
 vulnerabilities could be fixed. Despite having minimal experience with the
@@ -519,22 +534,30 @@ vulnerabilities could be fixed. Despite having minimal experience with the
 and implement those fixes.  This is a testament to the usefulness of ALICE as a
 tool (although the simplicity of the
 <a href="https://github.com/dgraph-io/badger">Badger</a> codebase helped a lot here!).</p>
+
 <p>I learned a lot about file systems and Linux system calls while working with
 ALICE. Some things I already intuitively knew, but other things were totally
 surprising.</p>
+
 <h2 id="what-could-go-wrong-when-you-modify-a-file">What could go wrong when you modify a file?</h2>
+
 <p>Say you have a file named <code>f</code> on disk. It contains the sequence of bytes <code>ABC</code>.</p>
+
 <p>You then have a C program that operates on the file. The intent of the file is
-to change the content to <code>12345</code>. The program isn't crash resilient though;
+to change the content to <code>12345</code>. The program isn&rsquo;t crash resilient though;
 under certain crash scenarios, the file could end up having content <em>other</em>
 than <code>ABC</code> or <code>12345</code>.</p>
+
 <pre><code>01 int fd = open(&quot;f&quot;, O_RDWR | O_TRUNC, 0644);
 02 write(fd, &quot;12345&quot;, 5);
 03 close(fd);
 # Boilerplate and error checking left out for brevity.
-</code></pre><p>So if the program crashes part way through, what possible states could the file
+</code></pre>
+
+<p>So if the program crashes part way through, what possible states could the file
 <code>f</code> be in? For each of the following possible states, think about whether the
 state is possible or not.</p>
+
 <ol>
 <li><code>f</code> contains <code>ABC</code>.</li>
 <li><code>f</code> contains <code>12345</code>.</li>
@@ -543,44 +566,61 @@ state is possible or not.</p>
 <li><code>f</code> contains <code>123</code>.</li>
 <li><code>f</code> contains <code>ABC$9</code>.</li>
 </ol>
+
 <p><strong>Take a few seconds and think about the possible states before reading on.</strong></p>
-<p>Alright! Let's go through the possibility of the states.</p>
-<p><strong>States 1 and 2</strong> are not only possible, they're intended. They're the only
+
+<p>Alright! Let&rsquo;s go through the possibility of the states.</p>
+
+<p><strong>States 1 and 2</strong> are not only possible, they&rsquo;re intended. They&rsquo;re the only
 allowable states if the program is to be 100% resilient to crashes. State 1 can
 occur if the program crashes before opening the file. State 2 can occur if the
 crash occurs after the close.</p>
+
 <p><strong>State 3</strong> is possible. It can occur if the program crashes after the call to
 <code>open</code> but before the <code>write</code> call is persisted to disk. Note that the
 <code>O_TRUNC</code> flag truncates the file to zero length when the file is opened.</p>
+
 <p><strong>State 4</strong> is not possible. The file <code>f</code> will always exist on disk in some form.</p>
+
 <p><strong>State 5</strong> is possible. Writes are not atomic and can be batched up in arbitrary
 sized chunks (although the size is usually much larger than a few bytes).</p>
+
 <p><strong>State 6</strong> is a strange case, but surprisingly, possible! How does that
 happen? It appears as though garbage data was appended to the file!</p>
+
 <p>This disk state is possible because writes are sometimes executed as two
 parallel operations.</p>
+
 <ol>
 <li>The data content is written.</li>
 <li>The size of the file is updated.</li>
 </ol>
+
 <p>If a crash occurs at precisely the wrong time, the change to the file size may
 be persisted to disk without the additional data being written.</p>
+
 <p>This even happens in modern file systems such as <em>ext4</em> (although only in
-writeback mode). So if you're the author of a program that writes to files and
+writeback mode). So if you&rsquo;re the author of a program that writes to files and
 you care about crash resilience, this is something you should design your
 program around.</p>
+
 <p>So how can we get around these problems? A common idiom is to create a
 temporary file, write the new content to it, then rename it to the old file.
 <strong>But&hellip;</strong></p>
+
 <h2 id="what-could-go-wrong-when-you-rename-a-file">What could go wrong when you rename a file?</h2>
+
 <pre><code>01 int fd = open(&quot;tmp&quot;, O_RDWR | O_CREAT | O_TRUNC, 0644);
 02 write(fd, &quot;12345&quot;, 5);
 03 close(fd);
 04 rename(&quot;tmp&quot;, &quot;f&quot;);
-</code></pre><p>There are some crash states where the
+</code></pre>
+
+<p>There are some crash states where the
 file <code>f</code> contains content other than <code>ABC</code> or <code>12345</code>. Below are the same set
 crash states as before. Again, think about whether each crash
 state is possible or not.</p>
+
 <ol>
 <li><code>f</code> contains <code>ABC</code>.</li>
 <li><code>f</code> contains <code>12345</code>.</li>
@@ -589,69 +629,92 @@ state is possible or not.</p>
 <li><code>f</code> contains <code>123</code>.</li>
 <li><code>f</code> contains <code>ABC$9</code>.</li>
 </ol>
+
 <p><strong>Pause for a moment to consider the possible states before reading on.</strong></p>
-<p>Okay! Let's go through the different possibilities.</p>
-<p><strong>States 1 and 2</strong> are still possible. That's good, it means we don't have a
+
+<p>Okay! Let&rsquo;s go through the different possibilities.</p>
+
+<p><strong>States 1 and 2</strong> are still possible. That&rsquo;s good, it means we don&rsquo;t have a
 regression.</p>
+
 <p><strong>State 3</strong> is still possible. It can occur when <code>rename</code> on line 4 persists to
 disk before the <code>write</code> on line 2 (and the crash occurs before the write
 persists). The calls to <code>write</code> and <code>rename</code> are not guaranteed to persist in
 order.</p>
-<p>Notably, the <code>close</code> <em>doesn't force the file contents to be persisted to disk.</em>
+
+<p>Notably, the <code>close</code> <em>doesn&rsquo;t force the file contents to be persisted to disk.</em>
 There is a common misconception among programmers that closing a file flushes
 to disk, but this is not true.  This is the behaviour for C as well as some
 higher level languages such as <a href="https://golang.org/pkg/os/#File">Go</a> and
 <a href="https://docs.python.org/2/library/stdtypes.html#file-objects">Python</a>.</p>
+
 <p>From the <a href="https://linux.die.net/man/2/close">man page</a>:</p>
+
 <p><em>A successful close does not guarantee that the data has been successfully saved
 to disk, as the kernel defers writes. It is not common for a file system to
 flush the buffers when the stream is closed. If you need to be sure that the
 data is physically stored use fsync(2). (It will depend on the disk hardware at
 this point.)</em></p>
+
 <p><strong>State 4</strong> is not possible. This is because <code>rename</code> is atomic, so there will
 never be a case where <code>f</code> is missing from disk.</p>
+
 <p><strong>State 5</strong> is possible; after crashing the file may contain only <code>123</code>. The first
 part of the <code>write</code> on line 2 could persist, then the file could be renamed. If
 the crash occurs before the final part of the <code>write</code> persists, then <code>123</code> would
 be the result.</p>
+
 <p><strong>State 6</strong> could also occur. This is similar to state 5. The rename may be
 persisted before the write. The write may only partially persist before the
 crash, leaving the file size updated without the data being written.</p>
+
 <p>Notice that the set of bad crash states is the same as before&hellip;  So in a
 certain sense, the program has become more complicated but can still break in
 the same ways. <em>Not to fear though,</em> with one small tweak we can fix everything!</p>
-<p>We need one more system call to fix the program. Remember how <code>close</code> doesn't
+
+<p>We need one more system call to fix the program. Remember how <code>close</code> doesn&rsquo;t
 flush the file content to disk? The man page gave an important hint, <code>fsync</code>!</p>
+
 <h2 id="sync-as-a-solution">Sync as a solution</h2>
+
 <p><code>fsync</code> flushes all pending <code>write</code>s through any buffers and persists them to
-physical disk. It's a blocking call, and doesn't return until the data is
+physical disk. It&rsquo;s a blocking call, and doesn&rsquo;t return until the data is
 completely persisted.  There are equivalents in higher level languages. In Go
-it's <a href="https://golang.org/pkg/os/#File.Sync">File.Sync</a>, and in Python it's
+it&rsquo;s <a href="https://golang.org/pkg/os/#File.Sync">File.Sync</a>, and in Python it&rsquo;s
 <a href="https://golang.org/pkg/os/#File.Sync">os.fsync</a>.</p>
-<p>So how does it help? Let's alter the program again. It's the same as before,
+
+<p>So how does it help? Let&rsquo;s alter the program again. It&rsquo;s the same as before,
 except that we use <code>fsync</code> after the write.</p>
+
 <pre><code>01 int fd = open(&quot;tmp&quot;, O_RDWR | O_CREAT | O_TRUNC, 0644);
 02 write(fd, &quot;12345&quot;, 5);
 03 fsync(fd);
 04 close(fd);
 05 rename(&quot;tmp&quot;, &quot;f&quot;);
-</code></pre><p>Now we're getting somewhere! The temp file is created and has <code>12345</code> written
+</code></pre>
+
+<p>Now we&rsquo;re getting somewhere! The temp file is created and has <code>12345</code> written
 to it. The sync causes the data to be persisted to disk. Only then is the file
 renamed. The file <code>f</code> cannot end up empty since the <code>write</code> now <em>has to</em>
-persist before the <code>rename</code>. For the same reason, the file can't end up with
+persist before the <code>rename</code>. For the same reason, the file can&rsquo;t end up with
 <code>123</code> or <code>ABC$9</code>. No matter how the program crashes, <code>f</code> will always either
 contain <code>ABC</code> or <code>12345</code>. Neat!</p>
+
 <h2 id="back-to-alice">Back to ALICE</h2>
-<p>In simple programs like the ones above, it's <em>possible</em> to identify and fix
+
+<p>In simple programs like the ones above, it&rsquo;s <em>possible</em> to identify and fix
 crash resilience problems manually, <em>so long as you understand all of the
 limitations and guarantees that file systems provide</em>. For large programs like
-<a href="https://github.com/dgraph-io/badger">Badger</a>, it's much more difficult.
+<a href="https://github.com/dgraph-io/badger">Badger</a>, it&rsquo;s much more difficult.
 Luckily, the process becomes easier with the aid of tooling.</p>
+
 <p>ALICE is one such tool that can help find crash vulnerabilities. You still need
 to understand the limitations and guarantees of the file system to use the
 tool, but it <em>does</em> do most of the heavy lifting when it comes to the
 identification of problems.</p>
+
 <p><em>So how does it work?</em></p>
+
 <p>ALICE works by executing a <em>workload</em> (supplied by the user). This starts up
 the application-under-test and makes it perform various operations.  ALICE
 records the system calls made by the program, including the details of all file
@@ -662,30 +725,42 @@ manipulations made by the program-under-test. For each crash states,
 ALICE runs a <em>checker</em> (also supplied by the user).  The checker tests to see
 if the crash state is permissible i.e. the program-under-test can start up,
 recover from the crash, and continue from where it left off.</p>
+
 <p>So what does this look like for the <code>ABC</code> -&gt; <code>12345</code> example?</p>
+
 <p>The workload is just the program that changes the content of the file (we start
 with the <em>incorrect</em> attempt at the program):</p>
+
 <pre><code>int main()
 {
     int fd = open(&quot;f&quot;, O_RDWR | O_TRUNC, 0666); // assert(fd &gt; 0);
     int ret = write(fd, &quot;12345&quot;, 5);            // assert(ret == 5);
     ret = close(fd);                            // assert(ret == 0);
 }
-</code></pre><p>What about the checker? It simply checks the consistency constraints that we
+</code></pre>
+
+<p>What about the checker? It simply checks the consistency constraints that we
 expect the program to maintain. It can be written in any language, e.g. Python:</p>
+
 <pre><code>import os
 import sys
 
 crashed_state_directory = sys.argv[1]
 os.chdir(crashed_state_directory)
 assert open('f').read() in ['ABC', '12345']
-</code></pre><p>When ALICE is run, its output indicates that there are some crash
+</code></pre>
+
+<p>When ALICE is run, its output indicates that there are some crash
 vulnerabilities:</p>
-<p><img src="/images/alice_before_toy.png" alt=""></p>
+
+<p><img src="/images/alice_before_toy.png" alt="" /></p>
+
 <p>The output indicates that there is a problem if the file is truncated, but
 <em>not</em> appended to.</p>
+
 <p>When we run the second version of the program, we get a different report from
 ALICE.</p>
+
 <pre><code>int main() {
     int fd = open(&quot;tmp&quot;, O_RDWR | O_CREAT | O_TRUNC, 0666); // assert(fd &gt; 0);
     int ret = write(fd, &quot;12345&quot;, 5); // assert(ret == 5);
@@ -693,11 +768,16 @@ ALICE.</p>
     ret = rename(&quot;tmp&quot;, &quot;f&quot;);        // assert(ret == 0);
 }
 
-</code></pre><p><img src="/images/alice_intermediate_toy.png" alt=""></p>
+</code></pre>
+
+<p><img src="/images/alice_intermediate_toy.png" alt="" /></p>
+
 <p>This time, ALICE indicates that the ordering of system calls is not guaranteed.
 Specifically, the rename may persist before the append.</p>
+
 <p>Once the problem with the program is fixed (the <code>fsync</code> call added), ALICE
 reports that there are no errors:</p>
+
 <pre><code>int main() {
     int fd = open(&quot;tmp&quot;, O_RDWR | O_CREAT | O_TRUNC, 0666); // assert(fd &gt; 0);
     int ret = write(fd, &quot;12345&quot;, 5); // assert(ret == 5);
@@ -705,21 +785,28 @@ reports that there are no errors:</p>
     ret = close(fd);                 // assert(ret == 0);
     ret = rename(&quot;tmp&quot;, &quot;f&quot;);        // assert(ret == 0);
 }
-</code></pre><p><img src="/images/alice_final_toy.png" alt=""></p>
+</code></pre>
+
+<p><img src="/images/alice_final_toy.png" alt="" /></p>
+
 <p>Excellent! The program is now free of crash vulnerabilities.</p>
+
 <p>As part of their
 <a href="http://research.cs.wisc.edu/adsl/Publications/alice-osdi14.pdf">research</a>, the
 authors of ALICE checked various key value stores and databases for crash
 vulnerabilities. We decided to put
 <a href="https://github.com/dgraph-io/badger">Badger</a> through the same paces. There
 were two main motivations for this:</p>
+
 <ul>
 <li>To see how <a href="https://github.com/dgraph-io/badger">Badger</a> stacks up against
 other existing key value stores.</li>
 <li>To find (<em>and fix!</em>) any crash vulnerabilities in
 <a href="https://github.com/dgraph-io/badger">Badger</a>.</li>
 </ul>
+
 <h2 id="testing-badger-with-alice">Testing Badger with ALICE</h2>
+
 <p>The
 <a href="https://github.com/dgraph-io/tove/blob/master/badger/workload/workload.go">workload</a>
 and
@@ -729,75 +816,101 @@ are a little bit more complicated for
 key/value pairs, then updates them several times. The checker then ensures that
 <a href="https://github.com/dgraph-io/badger">Badger</a> can start up after the simulated
 crash.</p>
+
 <p>In order to test as many code paths in
 <a href="https://github.com/dgraph-io/badger">Badger</a> as possible, we needed the
 workload to trigger both <em>LSM tree compaction</em> and a <em>value log garbage
 collection</em>. LSM tree compactions are necessary to allow the high write
 throughput possible with the design. Value log garbage collection rewrites
 value log files to reclaim disk space, discarding stale entries in the process.</p>
+
 <p>In order to coax <a href="https://github.com/dgraph-io/badger">Badger</a> into performing
-both of the above, Badger's parameters <a href="https://github.com/dgraph-io/tove/blob/master/badger/util/util.go#L14-L26">are set
+both of the above, Badger&rsquo;s parameters <a href="https://github.com/dgraph-io/tove/blob/master/badger/util/util.go#L14-L26">are set
 up</a>
 so that it will aggressively trigger them, even for small data writes.</p>
+
 <p>When ALICE was first run over <a href="https://github.com/dgraph-io/badger">Badger</a>,
 the output indicated quite a few problems:</p>
+
 <p><em>Triggering value log garbage collection:</em></p>
-<p><img src="/images/alice_before_badger.png" alt=""></p>
+
+<p><img src="/images/alice_before_badger.png" alt="" /></p>
+
 <p><em>Triggering LSM tree compaction:</em></p>
-<p><img src="/images/alice_lsm_compaction_before.png" alt=""></p>
+
+<p><img src="/images/alice_lsm_compaction_before.png" alt="" /></p>
+
 <p>The long list of problems from the output only corresponds to two different
 vulnerabilities, which are discussed in detail in the next sections.</p>
+
 <p>To put <em>two crash vulnerabilities</em> into perspective, we can compare to the
 number of vulnerabilities that were found by the ALICE authors in other
 programs, as documented
 <a href="http://research.cs.wisc.edu/adsl/Publications/alice-osdi14.pdf">in the paper</a>.</p>
-<p><img src="/images/crash_vulnerability_comparison.png" alt="comparison"></p>
+
+<p><img src="/images/crash_vulnerability_comparison.png" alt="comparison" /></p>
+
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> does considerably better than
 some other database style applications, even those that are backed by large
 organisations, e.g.:</p>
+
 <ul>
-<li>Google's Leveldb: 6 crash vulnerabilities.</li>
-<li>GNU's GDBM: 5 crash vulnerabilities.</li>
+<li>Google&rsquo;s Leveldb: 6 crash vulnerabilities.</li>
+<li>GNU&rsquo;s GDBM: 5 crash vulnerabilities.</li>
 <li>HSQLDB: 10 crash vulnerabilities.</li>
 </ul>
-<p>Another thing to note is that at Dgraph Labs, we're actively seeking out
-resources to make our products the best that they can be. When you're writing
+
+<p>Another thing to note is that at Dgraph Labs, we&rsquo;re actively seeking out
+resources to make our products the best that they can be. When you&rsquo;re writing
 world class software, behaving reactively and waiting for the bug reports to
-roll in, just isn't an option!</p>
+roll in, just isn&rsquo;t an option!</p>
+
 <p>So what does the ALICE output mean, and how does it translate into actual crash
 vulnerabilities?</p>
-<h2 id="crash-vulnerability-1---garbage-writes">Crash Vulnerability #1 - Garbage Writes</h2>
+
+<h2 id="crash-vulnerability-1-garbage-writes">Crash Vulnerability #1 - Garbage Writes</h2>
+
 <p>When <a href="https://github.com/dgraph-io/badger">Badger</a> appends to a value log file,
 it just does a normal appending <code>write</code>. As seen previously, a crash during or
 shortly after an append can result in the file containing some garbage data.</p>
+
 <p>In the ALICE output:</p>
-<p><img src="/images/alice_vul1_trace.png" alt="">
-<img src="/images/alice_vul1_vulns.png" alt=""></p>
+
+<p><img src="/images/alice_vul1_trace.png" alt="" />
+<img src="/images/alice_vul1_vulns.png" alt="" /></p>
+
 <p>ALICE is able to generate crash states containing garbage by artificially
 injecting garbage bytes into the ends of the recorded writes.</p>
+
 <p><em>This is a little bit confusing though.</em> Recall that this was a known problem
 that was previously &lsquo;solved&rsquo; by adding a checksum to the end of each value log
-entry. While replaying a value log, if an entry's checksum doesn't match up, we
+entry. While replaying a value log, if an entry&rsquo;s checksum doesn&rsquo;t match up, we
 assume that the value log is corrupted and truncate it. So why are garbage
 writes causing crashes in <a href="https://github.com/dgraph-io/badger">Badger</a>? They
 should just be discarded.</p>
-<p>Unfortunately, ALICE doesn't give any clues. It doesn't show the output of the
+
+<p>Unfortunately, ALICE doesn&rsquo;t give any clues. It doesn&rsquo;t show the output of the
 checker, it just indicates that it failed.  I had to hack the ALICE source code
 to leave the crash states on disk, rather than cleaning them up at the end of
 its execution. I could then iterate over the crash states myself, manually
 checking how <a href="https://github.com/dgraph-io/badger">Badger</a> reacts when it starts up.</p>
+
 <p>Once I did this, it was obvious what the problem was. For some crash states,
 <a href="https://github.com/dgraph-io/badger">Badger</a> terminated with an out of memory
 error. The stack traces indicated the problem was occurring in the value log
 replay code.</p>
+
 <h4 id="vulnerability">Vulnerability</h4>
+
 <p>The vulnerability occurs when the key and value lengths in a value log entry
 header contain garbage data. These lengths are used to figure out how to read
-the key and value. A 4-byte integer's largest value is ~4
+the key and value. A 4-byte integer&rsquo;s largest value is ~4
 billion, causing a worst case memory allocation of 8GB (4GB for each of the key
 and value). This can cause the process to go out of memory, resulting in
 <a href="https://github.com/dgraph-io/badger">Badger</a> refusing to start.</p>
+
 <h4 id="solution">Solution</h4>
+
 <p>Since we expect that keys will always be smaller than 1MB and values will
 always be smaller than 1GB (these are generous bounds), we can simply cap the
 allowable size of keys and values. If the header indicates that the key or
@@ -805,10 +918,14 @@ value is bigger than its bound, we know the entry is corrupt (and avoid a
 memory allocation based on bad data). But what if the header is corrupt but
 the key and value lengths are within their bounds? In that case, we can still
 detect the corruption using the checksum.</p>
+
 <p>Once a corrupt entry is detected, we can truncate the value log at that point.</p>
+
 <p>The relevant pull request is
 <a href="https://github.com/dgraph-io/badger/pull/158">here</a>.</p>
+
 <h2 id="crash-vulnerability-2">Crash Vulnerability #2</h2>
+
 <p>The value log is actually made up of many smaller <em>value log files</em>.  When an
 individual value log file gets too big, a new one is created. The value log
 (conceptually the concatenation of all of the value log files) then continues
@@ -816,35 +933,45 @@ in the new value log file. Meanwhile,
 <a href="https://github.com/dgraph-io/badger">Badger</a> maintains a head pointer,
 corresponding to the offset in value log, uptil which everything has been
 persisted to disk on the LSM tree.</p>
+
 <p>When <a href="https://github.com/dgraph-io/badger">Badger</a> starts up, it picks the
 latest value of head from the persisted portion of the LSM tree, and replays
 the entries from value log from that offset onwards to bring them back into LSM
 tree (for more details about how this works, see <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">the original
 paper</a>).</p>
+
 <p>The ALICE output indicates that there is a problem around the transition from
 one value log file (<code>*.vlog</code>) to the next:</p>
-<p><img src="/images/alice_vul2_trace.png" alt="">
-<img src="/images/alice_vul2_vulns.png" alt=""></p>
+
+<p><img src="/images/alice_vul2_trace.png" alt="" />
+<img src="/images/alice_vul2_vulns.png" alt="" /></p>
+
 <h5 id="vulnerability-1">Vulnerability</h5>
+
 <p>When <a href="https://github.com/dgraph-io/badger">Badger</a> starts up, all of the
 <code>*vlog</code> are first opened:</p>
+
 <ul>
 <li>The latest <code>vlog</code> file is opened in read/write mode. This is the <code>vlog</code> file
 that will be appended to when the key value store is mutated.</li>
 <li>All previous <code>vlog</code> files are opened in read-only mode. They are only used
 for value lookups.</li>
 </ul>
+
 <p>The value log is then replayed from the head persisted in the LSM tree.  When a
 corrupt entry in a <code>vlog</code> file is found during replay, that file is truncated
 so that it contains only good entries. This is normally fine, because the
 corrupt file is expected to be the latest one (since it would have been
 appended to last before the crash).</p>
-<p><em>This isn't always the case though&hellip;</em></p>
+
+<p><em>This isn&rsquo;t always the case though&hellip;</em></p>
+
 <p>The problem occurs when the content of <code>000001.vlog</code> is persisted to disk
 before the content of <code>000000.vlog</code>. <code>000001.vlog</code> will be the latest value log
 file (opened as read/write), but <code>000000.vlog</code> (opened as read-only) may have
 corrupt entries. The result is that we try to truncate a file that is opened in
 read-only mode.</p>
+
 <p>This vulnerability only occurs when
 <a href="https://github.com/dgraph-io/badger">Badger</a> is configured with
 <code>SyncWrites=false</code>. This is a mode that trades off increased write performance
@@ -852,29 +979,42 @@ for the chance that if <a href="https://github.com/dgraph-io/badger">Badger</a> 
 some small amount of recently written data may be lost. However, the
 vulnerability <em>does</em> leave <a href="https://github.com/dgraph-io/badger">Badger</a> unable
 to restart which is unacceptable.</p>
+
 <h5 id="solution-1">Solution</h5>
+
 <p>There are a few different possible fixes here. We went for a simple fix: always
 <a href="https://github.com/dgraph-io/badger/pull/157">sync the current <code>vlog</code> file before starting a new
 one</a>. That way, the nth value log
 file is always persisted completely before the n+1th is written.</p>
+
 <h2 id="concluding-thoughts">Concluding thoughts</h2>
+
 <p>After we fixed the problems that ALICE reported, running ALICE again shows no
 crash vulnerabilities for <a href="https://github.com/dgraph-io/badger">Badger</a>. Awesome!</p>
+
 <p><em>Triggering value log garbage collection:</em></p>
-<p><img src="/images/alice_after_badger.png" alt=""></p>
+
+<p><img src="/images/alice_after_badger.png" alt="" /></p>
+
 <p><em>Triggering LSM tree compaction:</em></p>
-<p><img src="/images/alice_lsm_compaction_after.png" alt=""></p>
+
+<p><img src="/images/alice_lsm_compaction_after.png" alt="" /></p>
+
 <p><strong>Here at Dgraph Labs, we really care about making our products as robust as
 possible,</strong> even under unlikely and rare scenarios such as system crashes.
 We want to stay ahead of the curve when it comes to rock solid
 stability. Proactively finding and fixing bugs before they are reported in
 production is a major part of that.</p>
+
 <p>If you own and maintain software that interacts directly with files, we
 recommend that you give ALICE a try. Also, if you need a rock solid and
 performant key-value store, you know <a href="https://github.com/dgraph-io/badger">where to
 look</a>!</p>
-<p><img src="/images/jumping_badger.jpg" alt="Happy Badger"></p>
-<hr>
+
+<p><img src="/images/jumping_badger.jpg" alt="Happy Badger" /></p>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -924,6 +1064,7 @@ look</a>!</p>
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="https://fineartamerica.com/featured/galileo-spacecraft-burning-up-in-jupiter-christian-darkin.html">Galileo Spacecraft Burning Up In
 Jupiter</a></em></p>
@@ -1132,9 +1273,9 @@ Jupiter</a></em></p>
   
 </div>
 
-    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script src="/js/clipboard.min.js"></script>
     <script
-      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+      src='/js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
     ></script>
     <script>
       hljs.initHighlightingOnLoad();
@@ -1177,10 +1318,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='/css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script

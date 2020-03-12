@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Dgraph Blog</title>
@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>DevRel</title>
+      <title>devrel</title>
       <link>https://blog.dgraph.io/tags/devrel/</link>
       <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
       
@@ -22,7 +22,7 @@
     </item>
     
     <item>
-      <title>Tutorial</title>
+      <title>tutorial</title>
       <link>https://blog.dgraph.io/tags/tutorial/</link>
       <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
       
@@ -31,7 +31,7 @@
     </item>
     
     <item>
-      <title>Dgraph</title>
+      <title>dgraph</title>
       <link>https://blog.dgraph.io/tags/dgraph/</link>
       <pubDate>Wed, 08 Jan 2020 21:30:00 +0530</pubDate>
       
@@ -40,7 +40,7 @@
     </item>
     
     <item>
-      <title>Release</title>
+      <title>release</title>
       <link>https://blog.dgraph.io/tags/release/</link>
       <pubDate>Tue, 17 Dec 2019 07:00:00 -0800</pubDate>
       
@@ -49,7 +49,7 @@
     </item>
     
     <item>
-      <title>GraphQL</title>
+      <title>graphql</title>
       <link>https://blog.dgraph.io/tags/graphql/</link>
       <pubDate>Tue, 10 Dec 2019 14:30:00 +0530</pubDate>
       
@@ -58,7 +58,7 @@
     </item>
     
     <item>
-      <title>Badger</title>
+      <title>badger</title>
       <link>https://blog.dgraph.io/tags/badger/</link>
       <pubDate>Mon, 18 Nov 2019 06:30:00 -0700</pubDate>
       
@@ -67,7 +67,7 @@
     </item>
     
     <item>
-      <title>Cache</title>
+      <title>cache</title>
       <link>https://blog.dgraph.io/tags/cache/</link>
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
@@ -76,7 +76,7 @@
     </item>
     
     <item>
-      <title>Go</title>
+      <title>go</title>
       <link>https://blog.dgraph.io/tags/go/</link>
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
@@ -85,7 +85,7 @@
     </item>
     
     <item>
-      <title>Hacker News</title>
+      <title>hacker news</title>
       <link>https://blog.dgraph.io/tags/hacker-news/</link>
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
@@ -94,7 +94,7 @@
     </item>
     
     <item>
-      <title>Reddit</title>
+      <title>reddit</title>
       <link>https://blog.dgraph.io/tags/reddit/</link>
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
@@ -103,7 +103,7 @@
     </item>
     
     <item>
-      <title>GraphQLConf</title>
+      <title>graphqlconf</title>
       <link>https://blog.dgraph.io/tags/graphqlconf/</link>
       <pubDate>Fri, 16 Aug 2019 14:30:00 +0530</pubDate>
       
@@ -112,7 +112,7 @@
     </item>
     
     <item>
-      <title>Engineering</title>
+      <title>engineering</title>
       <link>https://blog.dgraph.io/tags/engineering/</link>
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
       
@@ -121,7 +121,7 @@
     </item>
     
     <item>
-      <title>Indexing</title>
+      <title>indexing</title>
       <link>https://blog.dgraph.io/tags/indexing/</link>
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
       
@@ -130,7 +130,7 @@
     </item>
     
     <item>
-      <title>GitHub</title>
+      <title>github</title>
       <link>https://blog.dgraph.io/tags/github/</link>
       <pubDate>Tue, 16 Jul 2019 01:23:05 +0530</pubDate>
       
@@ -148,7 +148,7 @@
     </item>
     
     <item>
-      <title>SQL</title>
+      <title>sql</title>
       <link>https://blog.dgraph.io/tags/sql/</link>
       <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
       
@@ -157,7 +157,7 @@
     </item>
     
     <item>
-      <title>JavaScript</title>
+      <title>javascript</title>
       <link>https://blog.dgraph.io/tags/javascript/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +1100</pubDate>
       
@@ -166,7 +166,7 @@
     </item>
     
     <item>
-      <title>React</title>
+      <title>react</title>
       <link>https://blog.dgraph.io/tags/react/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +1100</pubDate>
       
@@ -175,7 +175,7 @@
     </item>
     
     <item>
-      <title>ACL</title>
+      <title>acl</title>
       <link>https://blog.dgraph.io/tags/acl/</link>
       <pubDate>Wed, 03 Apr 2019 00:06:20 -0800</pubDate>
       
@@ -184,7 +184,7 @@
     </item>
     
     <item>
-      <title>Freebase</title>
+      <title>freebase</title>
       <link>https://blog.dgraph.io/tags/freebase/</link>
       <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
       
@@ -193,7 +193,7 @@
     </item>
     
     <item>
-      <title>Google</title>
+      <title>google</title>
       <link>https://blog.dgraph.io/tags/google/</link>
       <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
       
@@ -202,7 +202,7 @@
     </item>
     
     <item>
-      <title>Knowledge Graph</title>
+      <title>knowledge graph</title>
       <link>https://blog.dgraph.io/tags/knowledge-graph/</link>
       <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
       
@@ -211,7 +211,7 @@
     </item>
     
     <item>
-      <title>Metaweb</title>
+      <title>metaweb</title>
       <link>https://blog.dgraph.io/tags/metaweb/</link>
       <pubDate>Wed, 13 Feb 2019 19:49:00 -0800</pubDate>
       
@@ -220,7 +220,7 @@
     </item>
     
     <item>
-      <title>Optimization</title>
+      <title>optimization</title>
       <link>https://blog.dgraph.io/tags/optimization/</link>
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
       
@@ -229,7 +229,7 @@
     </item>
     
     <item>
-      <title>RocksDB</title>
+      <title>rocksdb</title>
       <link>https://blog.dgraph.io/tags/rocksdb/</link>
       <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
       
@@ -238,7 +238,7 @@
     </item>
     
     <item>
-      <title>Transactions</title>
+      <title>transactions</title>
       <link>https://blog.dgraph.io/tags/transactions/</link>
       <pubDate>Thu, 05 Oct 2017 13:30:16 +1100</pubDate>
       
@@ -256,7 +256,7 @@
     </item>
     
     <item>
-      <title>BoltDB</title>
+      <title>boltdb</title>
       <link>https://blog.dgraph.io/tags/boltdb/</link>
       <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
       
@@ -265,7 +265,7 @@
     </item>
     
     <item>
-      <title>Benchmark</title>
+      <title>benchmark</title>
       <link>https://blog.dgraph.io/tags/benchmark/</link>
       <pubDate>Mon, 23 Jan 2017 18:07:44 +1100</pubDate>
       
@@ -274,7 +274,7 @@
     </item>
     
     <item>
-      <title>Neo4j</title>
+      <title>neo4j</title>
       <link>https://blog.dgraph.io/tags/neo4j/</link>
       <pubDate>Mon, 23 Jan 2017 18:07:44 +1100</pubDate>
       
@@ -283,7 +283,7 @@
     </item>
     
     <item>
-      <title>Gru</title>
+      <title>gru</title>
       <link>https://blog.dgraph.io/tags/gru/</link>
       <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
       
@@ -292,7 +292,7 @@
     </item>
     
     <item>
-      <title>Hiring</title>
+      <title>hiring</title>
       <link>https://blog.dgraph.io/tags/hiring/</link>
       <pubDate>Thu, 21 Jul 2016 11:53:04 +1000</pubDate>
       

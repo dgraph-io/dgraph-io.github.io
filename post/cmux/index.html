@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/index.xml">
 
   
     <title>Golang: Run multiple services on one port - Dgraph Blog</title>
@@ -39,7 +39,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/cmux/">
   
-  <meta property="og:image" content="https://blog.dgraph.io//images/rover-cmux.jpg">
+  <meta property="og:image" content="/images/rover-cmux.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,11 +48,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
   <link
-    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    href='/css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
     rel="stylesheet"
   />
   <link
-    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    href='/css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
     rel="stylesheet"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -79,22 +79,22 @@
 
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
   <link
     rel="stylesheet"
-    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/rover-cmux.jpg"/>
+      <meta name="twitter:image" content="/images/rover-cmux.jpg"/>
     
   
 
   <meta name="twitter:title" content="Golang: Run multiple services on one port"/>
   <meta name="twitter:description" content="Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I&#39;m going to brief about how to run multiple services via the same listener port."/>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -445,16 +445,21 @@ In this post, I&#39;m going to brief about how to run multiple services via the 
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="https://blog.dgraph.io//images/rover-cmux.jpg"
+            src="/images/rover-cmux.jpg"
           >
           <div class="article-content"><p>Ever faced the problem of having multiple ports in an application, one for each service?
-In this post, I'm going to brief about how to run multiple services via the same listener port.</p>
+In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.</p>
+
 <p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.</p>
+
 <p><a href="https://github.com/soheilhy/cmux">Cmux</a> is a connection multiplexing library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their <a href="https://godoc.org/github.com/soheilhy/cmux">godoc</a>.</p>
+
 <p>Let us jump into the three simple steps with some code sample and get this working in a jiffy.</p>
+
 <p>First setup the different services as you would usually do. In our case we setup a gRPC service and an HTTP handler function.</p>
+
 <pre><code>// Setup gRPC server.
 type grpcServer struct{}
 
@@ -473,8 +478,11 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
   .
 
 }
-</code></pre><p>Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
-Later we'll multiplex a single TCP listener into multiple listeners.</p>
+</code></pre>
+
+<p>Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
+Later we&rsquo;ll multiplex a single TCP listener into multiple listeners.</p>
+
 <pre><code>// Wrapper functions to start serving different services.
 
 func serveGRPC(l net.Listener) {
@@ -490,10 +498,13 @@ func serveHTTP(l net.Listener) {
     log.Fatalf(&quot;While serving http request: %v&quot;, err)
   }
 }
-</code></pre><p>Third, create a listener object and multiplex it using a cmux matcher.
-It'll read the header bytes of exchanges and figure out which service to trigger by giving us a new sub-listener (We just call it that, though it's actually just net.Listener) for every match.
+</code></pre>
+
+<p>Third, create a listener object and multiplex it using a cmux matcher.
+It&rsquo;ll read the header bytes of exchanges and figure out which service to trigger by giving us a new sub-listener (We just call it that, though it&rsquo;s actually just net.Listener) for every match.
 We then call the services that we wrote earlier with these corresponding sub-listeners.
 Look at the following code sample to get a better hang of the above-mentioned steps.</p>
+
 <pre><code>func setupServer() {
   go worker.RunServer(*workerPort) // For internal communication.
 
@@ -537,8 +548,12 @@ Look at the following code sample to get a better hang of the above-mentioned st
     log.Fatal(err)
   }
 }
-</code></pre><p>So, there we have it. A single port to cater to many services that you might be using.</p>
+</code></pre>
+
+<p>So, there we have it. A single port to cater to many services that you might be using.</p>
+
 <p>Hope you had fun with this post and learnt something new. Thanks for reading and do let us know your thoughts and how it works out for you.</p>
+
 <div class="engage">
 	<p>
 		<strong>
@@ -588,6 +603,7 @@ Look at the following code sample to get a better hang of the above-mentioned st
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="http://mars.nasa.gov/mars2020/images/Mars-2020-Artist-Concept-Instrument-SuperCam-br2.jpg">Mars 2020, Artist Concept Instrument</a></em></p></div>
           <div class="article-tag-list">
@@ -761,9 +777,9 @@ Look at the following code sample to get a better hang of the above-mentioned st
   
 </div>
 
-    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script src="/js/clipboard.min.js"></script>
     <script
-      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+      src='/js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
     ></script>
     <script>
       hljs.initHighlightingOnLoad();
@@ -806,10 +822,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='/css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script
