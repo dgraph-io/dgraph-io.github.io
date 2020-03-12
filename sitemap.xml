@@ -4,25 +4,42 @@
   
   <url>
     <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/encryption-at-rest-dgraph-badger/</loc>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/</loc>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/</loc>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/badger/</loc>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/encryption/</loc>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/tutorial-8-getting-started/</loc>
     <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/</loc>
-    <lastmod>2020-01-28T20:30:00+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -88,12 +105,6 @@
   <url>
     <loc>https://blog.dgraph.io/post/releasing-badger-v2/</loc>
     <lastmod>2019-11-18T06:30:00-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/badger/</loc>
-    <lastmod>2019-11-18T06:30:00-07:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

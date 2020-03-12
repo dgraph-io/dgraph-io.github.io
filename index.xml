@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jan 2020 20:30:00 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2020 04:00:05 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Encryption at Rest in Dgraph and Badger</title>
+      <link>https://blog.dgraph.io/post/encryption-at-rest-dgraph-badger/</link>
+      <pubDate>Thu, 12 Mar 2020 04:00:05 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/encryption-at-rest-dgraph-badger/</guid>
+      <description>We built &amp;ldquo;Encryption at Rest&amp;rdquo; in Badger v2. Encryption is complex, but important. With this blog post, we not only want to introduce this feature to our users, but also dive into the details of how we implemented encryption in Badger, so the reader can gain enough understanding about introducing AES encryption in their own systems.
+Background In 2008, Microsoft released Transparent Data Encryption (TDE) to provide Encryption at Rest to SQL server.</description>
+    </item>
     
     <item>
       <title>Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features</title>
