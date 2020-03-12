@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 12 Mar 2020 04:00:05 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 12 Mar 2020 04:01:05 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>badger</title>
       <link>https://blog.dgraph.io/tags/badger/</link>
-      <pubDate>Thu, 12 Mar 2020 04:00:05 -0700</pubDate>
+      <pubDate>Thu, 12 Mar 2020 04:01:05 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/tags/badger/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>encryption</title>
       <link>https://blog.dgraph.io/tags/encryption/</link>
-      <pubDate>Thu, 12 Mar 2020 04:00:05 -0700</pubDate>
+      <pubDate>Thu, 12 Mar 2020 04:01:05 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/tags/encryption/</guid>
       <description></description>
