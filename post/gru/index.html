@@ -94,8 +94,7 @@
 
   <meta name="twitter:title" content="Gru: Open source solution for better technical interviews"/>
   <meta name="twitter:description" content="Candidate REJECTED.
-
-4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. I guess he wasn&rsquo;t."/>
+4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&#39;t like the candidate had been at Google since early 2004. And he didn&#39;t like the candidate&#39;s joke question about whether he was very rich because he joined before Google went IPO. I guess he wasn&#39;t."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -449,131 +448,94 @@
             src="/images/gru.jpg"
           >
           <div class="article-content"><p>Candidate <strong>REJECTED</strong>.</p>
-
-<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&rsquo;t like the candidate had been at Google since early 2004. And he didn&rsquo;t like the candidate&rsquo;s joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn&rsquo;t.</em></p>
-
-<p>The system in place was methodical. On a scale of 0.0 to 5.0, only terrible candidates received less than 2.0. And only in very rare cases did someone receives above 4.0. Anything above 3.0 was a pretty solid YES for hire. But how the interviewers scored a candidate was very subjective. There was no standardized training for interviewers on how to interview. Some people tend to give higher scores; some tend to give lower scores. So, the hiring committee had been asked to take the interviewer&rsquo;s previous scoring patterns into account, along with how much evidence and conviction they had presented in the feedback form.</p>
-
+<p>4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn't like the candidate had been at Google since early 2004. And he didn't like the candidate's joke question about whether he was very rich because he joined before Google went IPO. <em>I guess he wasn't.</em></p>
+<p>The system in place was methodical. On a scale of 0.0 to 5.0, only terrible candidates received less than 2.0. And only in very rare cases did someone receives above 4.0. Anything above 3.0 was a pretty solid YES for hire. But how the interviewers scored a candidate was very subjective. There was no standardized training for interviewers on how to interview. Some people tend to give higher scores; some tend to give lower scores. So, the hiring committee had been asked to take the interviewer's previous scoring patterns into account, along with how much evidence and conviction they had presented in the feedback form.</p>
 <blockquote>
 <p>It was duct tape on a broken system.</p>
 </blockquote>
-
-<p>It&rsquo;s not an issue specific to Google. Many tech companies follow some variance of the same approach. Two phone screens + five onsite technical interviews, followed by feedback presented to a committee which then decided if the candidate should be hired or not.</p>
-
-<p>Except that the interviewers have no particular training in judging other people. Most would ask one question; which would get dragged on for the entire length of the interview. If the candidate did well on that question, they might ask another one. So, if the candidate messes up that first question, there&rsquo;s no coming back, mostly even including the rest of the interviews (unless you do exceptionally well in the rest).</p>
-
+<p>It's not an issue specific to Google. Many tech companies follow some variance of the same approach. Two phone screens + five onsite technical interviews, followed by feedback presented to a committee which then decided if the candidate should be hired or not.</p>
+<p>Except that the interviewers have no particular training in judging other people. Most would ask one question; which would get dragged on for the entire length of the interview. If the candidate did well on that question, they might ask another one. So, if the candidate messes up that first question, there's no coming back, mostly even including the rest of the interviews (unless you do exceptionally well in the rest).</p>
 <p>Also, given the inflow of smart young engineers flowing into the valley, the questions are generic enough to be answered by <em>anyone</em>. So, these drill down to basic computer science concepts &ndash; graphs, trees, sorting, and other algorithms. The candidate is expected to come up with a solution and code it up on a whiteboard within the allocated time under pressure.</p>
-
 <p>Not surprisingly, <strong>experienced professionals tend to do worse at these interviews than fresh grads</strong>. Very few professional tech problem can be coded up in 20 mins. Over years of coding, they lose the practice of solving simple problems under time pressure, instead focusing on deeper, harder design problems.</p>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.</p>&mdash; Max Howell (@mxcl) <a href="https://twitter.com/mxcl/status/608682016205344768?ref_src=twsrc%5Etfw">June 10, 2015</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
-<p>I&rsquo;m convinced that the existing technical interview system is expensive and broken.</p>
-
+<p>I'm convinced that the existing technical interview system is expensive and broken.</p>
 <blockquote>
 <p>Without any objective measurement, judging the smarts, skills and experience of an engineer is just handwaving.</p>
 </blockquote>
-
 <p>Triplebyte recently <a href="http://blog.triplebyte.com/three-hundred-programming-interviews-in-thirty-days">came up with a post about hiring</a>. I found it instantly interesting. With a lot of data, they found a higher correlation between a quiz and successful candidates; and a lower one between coding questions and successful candidates.
 This got us thinking.
 <strong>If we wanted to design an objective interviewing system, we should design a quiz.</strong>
 It would have multiple benefits:</p>
-
 <ul>
-<li>A single question wouldn&rsquo;t dictate the entire interview. If the candidate is stuck, they can just skip the question.</li>
+<li>A single question wouldn't dictate the entire interview. If the candidate is stuck, they can just skip the question.</li>
 <li>Focus on different aspects of systems and algorithms, with multiple questions from each. Looking at a final report would make it clear where the strengths and weaknesses of the candidate lie.</li>
 <li>Give us an objective score, which we can then use to compare them against other candidates.</li>
-<li>Generate a common repository of interview questions, which can ascertain that any leaked questions can&rsquo;t be asked again, and new ones can be added collectively by engineers.</li>
+<li>Generate a common repository of interview questions, which can ascertain that any leaked questions can't be asked again, and new ones can be added collectively by engineers.</li>
 <li>Cut down on engineers&rsquo; time spent on interviewing significantly. That in itself is a huge benefit about this system. <strong>Any human interaction can then focus on the cultural fit</strong>, which I think is equally important to technical skills.</li>
 </ul>
-
 <p>And we did exactly this. We painstakingly and after much cross-examination came up with 30 or so quiz questions in the house. These questions test various aspects of algorithms, concurrency and server interaction.</p>
-
-<p>Over the past months, we have had 20 candidates take our quiz. It&rsquo;s a small number, but it&rsquo;s still telling. The following graph shows how the candidates fared.</p>
-
-<p><img src="/images/score.png" alt="Graph representing scores of different candidates" /></p>
-
-<p>Note that the red dots represent the score (y-axis left), and the green dots represent the time taken (y-axis right). Candidates with experience in big companies are tagged as such - GB for Googlers who primarily worked on backend/infrastructure projects, GO for Googlers who worked on other projects, Intel, Microsoft and Amazon. Every other company whose name we didn&rsquo;t recognize (startup/smaller company) is tagged as OC.</p>
-
+<p>Over the past months, we have had 20 candidates take our quiz. It's a small number, but it's still telling. The following graph shows how the candidates fared.</p>
+<p><img src="/images/score.png" alt="Graph representing scores of different candidates"></p>
+<p>Note that the red dots represent the score (y-axis left), and the green dots represent the time taken (y-axis right). Candidates with experience in big companies are tagged as such - GB for Googlers who primarily worked on backend/infrastructure projects, GO for Googlers who worked on other projects, Intel, Microsoft and Amazon. Every other company whose name we didn't recognize (startup/smaller company) is tagged as OC.</p>
 <p>What we can learn from this:</p>
-
 <ul>
 <li>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we have an affinity for Googlers!</li>
 <li>The performance of Googlers on our quiz varied quite a lot. Googlers with backend experience performed not only great but the best out of all candidates.</li>
-<li>Googlers from other fields didn&rsquo;t fare so well. This goes to show that there&rsquo;s quite a significant difference in skills and experience of Googlers working on different projects.</li>
-<li>Note also that there&rsquo;s a selection bias here because our quiz includes questions about concurrency and distributed systems. Folks with frontend experience don&rsquo;t deal with these problems on a regular basis and hence didn&rsquo;t do so well; which in a way is a validation that the quiz system worked as intended.</li>
+<li>Googlers from other fields didn't fare so well. This goes to show that there's quite a significant difference in skills and experience of Googlers working on different projects.</li>
+<li>Note also that there's a selection bias here because our quiz includes questions about concurrency and distributed systems. Folks with frontend experience don't deal with these problems on a regular basis and hence didn't do so well; which in a way is a validation that the quiz system worked as intended.</li>
 <li>Worst scorers tend to take more time than the best. In fact, all 4 top scorers finished approximately under 50 mins, at least 10 mins before the test ended, because they ran out of questions to answer. In fact, the top scoring candidate finished the quiz in half the time!</li>
 </ul>
-
 <p><strong>So, we decided to improve upon this basic quiz and converted it to an adaptive test.</strong>
-Based on Triplebyte&rsquo;s and our experience, we know that best candidates take less time to solve the quiz.
+Based on Triplebyte's and our experience, we know that best candidates take less time to solve the quiz.
 We hypothesize if the best performers were allowed to answer more questions in the same fixed time, their score would have been significantly better.</p>
-
 <p>So, instead of showing a fixed number of questions to be answered in a given maximum time duration, we fix the time and let the candidates answer as many questions as they can in an hour.
-And if they&rsquo;re performing well, we show them harder questions carrying higher scores (and vice-versa).
+And if they're performing well, we show them harder questions carrying higher scores (and vice-versa).
 This system would make the difference between an okay candidate and a stellar candidate much more evident.</p>
-
 <blockquote>
 <p>In fact, the best candidates would become outliers.</p>
 </blockquote>
-
 <p>This inspiration is what <a href="https://github.com/dgraph-io/gru">lead to Gru</a>.</p>
-
 <h2 id="gru-finding-the-right-minions">Gru: Finding the right minions</h2>
-
-<p><strong>Update: Gru&rsquo;s design has changed significantly since this blog post. It has a browser based frontend, and uses <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+<p><strong>Update: Gru's design has changed significantly since this blog post. It has a browser based frontend, and uses <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  as backend. Over 200 candidates have taken <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  screening quiz using this new version of Gru.</strong></p>
-
-<p>Gru is an open-source, adaptive quiz system written entirely in Go. Gru server has a simple design and is very easy to setup. It doesn&rsquo;t require maintaining a database. Questions and candidate information are stored and read from files. All the communication between the client and the server is encrypted.</p>
-
-<p>Engineers collectively come up with questions from different areas and put them in a YAML formatted file. They tag them as <code>easy</code>, <code>medium</code>, <code>hard</code>. You can add more tags to define the field, for, e.g., <code>concurrency</code>, <code>graph</code>, <code>sorting</code>, <code>searching</code>, etc. Each question has it&rsquo;s own positive and negative scores, generally determined based on their complexity, uniqueness, or statistical probability of anyone getting it right, etc. Here&rsquo;s an example from our demo quiz.</p>
-
-<pre><code class="language-yaml">- id: spacecraftmars
-  str: Which year did we first land a spacecraft on Mars?
-  correct: [spacecraftmars-1976]
-  opt:
-  - uid: spacecraftmars-2001
-    str: 2001
-  - uid: spacecraftmars-1976
-    str: 1976
-  - uid: spacecraftmars-1981
-    str: 1981
-  - uid: spacecraftmars-2013
-    str: 2013
-  positive: 5
-  negative: 2.5
-  tags: [medium,demo,mars]
-</code></pre>
-
-<p>Gru client runs on the command line and makes use of <a href="https://github.com/gizak/termui">termui</a> for displaying the questions. The score of the candidate is always visible to them, providing real-time feedback on how they are doing during the test.</p>
-
-<p><img src="/images/gru_screenshot.png" alt="Screenshot of the Gru client in action" /></p>
-
-<p>If you want to get your hands dirty, we have a server running with some demo questions. The binaries for both Gru server and Gru client <a href="https://github.com/dgraph-io/gru/releases">are released here</a>. To take the demo quiz, download the gruclient binary for your platform and just run it. It would automatically connect to our Gru server, and test your knowledge about humankind&rsquo;s space missions.</p>
-
+<p>Gru is an open-source, adaptive quiz system written entirely in Go. Gru server has a simple design and is very easy to setup. It doesn't require maintaining a database. Questions and candidate information are stored and read from files. All the communication between the client and the server is encrypted.</p>
+<p>Engineers collectively come up with questions from different areas and put them in a YAML formatted file. They tag them as <code>easy</code>, <code>medium</code>, <code>hard</code>. You can add more tags to define the field, for, e.g., <code>concurrency</code>, <code>graph</code>, <code>sorting</code>, <code>searching</code>, etc. Each question has it's own positive and negative scores, generally determined based on their complexity, uniqueness, or statistical probability of anyone getting it right, etc. Here's an example from our demo quiz.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">-<span style="color:#bbb"> </span>id:<span style="color:#bbb"> </span>spacecraftmars<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>str:<span style="color:#bbb"> </span>Which<span style="color:#bbb"> </span>year<span style="color:#bbb"> </span>did<span style="color:#bbb"> </span>we<span style="color:#bbb"> </span>first<span style="color:#bbb"> </span>land<span style="color:#bbb"> </span>a<span style="color:#bbb"> </span>spacecraft<span style="color:#bbb"> </span>on<span style="color:#bbb"> </span>Mars?<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>correct:<span style="color:#bbb"> </span>[spacecraftmars<span style="color:#099">-1976</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>opt:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>uid:<span style="color:#bbb"> </span>spacecraftmars<span style="color:#099">-2001</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>str:<span style="color:#bbb"> </span><span style="color:#099">2001</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>uid:<span style="color:#bbb"> </span>spacecraftmars<span style="color:#099">-1976</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>str:<span style="color:#bbb"> </span><span style="color:#099">1976</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>uid:<span style="color:#bbb"> </span>spacecraftmars<span style="color:#099">-1981</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>str:<span style="color:#bbb"> </span><span style="color:#099">1981</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>-<span style="color:#bbb"> </span>uid:<span style="color:#bbb"> </span>spacecraftmars<span style="color:#099">-2013</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>str:<span style="color:#bbb"> </span><span style="color:#099">2013</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>positive:<span style="color:#bbb"> </span><span style="color:#099">5</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>negative:<span style="color:#bbb"> </span><span style="color:#099">2.5</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>tags:<span style="color:#bbb"> </span>[medium,demo,mars]<span style="color:#bbb">
+</span></code></pre></div><p>Gru client runs on the command line and makes use of <a href="https://github.com/gizak/termui">termui</a> for displaying the questions. The score of the candidate is always visible to them, providing real-time feedback on how they are doing during the test.</p>
+<p><img src="/images/gru_screenshot.png" alt="Screenshot of the Gru client in action"></p>
+<p>If you want to get your hands dirty, we have a server running with some demo questions. The binaries for both Gru server and Gru client <a href="https://github.com/dgraph-io/gru/releases">are released here</a>. To take the demo quiz, download the gruclient binary for your platform and just run it. It would automatically connect to our Gru server, and test your knowledge about humankind's space missions.</p>
 <p><strong>You could start running Gru at your company for free. For more details on how Gru works and how to host it, please visit <a href="https://wiki.dgraph.io/Gru">Gru wiki</a>.</strong></p>
-
 <p>Gru is a work in progress. Let us know what you think about it and how we could improve it on <a href="https://discuss.dgraph.io">discuss.dgraph.io</a>. If you find any issues with Gru, <a href="https://github.com/dgraph-io/gru/issues">file a bug</a>. Hope you like Gru and looking forward to a world with better technical interviews.</p>
-
-<hr />
-
-<p>Gru Links
-- <a href="https://github.com/dgraph-io/gru">Github repository</a>
-- <a href="https://wiki.dgraph.io/Gru">Gru Wiki</a></p>
-
-<p>Other posts I&rsquo;ve written about interview process:</p>
-
+<hr>
+<p>Gru Links</p>
+<ul>
+<li><a href="https://github.com/dgraph-io/gru">Github repository</a></li>
+<li><a href="https://wiki.dgraph.io/Gru">Gru Wiki</a></li>
+</ul>
+<p>Other posts I've written about interview process:</p>
 <ul>
 <li><a href="https://medium.com/@manishrjain/technical-interviews-open-ended-design-questions-ea7fff3486a7#.d6y5gyjys">Technical Interviews</a></li>
-<li><a href="https://www.quora.com/Why-cant-I-get-a-job-at-some-tech-giants-despite-doing-well-at-interviews/answer/Manish-Rai-Jain?srid=5tVr">Why can&rsquo;t I get a job despite doing well in interviews?</a></li>
+<li><a href="https://www.quora.com/Why-cant-I-get-a-job-at-some-tech-giants-despite-doing-well-at-interviews/answer/Manish-Rai-Jain?srid=5tVr">Why can't I get a job despite doing well in interviews?</a></li>
 </ul>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>

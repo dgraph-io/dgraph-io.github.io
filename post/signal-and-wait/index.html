@@ -453,9 +453,7 @@ more work and exit, so you can cleanly shut down the program."/>
 work. These goroutines block listening in on a channel, waiting for more work to
 arrive. At some point, you want to signal these goroutines to stop accepting
 more work and exit, so you can cleanly shut down the program.</p>
-
 <p>This is how the code might look:</p>
-
 <pre><code>func doWork(chanWork chan *work) {
   for w := range chanWork {
     do(w)
@@ -474,15 +472,11 @@ func main() {
   // All work is done, now stop.
   close(chanWork)
 }
-</code></pre>
-
-<p>This code looks reasonable, <strong>with one caveat.</strong> Once you close the chanWork
+</code></pre><p>This code looks reasonable, <strong>with one caveat.</strong> Once you close the chanWork
 channel, the main exits immediately. Closing the channel only acts as a
 signal. You want the program to wait as well.</p>
-
 <p>Using <code>sync.WaitGroup</code> allows the goroutines to cleanly exit before exiting the main
 program, like so:</p>
-
 <pre><code>func doWork(chanWork chan *work, wg *sync.WaitGroup) {
   defer wg.Done()
   ...
@@ -505,14 +499,10 @@ func main() {
   // Now wait.
   wg.Wait()
 }
-</code></pre>
-
-<p>For a Go programmer, this is pretty basic so far. And that&rsquo;s because we had
+</code></pre><p>For a Go programmer, this is pretty basic so far. And that's because we had
 access to the channel, which controls when the goroutine should exit.</p>
-
-<p>What happens in case we don&rsquo;t have access to this channel? For, e.g., if we want to run
-some execution periodically, we&rsquo;ll have this situation:</p>
-
+<p>What happens in case we don't have access to this channel? For, e.g., if we want to run
+some execution periodically, we'll have this situation:</p>
 <pre><code>func doWorkPeriodically(wg *sync.WaitGroup) {
   defer wg.Done()
   timeChan := time.Tick(time.Second)
@@ -521,11 +511,8 @@ some execution periodically, we&rsquo;ll have this situation:</p>
     do()  // some work
   }
 }
-</code></pre>
-
-<p>In this case, we need a way to signal the goroutine to stop doing the work.
+</code></pre><p>In this case, we need a way to signal the goroutine to stop doing the work.
 Say we use a signal channel like so:</p>
-
 <pre><code>func doWorkPeriodically(wg *sync.WaitGroup, signal chan struct{}) {
   defer wg.Done()
   timeChan := time.Tick(time.Second)
@@ -548,22 +535,16 @@ func main() {
   signal &lt;- struct{}{}  // To signal the goroutine to stop.
   wg.Wait() // Wait for goroutine to exit.
 }
-</code></pre>
-
-<p>This code above would indicate to the goroutine to stop doing the work. And also
+</code></pre><p>This code above would indicate to the goroutine to stop doing the work. And also
 wait for it so <code>main</code> can exit cleanly.</p>
-
 <p>All nice and good so far. Now, <strong>what if we have multiple different such goroutines, and
 we need to signal and wait on them in some order.</strong> For, e.g., we might have a
-pipeline of sorts, with multiple stages, each dependent on the previous <code>A -&gt; B
--&gt; C</code>. In this case, we need to signal and wait on <code>A</code>, before we do that for
+pipeline of sorts, with multiple stages, each dependent on the previous <code>A -&gt; B -&gt; C</code>. In this case, we need to signal and wait on <code>A</code>, before we do that for
 <code>B</code> and then <code>C</code>.</p>
-
-<p>With the above code, this would be cumbersome. You&rsquo;d need multiple signal
+<p>With the above code, this would be cumbersome. You'd need multiple signal
 channels, one for each stage; and similarly, multiple waits, one for each stage.
-Would be nice to encapsulate this in a class. That&rsquo;s what we have done in
+Would be nice to encapsulate this in a class. That's what we have done in
 <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
-
 <pre><code>type LevelCloser struct {
     Name    string
     running int32
@@ -603,10 +584,7 @@ func (lc *LevelCloser) Done() {
 func (lc *LevelCloser) Wait() {
     lc.waiting.Wait()
 }
-</code></pre>
-
-<p>It&rsquo;s a simple class with some basic APIs. The way you&rsquo;d use it is like this:</p>
-
+</code></pre><p>It's a simple class with some basic APIs. The way you'd use it is like this:</p>
 <pre><code>func doWorkPeriodically(lc *LevelCloser) {
   defer lc.Done()
   timeChan := time.Tick(time.Second)
@@ -634,11 +612,8 @@ func main() {
   lc.Signal()
   lc.Wait()
 }
-</code></pre>
-
-<p>Finally, to make it work for multiple stages, dependent or not, we wrap it up
+</code></pre><p>Finally, to make it work for multiple stages, dependent or not, we wrap it up
 into one <code>Closer</code> class.</p>
-
 <pre><code>type Closer struct {
     sync.RWMutex
     levels map[string]*LevelCloser
@@ -677,13 +652,10 @@ func (c *Closer) Get(name string) *LevelCloser {
     }
     return lc
 }
-</code></pre>
-
-<p>Using this wrapper class, you can just create one <code>Closer</code> object, and use that
+</code></pre><p>Using this wrapper class, you can just create one <code>Closer</code> object, and use that
 to create and maintain all <code>LevelCloser</code>s. This way, you can retrieve, and signal all
 the <code>LevelCloser</code>s individually in order, or just have <code>Closer</code> signal all of
 them, and then wait for all of them.</p>
-
 <pre><code>func (c *Closer) SignalAll() {
     c.RLock()
     defer c.RUnlock()
@@ -701,10 +673,7 @@ func (c *Closer) WaitForAll() {
         l.Wait()
     }
 }
-</code></pre>
-
-<p>This is how you&rsquo;d use this class:</p>
-
+</code></pre><p>This is how you'd use this class:</p>
 <pre><code>func stageA(lc *LevelCloser) {
   defer lc.Done()
   for {
@@ -736,13 +705,10 @@ func main() {
   closer.SignalAll()
   closer.WaitAll()
 }
-</code></pre>
-
-<p>This class is being used by <a href="https://github.com/dgraph-io/badger">Badger</a>, and
+</code></pre><p>This class is being used by <a href="https://github.com/dgraph-io/badger">Badger</a>, and
 it significantly simplifies the various asynchronous activities going on
 internally. We can ensure that our writes are all committed before in-memory
 tables are flushed, before we close value log, and so on.</p>
-
 <p>You can see the entire <a href="https://github.com/dgraph-io/badger/blob/master/y/y.go#L67-L170">code
 here</a>. The code
 is under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license, so
@@ -751,13 +717,10 @@ feel free to copy the code and use it in your project. You can see the class in
 for <code>closer.Register</code> and <code>closer.Get</code> to track how we create multiple such
 <code>LevelCloser</code>s and use them to maintain a strict opening and closing order
 between the various stages.</p>
-
 <p>Hope you found this useful! Check out other posts to see how
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> and
 <a href="https://github.com/dgraph-io/badger">Badger</a> can add value to your projects.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -807,7 +770,6 @@ between the various stages.</p>
 		}
 	})
 </script>
-
 
 <p><em>Top image: Various stages of a <a href="http://www.spacex.com/news/2015/06/24/why-and-how-landing-rockets">SpaceX rocket launch</a>.</em></p></div>
           <div class="article-tag-list">

@@ -94,7 +94,7 @@
 
   <meta name="twitter:title" content="Why Google Needed a Graph Serving System"/>
   <meta name="twitter:description" content="This post made it to #3 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.
-When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&rsquo;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together."/>
+When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&#39;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -447,58 +447,45 @@ When I introduce myself and explain what we are building at Dgraph Labs, I am ty
             class="main__image"
             src="/images/google-kg2.png"
           >
-          <div class="article-content">
-
-<p><strong>This post made it to #3 on HackerNews front page. Do engage in <a href="https://news.ycombinator.com/item?id=19168075">discussion
+          <div class="article-content"><p><strong>This post made it to #3 on HackerNews front page. Do engage in <a href="https://news.ycombinator.com/item?id=19168075">discussion
 there</a> and show us love by giving
 us a <a href="https://github.com/dgraph-io/dgraph">GitHub star</a>.</strong></p>
-
 <p>When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I
-worked at Facebook, or if what I&rsquo;m building is inspired by Facebook. A lot of people know about the
+worked at Facebook, or if what I'm building is inspired by Facebook. A lot of people know about the
 efforts at Facebook to serve their social graph, because they have published <a href="https://www.facebook.com/notes/facebook-engineering/tao-the-power-of-the-graph/10151525983993920/">multiple</a>
 <a href="https://code.fb.com/data-infrastructure/dragon-a-distributed-graph-query-engine/">articles</a> about the graph infrastructure they put together.</p>
-
 <p>Word from Google has been limited to serving Knowledge Graph, but nothing has been said about the
 internal infrastructure which makes this happen. There are specialized systems in place at Google to
 serve the knowledge graph.  In fact, we (at Google) placed big bets on graph serving system. I
 myself put at least two promotions at stake to go work on the new graph thing back in 2010, and see
 what we could build.</p>
-
 <p><strong>Google needed to build a graph serving system</strong> to serve not just the complex relationships in the
 Knowledge Graph data, but also all the <a href="https://en.ryte.com/wiki/Google_OneBox">OneBoxes</a> which had access to structured data. The
 serving system needed to traverse facts, with high enough throughput and low enough latency to be
 hit by a good chunk of <a href="https://google.com">web search</a> queries. No available system or database
 was able to do all three.</p>
-
-<p>Now that I&rsquo;ve answered the why, I&rsquo;ll take the rest of the blog post to walk you through my journey,
-intertwined with Google&rsquo;s, of building the graph system to serve the <a href="https://en.wikipedia.org/wiki/Knowledge_Graph">Knowledge Graph</a> and
+<p>Now that I've answered the why, I'll take the rest of the blog post to walk you through my journey,
+intertwined with Google's, of building the graph system to serve the <a href="https://en.wikipedia.org/wiki/Knowledge_Graph">Knowledge Graph</a> and
 <a href="https://en.ryte.com/wiki/Google_OneBox">OneBoxes</a>.</p>
-
 <h3 id="how-do-i-know-anything-about-this">How do I know anything about this?</h3>
-
-<p>I&rsquo;ll quickly introduce myself. I worked at Google from 2006 to 2013. First as an intern, then as a
+<p>I'll quickly introduce myself. I worked at Google from 2006 to 2013. First as an intern, then as a
 software engineer in Web Search Infrastructure. In 2010, Google <a href="https://techcrunch.com/2010/07/16/google-acquires-metaweb-to-make-search-smarter/">acquired Metaweb</a> and
 my team had just launched <a href="https://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a>. I wanted to do something different and started
 working with Metaweb folks (in SF), splitting my time between San Francisco and Mountain View. My
 aim was to figure out how we could use the knowledge graph to improve web search.</p>
-
 <p>There were projects at Google which predate my entrance into graphs. Notably, a project called
 <a href="https://en.wikipedia.org/wiki/Google_Squared">Squared</a> was built out of the NY office, and there was some talk of Knowledge Cards. These were
 sporadic efforts by individuals/small teams, but at this time there was no established chain of
-command in place, something that would eventually cause me to leave Google. But we&rsquo;ll get to that
+command in place, something that would eventually cause me to leave Google. But we'll get to that
 later.</p>
-
 <h3 id="the-metaweb-story">The Metaweb Story</h3>
-
 <p>As mentioned before, Google acquired Metaweb in <a href="https://techcrunch.com/2010/07/16/google-acquires-metaweb-to-make-search-smarter/">2010</a>. Metaweb had built a high-quality
 knowledge graph using multiple techniques, including crawling and parsing Wikipedia, and using a
-Wikipedia-like crowd-sourced curation run via <a href="https://developers.google.com/freebase/">Freebase</a>. All of this was powered by a graph
+Wikipedia-like crowd-sourced curation run via <a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a>. All of this was powered by a graph
 database they had built in-house called Graphd &ndash; a graph daemon (now <a href="https://github.com/google/graphd">published</a> on GitHub).</p>
-
 <p>Graphd had some pretty typical properties. Like a daemon, it ran on a single server and all the data
 was in memory. The entire Freebase website was being run out of Graphd. After the acquisition, one
 of the challenges Google had was to continue to run Freebase.</p>
-
 <p><strong>Google has built an empire on commodity hardware and distributed software.</strong> A single server
 database could have never housed the crawling, indexing and serving for Search. Google built SSTable
 and then Bigtable, which could scale horizontally to hundreds or thousands of machines, working
@@ -506,358 +493,287 @@ together to serve petabytes of data.  Machines were allocated using Borg (<a hre
 experience), communicated using Stubby (<a href="https://grpc.io/">gRPC</a> came out of that), resolved IP addresses via Borg
 name service (BNS, baked into K8s), and housed their data on Google File System (<a href="https://en.wikipedia.org/wiki/Google_File_System">GFS</a>, think
 Hadoop FS).  <em>Processes can die and machines can crash, but the system just keeps humming.</em></p>
-
 <p>That was the environment in which Graphd found itself. The idea of a database serving an entire
 website running on a single server was alien to Google (myself included).  In particular,
 Graphd needed 64GB or more memory just to function. If you are sneering at the memory requirement,
 note that this was back in 2010. Most Google servers were maxed at 32GB. In fact, Google had to
 procure special machines with enough RAM to serve Graphd as it stood.</p>
-
 <h4 id="replacement-for-graphd">Replacement for Graphd</h4>
-
 <p>Ideas were thrown around about how Graphd could be moved or rewritten to work in a distributed way.
 But see, graphs are hard. They are not key-value databases, where one can just take a chunk of data,
 move it to another server and when asked for the key, serve it. Graphs promise efficient joins and
 traversals, which require software to be built in a particular way.</p>
-
 <p>One of the ideas was to use a project called MindMeld (IIRC). The promise was that memory from
 another server could be accessed much faster via network hardware. This was supposedly faster than
 doing normal RPCs, fast enough to pseudo-replicate direct memory accesses required by an in-memory
-database. <em>That idea didn&rsquo;t go very far.</em></p>
-
+database. <em>That idea didn't go very far.</em></p>
 <p>Another idea, which actually became a project, was to build a truly distributed graph serving system.
 Something which can not only replace Graphd for Freebase but also serve all knowledge efforts in
 the future. <strong>This was named, Dgraph &ndash; distributed graph, a spin on Graphd &ndash; graph daemon.</strong></p>
-
 <p>If you are now wondering, the answer is <em>yes.</em> Dgraph Labs, the company and Dgraph, the open source
-project are named after this project at Google<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>.</p>
-
+project are named after this project at Google<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
 <p>For the majority of this blog post, when I refer to Dgraph, I am referring to the project internal
 to Google, not the open source project that we built. But more on <em>that</em> later.</p>
-
 <h3 id="the-story-of-cerebro-a-knowledge-engine">The Story of Cerebro: A Knowledge Engine</h3>
-
 <blockquote>
 <p><strong>Inadvertently building a graph serving system.</strong></p>
 </blockquote>
-
 <p>While I was generally aware of the Dgraph effort to replace Graphd, my goal was to build something
 to improve web search. I came across a research engineer, DH, at Metaweb, who had built
 <a href="/refs/freebase-cubed.pdf">Cubed</a>.</p>
-
 <p>As I mentioned before, a ragtag of engineers at Google NY had built Google <a href="https://en.wikipedia.org/wiki/Google_Squared">Squared</a>. So, doing a
 one up, DH built Cubed. While Squared was a dud, Cubed was <em>very</em> impressive. I started thinking
 about how I could build that at Google. Google had bits and pieces of the puzzle that I could
 readily use.</p>
-
 <p>The first piece of the puzzle was a search project which provided a way to understand which words
-belonged together with a high degree of accuracy. For example, when you see a phrase like <code>[tom
-hanks movies]</code>, it can tell you that <code>[tom]</code> and <code>[hanks]</code> belong together. Similarly, from <code>[san
-francisco weather]</code>, <code>[san]</code> and <code>[francisco]</code> belong together. These are obvious things for humans,
+belonged together with a high degree of accuracy. For example, when you see a phrase like <code>[tom hanks movies]</code>, it can tell you that <code>[tom]</code> and <code>[hanks]</code> belong together. Similarly, from <code>[san francisco weather]</code>, <code>[san]</code> and <code>[francisco]</code> belong together. These are obvious things for humans,
 not so obvious to machines.</p>
-
-<p>The second piece of the puzzle was to understand grammar. When a query asks for <code>[books by french
-authors]</code>, a machine could interpret it as <code>[books]</code> by <code>[french authors]</code> (i.e.  books by those
+<p>The second piece of the puzzle was to understand grammar. When a query asks for <code>[books by french authors]</code>, a machine could interpret it as <code>[books]</code> by <code>[french authors]</code> (i.e.  books by those
 authors who are French). But it could also interpret it as <code>[french books]</code> by <code>[authors]</code> (i.e.
 French language books by any author). I used a Part-Of-Speech (POS) tagger by <a href="https://nlp.stanford.edu/software/tagger.shtml">Stanford</a> to
 understand grammar better and build a tree.</p>
-
 <p>The third piece of the puzzle was to understand entities. <code>[french]</code> can mean many things. It could be
 the country (the region), the nationality (referring to French people), the cuisine (referring to
 the food), or the language. There was another project I could use to get a list of entities that the
 word or phrase could correspond to.</p>
-
 <p>The fourth piece of the puzzle was to understand the relationship between entities. Now that I knew
 how to associate the words into phrases, the order in which phrases should be executed, i.e. their
 grammar, and what entities they could correspond to, I needed a way to find relationships between
-these entities to create machine interpretations. For example, a query says <code>[books by french
-authors]</code> and POS tells us it is <code>[books]</code> by <code>[french authors]</code>. We have a few entities for
+these entities to create machine interpretations. For example, a query says <code>[books by french authors]</code> and POS tells us it is <code>[books]</code> by <code>[french authors]</code>. We have a few entities for
 <code>[french]</code> and few for <code>[authors]</code>, and the algorithm needs to determine how they are connected.
 They could be connected by birth, i.e. authors who were born in France (but could be writing in
 English), or authors who are French nationals, or authors who speak or write French (but could be
 unrelated to France, the country), or authors who just enjoy French food.</p>
-
 <h4 id="search-index-based-graph-system">Search Index Based Graph System</h4>
-
 <p>To determine if and how the entities are connected, I needed a graph system. Graphd was never going
 to scale to Google levels, and I understood web search. Knowledge Graph data was formatted in
 <a href="https://www.w3.org/TR/rdf-concepts/#section-triples">Triples</a>, i.e. every fact was represented by three pieces, subject (entity), predicate
-(relationship), and object (another entity). Queries had to go from <code>[S P]</code> &rarr; <code>[O]</code>, from <code>[P
-O]</code> &rarr; <code>[S]</code>, and sometimes from <code>[S O]</code> &rarr; <code>[P]</code>.</p>
-
-<p><img src="/images/google-spo-indexing.png" style="width:80%;"></img></p>
-
-<p><strong>I used Google&rsquo;s search index system,</strong> assigned a docid to each triple and built three indices,
+(relationship), and object (another entity). Queries had to go from <code>[S P]</code> → <code>[O]</code>, from <code>[P O]</code> → <code>[S]</code>, and sometimes from <code>[S O]</code> → <code>[P]</code>.</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><strong>I used Google's search index system,</strong> assigned a docid to each triple and built three indices,
 one each for S, P and O. In addition, the index allowed attachments, so I attached the type
 information about each entity (i.e. actor, book, person, etc).</p>
-
 <blockquote>
 <p>I built this graph serving system, with the knowledge that it had the join depth problem (explained
 below) and was unsuited for any complex graph queries. In fact, when someone from the Metaweb team
 asked me to make it generally accessible to other teams, I flat-out rejected the idea.</p>
 </blockquote>
-
-<p>Now to determine relationships, I&rsquo;d do queries to see how many results each yielded. Does <code>[french]</code>
+<p>Now to determine relationships, I'd do queries to see how many results each yielded. Does <code>[french]</code>
 and <code>[author]</code> yield any results? Pick those results and see how they are connected to <code>[books]</code>,
 and so on.  This resulted in multiple machine interpretations of the query. For example, when you
 run <code>[tom hanks movies]</code>, it would produce interpretations like <code>[movies directed by tom hanks]</code>,
 <code>[movies starring tom hanks]</code>, <code>[movies produced by tom hanks]</code>, and automatically reject
 interpretations like <code>[movies named tom hanks]</code>.</p>
-
-<p><img src="/images/google-spo-intersections.png" style="width:50%;"></img></p>
-
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>With each interpretation, it would generate a list of results &ndash; valid entities in the graph &ndash; and
 it would also return their types (present in attachments). This was extremely powerful because
 understanding the type of the results allowed capabilities like filtering, sorting or further
 expansion. For movie results, you could sort the movies by year of release, length of the
 movie (short, long), language, awards won, etc.</p>
-
 <p>This project seemed so smart, that we (DH was loosely involved as the knowledge graph expert) named
 it <em>Cerebro,</em> after the device of the same name appearing in <a href="https://en.wikipedia.org/wiki/Cerebro">X-Men</a>.</p>
-
-<p><strong>Cerebro would often reveal very interesting facts</strong> that one didn&rsquo;t originally search for. When
-you&rsquo;d run a query like <code>[us presidents]</code>, Cerebro would understand that presidents are humans, and
+<p><strong>Cerebro would often reveal very interesting facts</strong> that one didn't originally search for. When
+you'd run a query like <code>[us presidents]</code>, Cerebro would understand that presidents are humans, and
 humans have height.  Therefore, it would allow you to sort presidents by height and show that
 <em>Abraham Lincoln</em> is the tallest US president. It would also let people be filtered by nationality.
 In this case, it showed America and Britain in the list, because US had one British president,
-namely <em>George Washington.</em> (<em>Disclaimer: Results based on the state of KG at the time; can&rsquo;t vouch
+namely <em>George Washington.</em> (<em>Disclaimer: Results based on the state of KG at the time; can't vouch
 for the correctness of these results.</em>)</p>
-
 <h3 id="blue-links-vs-knowledge">Blue Links vs Knowledge</h3>
-
 <p>Cerebro had a chance to truly understand user queries. Provided we had data in the graph, we could
 generate machine interpretations of the query, generate the list of results and know a lot about the
-results to support further exploration. As explained above, once you understand you&rsquo;re dealing with
+results to support further exploration. As explained above, once you understand you're dealing with
 movies or humans or books, etc., you can enable specific filtering and sorting abilities. You could
-also do edge traversals to show connected data, going from <code>[us presidents]</code> to <code>[schools they went
-to]</code>, or <code>[children they fathered]</code>. This ability to jump from one list of results to another was
-demonstrated by DH in another project he&rsquo;d built called <a href="https://vimeo.com/1513562">Parallax</a>.</p>
-
-<p>Cerebro was very impressive<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup> and the leadership at Metaweb was supportive of it. Even the graph
+also do edge traversals to show connected data, going from <code>[us presidents]</code> to <code>[schools they went to]</code>, or <code>[children they fathered]</code>. This ability to jump from one list of results to another was
+demonstrated by DH in another project he'd built called <a href="https://vimeo.com/1513562">Parallax</a>.</p>
+<p>Cerebro was very impressive<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and the leadership at Metaweb was supportive of it. Even the graph
 serving part of it was performant and functional. I referred to it as a <strong>Knowledge Engine</strong> (an
 upgrade from search engine). But there was no leadership for knowledge in place at Google. My
 manager had little interest in it, and after being told to talk to this person and that, I got a
 chance to show it to a very senior leader in search.</p>
-
 <p><strong>The response was not what I was hoping for.</strong> For the demo of <code>[books by french authors]</code>, the
 senior search leader showed me Google search results for the query, which showed ten blue links, and
 asserted that Google can do the same thing. Also, they do not want to take traffic away from
 websites, because then the owners would be pissed.</p>
-
 <p><em>If you are thinking he was right, consider this:</em> When Google does a web search, it does not truly
 understand the query. It looks for the right keywords, at the right relative position, the rank of
 the page, and so on. It is a very complex and extremely sophisticated system, but it does not
 truly understand either the query or the results. It is up to the user to read, parse, and extract
 the pieces of information they need from the results, and make further searches to put the full list
 of results together.</p>
-
 <p>For example, for <code>[books by french authors]</code>, first one needs to put together an exhaustive list
 which might not be available in a single web page. Then sort these books by year of publication, or
 filter by publication houses, etc. &mdash; all those would require a lot of link following, further
 searches, and human aggregation of results. Cerebro had the power to cut down on all that effort and
 make the user interaction simple and flawless.</p>
-
-<p>However, this was the typical approach towards knowledge back then. Management wasn&rsquo;t sure of the
+<p>However, this was the typical approach towards knowledge back then. Management wasn't sure of the
 utility of the knowledge graph, or how and in what capacity that should be involved with
 search.  <strong>This new way of approaching knowledge was not easily digestible by an organization that
 had been so massively successful by providing users with links to web pages.</strong></p>
-
 <p>After butting heads with the management for a year, I eventually lost interest in continuing. A
 manager from the Google Shanghai office reached out to me, and I handed the project over to him in June
 2011. He put a team of 15 engineers on the project. I spent a week in Shanghai transferring whatever
 I had built and learned to the engineers. DH was involved as well and he guided the team for the
 long term.</p>
-
 <h3 id="join-depth-problem">Join-Depth Problem</h3>
-
 <p>The graph serving system I had built for Cerebro had a join-depth problem. A join is executed when
 the result set from an earlier portion of the query is needed to execute a later portion of it. A
 typical join would involve some <code>SELECT</code>, i.e. a filter in certain results from the universal data
-set, then using these results to filter against another portion of the dataset. I&rsquo;ll illustrate with
+set, then using these results to filter against another portion of the dataset. I'll illustrate with
 an example.</p>
-
 <p>Say, you want to know <code>[people in SF who eat sushi]</code>. Data is sharded by people, and has information
 about who lives in which city and what food they eat.</p>
-
 <p>The above query is a single-level join. If an application external to a database was executing this,
 it would do one query to execute the first step. Then execute multiple queries (one query for each
 result), to figure out what each person eats, picking only those who eat sushi.</p>
-
 <p>The second step suffers from a fan-out problem. If the first step has a million results (population
 of San Francisco), then the second step would need to put each result into a query, retrieving their
 eating habit, followed by a filter.</p>
-
-<p><img src="/images/google-fan-out.png" style="width:60%;"></img></p>
-
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>Distributed system engineers typically solve this by doing a <em>broadcast.</em> They would batch up the
 results, corresponding to their sharding function, and make a query to each server in the cluster.
 This would give them a join, but cause query latency issues.</p>
-
 <p>Broadcasts in a distributed system are bad. This issue is best explained by <a href="https://en.wikipedia.org/wiki/Jeff_Dean_(computer_scientist)">Jeff Dean</a> of
 Google in his &ldquo;Achieving Rapid Response Times in Large Online Services&rdquo; talk (<a href="https://www.youtube.com/watch?v=1-3Ahy7Fxsc">video</a>,
 <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/44875.pdf">slides</a>). The overall latency of a query is always greater than the latency of the slowest
 component. <strong>Small blips on individual machines cause delays, and touching more machines per query
 increases the likelihood of delays dramatically.</strong></p>
-
 <blockquote>
 <p>Consider a server with 50th-%ile latency of 1ms, but 99th-%ile latency of 1s. If a query only
 touches one server, only 1% of requests take over a second. But if the query touches 100 of these
 servers, 63% of requests would take over a second.</p>
 </blockquote>
-
 <p>Thus, broadcasts to execute one query are bad for query latency. Now consider if two, three or more
 joins need to happen. They would get too slow for real-time (OLTP) execution.</p>
-
 <p>This high fan-out broadcast problem is shared by most non-native graph databases, including <a href="https://github.com/JanusGraph/janusgraph">Janus
-graph</a>, <a href="https://blog.twitter.com/engineering/en_us/a/2010/introducing-flockdb.html">Twitter&rsquo;s FlockDB</a>, and <a href="https://www.facebook.com/notes/facebook-engineering/tao-the-power-of-the-graph/10151525983993920/">Facebook&rsquo;s TAO</a>.</p>
-
+graph</a>, <a href="https://blog.twitter.com/engineering/en_us/a/2010/introducing-flockdb.html">Twitter's FlockDB</a>, and <a href="https://www.facebook.com/notes/facebook-engineering/tao-the-power-of-the-graph/10151525983993920/">Facebook's TAO</a>.</p>
 <p>Distributed joins are a hard problem. Existing native graph databases avoid this problem by keeping
 the universal dataset within one machine (standalone DB), and doing all the joins without touching
 other servers, e.g. <a href="https://github.com/neo4j/neo4j">Neo4j</a>.</p>
-
 <h3 id="enter-dgraph-an-arbitrary-depth-join-engine">Enter Dgraph: An Arbitrary Depth Join Engine</h3>
-
 <p>After wrapping up Cerebro, and having experience building a graph serving system, I got involved
 with the Dgraph project, becoming one of the three tech leads on the project. The concepts involved
 in Dgraph design were novel and solved the join-depth problem.</p>
-
 <p>In particular, Dgraph sharded the graph data in a way where each join can be executed entirely by
 one machine. Going back to <code>subject-predicate-object</code> (SPO), each instance of Dgraph would hold all
 the subjects and objects corresponding to each predicate in that instance. Multiple predicates would
 be stored on the instance, each predicate being stored in its entirety.</p>
-
 <p><strong>This allowed the queries to execute arbitrary depth joins</strong> while avoiding the fan-out broadcast
 problem. Taking the query <code>[people in SF who eat sushi]</code>, this would result in <em>at most two network
 calls</em> within the database irrespective of the size of the cluster. The first call would find all
 people who live in SF. The second call would send this list of people and intersect with all the
 people who eat sushi. We can then add more constraints or expansions, each step would still involve
 at most one more network call.</p>
-
-<p><img src="/images/google-dgraph-query.png" style="width:50%;"></img></p>
-
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 <p>This introduces the problem of very large predicates located on a single server, but that can be
 solved by further splitting up a predicate among two or more instances as the size grows. Even then,
 a single predicate split across the entire cluster would be the worst-case behavior in only the most
 extreme cases where all the data corresponds to just one predicate. In the rest of the cases, the
 design of sharding data by predicates works better to achieve much faster query latency in
 real-world systems.</p>
-
 <p>Sharding was not the only innovation in Dgraph. All objects were assigned <code>integer</code> IDs and were
 sorted and stored in a posting list structure to allow for quick intersections of posting lists.
-This would allow fast filtering during joins, finding common references, etc. Ideas from Google&rsquo;s
+This would allow fast filtering during joins, finding common references, etc. Ideas from Google's
 web serving system were involved.</p>
-
 <h3 id="uniting-oneboxes-via-plasma">Uniting OneBoxes via Plasma</h3>
-
-<p><strong>Dgraph at Google was not a database.</strong> It was a serving system, the equivalent of Google&rsquo;s web
+<p><strong>Dgraph at Google was not a database.</strong> It was a serving system, the equivalent of Google's web
 search serving system. In addition, it was meant to react to live updates. As a real-time updating
 serving system, it needed a real-time graph indexing system. I had a lot of experience with
 real-time incremental indexing systems having worked on <a href="https://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">Caffeine</a>.</p>
-
 <p>I started a project to unite all Google OneBoxes under this graph indexing system, which involved
 weather, flights, events, and so on. You might not know the term, but you definitely have seen them.
 <a href="https://en.ryte.com/wiki/Google_OneBox">OneBox</a> is a separate display box which gets shown when certain types of queries are run,
 where Google can return richer information. To see one in action, try [<a href="https://www.google.com/search?q=weather+in+sf">weather in
 sf</a>].</p>
-
 <p>Before this project, each OneBox was being run by standalone backends and maintained by different
 teams. <strong>There was a rich set of structured data, but no data was being shared between the boxes.</strong>
 Not only was maintaining all these backends a lot of work operationally but also the lack of
 knowledge share limited the kind of queries Google could respond to.</p>
-
 <p>For example, <code>[events in SF]</code> can show the events, and <code>[weather in SF]</code> can show the weather. But if
 <code>[events in SF]</code> could understand that the weather is rainy and know whether events are indoors or
 outdoors, it can filter (or at least sort) the events based on weather (<em>in a heavy rainstorm, maybe a
 movie or a symphony is the best option</em>).</p>
-
 <p>Along with help from the Metaweb team, we started converting all this data into the SPO format and
 indexing it under one system. I named the system <strong>Plasma, a real-time graph indexing system</strong> for the
 graph serving system, Dgraph.</p>
-
 <h3 id="management-shuffle">Management Shuffle</h3>
-
 <p>Like Cerebro, Plasma was an under-funded project but kept on gaining steam.  Eventually, when
 management came to realize that OneBoxes were imminently moving to this project, they needed the
 <em>&ldquo;right people&rdquo;</em> in charge of Knowledge. In the midst of that game of politics, I saw three different
 management changes, each with zero prior experience with graphs.</p>
-
 <p>During this shuffle, Dgraph was considered <em>too complex</em> by management who supported <a href="https://en.wikipedia.org/wiki/Spanner_(database)">Spanner</a>,
 a globally distributed SQL database which needs GPS clocks to ensure global consistency. <em>The irony
 of this is still mind-boggling.</em></p>
-
 <p>Dgraph got canceled, Plasma survived. And a
 new team under a new leader was put in charge, with a hierarchy in place reporting to the CEO.
 The new team &ndash; with little understanding or knowledge of graph issues &ndash; decided to build a serving
-system based on Google&rsquo;s existing search index (<em>like I had done for Cerebro</em>). I suggested using the
+system based on Google's existing search index (<em>like I had done for Cerebro</em>). I suggested using the
 system I had already built for Cerebro, but that was rejected. I changed Plasma to crawl and
 expand each knowledge topic out a few levels, so this system could treat it like a web document.
 They called it TS <em>(name abbreviated)</em>.</p>
-
 <p><strong>This meant that the new serving system would not be able to do any deep joins.</strong> A curse of a decision
 that I see in many companies because engineers start with the wrong idea that <em>&ldquo;graphs are a simple
-problem that can be solved by just building a layer on top of another system.&rdquo;</em></p>
-
+problem that can be solved by just building a layer on top of another system.&quot;</em></p>
 <p>After a few more months, I left Google in May 2013, having worked on Dgraph/Plasma for just about
 two years.</p>
-
 <h3 id="after-story">After Story</h3>
-
 <ul>
-<li><p>A few years later, Web Search Infrastructure was renamed to Web Search and Knowledge Graph
+<li>
+<p>A few years later, Web Search Infrastructure was renamed to Web Search and Knowledge Graph
 Infrastructure and the leader to whom I had demoed Cerebro came to lead the Knowledge effort,
 talking about how they intend to replace blue links with knowledge &mdash; directly answering user
-queries as much as possible.</p></li>
-
-<li><p>When the team in Shanghai working on Cerebro was close to getting it into production, the project
+queries as much as possible.</p>
+</li>
+<li>
+<p>When the team in Shanghai working on Cerebro was close to getting it into production, the project
 got pulled from under their feet and moved to the Google NY office. Eventually, it got launched as
 Knowledge Strip. If you search for [<a href="https://www.google.com/search?q=tom+hanks+movies">tom hanks
-movies</a>], you&rsquo;ll see it at the top. It has sort of
+movies</a>], you'll see it at the top. It has sort of
 improved since the initial launch, but still does not support the level of filtering and sorting
-offered by Cerebro.</p></li>
-
-<li><p>All the three tech leads (including me) who worked on Dgraph eventually left Google. To the best of
-my knowledge, the other two leads are now working at Microsoft and LinkedIn.</p></li>
-
-<li><p>I did manage to get the two promotions and was due for a third one when I left Google as a Senior
-Software Engineer.</p></li>
-
-<li><p>Based on some anecdotal knowledge, the current version of TS is actually very close to Cerebro&rsquo;s
+offered by Cerebro.</p>
+</li>
+<li>
+<p>All the three tech leads (including me) who worked on Dgraph eventually left Google. To the best of
+my knowledge, the other two leads are now working at Microsoft and LinkedIn.</p>
+</li>
+<li>
+<p>I did manage to get the two promotions and was due for a third one when I left Google as a Senior
+Software Engineer.</p>
+</li>
+<li>
+<p>Based on some anecdotal knowledge, the current version of TS is actually very close to Cerebro's
 graph system design, with subject, predicate and object each having an index. <strong>It, therefore,
-continues to suffer from the join-depth problem.</strong></p></li>
-
-<li><p>Plasma has since been rewritten and renamed, but still continues to act as a real-time graph
+continues to suffer from the join-depth problem.</strong></p>
+</li>
+<li>
+<p>Plasma has since been rewritten and renamed, but still continues to act as a real-time graph
 indexing system, supporting TS. Together, they continue to host and serve all structured data
-at Google, including Knowledge Graph.</p></li>
-
-<li><p><strong>Google&rsquo;s inability to do deep joins is visible in many places.</strong> For one, we still don&rsquo;t see a
+at Google, including Knowledge Graph.</p>
+</li>
+<li>
+<p><strong>Google's inability to do deep joins is visible in many places.</strong> For one, we still don't see a
 marriage of the various data feeds of OneBoxes: <code>[cities by most rain in asia]</code> does not produce a
 list of city entities despite that weather and KG data are readily available (instead, the result is
 a quote from a web page); <code>[events in SF]</code> cannot be filtered based on weather; <code>[US presidents]</code>
 results cannot be further sorted, filtered, or expanded to their children or schools they attended.
-I suspect this was also one of the reasons to discontinue <a href="https://developers.google.com/freebase/">Freebase</a>.</p></li>
+I suspect this was also one of the reasons to discontinue <a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a>.</p>
+</li>
 </ul>
-
 <h3 id="dgraph-a-phoenix">Dgraph: A Phoenix</h3>
-
 <p>Two years after leaving Google, I decided to <a href="https://github.com/dgraph-io/dgraph">build Dgraph</a>. Outside of Google, I witnessed
 the same indecision about graph systems as I did inside. The graph space had a lot of half-baked
 solutions, in particular, a lot of custom solutions, hastily put together on top of relational or
 NoSQL databases, or as one of the many features of multi-model databases. If a native solution
 existed, it suffered from scalability issues.</p>
-
 <p>Nothing I saw had a coherent story with a performant, scalable design at heart. <strong>Building a
 horizontally scalable, low-latency graph database with arbitrary-depth joins is an extremely hard
 problem</strong> and I wanted to ensure that we built <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> the right way.</p>
-
 <p>The <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> team has spent the last three years &mdash; not only learning from my own
 experience but also putting a lot of original research into the design &mdash; building a graph
 database unparalleled in the market. So companies have the choice of using a robust, scalable, and
 performant solution instead of a yet another half baked one.</p>
-
 <p>Thanks for reading this post. If you liked this post, show us some love and give us <a href="https://github.com/dgraph-io/dgraph">a star on GitHub</a>.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -908,25 +824,23 @@ performant solution instead of a yet another half baked one.</p>
 	})
 </script>
 
-
 <p><em>P.S. Special thanks to Daniel Mai for helping put together the graphics in the blog post.</em></p>
-<div class="footnotes">
-
-<hr />
-
+<section class="footnotes" role="doc-endnotes">
+<hr>
 <ol>
-<li id="fn:1"><p>Dgraph is a trademark of Dgraph Labs, Inc. (<em>FWIW, Google does not release projects
-  externally with the same name as they are referred to internally.</em>)</p>
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
-
-<li id="fn:2"><p>Some more queries powered by Cerebro:
-  <code>[female african american politicians]</code>,
-  <code>[bollywood actors married to politicians]</code>,
-  <code>[children of us presidents]</code>,
-  <code>[movies starring tom hanks released in the 90s]</code></p>
- <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:1" role="doc-endnote">
+<p>Dgraph is a trademark of Dgraph Labs, Inc. (<em>FWIW, Google does not release projects
+externally with the same name as they are referred to internally.</em>) <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Some more queries powered by Cerebro:
+<code>[female african american politicians]</code>,
+<code>[bollywood actors married to politicians]</code>,
+<code>[children of us presidents]</code>,
+<code>[movies starring tom hanks released in the 90s]</code> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
 </ol>
-</div>
+</section>
 </div>
           <div class="article-tag-list">
             

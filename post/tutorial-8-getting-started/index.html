@@ -94,8 +94,8 @@
 
   <meta name="twitter:title" content="Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features"/>
   <meta name="twitter:description" content="Welcome to the eighth episode of getting started with Dgraph.
-In the previous episode, we learned about building a twitter-like user-search feature using Dgraph&rsquo;s fuzzy search.
-In this episode, we&rsquo;ll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&rsquo;s geolocation capabilities.
+In the previous episode, we learned about building a twitter-like user-search feature using Dgraph&#39;s fuzzy search.
+In this episode, we&#39;ll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&#39;s geolocation capabilities.
 You might have used Google to find the restaurants near you or to find the shopping centres within a mile of your current location."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -449,1439 +449,1403 @@ You might have used Google to find the restaurants near you or to find the shopp
             class="main__image"
             src="/images/tutorials/8/cover.jpg"
           >
-          <div class="article-content">
-
-<p>Welcome to the eighth episode of getting started with Dgraph.</p>
-
-<p>In the <a href="https://blog.dgraph.io/post/tutorial-7-getting-started/">previous episode</a>, we learned about building a twitter-like user-search feature using <a href="https://docs.dgraph.io/query-language/#fuzzy-matching">Dgraph&rsquo;s fuzzy search</a>.</p>
-
-<p>In this episode, we&rsquo;ll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph&rsquo;s geolocation capabilities.</p>
-
+          <div class="article-content"><p>Welcome to the eighth episode of getting started with Dgraph.</p>
+<p>In the <a href="https://blog.dgraph.io/post/tutorial-7-getting-started/">previous episode</a>, we learned about building a twitter-like user-search feature using <a href="https://docs.dgraph.io/query-language/#fuzzy-matching">Dgraph's fuzzy search</a>.</p>
+<p>In this episode, we'll build a graph of tourist locations around San Francisco and help our Zoologist friend, Mary, and her team in their mission to conserve birds using Dgraph's geolocation capabilities.</p>
 <p>You might have used Google to find the restaurants near you or to find the shopping centres within a mile of your current location.
 Applications like these make use of your geolocation data.</p>
-
 <p>Geolocation has become an integral part of mobile applications, especially with the advent of smartphones in the last decade, the list of applications which revolves around users location to power application features has grown beyond imagination.</p>
-
-<p>Let&rsquo;s take Uber, for instance, the location data of the driver and passenger is pivotal for the functionality of the application.
-We&rsquo;re gathering more GPS data than ever before, being able to store and query the location data efficiently can give you an edge over your competitors.</p>
-
+<p>Let's take Uber, for instance, the location data of the driver and passenger is pivotal for the functionality of the application.
+We're gathering more GPS data than ever before, being able to store and query the location data efficiently can give you an edge over your competitors.</p>
 <p>Real-world data is interconnected; they are not sparse; this is more relevant when it comes to location data.
 The natural representation of railway networks, maps, routes are graphs.</p>
-
-<p>The good news is that <a href="https://dgraph.io">Dgraph</a>, the world&rsquo;s most advanced graph database, comes with functionalities to efficiently store and perform useful queries on graphs containing location data.
+<p>The good news is that <a href="https://dgraph.io">Dgraph</a>, the world's most advanced graph database, comes with functionalities to efficiently store and perform useful queries on graphs containing location data.
 If you want to run queries like <code>find me the hotels near Golden Gate Bridge</code>, or find me all the tourist location around <code>Golden Gate Park</code>, Dgraph has your back.</p>
-
-<p>First, let&rsquo;s learn how to represent Geolocation data in Dgraph.</p>
-
+<p>First, let's learn how to represent Geolocation data in Dgraph.</p>
 <h4 id="representing-geolocation-data">Representing Geolocation data</h4>
-
 <p>You can represent location data in Dgraph using two ways:</p>
-
 <ul>
 <li><strong>Point location</strong></li>
 </ul>
-
 <p>Point location contains the geo-coordinate tuple (latitude, longitude) of your location of interest.</p>
-
 <p>The following image has the point location with the latitude and longitude for the Eifel tower in Paris.
 Point locations are useful for representing a precise location; for instance, your location when booking a cab or your delivery address.</p>
-
-<p><img src="/images/tutorials/8/b-paris.png" alt="model" /></p>
-
+<p><img src="/images/tutorials/8/b-paris.png" alt="model"></p>
 <ul>
 <li><strong>Polygonal location</strong></li>
 </ul>
-
-<p>It&rsquo;s not possible to represent geographical entities which are spread across multiple geo-coordinates just using a point location.
+<p>It's not possible to represent geographical entities which are spread across multiple geo-coordinates just using a point location.
 To represent geo entities like a city, a lake, or a national park, you should use a polygonal location.
 Here is an example:
-<img src="/images/tutorials/8/c-delhi.jpg" alt="model" /></p>
-
+<img src="/images/tutorials/8/c-delhi.jpg" alt="model"></p>
 <p>The polygonal fence above represents the city of Delhi, India.
 This polygonal fence or the geo-fence is formed by connecting multiple straight-line boundaries, and they are collectively represented using an array of location tuples of format <code>[(latitude, longitude), (latitude, longitude), ...]</code>.
 Each tuple pair <code>(2 tuples and 4 coordinates)</code> represents a straight line boundary of the geo-fence, and a polygonal fence can contain any number of lines.</p>
-
-<p>Let&rsquo;s start with building a simple San Francisco tourist graph, here&rsquo;s the graph model.
-<img src="/images/tutorials/8/a-graph.jpg" alt="model" /></p>
-
+<p>Let's start with building a simple San Francisco tourist graph, here's the graph model.
+<img src="/images/tutorials/8/a-graph.jpg" alt="model"></p>
 <p>The above graph has three entities represented by the nodes:</p>
-
 <ul>
 <li><strong>City</strong></li>
 </ul>
-
 <p>A <code>city node</code> represents the tourist city.
 Our dataset only contains the city of <code>San Francisco</code>, and a node in the graph represents it.</p>
-
 <ul>
 <li><strong>Location</strong></li>
 </ul>
-
 <p>A location node, along with the name of the location, it contains the point or polygonal location of the place of interest.</p>
-
 <ul>
 <li><strong>Location Type</strong></li>
 </ul>
-
 <p>A location type consists of the type of location.
 There are four types of location in our dataset: <code>zoo</code>, <code>museum</code>, <code>hotel</code> or a <code>tourist attraction</code>.</p>
-
 <p>The <code>location nodes</code> with geo-coordinates of a <code>hotel</code> also contains their pricing information.</p>
-
 <p>There are different ways to model the same graph.
 For instance, the <code>location type</code> could just be a property or a predicate of the <code>location node</code>, rather than being a node of its own.</p>
-
 <p>The queries you want to perform or the relationships you like to explore mostly influence the modelling decisions.
 The goal of the tutorial is not to arrive at the ideal graph model, but to use a simple dataset to demonstrate the geolocation capabilities of Dgraph.</p>
-
-<p>For the rest of the tutorial, let&rsquo;s call the node representing a <code>City</code> as a <code>city</code> node, and the node representing a <code>Location</code> as a <code>location</code> node, and the node representing the <code>Location Type</code> as a <code>location type</code> node.</p>
-
-<p>Here&rsquo;s the relationship between these nodes:</p>
-
+<p>For the rest of the tutorial, let's call the node representing a <code>City</code> as a <code>city</code> node, and the node representing a <code>Location</code> as a <code>location</code> node, and the node representing the <code>Location Type</code> as a <code>location type</code> node.</p>
+<p>Here's the relationship between these nodes:</p>
 <ul>
-<li>Every <code>city node</code> is connected to a <code>location node</code> via the <code>has_location</code> edge.</li>
+<li>Every <code>city node</code> is connected to a <code>location node</code> via the <code>has_location </code> edge.</li>
 <li>Every <code>location node</code> is connected to its node representing a <code>location type</code> via the <code>has_type</code> edge.</li>
 </ul>
-
-<p><em>Note: Dgraph allows you to associate one or more types for the nodes using its type system feature, for now, we are using nodes without types, we&rsquo;ll learn about type system for nodes in a future episode.
+<p><em>Note: Dgraph allows you to associate one or more types for the nodes using its type system feature, for now, we are using nodes without types, we'll learn about type system for nodes in a future episode.
 Check <a href="https://docs.dgraph.io/query-language/#type-system">this page from the documentation site</a>, if you want to explore type system feature for nodes.</em></p>
-
 <p>Here is our sample dataset.
 Open Ratel, go to the mutate tab, paste the mutation, and click Run.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;city&quot;: &quot;San Francisco&quot;,
-      &quot;uid&quot;: &quot;_:SFO&quot;,
-      &quot;has_location&quot;: [
+      <span style="color:#000080">&#34;city&#34;</span>: <span style="color:#d14">&#34;San Francisco&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:SFO&#34;</span>,
+      <span style="color:#000080">&#34;has_location&#34;</span>: [
         {
-          &quot;name&quot;: &quot;USS Pampanito&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;USS Pampanito&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.4160088,
-                  37.8096674
+                  <span style="color:#099">-122.4160088</span>,
+                  <span style="color:#099">37.8096674</span>
                 ],
                 [
-                  -122.4161147,
-                  37.8097628
+                  <span style="color:#099">-122.4161147</span>,
+                  <span style="color:#099">37.8097628</span>
                 ],
                 [
-                  -122.4162064,
-                  37.8098357
+                  <span style="color:#099">-122.4162064</span>,
+                  <span style="color:#099">37.8098357</span>
                 ],
                 [
-                  -122.4163467,
-                  37.8099312
+                  <span style="color:#099">-122.4163467</span>,
+                  <span style="color:#099">37.8099312</span>
                 ],
                 [
-                  -122.416527,
-                  37.8100471
+                  <span style="color:#099">-122.416527</span>,
+                  <span style="color:#099">37.8100471</span>
                 ],
                 [
-                  -122.4167504,
-                  37.8101792
+                  <span style="color:#099">-122.4167504</span>,
+                  <span style="color:#099">37.8101792</span>
                 ],
                 [
-                  -122.4168272,
-                  37.8102137
+                  <span style="color:#099">-122.4168272</span>,
+                  <span style="color:#099">37.8102137</span>
                 ],
                 [
-                  -122.4167719,
-                  37.8101612
+                  <span style="color:#099">-122.4167719</span>,
+                  <span style="color:#099">37.8101612</span>
                 ],
                 [
-                  -122.4165683,
-                  37.8100108
+                  <span style="color:#099">-122.4165683</span>,
+                  <span style="color:#099">37.8100108</span>
                 ],
                 [
-                  -122.4163888,
-                  37.8098923
+                  <span style="color:#099">-122.4163888</span>,
+                  <span style="color:#099">37.8098923</span>
                 ],
                 [
-                  -122.4162492,
-                  37.8097986
+                  <span style="color:#099">-122.4162492</span>,
+                  <span style="color:#099">37.8097986</span>
                 ],
                 [
-                  -122.4161469,
-                  37.8097352
+                  <span style="color:#099">-122.4161469</span>,
+                  <span style="color:#099">37.8097352</span>
                 ],
                 [
-                  -122.4160088,
-                  37.8096674
+                  <span style="color:#099">-122.4160088</span>,
+                  <span style="color:#099">37.8096674</span>
                 ]
               ]
             ]
           },
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:museum&quot;,
-              &quot;loc_type&quot;: &quot;Museum&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:museum&#34;</span>,
+              <span style="color:#000080">&#34;loc_type&#34;</span>: <span style="color:#d14">&#34;Museum&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Alameda Naval Air Museum&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Alameda Naval Air Museum&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.2995054,
-                  37.7813924
+                  <span style="color:#099">-122.2995054</span>,
+                  <span style="color:#099">37.7813924</span>
                 ],
                 [
-                  -122.2988538,
-                  37.7813582
+                  <span style="color:#099">-122.2988538</span>,
+                  <span style="color:#099">37.7813582</span>
                 ],
                 [
-                  -122.2988421,
-                  37.7814972
+                  <span style="color:#099">-122.2988421</span>,
+                  <span style="color:#099">37.7814972</span>
                 ],
                 [
-                  -122.2994937,
-                  37.7815314
+                  <span style="color:#099">-122.2994937</span>,
+                  <span style="color:#099">37.7815314</span>
                 ],
                 [
-                  -122.2995054,
-                  37.7813924
+                  <span style="color:#099">-122.2995054</span>,
+                  <span style="color:#099">37.7813924</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;Ferry Point Road&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Ferry Point Road&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:museum&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:museum&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Burlingame Museum of PEZ Memorabilia&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Burlingame Museum of PEZ Memorabilia&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.3441509,
-                  37.5792003
+                  <span style="color:#099">-122.3441509</span>,
+                  <span style="color:#099">37.5792003</span>
                 ],
                 [
-                  -122.3438207,
-                  37.5794257
+                  <span style="color:#099">-122.3438207</span>,
+                  <span style="color:#099">37.5794257</span>
                 ],
                 [
-                  -122.3438987,
-                  37.5794587
+                  <span style="color:#099">-122.3438987</span>,
+                  <span style="color:#099">37.5794587</span>
                 ],
                 [
-                  -122.3442289,
-                  37.5792333
+                  <span style="color:#099">-122.3442289</span>,
+                  <span style="color:#099">37.5792333</span>
                 ],
                 [
-                  -122.3441509,
-                  37.5792003
+                  <span style="color:#099">-122.3441509</span>,
+                  <span style="color:#099">37.5792003</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;California Drive&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;California Drive&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:museum&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:museum&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Carriage Inn&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Carriage Inn&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.3441509,
-                  37.5792003
+                  <span style="color:#099">-122.3441509</span>,
+                  <span style="color:#099">37.5792003</span>
                 ],
                 [
-                  -122.3438207,
-                  37.5794257
+                  <span style="color:#099">-122.3438207</span>,
+                  <span style="color:#099">37.5794257</span>
                 ],
                 [
-                  -122.3438987,
-                  37.5794587
+                  <span style="color:#099">-122.3438987</span>,
+                  <span style="color:#099">37.5794587</span>
                 ],
                 [
-                  -122.3442289,
-                  37.5792333
+                  <span style="color:#099">-122.3442289</span>,
+                  <span style="color:#099">37.5792333</span>
                 ],
                 [
-                  -122.3441509,
-                  37.5792003
+                  <span style="color:#099">-122.3441509</span>,
+                  <span style="color:#099">37.5792003</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;7th street&quot;,
-          &quot;price_per_night&quot;: 350.00,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;7th street&#34;</span>,
+          <span style="color:#000080">&#34;price_per_night&#34;</span>: <span style="color:#099">350.00</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:hotel&quot;,
-              &quot;loc_type&quot;: &quot;Hotel&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:hotel&#34;</span>,
+              <span style="color:#000080">&#34;loc_type&#34;</span>: <span style="color:#d14">&#34;Hotel&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Lombard Motor In&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Lombard Motor In&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.4260484,
-                  37.8009811
+                  <span style="color:#099">-122.4260484</span>,
+                  <span style="color:#099">37.8009811</span>
                 ],
                 [
-                  -122.4260137,
-                  37.8007969
+                  <span style="color:#099">-122.4260137</span>,
+                  <span style="color:#099">37.8007969</span>
                 ],
                 [
-                  -122.4259083,
-                  37.80081
+                  <span style="color:#099">-122.4259083</span>,
+                  <span style="color:#099">37.80081</span>
                 ],
                 [
-                  -122.4258724,
-                  37.8008144
+                  <span style="color:#099">-122.4258724</span>,
+                  <span style="color:#099">37.8008144</span>
                 ],
                 [
-                  -122.4257962,
-                  37.8008239
+                  <span style="color:#099">-122.4257962</span>,
+                  <span style="color:#099">37.8008239</span>
                 ],
                 [
-                  -122.4256354,
-                  37.8008438
+                  <span style="color:#099">-122.4256354</span>,
+                  <span style="color:#099">37.8008438</span>
                 ],
                 [
-                  -122.4256729,
-                  37.8010277
+                  <span style="color:#099">-122.4256729</span>,
+                  <span style="color:#099">37.8010277</span>
                 ],
                 [
-                  -122.4260484,
-                  37.8009811
+                  <span style="color:#099">-122.4260484</span>,
+                  <span style="color:#099">37.8009811</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;Lombard Street&quot;,
-          &quot;price_per_night&quot;: 400.00,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Lombard Street&#34;</span>,
+          <span style="color:#000080">&#34;price_per_night&#34;</span>: <span style="color:#099">400.00</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:hotel&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:hotel&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Holiday Inn San Francisco Golden Gateway&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Holiday Inn San Francisco Golden Gateway&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.4214895,
-                  37.7896108
+                  <span style="color:#099">-122.4214895</span>,
+                  <span style="color:#099">37.7896108</span>
                 ],
                 [
-                  -122.4215628,
-                  37.7899798
+                  <span style="color:#099">-122.4215628</span>,
+                  <span style="color:#099">37.7899798</span>
                 ],
                 [
-                  -122.4215712,
-                  37.790022
+                  <span style="color:#099">-122.4215712</span>,
+                  <span style="color:#099">37.790022</span>
                 ],
                 [
-                  -122.4215987,
-                  37.7901606
+                  <span style="color:#099">-122.4215987</span>,
+                  <span style="color:#099">37.7901606</span>
                 ],
                 [
-                  -122.4221004,
-                  37.7900985
+                  <span style="color:#099">-122.4221004</span>,
+                  <span style="color:#099">37.7900985</span>
                 ],
                 [
-                  -122.4221044,
-                  37.790098
+                  <span style="color:#099">-122.4221044</span>,
+                  <span style="color:#099">37.790098</span>
                 ],
                 [
-                  -122.4219952,
-                  37.7895481
+                  <span style="color:#099">-122.4219952</span>,
+                  <span style="color:#099">37.7895481</span>
                 ],
                 [
-                  -122.4218207,
-                  37.78957
+                  <span style="color:#099">-122.4218207</span>,
+                  <span style="color:#099">37.78957</span>
                 ],
                 [
-                  -122.4216158,
-                  37.7895961
+                  <span style="color:#099">-122.4216158</span>,
+                  <span style="color:#099">37.7895961</span>
                 ],
                 [
-                  -122.4214895,
-                  37.7896108
+                  <span style="color:#099">-122.4214895</span>,
+                  <span style="color:#099">37.7896108</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;Van Ness Avenue&quot;,
-          &quot;price_per_night&quot;: 250.00,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Van Ness Avenue&#34;</span>,
+          <span style="color:#000080">&#34;price_per_night&#34;</span>: <span style="color:#099">250.00</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:hotel&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:hotel&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Golden Gate Bridge&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Golden Gate Bridge&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.479784,
-                  37.8288329
+                  <span style="color:#099">-122.479784</span>,
+                  <span style="color:#099">37.8288329</span>
                 ],
                 [
-                  -122.4775646,
-                  37.8096291
+                  <span style="color:#099">-122.4775646</span>,
+                  <span style="color:#099">37.8096291</span>
                 ],
                 [
-                  -122.4775538,
-                  37.8095165
+                  <span style="color:#099">-122.4775538</span>,
+                  <span style="color:#099">37.8095165</span>
                 ],
                 [
-                  -122.4775465,
-                  37.8093304
+                  <span style="color:#099">-122.4775465</span>,
+                  <span style="color:#099">37.8093304</span>
                 ],
                 [
-                  -122.4775823,
-                  37.8093296
+                  <span style="color:#099">-122.4775823</span>,
+                  <span style="color:#099">37.8093296</span>
                 ],
                 [
-                  -122.4775387,
-                  37.8089749
+                  <span style="color:#099">-122.4775387</span>,
+                  <span style="color:#099">37.8089749</span>
                 ],
                 [
-                  -122.4773545,
-                  37.8089887
+                  <span style="color:#099">-122.4773545</span>,
+                  <span style="color:#099">37.8089887</span>
                 ],
                 [
-                  -122.4773402,
-                  37.8089575
+                  <span style="color:#099">-122.4773402</span>,
+                  <span style="color:#099">37.8089575</span>
                 ],
                 [
-                  -122.4772752,
-                  37.8088285
+                  <span style="color:#099">-122.4772752</span>,
+                  <span style="color:#099">37.8088285</span>
                 ],
                 [
-                  -122.4772084,
-                  37.8087099
+                  <span style="color:#099">-122.4772084</span>,
+                  <span style="color:#099">37.8087099</span>
                 ],
                 [
-                  -122.4771322,
-                  37.8085903
+                  <span style="color:#099">-122.4771322</span>,
+                  <span style="color:#099">37.8085903</span>
                 ],
                 [
-                  -122.4770518,
-                  37.8084793
+                  <span style="color:#099">-122.4770518</span>,
+                  <span style="color:#099">37.8084793</span>
                 ],
                 [
-                  -122.4769647,
-                  37.8083687
+                  <span style="color:#099">-122.4769647</span>,
+                  <span style="color:#099">37.8083687</span>
                 ],
                 [
-                  -122.4766802,
-                  37.8080091
+                  <span style="color:#099">-122.4766802</span>,
+                  <span style="color:#099">37.8080091</span>
                 ],
                 [
-                  -122.4766629,
-                  37.8080195
+                  <span style="color:#099">-122.4766629</span>,
+                  <span style="color:#099">37.8080195</span>
                 ],
                 [
-                  -122.4765701,
-                  37.8080751
+                  <span style="color:#099">-122.4765701</span>,
+                  <span style="color:#099">37.8080751</span>
                 ],
                 [
-                  -122.476475,
-                  37.8081322
+                  <span style="color:#099">-122.476475</span>,
+                  <span style="color:#099">37.8081322</span>
                 ],
                 [
-                  -122.4764106,
-                  37.8081708
+                  <span style="color:#099">-122.4764106</span>,
+                  <span style="color:#099">37.8081708</span>
                 ],
                 [
-                  -122.476396,
-                  37.8081795
+                  <span style="color:#099">-122.476396</span>,
+                  <span style="color:#099">37.8081795</span>
                 ],
                 [
-                  -122.4764936,
-                  37.8082814
+                  <span style="color:#099">-122.4764936</span>,
+                  <span style="color:#099">37.8082814</span>
                 ],
                 [
-                  -122.476591,
-                  37.8083823
+                  <span style="color:#099">-122.476591</span>,
+                  <span style="color:#099">37.8083823</span>
                 ],
                 [
-                  -122.4766888,
-                  37.8084949
+                  <span style="color:#099">-122.4766888</span>,
+                  <span style="color:#099">37.8084949</span>
                 ],
                 [
-                  -122.47677,
-                  37.808598
+                  <span style="color:#099">-122.47677</span>,
+                  <span style="color:#099">37.808598</span>
                 ],
                 [
-                  -122.4768444,
-                  37.8087008
+                  <span style="color:#099">-122.4768444</span>,
+                  <span style="color:#099">37.8087008</span>
                 ],
                 [
-                  -122.4769144,
-                  37.8088105
+                  <span style="color:#099">-122.4769144</span>,
+                  <span style="color:#099">37.8088105</span>
                 ],
                 [
-                  -122.4769763,
-                  37.8089206
+                  <span style="color:#099">-122.4769763</span>,
+                  <span style="color:#099">37.8089206</span>
                 ],
                 [
-                  -122.4770373,
-                  37.8090416
+                  <span style="color:#099">-122.4770373</span>,
+                  <span style="color:#099">37.8090416</span>
                 ],
                 [
-                  -122.477086,
-                  37.809151
+                  <span style="color:#099">-122.477086</span>,
+                  <span style="color:#099">37.809151</span>
                 ],
                 [
-                  -122.4771219,
-                  37.8092501
+                  <span style="color:#099">-122.4771219</span>,
+                  <span style="color:#099">37.8092501</span>
                 ],
                 [
-                  -122.4771529,
-                  37.809347
+                  <span style="color:#099">-122.4771529</span>,
+                  <span style="color:#099">37.809347</span>
                 ],
                 [
-                  -122.477179,
-                  37.8094517
+                  <span style="color:#099">-122.477179</span>,
+                  <span style="color:#099">37.8094517</span>
                 ],
                 [
-                  -122.4772003,
-                  37.809556
+                  <span style="color:#099">-122.4772003</span>,
+                  <span style="color:#099">37.809556</span>
                 ],
                 [
-                  -122.4772159,
-                  37.8096583
+                  <span style="color:#099">-122.4772159</span>,
+                  <span style="color:#099">37.8096583</span>
                 ],
                 [
-                  -122.4794624,
-                  37.8288561
+                  <span style="color:#099">-122.4794624</span>,
+                  <span style="color:#099">37.8288561</span>
                 ],
                 [
-                  -122.4794098,
-                  37.82886
+                  <span style="color:#099">-122.4794098</span>,
+                  <span style="color:#099">37.82886</span>
                 ],
                 [
-                  -122.4794817,
-                  37.8294742
+                  <span style="color:#099">-122.4794817</span>,
+                  <span style="color:#099">37.8294742</span>
                 ],
                 [
-                  -122.4794505,
-                  37.8294765
+                  <span style="color:#099">-122.4794505</span>,
+                  <span style="color:#099">37.8294765</span>
                 ],
                 [
-                  -122.4794585,
-                  37.8295453
+                  <span style="color:#099">-122.4794585</span>,
+                  <span style="color:#099">37.8295453</span>
                 ],
                 [
-                  -122.4795423,
-                  37.8295391
+                  <span style="color:#099">-122.4795423</span>,
+                  <span style="color:#099">37.8295391</span>
                 ],
                 [
-                  -122.4796312,
-                  37.8302987
+                  <span style="color:#099">-122.4796312</span>,
+                  <span style="color:#099">37.8302987</span>
                 ],
                 [
-                  -122.4796495,
-                  37.8304478
+                  <span style="color:#099">-122.4796495</span>,
+                  <span style="color:#099">37.8304478</span>
                 ],
                 [
-                  -122.4796698,
-                  37.8306078
+                  <span style="color:#099">-122.4796698</span>,
+                  <span style="color:#099">37.8306078</span>
                 ],
                 [
-                  -122.4796903,
-                  37.830746
+                  <span style="color:#099">-122.4796903</span>,
+                  <span style="color:#099">37.830746</span>
                 ],
                 [
-                  -122.4797182,
-                  37.8308784
+                  <span style="color:#099">-122.4797182</span>,
+                  <span style="color:#099">37.8308784</span>
                 ],
                 [
-                  -122.4797544,
-                  37.83102
+                  <span style="color:#099">-122.4797544</span>,
+                  <span style="color:#099">37.83102</span>
                 ],
                 [
-                  -122.479799,
-                  37.8311522
+                  <span style="color:#099">-122.479799</span>,
+                  <span style="color:#099">37.8311522</span>
                 ],
                 [
-                  -122.4798502,
-                  37.8312845
+                  <span style="color:#099">-122.4798502</span>,
+                  <span style="color:#099">37.8312845</span>
                 ],
                 [
-                  -122.4799025,
-                  37.8314139
+                  <span style="color:#099">-122.4799025</span>,
+                  <span style="color:#099">37.8314139</span>
                 ],
                 [
-                  -122.4799654,
-                  37.8315458
+                  <span style="color:#099">-122.4799654</span>,
+                  <span style="color:#099">37.8315458</span>
                 ],
                 [
-                  -122.4800346,
-                  37.8316718
+                  <span style="color:#099">-122.4800346</span>,
+                  <span style="color:#099">37.8316718</span>
                 ],
                 [
-                  -122.4801231,
-                  37.8318137
+                  <span style="color:#099">-122.4801231</span>,
+                  <span style="color:#099">37.8318137</span>
                 ],
                 [
-                  -122.4802112,
-                  37.8319368
+                  <span style="color:#099">-122.4802112</span>,
+                  <span style="color:#099">37.8319368</span>
                 ],
                 [
-                  -122.4803028,
-                  37.8320547
+                  <span style="color:#099">-122.4803028</span>,
+                  <span style="color:#099">37.8320547</span>
                 ],
                 [
-                  -122.4804046,
-                  37.8321657
+                  <span style="color:#099">-122.4804046</span>,
+                  <span style="color:#099">37.8321657</span>
                 ],
                 [
-                  -122.4805121,
-                  37.8322792
+                  <span style="color:#099">-122.4805121</span>,
+                  <span style="color:#099">37.8322792</span>
                 ],
                 [
-                  -122.4805883,
-                  37.8323459
+                  <span style="color:#099">-122.4805883</span>,
+                  <span style="color:#099">37.8323459</span>
                 ],
                 [
-                  -122.4805934,
-                  37.8323502
+                  <span style="color:#099">-122.4805934</span>,
+                  <span style="color:#099">37.8323502</span>
                 ],
                 [
-                  -122.4807146,
-                  37.8323294
+                  <span style="color:#099">-122.4807146</span>,
+                  <span style="color:#099">37.8323294</span>
                 ],
                 [
-                  -122.4808917,
-                  37.832299
+                  <span style="color:#099">-122.4808917</span>,
+                  <span style="color:#099">37.832299</span>
                 ],
                 [
-                  -122.4809526,
-                  37.8322548
+                  <span style="color:#099">-122.4809526</span>,
+                  <span style="color:#099">37.8322548</span>
                 ],
                 [
-                  -122.4809672,
-                  37.8322442
+                  <span style="color:#099">-122.4809672</span>,
+                  <span style="color:#099">37.8322442</span>
                 ],
                 [
-                  -122.4808396,
-                  37.8321298
+                  <span style="color:#099">-122.4808396</span>,
+                  <span style="color:#099">37.8321298</span>
                 ],
                 [
-                  -122.4807166,
-                  37.8320077
+                  <span style="color:#099">-122.4807166</span>,
+                  <span style="color:#099">37.8320077</span>
                 ],
                 [
-                  -122.4806215,
-                  37.8319052
+                  <span style="color:#099">-122.4806215</span>,
+                  <span style="color:#099">37.8319052</span>
                 ],
                 [
-                  -122.4805254,
-                  37.8317908
+                  <span style="color:#099">-122.4805254</span>,
+                  <span style="color:#099">37.8317908</span>
                 ],
                 [
-                  -122.4804447,
-                  37.8316857
+                  <span style="color:#099">-122.4804447</span>,
+                  <span style="color:#099">37.8316857</span>
                 ],
                 [
-                  -122.4803548,
-                  37.8315539
+                  <span style="color:#099">-122.4803548</span>,
+                  <span style="color:#099">37.8315539</span>
                 ],
                 [
-                  -122.4802858,
-                  37.8314395
+                  <span style="color:#099">-122.4802858</span>,
+                  <span style="color:#099">37.8314395</span>
                 ],
                 [
-                  -122.4802227,
-                  37.8313237
+                  <span style="color:#099">-122.4802227</span>,
+                  <span style="color:#099">37.8313237</span>
                 ],
                 [
-                  -122.4801667,
-                  37.8312051
+                  <span style="color:#099">-122.4801667</span>,
+                  <span style="color:#099">37.8312051</span>
                 ],
                 [
-                  -122.4801133,
-                  37.8310812
+                  <span style="color:#099">-122.4801133</span>,
+                  <span style="color:#099">37.8310812</span>
                 ],
                 [
-                  -122.4800723,
-                  37.8309602
+                  <span style="color:#099">-122.4800723</span>,
+                  <span style="color:#099">37.8309602</span>
                 ],
                 [
-                  -122.4800376,
-                  37.8308265
+                  <span style="color:#099">-122.4800376</span>,
+                  <span style="color:#099">37.8308265</span>
                 ],
                 [
-                  -122.4800087,
-                  37.8307005
+                  <span style="color:#099">-122.4800087</span>,
+                  <span style="color:#099">37.8307005</span>
                 ],
                 [
-                  -122.4799884,
-                  37.8305759
+                  <span style="color:#099">-122.4799884</span>,
+                  <span style="color:#099">37.8305759</span>
                 ],
                 [
-                  -122.4799682,
-                  37.8304181
+                  <span style="color:#099">-122.4799682</span>,
+                  <span style="color:#099">37.8304181</span>
                 ],
                 [
-                  -122.4799501,
-                  37.8302699
+                  <span style="color:#099">-122.4799501</span>,
+                  <span style="color:#099">37.8302699</span>
                 ],
                 [
-                  -122.4798628,
-                  37.8295146
+                  <span style="color:#099">-122.4798628</span>,
+                  <span style="color:#099">37.8295146</span>
                 ],
                 [
-                  -122.4799157,
-                  37.8295107
+                  <span style="color:#099">-122.4799157</span>,
+                  <span style="color:#099">37.8295107</span>
                 ],
                 [
-                  -122.4798451,
-                  37.8289002
+                  <span style="color:#099">-122.4798451</span>,
+                  <span style="color:#099">37.8289002</span>
                 ],
                 [
-                  -122.4798369,
-                  37.828829
+                  <span style="color:#099">-122.4798369</span>,
+                  <span style="color:#099">37.828829</span>
                 ],
                 [
-                  -122.479784,
-                  37.8288329
+                  <span style="color:#099">-122.479784</span>,
+                  <span style="color:#099">37.8288329</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;Golden Gate Bridge&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Golden Gate Bridge&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:attraction&quot;,
-              &quot;loc_type&quot;: &quot;Tourist Attraction&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:attraction&#34;</span>,
+              <span style="color:#000080">&#34;loc_type&#34;</span>: <span style="color:#d14">&#34;Tourist Attraction&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Carriage Inn&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Carriage Inn&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.3441509,
-                  37.5792003
+                  <span style="color:#099">-122.3441509</span>,
+                  <span style="color:#099">37.5792003</span>
                 ],
                 [
-                  -122.3438207,
-                  37.5794257
+                  <span style="color:#099">-122.3438207</span>,
+                  <span style="color:#099">37.5794257</span>
                 ],
                 [
-                  -122.3438987,
-                  37.5794587
+                  <span style="color:#099">-122.3438987</span>,
+                  <span style="color:#099">37.5794587</span>
                 ],
                 [
-                  -122.3442289,
-                  37.5792333
+                  <span style="color:#099">-122.3442289</span>,
+                  <span style="color:#099">37.5792333</span>
                 ],
                 [
-                  -122.3441509,
-                  37.5792003
+                  <span style="color:#099">-122.3441509</span>,
+                  <span style="color:#099">37.5792003</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;7th street&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;7th street&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:attraction&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:attraction&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;San Francisco Zoo&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;San Francisco Zoo&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.5036126,
-                  37.7308562
+                  <span style="color:#099">-122.5036126</span>,
+                  <span style="color:#099">37.7308562</span>
                 ],
                 [
-                  -122.5028991,
-                  37.7305879
+                  <span style="color:#099">-122.5028991</span>,
+                  <span style="color:#099">37.7305879</span>
                 ],
                 [
-                  -122.5028274,
-                  37.7305622
+                  <span style="color:#099">-122.5028274</span>,
+                  <span style="color:#099">37.7305622</span>
                 ],
                 [
-                  -122.5027812,
-                  37.7305477
+                  <span style="color:#099">-122.5027812</span>,
+                  <span style="color:#099">37.7305477</span>
                 ],
                 [
-                  -122.5026992,
-                  37.7305269
+                  <span style="color:#099">-122.5026992</span>,
+                  <span style="color:#099">37.7305269</span>
                 ],
                 [
-                  -122.5026211,
-                  37.7305141
+                  <span style="color:#099">-122.5026211</span>,
+                  <span style="color:#099">37.7305141</span>
                 ],
                 [
-                  -122.5025342,
-                  37.7305081
+                  <span style="color:#099">-122.5025342</span>,
+                  <span style="color:#099">37.7305081</span>
                 ],
                 [
-                  -122.5024478,
-                  37.7305103
+                  <span style="color:#099">-122.5024478</span>,
+                  <span style="color:#099">37.7305103</span>
                 ],
                 [
-                  -122.5023667,
-                  37.7305221
+                  <span style="color:#099">-122.5023667</span>,
+                  <span style="color:#099">37.7305221</span>
                 ],
                 [
-                  -122.5022769,
-                  37.7305423
+                  <span style="color:#099">-122.5022769</span>,
+                  <span style="color:#099">37.7305423</span>
                 ],
                 [
-                  -122.5017546,
-                  37.7307008
+                  <span style="color:#099">-122.5017546</span>,
+                  <span style="color:#099">37.7307008</span>
                 ],
                 [
-                  -122.5006917,
-                  37.7311277
+                  <span style="color:#099">-122.5006917</span>,
+                  <span style="color:#099">37.7311277</span>
                 ],
                 [
-                  -122.4992484,
-                  37.7317075
+                  <span style="color:#099">-122.4992484</span>,
+                  <span style="color:#099">37.7317075</span>
                 ],
                 [
-                  -122.4991414,
-                  37.7317614
+                  <span style="color:#099">-122.4991414</span>,
+                  <span style="color:#099">37.7317614</span>
                 ],
                 [
-                  -122.4990379,
-                  37.7318177
+                  <span style="color:#099">-122.4990379</span>,
+                  <span style="color:#099">37.7318177</span>
                 ],
                 [
-                  -122.4989369,
-                  37.7318762
+                  <span style="color:#099">-122.4989369</span>,
+                  <span style="color:#099">37.7318762</span>
                 ],
                 [
-                  -122.4988408,
-                  37.731938
+                  <span style="color:#099">-122.4988408</span>,
+                  <span style="color:#099">37.731938</span>
                 ],
                 [
-                  -122.4987386,
-                  37.7320142
+                  <span style="color:#099">-122.4987386</span>,
+                  <span style="color:#099">37.7320142</span>
                 ],
                 [
-                  -122.4986377,
-                  37.732092
+                  <span style="color:#099">-122.4986377</span>,
+                  <span style="color:#099">37.732092</span>
                 ],
                 [
-                  -122.4978359,
-                  37.7328712
+                  <span style="color:#099">-122.4978359</span>,
+                  <span style="color:#099">37.7328712</span>
                 ],
                 [
-                  -122.4979122,
-                  37.7333232
+                  <span style="color:#099">-122.4979122</span>,
+                  <span style="color:#099">37.7333232</span>
                 ],
                 [
-                  -122.4979485,
-                  37.7333909
+                  <span style="color:#099">-122.4979485</span>,
+                  <span style="color:#099">37.7333909</span>
                 ],
                 [
-                  -122.4980162,
-                  37.7334494
+                  <span style="color:#099">-122.4980162</span>,
+                  <span style="color:#099">37.7334494</span>
                 ],
                 [
-                  -122.4980945,
-                  37.7334801
+                  <span style="color:#099">-122.4980945</span>,
+                  <span style="color:#099">37.7334801</span>
                 ],
                 [
-                  -122.4989553,
-                  37.7337384
+                  <span style="color:#099">-122.4989553</span>,
+                  <span style="color:#099">37.7337384</span>
                 ],
                 [
-                  -122.4990551,
-                  37.7337743
+                  <span style="color:#099">-122.4990551</span>,
+                  <span style="color:#099">37.7337743</span>
                 ],
                 [
-                  -122.4991479,
-                  37.7338184
+                  <span style="color:#099">-122.4991479</span>,
+                  <span style="color:#099">37.7338184</span>
                 ],
                 [
-                  -122.4992482,
-                  37.7338769
+                  <span style="color:#099">-122.4992482</span>,
+                  <span style="color:#099">37.7338769</span>
                 ],
                 [
-                  -122.4993518,
-                  37.7339426
+                  <span style="color:#099">-122.4993518</span>,
+                  <span style="color:#099">37.7339426</span>
                 ],
                 [
-                  -122.4997605,
-                  37.7342142
+                  <span style="color:#099">-122.4997605</span>,
+                  <span style="color:#099">37.7342142</span>
                 ],
                 [
-                  -122.4997578,
-                  37.7343433
+                  <span style="color:#099">-122.4997578</span>,
+                  <span style="color:#099">37.7343433</span>
                 ],
                 [
-                  -122.5001258,
-                  37.7345486
+                  <span style="color:#099">-122.5001258</span>,
+                  <span style="color:#099">37.7345486</span>
                 ],
                 [
-                  -122.5003425,
-                  37.7346621
+                  <span style="color:#099">-122.5003425</span>,
+                  <span style="color:#099">37.7346621</span>
                 ],
                 [
-                  -122.5005576,
-                  37.7347566
+                  <span style="color:#099">-122.5005576</span>,
+                  <span style="color:#099">37.7347566</span>
                 ],
                 [
-                  -122.5007622,
-                  37.7348353
+                  <span style="color:#099">-122.5007622</span>,
+                  <span style="color:#099">37.7348353</span>
                 ],
                 [
-                  -122.500956,
-                  37.7349063
+                  <span style="color:#099">-122.500956</span>,
+                  <span style="color:#099">37.7349063</span>
                 ],
                 [
-                  -122.5011438,
-                  37.7349706
+                  <span style="color:#099">-122.5011438</span>,
+                  <span style="color:#099">37.7349706</span>
                 ],
                 [
-                  -122.5011677,
-                  37.7349215
+                  <span style="color:#099">-122.5011677</span>,
+                  <span style="color:#099">37.7349215</span>
                 ],
                 [
-                  -122.5013556,
-                  37.7349785
+                  <span style="color:#099">-122.5013556</span>,
+                  <span style="color:#099">37.7349785</span>
                 ],
                 [
-                  -122.5013329,
-                  37.7350294
+                  <span style="color:#099">-122.5013329</span>,
+                  <span style="color:#099">37.7350294</span>
                 ],
                 [
-                  -122.5015181,
-                  37.7350801
+                  <span style="color:#099">-122.5015181</span>,
+                  <span style="color:#099">37.7350801</span>
                 ],
                 [
-                  -122.5017265,
-                  37.7351269
+                  <span style="color:#099">-122.5017265</span>,
+                  <span style="color:#099">37.7351269</span>
                 ],
                 [
-                  -122.5019229,
-                  37.735164
+                  <span style="color:#099">-122.5019229</span>,
+                  <span style="color:#099">37.735164</span>
                 ],
                 [
-                  -122.5021252,
-                  37.7351953
+                  <span style="color:#099">-122.5021252</span>,
+                  <span style="color:#099">37.7351953</span>
                 ],
                 [
-                  -122.5023116,
-                  37.7352187
+                  <span style="color:#099">-122.5023116</span>,
+                  <span style="color:#099">37.7352187</span>
                 ],
                 [
-                  -122.50246,
-                  37.7352327
+                  <span style="color:#099">-122.50246</span>,
+                  <span style="color:#099">37.7352327</span>
                 ],
                 [
-                  -122.5026074,
-                  37.7352433
+                  <span style="color:#099">-122.5026074</span>,
+                  <span style="color:#099">37.7352433</span>
                 ],
                 [
-                  -122.5027534,
-                  37.7352501
+                  <span style="color:#099">-122.5027534</span>,
+                  <span style="color:#099">37.7352501</span>
                 ],
                 [
-                  -122.5029253,
-                  37.7352536
+                  <span style="color:#099">-122.5029253</span>,
+                  <span style="color:#099">37.7352536</span>
                 ],
                 [
-                  -122.5029246,
-                  37.735286
+                  <span style="color:#099">-122.5029246</span>,
+                  <span style="color:#099">37.735286</span>
                 ],
                 [
-                  -122.5033453,
-                  37.7352858
+                  <span style="color:#099">-122.5033453</span>,
+                  <span style="color:#099">37.7352858</span>
                 ],
                 [
-                  -122.5038376,
-                  37.7352855
+                  <span style="color:#099">-122.5038376</span>,
+                  <span style="color:#099">37.7352855</span>
                 ],
                 [
-                  -122.5038374,
-                  37.7352516
+                  <span style="color:#099">-122.5038374</span>,
+                  <span style="color:#099">37.7352516</span>
                 ],
                 [
-                  -122.5054006,
-                  37.7352553
+                  <span style="color:#099">-122.5054006</span>,
+                  <span style="color:#099">37.7352553</span>
                 ],
                 [
-                  -122.5056182,
-                  37.7352867
+                  <span style="color:#099">-122.5056182</span>,
+                  <span style="color:#099">37.7352867</span>
                 ],
                 [
-                  -122.5061792,
-                  37.7352946
+                  <span style="color:#099">-122.5061792</span>,
+                  <span style="color:#099">37.7352946</span>
                 ],
                 [
-                  -122.5061848,
-                  37.7352696
+                  <span style="color:#099">-122.5061848</span>,
+                  <span style="color:#099">37.7352696</span>
                 ],
                 [
-                  -122.5063093,
-                  37.7352671
+                  <span style="color:#099">-122.5063093</span>,
+                  <span style="color:#099">37.7352671</span>
                 ],
                 [
-                  -122.5063297,
-                  37.7352886
+                  <span style="color:#099">-122.5063297</span>,
+                  <span style="color:#099">37.7352886</span>
                 ],
                 [
-                  -122.5064719,
-                  37.7352881
+                  <span style="color:#099">-122.5064719</span>,
+                  <span style="color:#099">37.7352881</span>
                 ],
                 [
-                  -122.5064722,
-                  37.735256
+                  <span style="color:#099">-122.5064722</span>,
+                  <span style="color:#099">37.735256</span>
                 ],
                 [
-                  -122.506505,
-                  37.7352268
+                  <span style="color:#099">-122.506505</span>,
+                  <span style="color:#099">37.7352268</span>
                 ],
                 [
-                  -122.5065452,
-                  37.7352287
+                  <span style="color:#099">-122.5065452</span>,
+                  <span style="color:#099">37.7352287</span>
                 ],
                 [
-                  -122.5065508,
-                  37.7351214
+                  <span style="color:#099">-122.5065508</span>,
+                  <span style="color:#099">37.7351214</span>
                 ],
                 [
-                  -122.5065135,
-                  37.7350885
+                  <span style="color:#099">-122.5065135</span>,
+                  <span style="color:#099">37.7350885</span>
                 ],
                 [
-                  -122.5065011,
-                  37.7351479
+                  <span style="color:#099">-122.5065011</span>,
+                  <span style="color:#099">37.7351479</span>
                 ],
                 [
-                  -122.5062471,
-                  37.7351127
+                  <span style="color:#099">-122.5062471</span>,
+                  <span style="color:#099">37.7351127</span>
                 ],
                 [
-                  -122.5059669,
-                  37.7349341
+                  <span style="color:#099">-122.5059669</span>,
+                  <span style="color:#099">37.7349341</span>
                 ],
                 [
-                  -122.5060092,
-                  37.7348205
+                  <span style="color:#099">-122.5060092</span>,
+                  <span style="color:#099">37.7348205</span>
                 ],
                 [
-                  -122.5060405,
-                  37.7347219
+                  <span style="color:#099">-122.5060405</span>,
+                  <span style="color:#099">37.7347219</span>
                 ],
                 [
-                  -122.5060611,
-                  37.734624
+                  <span style="color:#099">-122.5060611</span>,
+                  <span style="color:#099">37.734624</span>
                 ],
                 [
-                  -122.5060726,
-                  37.7345101
+                  <span style="color:#099">-122.5060726</span>,
+                  <span style="color:#099">37.7345101</span>
                 ],
                 [
-                  -122.5060758,
-                  37.73439
+                  <span style="color:#099">-122.5060758</span>,
+                  <span style="color:#099">37.73439</span>
                 ],
                 [
-                  -122.5060658,
-                  37.73427
+                  <span style="color:#099">-122.5060658</span>,
+                  <span style="color:#099">37.73427</span>
                 ],
                 [
-                  -122.5065549,
-                  37.7342676
+                  <span style="color:#099">-122.5065549</span>,
+                  <span style="color:#099">37.7342676</span>
                 ],
                 [
-                  -122.5067262,
-                  37.7340364
+                  <span style="color:#099">-122.5067262</span>,
+                  <span style="color:#099">37.7340364</span>
                 ],
                 [
-                  -122.506795,
-                  37.7340317
+                  <span style="color:#099">-122.506795</span>,
+                  <span style="color:#099">37.7340317</span>
                 ],
                 [
-                  -122.5068355,
-                  37.733827
+                  <span style="color:#099">-122.5068355</span>,
+                  <span style="color:#099">37.733827</span>
                 ],
                 [
-                  -122.5068791,
-                  37.7335407
+                  <span style="color:#099">-122.5068791</span>,
+                  <span style="color:#099">37.7335407</span>
                 ],
                 [
-                  -122.5068869,
-                  37.7334106
+                  <span style="color:#099">-122.5068869</span>,
+                  <span style="color:#099">37.7334106</span>
                 ],
                 [
-                  -122.5068877,
-                  37.733281
+                  <span style="color:#099">-122.5068877</span>,
+                  <span style="color:#099">37.733281</span>
                 ],
                 [
-                  -122.5068713,
-                  37.7329795
+                  <span style="color:#099">-122.5068713</span>,
+                  <span style="color:#099">37.7329795</span>
                 ],
                 [
-                  -122.5068598,
-                  37.7328652
+                  <span style="color:#099">-122.5068598</span>,
+                  <span style="color:#099">37.7328652</span>
                 ],
                 [
-                  -122.506808,
-                  37.7325954
+                  <span style="color:#099">-122.506808</span>,
+                  <span style="color:#099">37.7325954</span>
                 ],
                 [
-                  -122.5067837,
-                  37.732482
+                  <span style="color:#099">-122.5067837</span>,
+                  <span style="color:#099">37.732482</span>
                 ],
                 [
-                  -122.5067561,
-                  37.7323727
+                  <span style="color:#099">-122.5067561</span>,
+                  <span style="color:#099">37.7323727</span>
                 ],
                 [
-                  -122.5066387,
-                  37.7319688
+                  <span style="color:#099">-122.5066387</span>,
+                  <span style="color:#099">37.7319688</span>
                 ],
                 [
-                  -122.5066273,
-                  37.731939
+                  <span style="color:#099">-122.5066273</span>,
+                  <span style="color:#099">37.731939</span>
                 ],
                 [
-                  -122.5066106,
-                  37.7319109
+                  <span style="color:#099">-122.5066106</span>,
+                  <span style="color:#099">37.7319109</span>
                 ],
                 [
-                  -122.506581,
-                  37.7318869
+                  <span style="color:#099">-122.506581</span>,
+                  <span style="color:#099">37.7318869</span>
                 ],
                 [
-                  -122.5065404,
-                  37.731872
+                  <span style="color:#099">-122.5065404</span>,
+                  <span style="color:#099">37.731872</span>
                 ],
                 [
-                  -122.5064982,
-                  37.7318679
+                  <span style="color:#099">-122.5064982</span>,
+                  <span style="color:#099">37.7318679</span>
                 ],
                 [
-                  -122.5064615,
-                  37.731878
+                  <span style="color:#099">-122.5064615</span>,
+                  <span style="color:#099">37.731878</span>
                 ],
                 [
-                  -122.5064297,
-                  37.7318936
+                  <span style="color:#099">-122.5064297</span>,
+                  <span style="color:#099">37.7318936</span>
                 ],
                 [
-                  -122.5063553,
-                  37.7317985
+                  <span style="color:#099">-122.5063553</span>,
+                  <span style="color:#099">37.7317985</span>
                 ],
                 [
-                  -122.5063872,
-                  37.7317679
+                  <span style="color:#099">-122.5063872</span>,
+                  <span style="color:#099">37.7317679</span>
                 ],
                 [
-                  -122.5064106,
-                  37.7317374
+                  <span style="color:#099">-122.5064106</span>,
+                  <span style="color:#099">37.7317374</span>
                 ],
                 [
-                  -122.5064136,
-                  37.7317109
+                  <span style="color:#099">-122.5064136</span>,
+                  <span style="color:#099">37.7317109</span>
                 ],
                 [
-                  -122.5063998,
-                  37.7316828
+                  <span style="color:#099">-122.5063998</span>,
+                  <span style="color:#099">37.7316828</span>
                 ],
                 [
-                  -122.5063753,
-                  37.7316581
+                  <span style="color:#099">-122.5063753</span>,
+                  <span style="color:#099">37.7316581</span>
                 ],
                 [
-                  -122.5061296,
-                  37.7314636
+                  <span style="color:#099">-122.5061296</span>,
+                  <span style="color:#099">37.7314636</span>
                 ],
                 [
-                  -122.5061417,
-                  37.731453
+                  <span style="color:#099">-122.5061417</span>,
+                  <span style="color:#099">37.731453</span>
                 ],
                 [
-                  -122.5060145,
-                  37.7313791
+                  <span style="color:#099">-122.5060145</span>,
+                  <span style="color:#099">37.7313791</span>
                 ],
                 [
-                  -122.5057839,
-                  37.7312678
+                  <span style="color:#099">-122.5057839</span>,
+                  <span style="color:#099">37.7312678</span>
                 ],
                 [
-                  -122.5054352,
-                  37.7311479
+                  <span style="color:#099">-122.5054352</span>,
+                  <span style="color:#099">37.7311479</span>
                 ],
                 [
-                  -122.5043701,
-                  37.7310447
+                  <span style="color:#099">-122.5043701</span>,
+                  <span style="color:#099">37.7310447</span>
                 ],
                 [
-                  -122.5042805,
-                  37.7310343
+                  <span style="color:#099">-122.5042805</span>,
+                  <span style="color:#099">37.7310343</span>
                 ],
                 [
-                  -122.5041861,
-                  37.7310189
+                  <span style="color:#099">-122.5041861</span>,
+                  <span style="color:#099">37.7310189</span>
                 ],
                 [
-                  -122.5041155,
-                  37.7310037
+                  <span style="color:#099">-122.5041155</span>,
+                  <span style="color:#099">37.7310037</span>
                 ],
                 [
-                  -122.5036126,
-                  37.7308562
+                  <span style="color:#099">-122.5036126</span>,
+                  <span style="color:#099">37.7308562</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;San Francisco Zoo&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;San Francisco Zoo&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:zoo&quot;,
-              &quot;loc_type&quot;: &quot;Zoo&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:zoo&#34;</span>,
+              <span style="color:#000080">&#34;loc_type&#34;</span>: <span style="color:#d14">&#34;Zoo&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Flamingo Park&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Flamingo Park&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.5033039,
-                  37.7334601
+                  <span style="color:#099">-122.5033039</span>,
+                  <span style="color:#099">37.7334601</span>
                 ],
                 [
-                  -122.5032811,
-                  37.7334601
+                  <span style="color:#099">-122.5032811</span>,
+                  <span style="color:#099">37.7334601</span>
                 ],
                 [
-                  -122.503261,
-                  37.7334601
+                  <span style="color:#099">-122.503261</span>,
+                  <span style="color:#099">37.7334601</span>
                 ],
                 [
-                  -122.5032208,
-                  37.7334495
+                  <span style="color:#099">-122.5032208</span>,
+                  <span style="color:#099">37.7334495</span>
                 ],
                 [
-                  -122.5031846,
-                  37.7334357
+                  <span style="color:#099">-122.5031846</span>,
+                  <span style="color:#099">37.7334357</span>
                 ],
                 [
-                  -122.5031806,
-                  37.7334718
+                  <span style="color:#099">-122.5031806</span>,
+                  <span style="color:#099">37.7334718</span>
                 ],
                 [
-                  -122.5031685,
-                  37.7334962
+                  <span style="color:#099">-122.5031685</span>,
+                  <span style="color:#099">37.7334962</span>
                 ],
                 [
-                  -122.5031336,
-                  37.7335078
+                  <span style="color:#099">-122.5031336</span>,
+                  <span style="color:#099">37.7335078</span>
                 ],
                 [
-                  -122.503128,
-                  37.7335189
+                  <span style="color:#099">-122.503128</span>,
+                  <span style="color:#099">37.7335189</span>
                 ],
                 [
-                  -122.5031222,
-                  37.7335205
+                  <span style="color:#099">-122.5031222</span>,
+                  <span style="color:#099">37.7335205</span>
                 ],
                 [
-                  -122.5030954,
-                  37.7335269
+                  <span style="color:#099">-122.5030954</span>,
+                  <span style="color:#099">37.7335269</span>
                 ],
                 [
-                  -122.5030692,
-                  37.7335444
+                  <span style="color:#099">-122.5030692</span>,
+                  <span style="color:#099">37.7335444</span>
                 ],
                 [
-                  -122.5030699,
-                  37.7335677
+                  <span style="color:#099">-122.5030699</span>,
+                  <span style="color:#099">37.7335677</span>
                 ],
                 [
-                  -122.5030813,
-                  37.7335868
+                  <span style="color:#099">-122.5030813</span>,
+                  <span style="color:#099">37.7335868</span>
                 ],
                 [
-                  -122.5031034,
-                  37.7335948
+                  <span style="color:#099">-122.5031034</span>,
+                  <span style="color:#099">37.7335948</span>
                 ],
                 [
-                  -122.5031511,
-                  37.73359
+                  <span style="color:#099">-122.5031511</span>,
+                  <span style="color:#099">37.73359</span>
                 ],
                 [
-                  -122.5031933,
-                  37.7335916
+                  <span style="color:#099">-122.5031933</span>,
+                  <span style="color:#099">37.7335916</span>
                 ],
                 [
-                  -122.5032228,
-                  37.7336022
+                  <span style="color:#099">-122.5032228</span>,
+                  <span style="color:#099">37.7336022</span>
                 ],
                 [
-                  -122.5032697,
-                  37.7335937
+                  <span style="color:#099">-122.5032697</span>,
+                  <span style="color:#099">37.7335937</span>
                 ],
                 [
-                  -122.5033194,
-                  37.7335874
+                  <span style="color:#099">-122.5033194</span>,
+                  <span style="color:#099">37.7335874</span>
                 ],
                 [
-                  -122.5033515,
-                  37.7335693
+                  <span style="color:#099">-122.5033515</span>,
+                  <span style="color:#099">37.7335693</span>
                 ],
                 [
-                  -122.5033723,
-                  37.7335518
+                  <span style="color:#099">-122.5033723</span>,
+                  <span style="color:#099">37.7335518</span>
                 ],
                 [
-                  -122.503369,
-                  37.7335068
+                  <span style="color:#099">-122.503369</span>,
+                  <span style="color:#099">37.7335068</span>
                 ],
                 [
-                  -122.5033603,
-                  37.7334702
+                  <span style="color:#099">-122.5033603</span>,
+                  <span style="color:#099">37.7334702</span>
                 ],
                 [
-                  -122.5033462,
-                  37.7334474
+                  <span style="color:#099">-122.5033462</span>,
+                  <span style="color:#099">37.7334474</span>
                 ],
                 [
-                  -122.5033073,
-                  37.733449
+                  <span style="color:#099">-122.5033073</span>,
+                  <span style="color:#099">37.733449</span>
                 ],
                 [
-                  -122.5033039,
-                  37.7334601
+                  <span style="color:#099">-122.5033039</span>,
+                  <span style="color:#099">37.7334601</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;San Francisco Zoo&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;San Francisco Zoo&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:zoo&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:zoo&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Peace Lantern&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Point&quot;,
-            &quot;coordinates&quot;: [
-              -122.4705776,
-              37.7701084
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Peace Lantern&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Point&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
+              <span style="color:#099">-122.4705776</span>,
+              <span style="color:#099">37.7701084</span>
             ]
           },
-          &quot;street&quot;: &quot;Golden Gate Park&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Golden Gate Park&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:attraction&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:attraction&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Buddha&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Point&quot;,
-            &quot;coordinates&quot;: [
-              -122.469942,
-              37.7703183
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Buddha&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Point&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
+              <span style="color:#099">-122.469942</span>,
+              <span style="color:#099">37.7703183</span>
             ]
           },
-          &quot;street&quot;: &quot;Golden Gate Park&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Golden Gate Park&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:attraction&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:attraction&#34;</span>
             }
           ]
         },
         {
-          &quot;name&quot;: &quot;Japanese Tea Garden&quot;,
-          &quot;location&quot;: {
-            &quot;type&quot;: &quot;Polygon&quot;,
-            &quot;coordinates&quot;: [
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Japanese Tea Garden&#34;</span>,
+          <span style="color:#000080">&#34;location&#34;</span>: {
+            <span style="color:#000080">&#34;type&#34;</span>: <span style="color:#d14">&#34;Polygon&#34;</span>,
+            <span style="color:#000080">&#34;coordinates&#34;</span>: [
               [
                 [
-                  -122.4692131,
-                  37.7705116
+                  <span style="color:#099">-122.4692131</span>,
+                  <span style="color:#099">37.7705116</span>
                 ],
                 [
-                  -122.4698998,
-                  37.7710069
+                  <span style="color:#099">-122.4698998</span>,
+                  <span style="color:#099">37.7710069</span>
                 ],
                 [
-                  -122.4702431,
-                  37.7710137
+                  <span style="color:#099">-122.4702431</span>,
+                  <span style="color:#099">37.7710137</span>
                 ],
                 [
-                  -122.4707248,
-                  37.7708919
+                  <span style="color:#099">-122.4707248</span>,
+                  <span style="color:#099">37.7708919</span>
                 ],
                 [
-                  -122.4708911,
-                  37.7701541
+                  <span style="color:#099">-122.4708911</span>,
+                  <span style="color:#099">37.7701541</span>
                 ],
                 [
-                  -122.4708428,
-                  37.7700354
+                  <span style="color:#099">-122.4708428</span>,
+                  <span style="color:#099">37.7700354</span>
                 ],
                 [
-                  -122.4703492,
-                  37.7695011
+                  <span style="color:#099">-122.4703492</span>,
+                  <span style="color:#099">37.7695011</span>
                 ],
                 [
-                  -122.4699255,
-                  37.7693989
+                  <span style="color:#099">-122.4699255</span>,
+                  <span style="color:#099">37.7693989</span>
                 ],
                 [
-                  -122.4692131,
-                  37.7705116
+                  <span style="color:#099">-122.4692131</span>,
+                  <span style="color:#099">37.7705116</span>
                 ]
               ]
             ]
           },
-          &quot;street&quot;: &quot;Golden Gate Park&quot;,
-          &quot;has_type&quot;: [
+          <span style="color:#000080">&#34;street&#34;</span>: <span style="color:#d14">&#34;Golden Gate Park&#34;</span>,
+          <span style="color:#000080">&#34;has_type&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:attraction&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:attraction&#34;</span>
             }
           ]
         }
@@ -1889,32 +1853,23 @@ Open Ratel, go to the mutate tab, paste the mutation, and click Run.</p>
     }
   ]
 }
-</code></pre>
-
-<p><em>Note: If this mutation syntax is new to you, refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first tutorial</a> to learn the basics of mutations in Dgraph.</em></p>
-
+</code></pre></div><p><em>Note: If this mutation syntax is new to you, refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first tutorial</a> to learn the basics of mutations in Dgraph.</em></p>
 <p>Run the query below to fetch the entire graph:</p>
-
-<pre><code class="language-graphql">{
-  entire_graph(func: has(city)) {
-    city
-    has_location {
-    name 
-    has_type {
-      loc_type
-      }
-    }
-  }
-}
-</code></pre>
-
-<p><em>Note: Check the <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">second tutorial</a> if you want to learn more about traversal queries like the above one.</em></p>
-
-<p>Here&rsquo;s our graph!
-<img src="/images/tutorials/8/d-full-graph.png" alt="full graph" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>entire_graph(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(city))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>city<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>has_location<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb"> 
+</span><span style="color:#bbb">    </span>has_type<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>loc_type<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><em>Note: Check the <a href="https://blog.dgraph.io/post/tutorial-2-getting-started/">second tutorial</a> if you want to learn more about traversal queries like the above one.</em></p>
+<p>Here's our graph!
+<img src="/images/tutorials/8/d-full-graph.png" alt="full graph"></p>
 <p>Our graph has:</p>
-
 <ul>
 <li>One blue <code>city node</code>.
 We just have one node which represents the city of <code>San Francisco</code>.</li>
@@ -1923,142 +1878,92 @@ We have a total of 13 locations.</li>
 <li>The pink nodes represent the <code>location types</code>.
 We have four kinds of locations in our dataset: <code>museum</code>, <code>zoo</code>, <code>hotel</code>, and <code>tourist attractions</code>.</li>
 </ul>
-
 <p>You can also see that Dgraph has auto-detected the data types of the predicates from the schema tab, and the location predicate has been auto-assigned <code>geo</code> type.</p>
-
-<p><img src="/images/tutorials/8/e-schema.png" alt="type detection" />
+<p><img src="/images/tutorials/8/e-schema.png" alt="type detection">
 <em>Note: Check out the <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">previous tutorial</a> to know more about data types in Dgraph.</em></p>
-
 <p>Before we start, please say Hello to <code>Mary</code>, a zoologist who has dedicated her research for the cause of conserving various bird species.</p>
-
-<p>For the rest of the tutorial, let&rsquo;s help Mary and her team of zoologists in their mission to conserving birds.</p>
-
+<p>For the rest of the tutorial, let's help Mary and her team of zoologists in their mission to conserving birds.</p>
 <h4 id="enter-san-francisco-hotel-booking">Enter San Francisco: Hotel booking</h4>
-
 <p>Several research projects done by Mary suggested that Flamingos thrive better when there are abundant water bodies for their habitat.</p>
-
 <p>Her team got approval for expanding the water source for the Flamingos in the San Francisco Zoo, and her team is ready for a trip to San Francisco with Mary remotely monitoring the progress of the team.</p>
-
 <p>Her teammates wish to stay close to the <code>Golden Gate Bridge</code> so that they could cycle around the Golden gate, enjoy the breeze, and the sunrise every morning.</p>
-
-<p>Let&rsquo;s help them find a hotel which is within a reasonable distance from the <code>Golden Gate Bridge</code>, and we&rsquo;ll do so using Dgraph&rsquo;s geolocation functions.</p>
-
+<p>Let's help them find a hotel which is within a reasonable distance from the <code>Golden Gate Bridge</code>, and we'll do so using Dgraph's geolocation functions.</p>
 <p>Dgraph provides a variety of functions to query geolocation data.
 To use them, you have to set the <code>geo</code> index first.</p>
-
 <p>Go to the Schema tab and set the index on the <code>location</code> predicate.</p>
-
-<p><img src="/images/tutorials/8/f-index.png" alt="geo-index" /></p>
-
-<p>After setting the <code>geo</code> index on the <code>location</code> predicate, you can use Dgraph&rsquo;s built-in function <code>near</code> to find the hotels near the Golden gate bridge.</p>
-
+<p><img src="/images/tutorials/8/f-index.png" alt="geo-index"></p>
+<p>After setting the <code>geo</code> index on the <code>location</code> predicate, you can use Dgraph's built-in function <code>near</code> to find the hotels near the Golden gate bridge.</p>
 <p>Here is the syntax of the <code>near</code> function: <code>near(geo-predicate, [long, lat], distance)</code>.</p>
-
 <p>The <a href="https://docs.dgraph.io/query-language/#near"><code>near</code> function</a> matches and returns all the geo-predicates stored in the database which are within <code>distance meters</code> of geojson coordinate <code>[long, lat]</code> provided by the user.</p>
-
-<p>Let&rsquo;s search for hotels within 7KM of from a point on the Golden Gate bridge.</p>
-
+<p>Let's search for hotels within 7KM of from a point on the Golden Gate bridge.</p>
 <p>Go to the query tab, paste the query below and click Run.</p>
-
-<pre><code class="language-graphql">{
-  find_hotel(func: near(location, [-122.479784,37.82883295],7000) )  {
-    name
-    has_type {
-      loc_type
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/8/g-near-1.png" alt="geo-index" />
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_hotel(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">near</span>(location,<span style="color:#bbb"> </span>[<span style="color:#a61717;background-color:#e3d2d2">-</span>122<span style="color:#099">.479784</span>,37<span style="color:#099">.82883295</span>],7000)<span style="color:#bbb"> </span>)<span style="color:#bbb">  </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>has_type<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>loc_type<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/8/g-near-1.png" alt="geo-index">
 Wait! The search returns not just the hotels, but also all other locations within 7 Km from the point coordinate on the <code>Golden Gate Bridge</code>.</p>
-
-<p>Let&rsquo;s use the <code>@filter</code> function to filter for search results containing only the hotels.
+<p>Let's use the <code>@filter</code> function to filter for search results containing only the hotels.
 You can visit our <a href="(https://blog.dgraph.io/post/tutorial-3-getting-started/)">third tutorial</a> of the series to refresh our previous discussions around using the <code>@filter</code> directive.</p>
-
-<pre><code class="language-graphql">{
-  find_hotel(func: near(location, [-122.479784,37.82883295],7000)) {
-    name
-    has_type @filter(eq(loc_type, &quot;hotel&quot;)){
-      loc_type 
-    }
-  }
-}
-</code></pre>
-
-<p>Oops, we forgot to add an index while using the <code>eq</code> comparator in the filter.</p>
-
-<p><img src="/images/tutorials/8/h-near-2.png" alt="geo-index" /></p>
-
-<p>Let&rsquo;s add a <code>hash</code> index to the <code>loc_type</code> and re-run the query.
-<img src="/images/tutorials/8/i-near-3.png" alt="geo-index" />
-<img src="/images/tutorials/8/j-near-4.png" alt="geo-index" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_hotel(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">near</span>(location,<span style="color:#bbb"> </span>[<span style="color:#a61717;background-color:#e3d2d2">-</span>122<span style="color:#099">.479784</span>,37<span style="color:#099">.82883295</span>],7000))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>has_type<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@filter</span>(eq(loc_type,<span style="color:#bbb"> </span><span style="color:#d14">&#34;hotel&#34;</span>)){<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>loc_type<span style="color:#bbb"> 
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Oops, we forgot to add an index while using the <code>eq</code> comparator in the filter.</p>
+<p><img src="/images/tutorials/8/h-near-2.png" alt="geo-index"></p>
+<p>Let's add a <code>hash</code> index to the <code>loc_type</code> and re-run the query.
+<img src="/images/tutorials/8/i-near-3.png" alt="geo-index">
+<img src="/images/tutorials/8/j-near-4.png" alt="geo-index"></p>
 <p><em>Note: Refer to the <a href="https://blog.dgraph.io/post/tutorial-3-getting-started/">third tutorial</a> of the series to learn more about hash index and comparator functions in Dgraph.</em></p>
-
-<p>The search result still contains nodes representing locations which are not hotels. That&rsquo;s because the root query first finds all the location nodes which are within 7KM from the specified point location, and then it applies the filter while selectively traversing to the <code>location type nodes</code>.</p>
-
+<p>The search result still contains nodes representing locations which are not hotels. That's because the root query first finds all the location nodes which are within 7KM from the specified point location, and then it applies the filter while selectively traversing to the <code>location type nodes</code>.</p>
 <p>Only the predicates in the location nodes can be filtered at the root level, and you cannot filter the <code>location types</code> without traversing to the <code>location type nodes</code>.</p>
-
 <p>We have the filter to select only the <code>hotels</code> while we traverse the <code>location type nodes</code>.
 Can we cascade or bubble up the filter to the root level, so that, we only have <code>hotels</code> in the final result?</p>
-
 <p>Yes you can! You can do by using the <code>@cascade</code> directive.
 The <code>@cascade</code> directive helps you <code>cascade</code> or <code>bubble up</code> the filters applied to your inner query traversals to the root level nodes, by doing so, we get only the locations of <code>hotels</code> in our result.</p>
-
-<pre><code class="language-graphql">{
-  find_hotel(func: near(location, [-122.479784,37.82883295],7000)) @cascade {
-   name
-   price_per_night
-   has_type @filter(eq(loc_type,&quot;Hotel&quot;)){
-     loc_type
-    }
-  }
-}
-</code></pre>
-
-<p><img src="/images/tutorials/8/k-near-5.png" alt="geo-index" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_hotel(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">near</span>(location,<span style="color:#bbb"> </span>[<span style="color:#a61717;background-color:#e3d2d2">-</span>122<span style="color:#099">.479784</span>,37<span style="color:#099">.82883295</span>],7000))<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@cascade</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">   </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">   </span>price_per_night<span style="color:#bbb">
+</span><span style="color:#bbb">   </span>has_type<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@filter</span>(eq(loc_type,<span style="color:#d14">&#34;Hotel&#34;</span>)){<span style="color:#bbb">
+</span><span style="color:#bbb">     </span>loc_type<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/8/k-near-5.png" alt="geo-index"></p>
 <p>Voila! You can see in the result that, after adding the <code>@cascade</code> directive in the query, only the locations with type <code>hotel</code> appear in the result.</p>
-
 <p>We have two hotels in the result, and one of them is over their budget of 300$ per night.
-Let&rsquo;s add another filter to search for Hotels priced below $300 per night.</p>
-
+Let's add another filter to search for Hotels priced below $300 per night.</p>
 <p>The price information of every hotel is stored in the <code>location nodes</code> along with their coordinates, hence the filter on the pricing should be at the root level of the query, not at the level we traverse the location type nodes.</p>
-
-<p>Before you jump onto run the query, don&rsquo;t forget to add an index on the <code>price_per_night</code> predicate.</p>
-
-<p><img src="/images/tutorials/8/l-float-index.png" alt="geo-index" /></p>
-
-<pre><code class="language-graphql">{
-  find_hotel(func: near(location, [-122.479784,37.82883295],7000)) @cascade @filter(le(price_per_night, 300)){
-    name
-    price_per_night
-    has_type @filter(eq(loc_type,&quot;Hotel&quot;)){
-      loc_type
-    }
-  }
-}
-
-</code></pre>
-
-<p><img src="/images/tutorials/8/m-final-result.png" alt="geo-index" /></p>
-
+<p>Before you jump onto run the query, don't forget to add an index on the <code>price_per_night</code> predicate.</p>
+<p><img src="/images/tutorials/8/l-float-index.png" alt="geo-index"></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_hotel(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">near</span>(location,<span style="color:#bbb"> </span>[<span style="color:#a61717;background-color:#e3d2d2">-</span>122<span style="color:#099">.479784</span>,37<span style="color:#099">.82883295</span>],7000))<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@cascade</span><span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@filter</span>(le(price_per_night,<span style="color:#bbb"> </span>300)){<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>price_per_night<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>has_type<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@filter</span>(eq(loc_type,<span style="color:#d14">&#34;Hotel&#34;</span>)){<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>loc_type<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span></code></pre></div><p><img src="/images/tutorials/8/m-final-result.png" alt="geo-index"></p>
 <p>Now we have a hotel well within the budget, and also close to the Golden Gate Bridge!</p>
-
 <h4 id="summary">Summary</h4>
-
-<p>In this tutorial, we learned about geolocation capabilities in Dgraph, and helped Mary&rsquo;s team book a hotel near Golden bridge.</p>
-
-<p>In the next episode, we&rsquo;ll showcase more geolocation functionalities in Dgraph and assist Mary&rsquo;s team in their quest for conserving Flamingo&rsquo;s.</p>
-
+<p>In this tutorial, we learned about geolocation capabilities in Dgraph, and helped Mary's team book a hotel near Golden bridge.</p>
+<p>In the next episode, we'll showcase more geolocation functionalities in Dgraph and assist Mary's team in their quest for conserving Flamingo's.</p>
 <p>See you all in the next episode.
 Till then, happy Graphing!</p>
-
 <p>Remember to click the &ldquo;Join our community&rdquo; button below and subscribe to our newsletter to get the latest tutorial right into your inbox.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -2109,48 +2014,10 @@ Till then, happy Graphing!</p>
 	})
 </script>
 
-
-<script src="//unpkg.com/clipboard@2.0.4"></script>
-<script src="/js/tutorial-3.js"></script>
-
-<style>
- pre.with-expand {
- position: relative;
- max-height: 300px;
- overflow: hidden;
- }
-
- pre.with-expand .expander {
- color: #ccc;
- cursor: pointer;
- padding: 32px 0 2px;
- position: absolute;
- text-align: center;
- bottom: 0;
- left: 0;
- right: 0;
- background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75));
- }
-
- pre.with-expand.expanded {
- max-height: unset;
- }
- pre.with-expand.expanded .expander {
- display: none;
- }
-
- .copy-btn {
- background: #fff;
- border: 1px solid #666;
- border-radius: 2px;
- cursor: pointer;
- display: block;
- padding: 2px 6px;
- position: absolute;
- top: 4px;
- right: 4px;
- }
-</style>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 </div>
           <div class="article-tag-list">
             

@@ -448,67 +448,52 @@
             class="main__image"
             src="/images/Neptune_Earth.jpg"
           >
-          <div class="article-content">
-
-<p>Amazon just announced their new graph database service, called <a href="https://aws.amazon.com/neptune/">Amazon
+          <div class="article-content"><p>Amazon just announced their new graph database service, called <a href="https://aws.amazon.com/neptune/">Amazon
 Neptune</a>.
 As per a <a href="https://techcrunch.com/2017/11/29/amazon-introduces-an-aws-graph-database-service-called-amazon-neptune/">TechCrunch article</a>,</p>
-
 <blockquote>
 <p>Amazon Neptune has been optimized to handle
 billions of relationships and run queries within milliseconds. Neptune supports
 fast-failover, point-in-time recovery and Multi-AZ deployments. And you can also
 encrypt data at rest.</p>
 </blockquote>
-
 <p>This is very exciting news for the entire tech ecosystem.  It clearly shows that
 graph databases are going mainstream. Already many tech companies are using
 <a href="https://neo4j.com/users/airbnb/">existing</a> <a href="https://github.com/JanusGraph/janusgraph#users">graph</a> <a href="https://github.com/orientechnologies/orientdb/issues/4806">solutions</a> or <a href="https://www.facebook.com/notes/facebook-engineering/tao-the-power-of-the-graph/10151525983993920/">building</a> <a href="https://github.com/twitter-archive/flockdb">their</a> <a href="https://searchengineland.com/library/google/google-knowledge-graph">own</a>
 graph-like systems.</p>
-
 <p>Many devs would be happy users of Neptune, given Amazon is
 running this as a managed service. People trust Amazon; they have done a great
 job with AWS so far. So, this is good news for adoption.</p>
-
 <p>But, in this article,
 I want to look past the blinding light of Amazon — into the design of this new
 graph database. <strong>Despite being built by Amazon, Neptune’s design is obsolete
 right out of the gate.</strong> Let’s look through the design features of Neptune.</p>
-
 <p><strong>Licensing:</strong> Nothing is mentioned about the availability of an open source
 version. It’s safe to presume that Neptune is closed source.</p>
-
 <p><strong>Scalability:</strong>
 Neptune is vertically scalable instead of being horizontally scalable. That
 means if your data size increases, it must still fit on a single server, as
 there’s no data sharding possibility.</p>
-
 <p><strong>ACID Transactions:</strong> There’s no mention of
 transactions on their features page, which indicates that Neptune potentially
 does not support ACID transactions.</p>
-
 <p><strong>Replication:</strong> The replicas are global copies
 of the original data, with all writes going to one server, and the rest being
 read-only servers.  Neptune provides eventual consistency for replication,
 (looks to be) built on top of <a href="https://aws.amazon.com/rds/aurora/details/">Amazon Aurora</a>, where the write server writes to
 this storage, and rest of the servers reading from this storage. They provide
 fast reads by bringing the data to RAM (“in-memory optimized architecture”).</p>
-
 <p><strong>APIs:</strong> Neptune supports Gremlin and SPARQL.</p>
-
 <h4 id="there-are-benefits-and-drawbacks-to-this-architecture">There are benefits and drawbacks to this architecture.</h4>
-
 <p>Benefits wise, having read replicas is great
 for increasing the query throughput. Aurora as storage would ensure that once
 written; your data would have the same guarantees (protection from disk losses,
 etc.). Amazon has a long record in providing hosted services, so a managed
 service by them is great for adoption.</p>
-
 <p>It comes with a fair bit of drawbacks as well. Vertical scaling introduces a
 <a href="https://en.wikipedia.org/wiki/Single_point_of_failure">single point of failure</a> in the system — a single server crashing could
 bring the entire system down. While Amazon has strict SLAs on their managed
 service, this is still a questionable system design from the tech giant.</p>
-
 <p>Vertical scalability is also disproportionately more expensive than horizontal
 scalability. Having to fit the entire data into a single machine requires
 specialized hardware, something which gets disproportionately more expensive
@@ -518,7 +503,6 @@ Search, Spanner, CockroachDB, etc. — all the new technologies since the 20
 have been designed to be horizontally scalable. So, Neptune is at least 10–20
 years behind regarding the needs of the market. In fact, <a href="https://www.345.systems/architecture/vertical-scalability-even-thing/">is vertical scalability
 even a thing anymore?</a></p>
-
 <p>Lack of ACID transactions is the biggest complaint from NoSQL databases.
 Distributed transactions are a hard but solvable problem. But, Neptune is a
 single server architecture, so it’s almost unbelievable that they don’t mention
@@ -526,14 +510,11 @@ a single word about their support of ACID transactions. I’m going to be
 optimistic and presume that they do support them but just failed to mention it
 in the feature list.  It’s commonly believed that support of transactions is
 what distinguishes a database from a datastore.</p>
-
 <h4 id="why-are-these-drawbacks-important">Why are these drawbacks important?</h4>
-
 <p>Let’s take a step back and look at database
 evolution. For a long time, we only had relational databases which ran on a
 single server. You could potentially have an eventually consistent replica, but
 all the data still had to fit into one machine.</p>
-
 <figure>
     <img src="/images/exploding-kittens.png"
          alt="Exploding Kittens"/> <figcaption>
@@ -541,7 +522,6 @@ all the data still had to fit into one machine.</p>
                     <a href="http://bit.ly/2iujVKD"></a></p>
         </figcaption>
 </figure>
-
 
 <p>Web exploded, and Google being the search engine for the web, had to keep up.
 They launched <a href="https://research.google.com/archive/mapreduce.html">MapReduce</a> in 2004, which among other things, helped run the
@@ -551,67 +531,53 @@ server databases were not able to handle the data growth and launched
 horizontally scalable database, something which relational DBs didn’t provide.
 This was a remarkable feat at the time, but achieved at a cost to the developer,
 with lack of joins and transactions.</p>
-
 <p>Bigtable kickstarted the entire NoSQL revolution, out of which MongoDB,
 RethinkDB, and Cassandra came. But, lack of transactions <a href="https://jira.mongodb.org/browse/SERVER-2804">continued</a> to
 <a href="https://jira.mongodb.org/browse/SERVER-11500">remain</a> an <a href="https://jira.mongodb.org/browse/SERVER-11508">issue</a> for developers. Within Google, <a href="https://research.google.com/pubs/pub36971.html">Megastore</a> and
 <a href="https://research.google.com/pubs/pub36726.html">Percolator</a> were born to deal with these shortcomings, but at the cost of
 performance.</p>
-
 <p>Calling lack of transactions in Bigtable, the “<a href="http://highscalability.com/blog/2016/3/16/jeff-dean-on-large-scale-deep-learning-at-google.html">biggest mistake as an
 engineer,</a>” Google worked to build <a href="https://research.google.com/archive/spanner.html">Spanner</a>, a horizontally
 scalable, multi-version, globally-distributed, and synchronously-replicated
 database, with distributed transactions. Again, this kickstarted a whole new
 revolution, people are calling NewSQL, with <a href="https://github.com/cockroachdb/cockroach">CockroachDB</a> and <a href="https://github.com/pingcap/tidb">TiDB</a>
 following Spanner’s heels.</p>
-
 <p>All these show where the database market is going. <strong>A
 database of the 2000s is horizontally scalable, supports distributed
 transactions and is consistently replicated.</strong>  Without these guarantees, building
 application on top becomes complicated, something Google’s Bigtable team and
 NoSQL users learned the hard way.</p>
-
-<h5 id="given-these-advancements-amazon-neptune-s-design-is-pre-2000-single-server-vertically-scaled-asynchronously-replicated-lack-of-transactions-all-this-screams-outdated"><em>Given these advancements, Amazon Neptune’s design is pre-2000.  Single server vertically scaled, asynchronously replicated, lack of transactions — all this screams outdated.</em></h5>
-
-<p><img src="/images/os-wide.png" alt="" /></p>
-
+<h5 id="given-these-advancements-amazon-neptunes-design-is-pre-2000--single-server-vertically-scaled-asynchronously-replicated-lack-of-transactionsall-this-screams-outdated"><em>Given these advancements, Amazon Neptune’s design is pre-2000.  Single server vertically scaled, asynchronously replicated, lack of transactions — all this screams outdated.</em></h5>
+<p><img src="/images/os-wide.png" alt=""></p>
 <h4 id="open-source-alternative">Open Source Alternative</h4>
-
 <p>Now, let’s consider an <a href="https://github.com/dgraph-io/dgraph">open source alternative: Dgraph</a>, a distributed graph
 database.</p>
-
 <p><strong>Licensing:</strong> Dgraph is available under Apache 2.0 license, which allows
 anyone to use it, run it, modify it, or build proprietary services on
 top of it.</p>
-
 <p><strong>Scalability:</strong> <em>This is 2017!</em> <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is horizontally
 scalable. As you add more servers, data automatically gets sharded and moved to
 fill the new ones. Also, Dgraph would automatically rebalance shards among
 servers to ensure that load is evenly distributed.</p>
-
 <p><strong>ACID Transactions:</strong> While
 Neptune doesn’t mention anything about transactions, Dgraph runs lock-free
 distributed ACID transactions, with snapshot isolation, designed for
 performance. Transactions make it a lot easier for application developers to
 think through database behavior, removing any data integrity issues.</p>
-
 <p><strong>Replication:</strong> <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> provides consistent (synchronous) replication, utilizing
 Raft, a consensus algorithm, to allow k servers dying in a 2k+1 replication
 setting. Each data shard can be replicated an odd number of times, and located
 in different datacenters, or availability zones to allow faster communication
 from your clients.</p>
-
-<p><strong>Linearizable reads:</strong> Neptune&rsquo;s eventual consistency model
+<p><strong>Linearizable reads:</strong> Neptune's eventual consistency model
 can cause issues where a read after write might not be visible through a
 replica; requiring the application to build logic around this limitation.
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> avoids this problem by guaranteeing atomic consistency of writes, which
 means irrespective of which replica is hit for reading, any write done before is
 guaranteed to be available. This guarantee makes it a lot easier to build
 applications.</p>
-
 <p><strong>APIs:</strong> Dgraph supports a variant of GraphQL, a modern language to
 replace REST. Cypher and Gremlin support are in the pipeline.</p>
-
 <p><strong>Others:</strong> While Neptune is built on top of another DB (Amazon Aurora), Dgraph
 is a native graph database. As such, data storage is designed for constant time
 edge traversals.  Also, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> has a unique design, which uses posting lists, a
@@ -619,26 +585,20 @@ concept from search engines, making joins highly efficient. It’s designed for 
 real-world cluster, minimizing network calls and disk seeks, running automatic
 fail overs in case of communication delays, running all operations concurrently.
 All these innovations show in the low query latency provided by Dgraph.</p>
-
 <h4 id="conclusion">Conclusion</h4>
-
 <p>Amazon’s Neptune is an exciting new graph database, a clear signal
 that graph databases are being used by companies small and large. I hope that
 Amazon provides more content to help developers create and switch their
 applications to utilize the power of graph DBs.</p>
-
 <p>While Neptune comes with the
 convenience of a managed service, it’s design is outdated and the technology
 proprietary.  Therefore, potential users of graph databases, who want to build
 smart, scalable applications and need ACID transactions, horizontally scalable
 design and strong replication consistency should look into the various open
 source graph databases available, like <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.</p>
-
 <p><em>- This post was originally written on
 <a href="https://medium.com/@manishrjain/open-source-alternative-to-amazon-neptune-e13b21afec79">Medium</a>.</em></p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -688,7 +648,6 @@ source graph databases available, like <a href="https://github.com/dgraph-io/dgr
 		}
 	})
 </script>
-
 
 <p><em>Top image. Neptune in comparison with Earth. Source: <a href="https://www.universetoday.com/21581/neptune/">https://www.universetoday.com/21581/neptune/</a></em></p>
 </div>

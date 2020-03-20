@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>metaweb on Dgraph Blog</title>
@@ -19,7 +19,7 @@
       
       <guid>https://blog.dgraph.io/post/why-google-needed-graph-serving-system/</guid>
       <description>This post made it to #3 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.
-When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&amp;rsquo;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together.</description>
+When I introduce myself and explain what we are building at Dgraph Labs, I am typically asked if I worked at Facebook, or if what I&#39;m building is inspired by Facebook. A lot of people know about the efforts at Facebook to serve their social graph, because they have published multiple articles about the graph infrastructure they put together.</description>
     </item>
     
   </channel>
