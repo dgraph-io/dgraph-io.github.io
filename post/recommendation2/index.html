@@ -452,10 +452,14 @@ In the last post, we looked at how many applications and web apps no longer pres
 <p>We dug deeper into content-based filtering and showed how <em>Jaccard</em> distance and <em>Cosine</em> distance can be encoded directly in Dgraph queries using Dgraph's variables and math functions.</p>
 <p>This time we'll look into collaborative filtering and hybrid recommendations in Dgraph queries.  Then we'll look at how to build a real-time scalable recommendation engine for big graphs.</p>
 <p>To start with, we'll continue with our <a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">movie data</a> from last time and then start looking at recommendations over Stack Exchange data.  We'll keep it small in this post and use <a href="https://lifehacks.stackexchange.com/">Lifehacks</a> data, but watch out for upcoming posts on loading all of Stack Overflow (2 Billion edges) into Dgraph and running the website and a recommendation engine with Dgraph as the backend.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 <h2 id="collaborative-filtering">Collaborative filtering</h2>
 <p>Content-based filtering measures the similarity of objects based on their properties.
 <strong>Rather than trying to find similar items, collaborative filtering works by finding similar users and then recommending items that similar users have rated highly.</strong>  In the movie example from <a href="/post/recommendation/">part 1</a>, for a given user we first find the set of users that are similar, find movies those users rated highly and recommend some that our user hasn't seen.</p>
@@ -466,7 +470,7 @@ these users have rated highly. We then remove the movies that Bob has seen, leav
 <p>If we represent the movies that user $U_i$ and user $U_j$ have in common as</p>
 <p>$$M_{(u_i,u_j)}$$</p>
 <p>and write $R_{U_i}$ for a user's rating function, then we can represent a distance (or similarity) score between two users as an average of their scores for the movies they both rated.</p>
-<!-- raw HTML omitted -->
+<!--$$\frac{\sum{R_{U_i}(M_{(u_i,u_j)})} + \sum{R_{U_j}(M_{(u_i,u_j)})}}{|M_{(u_i,u_j)}|}$$-->
 <p><img src="/images/collab_diff1.png" alt="collaborative distance 1"></p>
 <p>This is how the query would look in Dgraph.</p>
 <pre><code>{

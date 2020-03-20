@@ -549,7 +549,7 @@ unrelated to France, the country), or authors who just enjoy French food.</p>
 to scale to Google levels, and I understood web search. Knowledge Graph data was formatted in
 <a href="https://www.w3.org/TR/rdf-concepts/#section-triples">Triples</a>, i.e. every fact was represented by three pieces, subject (entity), predicate
 (relationship), and object (another entity). Queries had to go from <code>[S P]</code> → <code>[O]</code>, from <code>[P O]</code> → <code>[S]</code>, and sometimes from <code>[S O]</code> → <code>[P]</code>.</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><img src="/images/google-spo-indexing.png" style="width:80%;"></img></p>
 <p><strong>I used Google's search index system,</strong> assigned a docid to each triple and built three indices,
 one each for S, P and O. In addition, the index allowed attachments, so I attached the type
 information about each entity (i.e. actor, book, person, etc).</p>
@@ -564,7 +564,7 @@ and so on.  This resulted in multiple machine interpretations of the query. For 
 run <code>[tom hanks movies]</code>, it would produce interpretations like <code>[movies directed by tom hanks]</code>,
 <code>[movies starring tom hanks]</code>, <code>[movies produced by tom hanks]</code>, and automatically reject
 interpretations like <code>[movies named tom hanks]</code>.</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><img src="/images/google-spo-intersections.png" style="width:50%;"></img></p>
 <p>With each interpretation, it would generate a list of results &ndash; valid entities in the graph &ndash; and
 it would also return their types (present in attachments). This was extremely powerful because
 understanding the type of the results allowed capabilities like filtering, sorting or further
@@ -629,7 +629,7 @@ result), to figure out what each person eats, picking only those who eat sushi.<
 <p>The second step suffers from a fan-out problem. If the first step has a million results (population
 of San Francisco), then the second step would need to put each result into a query, retrieving their
 eating habit, followed by a filter.</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><img src="/images/google-fan-out.png" style="width:60%;"></img></p>
 <p>Distributed system engineers typically solve this by doing a <em>broadcast.</em> They would batch up the
 results, corresponding to their sharding function, and make a query to each server in the cluster.
 This would give them a join, but cause query latency issues.</p>
@@ -664,7 +664,7 @@ calls</em> within the database irrespective of the size of the cluster. The firs
 people who live in SF. The second call would send this list of people and intersect with all the
 people who eat sushi. We can then add more constraints or expansions, each step would still involve
 at most one more network call.</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><img src="/images/google-dgraph-query.png" style="width:50%;"></img></p>
 <p>This introduces the problem of very large predicates located on a single server, but that can be
 solved by further splitting up a predicate among two or more instances as the size grows. Even then,
 a single predicate split across the entire cluster would be the worst-case behavior in only the most
