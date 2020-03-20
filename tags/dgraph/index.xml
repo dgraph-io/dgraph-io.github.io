@@ -6,11 +6,20 @@
     <description>Recent content in dgraph on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Copyright (c) 2017, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Wed, 08 Jan 2020 21:30:00 +0530</lastBuildDate>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Fri, 20 Mar 2020 10:45:00 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/dgraph/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Dgraph switching to Calendar Versioning</title>
+      <link>https://blog.dgraph.io/post/dgraph-calendar-versioning/</link>
+      <pubDate>Fri, 20 Mar 2020 10:45:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/dgraph-calendar-versioning/</guid>
+      <description>Versioning is a complex and opinionated topic. Over the years, we’ve gotten great feedback from our users about our releases. We realize that while making frequent releases helps our users get access to new features and bug fixes, these can also introduce unpredictable breaking changes. We want to avoid a situation where our developers are faced with a broken application after upgrades because we didn’t communicate the lack of backward compatibility in advance.</description>
+    </item>
     
     <item>
       <title>What’s Next? Learn Dgraph with the Getting-Started Blog Series</title>
