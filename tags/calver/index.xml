@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>calver on Dgraph Blog</title>
+    <title>Calver on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/calver/</link>
-    <description>Recent content in calver on Dgraph Blog</description>
+    <description>Recent content in Calver on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
@@ -13,12 +13,13 @@
     
     
     <item>
-      <title>Dgraph switching to Calendar Versioning</title>
+      <title>Why there would be no Dgraph 2.0: Goodbye Semantic Versioning</title>
       <link>https://blog.dgraph.io/post/dgraph-calendar-versioning/</link>
       <pubDate>Fri, 20 Mar 2020 10:45:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/dgraph-calendar-versioning/</guid>
-      <description>Versioning is a complex and opinionated topic. Over the years, we’ve gotten great feedback from our users about our releases. We realize that while making frequent releases helps our users get access to new features and bug fixes, these can also introduce unpredictable breaking changes. We want to avoid a situation where our developers are faced with a broken application after upgrades because we didn’t communicate the lack of backward compatibility in advance.</description>
+      <description>There would be no Dgraph 2.0. After 4+ years of releasing Dgraph, we have decided to switch away from Semantic Versioning. The next release of Dgraph would be 20.03.0. In this post, we talk about why.
+Versioning is a complex and opinionated topic. Over the years, we’ve gotten great feedback from our users about our releases. We realize that while making frequent releases helps our users get access to new features and bug fixes, these can also introduce unpredictable breaking changes.</description>
     </item>
     
   </channel>

@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>rocksdb on Dgraph Blog</title>
+    <title>Rocksdb on Dgraph Blog</title>
     <link>https://blog.dgraph.io/tags/rocksdb/</link>
-    <description>Recent content in rocksdb on Dgraph Blog</description>
+    <description>Recent content in Rocksdb on Dgraph Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</guid>
-      <description>At Dgraph, we&#39;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&#39;s because it is.
+      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
 This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
     </item>
     

@@ -94,7 +94,7 @@
 
   <meta name="twitter:title" content="Dgraph tutorials series - 2: UID operations, updating nodes, and traversals"/>
   <meta name="twitter:description" content="Welcome to the second episode of getting started with Dgraph. In the last episode of the tutorial, we learned some of the basics of Dgraph. Including how to run the database, add new nodes and predicates, and query them back.
-In this episode, we&#39;ll build the above Graph and learn more about operations using the UID (Universal Identifier) of the nodes. Specifically, we&#39;ll learn about:
+In this episode, we&rsquo;ll build the above Graph and learn more about operations using the UID (Universal Identifier) of the nodes. Specifically, we&rsquo;ll learn about:
  Querying and updating nodes, deleting predicates using their UIDs."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -448,257 +448,366 @@ In this episode, we&#39;ll build the above Graph and learn more about operations
             class="main__image"
             src="/images/tutorials/2/banner.jpg"
           >
-          <div class="article-content"><p>Welcome to the second episode of getting started with Dgraph.
+          <div class="article-content">
+
+<p>Welcome to the second episode of getting started with Dgraph.
 In the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">last episode</a> of the tutorial, we learned some of the basics of Dgraph.
 Including how to run the database, add new nodes and predicates, and query them back.</p>
-<p><img src="/images/tutorials/2/graph-1.jpg" alt="Graph"></p>
-<p>In this episode, we'll build the above Graph and learn more about operations using the UID (Universal Identifier) of the nodes.
-Specifically, we'll learn about:</p>
+
+<p><img src="/images/tutorials/2/graph-1.jpg" alt="Graph" /></p>
+
+<p>In this episode, we&rsquo;ll build the above Graph and learn more about operations using the UID (Universal Identifier) of the nodes.
+Specifically, we&rsquo;ll learn about:</p>
+
 <ul>
 <li>Querying and updating nodes, deleting predicates using their UIDs.</li>
 <li>Adding an edge between existing nodes.</li>
 <li>Adding a new predicate to an existing node.</li>
 <li>Traversing the Graph.</li>
 </ul>
-<p>Here's the complimentary video for this blog post. It'll walk you through the steps of this getting started episode.</p>
+
+<p>Here&rsquo;s the complimentary video for this blog post. It&rsquo;ll walk you through the steps of this getting started episode.</p>
+
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/8TKD-FFBVgE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/8TKD-FFBVgE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-<p>First, let's create our Graph.</p>
-<p>Go to Ratel's mutate tab, paste the mutation below in the text area, and click Run.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;set&#34;</span>:[
+
+<p>First, let&rsquo;s create our Graph.</p>
+
+<p>Go to Ratel&rsquo;s mutate tab, paste the mutation below in the text area, and click Run.</p>
+
+<pre><code class="language-json">{
+  &quot;set&quot;:[
     {
-      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Michael&#34;</span>,
-      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">40</span>,
-      <span style="color:#000080">&#34;follows&#34;</span>: {
-        <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Pawan&#34;</span>,
-        <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">28</span>,
-        <span style="color:#000080">&#34;follows&#34;</span>:{
-          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Leyla&#34;</span>,
-          <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">31</span>
+      &quot;name&quot;: &quot;Michael&quot;,
+      &quot;age&quot;: 40,
+      &quot;follows&quot;: {
+        &quot;name&quot;: &quot;Pawan&quot;,
+        &quot;age&quot;: 28,
+        &quot;follows&quot;:{
+          &quot;name&quot;: &quot;Leyla&quot;,
+          &quot;age&quot;: 31
         }
       }
     }
   ]
 }
-</code></pre></div><p><img src="/images/tutorials/2/a-add-data.gif" alt="mutation-1"></p>
+</code></pre>
+
+<p><img src="/images/tutorials/2/a-add-data.gif" alt="mutation-1" /></p>
+
 <h2 id="query-using-uids">Query using UIDs</h2>
+
 <p>The UID of the nodes can be used to query them back.
 The built-in function uid takes a list of UIDs as a variadic argument, so you can pass one (e.g. uid(0x1)) or as many as you need (e.g. uid(0x1, 0x2)).</p>
+
 <p>It returns the same UIDs that were passed as input, no matter whether they exist in the database or not.
 But the predicates asked will be returned only if both the UIDs and their predicates exist.</p>
-<p>Let's see the <code>uid</code> function in action.</p>
-<p>First, let's copy the UID of the node created for <code>Michael</code>.</p>
+
+<p>Let&rsquo;s see the <code>uid</code> function in action.</p>
+
+<p>First, let&rsquo;s copy the UID of the node created for <code>Michael</code>.</p>
+
 <p>Go to the query tab, type in the query below, and click Run.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>people(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(name))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>uid<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p>Now, from the result, copy the UID of Michael's node.</p>
-<p><img src="/images/tutorials/2/b-get-uid-1.png" alt="get-uid"></p>
+
+<pre><code class="language-graphql">{
+  people(func: has(name)) {
+    uid
+    name
+    age
+  }
+}
+</code></pre>
+
+<p>Now, from the result, copy the UID of Michael&rsquo;s node.</p>
+
+<p><img src="/images/tutorials/2/b-get-uid-1.png" alt="get-uid" /></p>
+
 <p>In the query below, replace the placeholder <code>MICHAELS_UID</code> with the UID you just copied, and run the query.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>find_using_uid(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID)){<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>uid<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/2/c-query-uid.png" alt="get_node_from_uid">
+
+<pre><code class="language-graphql">{
+    find_using_uid(func: uid(MICHAELS_UID)){
+        uid
+        name 
+        age
+    }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/2/c-query-uid.png" alt="get_node_from_uid" />
 <em>Note: <code>MICHAELS_UID</code> appears as <code>0x8</code> in the images. The UID you get on your machine might have a different value.</em></p>
-<p>You can see that the <code>uid</code> function returns the node matching the UID for Michael's node.</p>
+
+<p>You can see that the <code>uid</code> function returns the node matching the UID for Michael&rsquo;s node.</p>
+
 <p>Refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">last episode</a> if you have questions related to the structure of the query in general.</p>
+
 <h2 id="updating-predicates">Updating predicates</h2>
+
 <p>You can also update one or more predicates of a node using its UID.</p>
-<p>Michael recently celebrated his 41st birthday. Let's update his age to 41.</p>
+
+<p>Michael recently celebrated his 41st birthday. Let&rsquo;s update his age to 41.</p>
+
 <p>Go to the mutate tab and execute the mutation.
-Again, don't forget to replace the placeholder <code>MICHAELS_UID</code> with the actual UID of the node for <code>Michael</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;set&#34;</span>:[
+Again, don&rsquo;t forget to replace the placeholder <code>MICHAELS_UID</code> with the actual UID of the node for <code>Michael</code>.</p>
+
+<pre><code class="language-json">{
+  &quot;set&quot;:[
     {
-      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;MICHAELS_UID&#34;</span>,
-      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">41</span>
+      &quot;uid&quot;: &quot;MICHAELS_UID&quot;,
+      &quot;age&quot;: 41
     }
   ]
 }
-</code></pre></div><p>We had earlier used <code>set</code> to create new nodes.
+</code></pre>
+
+<p>We had earlier used <code>set</code> to create new nodes.
 But on using the UID of an existing node, it updates its predicates, instead of creating a new node.</p>
-<p>You can see that Michael's age is updated to 41.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>find_using_uid(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID)){<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/2/d-update-check.png" alt="update check"></p>
+
+<p>You can see that Michael&rsquo;s age is updated to 41.</p>
+
+<pre><code class="language-graphql">{
+    find_using_uid(func: uid(MICHAELS_UID)){
+        name 
+        age
+    }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/2/d-update-check.png" alt="update check" /></p>
+
 <p>Similarly, you can also add new predicates to an existing node.
-Since the predicate <code>country</code> doesn't exist for the node for <code>Michael</code>, it creates a new one.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;set&#34;</span>:[
+Since the predicate <code>country</code> doesn&rsquo;t exist for the node for <code>Michael</code>, it creates a new one.</p>
+
+<pre><code class="language-json">{
+  &quot;set&quot;:[
     {
-      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;MICHAELS_UID&#34;</span>,
-      <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;Australia&#34;</span>
+      &quot;uid&quot;: &quot;MICHAELS_UID&quot;,
+      &quot;country&quot;: &quot;Australia&quot;
     }
   ]
 }
-</code></pre></div><h2 id="adding-an-edge-between-existing-nodes">Adding an edge between existing nodes</h2>
+</code></pre>
+
+<h2 id="adding-an-edge-between-existing-nodes">Adding an edge between existing nodes</h2>
+
 <p>You can also add an edge between existing nodes using their UIDs.</p>
-<p>Let's say, <code>Leyla</code> starts to follow <code>Michael</code>.</p>
+
+<p>Let&rsquo;s say, <code>Leyla</code> starts to follow <code>Michael</code>.</p>
+
 <p>We know that this relationship between them has to represented by creating the <code>follows</code> edge between them.</p>
-<p><img src="/images/tutorials/2/graph-2.jpg" alt="Graph"></p>
-<p>First, let's copy the UIDs of nodes for <code>Leyla</code> and <code>Michael</code> from Ratel.</p>
+
+<p><img src="/images/tutorials/2/graph-2.jpg" alt="Graph" /></p>
+
+<p>First, let&rsquo;s copy the UIDs of nodes for <code>Leyla</code> and <code>Michael</code> from Ratel.</p>
+
 <p>Now, replace the placeholders <code>LEYLAS_UID</code> and <code>MICHAELS_UID</code> with the ones you copied, and execute the mutation.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-  <span style="color:#000080">&#34;set&#34;</span>:[
+
+<pre><code class="language-json">{
+  &quot;set&quot;:[
     {
-      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;LEYLAS_UID&#34;</span>,
-      <span style="color:#000080">&#34;follows&#34;</span>: {
-        <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;MICHAELS_UID&#34;</span>
+      &quot;uid&quot;: &quot;LEYLAS_UID&quot;,
+      &quot;follows&quot;: {
+        &quot;uid&quot;: &quot;MICHAELS_UID&quot;
       }
     }
   ]
 }
-</code></pre></div><h2 id="traversing-the-edges">Traversing the edges</h2>
+</code></pre>
+
+<h2 id="traversing-the-edges">Traversing the edges</h2>
+
 <p>Graph databases offer many distinct capabilities. <code>Traversals</code> are among them.</p>
+
 <p>Traversals answer questions or queries related to the relationship between the nodes.
 Hence, queries like, <code>who does Michael follow?</code>
 are answered by traversing the <code>follows</code> relationship.</p>
-<p>Let's run a traversal query and then understand it in detail.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID)){<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">          </span>age<span style="color:#bbb"> 
-</span><span style="color:#bbb">        </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p>Here's the result.</p>
-<p><img src="/images/tutorials/2/e-traversal.png" alt="traversal-result"></p>
+
+<p>Let&rsquo;s run a traversal query and then understand it in detail.</p>
+
+<pre><code class="language-graphql">{
+    find_follower(func: uid(MICHAELS_UID)){
+        name 
+        age
+        follows {
+          name 
+          age 
+        }
+    }
+}
+</code></pre>
+
+<p>Here&rsquo;s the result.</p>
+
+<p><img src="/images/tutorials/2/e-traversal.png" alt="traversal-result" /></p>
+
 <p>The query has three parts:</p>
+
 <ul>
 <li><strong>Selecting the root nodes.</strong></li>
 </ul>
+
 <p>First, you need to select one or more nodes as the starting point for traversals.
 These are called the root nodes.
 In the query above, we use the <code>uid()</code> function to select the node created for <code>Michael</code> as the root node.</p>
+
 <ul>
 <li><strong>Choosing the edge to be traversed</strong></li>
 </ul>
+
 <p>You need to specify the edge to be traversed, starting from the selected root nodes.
 And then, the traversal, travels along these edges, from one end to the nodes at the other end.</p>
+
 <p>In our query, we chose to traverse the <code>follows</code> edge starting from the node for <code>Michael</code>.
 The traversal returns all the nodes connected to the node for <code>Michael</code> via the <code>follows</code> edge.</p>
+
 <ul>
 <li><strong>Specify the predicates to get back</strong></li>
 </ul>
+
 <p>Since Michael follows only one person, the traversal returns just one node.
 These are <code>level-2</code> nodes. The root nodes constitute the nodes for <code>level-1</code>.
 Again, we need to specify which predicates you want to get back from <code>level-2</code> nodes.</p>
-<p><img src="/images/tutorials/2/j-explain.JPG" alt="get_node_from_uid"></p>
+
+<p><img src="/images/tutorials/2/j-explain.JPG" alt="get_node_from_uid" /></p>
+
 <p>You can extend the query to make use of <code>level-2</code> nodes and traverse the Graph further and deeper.
-Let's explore that in the next section.</p>
+Let&rsquo;s explore that in the next section.</p>
+
 <h4 id="multi-level-traversals">Multi-level traversals</h4>
+
 <p>The first level of traversal returns people followed by Michael.
 The next level of traversal further returns the people they in-turn follow.</p>
+
 <p>This pattern can be repeated multiple times to achieve multi-level traversals.
 The depth of the query increases by one as we traverse each level of the Graph.
-That's when we say that the query is deep!</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">    </span>age<span style="color:#bbb"> 
-</span><span style="color:#bbb">    </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>name<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/2/f-level-3-traverse.png" alt="level-3-query"></p>
+That&rsquo;s when we say that the query is deep!</p>
+
+<pre><code class="language-graphql">{
+  find_follower(func: uid(MICHAELS_UID)) {
+    name 
+    age 
+    follows {
+      name
+      age
+      follows {
+        name 
+        age
+      }
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/2/f-level-3-traverse.png" alt="level-3-query" /></p>
+
 <p>Here is one more example from the extention of the last query.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID))<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">    </span>age<span style="color:#bbb"> 
-</span><span style="color:#bbb">    </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>name<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">          </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">          </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">        </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/2/g-level-4-traversal.png" alt="level 3"></p>
+
+<pre><code class="language-graphql">{
+  find_follower(func: uid(MICHAELS_UID)) {
+    name 
+    age 
+    follows {
+      name
+      age
+      follows {
+        name 
+        age
+        follows {
+          name 
+          age
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/2/g-level-4-traversal.png" alt="level 3" /></p>
+
 <p>This query is really long! The query is four levels deep.
 In other words, the depth of the query is four.
-If you ask, isn't there an in-built function that makes multi-level deep queries or traversals easy?</p>
+If you ask, isn&rsquo;t there an in-built function that makes multi-level deep queries or traversals easy?</p>
+
 <p>The answer is Yes!
-That's what the <code>recurse()</code> function does.
-Let's explore that in our next section.</p>
+That&rsquo;s what the <code>recurse()</code> function does.
+Let&rsquo;s explore that in our next section.</p>
+
 <h4 id="recursive-traversals">Recursive traversals</h4>
+
 <p>Recursive queries makes it easier to perform multi-level deep traversals.
 They let you easily traverse a subset of the Graph.</p>
+
 <p>With the following recursive query, we achieve the same result as our last query.
 But, with a much better querying experience.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID))<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@recurse</span>(depth:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">4</span>)<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>name<span style="color:#bbb"> 
-</span><span style="color:#bbb">    </span>age<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>follows<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p>In the query above, the <code>recurse</code> function traverses the graph starting from the node for <code>Michael</code>.
+
+<pre><code class="language-graphql">{
+  find_follower(func: uid(MICHAELS_UID)) @recurse(depth: 4) {
+    name 
+    age
+    follows
+  }
+}
+</code></pre>
+
+<p>In the query above, the <code>recurse</code> function traverses the graph starting from the node for <code>Michael</code>.
 You can choose any other node to be the starting point.
 The depth parameter specifies the maximum depth the traversal query should consider.</p>
-<p>Let's run the recursive traversal query after replacing the placeholder with the UID of node for Michael.</p>
-<p><img src="/images/tutorials/2/h-recursive-traversal.png" alt="recurse"></p>
+
+<p>Let&rsquo;s run the recursive traversal query after replacing the placeholder with the UID of node for Michael.</p>
+
+<p><img src="/images/tutorials/2/h-recursive-traversal.png" alt="recurse" /></p>
+
 <p><a href="https://docs.dgraph.io/query-language/#recurse-query">Check out the docs</a> for detailed instructions on using the <code>recurse</code> directive.</p>
+
 <h4 id="edges-have-directions">Edges have directions</h4>
+
 <p>Edges in Dgraph have directions.</p>
+
 <p>For instance, the <code>follows</code> edge emerging from the node for <code>Michael</code>, points at the node for <code>Pawan</code>.
 They have a notion of direction.</p>
+
 <p>Traversing along the direction of an edge is natural to Dgraph.
-We'll learn about traversing edges in reverse direction in our future episodes.</p>
+We&rsquo;ll learn about traversing edges in reverse direction in our future episodes.</p>
+
 <h2 id="deleting-a-predicate">Deleting a predicate</h2>
+
 <p>Predicates of a node can be deleted using the <code>delete</code> mutation.
-Here's the syntax of the delete mutation to delete any predicate of a node,</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span>delete<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">        </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>UID<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>predicate_name<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#bbb">
-</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p>Using the mutation syntax above, let's compose a delete mutation.
-Let's delete the <code>age</code> predicate of the node for <code>Michael</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>delete<span style="color:#bbb"> </span>{<span style="color:#bbb">
-</span><span style="color:#bbb">    </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>MICHAELS_UID<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>age<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#bbb">
-</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
-</span><span style="color:#bbb"></span>}<span style="color:#bbb">
-</span></code></pre></div><p><img src="/images/tutorials/2/i-delete.png" alt="recurse"></p>
+Here&rsquo;s the syntax of the delete mutation to delete any predicate of a node,</p>
+
+<pre><code class="language-graphql">{
+    delete {
+        &lt;UID&gt; &lt;predicate_name&gt; * .
+    }
+}
+</code></pre>
+
+<p>Using the mutation syntax above, let&rsquo;s compose a delete mutation.
+Let&rsquo;s delete the <code>age</code> predicate of the node for <code>Michael</code>.</p>
+
+<pre><code class="language-graphql">{
+  delete {
+    &lt;MICHAELS_UID&gt; &lt;age&gt; * .
+  }
+}
+</code></pre>
+
+<p><img src="/images/tutorials/2/i-delete.png" alt="recurse" /></p>
+
 <h2 id="wrapping-up">Wrapping up</h2>
+
 <p>In this tutorial, we learned about the CRUD operations using UIDs.
 We also learned about <code>recurse()</code> function.</p>
-<p>Before we wrap, here's a sneak peek into our next tutorial.</p>
+
+<p>Before we wrap, here&rsquo;s a sneak peek into our next tutorial.</p>
+
 <p>Did you know that you could search predicates based on their value?</p>
+
 <p>Sounds interesting?</p>
+
 <p>See you all soon in the next tutorial. Till then, happy Graphing!</p>
+
 <div class="engage">
 	<p>
 		<strong>

@@ -449,21 +449,35 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
             src="/images/northwest.jpg"
           >
           <div class="article-content"><p>Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “<a href="https://blog.timescale.com/why-sql-beating-nosql-what-this-means-for-future-of-data-time-series-database-348b777b847a">Why SQL is beating NoSQL</a>,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.</p>
+
 <p>The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.</p>
+
 <p>Bigtable and MapReduce were developed to deal with an enormous amount of data at Google. I was part of Google’s incremental indexing system, <a href="https://googleblog.blogspot.com.au/2010/06/our-new-search-index-caffeine.html">Caffeine</a>. A single distributed Bigtable instance handled petabytes of web data with new information being added at the rate of hundreds of terabytes per day. A feat like this is unachievable by any SQL system popular even today.</p>
+
 <p>Typical SQL database has not changed. It is still a single instance, scaling which is pain and requires application side complexity. There’s a real need for scalable systems, something that traditional SQL systems still haven’t evolved to provide. We do not have a distributed MySQL or a distributed Postgres.</p>
+
 <p>A learning curve is commonly cited as a counter to new entrants to database world (also made by Kulkarni).</p>
+
 <blockquote>
 <p>“Each NoSQL database offered its own unique query language, which meant: more languages to learn”</p>
 </blockquote>
+
 <p><strong>I do not buy it.</strong> Most companies add new tech despite the unfamiliarity of their devs. Redis, Elastic Search, Memcache are (or at least recently were) all unfamiliar technologies that are commonly part of a typical tech stack.</p>
+
 <p>In fact, contradictory arguments are used in both ways. Devs like <em>“everything new and shiny,”</em> and at the same time, <em>“learning curve limits adoption.”</em> Both arguments were made by Kulkarni on why NoSQL became big and why it did not, respectively. Both fail to understand and explain the NoSQL movement.</p>
+
 <p>As I write this, MongoDB has <a href="https://techcrunch.com/2017/09/21/database-provider-mongodb-has-filed-to-go-public/">filed to go public</a>. <em>This is a huge success for any database company!</em> Developers use Mongo not just because it is new and shiny (well, it no longer is new), but because it solves real problems for them.</p>
+
 <p><strong>So what has changed?</strong> What changed is a result of lessons learned by NoSQL folks. Jeff Dean, the Google fellow behind MapReduce and Bigtable, said that not supporting distributed transactions in Bigtable <a href="http://nosql.mypopescu.com/post/2082849662/distributed-transactions-matter-googles-jeff">was a mistake</a>.</p>
+
 <p>In fact, many projects were using Megastore at Google despite poor write throughput, because it added transactions on top of Bigtable. Caffeine itself used transactions via <a href="https://research.google.com/pubs/pub36726.html">Percolator</a>. So Spanner was an evolution of Bigtable to provide distributed transactions. Four of Bigtable authors worked on Spanner, including Jeff Dean and Sanjay Ghemawat.</p>
+
 <p>Once you evolve a NoSQL database into providing MVCC and transactions, then adding a SQL based query language is not hard. However, it could be any other interface. <strong>The interface does not matter.</strong> What matters is the fact that scalability <strong>and</strong> transactions are important. Bigtable traded off transactional access for scalability, something that Cassandra and MongoDB went on to copy. That and lack of joins is the primary cause of discontent among NoSQL developers.</p>
+
 <p>So, like Spanner is an evolution of Bigtable, CockroachDB is an evolution of MongoDB. SQL has not changed or made a comeback, or beaten NoSQL. NoSQL has morphed into something developers have come to expect from their databases, namely transactions and joins.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -513,6 +527,7 @@ Bigtable and MapReduce were developed to deal with an enormous amount of data at
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="https://www.nasa.gov/image-feature/phytoplankton-bloom-in-the-north-atlantic">Phytoplankton Bloom in the North Atlantic</a></em></p>
 </div>

@@ -93,7 +93,7 @@
   
 
   <meta name="twitter:title" content="Hello, World!"/>
-  <meta name="twitter:description" content="I&#39;m very excited to use this first post to talk about Dgraph
+  <meta name="twitter:description" content="I&rsquo;m very excited to use this first post to talk about Dgraph
 , what it is and why it was created."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -447,92 +447,131 @@
             class="main__image"
             src="/images/default.jpg"
           >
-          <div class="article-content"><p><strong>I'm very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+          <div class="article-content"><p><strong>I&rsquo;m very excited</strong> to use this first post to talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , what it is and why it was created.</p>
-<p>Before I explain what's <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-, let's start with a basic understanding of graphs.
+
+<p>Before I explain what&rsquo;s <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+, let&rsquo;s start with a basic understanding of graphs.
 A graph is a mathematical structure used to model a pairwise relationship between entities.
 A graph is thus composed of nodes connected by edges.
 Each node represents an entity (a person, place, thing, etc.), and each edge represents the relationship between two nodes.
 Some popular graphs that we all know about are the <a href="https://en.wikipedia.org/wiki/Social_graph">Facebook Social Graph</a> and the <a href="https://en.wikipedia.org/wiki/Knowledge_Graph">Google Knowledge Graph</a>.</p>
+
 <p>A graph database is a database that uses graph structures with nodes and edges to represent, store and serve data.</p>
-<p>But who really uses graph databases? More teams and companies than you'd think.
+
+<p>But who really uses graph databases? More teams and companies than you&rsquo;d think.
 Google, Facebook, Twitter, eBay, LinkedIn, Amazon, Dropbox, Pinterest &ndash; pick a company you are familiar with.
-If they're doing something smart, chances are they're probably using a graph database.
+If they&rsquo;re doing something smart, chances are they&rsquo;re probably using a graph database.
 Even very simple web apps have much to gain from graph databases.
-In the past, I've built a graph based REST framework and using that <a href="https://mrjn.xyz/post/Porting-To-Gocrud/">cut down the code in half</a>.</p>
-<p>So now that we understand graphs, let's talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+In the past, I&rsquo;ve built a graph based REST framework and using that <a href="https://mrjn.xyz/post/Porting-To-Gocrud/">cut down the code in half</a>.</p>
+
+<p>So now that we understand graphs, let&rsquo;s talk about <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .</p>
+
 <p><strong><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is an open source, low-latency, high throughput, native and distributed graph database.</strong></p>
-<p>To understand why it was created, let's rewind a few years back to 2011.</p>
-<hr>
-<p><strong>I'd been at Google</strong> about 4+ years with the Web Search Infrastructure Group.
+
+<p>To understand why it was created, let&rsquo;s rewind a few years back to 2011.</p>
+
+<hr />
+
+<p><strong>I&rsquo;d been at Google</strong> about 4+ years with the Web Search Infrastructure Group.
 Google had just then acquired Metaweb a year earlier in 2010.
-I'd been wrapping my head around the newly acquired Knowledge Graph, trying to find ways to integrate Knowledge Graph with Google Search.
+I&rsquo;d been wrapping my head around the newly acquired Knowledge Graph, trying to find ways to integrate Knowledge Graph with Google Search.
 This is when I found a problem.</p>
+
 <p>At Google, we had multiple knowledge bearing feeds called One Boxes.
 You know, the boxed snippets that sometimes show up at the top of the search results, for instance when you search for <a href="https://www.google.com/#q=tesla+stock">Tesla stock</a>, <a href="https://www.google.com/#q=weather+in+sydney">Weather in Sydney</a>, or <a href="https://www.google.com/#q=events+in+san+francisco">Events in San Francisco</a>.</p>
+
 <p>There were multiple custom built backends, each serving a One Box.
 A search query hitting <em><a href="https://www.google.com">www.google.com</a></em> would be sent iteratively through each of these One Box backends to check if any of them has a response.
 When one of the backends responds, the One Box data is retrieved and rendered on the top of the search results page.
 This is how that well-formatted box with just the right information shows up below the search bar, thus saving you a few clicks.</p>
+
 <p>As good as it sounded, One Boxes had several inefficiencies and missed opportunities.</p>
+
 <p>For starters, each One Box was custom built by a separate team that was responsible for running and maintaining it.
 As a result, there was no particular sharing of the framework used to build the One Box.</p>
+
 <p>This also meant that there was no single standard for the data format used by the One Boxes.
 Each One Box kept its data in its very own data structure, and no common querying language.
-Thus, there didn't exist an opportunity to share data amongst the boxes, to respond to more interesting queries that required an intersection of diverse data feeds.</p>
+Thus, there didn&rsquo;t exist an opportunity to share data amongst the boxes, to respond to more interesting queries that required an intersection of diverse data feeds.</p>
+
 <blockquote>
-<p>A good example of this would be the ability to <em>recommend events based on the weather</em> to a tourist exploring NYC &ndash; that couldn't easily be done with the existing system.</p>
+<p>A good example of this would be the ability to <em>recommend events based on the weather</em> to a tourist exploring NYC &ndash; that couldn&rsquo;t easily be done with the existing system.</p>
 </blockquote>
-<p><img src="/images/nyc.jpg" alt="NYC in rain">
+
+<p><img src="/images/nyc.jpg" alt="NYC in rain" />
 <em>Courtesy: <a href="https://flic.kr/p/azztBd">Several Seconds</a></em></p>
+
 <p>This motivated me to start a project to standardize the data structures and eventually serve them all using a single backend.
 Using the vast expertise of Metaweb team, we chose a data normalization structure that was also used by Knowledge Graph, the RDF Triples.
 By reconciling all the various entities from the different data feeds, we could start to reuse the data.</p>
+
 <p><strong>But, there was a second and more challenging part to the problem.</strong></p>
+
 <p>It was to build a system that could serve structured queries with data updating in real time.
-The system had to run behind Web Search, which meant that if it doesn't respond within allocated milliseconds, Search would time out and move on.
+The system had to run behind Web Search, which meant that if it doesn&rsquo;t respond within allocated milliseconds, Search would time out and move on.
 Also, this system had to tackle a major chunk of query load to Web Search, which amounts to thousands of queries per second.</p>
+
 <p><em>We basically had to build a low latency, high throughput system to serve graph queries.</em></p>
+
 <p>It was certainly an exciting project and held much promise.
 But, the harsh realities of the business environment and the attendant politics resulted in the cancellation of the project.
-Shortly thereafter I left Google in 2013 and didn't give much thought to the project.</p>
-<hr>
-<p><strong>Fast forward two years,</strong> I was hanging out on the Go language's Slack channel and Stack Overflow.
-I saw quite a few people complaining about a popular graph database's performance and stability.</p>
-<p>That's when I realized that graph databases were starting to be used more frequently than it would appear from the surface.
+Shortly thereafter I left Google in 2013 and didn&rsquo;t give much thought to the project.</p>
+
+<hr />
+
+<p><strong>Fast forward two years,</strong> I was hanging out on the Go language&rsquo;s Slack channel and Stack Overflow.
+I saw quite a few people complaining about a popular graph database&rsquo;s performance and stability.</p>
+
+<p>That&rsquo;s when I realized that graph databases were starting to be used more frequently than it would appear from the surface.
 But a bit more digging around revealed a deeper problem.</p>
-<p><em>Existing native graph databases weren't designed to be performant or distributed.</em></p>
-<p>The ones that sharded the data and distributed it across a cluster weren't actually native graph databases.
+
+<p><em>Existing native graph databases weren&rsquo;t designed to be performant or distributed.</em></p>
+
+<p>The ones that sharded the data and distributed it across a cluster weren&rsquo;t actually native graph databases.
 They were largely serving as a graph layer over another database.
 This meant having many network calls should the intermediate number of results be large, which leads to performance degradation.</p>
+
 <p>For example, say you wanted to find <strong>[People living in SF who eat Sushi]</strong>.
 Assuming you have this data (<em>hey Facebook!</em>) and keeping things simple, this requires 2 steps.</p>
-<p><img src="/images/sushi.jpg" alt="Sushi">
+
+<p><img src="/images/sushi.jpg" alt="Sushi" />
 <em>Courtesy: <a href="https://flic.kr/p/nLkbkQ">Yannig Van de Wouwer</a></em></p>
+
 <p>First, you find all the people living in SF, and then secondly, intersect that list with all the people who eat Sushi.</p>
-<p>As you can imagine, the intermediate step here has a <em>large fan-out</em>, i.e. there're over a million results.
-If you were to shard the data by <em>entities</em> (people), you'd end up broadcasting to all the servers in the cluster.
+
+<p>As you can imagine, the intermediate step here has a <em>large fan-out</em>, i.e. there&rsquo;re over a million results.
+If you were to shard the data by <em>entities</em> (people), you&rsquo;d end up broadcasting to all the servers in the cluster.
 Thus, this query would be affected by even a single slow machine in the cluster.</p>
+
 <p>Do that for every query, and it would spike the 95%-ile latency numbers up dramatically, <em>higher latency being worse</em>.</p>
-<hr>
+
+<hr />
+
 <p><strong><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , on the other hand, is a native graph database</strong> in the sense that the data is handled directly by <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , and not given off to another database layer.</p>
+
 <p>This allows us to shard and relocate the data better, to minimize the number of network calls required per query.
 In fact, the above query would run in 2 network calls, irrespective of the cluster size.</p>
+
 <p>The number of network calls being <em>directly proportional to the complexity of the query</em>, not the number of intermediate or final results.</p>
+
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is designed to easily scale from meeting the needs of a small startup to that of Dropbox, or even Facebook.
 This means being able to run on a laptop as well as on a big cluster of hundreds of machines serving thousands of queries per second.</p>
+
 <p>Additionally, it would also have to survive machine failures and partial data center collapses.
 The data stored would have to be automatically replicated with no single point of failure, and be able to move around the cluster to better distribute traffic.</p>
+
 <p><strong>This is the big vision which led to <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-.</strong> And I'm <a href="http://dgraph.io/">fortunate to have a team</a> that believes in and shares this vision with me.</p>
+.</strong> And I&rsquo;m <a href="http://dgraph.io/">fortunate to have a team</a> that believes in and shares this vision with me.</p>
+
 <p>Apart from use with diverse social and knowledge graphs, <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  can also be used to:</p>
+
 <ul>
 <li>build real-time recommendation engines,</li>
 <li>do semantic search,</li>
@@ -540,9 +579,12 @@ The data stored would have to be automatically replicated with no single point o
 <li>serve relationship data, and</li>
 <li>serve web apps via <a href="https://facebook.github.io/graphql/">GraphQL</a>, a full feature graph query language by Facebook.</li>
 </ul>
-<p>We'll be reporting some performance numbers for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+
+<p>We&rsquo;ll be reporting some performance numbers for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  in our next few posts, to give you an idea of what you can expect from the system.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -592,6 +634,7 @@ The data stored would have to be automatically replicated with no single point o
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="http://go.nasa.gov/1VlGVXx">Mars Rover Curiosity in Buckskin Selfie</a></em></p></div>
           <div class="article-tag-list">

@@ -447,67 +447,99 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
             class="main__image"
             src="/images/badger-evolution.png"
           >
-          <div class="article-content"><p>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.</p>
+          <div class="article-content">
+
+<p>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.</p>
+
 <p>One of these pieces is <a href="https://github.com/dgraph-io/badger">BadgerDB</a>, a key-value store written completely in Go following the ideas of RocksDB and LSM trees. BadgerDB has many users (e.g. <a href="https://github.com/ipfs/go-ipfs">go-ipfs</a>, <a href="https://github.com/emitter-io/emitter">emitter</a>, <a href="https://github.com/go-ego/riot">riot</a>, and <a href="https://github.com/dgraph-io/badger/#other-projects-using-badger">many more</a>) but one of the most important one is indeed our database server <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>. Now, this is important because we care about our community of users: they always are the main stakeholder we keep in mind. In our case, though, our biggest user is ourselves so our own engineers become also clients that we need to delight.</p>
+
 <p>This post is a report on how we got ourselves into a situation in which Go Modules were simply not good enough for us, and how in the process of understanding why we figured out that our issue might be probably with Semantic Versioning itself.</p>
+
 <h3 id="how-we-got-ourselves-in-this-situation">How we got ourselves in this situation</h3>
+
 <p>For reasons that are not relevant to this post, BadgerDB has not had a release in over a year. This does not mean that BadgerDB has not changed over this time, it indeed has changed a lot, but we have not really cut a release or tagged a version and published it as something people should be using.</p>
+
 <p>This had to change and I, as VP of Product, was responsible for getting us back to a regular release pace which would allow us to release new features quickly while avoiding any impact on our current users. With that in mind, I started reviewing the changes since our last release and the ones that were coming up in the near future.</p>
+
 <p>We had two different kinds of backward-incompatible changes: API changes and data format changes. API changes had already been committed to <code>master</code> and many of our users (including Dgraph itself) were already using this new API not fully compatible with the previous release <code>v1.5.3</code>. The data changes had not landed yet, but they were necessary for the next release of Dgraph and therefore imminent.</p>
+
 <p>Following Semantic Versioning principles, I decided we should release the following versions after <code>v1.5.3</code>:</p>
+
 <ul>
 <li><code>v2.0.0</code> which would include all of the API breaking changes. This version would support all of those already using <code>master</code>, which includes Dgraph 1.0.</li>
 <li><code>v2.1.0</code> which would include also the data format changes. This version’s API would be backward-compatible with <code>v2.0.0</code> but files written with <code>v2.0.0</code> would not be readable from <code>v2.1.0</code> and vice-versa.</li>
 </ul>
+
 <h3 id="why-go-modules-makes-it-hard-for-us">Why Go Modules makes it hard for us</h3>
+
 <p>This felt like the right solution from a Semantic Versioning point of view, so I announced the plan and got started with the release process. Then Go Modules, which we planned on supporting, appeared and interrupted the whole process because it caused us to force upon our users a new import path for BadgerDB <code>v2.0.0</code>. The import path would be <code>”github.com/dgraph-io/badger/v2&quot;</code>, note that <code>v2</code> at the end. This would mean that for our users already on <code>master</code>, adopting <code>v2.0.0</code> would require changing every single import statement instead of simply marking on their dependency manager that they were now using <code>v2.0.0</code>.</p>
+
 <p>This seemed to be a roadblock and I <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662">wrote about</a> why we were deciding to postpone adding support for Go Modules on Badger until a point where our concerns had been addressed.</p>
+
 <p>My complaint was and still is that forcing users to include the major version of a package in their import path is unnecessary. I do understand the benefits of having different import paths for different versions, but there are also many drawbacks to this decision so it should be up to package publishers to make it rather than the Go team.</p>
+
 <p>I kept thinking about how to get out of this thorny situation since releasing a version 2 of our library without support for Go modules would put us in a situation where adopting Go modules would become almost impossible. We would have to support two different import paths for v2, one for those using Go modules and one for the rest. The other option was, of course, to hope the Go team would change the design of Go Modules making the import path rewrite an optional step … but I’m a realistic person and it seemed that boat (probably) left port long ago.</p>
+
 <h3 id="semantic-versioning-should-not-only-about-apis">Semantic Versioning should not only about APIs</h3>
+
 <p>At some point, I was discussing with Manish (the CEO of Dgraph Labs) about my plans and concerns and he came out with an interesting point: is Semantic Versioning necessarily about APIs? If you visit semver.org you will see that, indeed, all of the changes they take into account are those impacting the API of a library, but what about the other ways a library can break?</p>
+
 <p>In our case, there are two different change kinds: API changes and serialization changes. They both are backward-incompatible but the cost of fixing one vastly outweighs the other.</p>
+
 <p>Migrating to a new API, in our case, is a pretty straight forward change. Some functions might have changed arguments or maybe even replaced byfor a completely new API. These changes, no matter how tedious, are pretty straightforward to fix especially in a strongly typed statically compiled language like Go.</p>
+
 <p>Migrating to a new serialization format, though, can be much time and cost consuming as it requires transforming your whole dataset, often measured in TB, from the previous version into the new one. This takes time, and while the process is ongoing you might need still be serving traffic so the migration strategies become much more advanced than a simple code deployment.</p>
+
 <p>So in our case, it turns out that the major breakage we have is not API changes, but serialization format changes! So … what if we adapted Semantic Versioning to take that into account?</p>
+
 <p>Our modified version of Semantic Versioning is called Serialization Versioning. You can find a full description of the reasoning and details of the naming schema in <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/7?u=mrjn">here</a> and <a href="https://medium.com/@francesc/serialization-versioning-the-semantic-versioning-for-databases-eea5aece0355">here</a>, but let me summarize it here too.</p>
+
 <p>Given a version number MAJOR.MINOR.PATCH, increment the:</p>
+
 <ol>
 <li>MAJOR version when you make changes that require a transformation of the dataset before it can be used again.</li>
 <li>MINOR version when old datasets are still readable but the API might have changed in backward-compatible or incompatible ways.</li>
 <li>PATCH version when you make backward-compatible bug fixes.</li>
 </ol>
+
 <p>Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.</p>
+
 <h3 id="how-we-get-out-of-this-situation">How we get out of this situation</h3>
+
 <p>Taking into account this new way of interpreting Semantic Versioning, our release plan became quite different and in so adapted to what Go Modules requires in a much more natural way!</p>
+
 <p>My original plan was to release v2.0.0 containing all of the API breaking changes, followed by v2.1.0 containing the serialization format changes. This had three main drawbacks:</p>
+
 <ul>
-<li>
-<p>The most expensive upgrade seemed like the easiest one. Migrating from v1.5.3 to v2.0.0 is actually quite straight forward and it can be done in a single Pull Request, but migrating from v2.0.0 to v2.1.0 can mean weeks or more of engineering efforts to migrate your dataset without causing any downtime.</p>
-</li>
-<li>
-<p>Following Go Modules advice, the new versions of Badger needed to have <code>v2</code> at the end of their import path. This meant that our users already using the newer API from master would have to rewrite their import paths for no real benefit.</p>
-</li>
-<li>
-<p>It also felt like releasing v2 and v3 at the same time would be confusing to our users and would somehow imply that the release pace had been accelerated unnecessarily. This is why v2.1.0 felt like a better option to follow v2.0.0 even though they were clearly incompatible.</p>
-</li>
+<li><p>The most expensive upgrade seemed like the easiest one. Migrating from v1.5.3 to v2.0.0 is actually quite straight forward and it can be done in a single Pull Request, but migrating from v2.0.0 to v2.1.0 can mean weeks or more of engineering efforts to migrate your dataset without causing any downtime.</p></li>
+
+<li><p>Following Go Modules advice, the new versions of Badger needed to have <code>v2</code> at the end of their import path. This meant that our users already using the newer API from master would have to rewrite their import paths for no real benefit.</p></li>
+
+<li><p>It also felt like releasing v2 and v3 at the same time would be confusing to our users and would somehow imply that the release pace had been accelerated unnecessarily. This is why v2.1.0 felt like a better option to follow v2.0.0 even though they were clearly incompatible.</p></li>
 </ul>
+
 <p>These three issues actually disappear once we consider our versioning focus to be on serialization formats rather than APIs. Our plan is now to release these two versions:</p>
+
 <ul>
-<li>
-<p><code>v1.6.0</code> includes all the API changes but no serialization one. A system using <code>v1.5.3</code> for months can simply migrate its code to <code>v1.6.0</code> and start benefiting from the newest features without having to worry about a data migration strategy. Once it compiles, it works.</p>
-</li>
-<li>
-<p><code>v2.0.0</code> has actually the same API as <code>v1.6.0</code> but a completely different serialization format. Migrating from <code>v1.6.0</code> to <code>v2.0.0</code> is an endeavor that should be considered carefully.</p>
-</li>
+<li><p><code>v1.6.0</code> includes all the API changes but no serialization one. A system using <code>v1.5.3</code> for months can simply migrate its code to <code>v1.6.0</code> and start benefiting from the newest features without having to worry about a data migration strategy. Once it compiles, it works.</p></li>
+
+<li><p><code>v2.0.0</code> has actually the same API as <code>v1.6.0</code> but a completely different serialization format. Migrating from <code>v1.6.0</code> to <code>v2.0.0</code> is an endeavor that should be considered carefully.</p></li>
 </ul>
+
 <p>So the cost of the changes is again aligned with the MAJOR, MINOR, PATCH schema, which solves our first concern. But what about the second concern? Since <code>v1.6.0</code> corresponds to our current <code>master</code>, our users depending on <code>master</code> can migrate to using <code>v1.6.0</code> without any hiccups - no need to rewrite any import path either since this is <em>still</em> a <code>v1.x</code> version.</p>
+
 <p>And as part of the migration to <code>v2</code>, we can now force our users to adopt the new import paths, since it actually has a very clear benefit and it is part of a much larger migration process. The clear benefit, at least from our point of view, is that having two different import paths for these two versions will allow us to write a tool that will migrate files from <code>v1</code> formatting to <code>v2</code>, which would have been otherwise impossible if both versions used the same import path, as <code>v2.0.0</code> and <code>v2.1.0</code> would have in our original plan.</p>
+
 <h3 id="in-conclusion">In conclusion</h3>
+
 <p>Releasing Open Source Software is hard and finding a solution that meets everyone’s needs is almost impossible. That said, Go Modules does provide a really good solution to 99% of the use cases - maybe 100% if instead of blaming Go Modules for our issues you simply point at Semantic Versioning not being the right way to version Database libraries.</p>
+
 <p>I wanted to thank everyone in the Go community that participated in this conversation, especially Andrew Gerrand and Russ Cox which took their time to participate in our <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662">discuss.dgraph.io</a> post where I originally shared my plans.</p>
+
 <p><em>Oh, by the way,</em> Dgraph is writing some really cool Go code to solve distributed systems problems … and yes, we’re hiring! Hit me up if you’re interested in joining us as a Software Engineer, Developer Advocate, Technical Writer, or Product Manager roles. Either in SF or Bangalore.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -557,6 +589,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 		}
 	})
 </script>
+
 
 <p><em>Top image derived from <a href="https://pixabay.com/illustrations/evolution-human-evolution-2780651/">The theory of evolution</a></em></p>
 </div>
