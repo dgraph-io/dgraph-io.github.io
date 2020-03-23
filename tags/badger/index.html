@@ -32,8 +32,8 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/index.xml">
 
   
-    <title>Badger - Dgraph Blog</title>
-    <meta property='og:title' content="Badger - Dgraph Blog">
+    <title>badger - Dgraph Blog</title>
+    <meta property='og:title' content="badger - Dgraph Blog">
     <meta property="og:type" content="article">
   
 
@@ -90,7 +90,7 @@
       <meta name="twitter:image" content="/images/diggy-lg.png"/>
   
 
-  <meta name="twitter:title" content="Badger"/>
+  <meta name="twitter:title" content="badger"/>
   <meta name="twitter:description" content="Engineering stories of building the world&#39;s best graph database Dgraph"/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
@@ -140,7 +140,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Dgraph Blog</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              <span class="tag-name">Badger</span>
+              <span class="tag-name">badger</span>
               <span class="article-count">&nbsp;(8)</span>
             </li>
           </ol>
@@ -212,7 +212,7 @@ Background In 2008, Microsoft released Transparent Data Encryption (TDE) to prov
 			</div>
 			<div class="col-12 col-lg-9">
 				<div class="summary">Dgraph is an open-source, transactional, distributed, native Graph database. Dgraph is optimized for high-performance reads and writes. It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.
-Much of Dgraph&rsquo;s advanced performance capabilities come from Badger. Badger is the embedded key-value store that is responsible for storing all of Dgraph&rsquo;s data.
+Much of Dgraph's advanced performance capabilities come from Badger. Badger is the embedded key-value store that is responsible for storing all of Dgraph's data.
 Badger itself is not distributed, Dgraph implements a layer on top of it to provide the distributed capabilities.</div>
 				<div class="tags">
 					
@@ -253,7 +253,7 @@ Badger itself is not distributed, Dgraph implements a layer on top of it to prov
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary"><p>It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
+				<div class="summary"><p>It's been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
@@ -338,7 +338,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">At Dgraph, we&rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&rsquo;s because it is.
+				<div class="summary">At Dgraph, we're building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That's because it is.
 This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</div>
 				<div class="tags">
 					
@@ -379,7 +379,8 @@ This blog post is about Badger, the key-value database that makes it all happen 
 				</a>
 			</div>
 			<div class="col-12 col-lg-9">
-				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</div>
+				<div class="summary">When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.
+As Badger is gaining popularity, we see the limitations of our initial choices.</div>
 				<div class="tags">
 					
 							

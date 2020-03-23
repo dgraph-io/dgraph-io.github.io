@@ -447,12 +447,9 @@ Versioning is a complex and opinionated topic. Over the years, we’ve gotten gr
             class="main__image"
             src="/images/microgravity.jpg"
           >
-          <div class="article-content">
-
-<p>There would be no Dgraph 2.0. After 4+ years of releasing Dgraph, we have
+          <div class="article-content"><p>There would be no Dgraph 2.0. After 4+ years of releasing Dgraph, we have
 decided to switch away from Semantic Versioning.  <strong>The next release of Dgraph
 would be 20.03.0.</strong> In this post, we talk about why.</p>
-
 <p>Versioning is a complex and opinionated topic. Over the years, we’ve gotten
 great feedback from our users about our releases. We realize that while making
 frequent releases helps our users get access to new features and bug fixes,
@@ -461,7 +458,6 @@ situation where our developers are faced with a broken application after
 upgrades because we didn’t communicate the lack of backward compatibility in
 advance. Our ultimate goal is to achieve a continuous delivery model where users
 can benefit from a seamless upgrade experience.</p>
-
 <p><strong>However, it is hard to achieve that with typical <a href="https://semver.org/">Semantic Versioning</a>.</strong>
 Even a small API breaking change requires a major version increase, while a very
 large feature affecting the way data is laid out on disk (but containing no API
@@ -471,7 +467,6 @@ to all the work that has gone into the system. At the same time, our upcoming v2
 release has led to a rush of <em>cramming in</em> all possible breaking changes to avoid
 another major version release within a few months, which delays the release
 process and makes it hard to do testing.</p>
-
 <p>Instead of slowing down and complicating our releases, we decided to put a
 versioning system in place that is <strong>flexible but has a rigorous and predictable
 schedule.</strong>  When looking for a solution, we researched how other databases are
@@ -480,9 +475,7 @@ and MySQL) are using Semantic Versioning, while newer ones (MongoDB,
 CockroachDB) are using an even/odd versioning model and Calendar Versioning.
 We thought of adding that research in our post to provide a broader context to our
 users and to the general audience interested in understanding versioning schemes.</p>
-
 <h3 id="a-bit-of-market-research">A bit of Market Research</h3>
-
 <p><strong>Postgres</strong>: A major version is indicated by increasing the first part of the
 version, e.g. 10 to 11. Minor releases are numbered by increasing the last part
 of the version number, e.g. 10.0 to 10.1. PostgreSQL releases a new major
@@ -491,7 +484,6 @@ fixes are at least every 3 months, with exceptions for security fixes. End of
 Life Policy is 5 years. Major versions usually change the internal format of
 system tables and data files.  Backward compatibility of all stored data is not
 maintained in major releases.  <a href="https://www.postgresql.org/support/versioning/">Reference</a></p>
-
 <p><strong>MySQL</strong>: Release names consist of three numbers and an optional suffix; for
 example, mysql-5.7.1-m1.  The first number (5) is the major version number.  The
 second number (7) is the minor version number. Taken together, the major and
@@ -501,7 +493,6 @@ release series. This is incremented for each new bugfix release. The absence of 
 suffix indicates a General Availability (GA) or Production release. The overall
 goal is to produce a new GA release every 18 to 24 months.
 <a href="https://dev.mysql.com/doc/refman/5.7/en/which-version.html">Reference</a></p>
-
 <p><strong>MongoDB</strong>:  MongoDB versioning has the form X.Y.Z where X.Y refers to either a
 release series or development series and Z refers to the revision/patch number.
 If Y is even, X.Y refers to a release series and is stable and suitable for
@@ -512,12 +503,10 @@ series (e.g. 4.0 to 4.2) generally mark the introduction of new features that
 may break backward compatibility. Changes to the revision number (e.g. 4.0.11
 to 4.0.12) generally mark the release of bug fixes and backward-compatible
 changes. <a href="https://docs.mongodb.com/manual/reference/versioning/">Reference</a></p>
-
-<p><strong>Ubuntu</strong>: Ubuntu isn&rsquo;t a database, but an operating system that most Dgraph
+<p><strong>Ubuntu</strong>: Ubuntu isn't a database, but an operating system that most Dgraph
 team members use. We really liked how easy it is to correlate the version number of
 Ubuntu with when it was released and its end of life policy. Ubuntu uses
 <a href="https://calver.org/#when-to-use-calver">Calendar Versioning</a>.</p>
-
 <p>Releases of Ubuntu get a development codename and are versioned by the year and
 month of delivery - for example, Ubuntu 19.10 was released in October 2019. LTS
 or ‘Long Term Support’ releases are published every two years in April.  Every
@@ -526,12 +515,9 @@ Ubuntu. These are production-quality releases and are supported for 9 months,
 with sufficient time provided for users to update, but these releases do not
 receive the long-term commitment of LTS releases.
 <a href="https://ubuntu.com/about/release-cycle">Reference</a></p>
-
 <p><strong>CockroachDB</strong>: As of February 2019, CockroachDB has switched from Semantic
 Versioning to Calendar Versioning. <a href="https://www.cockroachlabs.com/blog/calendar-versioning/">Reference</a></p>
-
 <h3 id="introducing-calendar-versioning">Introducing Calendar Versioning</h3>
-
 <p>After our research and a lot of internal discussions, we concluded that a
 date-based approach will be the most suitable solution. Starting with the next
 release, <strong>Dgraph releases are going to be based on <a href="https://calver.org/#when-to-use-calver">Calendar
@@ -542,27 +528,21 @@ our release for new features that are not completely ready yet. It is also
 predictable because by looking at a release version, a user can judge when it
 was released and when it would reach its end of life. As mentioned above, this
 versioning scheme is quite inspired by <a href="https://calver.org/#ubuntu">Ubuntu</a>.</p>
-
 <p>The shift to Calendar Versioning and adopting regulated <em>End Of Life</em> policy will
 reflect the rapid progress we are making and will also manage our internal
 problem of maintaining too many released versions.  Starting in March, our
 release scheme will be <strong>YY.0M.PatchNumber</strong> for major releases and
 <strong>YY.0M.0-beta.MMMDD</strong> for beta releases of a future release.</p>
-
 <h4 id="versioning-scheme">Versioning Scheme</h4>
-
 <p><strong>YY</strong>: Short year which indicates which year the release was made GA.</p>
-
 <p><strong>0M</strong>: Zero padded month indicating the month that the release was made GA. We
 will have major releases every four months: (March, July, November) or (03, 07,
 11). These releases will have bug fixes and new features with the possibility of
 breaking changes. We will provide scripts and tools to make upgrades easier
 between these versions.</p>
-
 <p><strong>PatchNumber</strong>: Patch releases are focused on bug fixes and are <strong>backward
 compatible.</strong> If a bug fix has a breaking change it will not be released until the
 next major release but will be available as a beta.</p>
-
 <p><strong>Beta Releases</strong>: Beta releases are available before the GA and are cut from
 the release branch, which will be in sync with the master branch. Their naming scheme
 contains the release the beta is destined for (<strong>YY.0M.0</strong>-beta.MMMDD), and the
@@ -573,18 +553,13 @@ stable product. After the release is GA, every new feature will then go to the
 next release branch. It is up to the Dgraph team to decide when to do a beta
 release, we will aim to do a beta release every time we are ready with a new
 feature.</p>
-
 <h4 id="end-of-life-policy">End of Life Policy</h4>
-
 <p><strong>We will support the release series for one year and security patches for 18
 months.</strong> For example, release series (20.03.x) will be supported until March
 2021 with security patches until September 2021.</p>
-
 <p>The <a href="https://docs.dgraph.io/releases/">Releases</a> page details all the Dgraph releases and
 their end of life dates.</p>
-
 <h4 id="versioning-for-dgraph-libraries">Versioning for Dgraph Libraries</h4>
-
 <p>It is our intention to keep things as simple as possible. In March, we are going
 to sync all of our user-facing libraries with the Dgraph release version. So,
 along with March Dgraph release, we will also release all clients (dgo,
@@ -592,7 +567,6 @@ dgraph4j, …) with the same release number as Dgraph. For releases after March,
 will release any client that has a breaking change and will sync its release
 number with Dgraph. So at any given time, <strong>the client’s release number will be in
 sync with the earliest compatible Dgraph version.</strong></p>
-
 <p><strong>Example</strong>: We will have our first CalVer release in March. The version for
 the March GA release: <strong>20.03.0</strong>. Later we will release a patch with bug
 fixes and no breaking changes as <strong>20.03.1</strong>. Let’s say it is June 15th and we
@@ -605,25 +579,19 @@ breaks a particular client, we will only release that client. If the
 Dgraph version 20.07.0 has client API changes, then the client
 library version will be 20.07.0. Any client libraries not affected will remain
 as 20.03.0, indicating they are compatible with both March and July releases.</p>
-
 <p><strong>For client-versioning, there’s a special exception for the Go client</strong>.
 <a href="https://github.com/dgraph-io/dgo">dgo</a> versions would include an extra digit in the <strong>YY</strong> number to allow for
 breaking changes within the year. In a hypothetical scenario, they could be
 called v200.03.0, v201.07.0, v202.11.0 if there are multiple breaking API
 changes within the year.  This versioning scheme still correlates to Dgraph
 versions, yet supports Go Modules which mandates using Semantic Versioning.</p>
-
 <h3 id="conclusion">Conclusion</h3>
-
 <p>We hope this versioning scheme is clear and makes sense to all our users. This
 scheme makes it much easier for us to ensure that we keep releasing Dgraph
 regularly, while also <a href="https://docs.dgraph.io/releases/">communicating</a> to our users about client/server
 compatibility, our maintenance policy and when it is time to upgrade.</p>
-
 <p>Let us know if you have any questions or comments!</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -673,7 +641,6 @@ compatibility, our maintenance policy and when it is time to upgrade.</p>
 		}
 	})
 </script>
-
 
 <p><em>Top image: <a href="https://images.nasa.gov/details-564137">Microgravity - U.S. Marned Spacecraft Launch Vehicle Size Comparison</a></em></p>
 </div>
