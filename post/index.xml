@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Dgraph Blog</title>
@@ -84,7 +84,7 @@ At the time of writing, we’ve published six tutorial episodes, and you can fin
       <description>It&amp;rsquo;s been a bit over three months since we released Dgraph v1.1.0 (see the announcement) but the wait and hard work were well worth it because today we announce that Dgraph v1.1.1 is released!
 This blog post will cover the biggest changes since v1.1.0, including new features, bug fixes, and other improvements.
 For those in a hurry, these are the changes covered in this article.
- Breaking changes  Removing expand _reverse_ and _forward_ No more @type directive  New features  Use @cascade and @normalize anywhere Improved support for upsert blocks Changes on types Better facets Transparent data encryption   Breaking changes While this is not a patch release, to fix some of the issues identified with v1.</description>
+ Breaking changes  Removing expand _reverse_ and _forward_ No more @type directive   New features  Use @cascade and @normalize anywhere Improved support for upsert blocks Changes on types Better facets Transparent data encryption    Breaking changes While this is not a patch release, to fix some of the issues identified with v1.</description>
     </item>
     
     <item>
@@ -161,7 +161,7 @@ In this tutorial, we&amp;rsquo;ll learn about Dgraph&amp;rsquo;s basic types and
       <pubDate>Tue, 29 Oct 2019 02:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/building-native-graphql-database-dgraph/</guid>
-      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;rdquo;
+      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;quot;
  That&amp;rsquo;s my standard opening statement whenever talking about Dgraph&amp;rsquo;s choice of the query language.
 Most people who don&amp;rsquo;t know GraphQL assume it&amp;rsquo;s a graph database query language. Most people who know GraphQL wonder how a graph database is being powered by it.
 Our focus at Dgraph has always been on helping you build apps using an amazingly advanced graph database.</description>
@@ -187,7 +187,7 @@ In this episode, we&amp;rsquo;ll build the above Graph and learn more about oper
       <description>Welcome to getting started with Dgraph. Dgraph is an open-source, transactional, distributed, native Graph Database. Here is the first episode of the tutorial series on using Dgraph.
 In this tutorial, we&amp;rsquo;ll learn how to build the following graph on Dgraph,
 In the process, we&amp;rsquo;ll learn about:
- Running Dgraph using the dgraph/standalone docker image. Running the following basic operations using Dgraph&amp;rsquo;s UI Ratel,  Creating a node. Creating an edge between two nodes.</description>
+ Running Dgraph using the dgraph/standalone docker image. Running the following basic operations using Dgraph&amp;rsquo;s UI Ratel, Creating a node. Creating an edge between two nodes.</description>
     </item>
     
     <item>
@@ -227,7 +227,7 @@ We also realized that the job openings were neither really up to date nor covere
       
       <guid>https://blog.dgraph.io/post/graphql-conf-19/</guid>
       <description>We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&amp;rsquo;t help ourselves from sharing this with Dgraph&amp;rsquo;s community! This is the story of the GraphQL conference in Berlin.
-The GraphQL connection If you&amp;rsquo;re wondering what does Dgraph has to do with GraphQL, here&amp;rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early.</description>
+ The GraphQL connection If you&amp;rsquo;re wondering what does Dgraph has to do with GraphQL, here&amp;rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early.</description>
     </item>
     
     <item>
@@ -258,7 +258,8 @@ I&amp;rsquo;m really excited to announce that Dgraph has raised $11.5M in Series
       <guid>https://blog.dgraph.io/post/10k-github-stars/</guid>
       <description>Dgraph is celebrating the milestone of reaching 10,000 GitHub stars 🎉.
 This wouldn&amp;rsquo;t have happened without all of you, so we want to thank the awesome community for being with us all the way along. This milestone comes at an exciting time for Dgraph.
-Let&amp;rsquo;s do quick time-travel through our journey, gaze at our milestones, and wrap it up with a glance through the exciting things in the pipeline.</description>
+Let&amp;rsquo;s do quick time-travel through our journey, gaze at our milestones, and wrap it up with a glance through the exciting things in the pipeline.
+Dgraph milestone timeline.</description>
     </item>
     
     <item>
@@ -301,9 +302,9 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
       <guid>https://blog.dgraph.io/post/building-todo-list-react-dgraph/</guid>
       <description>In this tutorial we will build a To-Do List application using React JavaScript library and Dgraph as a backend database. We will use dgraph-js-http &amp;mdash; a library designed to greatly simplify the life of JavaScript developers when accessing Dgraph databases.
 The tutorial is split into several steps:
- Creating a React App
- Starting a local Dgraph server using docker-compose
- Connecting to Dgraph from JavaScript and fetching data</description>
+  Creating a React App
+  Starting a local Dgraph server using docker-compose
+  Connecting to Dgraph from JavaScript and fetching data</description>
     </item>
     
     <item>
@@ -322,7 +323,7 @@ The tutorial is split into several steps:
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
-This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
+ This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
 Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.</description>
     </item>
     
@@ -364,7 +365,7 @@ This blog post is about Badger, the key-value database that makes it all happen 
       <guid>https://blog.dgraph.io/post/relicensing-dgraph/</guid>
       <description>Last year, we had switched Dgraph license to AGPLv3.0, considering reasons like the ability to monetize in a competitive environment. In particular,
  The threat of duplicate commercial services and enterprise features built by others without paying anything back towards the development of the open source version.
-Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, with no restrictions.
+  Update (Nov 2018): This post is outdated. Dgraph core is back to Apache 2.0, with no restrictions.
  This remains a credible threat; nothing has changed in that regard.</description>
     </item>
     
@@ -416,7 +417,8 @@ In a previous blog post, we discussed some of the challenges that we met on our 
       <pubDate>Thu, 05 Oct 2017 13:30:16 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-txn/</guid>
-      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</description>
+      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.
+As Badger is gaining popularity, we see the limitations of our initial choices.</description>
     </item>
     
     <item>
@@ -556,8 +558,8 @@ All of these changes make Dgraph an excellent tool for working with multilingual
       
       <guid>https://blog.dgraph.io/post/licensing/</guid>
       <description>Dgraph started with the idea that every startup should be able to have the same level of technology as run by big giants. We designed Dgraph from ground-up to allow data sharding, horizontal scalability, consistent replication, and a fast and distributed architecture.
-Update (Apr 2018): Dgraph has switched back to Apache 2.0, with a Commons clause restriction. See new post here.
-We also dream that graph database would no longer run as a secondary database.</description>
+ Update (Apr 2018): Dgraph has switched back to Apache 2.0, with a Commons clause restriction. See new post here.
+ We also dream that graph database would no longer run as a secondary database.</description>
     </item>
     
     <item>
@@ -568,9 +570,7 @@ We also dream that graph database would no longer run as a secondary database.</
       <guid>https://blog.dgraph.io/post/benchmark-neo4j/</guid>
       <description>&lt;p&gt;As &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
  is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;.&lt;/p&gt;
-
 &lt;p&gt;We have divided this post into five parts:&lt;/p&gt;
-
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-loading-data&#34;&gt;Loading data&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#ref-querying&#34;&gt;Querying&lt;/a&gt;&lt;/li&gt;
@@ -627,7 +627,6 @@ In this post, I&amp;rsquo;m going to brief about how to run multiple services vi
       
       <guid>https://blog.dgraph.io/post/gru/</guid>
       <description>&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
-
 &lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     

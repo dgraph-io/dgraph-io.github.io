@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>reddit on Dgraph Blog</title>
@@ -29,7 +29,7 @@ With over six months of research and development, we&amp;rsquo;re proud to annou
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
-This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
+ This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
 Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.</description>
     </item>
     

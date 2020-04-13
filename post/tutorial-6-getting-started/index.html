@@ -428,215 +428,168 @@ In this tutorial, we&rsquo;ll continue from where we left off and learn about ad
             class="main__image"
             src="https://blog.dgraph.io//images/tutorials/6/cover.jpg"
           >
-          <div class="article-content">
-
-<p>Welcome to the sixth episode of getting started with Dgraph.</p>
-
+          <div class="article-content"><p>Welcome to the sixth episode of getting started with Dgraph.</p>
 <p>In the <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">previous episode</a>, we learned about building social graphs in Dgraph, by modeling tweets as an example.
 We queried the tweets using the <code>hash</code> and <code>exact</code> indices, and implemented a keyword-based search to find your favorite tweets using the <code>term</code> index and its functions.</p>
-
 <p>In this tutorial, we&rsquo;ll continue from where we left off and learn about advanced text search features in Dgraph.</p>
-
 <p>Specifically, we&rsquo;ll focus on two advanced features:</p>
-
 <ul>
 <li>Searching for tweets using Full-text search.</li>
 <li>Searching for hashtags using the regular expression search.</li>
 </ul>
-
 <p>Before we dive in, let&rsquo;s do a quick recap of how to model the tweets in Dgraph.
-<img src="https://blog.dgraph.io/images/tutorials/5/a-graph-model.jpg" alt="tweet model" /></p>
-
+<img src="https://blog.dgraph.io/images/tutorials/5/a-graph-model.jpg" alt="tweet model"></p>
 <p>In the previous episode, we took three real tweets as a sample dataset and stored them in Dgraph using the above graph as a model.</p>
-
 <p>In case you haven&rsquo;t stored the tweets from the <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">previous episode</a> into Dgraph, here&rsquo;s the sample dataset again.</p>
-
 <p>Copy the mutation below, go to the mutation tab and click Run.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;user_handle&quot;: &quot;hackintoshrao&quot;,
-      &quot;user_name&quot;: &quot;Karthic Rao&quot;,
-      &quot;uid&quot;: &quot;_:hackintoshrao&quot;,
-      &quot;authored&quot;: [
+      <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;hackintoshrao&#34;</span>,
+      <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Karthic Rao&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:hackintoshrao&#34;</span>,
+      <span style="color:#000080">&#34;authored&#34;</span>: [
         {
-          &quot;tweet&quot;: &quot;Test tweet for the fifth episode of getting started series with @dgraphlabs. Wait for the video of the fourth one by @francesc the coming Wednesday!\n#GraphDB #GraphQL&quot;,
-          &quot;tagged_with&quot;: [
+          <span style="color:#000080">&#34;tweet&#34;</span>: <span style="color:#d14">&#34;Test tweet for the fifth episode of getting started series with @dgraphlabs. Wait for the video of the fourth one by @francesc the coming Wednesday!\n#GraphDB #GraphQL&#34;</span>,
+          <span style="color:#000080">&#34;tagged_with&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:graphql&quot;,
-              &quot;hashtag&quot;: &quot;GraphQL&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphql&#34;</span>,
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;GraphQL&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:graphdb&quot;,
-              &quot;hashtag&quot;: &quot;GraphDB&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphdb&#34;</span>,
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;GraphDB&#34;</span>
             }
           ],
-          &quot;mentioned&quot;: [
+          <span style="color:#000080">&#34;mentioned&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:francesc&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:francesc&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:dgraphlabs&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>
             }
           ]
         }
       ]
     },
     {
-      &quot;user_handle&quot;: &quot;francesc&quot;,
-      &quot;user_name&quot;: &quot;Francesc Campoy&quot;,
-      &quot;uid&quot;: &quot;_:francesc&quot;,
-      &quot;authored&quot;: [
+      <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;francesc&#34;</span>,
+      <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Francesc Campoy&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:francesc&#34;</span>,
+      <span style="color:#000080">&#34;authored&#34;</span>: [
         {
-          &quot;tweet&quot;: &quot;So many good talks at #graphqlconf, next year I'll make sure to be *at least* in the audience!\nAlso huge thanks to the live tweeting by @dgraphlabs for alleviating the FOMO😊\n#GraphDB ♥️ #GraphQL&quot;,
-          &quot;tagged_with&quot;: [
+          <span style="color:#000080">&#34;tweet&#34;</span>: <span style="color:#d14">&#34;So many good talks at #graphqlconf, next year I&#39;ll make sure to be *at least* in the audience!\nAlso huge thanks to the live tweeting by @dgraphlabs for alleviating the FOMO😊\n#GraphDB ♥️ #GraphQL&#34;</span>,
+          <span style="color:#000080">&#34;tagged_with&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:graphql&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphql&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:graphdb&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphdb&#34;</span>
             },
             {
-              &quot;hashtag&quot;: &quot;graphqlconf&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;graphqlconf&#34;</span>
             }
           ],
-          &quot;mentioned&quot;: [
+          <span style="color:#000080">&#34;mentioned&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:dgraphlabs&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>
             }
           ]
         }
       ]
     },
     {
-      &quot;user_handle&quot;: &quot;dgraphlabs&quot;,
-      &quot;user_name&quot;: &quot;Dgraph Labs&quot;,
-      &quot;uid&quot;: &quot;_:dgraphlabs&quot;,
-      &quot;authored&quot;: [
+      <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;dgraphlabs&#34;</span>,
+      <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Dgraph Labs&#34;</span>,
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>,
+      <span style="color:#000080">&#34;authored&#34;</span>: [
         {
-          &quot;tweet&quot;: &quot;Let's Go and catch @francesc at @Gopherpalooza today, as he scans into Go source code by building its Graph in Dgraph!\nBe there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!\n#golang #GraphDB #Databases #Dgraph &quot;,
-          &quot;tagged_with&quot;: [
+          <span style="color:#000080">&#34;tweet&#34;</span>: <span style="color:#d14">&#34;Let&#39;s Go and catch @francesc at @Gopherpalooza today, as he scans into Go source code by building its Graph in Dgraph!\nBe there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!\n#golang #GraphDB #Databases #Dgraph &#34;</span>,
+          <span style="color:#000080">&#34;tagged_with&#34;</span>: [
             {
-              &quot;hashtag&quot;: &quot;golang&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;golang&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:graphdb&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:graphdb&#34;</span>
             },
             {
-              &quot;hashtag&quot;: &quot;Databases&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;Databases&#34;</span>
             },
             {
-              &quot;hashtag&quot;: &quot;Dgraph&quot;
+              <span style="color:#000080">&#34;hashtag&#34;</span>: <span style="color:#d14">&#34;Dgraph&#34;</span>
             }
           ],
-          &quot;mentioned&quot;: [
+          <span style="color:#000080">&#34;mentioned&#34;</span>: [
             {
-              &quot;uid&quot;: &quot;_:francesc&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:francesc&#34;</span>
             },
             {
-              &quot;uid&quot;: &quot;_:dgraphlabs&quot;
+              <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:dgraphlabs&#34;</span>
             }
           ]
         },
         {
-          &quot;uid&quot;: &quot;_:gopherpalooza&quot;,
-          &quot;user_handle&quot;: &quot;gopherpalooza&quot;,
-          &quot;user_name&quot;: &quot;Gopherpalooza&quot;
+          <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;_:gopherpalooza&#34;</span>,
+          <span style="color:#000080">&#34;user_handle&#34;</span>: <span style="color:#d14">&#34;gopherpalooza&#34;</span>,
+          <span style="color:#000080">&#34;user_name&#34;</span>: <span style="color:#d14">&#34;Gopherpalooza&#34;</span>
         }
       ]
     }
   ]
 }
-</code></pre>
-
-<p><em>Note: If you&rsquo;re new to Dgraph, and this is the first time you&rsquo;re running a mutation, we highly recommend reading the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first episode of the series before proceeding.</a></em></p>
-
+</code></pre></div><p><em>Note: If you&rsquo;re new to Dgraph, and this is the first time you&rsquo;re running a mutation, we highly recommend reading the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">first episode of the series before proceeding.</a></em></p>
 <p>Voilà! Now you have a graph with <code>tweets</code>, <code>users</code>, and <code>hashtags</code>. It is ready for us to explore.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/5/x-all-tweets.png" alt="tweet graph" />
+<p><img src="https://blog.dgraph.io/images/tutorials/5/x-all-tweets.png" alt="tweet graph">
 <em>Note: If you&rsquo;re curious to know how we modeled the tweets in Dgraph, refer to <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">the previous episode.</a></em></p>
-
 <p>Let&rsquo;s start by finding your favorite tweets using the full-text search feature first.</p>
-
 <h4 id="full-text-search">Full-text search</h4>
-
 <p>Before we learn how to use the Full-text search feature, it&rsquo;s important to understand when to use it.</p>
-
 <p>The length and the number of words in a string predicate value vary based on what the predicates represent.</p>
-
 <p>Some string predicate values have only a few terms (words) in them.
 Predicates representing <code>names</code>, <code>hashtags</code>, <code>twitter handle</code>, <code>city names</code> are a few good examples. These predicates are easy to query using their exact values.</p>
-
 <p>For instance, here is an example query.</p>
-
 <p><em>Give me all the tweets where the user name is equal to <code>John Campbell</code></em>.</p>
-
 <p>You can easily compose queries like these after adding either the <code>hash</code> or an <code>exact</code> index to the string predicates.</p>
-
 <p>But, some of the string predicates store sentences. Sometimes even one or more paragraphs of text data in them.
 Predicates representing a tweet, a bio, a blog post, a product description, or a movie review are just some examples.
 It&rsquo;s relatively hard to query these predicates.</p>
-
 <p>It&rsquo;s not practical to query such predicates using the <code>hash</code> or <code>exact</code> string indices.
 A keyword-based search using the <code>term</code> index is a good starting point to query such predicates.
 We used it in our <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">previous episode</a> to find the tweets with an exact match for keywords like <code>GraphQL</code>, <code>Graphs</code>, and <code>Go</code>.</p>
-
 <p>But, for some of the use cases, just the keyword-based search may not be sufficient.
 You might need a more powerful search capability, and that&rsquo;s when you should consider using Full-text search.</p>
-
 <p>Let&rsquo;s write some queries and understand Dgraph&rsquo;s Full-text search capability in detail.</p>
-
 <p>To be able to do a Full-text search, you need to first set a <code>fulltext</code> index on the <code>tweet</code> predicate.</p>
-
 <p>Creating a <code>fulltext</code> index on any string predicate is similar to creating any other string indices.
-<img src="https://blog.dgraph.io/images/tutorials/6/a-set-index.png" alt="full text" />
+<img src="https://blog.dgraph.io/images/tutorials/6/a-set-index.png" alt="full text">
 <em>Note: Refer to the <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">previous episode</a> if you&rsquo;re not sure about creating an index on a string predicate.</em></p>
-
 <p>Now, let&rsquo;s do a Full-text search query to find tweets related to the following topic: <code>graph data and analyze it in graphdb</code>.</p>
-
 <p>You can do so by using either of <code>alloftext</code> or <code>anyoftext</code> in-built functions.
 Both functions take two arguments.
 The first argument is the predicate to search.
 The second argument is the space-separated string values to search for, and we call these as the <code>search strings</code>.</p>
-
-<pre><code class="language-sh">- alloftext(predicate, &quot;space-separated search strings&quot;)
-- anyoftext(predicate, &quot;space-separated search strings&quot;)
-</code></pre>
-
-<p>We&rsquo;ll look at the difference between these two functions later. For now, let&rsquo;s use the <code>alloftext</code> function.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">- alloftext<span style="color:#000;font-weight:bold">(</span>predicate, <span style="color:#d14">&#34;space-separated search strings&#34;</span><span style="color:#000;font-weight:bold">)</span>
+- anyoftext<span style="color:#000;font-weight:bold">(</span>predicate, <span style="color:#d14">&#34;space-separated search strings&#34;</span><span style="color:#000;font-weight:bold">)</span>
+</code></pre></div><p>We&rsquo;ll look at the difference between these two functions later. For now, let&rsquo;s use the <code>alloftext</code> function.</p>
 <p>Go to the query tab, paste the query below, and click Run.
 Here is our search string: <code>graph data and analyze it in graphdb</code>.</p>
-
-<pre><code class="language-graphql">{
-  search_tweet(func: alloftext(tweet, &quot;graph data and analyze it in graphdb&quot;)) {
-    tweet
-  }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/6/b-full-text-query-1.png" alt="tweet graph" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>search_tweet(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">alloftext</span>(tweet,<span style="color:#bbb"> </span><span style="color:#d14">&#34;graph data and analyze it in graphdb&#34;</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>tweet<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/6/b-full-text-query-1.png" alt="tweet graph"></p>
 <p>Here&rsquo;s the matched tweet, which made it to the result.</p>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Let&#39;s Go and catch <a href="https://twitter.com/francesc?ref_src=twsrc%5Etfw">@francesc</a>  at <a href="https://twitter.com/Gopherpalooza?ref_src=twsrc%5Etfw">@Gopherpalooza</a>  today, as he scans into Go source code by building its Graph in Dgraph!<br><br>Be there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!<a href="https://twitter.com/hashtag/golang?src=hash&amp;ref_src=twsrc%5Etfw">#golang</a> <a href="https://twitter.com/hashtag/GraphDB?src=hash&amp;ref_src=twsrc%5Etfw">#GraphDB</a> <a href="https://twitter.com/hashtag/Databases?src=hash&amp;ref_src=twsrc%5Etfw">#Databases</a> <a href="https://twitter.com/hashtag/Dgraph?src=hash&amp;ref_src=twsrc%5Etfw">#Dgraph</a> <a href="https://t.co/sK90DJ6rLs">pic.twitter.com/sK90DJ6rLs</a></p>&mdash; Dgraph Labs (@dgraphlabs) <a href="https://twitter.com/dgraphlabs/status/1192822660679577602?ref_src=twsrc%5Etfw">November 8, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
 <p>If you observe, you can see some of the words from the search strings are not present in the matched tweet, but the tweet has still made it to the result.</p>
-
 <p>To be able to use the Full-text search capability effectively, we must understand how it works.</p>
-
 <p>Let&rsquo;s understand it in detail.</p>
-
 <p>Once you set a <code>fulltext</code> index on the tweets, internally, the tweets are processed, and <code>fulltext</code> tokens are generated.
 These <code>fulltext</code> tokens are then indexed.</p>
-
 <p>The search string also goes through the same processing pipeline, and <code>fulltext</code> tokens generated them too.</p>
-
 <p>Here are the steps to generate the <code>fulltext</code> tokens:</p>
-
 <ul>
 <li>Split the tweets into chunks of words called tokens (tokenizing).</li>
 <li>Convert these tokens to lowercase.</li>
@@ -644,15 +597,11 @@ These <code>fulltext</code> tokens are then indexed.</p>
 <li>Reduce the tokens to their root form, this is called <a href="https://en.wikipedia.org/wiki/Stemming">stemming</a> (running to run, faster to fast and so on).</li>
 <li>Remove the <a href="https://en.wikipedia.org/wiki/Stop_words">stop words</a>.</li>
 </ul>
-
 <p>You would have seen in <a href="https://blog.dgraph.io/post/tutorial-4-getting-started/">the fourth episode</a> that Dgraph allows you to build multi-lingual apps.</p>
-
 <p>The stemming and stop words removal are not supported for all the languages.
 Here is <a href="https://docs.dgraph.io/query-language/#full-text-search">the link to the docs</a> that contains the list of languages and their support for stemming and stop words removal.</p>
-
 <p>Below is the table with the matched tweet and its search string in the first column.
 The second column contains their corresponding <code>fulltext</code> tokens generated by Dgraph.</p>
-
 <table>
 <thead>
 <tr>
@@ -660,144 +609,97 @@ The second column contains their corresponding <code>fulltext</code> tokens gene
 <th>fulltext tokens generated by Dgraph</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>Let&rsquo;s Go and catch @francesc at @Gopherpalooza today, as he scans into Go source code by building its Graph in Dgraph!\nBe there, as he Goes through analyzing Go source code, using a Go program, that stores data in the GraphDB built in Go!\n#golang #GraphDB #Databases #Dgraph</td>
 <td>[analyz build built catch code data databas dgraph francesc go goe golang gopherpalooza graph graphdb program scan sourc store todai us]</td>
 </tr>
-
 <tr>
 <td>graph data and analyze it in graphdb</td>
 <td>[analyz data graph graphdb]</td>
 </tr>
 </tbody>
 </table>
-
 <p>As you can see from the table, you can see that the tweets are reduced to an array of strings or tokens (Dgraph internally uses Bleve package to do the stemming).</p>
-
 <p>There are four <code>fulltext</code> tokens generated for our search string: [<code>analyz</code>, <code>data</code>, <code>graph</code>, <code>graphdb</code>], and all four tokens exist in the matched tweet.
 Hence, the <code>alloftext</code> function returns a positive match for the tweet. It would not have returned a positive match even if one of the tokens in the search string is missing for the tweet.
 However, on the other hand, the <code>anyoftext</code> function would’ve returned a positive match as long as the tweets and the search string have at least one of the tokens in common.</p>
-
 <p>If you&rsquo;re interested to see Dgraph&rsquo;s <code>fulltext</code> tokenizer in action, <a href="https://gist.github.com/hackintoshrao/0e8d715d8739b12c67a804c7249146a3">here is the gist</a> containing the instructions to use it.</p>
-
 <p>Dgraph generates the same <code>fulltext</code> tokens even if the words in a search string is differently ordered.
 Hence, using the same search string with different order would not impact the query result.</p>
-
 <p>As you can see, all three queries below are the same for Dgraph.</p>
-
 <pre><code>{
   search_tweet(func: alloftext(tweet, &quot;graph analyze and it in graphdb data&quot;)) {
     tweet
   }
 }
-</code></pre>
-
-<pre><code>{
+</code></pre><pre><code>{
   search_tweet(func: alloftext(tweet, &quot;data and data analyze it graphdb in&quot;)) {
     tweet
   }
 }
-</code></pre>
-
-<pre><code>{
+</code></pre><pre><code>{
   search_tweet(func: alloftext(tweet, &quot;analyze data and it in graph graphdb&quot;)) {
     tweet
   }
 }
-</code></pre>
-
-<p>Next, let&rsquo;s move onto the second advanced text search feature of Dgraph: regular expression based queries.
+</code></pre><p>Next, let&rsquo;s move onto the second advanced text search feature of Dgraph: regular expression based queries.
 We will use them to find all the hashtags containing the following substring: <code>graph</code>.</p>
-
 <h4 id="regular-expression-search">Regular expression search</h4>
-
 <p><a href="https://www.geeksforgeeks.org/write-regular-expressions/">Regular expressions</a> are powerful ways of expressing search patterns.
 Dgraph allows you to search for string predicates based on regular expressions.
 You need to set the <code>trigram</code> index on the string predicate to be able to perform regex-based queries.</p>
-
 <p>Using regular expression based search, let&rsquo;s match all the hashtags that have this particular pattern: <code>Starts and ends with any characters of indefinite length, but with the substring graph in it</code>.</p>
-
 <p>Here is the regex expression we can use: <code>^.*graph.*$</code></p>
-
 <p>Check out <a href="https://www.geeksforgeeks.org/write-regular-expressions/">this tutorial</a> if you&rsquo;re not familiar with writing a regular expression.</p>
-
 <p>Let&rsquo;s first find all the hashtags in the database using the <code>has()</code> function.</p>
-
-<pre><code class="language-graphql">{
-  hash_tags(func: has(hashtag)) {
-    hashtag
-  }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/6/has-hashtag.png" alt="The hashtags" />
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hash_tags(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(hashtag))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>hashtag<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/6/has-hashtag.png" alt="The hashtags">
 <em>If you&rsquo;re not familiar with using the <code>has()</code> function, refer to <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">the first episode</a> of the series.</em></p>
-
 <p>You can see that we have six hashtags in total, and four of them have the substring <code>graph</code> in them: <code>Dgraph</code>, <code>GraphQL</code>, <code>graphqlconf</code>, <code>graphDB</code>.</p>
-
 <p>We should use the built-in function <code>regexp</code> to be able to use regular expressions to search for predicates.
 This function takes two arguments, the first is the name of the predicate, and the second one is the regular expression.</p>
-
 <p>Here is the syntax of the <code>regexp</code> funtion: <code>regexp(predicate, /regular-expression/)</code></p>
-
 <p>Let&rsquo;s execute the following query to find the hashtags that have the substring <code>graph</code>.</p>
-
 <p>Go to the query tab, type in the query, and click Run.</p>
-
-<pre><code class="language-graphql">{
-  reg_search(func: regexp(hashtag, /^.*graph.*$/)) {
-    hashtag
-  }
-}
-</code></pre>
-
-<p>Oops! We have an error!
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>reg_search(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">regexp</span>(hashtag,<span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">^</span><span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#a61717;background-color:#e3d2d2">*</span>graph<span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#a61717;background-color:#e3d2d2">$</span><span style="color:#a61717;background-color:#e3d2d2">/</span>))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>hashtag<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Oops! We have an error!
 It looks like we forgot to set the <code>trigram</code> index on the <code>hashtag</code> predicate.
-<img src="https://blog.dgraph.io/images/tutorials/6/trigram-error.png" alt="The hashtags" /></p>
-
+<img src="https://blog.dgraph.io/images/tutorials/6/trigram-error.png" alt="The hashtags"></p>
 <p>Again, setting a <code>trigram</code> index is similar to setting any other string index, let&rsquo;s do that for the <code>hashtag</code> predicate.
-<img src="https://blog.dgraph.io/images/tutorials/6/set-trigram.png" alt="The hashtags" />
+<img src="https://blog.dgraph.io/images/tutorials/6/set-trigram.png" alt="The hashtags">
 <em>Note: Refer to the <a href="https://blog.dgraph.io/post/tutorial-5-getting-started/">previous episode</a> if you&rsquo;re not sure about creating an index on a string predicate.</em></p>
-
 <p>Now, let&rsquo;s re-run the <code>regexp</code> query.
-<img src="https://blog.dgraph.io/images/tutorials/6/regex-query-1.png" alt="regex-1" />
+<img src="https://blog.dgraph.io/images/tutorials/6/regex-query-1.png" alt="regex-1">
 <em>Note: Refer to <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">the first episode</a> if you&rsquo;re not familiar with the query structure in general.</em></p>
-
 <p>Now we have success!
 But why do we only have the following hashtags <code>Dgraph</code> and <code>graphqlconf</code> in the result?
 That’s because <code>regexp</code> function is case-sensitive by default.</p>
-
 <p>Add the character <code>i</code> at the the end of the second argument of the <code>regexp</code> function to make it case insensitive: <code>regexp(predicate, /regular-expression/i)</code>
-<img src="https://blog.dgraph.io/images/tutorials/6/regex-query-2.png" alt="regex-2" /></p>
-
+<img src="https://blog.dgraph.io/images/tutorials/6/regex-query-2.png" alt="regex-2"></p>
 <p>Now we have the four hashtags with substring <code>graph</code> in them.</p>
-
 <p>Let&rsquo;s modify the regular expression to match only the <code>hashtags</code> which have a prefix called <code>graph</code>.</p>
-
-<pre><code class="language-graphql">{
-  reg_search(func: regexp(hashtag, /^graph.*$/i)) {
-    hashtag
-  }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/6/regex-query-3.png" alt="regex-2" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>reg_search(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">regexp</span>(hashtag,<span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">/</span><span style="color:#a61717;background-color:#e3d2d2">^</span>graph<span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#a61717;background-color:#e3d2d2">$</span><span style="color:#a61717;background-color:#e3d2d2">/</span>i))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>hashtag<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/6/regex-query-3.png" alt="regex-2"></p>
 <h4 id="summary">Summary</h4>
-
 <p>In this tutorial, we learned about Full-text search and regular expression based search capabilities in Dgraph.</p>
-
 <p>Did you know that Dgraph also offers fuzzy search capabilities, which can be used to power features like product search in an e-commerce store?
 Let’s learn about it in our next tutorial.</p>
-
 <p>Till then, happy Graphing!</p>
-
 <p>Remember to click the “Join our community” button below and subscribe to our newsletter to get the latest tutorial right to your inbox.</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
@@ -848,10 +750,8 @@ Let’s learn about it in our next tutorial.</p>
 	})
 </script>
 
-
 <script src="//unpkg.com/clipboard@2.0.4"></script>
 <script src="https://blog.dgraph.io/js/tutorial-3.js"></script>
-
 <style>
  pre.with-expand {
  position: relative;

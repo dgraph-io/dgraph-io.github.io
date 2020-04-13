@@ -427,352 +427,245 @@ Designing the GraphQL schema is often the first step in your app development jou
             class="main__image"
             src="https://blog.dgraph.io//images/graphql/cover-1.png"
           >
-          <div class="article-content">
-
-<p>GraphQL has taken the app development world by storm because of its immense benefits. GraphQL adoption by UI development teams has brought in a new wave of flexibility in API design, productivity across frontend-backend teams, intuitiveness in expressing UI data requirements, and accessibility to powerful tooling. These benefits are why many tech companies, including <a href="https://engineering.fb.com/core-data/graphql-a-data-query-language/">Facebook</a>, <a href="https://medium.com/airbnb-engineering/how-airbnb-is-moving-10x-faster-at-scale-with-graphql-and-apollo-aa4ec92d69e2">Airbnb</a>, <a href="https://medium.com/paypal-engineering/graphql-a-success-story-for-paypal-checkout-3482f724fb53">Paypal</a>, <a href="https://githubengineering.com/the-github-graphql-api/">GitHub</a>, and <a href="https://shopify.dev/concepts/graphql/benefits">Shopify</a>, are embracing GraphQL.</p>
-
+          <div class="article-content"><p>GraphQL has taken the app development world by storm because of its immense benefits. GraphQL adoption by UI development teams has brought in a new wave of flexibility in API design, productivity across frontend-backend teams, intuitiveness in expressing UI data requirements, and accessibility to powerful tooling. These benefits are why many tech companies, including <a href="https://engineering.fb.com/core-data/graphql-a-data-query-language/">Facebook</a>, <a href="https://medium.com/airbnb-engineering/how-airbnb-is-moving-10x-faster-at-scale-with-graphql-and-apollo-aa4ec92d69e2">Airbnb</a>, <a href="https://medium.com/paypal-engineering/graphql-a-success-story-for-paypal-checkout-3482f724fb53">Paypal</a>, <a href="https://githubengineering.com/the-github-graphql-api/">GitHub</a>, and <a href="https://shopify.dev/concepts/graphql/benefits">Shopify</a>, are embracing GraphQL.</p>
 <p>Designing the GraphQL schema is often the first step in your app development journey using GraphQL. This guide presents an intuitive, straightforward process to design your GraphQL schemas, and modify them as your application UIs become increasingly complex.</p>
-
 <h2 id="graphql-schema">GraphQL Schema</h2>
-
 <p>Expressing the data requirements of your application in your GraphQL schema is easy for simple UIs. However, it can become more difficult as your UI becomes more extensive and more complex. A StackOverflow page or an Amazon product page are classic examples of complex application user interfaces.</p>
-
 <p>Most of the benefits offered by GraphQL are due to <strong>GraphQL Schemas</strong>. <em>Schemas enable automatic code generation, validation and parsing, introspection, and type safety for your APIs</em>. In many ways, schemas are like strong typing in programming languages, in that they can catch errors while a system is being constructed, as well as helping deal with errors at runtime.</p>
-
 <p>A GraphQL schema is a description of the data clients can request from a GraphQL API. It also defines the queries and mutation functions that the client can use to read and write data from the GraphQL server. In other words, you specify your client or application UI data requirements in your GraphQL schema.</p>
-
 <p><strong>Application Data</strong></p>
-
 <p>Consider a simple blogging application with two distinct app screens.</p>
-
 <ol>
 <li>The table of contents lists all the blog posts
-<img src="https://blog.dgraph.io/images/graphql/blog-feed.png" alt="blog-screen-1" /></li>
+<img src="https://blog.dgraph.io/images/graphql/blog-feed.png" alt="blog-screen-1"></li>
 <li>The content page displays a single blog post from the table of contents
-<img src="https://blog.dgraph.io/images/graphql/blog-view.png" alt="blog-screen-2" /></li>
+<img src="https://blog.dgraph.io/images/graphql/blog-view.png" alt="blog-screen-2"></li>
 </ol>
-
 <p>The application data requirement describes all the information your application UI expects to be served from the backend.</p>
-
 <p>The data requirements of the table of contents are:</p>
-
 <ul>
 <li>A list of titles of the blog posts</li>
 <li>The author names of the blog posts</li>
 </ul>
-
 <p>The data requirements of the content page are:</p>
-
 <ul>
 <li>The title of the blog post</li>
 <li>The content of the blog post</li>
 </ul>
-
 <p>Once you identify the data requirements, you can group different data entities.</p>
-
 <p>The title and content of the blog can be grouped under a <code>Blog post</code> entity. Similarly, the <code>Author name</code> or any other Author info can be grouped under the Author entity.</p>
-
 <p>The <em>Blog</em> post entity consists of</p>
-
 <ul>
-<li><p>A title</p></li>
-
-<li><p>The content of the post</p></li>
+<li>
+<p>A title</p>
+</li>
+<li>
+<p>The content of the post</p>
+</li>
 </ul>
-
 <p>The <em>Author</em> entity consists of</p>
-
 <ul>
 <li>The author names</li>
 </ul>
-
 <p>By making the <em>Author</em> a separate entity, you can associate more than one blog post with an author, and also add more information about an author (e.g., the email address, personal website, etc.) without having to change multiple blog posts.</p>
-
 <p>Data entities are generally related to each other. But how to represent the relationship between different data entities? Read on.</p>
-
 <h2 id="your-graphql-schema-is-a-graph">Your GraphQL schema is a graph</h2>
-
 <p>If you&rsquo;ve wondered why there is a <strong>Graph</strong> in <strong>GraphQL</strong>, here is the quote from <a href="https://graphql.org/">graphql.org</a>, the official GraphQL site:</p>
-
 <blockquote>
 <p>&ldquo;Graphs are powerful tools for modeling many real-world phenomena because they resemble our natural mental models and verbal descriptions of the underlying process. With GraphQL, you model your business domain as a graph by defining a schema; within your schema, you define different types of nodes and how they connect/relate to one another.&rdquo;</p>
 </blockquote>
-
 <p>In short, a <strong>GraphQL schema</strong> is a textual representation of your application&rsquo;s <strong>data graph</strong> and the <strong>operations</strong> on it. Your data graph defines the entities and the relationships between them. But to complete a schema, you usually need to add GraphQL <strong>operations</strong>. The GraphQL operations provide the information needed to generate and validate operations on the data graph.</p>
-
 <h2 id="application-data-graph">Application data graph</h2>
-
 <p>To describe the relationship between the two entities in the blog post application mentioned above:</p>
-
 <ul>
 <li>Each <em>Blog</em> post has an Author</li>
 <li>Each <em>Author</em> can have more than one blog post.</li>
 </ul>
-
 <p>Compared to the rows and columns used in traditional relational databases, graphs are a much easier and more intuitive model to represent data and their relationships. Here is the diagram of the graph model for the blog application:
-<img src="https://blog.dgraph.io/images/graphql/data-graph.png" alt="data-graph" /></p>
-
+<img src="https://blog.dgraph.io/images/graphql/data-graph.png" alt="data-graph"></p>
 <p>The graph represents the entities in application data as nodes in the graph, and their relationships are represented as edges. The title, content and author name are represented as properties of the node below the entity names.</p>
-
 <p>By convention, you capitalize entity names. Note that this diagram uses CamelCase (e.g., BlogPost, Author) for entity names, and camelCase for data fields and relationship names. This casing practice is not a requirement, and the GraphQL spec doesn&rsquo;t dictate any convention. This casing practice is widely followed because the same convention can be mapped to data structures representing the object types in your programming language.</p>
-
 <p>Also, the asterisk (*) near the arrowhead of the <em>hasBlog</em> means this is a one-to-many relationship. A single author can be associated with multiple blog posts, one blog post, or even no blog posts.</p>
-
 <p>The last step in designing the schema is to translate the application data graph into a GraphQL schema.</p>
-
 <h2 id="writing-the-graphql-schema">Writing the GraphQL schema</h2>
-
 <p>The <a href="https://spec.graphql.org/June2018/">GraphQL spec</a> defines a language called the <strong>Schema Definition Language (SDL)</strong> to write GraphQL schemas.</p>
-
 <p>You use the available types defined by SDL to compose your GraphQL schema. We cover four of the types in this article:</p>
-
 <ul>
 <li>Object type</li>
 <li>Scalar type</li>
 <li>Query type</li>
 <li>Mutation type</li>
 </ul>
-
 <p>You&rsquo;ll learn more about these types (and others) in upcoming articles.</p>
-
 <p>It can be challenging to represent types as GraphQL schema, especially with complex and extensive
 UIs. However, follow the four steps below to represent your types as a GraphQL schema like a pro.</p>
-
 <h3 id="step-1-represent-the-nodes-as-object-types">Step 1: Represent the nodes as object types</h3>
-
 <p>Based on the data graph of the blog post application above, it has two nodes representing
 two entities: <em>BlogPost</em> and <em>Author</em>. Both entities are represented as object types
 in the GraphQL schema.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-
-}
-
-type Author {
-
-}
-</code></pre>
-
-<h3 id="step-2-add-the-scalar-types-as-fields-to-the-object-types">Step 2: Add the scalar types as fields to the object types</h3>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><h3 id="step-2-add-the-scalar-types-as-fields-to-the-object-types">Step 2: Add the scalar types as fields to the object types</h3>
 <p>The built-in scalar types in GraphQL are <code>Int</code>, <code>Float</code>, <code>String</code>, <code>Boolean</code>, and <code>ID</code>. You can add scalar types as fields to the (previously defined) object types in the schema. These scalar types represent the <strong>properties</strong> of their corresponding entities.</p>
-
 <p>The data fields for the <code>BlogPost</code> entity are <code>title</code> and <code>content</code>, and both are type String. If a field is mandatory, specify this with an exclamation point (!).</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  title: String!
-  content: String!
-}
-</code></pre>
-
-<p>Similarly, add a property called <code>name</code> of type <code>String</code> to the <code>Author</code> object.</p>
-
-<pre><code class="language-graphql">type Author {
-  name: String!
-}
-</code></pre>
-
-<p>Defining a field as mandatory is a type modifier, which is not specified in the data graph. If a field is mandatory, that means that its value cannot be undefined or <code>null</code>. You can determine if a field is mandatory by figuring out if operations on the graph assume whether this field is defined. For example, a blog post needs a title and some content to be displayed correctly. If a BlogPost entity is created without defining both, an error would be thrown in the result.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, add a property called <code>name</code> of type <code>String</code> to the <code>Author</code> object.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Defining a field as mandatory is a type modifier, which is not specified in the data graph. If a field is mandatory, that means that its value cannot be undefined or <code>null</code>. You can determine if a field is mandatory by figuring out if operations on the graph assume whether this field is defined. For example, a blog post needs a title and some content to be displayed correctly. If a BlogPost entity is created without defining both, an error would be thrown in the result.</p>
 <h3 id="step-3-represent-the-relationships">Step 3: Represent the relationships</h3>
-
 <p>A relationship in a GraphQL schema is represented by adding an object type as a field inside another object. The edges that are connecting the nodes represent the relationships between the entities.</p>
-
 <p>In the graph above, the edge connecting a <code>BlogPost</code> node to an <code>Author</code> node is named <code>hasAuthor</code>. Add a field named <code>hasAuthor</code> of type <code>Author</code>, inside the <code>BlogPost</code> type to represent this relationship. Note that a blog post has to have an author, in addition to a title and content.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  title: String!
-  content: String!
-
-  # It's required that every blog post has an author
-  # Hence the exclamation (!) to mark it as required
-
-  hasAuthor: Author!
-}
-</code></pre>
-
-<p>Similarly, the edge connecting an Author node to its BlogPosts is named hasBlog. Add a field hasBlog of type BlogPost, inside the Author type to represent this relationship.</p>
-
-<pre><code class="language-graphql">type Author {
-  name: String!
-
-  # An author can have more than one blog post
-  # Hence representing this as an array [BlogPost]
-
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>The square brackets around <code>[BlogPost]</code> indicates that the <code>hasBlog</code> field is stored as an array. Because an author can be associated with 0, 1, or more blog posts, so the one-to-many relationship was indicated by the asterisk (*) in the data graph.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># It&#39;s required that every blog post has an author</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence the exclamation (!) to mark it as required</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, the edge connecting an Author node to its BlogPosts is named hasBlog. Add a field hasBlog of type BlogPost, inside the Author type to represent this relationship.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># An author can have more than one blog post</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence representing this as an array [BlogPost]</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>The square brackets around <code>[BlogPost]</code> indicates that the <code>hasBlog</code> field is stored as an array. Because an author can be associated with 0, 1, or more blog posts, so the one-to-many relationship was indicated by the asterisk (*) in the data graph.</p>
 <p>This schema represents the application data graph for our blog application.</p>
-
 <h2 id="the-last-step-define-queries-and-mutations">The Last Step: Define queries and mutations</h2>
-
 <p>While object types help you represent the data graph, they don&rsquo;t help you define the operations on it. To include the operations on the data graph, you need Query types and Mutation types. The <code>Query</code> types define the read operations, and the <code>Mutation</code> types define the write operations on the data graph. They define the type signatures of operations that are used by your application to read or write data.</p>
-
 <p>For example, to fetch all of the blogs with their tables of content, you need to define a field in the Query type that returns an array of blog posts, like this:</p>
-
-<pre><code class="language-graphql">type Query {
-  # Return all blog posts
-  # Satisfies the data requirement for the first page
-
-  getAllBlogs(): [BlogPost]
-}
-
-type BlogPost {
-  title: String!
-  content: String!
-
-  # It's required that every blog post has an author
-  # Hence the exclamation (!) to mark it as required
-
-  hasAuthor: Author!
-}
-
-type Author {
-  name: String!
-
-  # An author can have more than one blog post
-  # hence representing this as an array [blogpost]
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>Next, you need an operation to fetch a specific blog post. To enable this operation, you need to associate a unique ID with every blog post. The ID of a blog post is used to fetch the blog content for the second application screen.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Return all blog posts</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Satisfies the data requirement for the first page</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getAllBlogs():<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># It&#39;s required that every blog post has an author</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence the exclamation (!) to mark it as required</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># An author can have more than one blog post</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># hence representing this as an array [blogpost]</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Next, you need an operation to fetch a specific blog post. To enable this operation, you need to associate a unique ID with every blog post. The ID of a blog post is used to fetch the blog content for the second application screen.</p>
 <p>ID is a scalar type in GraphQL that represents a unique identifier and is added as a field to the BlogPost and Author object type to uniquely identify each Author and their BlogPosts.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  id: ID!
-  title: String!
-  content: String!
-
-  # It's required that every blog post has an author
-  # Hence the exclamation (!) to mark it as required
-
-  hasAuthor: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-
-  # An author can have more than one blog post
-  # hence representing this as an array [blogpost]
-
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>Now, you can extend the <code>Query</code> type in the schema by adding a <code>getBlogPost</code> field; this field can fetch a blog post with its unique ID.</p>
-
-<pre><code class="language-graphql">type Query {
-  # Return all blog posts
-  # Satisfies the data requirement for the first page
-
-  getAllBlogs(): [BlogPost]
-
-  # Returns a single blog post given it's ID.
-
-  getBlogPost(id: ID!): BlogPost
-}
-</code></pre>
-
-<p>Similarly, you can add fields to the <code>Mutation</code> type to create new objects. For example, here is a Mutation field to create new blog posts:</p>
-
-<pre><code class="language-graphql">type Mutation {
-  addBlogPost(title: String!, content: String!, authorID: ID!): BlogPost
-}
-</code></pre>
-
-<p>Voila! You have successfully created the GraphQL schema for your simple blog application:</p>
-
-<pre><code class="language-graphql">type Query {
-  getAllBlogs(): [BlogPost]
-  getBlogPost(id: ID!): BlogPost
-}
-
-type Mutation {
-  addBlogPost(title: String!, content: String!, authorID: ID!): BlogPost!
-}
-
-type BlogPost {
-  id: ID!
-  title: String!
-  content: String!
-  hasAuthor: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>For most of the common read-write operations, you can define CRUD functions named for your types. In the blog post application case, you could name them as <code>addAuthor</code>, <code>queryAuthor</code>, <code>UpdateAuthor</code>, and <code>DeleteAuthor</code>. You can add more <code>Query</code> and <code>Mutation</code> functions later to your GraphQL schema for handling custom logic that is more complicated than the basic CRUD operations.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># It&#39;s required that every blog post has an author</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence the exclamation (!) to mark it as required</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># An author can have more than one blog post</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># hence representing this as an array [blogpost]</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Now, you can extend the <code>Query</code> type in the schema by adding a <code>getBlogPost</code> field; this field can fetch a blog post with its unique ID.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Return all blog posts</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Satisfies the data requirement for the first page</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getAllBlogs():<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Returns a single blog post given it&#39;s ID.</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getBlogPost(id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, you can add fields to the <code>Mutation</code> type to create new objects. For example, here is a Mutation field to create new blog posts:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Mutation</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>addBlogPost(title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>authorID:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Voila! You have successfully created the GraphQL schema for your simple blog application:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getAllBlogs():<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getBlogPost(id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Mutation</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>addBlogPost(title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>authorID:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>For most of the common read-write operations, you can define CRUD functions named for your types. In the blog post application case, you could name them as <code>addAuthor</code>, <code>queryAuthor</code>, <code>UpdateAuthor</code>, and <code>DeleteAuthor</code>. You can add more <code>Query</code> and <code>Mutation</code> functions later to your GraphQL schema for handling custom logic that is more complicated than the basic CRUD operations.</p>
 <p>GraphQL schema defines the signature of your GraphQL API, but it&rsquo;s not yet functional.</p>
-
 <p>To make it functional, you still need to run a GraphQL web server, write server-side code, and use a database to store and retrieve the data.</p>
-
 <p>Next, let&rsquo;s dive into how to use <a href="https://dgraph.io/graphql">Dgraph GraphQL</a> to obtain production-grade, scalable GraphQL APIs in a couple of simple steps - with only the GraphQL object types from your schema.</p>
-
 <p><strong>What is Dgraph GraphQL?</strong></p>
-
 <p><a href="https://dgraph.io/">Dgraph</a> is an open-source, distributed, transactional, native GraphQL database. Last week, we released the GA version of <a href="https://github.com/dgraph-io/dgraph/releases/tag/v20.03.0">Dgraph 20.03.00</a>. It comes with GraphQL out of the box.</p>
-
 <p>To get started with Dgraph GraphQL is extremely simple. Just compose a GraphQL schema containing types to represent the data requirements of your application and submit it to Dgraphs HTTP endpoint. No need to initiate the database. No schema mapping or layering.</p>
-
 <p>Dgraph takes those types, prepares graph storage for them, and auto-generates a production-ready, scalable CRUD Graph API with Queries and Mutations instantly.</p>
-
 <p>All of these in only two steps, without having to write any server-side code or having to run your GraphQL server.</p>
-
 <p><strong>Step 1: Run Dgraph GraphQL</strong></p>
-
 <p>Use Dgraph standalone image to run Dgraph for a quick start.</p>
-
-<pre><code class="language-sh">docker run -it -p 8080:8080 -p 9080:9080 -p 8000:8000 dgraph/standalone:v20.03.0
-</code></pre>
-
-<p><strong>Step 2: Submit your schema to Dgraph GraphQL</strong></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">docker run -it -p 8080:8080 -p 9080:9080 -p 8000:8000 dgraph/standalone:v20.03.0
+</code></pre></div><p><strong>Step 2: Submit your schema to Dgraph GraphQL</strong></p>
 <p>Save the GraphQL schema with your GraphQL types in a file, we&rsquo;re calling it schema.graphql. Don&rsquo;t bother adding the Query and Mutations types, Dgraph GraphQL auto-generates it for you.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  id: ID!
-  title: String!
-  content: String!
-  hasAuthor: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>Upload the schema to Dgraph GraphQL HTTP endpoint</p>
-
-<pre><code class="language-sh">curl -X POST localhost:8080/admin/schema -d '@schema.graphql'
-</code></pre>
-
-<p>That&rsquo;s it! You now have a production-ready, scalable GraphQL API!</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Upload the schema to Dgraph GraphQL HTTP endpoint</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">curl -X POST localhost:8080/admin/schema -d <span style="color:#d14">&#39;@schema.graphql&#39;</span>
+</code></pre></div><p>That&rsquo;s it! You now have a production-ready, scalable GraphQL API!</p>
 <p>Point your favorite GraphQL client to <a href="http://localhost:8080/graphql">http://localhost:8080/graphql</a> and start using it!</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>In this blog post, you learned an intuitive approach to design your GraphQL schema and some of the GraphQL types defined by the Schema Definition Language (SDL).</p>
-
 <p>In the upcoming articles, we will show you how to compose a GraphQL schema and obtain functional GraphQL API for more complex UIs.</p>
-
 <p>Subscribe to our email list so you will receive the article directly in your inbox. Until then, keep building smarter apps!</p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>

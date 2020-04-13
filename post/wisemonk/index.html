@@ -435,21 +435,16 @@ It multiplexed my brain and left me in a constant state of anxiety, feeling that
 It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
 <em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
 </blockquote>
-
 <h1 id="the-beginning">The Beginning</h1>
-
 <p><em>— Manish Jain</em></p>
-
 <p>Sitting in a Japanese restaurant, waiting for my lunch, this is the line that hit me hard.
 I’d experienced this exact thing in my previous company.</p>
-
 <p>Every block of time dedicated to coding was either interrupted by pings on the chat system, or a consistent feeling that you’re missing out.
 Away from the desk, phones would start ringing every evening.
 And they’d ring some more on the weekends, Sunday evenings in particular.
 We were always doing something — the feeling was like being on <em>unpaid pager duty</em>.
 People are talking, and if I’m not around to show my presence, it would mean I’m not working.
 But what was getting done, I wasn’t so clear about.</p>
-
 <p>So, when we started exploring options for both internal and external communication for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we wanted to do things differently.
 We’d focus on asynchronous communication, so people can take their time before jumping in.
@@ -457,7 +452,6 @@ People can reply when they get to it — this might be hours later.
 And there’ll be an incentive to modify your reply as more things become clear to you or you find better words to express yourself.
 Something better than Email, but not so distracting as Slack.
 The winner came out to be Discourse by Jeff Atwood and his team(edit: not Discord, another chat app).</p>
-
 <p>Having run it for over two months, we couldn’t have been happier.
 Discourse sits somewhere between emails and real-time chat systems.
 You feel like you’re having a real-time conversation.
@@ -466,33 +460,25 @@ Discourse has become such an integral part of our company that we abandoned maki
 All decisions happen over discourse, so everyone has a chance to voice their opinions and suggestions at their pace.
 And others can embark on fact-finding and put figures together to support or deny arguments.
 I’ve seen a lot smarter discussions, and hence decisions happening over our Discourse forum than over any other medium.</p>
-
 <p>Don’t get me wrong.
 <strong>We still need Slack</strong> for casual chit chat and team bonding.
 But, Slack is an addiction.
 You write one thing, someone replies; then someone else jumps in; and the result is an hour-long frenzy, where everyone feels like they’ve contributed a lot.
 But a few hours later, you can’t pinpoint what changed.</p>
-
 <p>Most useful discussions require a bit more time and thought.
 More than when someone else is typing while you’re in the middle of your sentence.</p>
-
 <p>This is what lead to Wisemonk.
 This bot would push the conversation away from Slack into Discourse.
 And this has to happen just when the team is getting sucked into the frenzy.
 <strong>Before it’s too late</strong></p>
-
-<hr />
-
+<hr>
 <h1 id="how-we-built-it">How we built it</h1>
-
 <p><em>— Pawan Rawal</em></p>
-
 <p>Wisemonk makes use of the Slack RTM API.
 We make good use of the concurrency features in Go.
 For each Slack channel passed in channels flag, we initialise an instance of type Counter.
 The counter keeps track of the messages and other states for a Slack channel.
 Each counter has a buffered channel (called <code>messages</code>) to which Slack messages are sent.</p>
-
 <pre><code>cmap := make(map[string]*Counter)
 for _, cid := range schannels {
   wg.Add(1)
@@ -503,12 +489,9 @@ for _, cid := range schannels {
 }
 go listen(rtm)
 wg.Wait()
-</code></pre>
-
-<p>The listen function which runs as a goroutine gives us access to the messages sent on Slack.
+</code></pre><p>The listen function which runs as a goroutine gives us access to the messages sent on Slack.
 We use this library to authenticate with and get messages from Slack.
 Then the listen function passes messages on the relevant Go channel.</p>
-
 <pre><code>case *slack.MessageEvent:
   if sm, ok := msg.Data.(*slack.MessageEvent); ok {
   // Putting the message on the Counter it belongs to
@@ -516,16 +499,13 @@ Then the listen function passes messages on the relevant Go channel.</p>
   if c, ok := cmap[m.Channel]; ok {
     c.messages &lt;- &amp;m
   }
-</code></pre>
-
-<p>The <code>checkOrIncr</code> method which runs as a goroutine for every counter keeps a count of the number of messages exchanged in a given interval.
+</code></pre><p>The <code>checkOrIncr</code> method which runs as a goroutine for every counter keeps a count of the number of messages exchanged in a given interval.
 Below is the basic version of the method.
 It runs a never ending <code>for</code> loop.
 Now every time a message is received on the messages channel of the counter instance, it adds the message.
 NewTicker function from the time package provides us with a Ticker, which sends the time on a channel with the period specified.
 So every 10 seconds we get a time value and check if the count of messages exchanged increases the <code>maxmsg</code> that we passed as a flag.
 If it does, then we send a warning to the relevant Slack channel.</p>
-
 <pre><code>func (c *Counter) checkOrIncr(rtm *slack.RTM, wg sync.WaitGroup, memmap map[string]string) {
    defer wg.Done()
    ticker := time.NewTicker(time.Second * 10)
@@ -541,40 +521,24 @@ If it does, then we send a warning to the relevant Slack channel.</p>
        }
    }
 }
-</code></pre>
-
-<p>Once the basic functionality was in place, we added integration with discourse.
+</code></pre><p>Once the basic functionality was in place, we added integration with discourse.
 Wisemonk stores the last n messages exchanged, creates a discourse topic with the messages when they exceed the max count and shares the URL with us on Slack.</p>
-
 <p>You can create a discourse topic on demand too and get the URL for it. This makes shifting conversations to Discourse super easy.</p>
-
 <p>For the weekends or in the evenings when you want to have a casual chat and don’t want to be interrupted by Wisemonk, you could ask him to meditate, and it won’t disturb you for a while.</p>
-
-<hr />
-
+<hr>
 <h1 id="wisemonk-in-action">Wisemonk in Action</h1>
-
-<p><img src="https://blog.dgraph.io/images/wisemonk-in-action.png" alt="Wisemonk alerting us when we talk too much" />
+<p><img src="https://blog.dgraph.io/images/wisemonk-in-action.png" alt="Wisemonk alerting us when we talk too much">
 <em>Wisemonk alerting us when we talk too much</em></p>
-
-<p><img src="https://blog.dgraph.io/images/wisemonk-creating-topic.png" alt="Asking wisemonk to create a topic" />
+<p><img src="https://blog.dgraph.io/images/wisemonk-creating-topic.png" alt="Asking wisemonk to create a topic">
 <em>Asking wisemonk to create a topic</em></p>
-
-<p><img src="https://blog.dgraph.io/images/wisemonk-meditating.png" alt="Asking wisemonk to meditate" />
+<p><img src="https://blog.dgraph.io/images/wisemonk-meditating.png" alt="Asking wisemonk to meditate">
 <em>Asking wisemonk to meditate</em></p>
-
-<hr />
-
+<hr>
 <h1 id="parting-thoughts">Parting Thoughts</h1>
-
 <p><strong><a href="https://github.com/dgraph-io/wisemonk#install">Setting up wisemonk</a> is super easy and we have found that it has enhanced our productivity a lot.</strong></p>
-
 <p>It&rsquo;s open source and <a href="https://github.com/dgraph-io/wisemonk">available at Github</a>, so feel free to contribute to it. We would love to hear about your usage of Wisemonk.</p>
-
 <p><em>Yoda guides actions. Wisemonk guides conversations. Image courtesy: <a href="http://www.wired.com/wp-content/uploads/2015/08/Yoda-featured1.jpg">wired.com</a></em></p>
-
-<hr />
-
+<hr>
 <div class="engage">
 	<p>
 		<strong>
