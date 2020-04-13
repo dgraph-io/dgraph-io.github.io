@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>release on Dgraph Blog</title>
@@ -18,10 +18,10 @@
       <pubDate>Tue, 17 Dec 2019 07:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/release-v1.1.1/</guid>
-      <description>It&#39;s been a bit over three months since we released Dgraph v1.1.0 (see the announcement) but the wait and hard work were well worth it because today we announce that Dgraph v1.1.1 is released!
+      <description>It&amp;rsquo;s been a bit over three months since we released Dgraph v1.1.0 (see the announcement) but the wait and hard work were well worth it because today we announce that Dgraph v1.1.1 is released!
 This blog post will cover the biggest changes since v1.1.0, including new features, bug fixes, and other improvements.
 For those in a hurry, these are the changes covered in this article.
- Breaking changes  Removing expand _reverse_ and _forward_ No more @type directive   New features  Use @cascade and @normalize anywhere Improved support for upsert blocks Changes on types Better facets Transparent data encryption    Breaking changes While this is not a patch release, to fix some of the issues identified with v1.</description>
+ Breaking changes  Removing expand _reverse_ and _forward_ No more @type directive  New features  Use @cascade and @normalize anywhere Improved support for upsert blocks Changes on types Better facets Transparent data encryption   Breaking changes While this is not a patch release, to fix some of the issues identified with v1.</description>
     </item>
     
     <item>
@@ -40,7 +40,7 @@ Set on this path, embracing open source all along the way, the first production-
       <pubDate>Wed, 03 Jul 2019 11:00:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-v1.6.0-release/</guid>
-      <description>&lt;p&gt;It&#39;s been almost a years since BadgerDB v1.5.0 was released. While both the
+      <description>&lt;p&gt;It&amp;rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next

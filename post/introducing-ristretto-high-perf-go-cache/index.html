@@ -3,33 +3,12 @@
 <head>
   <meta charset="utf-8">
 
-  
-  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/favicons/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/favicons/apple-touch-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicons/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicons/apple-touch-icon-76x76.png">
-
-  <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicons/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicons/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicons/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicons/apple-touch-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicons/apple-touch-icon-180x180.png">
-
-  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
-  <link rel="icon" type="image/png" href="/assets/favicons/favicon-194x194.png" sizes="194x194">
-  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
-
-  <link rel="mask-icon" href="/assets/images/favicons/safari-pinned-tab.svg" color="#fe2c06">
-  <link rel="shortcut icon" href="/images/favicon.ico">
+  <link rel="shortcut icon" href="https://blog.dgraph.io//images/favicon.ico">
   <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-TileImage" content="/assets/favicons/mstile-144x144.png">
-  <meta name="msapplication-config" content="/assets/favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/index.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
 
   
     <title>Introducing Ristretto: A High-Performance Go Cache - Dgraph Blog</title>
@@ -39,7 +18,7 @@
 
   <meta property="og:url" content="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/">
   
-  <meta property="og:image" content="/images/ristretto-3.jpg">
+  <meta property="og:image" content="https://blog.dgraph.io//images/ristretto-3.jpg">
 
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Work+Sans:400,500,700,800" rel="stylesheet">
 
@@ -48,11 +27,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
 
   <link
-    href='/css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
     rel="stylesheet"
   />
   <link
-    href='/css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
     rel="stylesheet"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />
@@ -75,26 +54,26 @@
 
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
-  <script src="/js/search.js"></script>
+  <script src="https://blog.dgraph.io//js/search.js"></script>
 
   <link
     rel="stylesheet"
-    href='/css/styles.css?5c8a1fe31ab0b3ec38aa8f3c97f9040d'>
+    href='https://blog.dgraph.io//css/styles.css?21ad29131562e6f79799833d1702fcb9'>
   <link
     rel="stylesheet"
-    href='/css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
+    href='https://blog.dgraph.io//css/custom.css?83898a52f9f9600dfde9404842bcb2d4'>
 
   
   
     
       <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="/images/ristretto-3.jpg"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io//images/ristretto-3.jpg"/>
     
   
 
   <meta name="twitter:title" content="Introducing Ristretto: A High-Performance Go Cache"/>
   <meta name="twitter:description" content="This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a star.
-With over six months of research and development, we&#39;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios."/>
+With over six months of research and development, we&rsquo;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 </head>
 
@@ -369,7 +348,7 @@ With over six months of research and development, we&#39;re proud to announce th
 	<div class="container">
 	  <div class="row">
 		<div class="col-12 offset-0 col-md-10 offset-md-1">
-		  <figure class="page-logo"><a href="/"><img src="/images/logo.svg" alt="Dgraph Logo"></a></figure>
+		  <figure class="page-logo"><a href="https://blog.dgraph.io/"><img src="https://blog.dgraph.io//images/logo.svg" alt="Dgraph Logo"></a></figure>
 				  
 			<span class="topnav-stargazers-wrapper">
 			  <a href="https://github.com/dgraph-io/dgraph" data-show-count="true" aria-label="Star Dgraph on GitHub" class="github-button">Star</a>
@@ -402,6 +381,7 @@ With over six months of research and development, we&#39;re proud to announce th
 	</script>
   </header>
   
+
   
   <section class="page-intro page-intro--blog-article">
     <div class="container">
@@ -445,31 +425,40 @@ With over six months of research and development, we&#39;re proud to announce th
         <div class="col-xs-12 offset-xs-0 col-md-10 offset-md-1">
           <img
             class="main__image"
-            src="/images/ristretto-3.jpg"
+            src="https://blog.dgraph.io//images/ristretto-3.jpg"
           >
-          <div class="article-content"><p><strong>This post made it to the top of Golang <a href="https://www.reddit.com/r/golang/comments/d6taoq/introducing_ristretto_a_highperformance_go_cache/">subreddit</a> and is trending in top 10
+          <div class="article-content">
+
+<p><strong>This post made it to the top of Golang <a href="https://www.reddit.com/r/golang/comments/d6taoq/introducing_ristretto_a_highperformance_go_cache/">subreddit</a> and is trending in top 10
 on the front page of <a href="https://news.ycombinator.com/item?id=21023949">Hacker News</a>. Do engage in discussion there and show
 us love by giving us a <a href="https://github.com/dgraph-io/dgraph">star</a>.</strong></p>
-<p>With over six months of research and development, we're proud to announce the
+
+<p>With over six months of research and development, we&rsquo;re proud to announce the
 initial release of <strong><a href="https://github.com/dgraph-io/ristretto">Ristretto</a>: A High Performance, Concurrent, Memory-Bound
 Go cache.</strong> It is contention-proof, scales well and provides consistently high
 hit-ratios.</p>
+
 <p>You can now also watch the talk Manish gave at the latest Go Bangalore meetup!</p>
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/HzMZEsqXDec" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 <h3 id="preface">Preface</h3>
+
 <p>It all started with needing a memory-bound, concurrent Go cache in <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.
-We looked around for a solution, but we couldn't find a great one. We then tried
+We looked around for a solution, but we couldn&rsquo;t find a great one. We then tried
 using a sharded map, with shard eviction to release memory, which caused us
-memory issues. We then repurposed Groupcache's <a href="https://github.com/golang/groupcache/blob/master/lru/lru.go">LRU</a>, using mutex locks for
+memory issues. We then repurposed Groupcache&rsquo;s <a href="https://github.com/golang/groupcache/blob/master/lru/lru.go">LRU</a>, using mutex locks for
 thread safety. After having it around for a year, we noticed that the cache
 suffered from severe contention. A <a href="https://github.com/dgraph-io/dgraph/commit/b9990f4619b64615c2c18bb7627d198b4397109c">commit</a> to remove that cache caused our
 query latency to dramatically improve by 5-10x. <strong>In essence, our cache was
 slowing us down!</strong></p>
+
 <p>We concluded that the concurrent cache story in Go is broken and must be fixed.
 In March, we wrote about the <a href="https://blog.dgraph.io/post/caching-in-go/">State of Caching in Go</a>, mentioning the
 problem of databases and systems requiring a smart memory-bound cache which can
 scale to the multi-threaded environment Go programs find themselves in. In
 particular, we set these as the requirements for the cache:</p>
+
 <ol>
 <li>Concurrent</li>
 <li>High cache-hit ratio</li>
@@ -477,19 +466,24 @@ particular, we set these as the requirements for the cache:</p>
 <li>Scale well as the number of cores and goroutines increases</li>
 <li>Scale well under non-random key access distribution (e.g. Zipf).</li>
 </ol>
+
 <p>After publishing the <a href="https://blog.dgraph.io/post/caching-in-go/">blog post</a>, we built a team to address the challenges mentioned
 therein and create a Go cache library worthy of being compared to non-Go cache
 implementations. In particular, <a href="https://github.com/ben-manes/caffeine">Caffeine</a> which is a high performance,
 near-optimal caching library based on Java 8. It is being used by many Java-based
-databases, like Cassandra, HBase, and Neo4j. There's an article about the design
+databases, like Cassandra, HBase, and Neo4j. There&rsquo;s an article about the design
 of Caffeine <a href="http://highscalability.com/blog/2016/1/25/design-of-a-modern-cache.html">here</a>.</p>
+
 <h3 id="ristretto-better-half-of-espresso">Ristretto: Better Half of Espresso</h3>
-<p>We have since <a href="/refs/bp_wrapper.pdf">read</a> <a href="/refs/Adaptive%20Software%20Cache%20Management.pdf">the</a> <a href="/refs/TinyLFU%20-%20A%20Highly%20Efficient%20Cache%20Admission%20Policy.pdf">literature</a>, extensively tested
+
+<p>We have since <a href="https://blog.dgraph.io/refs/bp_wrapper.pdf">read</a> <a href="https://blog.dgraph.io/refs/Adaptive%20Software%20Cache%20Management.pdf">the</a> <a href="https://blog.dgraph.io/refs/TinyLFU%20-%20A%20Highly%20Efficient%20Cache%20Admission%20Policy.pdf">literature</a>, extensively tested
 implementations and discussed every variable there is to consider in writing a
 cache library. And today, we are proud to announce that it is ready for the
 wider Go community to use and experiment with.</p>
-<p>Before we begin explaining the design of <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>, here's a code snippet which shows how to
+
+<p>Before we begin explaining the design of <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>, here&rsquo;s a code snippet which shows how to
 use it:</p>
+
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">main</span>() {
 	cache, err <span style="color:#000;font-weight:bold">:=</span> ristretto.<span style="color:#900;font-weight:bold">NewCache</span>(<span style="color:#000;font-weight:bold">&amp;</span>ristretto.Config{
 		NumCounters: <span style="color:#099">1e7</span>,     <span style="color:#998;font-style:italic">// Num keys to track frequency of (10M).
@@ -511,75 +505,96 @@ use it:</p>
 	fmt.<span style="color:#900;font-weight:bold">Println</span>(value)
 	cache.<span style="color:#900;font-weight:bold">Del</span>(<span style="color:#d14">&#34;key&#34;</span>)
 }</code></pre></div>
+
 <h4 id="guiding-principles">Guiding Principles</h4>
+
 <p><a href="https://github.com/dgraph-io/ristretto">Ristretto</a> is built on three guiding principles:</p>
+
 <ol>
 <li>Fast Accesses</li>
 <li>High Concurrency and Contention Resistance</li>
 <li>Memory Bounding.</li>
 </ol>
-<p>In this blog post, we'll discuss these three principles and how we achieved
+
+<p>In this blog post, we&rsquo;ll discuss these three principles and how we achieved
 them in Ristretto.</p>
+
 <h3 id="fast-access">Fast Access</h3>
+
 <p>As much as we love Go and its opinionated stance on features, some of Go design
 decisions prevented us from squeezing out all the performance we wanted to. The
-most notable one is Go's concurrency model. Due to the focus on CSP, most other
+most notable one is Go&rsquo;s concurrency model. Due to the focus on CSP, most other
 forms of atomic operations have been neglected. This makes it hard to implement
 lock-free structures that would be useful in a cache library. For example, Go
 <a href="https://groups.google.com/d/msg/golang-nuts/M9kF6Tdh2Vo/3tLSFYYOGgAJ">does not</a> provide thread-local storage.</p>
+
 <p>At its core, a cache is a hash map with rules about what goes in and what goes
-out. If the hash map doesn't perform well, then the whole cache will suffer.
+out. If the hash map doesn&rsquo;t perform well, then the whole cache will suffer.
 As opposed to Java, Go does not have a lockless concurrent hashmap. Instead,
 thread safety in Go is achieved via explicitly acquiring mutex locks.</p>
+
 <p>We experimented with multiple implementations (using the <code>store</code> interface
 within Ristretto) and found <code>sync.Map</code> performs well for read-heavy workloads
-but deteriorates for write workloads. Considering there's no thread-local
+but deteriorates for write workloads. Considering there&rsquo;s no thread-local
 storage, <strong>we found the best overall performance with sharded mutex-wrapped Go
 maps.</strong> In particular, we chose to use 256 shards to ensure that this would
 perform well even with a 64-core server.</p>
+
 <p>With a shard based approach, we also needed to find a quick way to calculate
 which shard a key should go in. This requirement and the concern about long keys
 consuming too much memory led us to using <code>uint64</code> for keys, instead
-of storing the entire key.  The rationale was that we'll need the hash of the
+of storing the entire key.  The rationale was that we&rsquo;ll need the hash of the
 key in multiple places and doing it once at entry allowed us to reuse that hash,
 avoiding any more computation.</p>
+
 <p><strong>To generate a fast hash, we borrowed <a href="https://github.com/dgraph-io/ristretto/blob/master/z/rtutil.go#L42-L44">runtime.memhash</a> from Go Runtime.</strong>
 This function uses assembly code to quickly generate a hash. Note that the hash
 has a randomizer that is initialized whenever the process starts, which means
 the same key would not generate the same hash on the next process run. But,
-that's alright for a non-persistent cache. In our <a href="https://github.com/dgraph-io/ristretto/blob/master/z/rtutil_test.go#L11-L44">experiments</a>, we found that it can
+that&rsquo;s alright for a non-persistent cache. In our <a href="https://github.com/dgraph-io/ristretto/blob/master/z/rtutil_test.go#L11-L44">experiments</a>, we found that it can
 hash 64-byte keys in under 10ns.</p>
+
 <pre><code>BenchmarkMemHash-32 200000000	 8.88 ns/op
 BenchmarkFarm-32    100000000	 17.9 ns/op
 BenchmarkSip-32      30000000	 41.1 ns/op
 BenchmarkFnv-32      20000000	 70.6 ns/op
-</code></pre><p>We then used this hash as not only the stored key but also to figure out the
+</code></pre>
+
+<p>We then used this hash as not only the stored key but also to figure out the
 shard the key should go into. <em>This does introduce a chance of key collision,
-that's something we plan to deal with later.</em></p>
+that&rsquo;s something we plan to deal with later.</em></p>
+
 <h3 id="concurrency-and-contention-resistance">Concurrency and Contention Resistance</h3>
-<p>Achieving high hit ratios requires managing metadata about what's present in the
+
+<p>Achieving high hit ratios requires managing metadata about what&rsquo;s present in the
 cache and what <em>should</em> be present in the cache. This becomes very hard when
 balancing the performance and scalability of the cache across goroutines. Luckily,
-there's a <a href="/refs/bp_wrapper.pdf">paper</a> called <em>BP-Wrapper</em> written about a system framework making any replacement
+there&rsquo;s a <a href="https://blog.dgraph.io/refs/bp_wrapper.pdf">paper</a> called <em>BP-Wrapper</em> written about a system framework making any replacement
 algorithms almost lock contention-free. The paper describes two ways to mitigate
 contention: <em>prefetching</em> and <em>batching</em>. We only use batching.</p>
-<p>Batching works pretty much how you'd think. <strong>Rather than acquiring a mutex lock
+
+<p>Batching works pretty much how you&rsquo;d think. <strong>Rather than acquiring a mutex lock
 for every metadata mutation, we wait for a ring buffer to fill up before we
 acquire a mutex and process the mutations.</strong> As described in
 the paper, this lowers contention considerably with little overhead.</p>
+
 <p>We apply this method for all <code>Gets</code> and <code>Sets</code> to the cache.</p>
+
 <h4 id="gets">Gets</h4>
+
 <p>All Gets to the cache are, of course, immediately serviced. The hard part is to
 capture the Get, so we can keep track of the key access. In an LRU cache,
 typically a key would be placed at the head of a linked list. In our LFU based
-cache, we need to increment an item's hit counter. Both operations require
-thread-safe access to a cache global struct. <a href="/refs/bp_wrapper.pdf">BP-Wrapper</a> suggests using
+cache, we need to increment an item&rsquo;s hit counter. Both operations require
+thread-safe access to a cache global struct. <a href="https://blog.dgraph.io/refs/bp_wrapper.pdf">BP-Wrapper</a> suggests using
 batching to process the hit counter increments, but the question is how do we
 implement this batching process, without acquiring yet another lock.</p>
+
 <p>This might sound like a perfect use case of Go channels, and it is.
 Unfortunately, the throughput performance of channels prevented us from using
 them. <strong>Instead, we devised a nifty way to use <code>sync.Pool</code> to implement striped,
 lossy <a href="https://github.com/dgraph-io/ristretto/blob/master/ring.go#L99-L104">ring buffers</a></strong> that have great performance with little loss of data.</p>
+
 <p>Any item stored in the Pool may be removed automatically at any time
 <a href="https://golang.org/pkg/sync/#Pool">without</a> notification. <em>That introduces one level of lossy behavior.</em>
 Each item in Pool is effectively a batch of keys. When the batch fills up, it
@@ -588,6 +603,7 @@ consuming too many CPU cycles to process it. If the channel is full, the batch i
 <em>This introduces a secondary level of lossy behavior.</em> A goroutine picks up this
 batch from the internal channel and processes the keys, updating their hit
 counter.</p>
+
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#900;font-weight:bold">AddToLossyBuffer</span>(key):
   stripe <span style="color:#000;font-weight:bold">:=</span> b.pool.<span style="color:#900;font-weight:bold">Get</span>().(<span style="color:#000;font-weight:bold">*</span>ringStripe)
   stripe.<span style="color:#900;font-weight:bold">Push</span>(key)
@@ -609,18 +625,23 @@ p.itemCh processing:
       p.<span style="color:#900;font-weight:bold">Increment</span>(key)
     }
   }</code></pre></div>
+
 <p>The performance benefits of using a <code>sync.Pool</code> over anything else (slices,
 striped mutexes, etc.) are mostly due to the internal usage of thread-local
 storage, <em>something not available as a public API to Go users.</em></p>
+
 <h4 id="sets">Sets</h4>
+
 <p>The requirements for Set buffer is slightly different from Get. In Gets,
 we buffer up the keys, only processing them once the buffer fills up. In Sets,
 we want to process the keys as soon as possible. <strong>So, we use a channel to
 capture the Sets, dropping them on the floor if the channel is full to avoid
 contention.</strong> A couple of background goroutines pick sets from the channel and
 process the Set.</p>
+
 <p>This approach, as with Gets, is designed to optimize for contention resistance.
 But, comes with a few caveats, described below.</p>
+
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">select</span> {
 <span style="color:#000;font-weight:bold">case</span> c.setBuf <span style="color:#000;font-weight:bold">&lt;-</span> <span style="color:#000;font-weight:bold">&amp;</span>item{key: hash, val: val, cost: cost}:
     <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">true</span>
@@ -629,9 +650,12 @@ But, comes with a few caveats, described below.</p>
 </span><span style="color:#998;font-style:italic"></span>    c.stats.<span style="color:#900;font-weight:bold">Add</span>(dropSets, hash, <span style="color:#099">1</span>)
     <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">false</span>
 }</code></pre></div>
+
 <h4 id="caveats">Caveats</h4>
+
 <p>Sets in <a href="https://github.com/dgraph-io/ristretto">Ristretto</a> are queued into a buffer, control is returned back to the
 caller, and the buffer is then applied to the cache. This has two side-effects:</p>
+
 <ol>
 <li><strong>There is no guarantee that a set would be applied.</strong> It could be dropped
 immediately to avoid contention or could be rejected later by the policy.</li>
@@ -639,56 +663,73 @@ immediately to avoid contention or could be rejected later by the policy.</li>
 has returned to the user. In database terms, it is an <em>eventual consistency</em>
 model.</li>
 </ol>
+
 <p>If however, a key is already present in the cache, Set would update the key
 immediately. This is to avoid a cached key holding a stale value.</p>
+
 <h4 id="contention-resistance">Contention Resistance</h4>
+
 <p><strong>Ristretto is optimized for contention resistance.</strong> This performs really well
-under heavy concurrent load, as we'll see with throughput benchmarks below. However, it
+under heavy concurrent load, as we&rsquo;ll see with throughput benchmarks below. However, it
 would lose some metadata in exchange for better throughput performance.</p>
-<p>Interestingly, that information loss doesn't hurt our hit ratio performance because of
+
+<p>Interestingly, that information loss doesn&rsquo;t hurt our hit ratio performance because of
 the nature of key access distributions. If we do lose metadata, it is generally
 lost uniformly while the key access distribution remains non-uniform. Therefore,
 we still achieve high hit ratios and the hit ratio degradation is small as shown
 by the following graph.</p>
-<p><img src="/images/rt-hit-degrade.svg?sanitize=true" alt="Ristretto Hit Ratio Degradation"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-hit-degrade.svg?sanitize=true" alt="Ristretto Hit Ratio Degradation" /></p>
+
 <h3 id="memory-bounding">Memory Bounding</h3>
+
 <h4 id="key-cost">Key Cost</h4>
+
 <p><em>An infinitely large cache is practically impossible.</em> A cache must be bounded in
 size. Many cache libraries would consider cache size to be the number of elements. We
 found that approach <em>naive</em>. Surely it works in a workload where values are of
 identical size. Most workloads, however, have variable-sized values. One value
 could cost a few bytes, another a few kilobytes and yet another, a few
-megabytes. Treating them as having the same memory cost isn't realistic.</p>
+megabytes. Treating them as having the same memory cost isn&rsquo;t realistic.</p>
+
 <p><strong>In <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>, we attach a cost to every key-value.</strong> Users can specify
 what that cost is when calling Set. We count this cost against the MaxCost of
 the cache. When the cache is operating at capacity, a <em>heavy</em> item could
 displace many <em>lightweight</em> items.  This mechanism is nice in that it works well
 for all different workloads, including the naive approach where each
 key-value costs 1.</p>
+
 <h4 id="admission-policy-via-tinylfu">Admission Policy via TinyLFU</h4>
+
 <blockquote>
 <p>&ldquo;What should we let into the cache?&rdquo;</p>
 </blockquote>
+
 <p>is answered by the admission policy. The goal, obviously, is to let
 in new items if they are more <em>&ldquo;valuable&rdquo;</em> than the current items. However, this
 becomes a challenge if you consider the overhead (latency and memory) required
 to track relevant item information pertaining to the <em>&ldquo;value&rdquo;</em> question.</p>
+
 <p>Despite being a well-documented strategy for increasing hit ratios, most Go
 cache libraries have no admission policy at all. In fact, many LRU eviction
 implementations assume the latest key as the most valuable.</p>
+
 <p>Moreover, most of the Go cache libraries use pure LRU or an approximation of LRU as their
 eviction policy. The quality of LRU approximation notwithstanding, some
-workloads are just better suited to LFU eviction policies. We've found this to
+workloads are just better suited to LFU eviction policies. We&rsquo;ve found this to
 be the case in our benchmarks using various traces.</p>
+
 <p>For our admission policy, we looked at a new and fascinating paper called
-<strong><a href="/refs/TinyLFU%20-%20A%20Highly%20Efficient%20Cache%20Admission%20Policy.pdf">TinyLFU</a>: A Highly Efficient Cache Admission Policy.</strong> At a very high
+<strong><a href="https://blog.dgraph.io/refs/TinyLFU%20-%20A%20Highly%20Efficient%20Cache%20Admission%20Policy.pdf">TinyLFU</a>: A Highly Efficient Cache Admission Policy.</strong> At a very high
 level, TinyLFU provides three methods:</p>
+
 <ul>
 <li>Increment(key uint64)</li>
 <li>Estimate(key uint64) int (referred as ɛ)</li>
 <li>Reset</li>
 </ul>
-<p>The <a href="/refs/TinyLFU%20-%20A%20Highly%20Efficient%20Cache%20Admission%20Policy.pdf">paper</a> explains it best, but TinyLFU is an eviction-agnostic
+
+<p>The <a href="https://blog.dgraph.io/refs/TinyLFU%20-%20A%20Highly%20Efficient%20Cache%20Admission%20Policy.pdf">paper</a> explains it best, but TinyLFU is an eviction-agnostic
 admission policy designed to improve hit ratios with very little memory
 overhead. The main idea is to <strong>only let in a new item if its estimate is higher
 than that of the item being evicted.</strong> We implemented TinyLFU in <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>
@@ -696,25 +737,31 @@ using a <a href="https://en.wikipedia.org/wiki/Count%E2%80%93min_sketch">Count-M
 frequency of access for the item (ɛ). This small cost per key allows us
 to keep track of a much larger sample of the global keyspace, than would be
 possible using a normal key to frequency map.</p>
+
 <p>TinyLFU also maintains the recency of key access by a <code>Reset</code> function. After N key
 increments, the counters get halved. So, a key that has not been seen for a
 while would have its counter get reset to zero; paving the way for more
 recently seen keys.</p>
+
 <h4 id="eviction-policy-via-sampled-lfu">Eviction Policy via Sampled LFU</h4>
+
 <p>When the cache reaches capacity, every incoming key should displace one or more
 keys present in the cache. Not only that, <strong>the ɛ of incoming key should be higher
 than the ɛ of key being evicted.</strong> To find a key with low ɛ, we used the natural
 <a href="https://blog.golang.org/go-maps-in-action">randomness</a> provided by Go map iteration to pick a sample of keys and
 loop over them to find a key with the lowest ɛ.</p>
+
 <p>We then compare the ɛ of this key against the incoming key. If the incoming key
 has a higher ɛ, then this key gets evicted (<em>eviction policy</em>). Otherwise, the
 incoming key is rejected (<em>admission policy</em>).  This mechanism is repeated until
-the incoming key's cost can be fit into the cache. Thus, a single incoming key
+the incoming key&rsquo;s cost can be fit into the cache. Thus, a single incoming key
 may displace more than one key. <em>Note that the cost of the incoming key does not
 play a factor in choosing the eviction keys.</em></p>
+
 <p><strong>With this approach, the hit ratios are within 1% of the exact LFU policies for a
 variety of workloads.</strong> This means we get the benefits of admission policy,
 conservative memory usage, and lower contention in the same little package.</p>
+
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// Snippet from the Admission and Eviction Algorithm
 </span><span style="color:#998;font-style:italic"></span>incHits <span style="color:#000;font-weight:bold">:=</span> p.admit.<span style="color:#900;font-weight:bold">Estimate</span>(key)
 <span style="color:#000;font-weight:bold">for</span> ; room &lt; <span style="color:#099">0</span>; room = p.evict.<span style="color:#900;font-weight:bold">roomLeft</span>(cost) {
@@ -734,22 +781,29 @@ conservative memory usage, and lower contention in the same little package.</p>
     sample = sample[:<span style="color:#0086b3">len</span>(sample)<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
     victims = <span style="color:#0086b3">append</span>(victims, minKey)
 }</code></pre></div>
+
 <h4 id="doorkeeper">DoorKeeper</h4>
+
 <p>Before we place a new key in TinyLFU, <a href="https://github.com/dgraph-io/ristretto">Ristretto</a> uses a bloom filter to first
 check if the key has been seen before. Only if the key is already present in the
 bloom filter, is it inserted into the TinyLFU. This is to avoid <em>polluting</em>
 TinyLFU with a long tail of keys that are not seen more than once.</p>
+
 <p>When calculating ɛ of a key, if the item is included in the bloom filter, its
 frequency is estimated to be the Estimate from TinyLFU plus one. During a
 <code>Reset</code> of TinyLFU, the bloom filter is also cleared out.</p>
+
 <h3 id="metrics">Metrics</h3>
+
 <p>While optional, it is important to understand how a cache is behaving. We wanted
 to ensure that tracking metrics related to cache is not only possible, the
 overhead of doing so is low enough to be turned on and kept on.</p>
+
 <p>Beyond hits and misses, Ristretto tracks metrics like keys and their cost being
 added, updated and evicted, sets being dropped or rejected, and gets being
 dropped or kept. All these numbers help understand the cache behavior on various
 workloads and pave way for further optimizations.</p>
+
 <p>We initially used atomic counters for these. However, the overhead was
 significant. We narrowed the cause down to <a href="https://dzone.com/articles/false-sharing">False Sharing</a>. Consider a
 multi-core system, where different atomic counters (8-bytes each) fall in the
@@ -757,11 +811,13 @@ same cache line (typically 64 bytes). Any update made to one of these counters,
 causes the others to be marked <em>invalid</em>. This forces a cache reload for all
 other cores holding that cache, thus creating a write contention on the cache
 line.</p>
+
 <p><strong>To achieve scalability, we ensure that each atomic counter completely occupies
 a full cache line.</strong> So, every core is working on a different cache line.
 Ristretto uses this by allocating 256 uint64s for each metric, leaving 9 unused
 uint64s between each active uint64. To avoid extra computation, the key hash is
 reused to determine which uint64 to increment.</p>
+
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">Add:
 	valp <span style="color:#000;font-weight:bold">:=</span> p.all[t]
 	<span style="color:#998;font-style:italic">// Avoid false sharing by padding at least 64 bytes of space between two
@@ -776,64 +832,94 @@ Read:
 		total <span style="color:#000;font-weight:bold">+=</span> atomic.<span style="color:#900;font-weight:bold">LoadUint64</span>(valp[i])
 	}
 	<span style="color:#000;font-weight:bold">return</span> total</code></pre></div>
+
 <p>When reading the metric, all the uint64s are read and summed up to get the
 latest number. <strong>With this approach, metrics tracking only adds around 10%
 overhead to the cache performance.</strong></p>
+
 <h3 id="benchmarks">Benchmarks</h3>
-<p>Now that you understand the various mechanisms present in <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>, let's look
+
+<p>Now that you understand the various mechanisms present in <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>, let&rsquo;s look
 at the Hit ratio and Throughput benchmarks compared to other popular Go caches.</p>
+
 <h4 id="hit-ratios">Hit Ratios</h4>
-<p>Hit ratios were measured using Damian Gryski's <a href="https://github.com/dgryski/trifles/blob/master/cachetest/main.go">cachetest</a> along with our
+
+<p>Hit ratios were measured using Damian Gryski&rsquo;s <a href="https://github.com/dgraph-io/benchmarks/blob/master/cachebench/cache_bench_test.go">cachetest</a> along with our
 own benchmarking <a href="https://github.com/dgraph-io/benchmarks/tree/master/cachebench">suite</a>. The hit ratio numbers are the same across
 both utilities, but we added the ability to read certain trace formats (LIRS and
 ARC, specifically) as well as CSV output for easier graphing. If you want to
 write your own benchmarks or add a trace format, check out the
 <a href="https://github.com/dgraph-io/ristretto/tree/master/sim">sim</a> package.</p>
+
 <p>To get a better idea of the room for improvement, <strong>we added a theoretically
 <a href="https://en.wikipedia.org/wiki/Page_replacement_algorithm#The_theoretically_optimal_page_replacement_algorithm">optimal</a> cache implementation, which uses future knowledge to evict items
 with the least amount of hits over its entire lifetime.</strong> Note that this is a
 clairvoyant LFU eviction policy, where other clairvoyant policies may use LRU.
 Depending on the workload, LFU or LRU may be better suited, but we found
-clairvoyant LFU useful for comparisons with <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>&lsquo;s Sampled LFU.</p>
+clairvoyant LFU useful for comparisons with <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>&rsquo;s Sampled LFU.</p>
+
 <h5 id="search">Search</h5>
+
 <p>This trace is described as &ldquo;disk read accesses initiated by a large commercial
 search engine in response to various web search requests.&rdquo;</p>
-<p><img src="/images/rt-hit-search.svg?sanitize=true" alt="Hit Ratios: Search"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-hit-search.svg?sanitize=true" alt="Hit Ratios: Search" /></p>
+
 <h5 id="database">Database</h5>
+
 <p>This trace is described as &ldquo;a database server running at a commercial site
 running an ERP application on top of a commercial database.&rdquo;</p>
-<p><img src="/images/rt-hit-db.svg?sanitize=true" alt="Hit Ratios: Commercial DB"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-hit-db.svg?sanitize=true" alt="Hit Ratios: Commercial DB" /></p>
+
 <h5 id="looping">Looping</h5>
-<p>This trace demonstrates a looping access pattern. We couldn't include
+
+<p>This trace demonstrates a looping access pattern. We couldn&rsquo;t include
 Fastcache, Freecache, or Bigcache implementations in this and the following
 benchmark because they have minimum capacity requirements that would skew the
 results. Some trace files are small and require small capacities for performance
 measurements.</p>
-<p><img src="/images/rt-hit-loop.svg?sanitize=true" alt="Hit Ratios: Loop"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-hit-loop.svg?sanitize=true" alt="Hit Ratios: Loop" /></p>
+
 <h5 id="codasyl">CODASYL</h5>
+
 <p>This trace is described as &ldquo;references to a CODASYL database for a one hour
-period.&rdquo; Note that <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>&lsquo;s performance suffers in comparison to the others
+period.&rdquo; Note that <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>&rsquo;s performance suffers in comparison to the others
 here. This is because of the LFU eviction policy being a bad fit for this
 workload.</p>
-<p><img src="/images/rt-hit-codasyl.svg?sanitize=true" alt="Hit Ratios: CODASYL"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-hit-codasyl.svg?sanitize=true" alt="Hit Ratios: CODASYL" /></p>
+
 <h4 id="throughput">Throughput</h4>
-<p>Throughput was measured using the <a href="https://github.com/dgryski/trifles/blob/master/cachetest/main.go">same utility</a> as the <a href="https://blog.dgraph.io/post/caching-in-go/">previous</a> blog post,
+
+<p>Throughput was measured using the <a href="https://github.com/dgraph-io/benchmarks/blob/master/cachebench/cache_bench_test.go">same utility</a> as the <a href="https://blog.dgraph.io/post/caching-in-go/">previous</a> blog post,
 which generates a large number of keys and alternates between goroutines for
 Getting and Setting according to the workload.</p>
+
 <p>All throughput benchmarks were ran on an Intel Core i7-8700K (3.7GHz) with 16gb
 of RAM.</p>
+
 <h5 id="mixed-25-writes-75-reads">Mixed: 25% Writes, 75% Reads</h5>
-<p><img src="/images/rt-thr-mixed.svg?sanitize=true" alt="Mixed Workload"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-thr-mixed.svg?sanitize=true" alt="Mixed Workload" /></p>
+
 <h5 id="read-100-reads">Read: 100% Reads</h5>
-<p><img src="/images/rt-thr-read.svg?sanitize=true" alt="Read Workload"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-thr-read.svg?sanitize=true" alt="Read Workload" /></p>
+
 <h5 id="write-100-writes">Write: 100% Writes</h5>
-<p><img src="/images/rt-thr-write.svg?sanitize=true" alt="Write Workload"></p>
+
+<p><img src="https://blog.dgraph.io/images/rt-thr-write.svg?sanitize=true" alt="Write Workload" /></p>
+
 <h3 id="future-improvements">Future Improvements</h3>
-<p>As you may have noticed in the CODASYL benchmarks, <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>&lsquo;s performance
+
+<p>As you may have noticed in the CODASYL benchmarks, <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>&rsquo;s performance
 suffers in LRU-heavy workloads. However, for most workloads, our Sampled LFU
 policy performs quite well. The question then becomes <strong>&ldquo;How can we get the best
-of both worlds?&quot;</strong></p>
-<p>In a <a href="/refs/Adaptive%20Software%20Cache%20Management.pdf">paper</a> called <em>Adaptive Software Cache Management</em>, this exact
+of both worlds?&rdquo;</strong></p>
+
+<p>In a <a href="https://blog.dgraph.io/refs/Adaptive%20Software%20Cache%20Management.pdf">paper</a> called <em>Adaptive Software Cache Management</em>, this exact
 question is explored.  The basic idea is placing an LRU &ldquo;window&rdquo; before the main
 cache segment, and adaptively sizing that window using hill-climbing techniques
 to maximize the hit ratio. Caffeine has already seen
@@ -841,25 +927,33 @@ to maximize the hit ratio. Caffeine has already seen
 results by doing
 <a href="https://github.com/ben-manes/caffeine/wiki/Design#adaptivity">this</a>.  Something
 we believe Ristretto can benefit from as well in the future.</p>
+
 <h3 id="special-thanks">Special Thanks</h3>
+
 <p>We would like to sincerely thank <a href="https://github.com/ben-manes">Ben Manes</a>. His
 depth of knowledge and dedicated, selfless sharing has been a large factor in
-any progress we've made and we are honored to have had many conversations with
+any progress we&rsquo;ve made and we are honored to have had many conversations with
 him about all things caching. Ristretto would just not have been possible
 without his guidance, support and <em><a href="https://en.wikipedia.org/wiki/High_availability#%22Nines%22">99.9%</a></em> availability on our internal
 Slack channel.</p>
+
 <p>We would also like to thank <a href="https://twitter.com/dgryski">Damian Gryski</a> for his help with
 benchmarking Ristretto and writing a reference <a href="https://github.com/dgryski/go-tinylfu">TinyLFU</a> implementation.</p>
+
 <h2 id="conclusion">Conclusion</h2>
+
 <p>We set out with the goal of making a cache library competitive with Caffeine.
 While not completely there, <strong>we did create something significantly
 <a href="https://en.wikipedia.org/wiki/Ristretto">better</a></strong> than most others in the Go world at the moment by using some
 new techniques that others can learn from.</p>
+
 <p>Some initial experiments with using this cache in Dgraph are looking promising.
 And we hope to integrate <a href="https://github.com/dgraph-io/ristretto">Ristretto</a> into both <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> and
 <a href="https://github.com/dgraph-io/badger">Badger</a> in the upcoming months. Do <a href="https://github.com/dgraph-io/ristretto">check it out</a> and perhaps use
 Ristretto to speed up your workloads!</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -909,6 +1003,7 @@ Ristretto to speed up your workloads!</p>
 		}
 	})
 </script>
+
 
 <p><em>Top Image: <a href="https://bluebottlecoffee.com/preparation-guides/espresso">Blue
 Bottle</a> Coffee Espresso Preparation Guide.</em></p>
@@ -961,7 +1056,7 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
             <div class="article-author">
   <figure class="article-author__figure">
     
-	<img src="/images/people/karl.jpg" class="article-author__image">
+	<img src="https://blog.dgraph.io/images/people/karl.jpg" class="article-author__image">
 
 
   </figure>
@@ -989,7 +1084,6 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
 </p>
 
 
-
   </div>
 </div>
 
@@ -997,7 +1091,7 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
 	<div class="article-author">
 	<figure class="article-author__figure">
 		
-	<img src="/images/people/manish.jpg" class="article-author__image">
+	<img src="https://blog.dgraph.io/images/people/manish.jpg" class="article-author__image">
 
 
 	</figure>
@@ -1023,7 +1117,6 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
-
 	</div>
 </div>
 
@@ -1041,7 +1134,7 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
     <div class="container">
       <div class="row">
         <div class="col-12 col-md-3">
-          <figure class="page-logo-footer"><a href="/"><img src="/images/logo.svg" width="140" height="42" alt="Company Logo"></a></figure>
+          <figure class="page-logo-footer"><a href="https://blog.dgraph.io/"><img src="https://blog.dgraph.io/images/logo.svg" width="140" height="42" alt="Company Logo"></a></figure>
         </div>
         
         <div class="col-4 col-md-2">
@@ -1133,9 +1226,9 @@ Bottle</a> Coffee Espresso Preparation Guide.</em></p>
   
 </div>
 
-    <script src="/js/clipboard.min.js"></script>
+    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
     <script
-      src='/js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
     ></script>
     <script>
       hljs.initHighlightingOnLoad();
@@ -1178,10 +1271,10 @@ $(document.links)
 <script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 <link
-  href='/css/heart.css?24a50879951b2391f04750723b4a012e'
+  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
   rel="stylesheet">
 <link
-  href='/css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
   rel="stylesheet">
 
 <script
@@ -1191,7 +1284,7 @@ $(document.links)
 ></script>
 <script
   type="text/javascript"
-  src='/js/custom.js?94f0c667422b8dac293e14c9c49872e3'
+  src='https://blog.dgraph.io//js/custom.js?94f0c667422b8dac293e14c9c49872e3'
 ></script>
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
@@ -1205,8 +1298,8 @@ $(document.links)
   <script type="text/javascript">
 DiscourseEmbed = {
   discourseUrl: "https:\/\/discuss.dgraph.io\/",
-  discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/introducing-ristretto-high-perf-go-cache\/"
-};
+  topicId:  5102 
+  };
 (function() {
   var d = document.createElement("script");
   d.type = "text/javascript";
