@@ -454,7 +454,9 @@
           >
           <div class="article-content"><p>Thanks for your feedback over the last couple of months. This release addresses some of the main pain points of using <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .</p>
+
 <h2 id="installation">Installation</h2>
+
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  uses <a href="http://rocksdb.org/">RocksDB</a>, which doesn&rsquo;t have a native Go interface.
 To use RocksDB via Go, Cgo is required, which makes doing a simple <code>go get</code> installation of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
@@ -463,64 +465,94 @@ You first need to download, compile and install RocksDB, before installing <a hr
 .
 While <code>go get</code> would still require more manual steps, starting this version only contributors to <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  would have to do that.</p>
+
 <p>We have embedded RocksDB into <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  binary and generated binaries for both Linux and Mac.
 Now, most users can just choose one of these two options:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl https://get.dgraph.io | bash
-</code></pre></div><p>Or, download the latest release <a href="https://github.com/dgraph-io/dgraph/releases">from Github</a>. And extract the binaries to <code>/usr/local/bin</code>.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#998;font-style:italic"># For Linux</span>
+
+<pre><code class="language-bash">$ curl https://get.dgraph.io | bash
+</code></pre>
+
+<p>Or, download the latest release <a href="https://github.com/dgraph-io/dgraph/releases">from Github</a>. And extract the binaries to <code>/usr/local/bin</code>.</p>
+
+<pre><code class="language-bash"># For Linux
 $ sudo tar -C /usr/local/bin -xzf dgraph-linux-amd64-VERSION.tar.gz
 
-<span style="color:#998;font-style:italic"># For Mac</span>
+# For Mac
 $ sudo tar -C /usr/local/bin -xzf dgraph-darwin-amd64-VERSION.tar.gz
-</code></pre></div><p>That&rsquo;s it! These simple steps give you everything that you need to install <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+</code></pre>
+
+<p>That&rsquo;s it! These simple steps give you everything that you need to install <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .</p>
+
 <h2 id="documentation">Documentation</h2>
+
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is a small team of enthusiastic developers, who like to code more than they like to write docs.
 Even when the team writes documentation, it gets stale very quickly.
 Honestly, that&rsquo;s not a story unique to us. It&rsquo;s a common problem affecting many projects.</p>
+
 <p>So, I thought why not solve it in a way where our documentation would never get stale.
 I looked around for inspiration and found these two documentations that maximized screen estate usage and were easy to follow.
 Each of these allowed search engines to easily index them while providing a lot of content per web page, which made doing a browser search easy.</p>
+
 <ul>
 <li><a href="https://wiki.archlinux.org/">Arch Linux</a></li>
 <li><a href="https://wiki.gentoo.org/wiki/Main_Page">Gentoo Linux</a></li>
 </ul>
+
 <p>I run Arch Linux on my desktop and laptop, and love it&rsquo;s thorough up to date documentation.
 So, I couldn&rsquo;t be more excited about building something similar for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .</p>
+
 <p>So, after last 3 weeks of <em>no-coding-only-documentation</em> effort, <strong>presenting <a href="https://wiki.dgraph.io">wiki.dgraph.io</a>, the official source of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  documentation</strong>.</p>
+
 <p>Just like Arch and Gentoo, it&rsquo;s using MediaWiki software, which most people use on a daily basis (Thanks, Wikipedia).</p>
+
 <p>The main reason we chose wiki over other solutions is that it puts the power of editing right in the hands of the user.
 So if a user spots an error, they have everything they need to fix it.
 If the fix is more complicated, writing a note stating that this article or section is out of date is sufficient to get the team and more importantly, other users notified; so they can take appropriate action.</p>
+
 <p>And <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  community welcomed the change! We already have contributions to wiki from community members on various pages.
 They keep us accountable and help maintain the quality of the documentation.
 So, check it out, and if you find any issues or need more clarity in some section, log in, and edit the page. It&rsquo;s that simple.</p>
+
 <p>Btw, if you installed <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  above, this is the page you&rsquo;re looking for: <a href="https://wiki.dgraph.io/Beginners_Guide">https://wiki.dgraph.io/Beginners_Guide</a>.</p>
+
 <h2 id="clients">Clients</h2>
+
 <p>In v0.3, we released a Go client for <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .
 Thanks to our enthusiastic community, we got contributions for other languages. Now we have client code for both <strong>Java</strong> and <strong>Python</strong>.
 Thanks <a href="https://github.com/bitmalloc">@bitmalloc</a> and <a href="https://github.com/mohitranka">@mohitranka</a>!</p>
+
 <p>In fact, Python client installation is as simple as:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ pip install -U pydgraph
-</code></pre></div><p>You can read more about how to install and use them here: <a href="https://wiki.dgraph.io/Clients">https://wiki.dgraph.io/Clients</a>.</p>
+
+<pre><code class="language-bash">$ pip install -U pydgraph
+</code></pre>
+
+<p>You can read more about how to install and use them here: <a href="https://wiki.dgraph.io/Clients">https://wiki.dgraph.io/Clients</a>.</p>
+
 <h2 id="debugging">Debugging</h2>
+
 <p><strong>Why did this query take so long to run?</strong></p>
+
 <p>This question stumped us! We didn&rsquo;t know why. <code>logrus</code> was useful only for general logging.
 It couldn&rsquo;t pinpoint which log was from which query, and show which steps of execution took how long, during the life of the query.</p>
+
 <p>The moment I realized that <a href="https://grpc.io">grpc.io</a> is a ground-up rewrite of stubby, Google&rsquo;s internal rpc system; I knew that we had to switch to it.
 Stubby could provide amazing debugging information about each request to the server, and something that&rsquo;s very well translated to grpc.</p>
+
 <p>So, after thorough effort, I was able to replace most of the <code>logrus.Log</code> statements to use <a href="https://godoc.org/golang.org/x/net/context">context</a> and <a href="https://godoc.org/golang.org/x/net/trace">trace</a>.</p>
+
 <p>Thanks to these, you can now easily debug live queries running on <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .
 In fact, you can see all this in action on one of our demo <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  instance <a href="http://dgraph.xyz/debug/requests?fam=Dgraph&amp;b=0&amp;exp=1">via /debug/requests</a>.</p>
+
 <pre><code>2016/07/14 06:54:55.615143    0.003184    Query
 06:54:55.615157     .    14    ... Query received: { me(_xid_: m.0bxtg) { type.object.name.en film.actor.film { film.performance.film { type.object.name.en type.object.name.ru } } } }
 06:54:55.615295     .   138    ... Xid: m.0bxtg Uid: 14685953405111677952
@@ -532,7 +564,10 @@ In fact, you can see all this in action on one of our demo <a href="https://gith
 06:54:55.617194     .     2    ... Reply from child. Index: 1 Attr: film.actor.film
 06:54:55.617195     .     1    ... Graph processed
 06:54:55.618252     .  1057    ... Latencies: Total: 3.102143ms Parsing: 163.283µs Process: 1.88333ms Json: 601.266µs
-</code></pre><p>These live queries are further categorized by how long they took to run. So, you can easily identify slower queries.</p>
+</code></pre>
+
+<p>These live queries are further categorized by how long they took to run. So, you can easily identify slower queries.</p>
+
 <pre><code>2016/07/14 03:16:13.684030    0.100109    Query
 03:16:13.684045     .    15    ... Query received: { me(_xid_: m.06pj8) { type.object.name.en film.director.film { type.object.name.en film.film.initial_release_date film.film.country film.film.starring { film.performance.actor { type.object.name.en } film.performance.character { type.object.name.en } } film.film.genre { type.object.name.en } } } }
 03:16:13.684175     .   130    ... Xid: m.06pj8 Uid: 4255310415198890869
@@ -544,14 +579,22 @@ In fact, you can see all this in action on one of our demo <a href="https://gith
 03:16:13.744477     .    11    ... Reply from child. Index: 1 Attr: film.director.film
 03:16:13.744482     .     5    ... Graph processed
 03:16:13.783501     . 39020    ... Latencies: Total: 99.461379ms Parsing: 156.916µs Process: 60.288205ms Json: 25.813948ms
-</code></pre><p>Also, you can see latency (in microseconds) statistics over various time intervals.</p>
+</code></pre>
+
+<p>Also, you can see latency (in microseconds) statistics over various time intervals.</p>
+
 <pre><code>Count: 20    Mean: 59979    StdDev: 37593    Median: 84261
 [    2048,    4096)    4    20.000%    20.000%
 [    4096,    8192)    2    10.000%    30.000%
 [    65536,    131072)    14    70.000%    100.000%
-</code></pre><p>This is the first time we have such data available, and we&rsquo;ll tweak what gets reported over time to make these logs more and more useful.</p>
+</code></pre>
+
+<p>This is the first time we have such data available, and we&rsquo;ll tweak what gets reported over time to make these logs more and more useful.</p>
+
 <p>Hope you like these features and try out <a href="https://github.com/dgraph-io/dgraph/releases">the new release</a>.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -602,7 +645,9 @@ In fact, you can see all this in action on one of our demo <a href="https://gith
 	})
 </script>
 
+
 <p><em>Thanks <a href="https://twitter.com/mholt6">Matt Holt</a> from the Caddy team, for the inspiration to have <code>https://get.dgraph.io</code>.</em></p>
+
 <p><em>Top image: <a href="https://www.nasa.gov/image-feature/cygnus-cargo-craft-released-from-space-station/">Cygnus Cargo Craft Released From Space Station</a></em></p></div>
           <div class="article-tag-list">
             

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hacker news on Dgraph Blog</title>
@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 19 Sep 2019 23:13:13 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2020 07:41:43 +0000</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/hacker-news/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Designing GraphQL schemas</title>
+      <link>https://blog.dgraph.io/post/designing-graphql-schemas/</link>
+      <pubDate>Sun, 12 Apr 2020 07:41:43 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/designing-graphql-schemas/</guid>
+      <description>This post made it to top 10 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.
+GraphQL has taken the app development world by storm because of its immense benefits. GraphQL adoption by UI development teams has brought in a new wave of flexibility in API design, productivity across frontend-backend teams, intuitiveness in expressing UI data requirements, and accessibility to powerful tooling.</description>
+    </item>
     
     <item>
       <title>Introducing Ristretto: A High-Performance Go Cache</title>
@@ -29,7 +39,7 @@ With over six months of research and development, we&amp;rsquo;re proud to annou
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
- This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
+This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
 Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.</description>
     </item>
     

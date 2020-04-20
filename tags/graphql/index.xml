@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>graphql on Dgraph Blog</title>
@@ -18,8 +18,8 @@
       <pubDate>Sun, 12 Apr 2020 07:41:43 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/post/designing-graphql-schemas/</guid>
-      <description>GraphQL has taken the app development world by storm because of its immense benefits. GraphQL adoption by UI development teams has brought in a new wave of flexibility in API design, productivity across frontend-backend teams, intuitiveness in expressing UI data requirements, and accessibility to powerful tooling. These benefits are why many tech companies, including Facebook, Airbnb, Paypal, GitHub, and Shopify, are embracing GraphQL.
-Designing the GraphQL schema is often the first step in your app development journey using GraphQL.</description>
+      <description>This post made it to top 10 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.
+GraphQL has taken the app development world by storm because of its immense benefits. GraphQL adoption by UI development teams has brought in a new wave of flexibility in API design, productivity across frontend-backend teams, intuitiveness in expressing UI data requirements, and accessibility to powerful tooling.</description>
     </item>
     
     <item>
@@ -39,7 +39,7 @@ We took part as one of the platinum sponsors of the event, and we also unveiled 
       <pubDate>Tue, 29 Oct 2019 02:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/building-native-graphql-database-dgraph/</guid>
-      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;quot;
+      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;rdquo;
  That&amp;rsquo;s my standard opening statement whenever talking about Dgraph&amp;rsquo;s choice of the query language.
 Most people who don&amp;rsquo;t know GraphQL assume it&amp;rsquo;s a graph database query language. Most people who know GraphQL wonder how a graph database is being powered by it.
 Our focus at Dgraph has always been on helping you build apps using an amazingly advanced graph database.</description>
@@ -52,7 +52,7 @@ Our focus at Dgraph has always been on helping you build apps using an amazingly
       
       <guid>https://blog.dgraph.io/post/graphql-conf-19/</guid>
       <description>We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community. Now, we couldn&amp;rsquo;t help ourselves from sharing this with Dgraph&amp;rsquo;s community! This is the story of the GraphQL conference in Berlin.
- The GraphQL connection If you&amp;rsquo;re wondering what does Dgraph has to do with GraphQL, here&amp;rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early.</description>
+The GraphQL connection If you&amp;rsquo;re wondering what does Dgraph has to do with GraphQL, here&amp;rsquo;s the answer. Dgraph had set its eyes and placed its bet on GraphQL very early.</description>
     </item>
     
   </channel>

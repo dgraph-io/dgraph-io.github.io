@@ -452,12 +452,16 @@ Background In 2008, Microsoft released Transparent Data Encryption (TDE) to prov
             class="main__image"
             src="https://blog.dgraph.io//images/milky_way.jpg"
           >
-          <div class="article-content"><p>We built &ldquo;Encryption at Rest&rdquo; in Badger <a href="https://blog.dgraph.io/post/releasing-badger-v2/">v2</a>. Encryption is complex, but
+          <div class="article-content">
+
+<p>We built &ldquo;Encryption at Rest&rdquo; in Badger <a href="https://blog.dgraph.io/post/releasing-badger-v2/">v2</a>. Encryption is complex, but
 important.  With this blog post, we not only want to introduce this feature to
 our users, but also dive into the details of how we implemented encryption in
 Badger, so the reader can <strong>gain enough understanding about introducing AES
 encryption</strong> in their own systems.</p>
+
 <h3 id="background">Background</h3>
+
 <p>In 2008, Microsoft released Transparent Data Encryption (<a href="https://en.wikipedia.org/wiki/Transparent_data_encryption">TDE</a>) to provide
 Encryption at Rest to SQL server. Since then, TDE has become an expectation, if
 not a requirement for databases. <a href="https://docs.oracle.com/database/121/ASOAG/introduction-to-transparent-data-encryption.htm#ASOAG10117">Oracle</a> supports it, <a href="https://docs.mongodb.com/manual/core/security-encryption-at-rest/">MongoDB</a> supports
@@ -467,25 +471,30 @@ DSS, which require the protection of data at rest. With data protection
 standards such as GDPR and the sheer mass of data that companies collect and
 accumulate, the protection and control of information has become increasingly
 important.</p>
+
 <p><strong>Dgraph is dealing with similar expectations.</strong> But, instead of directly
 building encryption into <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>, we decided to offload that complexity onto
 <a href="https://github.com/dgraph-io/badger">Badger</a>. This benefits not only Dgraph users, but the wider community using
 Badger actively.</p>
+
 <p>Badger is implemented as an embeddable library, which makes it especially
 powerful for building more specialized or complex systems on top of it.
 Layering systems on top of Badger provides a number of significant benefits.
 Most importantly, it provides <a href="https://en.wikipedia.org/wiki/Separation_of_concerns">separation</a> of concerns. For example:</p>
+
 <ul>
 <li>Badger provides fast access to data by key on a single server, and it
 manages the actual data on disk so it is in charge of data security.</li>
 <li>Dgraph builds a graph database on top of Badger, and is also in charge of
 scaling to multiple distributed servers.</li>
 </ul>
+
 <p>This means that we were able to add encryption to Badger with minimal changes to
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>, while adding encryption to Dgraph as well. <strong>The same benefit can
 accrue to other layered systems that use Badger.</strong> Furthermore, because Badger
 is a smaller, independent system, new features like encryption can be built,
 tested, and verified more easily and with more confidence.</p>
+
 <p>This is similar to the Internet Protocol
 <a href="https://en.wikipedia.org/wiki/Internet_protocol_suite">Suite</a>, which provides
 high level protocols like TCP on top of lower level protocols like IP. This
@@ -493,7 +502,9 @@ allows other high level protocols (e.g. UDP, DCCP, SCCP, RSVP) to be built on
 top of IP. When improvements are made to IP (such as IPv4 to
 <a href="https://en.wikipedia.org/wiki/IPv6">IPv6</a>), higher level protocols can all take
 advantage of them easily.</p>
+
 <h3 id="what-is-badger">What is Badger?</h3>
+
 <p><a href="https://github.com/dgraph-io/badger">BadgerDB</a> is a key-value database (KVDB) designed for performance and
 resilience. In benchmarks running on today’s typical cloud server hardware,
 Badger provides <a href="https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/">great</a> <a href="https://blog.dgraph.io/post/badger-lmdb-boltdb/">performance</a> compared to other popular KVDBs.
@@ -501,13 +512,16 @@ Badger can run concurrent <a href="https://blog.dgraph.io/post/badger-txn/">ACID
 concurrency control (<a href="https://en.wikipedia.org/wiki/Multiversion_concurrency_control">MVCC</a>) providing serializable snapshot
 isolation (<a href="https://wiki.postgresql.org/wiki/SSI">SSI</a>) guarantees. Badger provides resilience in the event of
 process, filesystem or even hardware crashes.</p>
+
 <p>In addition to speed and resilience, Badger&rsquo;s rich feature set and ease of use has
 made it a popular library. It has quickly become <em>the most active</em> KVDB
 written in Go.  On GitHub, <strong>Badger has over 7.3K stars and is used in over
 850 <a href="https://github.com/dgraph-io/badger#other-projects-using-badger">projects</a>,</strong> including Uber&rsquo;s <a href="https://github.com/jaegertracing/jaeger">Jaeger</a> and <a href="https://github.com/ipfs/go-ipfs">IPFS</a>.
 Most notable is <a href="https://www.usenetexpress.com/">UsenetExpress</a>, which uses
 Badger to store <strong>petabytes of data</strong>.</p>
+
 <h3 id="advanced-encryption-standard">Advanced Encryption Standard</h3>
+
 <p><strong>Badger uses the highly regarded <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> encryption algorithm,</strong> standardized
 by the <a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology">US NIST</a> and used by MongoDB, SQLite, and many other databases and
 systems. Even RocksDB, the KVDB used by <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> before Badger was created,
@@ -515,11 +529,14 @@ has since been <a href="https://github.com/facebook/rocksdb/pull/2424">enhanced<
 industry standard as it is the most secure and widely used algorithm for
 encrypting data. Wide use is critical for encryption standards for ensuring that
 potential security flaws are found and fixed.</p>
-<p>AES is symmetric; the same encryption key<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> is used for both encrypting and
+
+<p>AES is symmetric; the same encryption key<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> is used for both encrypting and
 decrypting data. Badger supports <a href="https://www.cryptomathic.com/news-events/blog/symmetric-cryptography-and-key-management-considerations-on-key-exhaustion-rotation-and-security-models">key rotation</a> to further secure access to
 data. This allows Badger to be used in systems that need to meet the various
 data protection regulations and requirements.</p>
+
 <h3 id="the-need-for-key-rotation">The Need for Key Rotation</h3>
+
 <p>To encrypt and decrypt data requires access to an encryption key. AES keys come
 in three sizes: 128, 192, and 256 bits. Which size you use is actually <a href="https://proprivacy.com/guides/aes-encryption">not very
 important</a>, as a brute force crack
@@ -527,6 +544,7 @@ of a 128-bit key would take the fastest computer in the world over a
 hundred-quadrillion (10 to the 17th power) years. Even if you could get 10
 million supercomputers to work together to do the crack, it would still take
 longer than the current age of the universe.</p>
+
 <p><strong>Much more important is maintaining the security of the key to avoid key
 <a href="https://en.wikipedia.org/wiki/Information_leakage">leak</a></strong>. Obviously, encryption keys must be stored securely by the user and
 should not be easy to guess. However, there are other sources of key leak. For
@@ -536,6 +554,7 @@ that it is possible to crack even the most secure (256-bit) AES keys by
 measuring electromagnetic radiation coming from a computer, using a device that
 costs around $200 and can fit into a jacket pocket. Computers doing encryption
 must be physically secure to prevent this.</p>
+
 <p>Even without physical access, if the same key is used too often there are known
 ways that attackers can determine the value of the key by analyzing large
 amounts of data encrypted using that key. In order to avoid this, <strong>the key must
@@ -545,21 +564,27 @@ key rotation.</strong> However, when the key is changed, existing
 encrypted data must be decrypted using the old key and then re-encrypted using
 the new key. These computations would significantly reduce the performance for
 encrypted data.</p>
+
 <h3 id="one-key-to-rule-them-all-many-keys-to-find-them">One Key to Rule Them All, Many Keys to Find Them</h3>
+
 <p>Instead of using the AES encryption key directly to encrypt data, Badger
 uses two types of keys:</p>
+
 <ul>
 <li>A user provided AES encryption key, called the <strong>master key</strong>, is used to encrypt auto-generated data keys.</li>
 <li><strong>Data keys</strong> are used to encrypt and decrypt data on disk. Each encrypted data key is stored on disk along with the encrypted data.</li>
 </ul>
+
 <p>The length of your master key must be 16, 24 or 32 characters. This determines
 what version of AES encryption is used (AES-128, AES-192, and AES-256
 respectively).</p>
+
 <p>Note that <strong>you should never use a predictable string as your master key.</strong> If
 you have a password manager (such as 1Password, LastPass, etc.), you can use its
 built-in password generator to generate a strong encryption key. Even if you
 don’t have a password manager, you can use a reputable online password
 generator, such as <a href="https://1password.com/password-generator/">1Password</a> to generate your master key.</p>
+
 <p><strong>You should rotate your master key on a regular schedule.</strong> Fortunately, because the
 master key is used to encrypt only data keys, which are (even
 all together) much smaller compared to the data stored in the database, the
@@ -567,12 +592,15 @@ master key does not need to be rotated as often (as data keys) to prevent key le
 Even better, when the master key is rotated, only the data keys need to be
 decrypted using the old master key, and then re-encrypted using the new master
 key. This is tremendously faster than re-encrypting all of the data on disk.</p>
+
 <h3 id="avoiding-encrypted-duplicates">Avoiding Encrypted Duplicates</h3>
+
 <p>When data keys are used to encrypt data stored in the database, the same data
 will often be encrypted multiple times before the rotation period for the data
 key expires. Encrypting the same data with the same data key always generates
 the same encrypted text to be stored in the database. This increases the ability
 of an attacker to predict the original plaintext data.</p>
+
 <p>To reduce the predictability of the original data, Badger incorporates a
 standard encryption technique that doesn’t use the data key directly to encrypt
 the data. Instead, <strong>Badger generates a random 16-byte array called an
@@ -581,7 +609,9 @@ the data. Instead, <strong>Badger generates a random 16-byte array called an
 XORed with the original data, and the result is stored on disk. This means that
 <strong>even if the same block is encrypted multiple times,</strong> the random value of the
 IV ensures that <strong>the stored text will be different each time.</strong></p>
+
 <h3 id="storing-ivs-with-minimal-overhead">Storing IVs with Minimal Overhead</h3>
+
 <p>Badger is based on <a href="https://blog.dgraph.io/post/badger/">LSM trees</a>. An advanced
 feature of Badger’s implementation of LSM trees is that for <strong>values larger than a
 certain user specified threshold size, it can separate the key-value pairs and
@@ -592,12 +622,14 @@ Assuming 16 bytes per key and 16 bytes per value pointer, a single
 64MB file can store two million key-value pairs. For various datasets, the
 entire LSM tree can fit in memory making the task of searching for a key much
 faster.</p>
+
 <p>The LSM tree is composed of many equally sized files called SSTables, arranged
 into a pyramid-like structure. Each lower level in the pyramid is 10-15x the
 size of its upper level. Each SSTable is further divided up into block
 structures, where each block holds 4KB of data. <strong>Badger uses a unique IV to
 encrypt each of these blocks and stores the IV in plaintext at the end of the
 encrypted block.</strong> The storage overhead of a 16B IV over a 4KB is 0.4%.</p>
+
 <p>Note that it is OK to store the IVs in plaintext. Assume that a cracker gets
 access to the IV and encrypted block. To decrypt the block, they&rsquo;d need to
 encrypt the IV with the data key (to XOR the encrypted data back to plaintext).
@@ -605,6 +637,7 @@ But to get access to the data key, they&rsquo;d need to decrypt it using the mas
 key. If master key is safe and secure, that won&rsquo;t be accessible, rendering the
 effort futile. Thus, <strong>knowing the IV is not sufficient to decrypt the
 data.</strong></p>
+
 <p>Next, we need to encrypt the values stored in the vlog files. Each value is read
 individually from a vlog file, using the value pointer from the LSM tree, which
 stores the vlog file id, the offset in the file and the length of the value.
@@ -614,6 +647,7 @@ we decided to <strong>encrypt each value individually,</strong> keeping it in sy
 access pattern of the value logs. But IVs are supposed to be random per
 encrypted data block, in this case per value, so using one IV for the whole
 value log file isn&rsquo;t ideal.</p>
+
 <p><strong>How does Badger avoid the bloat of attaching a 16-byte IV to every value?</strong> To
 optimize the encryption of the vlog entries, Badger uses a unique technique.
 Instead of generating a 16-byte IV and storing it at the end of each value in
@@ -622,66 +656,88 @@ vlog file. Along with it, Badger attaches a 4-byte unique value that is the
 offset of the value in the vlog file, which together make up the required
 16-byte IV. For decryption, the 4-byte vlog offsets are available from the value
 pointer stored with each key.</p>
+
 <p>This technique saves 16 bytes of space on disk for every value in a vlog file.
 For example, for a vlog file that contains 10,000 entries, storing an IV with
 each value would require 160,000 bytes, while this technique only requires 12
 bytes. Furthermore, for a typical 1GB of value log, this technique only adds a
 12B overhead, even lower than an SSTable.</p>
+
 <h3 id="key-rotation-revisited">Key Rotation Revisited</h3>
+
 <p>By default, Badger rotates the data keys every ten days, automatically
 generating new data keys whenever the old data keys expire. The user can change
 this schedule using the <code>Options.WithEncryptionKeyRotationDuration</code>
 <a href="https://godoc.org/github.com/dgraph-io/badger#Options.WithEncryptionKeyRotationDuration">function</a>. All data keys are stored together in a file and loaded into
 memory when Badger is opened.</p>
+
 <p><strong>All data keys ever used are always stored.</strong> Badger does not determine which
 key is not being used and can be discarded. Here&rsquo;s why: Each data key is 32B, so
 even a thousand of these keys only consume 32KB &mdash; a small size considering how
 big Badger DBs can get (TBs/PBs). A thousand keys correspond to ten thousand
 days ~ 27 years worth of data keys assuming a 10 day rotation cycle. So, we felt
 it was OK for us to avoid the logical complexity of actively garbage collecting
-data keys<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
+data keys<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>.</p>
+
 <p>While Badger rotates the data keys automatically, <strong>it is up to the user to rotate
 the master key.</strong> The user is encouraged to rotate the master encryption key
 frequently in order to ensure a higher level of security. This is done with the
 <code>rotate</code> subcommand:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">badger rotate --dir<span style="color:#000;font-weight:bold">=</span>badger_dir --old-key-path<span style="color:#000;font-weight:bold">=</span>old/path --new-key-path<span style="color:#000;font-weight:bold">=</span>new/path
-</code></pre></div><p>Note that currently, the Badger datastore must be offline in order to rotate the
+
+<pre><code class="language-shell">badger rotate --dir=badger_dir --old-key-path=old/path --new-key-path=new/path
+</code></pre>
+
+<p>Note that currently, the Badger datastore must be offline in order to rotate the
 master key. Because rotating the master key requires only that the data keys be
 re-encrypted, this doesn’t take very long and should not be a significant
 problem. In the future, the requirement that the datastore be offline might be
 removed.</p>
+
 <h3 id="enabling-encryption-on-an-existing-datastore">Enabling Encryption on an Existing Datastore</h3>
+
 <p>You can enable encryption on a Badger DB instance using these <a href="https://godoc.org/github.com/dgraph-io/badger#Options.WithEncryptionKey">options</a>:</p>
+
 <pre><code>opts := badger.DefaultOptions(&quot;/tmp/badger&quot;).
     WithEncryptionKey(masterKey).
     WithEncryptionKeyRotationDuration(dataKeyRotationDuration) # defaults to 10 days
-</code></pre><p>If you have an existing Badger datastore that is not encrypted, enabling
+</code></pre>
+
+<p>If you have an existing Badger datastore that is not encrypted, enabling
 encryption on it will not immediately encrypt your existing data all at once.
 Instead, only <em>new files</em> are encrypted, which will happen as new data is
 added. As older data gets compacted and newer files generated, those would also
 get encrypted over time. Badger can run in this hybrid mode easily, as each
 SSTable and value log file stores the information about the data key used for
 encryption.</p>
+
 <p><strong>In order to immediately encrypt all of an existing Badger datastore,</strong> you should:</p>
+
 <ol>
 <li>Export your Badger datastore</li>
 <li>Start a new instance of Badger with encryption enabled</li>
 <li>Import your data into the new Badger datastore.</li>
 </ol>
+
 <p>This can be done using <code>badger backup</code> and <code>badger restore</code> tools already
 available. Otherwise, a simple tool could be written using <a href="https://godoc.org/github.com/dgraph-io/badger#DB.NewStream">Stream</a> Framework
 and <a href="https://godoc.org/github.com/dgraph-io/badger#DB.NewStreamWriter">StreamWriter</a> interface to allow this to happen without exporting
 and with a stunning <a href="https://blog.dgraph.io/post/badger-v1.6.0-release/">1.6Gbps</a> throughput.</p>
+
 <h3 id="conclusion">Conclusion</h3>
+
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> supports Encryption at Rest (<a href="https://en.wikipedia.org/wiki/Transparent_data_encryption">TDE</a>) using established and proven
 standards and best practices, implemented in a way that works well with the
 existing features and benefits of Badger. And because <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> is built on top
 of Badger, you can also use strong encryption with Dgraph.</p>
+
 <p>We are dedicated to adding important new features to Badger and Dgraph. Give
 Encryption at Rest a try, and let us know how we can make it even better.</p>
+
 <p><em>We&rsquo;d like to thank the Dgraph Developer Relations team who worked tirelessly in
 helping write this blog post. It was an incredible team effort.</em></p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -732,23 +788,25 @@ helping write this blog post. It was an incredible team effort.</em></p>
 	})
 </script>
 
+
 <p><em>Top image: <a href="https://assets.wired.com/photos/w_600/wp-content/uploads/2014/06/uhd_img_2528_cc.jpg">Glittering Milky Way Photo by ESO/B. Tafreshi</a></em></p>
-<section class="footnotes" role="doc-endnotes">
-<hr>
+<div class="footnotes">
+
+<hr />
+
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>Note that when encryption is added to a key-value database the word “key”
-becomes ambiguous, as it is used to refer to both the key of the key-value
-pairs stored in Badger, and the key used to encrypt and decrypt those
-key-value pairs.  When the context is not clear, this post will use
-“encryption key” for the latter meaning. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-<li id="fn:2" role="doc-endnote">
-<p>It shouldn&rsquo;t be too hard to introduce the garbage collection for data keys, if
-there are use cases where this back of the envelope calculation breaks. <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
+<li id="fn:1"><p>Note that when encryption is added to a key-value database the word “key”
+  becomes ambiguous, as it is used to refer to both the key of the key-value
+  pairs stored in Badger, and the key used to encrypt and decrypt those
+  key-value pairs.  When the context is not clear, this post will use
+  “encryption key” for the latter meaning.</p>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+
+<li id="fn:2"><p>It shouldn&rsquo;t be too hard to introduce the garbage collection for data keys, if
+  there are use cases where this back of the envelope calculation breaks.</p>
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
 </ol>
-</section>
+</div>
 </div>
           <div class="article-tag-list">
             

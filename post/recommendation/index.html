@@ -453,26 +453,37 @@ You wake up and open Facebook, which shows you a feed of articles that it has ch
             class="main__image"
             src="https://blog.dgraph.io//images/falcon.png"
           >
-          <div class="article-content"><h2 id="preface">Preface</h2>
+          <div class="article-content">
+
+<h2 id="preface">Preface</h2>
+
 <p>In today&rsquo;s world, user experience is paramount. It&rsquo;s no longer about basic CRUD, just serving user
 data; it&rsquo;s about mining the data to generate interesting predictions and suggesting actions to the
 user.</p>
+
 <p>That&rsquo;s the field of recommendations. They&rsquo;re everywhere. In fact, they happen so frequently that you
 don&rsquo;t even realize them.</p>
+
 <p><em>You wake up and open Facebook,</em> which shows you a feed of articles that it
 has chosen for you based on your viewing history.</p>
+
 <p><em>Want to buy something?</em> Amazon would recommend
 you things to purchase based on what you&rsquo;ve viewed in the recent past.</p>
+
 <p><em>Want to relax and unwind with a movie?</em> Netflix would recommend you what to watch based on your
 interests.</p>
+
 <p><em>No time to watch a full movie?</em> YouTube would recommend you smaller chunk videos.</p>
+
 <p><em>Want to listen to music instead?</em> Spotify would generate a weekly discovery list of songs just for
 you.</p>
+
 <p>All this makes you wonder: <strong>Should recommendations be part of your application?</strong> While competing
 against Netflix might be hard, in this two-part series, we&rsquo;ll explain the basics of a recommendation
 engine. We&rsquo;ll show how you can build recommendations via two approaches: Content-based filtering and
 Collaborative filtering. And, how you can use Dgraph to bring recommendations to your app without breaking a
 sweat.</p>
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
@@ -481,28 +492,38 @@ MathJax.Hub.Config({
 <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+
 <p>For this, we&rsquo;ll make use of Dgraph&rsquo;s query variables. To learn more about variables, head over to
 <a href="https://tour.dgraph.io/blocksvars/1/">Dgraph tour</a> &mdash; <em>if you are new to Dgraph variables, you
 really should check them out first before diving in here.</em></p>
+
 <p>Let&rsquo;s first check out how recommendation systems work, and then we&rsquo;ll look at the support Dgraph queries offer.  We&rsquo;ll use two sample datasets.  One about movies and ratings (<a href="https://grouplens.org/datasets/movielens/100k/">Movielens</a>) and the other is part of <a href="https://archive.org/download/stackexchange/lifehacks.stackexchange.com.7z">Stack Exchange&rsquo;s data archive</a> &mdash; we&rsquo;ll just use the Lifehacks dataset here, but watch out for a coming series of posts where we show how to load all of Stack Overflow into Dgraph and run the entire website completely off Dgraph.</p>
+
 <h2 id="recommendation-systems">Recommendation Systems</h2>
+
 <p>Making Recommendations is a subtle art.  There are a number of approaches and a production worthy recommendation system might depend on data, weighting of various features, global user behaviour and maybe recent behaviour of the user we are recommending for.</p>
-<p>Rather than just inventing recommendation queries, let&rsquo;s start somewhere more grounded.  For this post, we started with the Stanford University MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.  Part of the course is on recommender systems.  We&rsquo;ll show how the theory in the <em>&lsquo;&lsquo;Recommendation Systems&rsquo;'</em> chapter of the <a href="http://www.mmds.org">text</a> can be translated into practice using Dgraph. We&rsquo;ll also talk about other approaches and how to run one at scale.</p>
+
+<p>Rather than just inventing recommendation queries, let&rsquo;s start somewhere more grounded.  For this post, we started with the Stanford University MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.  Part of the course is on recommender systems.  We&rsquo;ll show how the theory in the <em>&ldquo;Recommendation Systems&rdquo;</em> chapter of the <a href="http://www.mmds.org">text</a> can be translated into practice using Dgraph. We&rsquo;ll also talk about other approaches and how to run one at scale.</p>
+
 <h3 id="making-recommendations">Making Recommendations</h3>
+
 <p>Making recommendations is about taking past benaviour and preferences and trying to predict a preference for some unknown.  For example, later in the post, we&rsquo;ll talk about movie recommendations.  For this, we know what a user has watched and how they rated movies; how then can we predict what unwatched movies they&rsquo;ll enjoy.</p>
+
 <p>As briefly mentioned before, broadly speaking, there are two basic approaches:</p>
+
 <ol>
-<li>
-<p><strong>Content-based:</strong> Such systems base a recommendation on the properties of an item. Two items that have similar properties are deemed similar; the more properties shared, the more similar. For example, if a user likes movies with certain actors or directors, we can
-recommend other movies involving the same people.</p>
-</li>
-<li>
-<p><strong>Collaborative filtering:</strong> Such systems base recommendations on the relationship between users and items, and similarity to other users. Users are similar if they have relationships to items in common; the more items in common, the more similar.  For example, if many similar users enjoyed a particular movie, that might be a good one to recommend.</p>
-</li>
+<li><p><strong>Content-based:</strong> Such systems base a recommendation on the properties of an item. Two items that have similar properties are deemed similar; the more properties shared, the more similar. For example, if a user likes movies with certain actors or directors, we can
+recommend other movies involving the same people.</p></li>
+
+<li><p><strong>Collaborative filtering:</strong> Such systems base recommendations on the relationship between users and items, and similarity to other users. Users are similar if they have relationships to items in common; the more items in common, the more similar.  For example, if many similar users enjoyed a particular movie, that might be a good one to recommend.</p></li>
 </ol>
+
 <p>There are also classification algorithms based on machine learning.  We&rsquo;ll focus here on how far we can get with Dgraph queries alone.  Machine learning or other algorithms could also be run over the Dgraph output.</p>
+
 <h3 id="interpreting-the-data-for-recommendations">Interpreting the Data for Recommendations</h3>
+
 <p>Our Stanford reference text represents data as a sparse matrix.  So for our movie data set, we might think of the user&rsquo;s ratings of movies as:</p>
+
 <table>
 <thead>
 <tr>
@@ -514,6 +535,7 @@ recommend other movies involving the same people.</p>
 <th>Braveheart</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td>A</td>
@@ -523,6 +545,7 @@ recommend other movies involving the same people.</p>
 <td></td>
 <td></td>
 </tr>
+
 <tr>
 <td>B</td>
 <td></td>
@@ -531,6 +554,7 @@ recommend other movies involving the same people.</p>
 <td></td>
 <td>1</td>
 </tr>
+
 <tr>
 <td>C</td>
 <td>1</td>
@@ -541,18 +565,31 @@ recommend other movies involving the same people.</p>
 </tr>
 </tbody>
 </table>
+
 <p>The movies also have other properties such as genres, not shown here.  We&rsquo;ve stored it all as a graph, which in itself is a nice way to store a sparse matrix.</p>
-<p>The matrix (that&rsquo;s the matrix above, not <em>''<a href="https://en.wikipedia.org/wiki/The_Matrix">The Matrix</a>''</em>) is missing values because users haven&rsquo;t seen all movies &mdash; in fact, for the real dataset it&rsquo;s much sparser because users have each only rated a tiny percentage of the movies.</p>
+
+<p>The matrix (that&rsquo;s the matrix above, not <em>&ldquo;<a href="https://en.wikipedia.org/wiki/The_Matrix">The Matrix</a>&ldquo;</em>) is missing values because users haven&rsquo;t seen all movies &mdash; in fact, for the real dataset it&rsquo;s much sparser because users have each only rated a tiny percentage of the movies.</p>
+
 <p>The challenge of recommendation is to predict values for the missing ratings.  Will user A enjoy Braveheart because it&rsquo;s an action movie and thus similar to movies they enjoyed? (content based filtering)</p>
+
 <p>But maybe they won&rsquo;t enjoy it because they might have something in common with user B who seems to share similar ratings (collaborative filtering).</p>
+
 <p>Maybe user A just gives high ratings and isn&rsquo;t very discriminating &mdash; sometimes benaviour rather than rating can be a better predictor. We&rsquo;ll need to combine a number of approaches.</p>
+
 <p>The theory boils down to finding functions that serve as measures of similarity or distance.  For example, in content-based filtering, the function would take two movies and output a score (the distance or similarity).  If we start with a movie and apply the function repeatedly to it and all other movies, we can find the most similar movies.</p>
+
 <p>We&rsquo;ll look at some distance measures below as we apply them in queries, but for any of them we&rsquo;ll need to propagate values through our query, so let&rsquo;s look at how that works in Dgraph and then try out some recommendation queries.</p>
+
 <h2 id="variable-propagation">Variable Propagation</h2>
+
 <p>A Dgraph <a href="https://docs.dgraph.io/query-language/#value-variables">value variable</a> is a mapping from graph nodes to values that have been computed for the nodes during the query.  Value variables can be passed around the query, aggregated etc.  Value variables also sum over paths as we move deeper into a query tree.</p>
+
 <p>Within a query tree, a value variable defined at one level, propagates such that in a nested level, the variable is the sum of all paths from the definition.</p>
+
 <p>We call this <strong>variable propagation.</strong>  Note that the queries in this post we built for our master branch for the upcoming v0.8 release.</p>
+
 <p>Say you had a query:</p>
+
 <pre><code>{
   var(func: uid(&lt;...P...&gt;)) {
     myscore as math(1)          # A
@@ -568,31 +605,50 @@ recommend other movies involving the same people.</p>
     val(score)
   }
 }
-</code></pre><p>At line A, nodes are assigned a score of <code>1</code> (which in this case we&rsquo;ll assume is the single node <code>P</code>).
+</code></pre>
+
+<p>At line A, nodes are assigned a score of <code>1</code> (which in this case we&rsquo;ll assume is the single node <code>P</code>).
 Traversing the <code>friend</code> edge twice reaches the friends of friends.  The variable <code>myscore</code> gets
 propagated, such that the value inside the block marked C is the sum of values from all paths from A to C.</p>
+
 <p>Here&rsquo;s how that propagation looks in a graph.</p>
-<p><img src="https://blog.dgraph.io/images/vartransform.png" alt="Variable propagation"></p>
+
+<p><img src="https://blog.dgraph.io/images/vartransform.png" alt="Variable propagation" /></p>
+
 <p><strong>In short, the value that a node receives is equal to the sum of values of all its parent nodes.</strong>
 This propagation is useful when we want to normalize a sum across users, find the number of paths
 between some nodes or accumulate a sum as we move through the graph.</p>
+
 <h2 id="movielens">Movielens</h2>
+
 <p>Let&rsquo;s start with the <a href="https://grouplens.org/datasets/movielens/100k/">ML-100k</a> dataset of
 100,000 ratings from 1000 users on 1700 movies. We converted the dataset to RDF (the dataset and
 script can be found at
 <a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">github</a>) and loaded it into
 Dgraph.</p>
+
 <p>It&rsquo;s about users and movies and user&rsquo;s ratings of movies.  So a user (a node in the graph) has a name and a gender and a <code>rated</code> edge to a movie.  The <code>rated</code> edge has a facet <code>rating</code> that tells us the users numeric 0&ndash;5 rating of the movie.</p>
-<p><img src="https://blog.dgraph.io/images/movilensschema.png" alt="Movielens schema"></p>
+
+<p><img src="https://blog.dgraph.io/images/movilensschema.png" alt="Movielens schema" /></p>
+
 <h2 id="content-based-filtering">Content-based filtering</h2>
+
 <p>Content-based filtering ranks items as similar or not based on their properties.  There are a number of measures we could use.  Our reference text from Stanford talks about <strong>Jaccard</strong> and <strong>Cosine</strong> distances.</p>
+
 <h3 id="jaccard-distance">Jaccard Distance</h3>
+
 <p>Let&rsquo;s try some measure functions based on Jaccard distance.  For two sets A and B the Jaccard distance is given by</p>
+
 <p>$$1-\frac{|A\cap B|}{| A\cup B |}$$</p>
+
 <p>That&rsquo;s the ratio of the size of the set intersection to the size of the union.  So if items have many properties in common (compared to how many properties each has) then the items are similar.  For our movie example, let&rsquo;s take $A$ and $B$ as the genre sets for each movie.  We can then express our difference function as:</p>
+
 <p>$$d(M_1, M_2) = 1-\frac{|M_1.\mathcal{genres} \cap M_2.\mathcal{genres}|}{| M_1.\mathcal{genres}\cup M_2.\mathcal{genres} |}$$</p>
+
 <p>The closer the result is to 0, the closer the movies &mdash; if the number of genres in common is more, the second term is close to 1, if movies have few genres in common, the second term is closer to 0.</p>
-<p>For movie a $M_1$, we picked &lsquo;&lsquo;The Shawshank Redemption&rsquo;&rsquo; with unique ID <code>0x30d80</code>, and translated Jaccard distance to this query.</p>
+
+<p>For movie a $M_1$, we picked &ldquo;The Shawshank Redemption&rdquo; with unique ID <code>0x30d80</code>, and translated Jaccard distance to this query.</p>
+
 <pre><code>{
   # Count the genres for every movie that has been rated
   var(func: has(~rated)) {
@@ -622,19 +678,22 @@ Dgraph.</p>
     val(distance)
   }
 }
-</code></pre><p>The query works as follows.</p>
+</code></pre>
+
+<p>The query works as follows.</p>
+
 <ol>
 <li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-</ol>
-<ul>
 <li>Count the number of genres for movie $M_1$.</li>
 <li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
 <li>We may have reached this $M_2$ via multiple genre paths and the count of genres set at <code># 2</code> would have accumulated for each path, so normalize back to the original count.</li>
 <li>Find the number of intersecting genres.</li>
 <li>Apply the Jaccard distance formula &mdash; <code>distance</code> is thus a map for each $M_2$ to the Jaccard distance between $M_1$ and $M_2$.</li>
 <li>Filter out the movies that were closest (had lowest distance)</li>
-</ul>
-<p>Here&rsquo;s the results we got for &lsquo;&lsquo;The Shawshank Redemption&rsquo;&rsquo;</p>
+</ol>
+
+<p>Here&rsquo;s the results we got for &ldquo;The Shawshank Redemption&rdquo;</p>
+
 <pre><code>{
     &quot;similarMovies&quot;: [
         {
@@ -679,7 +738,10 @@ Dgraph.</p>
         }
     ]
 }
-</code></pre><p>Ouch, there&rsquo;s a bunch of movies with distance 0.  That means all those movies share exactly the same genre set with &lsquo;&lsquo;The Shawshank Redemption&rsquo;', so we can&rsquo;t discriminate between them.  Let&rsquo;s test another movie.  With &lsquo;&lsquo;Toy Story&rsquo;&rsquo; we get.</p>
+</code></pre>
+
+<p>Ouch, there&rsquo;s a bunch of movies with distance 0.  That means all those movies share exactly the same genre set with &ldquo;The Shawshank Redemption&rdquo;, so we can&rsquo;t discriminate between them.  Let&rsquo;s test another movie.  With &ldquo;Toy Story&rdquo; we get.</p>
+
 <pre><code>{
     &quot;similarMovies&quot;: [
         {
@@ -704,12 +766,20 @@ Dgraph.</p>
         }
     ]
 }
-</code></pre><p>That&rsquo;s better.  At least similar movies have similar genres. But still, the Jaccard distance function isn&rsquo;t good enough because it can&rsquo;t discriminate a difference between many movies.  Our reference text suggests the same distance function but for data that also has actors and directors, which we don&rsquo;t.</p>
+</code></pre>
+
+<p>That&rsquo;s better.  At least similar movies have similar genres. But still, the Jaccard distance function isn&rsquo;t good enough because it can&rsquo;t discriminate a difference between many movies.  Our reference text suggests the same distance function but for data that also has actors and directors, which we don&rsquo;t.</p>
+
 <p>As it stands, the Jaccard distance might not be so appropriate because the only items we have to compare are the genres, since the Jaccard distance doesn&rsquo;t take into account the magnitude of the ratings.  So let&rsquo;s play around with it and see how some variations come out.</p>
+
 <h3 id="jaccard-distance-variation">Jaccard Distance Variation</h3>
+
 <p>The size of the intersection of the genres seems a reasonable start, but how to bring the magnitude of the ratings into it?  If we are to use the ratings, then the average rating might be appropriate.  Let&rsquo;s try the number of genres in common plus an average rating.  Given a movie $M_1$ we&rsquo;ll find the similarity to all other movies $M_2$ as</p>
+
 <p>$$d(M_1, M_2) = |M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_2.\overline{\mathcal{rating}}$$</p>
-<p>Here&rsquo;s the Dgraph query for movie $M_1$ having unique ID <code>0x30d72</code>, that&rsquo;s &lsquo;&lsquo;Star Wars&rsquo;'.</p>
+
+<p>Here&rsquo;s the Dgraph query for movie $M_1$ having unique ID <code>0x30d72</code>, that&rsquo;s &ldquo;Star Wars&rdquo;.</p>
+
 <pre><code>{
   # M1 -- Star Wars by its unique ID
   var(func: uid(0x30d72)) {
@@ -736,9 +806,14 @@ Dgraph.</p>
     val(score)
   }
 }
-</code></pre><p><strong>In terms of variable propagation, the important part is the calculation of average rating.</strong>  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.</p>
-<p><img src="https://blog.dgraph.io/images/facetsumming.png" alt="Facet summing"></p>
+</code></pre>
+
+<p><strong>In terms of variable propagation, the important part is the calculation of average rating.</strong>  If an edge has a facet and we assign the facet to a variable, we calculate the average. Then for each node reached by the block the variable is the sum of the facets of all such edges reaching the node.</p>
+
+<p><img src="https://blog.dgraph.io/images/facetsumming.png" alt="Facet summing" /></p>
+
 <p>Running the query we get the following results.</p>
+
 <pre><code>{
     &quot;fin&quot;: [
         {
@@ -783,24 +858,40 @@ Dgraph.</p>
         }
     ]
 }
-</code></pre><p><em>Note that we didn&rsquo;t filter out &lsquo;&lsquo;Star Wars&rsquo;&rsquo; and thankfully it came back as the first result.</em>  Looks like a pretty good distance function, especially given the top three results, but it&rsquo;s probably biased.  &lsquo;&lsquo;Star Wars&rsquo;&rsquo; is highly rated on average, and so we got back other highly rated movies with intersecting genres.  If we searched for a movie that wasn&rsquo;t highly rated on average, the measure would still prefer highly rated movies with intersecting genres.</p>
+</code></pre>
+
+<p><em>Note that we didn&rsquo;t filter out &ldquo;Star Wars&rdquo; and thankfully it came back as the first result.</em>  Looks like a pretty good distance function, especially given the top three results, but it&rsquo;s probably biased.  &ldquo;Star Wars&rdquo; is highly rated on average, and so we got back other highly rated movies with intersecting genres.  If we searched for a movie that wasn&rsquo;t highly rated on average, the measure would still prefer highly rated movies with intersecting genres.</p>
+
 <p>That might be fine.  If a user likes certain genres, then maybe highly rated movie in those genres are good recommendations. Maybe it&rsquo;s better to normalize the result so that two movies come out as more similar if they have genres in common and similar average ratings.  That&rsquo;s what cosine distance does.</p>
+
 <h3 id="cosine-distance">Cosine Distance</h3>
+
 <p>Cosine distance treats our movies as vectors in an n-dimensional space.  The similarity of the movies is then a measure of the difference in angle between the vectors.  The smaller the angle between two vectors, the more similar the movies.  For our movie example, we can express that as follows.</p>
+
 <p>If we treat our movies as vectors</p>
+
 <p>$$x_1 &hellip; x_n$$ and $$y_1 &hellip; y_n$$</p>
+
 <p>the cosine difference between them is computed by calculating the vector dot product divided by the multiple of the distances from the origin.</p>
-<p><img src="https://blog.dgraph.io/images/cosine_diff.png" alt="cosine difference"></p>
+
+<p><img src="https://blog.dgraph.io/images/cosine_diff.png" alt="cosine difference" /></p>
+
 <!--
 what's wrong with this???
 $$\frac{\sum_{i=1}^n{x_iy_i}}{\sqrt{\sum_{i=1}^n{x_i^2}}\cdot \sqrt{\sum_{i=1}^n{y_i^2}}}$$
 If I paste it into http://www.hostmath.com/ I get what I want
 -->
-<p>In our case the $x$'s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
-<p><img src="https://blog.dgraph.io/images/cosine_diff_movies.png" alt="cosine difference"></p>
+
+<p>In our case the $x$&rsquo;s up to $x_{n-1}$ will represent the genres, with 1 for genre present and 0 for not present.  While the last term is the average rating.  So for our movie example we can express the cosine difference as.</p>
+
+<p><img src="https://blog.dgraph.io/images/cosine_diff_movies.png" alt="cosine difference" /></p>
+
 <!-- d(M_1,M_2) = \frac{|M_1.\mathcal{genres}\cap M_2.\mathcal{genres}| + M_1.\overline{\mathcal{rating}} \cdot M_2.\overline{\mathcal{rating}}}{\sqrt{|M_1.\mathcal{genres}| + {M_1.\overline{\mathcal{rating}}}^2}\cdot \sqrt{|M_2.\mathcal{genres}| + {M_2.\overline{\mathcal{rating}}}^2}} -->
+
 <p>That factors in both the intersecting genres as well as the similarity of the average ratings.</p>
+
 <p>As a single Dgraph query, that looks like this.</p>
+
 <pre><code>{
   # Calculate the average rating of every movie
   var(func: has(rated)) {
@@ -845,11 +936,12 @@ If I paste it into http://www.hostmath.com/ I get what I want
     val(score)
   }
 }
-</code></pre><p>The query works as follows.</p>
+</code></pre>
+
+<p>The query works as follows.</p>
+
 <ol>
 <li>We are going to need to normalize some results, so begin by setting <code>norm</code> to 1.</li>
-</ol>
-<ul>
 <li>Find the average rating for movie $M_1$.</li>
 <li>Count the genres for $M_1$.</li>
 <li>Follow <code>genre</code> paths to find all movies $M_2$ that share a genre with $M_1$.</li>
@@ -857,8 +949,10 @@ If I paste it into http://www.hostmath.com/ I get what I want
 <li>Find the number of intersecting genres.</li>
 <li>Apply the cosine distance formula &mdash; <code>score</code> is thus a map for each $M_2$ to the cosine distance between $M_1$ and $M_2$.</li>
 <li>Filter out the movies that were closest (had cosine closer to 1, and thus lowest angle)</li>
-</ul>
-<p>We searched again for the &lsquo;&lsquo;The Shawshank Redemption&rsquo;&rsquo; and got these results.</p>
+</ol>
+
+<p>We searched again for the &ldquo;The Shawshank Redemption&rdquo; and got these results.</p>
+
 <pre><code>{
     &quot;similarMovies&quot;: [
         {
@@ -903,11 +997,17 @@ If I paste it into http://www.hostmath.com/ I get what I want
         }
     ]
 }
-</code></pre><p>We didn&rsquo;t filter out &lsquo;&lsquo;The Shawshank Redemption&rsquo;&rsquo; and thus it comes back as the top result &mdash; it has an angle of 0 with itself.  Following that the query returns the results that cosine difference calculates as most similar.</p>
+</code></pre>
+
+<p>We didn&rsquo;t filter out &ldquo;The Shawshank Redemption&rdquo; and thus it comes back as the top result &mdash; it has an angle of 0 with itself.  Following that the query returns the results that cosine difference calculates as most similar.</p>
+
 <p><em>With that, we conclude this post.</em> In this post, we showcased Jaccard distance, a variation of Jaccard, and finally Cosine
 distance. That&rsquo;s three content-based filtering distance metrics and queries for them in Dgraph.  The variables and math function in Dgraph allow us to encode the metrics directly in the query.</p>
+
 <p>In the next post, we&rsquo;ll take a look at collaborative filtering.  We&rsquo;ll also look at making recommendations for Stack Overflow and how to build a scalable recommendation engine for big graphs.</p>
-<hr>
+
+<hr />
+
 <div class="engage">
 	<p>
 		<strong>
@@ -957,6 +1057,7 @@ distance. That&rsquo;s three content-based filtering distance metrics and querie
 		}
 	})
 </script>
+
 
 <p><em>Top image: <a href="http://www.spacex.com/media-gallery/detail/149441/9516">FALCON 9 FIRST STAGE LANDING</a></em></p>
 </div>

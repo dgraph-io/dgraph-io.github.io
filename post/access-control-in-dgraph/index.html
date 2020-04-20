@@ -451,7 +451,9 @@
             class="main__image"
             src="https://blog.dgraph.io//images/starshine-2.jpg"
           >
-          <div class="article-content"><p>With <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">GDPR</a> passing in the EU on April 14th, 2016, users on the Internet are demanding
+          <div class="article-content">
+
+<p>With <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">GDPR</a> passing in the EU on April 14th, 2016, users on the Internet are demanding
 protection of their privacy and data from Internet companies. The regulation has profound
 implications. Many companies take the law and users&rsquo; demand seriously: they start encrypting data
 for traffic <em>within</em> their data centers, and employing strict control on who can access users&rsquo; data.
@@ -459,21 +461,24 @@ The Dgraph team takes full notice of that. Access control on the data stored in 
 important to our enterprise customers. <strong>This feature has been in-demand and we plan to release it
 in the upcoming Dgraph v1.1 as a proprietary feature.</strong> In this article, you will find some details
 about how Access Control List (ACL) works in Dgraph.</p>
+
 <h3 id="the-requirements">The requirements</h3>
+
 <p>We started the project by asking what are the features that we must support for
 access control to work both securely and seamlessly for our customers. After a
 few rounds of brainstorming and feedback, we settled on the following list:</p>
+
 <ul>
 <li>We should be able to create user accounts, e.g. Alice and Bob, and groups, e.g. devs and SREs.</li>
 <li>Each user can be assigned to multiple groups.</li>
 <li>Access control should be enforced on predicates, and each predicate should
 have 3 types of access:
+
 <ol>
 <li>Read: being able to query data under the predicate</li>
 <li>Write: being able to mutate data under the predicate</li>
 <li>Modify: being able to alter the schema of the predicate.</li>
-</ol>
-</li>
+</ol></li>
 <li>Access control should be granted on the granularity of groups. For example, we can grant Read
 access of the predicate <code>friend</code> to the group <code>dev</code>, and Read+Write access of the predicate <code>friend</code> to
 the group <code>sre</code>.</li>
@@ -485,20 +490,23 @@ misconfigured.</li>
 such a rule exists, predicates created later matching the regex should have access control
 enforced automatically.</li>
 <li>There should be a way to query:
+
 <ol>
 <li>All the groups of a given user</li>
 <li>All the users belonging to a given group</li>
 <li>All the predicates and the granted permissions associated with a given group.</li>
-</ol>
-</li>
+</ol></li>
 <li>There should be logging of all the access attempts, including who is trying to perform what
 operation on which predicate, and whether the access is accepted or denied.</li>
 </ul>
+
 <h3 id="how-acl-data-is-stored">How ACL data is stored</h3>
+
 <p>With the requirements settled, now let&rsquo;s dive into some details. The very first detailed
 design question is how to store the ACL data. We discussed several options each
 having their pros and cons. In the end we decided to pick the following approach:
-<img src="https://blog.dgraph.io/images/groups.png" alt="Predicates assigned to groups"></p>
+<img src="https://blog.dgraph.io/images/groups.png" alt="Predicates assigned to groups" /></p>
+
 <p>To make it easier for operators to turn on the ACL feature, we are storing the
 ACL rules inside Dgraph instead of relying upon an external system. The example
 demonstrates a cluster with a Zero group and a number of Alpha groups. The
@@ -507,44 +515,56 @@ belongs to and which group a predicate is assigned to. The Alpha groups
 host the actual user data, with each one hosting a portion of the whole data
 set. The whole dataset is divided into shards and in Dgraph sharding is based on
 predicates.</p>
+
 <p>To store the ACL data, we need a total of four predicates. And these four predicates
 are treated specially by group zero in the sense that they are always assigned
 to group 1. Other groups maintain a local in-memory cache of all the ACL
-rules and refresh it periodically by querying group 1<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Thus, every Alpha
+rules and refresh it periodically by querying group 1<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>. Thus, every Alpha
 server knows about the ACL rules, so each Alpha is capable to applying those
 rules to all the incoming requests, without having to make network calls.</p>
+
 <p>Now let&rsquo;s take a closer look at the four predicates:</p>
+
 <ul>
 <li><code>dgraph.xid</code> is for storing the name of a user or group</li>
 <li><code>dgraph.password</code> is for storing a user&rsquo;s hashed password</li>
-<li><code>dgraph.user.group</code> is for storing user → group mapping and uses a reverse index to retrieve group → users mapping.</li>
+<li><code>dgraph.user.group</code> is for storing user &rarr; group mapping and uses a reverse index to retrieve group &rarr; users mapping.</li>
 <li><code>dgraph.group.acl</code> is for storing all predicates assigned to a group (or regexps against which predicates will be matched), and the types of access allowed for
 the group, e.g. <code>(friend, Read), (name, Read+Write), (^user.*name$, Read+Write+Modify)</code>.</li>
 </ul>
+
 <figure>
     <img src="https://blog.dgraph.io/images/groot.jpg"/> <figcaption>
             <h4>I AM GROOT</h4>
         </figcaption>
 </figure>
 
+
 <p>These predicates are proposed by an Alpha server when it starts up if the ACL feature is turned on
 through command line options and created when they do not already exist in the cluster.
 Unlike a regular data predicate, they are not removed by the DropAll request.</p>
+
 <p>Also being created during an Alpha server start-up time is the root user account if it does not
 already exist, and we give it the nickname <code>groot</code> (graph root) along with a default password which
 can be changed using our command line tools explained below.</p>
+
 <h3 id="acl-clients">ACL clients</h3>
+
 <p>Now that the server side storage is ready, let&rsquo;s switch our attention to the client side.
 From the ACL perspective, there are two types of clients:</p>
+
 <ul>
 <li>The command line tools for changing and querying ACL data</li>
 <li>The clients used to access data protected by ACL rules, e.g. the
 <a href="https://github.com/dgraph-io/dgo">dgo</a> client written in Go, the <a href="https://github.com/dgraph-io/dgraph4j">dgraph4j</a> client in Java, the
 <a href="https://play.dgraph.io/">Ratel</a> web portal etc.</li>
 </ul>
+
 <h4 id="the-command-line-tools">The command line tools</h4>
+
 <p>The command line tools are available under a new <code>acl</code> subcommand within the
 Dgraph binary.</p>
+
 <ul>
 <li><code>dgraph acl add</code> is for creating a new user account or a new group</li>
 <li><code>dgraph acl del</code> is for deleting a user account or a group</li>
@@ -552,9 +572,12 @@ Dgraph binary.</p>
 <li><code>dgraph acl info</code> is for querying a user&rsquo;s groups, or a group&rsquo;s users, or predicate permissions granted
 to a group</li>
 </ul>
+
 <p>Concrete examples for turning on the ACL feature in a cluster and setting up ACL rules can be found
 at <a href="https://docs.dgraph.io/enterprise-features/#access-control-lists">our documentation page</a>.</p>
+
 <h4 id="client-libraries">Client Libraries</h4>
+
 <p>The second type of clients, e.g. dgo or dgraph4j, accesses data in Dgraph by
 executing transactions.  Each transaction can have a mix of <code>query</code> and <code>mutate</code>
 requests. Also a client can be used to <code>alter</code> the schema, e.g. changing a
@@ -564,6 +587,7 @@ operations for all predicates in the request are allowed. For example, for the
 query below to work, the current user must belong to one or more groups that
 collectively have been granted Read access to both the <code>name</code> and <code>friend</code>
 predicate.</p>
+
 <pre><code>{
   friends_of_alice(func: eq(name, &quot;Alice&quot;)) {
     name
@@ -573,18 +597,23 @@ predicate.</p>
   }
 }
 </code></pre>
+
 <h3 id="the-jwts">The JWTs</h3>
+
 <p><em>But wait a second!</em> How does an Alpha server know the
 query&rsquo;s current user or its groups?  The trick is that each request carries some
 metadata encoded as <a href="https://jwt.io/">JSON Web Token</a> that tells the Alpha server about the
 current user and the groups they belong to.</p>
+
 <figure>
     <img src="https://blog.dgraph.io/images/accessJWT.png"/> <figcaption>
             <h4>Access Token</h4>
         </figcaption>
 </figure>
 
+
 <h4 id="access-token">Access Token</h4>
+
 <p><strong>Here is how JWT works:</strong> Before running any transactions, the client, e.g. dgo
 needs to make a <code>Login</code> call to an Alpha server using a user name and password.
 When processing the <code>Login</code> request, the Alpha server 1) queries all of the
@@ -593,44 +622,61 @@ TTL, and 3) signs all that data with a secret key. The group list, expiration
 timestamp, and signature together form an access JWT which is sent back to the
 client. The client then remembers this JWT and attaches it to every subsequent
 request it sends to the cluster, e.g. the query request example we saw earlier.</p>
+
 <h4 id="refresh-token">Refresh Token</h4>
+
 <p>As explained above, JWTs contain the groups a logged-in user belongs to. This
 can cause a problem if this user is assigned a new group. Until the Access Token
 expires, a new JWT would not be issued to reflect that change.</p>
+
 <figure>
     <img src="https://blog.dgraph.io/images/refreshJWT.png"/> <figcaption>
             <h4>Refresh Token</h4>
         </figcaption>
 </figure>
 
+
 <p>Therefore, Access Token expiration is typically set to a short duration, like a
 few hours. But, this causes an issue with long running services, which would
 suddenly get their access denied after this token expires.</p>
+
 <p>When a <code>Login</code> happens, a refresh token is issued as well. This token
 is typically valid for a much longer duration, like a month. When access token
 expires and an unauthorized response is received from the server, Dgraph clients
 would automatically retry a login using the refresh token (if available). This would
 cause a new JWT to be issued with the updated groups.</p>
+
 <p>Notice that when an access JWT expiration causes an automatic login using the refresh JWT, not only
 does the access JWT get replaced, but the refresh JWT itself also gets renewed with a later
 expiration timestamp. Thus the same client can be used continually without an explicit call to
 Login again after it&rsquo;s initialized, thanks to the rolling JWTs.</p>
+
 <h3 id="logging">Logging</h3>
+
 <p>We log all of the <em>failed</em> access attempts in the main log files of Alpha servers, together with
 other types of events. All the log entries for ACL have a prefix <code>ACL-LOG</code>, so operators can run
 a simple grep and filter them out. Here is an example log entry:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    I0320 18:36:44.386417       <span style="color:#099">1</span> access_ee.go:650<span style="color:#000;font-weight:bold">]</span> ACL-LOG Authorizing user <span style="color:#d14">&#34;alice&#34;</span> with groups <span style="color:#d14">&#34;&#34;</span> on predicates <span style="color:#d14">&#34;name,friend&#34;</span> <span style="color:#000;font-weight:bold">for</span> <span style="color:#d14">&#34;Read&#34;</span>, allowed:false
-</code></pre></div><p>To reduce verbosity of logging, we send the <em>authorized</em> access attempts as <a href="https://opencensus.io/">OpenCensus</a> traces,
+
+<pre><code class="language-bash">    I0320 18:36:44.386417       1 access_ee.go:650] ACL-LOG Authorizing user &quot;alice&quot; with groups &quot;&quot; on predicates &quot;name,friend&quot; for &quot;Read&quot;, allowed:false
+</code></pre>
+
+<p>To reduce verbosity of logging, we send the <em>authorized</em> access attempts as <a href="https://opencensus.io/">OpenCensus</a> traces,
 which can be further analyzed with <a href="https://www.jaegertracing.io/">Jaeger</a>. Below is a screenshot of the ACL log from the
 Jaeger UI:
-<img src="https://blog.dgraph.io/images/jaeger-acl-log.png" alt="ACL Log in Jaeger"></p>
+<img src="https://blog.dgraph.io/images/jaeger-acl-log.png" alt="ACL Log in Jaeger" /></p>
+
 <h3 id="show-case">Show case</h3>
+
 <p>Below is a quick demo of the ACL feature in action using the command line tool.
-<img src="https://blog.dgraph.io/images/acl-demo.gif" alt="ACL demo"></p>
+<img src="https://blog.dgraph.io/images/acl-demo.gif" alt="ACL demo" /></p>
+
 <h3 id="got-feedback">Got feedback?</h3>
+
 <p>That covers all the aspects of our first ACL release. We cannot wait to hear your feedback at
 <a href="https://discuss.dgraph.io/">our discussion forum.</a></p>
-<hr>
+
+<hr />
+
 <p><div class="engage">
 	<p>
 		<strong>
@@ -682,14 +728,15 @@ Jaeger UI:
 </script>
 
 <em>Top image: <a href="https://en.wikipedia.org/wiki/STARSHINE_(satellite)">On December 5th, 2001, STARSHINE-2 was launched from the Space Shuttle Endeavour on STS-108</a></em></p>
-<section class="footnotes" role="doc-endnotes">
-<hr>
+<div class="footnotes">
+
+<hr />
+
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>For now, each refresh retrieves the full set of ACL data. In the future, we&rsquo;ll switch to using a live stream of updates which is in the works. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
+<li id="fn:1">For now, each refresh retrieves the full set of ACL data. In the future, we&rsquo;ll switch to using a live stream of updates which is in the works.
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
 </ol>
-</section>
+</div>
 </div>
           <div class="article-tag-list">
             

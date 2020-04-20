@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Dgraph Blog</title>
@@ -27,6 +27,15 @@
       <pubDate>Sun, 12 Apr 2020 07:41:43 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/tags/graphql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hacker news</title>
+      <link>https://blog.dgraph.io/tags/hacker-news/</link>
+      <pubDate>Sun, 12 Apr 2020 07:41:43 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/tags/hacker-news/</guid>
       <description></description>
     </item>
     
@@ -99,15 +108,6 @@
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hacker news</title>
-      <link>https://blog.dgraph.io/tags/hacker-news/</link>
-      <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
-      
-      <guid>https://blog.dgraph.io/tags/hacker-news/</guid>
       <description></description>
     </item>
     
