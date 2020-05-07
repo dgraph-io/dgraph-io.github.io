@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/karthic/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Sun, 12 Apr 2020 07:41:43 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/karthic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Designing GraphQL schemas</title>
+      <link>https://blog.dgraph.io/post/designing-graphql-schemas/</link>
+      <pubDate>Sun, 12 Apr 2020 07:41:43 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/designing-graphql-schemas/</guid>
+      <description>This post made it to top 10 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features</title>
+      <link>https://blog.dgraph.io/post/tutorial-8-getting-started/</link>
+      <pubDate>Tue, 28 Jan 2020 20:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-8-getting-started/</guid>
+      <description>Welcome to the eighth episode of getting started with Dgraph.
+In the previous episode, we learned about building a twitter-like user-search feature using Dgraph&amp;rsquo;s fuzzy search.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 7: Give your users powerful search results with fuzzy search on graph</title>
+      <link>https://blog.dgraph.io/post/tutorial-7-getting-started/</link>
+      <pubDate>Fri, 17 Jan 2020 20:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-7-getting-started/</guid>
+      <description>Welcome to the seventh episode of getting started with Dgraph. In the previous episode, we learned about building advanced text searches on social graphs in Dgraph, by modeling tweets as an example.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 6: Advanced text search on social graphs </title>
+      <link>https://blog.dgraph.io/post/tutorial-6-getting-started/</link>
+      <pubDate>Wed, 11 Dec 2019 06:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-6-getting-started/</guid>
+      <description>Welcome to the sixth episode of getting started with Dgraph.
+In the previous episode, we learned about building social graphs in Dgraph, by modeling tweets as an example.</description>
+    </item>
+    
+    <item>
+      <title>The GraphQL Summit story</title>
+      <link>https://blog.dgraph.io/post/graphql-summit-19/</link>
+      <pubDate>Tue, 10 Dec 2019 14:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/graphql-summit-19/</guid>
+      <description>We took part in the recently held GraphQL Summit in San Francisco.
+The conference was exciting, and it had a great line up of talks.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 5: Tweet graph, string indices, and keyword-based searching</title>
+      <link>https://blog.dgraph.io/post/tutorial-5-getting-started/</link>
+      <pubDate>Tue, 26 Nov 2019 06:30:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-5-getting-started/</guid>
+      <description>Welcome to the fifth episode of getting started with Dgraph. In the previous episode, we learned about using multi-language strings and operations on them using language tags.</description>
+    </item>
+    
+    <item>
+      <title>Releasing BadgerDB v2.0</title>
+      <link>https://blog.dgraph.io/post/releasing-badger-v2/</link>
+      <pubDate>Mon, 18 Nov 2019 06:30:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/releasing-badger-v2/</guid>
+      <description>Dgraph is an open-source, transactional, distributed, native Graph database. Dgraph is optimized for high-performance reads and writes. It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.</description>
+    </item>
+    
+    <item>
+      <title>Getting started with Dgraph tutorials series - 4: Multi-language strings</title>
+      <link>https://blog.dgraph.io/post/tutorial-4-getting-started/</link>
+      <pubDate>Tue, 12 Nov 2019 06:30:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-4-getting-started/</guid>
+      <description>Welcome to the fourth episode of getting started with Dgraph.
+In the previous episode, we learned about Datatypes, Indexing, Filtering, and Reverse traversals in Dgraph.</description>
+    </item>
+    
+    <item>
+      <title>Dgraph tutorials series - 3: Datatypes, Indexing, Filtering, and Reverse traversals.</title>
+      <link>https://blog.dgraph.io/post/tutorial-3-getting-started/</link>
+      <pubDate>Wed, 30 Oct 2019 06:30:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-3-getting-started/</guid>
+      <description>Welcome to the third episode of getting started with Dgraph. In the previous episode of the tutorial, we learned about the CRUD operations using UIDs.</description>
+    </item>
+    
+    <item>
+      <title>Dgraph tutorials series - 2: UID operations, updating nodes, and traversals</title>
+      <link>https://blog.dgraph.io/post/tutorial-2-getting-started/</link>
+      <pubDate>Tue, 15 Oct 2019 14:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-2-getting-started/</guid>
+      <description>Welcome to the second episode of getting started with Dgraph. In the last episode of the tutorial, we learned some of the basics of Dgraph.</description>
+    </item>
+    
+    <item>
+      <title>Dgraph tutorials series - 1: Getting started</title>
+      <link>https://blog.dgraph.io/post/tutorial-1-getting-started/</link>
+      <pubDate>Tue, 01 Oct 2019 14:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/tutorial-1-getting-started/</guid>
+      <description>Welcome to getting started with Dgraph. Dgraph is an open-source, transactional, distributed, native Graph Database. Here is the first episode of the tutorial series on using Dgraph.</description>
+    </item>
+    
+    <item>
+      <title>Releasing Dgraph v1.1.0</title>
+      <link>https://blog.dgraph.io/post/release-v1.1.0/</link>
+      <pubDate>Wed, 04 Sep 2019 08:00:00 -0400</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/release-v1.1.0/</guid>
+      <description>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness.</description>
+    </item>
+    
+    <item>
+      <title>Dgraph&#39;s recap of GraphQL Conf - Berlin 2019</title>
+      <link>https://blog.dgraph.io/post/graphql-conf-19/</link>
+      <pubDate>Fri, 16 Aug 2019 14:30:00 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/graphql-conf-19/</guid>
+      <description>We took part in the recently held GraphQL conference in Berlin. The experience was fascinating, and we were amazed by the high voltage enthusiasm in the GraphQL community.</description>
+    </item>
+    
+  </channel>
+</rss>

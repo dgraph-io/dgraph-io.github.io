@@ -8,62 +8,85 @@ let widgetContainer = {};
 
 // Toggles search interface's visibility
 const toggleVisibility = () => {
-	widgetContainer.style.display = showSearch? "none" : "";
-	widgetContainer.querySelector('input').focus();
 	showSearch = !showSearch;
+
+	var $container = document.querySelector('.page-search');
+
+	if ($container) {
+		if (showSearch) {
+			$container.classList.add('is-active');
+		} else {
+			$container.classList.remove('is-active');
+		}
+	}
+
+	var $results = document.querySelector('.page-search__results');
+
+	if ($results) {
+		$results.style.display = showSearch ? "" : "none";
+	}
+
+	var $input = document.querySelector('.page-search__input');
+
+	if ($input) {
+		$input.style.display = showSearch ? "" : "none";
+
+		if (showSearch) {
+			$input.focus();
+		}
+	}
+
+	var $body = document.querySelector('.post-grid');
+
+	if ($body && !showSearch) {
+		$body.style.display = '';
+	}
+
+	var $pagination = document.querySelector('.pagination');
+
+	if ($pagination && !showSearch) {
+		$pagination.style.display = '';
+	}
 }
 
 const parseSummary = (summary) => summary.trim().replace("<p>", "").replace("</p>", "");
 
 // Renders tags
-const renderTags = tags => `
-	<div class="tag-wrapper">
-	${
-		tags.map(tag => `
-			<span 
-				class="tag"
-				onclick="event.stopPropagation(); window.location.href = '/tags/${tag.toLowerCase()}'"
-			>
-				${tag}
-			</span>
-		`)
-		.join('')
-	}
-	</div>
-`;
+const renderTags = tags => tags.map(tag => `
+	<a href="/blog/tags/${tag.toLowerCase()}">
+		${tag.toLowerCase()}
+	</a>
+`).join('')
 
 // Helper for the render function
 const renderIndexListItem = ({ indexId, hits }) => `
-<li> 
-	<div class="results-header">
-		<div class="number-of-results">
-			${hits.length} results found.
-		</div>
-	</div>
+<div>
+	<h2 class="page-search__header">
+		${hits.length} results found.
+	</h2>
 
   	<ol>
-		${hits
-			.slice(0, 5)
-			.map(
+		${hits.filter(hit => 'page' === hit.kind).map(
 				hit =>
-				`<li 
-						class="search-listing"
-						onclick="window.location.href='${hit.permalink}'"
-					>
-					<div class="title">
-						${instantsearch.highlight({ attribute: 'title', hit })}
+				`<div class="page-search__item">
+					<h3 class="post__title">
+						<a href="${hit.permalink}">
+							${instantsearch.highlight({ attribute: 'title', hit })}
+						</a>
+					</h3>
+					<div class="post__summary">
+						${parseSummary(hit.summary)}
 					</div>
-					<div class="summary">
-						${parseSummary(hit.summary)} 
-					</div>
-					<div>
-						${renderTags(hit.tags || [])}
-					</div>
-				</li>`
+					${ hit.tags && `
+						<div class="post__tags">
+							<div>${renderTags(hit.tags || [])}</div>
+						</div>
+					` || '' }
+				</div>`
 			)
 			.join('')}
   	</ol>
-</li>
+</div>
 `;
 
 // Create the render function
@@ -71,17 +94,13 @@ const renderAutocomplete = (renderOptions, isFirstRender) => {
 	const { indices, currentRefinement, refine, widgetParams } = renderOptions;
 
 	if (isFirstRender) {
-		const background = document.createElement('div');
 		const input = document.createElement('input');
-		const ul = document.createElement('ul');
-		
-		background.className = "search-background";
-		ul.className = "search-results";
-		input.className = "search-input";
+		const ul = document.createElement('div');
+
+		ul.className = "page-search__results";
+		input.className = "page-search__input";
 
 		input.placeholder = "Search...";
-
-		background.onclick = toggleVisibility;
 
 		input.addEventListener('input', event => {
 			refine(event.currentTarget.value);
@@ -89,23 +108,34 @@ const renderAutocomplete = (renderOptions, isFirstRender) => {
 
 		widgetContainer = widgetParams.container;
 
-		widgetContainer.appendChild(background);
-		widgetContainer.appendChild(input);
+		widgetContainer.insertBefore(input, widgetContainer.firstChild);
 		widgetContainer.appendChild(ul);
 
 		toggleVisibility();
 	}
 
 	widgetContainer.querySelector('input').value = currentRefinement;
-	
+
 	if (currentRefinement) {
-		widgetContainer.querySelector('ul').style.display = "";
-		widgetContainer.querySelector('ul').innerHTML = indices
+		widgetContainer.querySelector('.page-search__results').style.display = "";
+		widgetContainer.querySelector('.page-search__results').innerHTML = indices
 			.map(renderIndexListItem)
 			.join('');
 	} else {
-		widgetContainer.querySelector('ul').innerHTML = "";
-		widgetContainer.querySelector('ul').style.display = "none"
+		widgetContainer.querySelector('.page-search__results').innerHTML = "";
+		widgetContainer.querySelector('.page-search__results').style.display = "none"
+	}
+
+	var $body = document.querySelector('.post-grid');
+
+	if ($body) {
+		$body.style.display = !!currentRefinement ? "none" : "";
+	}
+
+	var $pagination = document.querySelector('.pagination');
+
+	if ($pagination) {
+		$pagination.style.display = !!currentRefinement ? "none" : "";
 	}
 };
 
@@ -117,16 +147,22 @@ const createSearch = () => {
 
 	// Algolia client
 	const client = algoliasearch(appId, publicKey);
-	
+
 	const search = instantsearch({
 		indexName: index,
 		searchClient: client,
 	});
 	search.addWidgets([
 		customAutocomplete({
-			container: document.querySelector('#searchbox'),
+			container: document.querySelector('.page-search'),
 		})
 	]);
 
 	search.start();
 };
+
+window.addEventListener('DOMContentLoaded', function() {
+	if (document.querySelector('.page-search')) {
+		createSearch();
+	}
+});

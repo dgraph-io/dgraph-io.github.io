@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/leyla/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Fri, 20 Mar 2020 10:45:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/leyla/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why there would be no Dgraph 2.0: Goodbye Semantic Versioning</title>
+      <link>https://blog.dgraph.io/post/dgraph-calendar-versioning/</link>
+      <pubDate>Fri, 20 Mar 2020 10:45:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/dgraph-calendar-versioning/</guid>
+      <description>There would be no Dgraph 2.0. After 4+ years of releasing Dgraph, we have decided to switch away from Semantic Versioning.</description>
+    </item>
+    
+  </channel>
+</rss>

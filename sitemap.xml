@@ -1,6 +1,46 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/dmai/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/dgraph-graphql-hits-ga/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/graphql/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/release/</loc>
+    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/karthic/</loc>
+    <lastmod>2020-04-12T07:41:43+00:00</lastmod>
+  </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/designing-graphql-schemas/</loc>
@@ -13,27 +53,7 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2020-04-12T07:41:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/graphql/</loc>
-    <lastmod>2020-04-12T07:41:43+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/tags/hacker-news/</loc>
-    <lastmod>2020-04-12T07:41:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/post/</loc>
-    <lastmod>2020-04-12T07:41:43+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/</loc>
     <lastmod>2020-04-12T07:41:43+00:00</lastmod>
   </url>
   
@@ -43,18 +63,23 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/calver/</loc>
+    <loc>https://blog.dgraph.io/authors/leyla/</loc>
     <lastmod>2020-03-20T10:45:00-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
+    <loc>https://blog.dgraph.io/tags/calver/</loc>
     <lastmod>2020-03-20T10:45:00-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/post/dgraph-calendar-versioning/</loc>
     <lastmod>2020-03-20T10:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/balaji/</loc>
+    <lastmod>2020-03-12T04:00:05-07:00</lastmod>
   </url>
   
   <url>
@@ -83,12 +108,17 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/prashant/</loc>
+    <lastmod>2020-01-08T21:30:00+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/introducing-getting-started-series/</loc>
     <lastmod>2020-01-08T21:30:00+05:30</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/release/</loc>
+    <loc>https://blog.dgraph.io/authors/francesc/</loc>
     <lastmod>2019-12-17T07:00:00-08:00</lastmod>
   </url>
   
@@ -128,6 +158,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/mrjn/</loc>
+    <lastmod>2019-10-29T02:13:13-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/building-native-graphql-database-dgraph/</loc>
     <lastmod>2019-10-29T02:13:13-07:00</lastmod>
   </url>
@@ -140,6 +175,11 @@
   <url>
     <loc>https://blog.dgraph.io/post/tutorial-1-getting-started/</loc>
     <lastmod>2019-10-01T14:30:00+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/karl/</loc>
+    <lastmod>2019-09-19T23:13:13-07:00</lastmod>
   </url>
   
   <url>
@@ -183,6 +223,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/aman/</loc>
+    <lastmod>2019-08-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/datetime-indexes-dgraph/</loc>
     <lastmod>2019-08-08T00:00:00+00:00</lastmod>
   </url>
@@ -223,6 +268,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/lucas/</loc>
+    <lastmod>2019-05-30T00:08:00-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</loc>
     <lastmod>2019-05-30T00:08:00-08:00</lastmod>
   </url>
@@ -235,6 +285,11 @@
   <url>
     <loc>https://blog.dgraph.io/tags/sql/</loc>
     <lastmod>2019-05-30T00:08:00-08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/paul/</loc>
+    <lastmod>2019-04-18T00:00:00+11:00</lastmod>
   </url>
   
   <url>
@@ -293,6 +348,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/martinmr/</loc>
+    <lastmod>2019-01-29T12:00:00-08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/tags/optimization/</loc>
     <lastmod>2019-01-29T12:00:00-08:00</lastmod>
   </url>
@@ -328,6 +388,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/peter/</loc>
+    <lastmod>2017-11-14T15:30:04+11:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/v0.9/</loc>
     <lastmod>2017-11-14T15:30:04+11:00</lastmod>
   </url>
@@ -358,8 +423,18 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/jasonc/</loc>
+    <lastmod>2017-10-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/basics-graphql/</loc>
     <lastmod>2017-10-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/deepak/</loc>
+    <lastmod>2017-09-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -383,6 +458,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/sung/</loc>
+    <lastmod>2017-08-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/building-graphoverflow/</loc>
     <lastmod>2017-08-02T00:00:00+00:00</lastmod>
   </url>
@@ -395,6 +475,11 @@
   <url>
     <loc>https://blog.dgraph.io/post/sql-vs-dgraph/</loc>
     <lastmod>2017-07-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/ashwin/</loc>
+    <lastmod>2017-06-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -418,6 +503,11 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/tzdybal/</loc>
+    <lastmod>2017-04-10T12:10:00+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/post/string-matching/</loc>
     <lastmod>2017-04-10T12:10:00+02:00</lastmod>
   </url>
@@ -425,6 +515,11 @@
   <url>
     <loc>https://blog.dgraph.io/post/licensing/</loc>
     <lastmod>2017-03-26T07:30:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/pawan/</loc>
+    <lastmod>2017-01-23T18:07:44+11:00</lastmod>
   </url>
   
   <url>
@@ -503,7 +598,15 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/categories/</loc>
+    <loc>https://blog.dgraph.io/authors/jay/</loc>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/michael/</loc>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/zhenni/</loc>
   </url>
   
 </urlset>

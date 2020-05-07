@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/peter/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 14 Nov 2017 15:30:04 +1100</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/peter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Releasing distributed transactions in v0.9</title>
+      <link>https://blog.dgraph.io/post/v0.9/</link>
+      <pubDate>Tue, 14 Nov 2017 15:30:04 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/v0.9/</guid>
+      <description>It all started with a Github issue.
+At Dgraph, we really care about user feedback. Most of what we&amp;rsquo;ve built starting January 2017, has been based what our community (that&amp;rsquo;s you!</description>
+    </item>
+    
+    <item>
+      <title>Loading close to 1M edges/sec into Dgraph</title>
+      <link>https://blog.dgraph.io/post/bulkloader/</link>
+      <pubDate>Mon, 09 Oct 2017 17:09:10 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/bulkloader/</guid>
+      <description>We&amp;rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges!</description>
+    </item>
+    
+    <item>
+      <title>Making Badger Crash Resilient with ALICE</title>
+      <link>https://blog.dgraph.io/post/alice/</link>
+      <pubDate>Mon, 14 Aug 2017 13:21:25 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/alice/</guid>
+      <description>Crashes can occur for many different reasons and can manifest themselves in many different forms. A program can experience a segfault or uncaught exception.</description>
+    </item>
+    
+  </channel>
+</rss>

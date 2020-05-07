@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/lucas/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Thu, 30 May 2019 00:08:00 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/lucas/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Migrating data from SQL to Dgraph</title>
+      <link>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</link>
+      <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</guid>
+      <description>Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from.</description>
+    </item>
+    
+    <item>
+      <title>How Access Control Works in Dgraph</title>
+      <link>https://blog.dgraph.io/post/access-control-in-dgraph/</link>
+      <pubDate>Wed, 03 Apr 2019 00:06:20 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/access-control-in-dgraph/</guid>
+      <description>With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies.</description>
+    </item>
+    
+  </channel>
+</rss>

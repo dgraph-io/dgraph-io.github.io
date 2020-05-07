@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>optimization on Dgraph Blog</title>
@@ -18,8 +18,7 @@
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/indexing-in-dgraph/</guid>
-      <description>One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime. This involves changing data types and adding or removing indices with a single ALTER command to match the needs of an application developer.
-Dgraph supports indexing natively, which means common use cases around full-text search, regular expressions, date matching, geolocation queries, etc. can all be executed within Dgraph, while maintaining transactional guarantees.</description>
+      <description>One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime.</description>
     </item>
     
   </channel>

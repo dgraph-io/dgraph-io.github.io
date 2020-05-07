@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+
+  
+    <title> - Dgraph Blog</title>
+    <meta property='og:title' content=" - Dgraph Blog">
+    <meta property="og:type" content="article">
+  
+
+  <meta property="og:url" content="https://blog.dgraph.io/authors/jasonc/">
+  
+  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
+
+  <link
+    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    rel="stylesheet"
+  />
+  <link
+    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+
+  
+  
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io//images/diggy-lg.png"/>
+  
+
+  <meta name="twitter:title" content=""/>
+  <meta name="twitter:description" content="Engineering stories of building the world&#39;s best graph database Dgraph"/>
+  <meta name="twitter:site" content="@dgraphlabs"/>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+</head>
+
+
+<body class="blog" data-gr-c-s-loaded="true">
+
+    <header id="page-header" class="page-header">
+	<div class="page-logo">
+		<a href="https://dgraph.io/">
+			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+	</div>
+	<nav class="page-nav">
+    <ul>
+        <li>
+            <div data-label="Products">
+                <span>Products</span>
+            </div>
+            <ul>
+                <li>
+                    <a href="https://dgraph.io/graphql" data-label="GraphQL">
+                        <span>GraphQL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/enterprise" data-label="Enterprise">
+                        <span>Enterprise</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/downloads" data-label="Downloads">
+                        <span>Downloads</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div data-label="Learn" class="is-active">
+                <span>Learn</span>
+            </div>
+            <ul>
+                <li>
+                    <a href="https://dgraph.io/blog" data-label="Blog">
+                        <span>Blog</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://tour.dgraph.io" target="_blank" data-label="Interactive Tour">
+                        <span>Interactive Tour</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://discuss.dgraph.io" target="_blank" data-label="Forum">
+                        <span>Forum</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
+                        <span>Slack</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div data-label="Docs"><span>Docs</span></div>
+            <ul>
+                <li>
+                    <a href="https://docs.dgraph.io" target="_blank" data-label="Dgraph Docs">
+                        <span>Dgraph Docs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://graphql.dgraph.io/docs/" target="_blank" data-label="GraphQL Docs">
+                        <span>GraphQL Docs</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div data-label="Company"><span>Company</span></div>
+            <ul>
+                <li>
+                    <a href="https://dgraph.io/about" data-label="Team">
+                        <span>Team</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/careers" data-label="Careers">
+                        <span>Careers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/contact" data-label="Contact">
+                        <span>Contact</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/conduct" data-label="Conduct">
+                        <span>Conduct</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+	<div class="page-cta">
+    <ul>
+        <li class="hide-tablet">
+            <a href="https://dgraph.io/contact" title="Contact">Contact</a>
+        </li>
+        <li>
+            <a href="https://dgraph.io/downloads" title="Download" class="button button--secondary">
+                <span>Download</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+</header>
+
+
+
+
+    <section class="page-intro no-border">
+        <div class="container">
+
+            <div class="author">
+
+                <img src="https://blog.dgraph.io/images/people/jasonc.jpg" class="author__photo">
+
+                <div class="author__content">
+
+                    <h1 class="author__title">
+                        Jason Chu
+                    </h1>
+
+                    <p>Jason is studying his Bachelor&rsquo;s for Software Engineering at UNSW in Sydney. He
+helps create video tutorial content for Dgraph and Badger. Programming has been
+a hobby of his since middle school. He enjoys tinkering with hardware, playing
+the violin and trying out different foods around the world.</p>
+
+
+                    
+                        <nav class="author__social">
+
+                            
+                                <a href="https://www.linkedin.com/in/jasonchujc/" target="_blank">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            
+
+                            
+
+                            
+                                <a href="https://github.com/1lann" target="_blank">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            
+
+                        </nav>
+                    
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="page-body">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="post-grid">
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/atlantis-iss.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Mon, Oct 2, 2017
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/basics-graphql/">Learn the basics of GraphQL&#43;-, now available on video</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/jasonc/">Jason Chu</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below.
+		</div>
+
+		
+
+
+	</div>
+
+</article>
+
+                        </div>
+
+                    
+                </div>
+
+                <div class="pagination">
+
+    
+
+    
+        
+            <a class="pagination__item pagination__active" href="https://blog.dgraph.io/authors/jasonc/page/1/">
+                <span>1</span>
+            </a>
+        
+    
+
+    
+
+</div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-5 col-sm-4">
+        <div class="row">
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Products</h3>
+            <ul>
+              <li><a href="https://dgraph.io/graphql">GraphQL</a></li>
+              <li><a href="https://dgraph.io/enterprise">Enterprise</a></li>
+              <li><a href="https://dgraph.io/downloads">Downloads</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Learn</h3>
+            <ul>
+              <li><a href="https://dgraph.io/blog" target="_blank">Blog</a></li>
+              <li><a href="https://tour.dgraph.io" target="_blank">Interactive Tour</a></li>
+              <li><a href="https://discuss.dgraph.io" target="_blank">Forum</a></li>
+              <li><a href="https://slack.dgraph.io" target="_blank">Slack</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-5 col-sm-4">
+        <div class="row">
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Docs</h3>
+            <ul>
+              <li><a href="https://docs.dgraph.io" target="_blank">Dgraph Docs</a></li>
+              <li><a href="https://graphql.dgraph.io/docs/" target="_blank">GraphQL Docs</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Company</h3>
+            <ul>
+              <li><a href="https://dgraph.io/about">Team</a></li>
+              <li><a href="https://dgraph.io/careers">Careers</a></li>
+              <li><a href="https://dgraph.io/contact">Contact</a></li>
+              <li><a href="https://dgraph.io/conduct">Conduct</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-lg-1 border-above-sm">
+        <div class="page-footer__cta"><a href="https://dgraph.io/downloads" title="Download" class="button button--secondary"><span>Download</span><i class="fas fa-arrow-right"></i></a></div>
+        <div class="page-footer__address">
+          <p>
+            655 Montgomery Street, 7th Floor<br>
+            San Francisco, CA 94111
+          </p>
+          <hr>
+          <p><a href="mailto:contact@dgraph.io">contact@dgraph.io</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="page-footer__social">
+      <ul>
+        <li><a href="https://twitter.com/dgraphlabs" target="_blank"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="https://github.com/dgraph-io/dgraph" target="_blank"><i class="fab fa-github"></i></a></li>
+        <li><a href="https://www.youtube.com/channel/UCghE41LR8nkKFlR3IFTRO4w" target="_blank"><i class="fab fa-youtube"></i></a></li>
+        <li><a href="https://slack.dgraph.io" target="_blank"><i class="fab fa-slack"></i></a></li>
+        <li><a href="https://www.linkedin.com/company/dgraph-labs" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+    <div class="page-footer__copyright">
+      <p>
+        <Copyright>&copy; 2017-2020 Dgraph Labs, Inc.</Copyright>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script
+      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+    ></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+
+
+
+
+<script>
+  window.Countly = window.Countly || {};
+  Countly.q = Countly.q || [];
+
+  Countly.q.push(['track_sessions']);
+  Countly.q.push(['track_pageview']);
+  (function() {
+  	var cly = document.createElement('script');
+  	cly.type = 'text/javascript';
+  	cly.async = true;
+  	cly.src = "https://dgraph.io/assets/js/unminified/stats/dgraph-stats.min.js";
+  	cly.onload = function() {
+      Countly.init({
+        app_key: "e93284ab5e5d21ef9eb16a94516b3c1c6eba1015",
+        url: "https://stats.dgraph.io",
+        force_post: true,
+      })
+  	};
+  	document.body.appendChild(cly);
+  })();
+</script>
+
+
+<script>
+$(document.links)
+  .filter(function() {
+    return this.hostname != window.location.hostname;
+  })
+  .attr("target", "_blank");
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+<link
+  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  rel="stylesheet">
+<link
+  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  rel="stylesheet">
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
+  integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps="
+  crossorigin="anonymous"
+></script>
+<script
+  type="text/javascript"
+  src='https://blog.dgraph.io//js/custom.js?94f0c667422b8dac293e14c9c49872e3'
+></script>
+
+<script src="//unpkg.com/@dgraph-io/community"></script>
+
+
+</body>
+
+    <script src="https://blog.dgraph.io/js/footnotes.js"></script>
+
+</html>
+

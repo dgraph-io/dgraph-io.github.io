@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>go on Dgraph Blog</title>
@@ -18,8 +18,7 @@
       <pubDate>Thu, 19 Sep 2019 23:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/</guid>
-      <description>This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a star.
-With over six months of research and development, we&amp;rsquo;re proud to announce the initial release of Ristretto: A High Performance, Concurrent, Memory-Bound Go cache. It is contention-proof, scales well and provides consistently high hit-ratios.</description>
+      <description>This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News.</description>
     </item>
     
     <item>
@@ -28,8 +27,7 @@ With over six months of research and development, we&amp;rsquo;re proud to annou
       <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/post/datetime-indexes-dgraph/</guid>
-      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&amp;rsquo;s datetime datatype. This article covers how I discovered and resolved the issue. The article assumes a basic understanding of Dgraph, but you can learn everything you need in docs.dgraph.io.
-Bug Discovery While working on Flock, I observed that timestamp comparisons were not working correctly in Dgraph when the data or query had timezone information in it.</description>
+      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&amp;rsquo;s datetime datatype.</description>
     </item>
     
     <item>
@@ -38,8 +36,7 @@ Bug Discovery While working on Flock, I observed that timestamp comparisons were
       <pubDate>Thu, 27 Jun 2019 12:06:20 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/serialization-versioning/</guid>
-      <description>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.
-One of these pieces is BadgerDB, a key-value store written completely in Go following the ideas of RocksDB and LSM trees.</description>
+      <description>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases.</description>
     </item>
     
     <item>
@@ -48,7 +45,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
       <pubDate>Wed, 03 Apr 2019 00:06:20 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/access-control-in-dgraph/</guid>
-      <description>With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies. The regulation has profound implications. Many companies take the law and users&amp;rsquo; demand seriously: they start encrypting data for traffic within their data centers, and employing strict control on who can access users&amp;rsquo; data. The Dgraph team takes full notice of that. Access control on the data stored in Dgraph is very important to our enterprise customers.</description>
+      <description>With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies.</description>
     </item>
     
     <item>
@@ -58,8 +55,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
-This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News. Do engage in discussion there and show us love by giving us a GitHub star.
-Every database system requires a smart cache. That is, a cache that keeps the most frequently or recently accessed items and has a configurable memory utilization limit.</description>
+ This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News.</description>
     </item>
     
     <item>
@@ -68,8 +64,7 @@ Every database system requires a smart cache. That is, a cache that keeps the mo
       <pubDate>Tue, 29 Jan 2019 12:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/indexing-in-dgraph/</guid>
-      <description>One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime. This involves changing data types and adding or removing indices with a single ALTER command to match the needs of an application developer.
-Dgraph supports indexing natively, which means common use cases around full-text search, regular expressions, date matching, geolocation queries, etc. can all be executed within Dgraph, while maintaining transactional guarantees.</description>
+      <description>One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime.</description>
     </item>
     
   </channel>

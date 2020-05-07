@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rocksdb on Dgraph Blog</title>
@@ -18,8 +18,7 @@
       <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</guid>
-      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
-This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
+      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API.</description>
     </item>
     
     <item>
@@ -28,8 +27,7 @@ This blog post is about Badger, the key-value database that makes it all happen 
       <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger/</guid>
-      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
-We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</description>
+      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016.</description>
     </item>
     
   </channel>

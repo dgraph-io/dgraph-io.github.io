@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/ashwin/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Fri, 30 Jun 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/ashwin/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Build a Realtime Recommendation Engine: Part 2</title>
+      <link>https://blog.dgraph.io/post/recommendation2/</link>
+      <pubDate>Fri, 30 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/recommendation2/</guid>
+      <description>This is part 2 of a two-part series on recommendations using Dgraph. Check our part 1 here.
+In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users.</description>
+    </item>
+    
+    <item>
+      <title>Build a Realtime Recommendation Engine: Part 1</title>
+      <link>https://blog.dgraph.io/post/recommendation/</link>
+      <pubDate>Thu, 29 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/recommendation/</guid>
+      <description>Preface In today&amp;rsquo;s world, user experience is paramount. It&amp;rsquo;s no longer about basic CRUD, just serving user data; it&amp;rsquo;s about mining the data to generate interesting predictions and suggesting actions to the user.</description>
+    </item>
+    
+    <item>
+      <title>Golang: Run multiple services on one port</title>
+      <link>https://blog.dgraph.io/post/cmux/</link>
+      <pubDate>Tue, 04 Oct 2016 11:59:57 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/cmux/</guid>
+      <description>&lt;p&gt;Ever faced the problem of having multiple ports in an application, one for each service?
+In this post, I&amp;rsquo;m going to brief about how to run multiple services via the same listener port.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Can it really scale?</title>
+      <link>https://blog.dgraph.io/post/performance-throughput-latency/</link>
+      <pubDate>Tue, 21 Jun 2016 10:20:32 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/performance-throughput-latency/</guid>
+      <description>&lt;p&gt;In this post, we’ll look at how &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: &lt;em&gt;Can it really scale?&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

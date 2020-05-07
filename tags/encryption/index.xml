@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>encryption on Dgraph Blog</title>
@@ -18,8 +18,7 @@
       <pubDate>Thu, 12 Mar 2020 04:00:05 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/encryption-at-rest-dgraph-badger/</guid>
-      <description>We built &amp;ldquo;Encryption at Rest&amp;rdquo; in Badger v2. Encryption is complex, but important. With this blog post, we not only want to introduce this feature to our users, but also dive into the details of how we implemented encryption in Badger, so the reader can gain enough understanding about introducing AES encryption in their own systems.
-Background In 2008, Microsoft released Transparent Data Encryption (TDE) to provide Encryption at Rest to SQL server.</description>
+      <description>We built &amp;ldquo;Encryption at Rest&amp;rdquo; in Badger v2. Encryption is complex, but important. With this blog post, we not only want to introduce this feature to our users, but also dive into the details of how we implemented encryption in Badger, so the reader can gain enough understanding about introducing AES encryption in their own systems.</description>
     </item>
     
   </channel>

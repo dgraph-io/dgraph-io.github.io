@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>opinion on Dgraph Blog</title>
@@ -18,9 +18,7 @@
       <pubDate>Tue, 03 Oct 2017 13:20:35 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/sql-vs-nosql/</guid>
-      <description>Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit. He made a compelling case about how SQL is making a comeback, citing Google Spanner and CockroachDB.
-The analysis was mostly agreeable, except for one major flaw. It is not SQL which is making a comeback, its NoSQL which is morphing into providing a familiar interface.
-Bigtable and MapReduce were developed to deal with an enormous amount of data at Google.</description>
+      <description>Ajay Kulkarni, the co-founder of Timescale DB wrote an article about “Why SQL is beating NoSQL,” which became an instant hit.</description>
     </item>
     
   </channel>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/tzdybal/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 10 Apr 2017 12:10:00 +0200</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/tzdybal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>String matching in Dgraph v0.7.5</title>
+      <link>https://blog.dgraph.io/post/string-matching/</link>
+      <pubDate>Mon, 10 Apr 2017 12:10:00 +0200</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/string-matching/</guid>
+      <description>&lt;p&gt;The recent release of Dgraph is packed with new features and improvements.
+Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
+All of these changes make Dgraph an excellent tool for working with multilingual applications.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

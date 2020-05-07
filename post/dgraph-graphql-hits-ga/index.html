@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
+
+  
+    <title>Dgraph GraphQL hits GA with v20.03.1 - Dgraph Blog</title>
+    <meta property='og:title' content="Dgraph GraphQL hits GA with v20.03.1 - Dgraph Blog">
+    <meta property="og:type" content="article">
+  
+
+  <meta property="og:url" content="https://blog.dgraph.io/post/dgraph-graphql-hits-ga/">
+  
+  <meta property="og:image" content="https://blog.dgraph.io//images/Jupiter North.jpg">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
+
+  <link
+    href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
+    rel="stylesheet"
+  />
+  <link
+    href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+
+  
+  
+    
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta name="twitter:image" content="https://blog.dgraph.io//images/Jupiter North.jpg"/>
+    
+  
+
+  <meta name="twitter:title" content="Dgraph GraphQL hits GA with v20.03.1"/>
+  <meta name="twitter:description" content="Dgraph is a distributed, transactional, open source, native graph database. It enables and simplifies the development of scalable cloud applications that continue to thrive even when the data is highly connected and involved."/>
+  <meta name="twitter:site" content="@dgraphlabs"/>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+</head>
+
+
+<body class="blog-single has-lightning" data-gr-c-s-loaded="true">
+
+    <header id="page-header" class="page-header">
+	<div class="page-logo">
+		<a href="https://dgraph.io/">
+			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+	</div>
+	<nav class="page-nav">
+    <ul>
+        <li>
+            <div data-label="Products">
+                <span>Products</span>
+            </div>
+            <ul>
+                <li>
+                    <a href="https://dgraph.io/graphql" data-label="GraphQL">
+                        <span>GraphQL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/enterprise" data-label="Enterprise">
+                        <span>Enterprise</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/downloads" data-label="Downloads">
+                        <span>Downloads</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div data-label="Learn" class="is-active">
+                <span>Learn</span>
+            </div>
+            <ul>
+                <li>
+                    <a href="https://dgraph.io/blog" data-label="Blog">
+                        <span>Blog</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://tour.dgraph.io" target="_blank" data-label="Interactive Tour">
+                        <span>Interactive Tour</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://discuss.dgraph.io" target="_blank" data-label="Forum">
+                        <span>Forum</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
+                        <span>Slack</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div data-label="Docs"><span>Docs</span></div>
+            <ul>
+                <li>
+                    <a href="https://docs.dgraph.io" target="_blank" data-label="Dgraph Docs">
+                        <span>Dgraph Docs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://graphql.dgraph.io/docs/" target="_blank" data-label="GraphQL Docs">
+                        <span>GraphQL Docs</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div data-label="Company"><span>Company</span></div>
+            <ul>
+                <li>
+                    <a href="https://dgraph.io/about" data-label="Team">
+                        <span>Team</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/careers" data-label="Careers">
+                        <span>Careers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/contact" data-label="Contact">
+                        <span>Contact</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/conduct" data-label="Conduct">
+                        <span>Conduct</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+	<div class="page-cta">
+    <ul>
+        <li class="hide-tablet">
+            <a href="https://dgraph.io/contact" title="Contact">Contact</a>
+        </li>
+        <li>
+            <a href="https://dgraph.io/downloads" title="Download" class="button button--secondary">
+                <span>Download</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+</header>
+
+
+
+
+    <section class="page-body">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12 col-md-8">
+                    <div class="page-body__content post">
+
+                        <div class="post__meta">
+
+                            <div class="post__date">
+
+    
+        Sun, May 3, 2020
+    
+    
+</div>
+
+
+                            <div class="post__share">
+                                
+                                    <a href="https://twitter.com/share?text=Dgraph%20GraphQL%20hits%20GA%20with%20v20.03.1&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fdgraph-graphql-hits-ga%2f&amp;via=dgraphlabs" target="_blank">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                
+                            </div>
+
+                        </div>
+
+                        <div class="post__cover">
+
+                            <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
+
+                            <div class="post__header">
+
+                                <h1 class="post__title">
+                                    Dgraph GraphQL hits GA with v20.03.1
+                                </h1>
+
+                                
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/dmai/">Daniel Mai</a>
+        
+    
+
+</div>
+
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="post__content">
+                            <p>Dgraph is a distributed, transactional, open source, native graph database. It
+enables and simplifies the development of scalable cloud applications that
+continue to thrive even when the data is highly connected and involved. With
+this release, Dgraph now supports the official GraphQL spec, making it the first
+database which natively executes GraphQL.</p>
+<p>Ever since the first production-ready, major release, v1.0.0 in December 2017,
+Dgraph development has been driven through feedback from the community and
+customers. After two years on this incredible journey, Dgraph’s second major
+release, v20.03.1, is here. This would not have been possible without the
+constant support and feedback from all of you and, for that, <strong>the entire Dgraph
+team says thank you!</strong></p>
+<p>This new release marks the general availability for Dgraph GraphQL, which is our
+biggest step towards simplifying GraphQL app development with Dgraph.</p>
+<h2 id="instant-graphql-with-dgraph">Instant GraphQL with Dgraph</h2>
+<p>Dgraph started with GraphQL back in 2015. See a talk by our founder about
+Dgraph&rsquo;s journey with GraphQL in recent conference.</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/6o0tKHLoJxg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p><br /></p>
+<p><strong>With v20.03.1 Dgraph GraphQL, our native support for GraphQL hits general
+availability.</strong> This release makes Dgraph the only database that natively
+interprets, distributes, stores, and executes GraphQL with no layering. <strong>In
+short, Dgraph is the only native GraphQL database in the market.</strong></p>
+<p>All you need to know to get started with Dgraph is GraphQL. This means no need
+to initiate the database, no schema mapping or layering; just compose your
+GraphQL schema containing types to represent the data requirements of your
+application, submit it to Dgraph HTTPS endpoint, and you are ready to
+build your app.</p>
+<p>Dgraph takes those types and prepares graph storage for them and auto-generates
+a production-ready, scalable, CRUD APIs with GraphQL queries and mutations
+instantly. All of it in two steps, without having to write any server-side code
+or having to run your own GraphQL server.</p>
+<h3 id="iterate-with-graphql">Iterate with GraphQL</h3>
+<p>As your application data requirements evolve, update the GraphQL schema by
+modifying the data types, indices, and relationships. Dgraph interprets the
+changes to the schema and dynamically modifies GraphQL query and mutations.</p>
+<h3 id="scale-and-perform-with-graphql">Scale and Perform with GraphQL</h3>
+<p>Dgraph is a distributed GraphQL database - add more database servers on the fly
+to enhance compute, memory, or storage capacity and it scales seamlessly.</p>
+<p><strong>Dgraph natively interprets, stores, and executes GraphQL.</strong> It’s not an
+additional layer - it’s built-in. In other words, GraphQL is a first-class
+citizen for Dgraph.</p>
+<p>Dgraph is built from the ground up to serve deep GraphQL queries and mutations
+efficiently. Don’t let the complexity of your application and query depth stop
+you from building the next big thing. Dgraph GraphQL gives unhindered read-write
+performance - no matter how complex your app may be.</p>
+<h3 id="easy-integration-full-access-to-the-graphql-ecosystem">Easy Integration: Full Access to the GraphQL Ecosystem</h3>
+<p>From community feedback, we learned that our users not only want the Dgraph
+experience and the query power, but also the integration into the GraphQL
+growing ecosystem, tooling, and development workflows. Dgraph GraphQL makes it
+happen. Fully compliant with the GraphQL spec, you can now use all your favorite
+GraphQL tools and libraries, like <a href="https://www.apollographql.com/">Apollo GraphQL</a>, <a href="https://github.com/graphql/graphiql">GraphiQL</a>, and
+<a href="https://www.postman.com/">Postman</a> with Dgraph. All you need to do is plug-in Dgraph with the rest of
+your GraphQL app development stack, and you’re good to go.</p>
+<h3 id="admin-endpoint-is-now-graphql-compatible">/admin endpoint is now GraphQL compatible</h3>
+<p>All of Dgraph’s database management operations - like backup, health check, and
+export - are now accessible as GraphQL. So, these operations can now be done via
+any GraphQL editor.</p>
+<p>Dgraph has really embraced GraphQL ecosystem. And that’s not all. Expect many
+more exciting features - like auth, remote custom logic, and subscription in the
+upcoming Dgraph releases.</p>
+<h2 id="configure-badger-compression-level">Configure Badger Compression Level</h2>
+<p>You can now set the degree of data compression for Badger while running the bulk
+loader by using the <code>--badger.compression_level</code> flag. A higher value saves you
+disk space at the cost of higher CPU utilization.</p>
+<h2 id="enterprise-features">Enterprise features</h2>
+<h3 id="perform-acl-operations-with-graphql">Perform ACL Operations with GraphQL</h3>
+<p>ACL operations are now available via GraphQL APIs. This makes it easier to work
+with ACLs. While Ratel can still be used to operate on them, any GraphQL editor
+can now do the job of updating ACLs.  You can learn more from our documentation
+<a href="https://dgraph.io/docs/enterprise-features/#turn-on-acls">here</a>.</p>
+<h2 id="introducing-ludicrous-mode">Introducing Ludicrous Mode</h2>
+<p>From community feedback, we realized that not all use cases prioritize the consistency
+guarantee and users oftentimes prefer more efficient data loading performance.
+To address this, we created the Ludicrous Mode. And yes, the feature name is inspired
+by the crazy fast mode from Tesla, because it significantly improves the performance
+of live data loading - it’s ludicrously fast.</p>
+<p>Ludicrous mode is ideal for situations where you may have several GBs of data to load
+into Dgraph and your use case doesn’t require the strict consistency guarantees provided
+by default. Expect further enhancements for Ludicrous Mode in the upcoming patch release.
+Ludicrous mode is available with our <a href="https://github.com/dgraph-io/dgraph/releases/tag/v20.03.1">v20.03.1</a> patch release.</p>
+<h2 id="enhancements">Enhancements</h2>
+<h3 id="indexing-in-the-background">Indexing in the Background</h3>
+<p>Previously, if a user reindexed a certain predicate, it would blocked queries
+and mutations until the indexing finished. In this release, the client libraries
+now have an option to instruct Dgraph to run indexing in the background without
+blocking queries or mutations.</p>
+<p>Use the <code>RunInBackground</code> option in the <a href="https://www.apollographql.com/">Alter function</a> of the Dgraph
+client libraries to configure background indexing. When set to true, the Alter
+function returns immediately and initiates indexing in the background.</p>
+<h3 id="bulk-loader-performance">Bulk Loader Performance</h3>
+<p>Bulk loader has been significantly improved to make the reduce phase run
+concurrently and consume much less memory. This makes the reduce phase
+significantly faster than before.</p>
+<h3 id="incremental-rollups">Incremental Rollups</h3>
+<p>Previously, rollups were initiated only during database snapshots. This led to
+scanning over the entire Badger DB to roll up a large number of keys, adding a lot
+of stress on the database. This also used to calculate the size of tablets.</p>
+<p>With the introduction of incremental rollups, the rollups are triggered on a
+continuous basis, resulting in a smoother operation of the DB. Moreover, the
+shard size estimations are now done by using advanced features of Badger. With
+these changes, Dgraph now does not scan over Badger DB, conserving CPU
+significantly, particularly as the DB size grows.</p>
+<p>If you’re curious about how rollups and snapshots work, read our paper on
+<a href="https://dgraph.io/paper">Dgraph architecture</a>.</p>
+<h2 id="badger-updated">Badger Updated</h2>
+<p>Badger is an embedded key-value store that is responsible for storing all of
+Dgraph&rsquo;s data. Updating Badger to a recent version brings in a plethora of
+enhancements at the storage layer.</p>
+<ul>
+<li>Run compression and encryption concurrently, resulting in faster table creation.</li>
+<li>Avoid stalling on levels 2 and beyond, resulting in faster compactions.</li>
+<li>Bloom filters are now cached via Ristretto, resulting in a bounded memory usage.</li>
+</ul>
+<p>Check out the <a href="https://www.postman.com/">pull request</a> to learn more about the enhancements.</p>
+<h2 id="breaking-changes">Breaking Changes</h2>
+<p>We have two breaking changes since the previous release. You should take a quick
+look to ensure this doesn’t affect your workflow.</p>
+<h3 id="change-in-acl-schema-enterprise">Change in ACL schema (Enterprise)</h3>
+<p>The first breaking change arises from the changes introduced to the ACL schema.</p>
+<p>Use the ACL upgrade tool to migrate to Dgraph 20.03.1 from the previous release v1.2.2. Here are the steps:</p>
+<ol>
+<li>Use binary backup to export data from the old cluster</li>
+<li>Shutdown Dgraph and wait for all writes to complete</li>
+<li>Download the Dgraph binary for v20.03.1</li>
+<li>Restore from the backups using upgraded Dgraph binary.</li>
+<li>Start a new Dgraph cluster using the restored data directories</li>
+<li>Upgrade ACL data using the following command: <code>dgraph upgrade --acl -a localhost:9080 -u groot -p password</code></li>
+</ol>
+<h3 id="lang-index">Lang Index</h3>
+<p>A bug fix resulted in a data format change that affects using the language index
+(<code>@lang</code> schema directive). Follow the steps from the documentation link
+<a href="https://dgraph.io/docs/deploy/#upgrade-database">here</a> to upgrade the database to the new release.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This release marks the end of the Dgraph 1.x series and the beginning of Dgraph
+GraphQL. Starting from this milestone, Dgraph will also follow <a href="https://dgraph.io/blog/post/dgraph-calendar-versioning/">CalVer
+versioning</a> as announced earlier.</p>
+<p>With the emphasis on GraphQL, this has been the most exciting release of Dgraph.
+Dgraph community has long asked us to support official GraphQL spec. We are now
+fully committed to the GraphQL ecosystem. This release is a big step in that
+direction.</p>
+<p>We are working hard to bring greater functionality and new features in the
+upcoming releases of Dgraph GraphQL. Read the <a href="https://github.com/dgraph-io/dgraph/releases/tag/v20.03.0">Changelog</a> to find out more
+about all the changes, bug fixes, and enhancements we packed into this major
+release.</p>
+<p>Dgraph GraphQL is the result of the persistence of our wonderful community for
+full GraphQL spec compliance. You asked for it, and we delivered!</p>
+<p>Give <a href="https://dgraph.io/paper">Dgraph GraphQL</a> a try and let us know your thoughts.</p>
+<hr>
+
+
+<aside class="post__references">
+
+    <h4>References</h4><p>Top image: <a href="https://photojournal.jpl.nasa.gov/catalog/PIA22686">NASA PIA22686: Time-lapse Sequence of Jupiter&rsquo;s North</a></p>
+</aside>
+
+
+                        </div>
+
+                        
+    <aside class="post__authors">
+                <div class="tile author-tile">
+
+    <img src="https://blog.dgraph.io/images/people/dmai.png" class="author-tile__photo">
+
+    <h4 class="author-tile__title">
+        <a href="https://blog.dgraph.io/authors/dmai/">Daniel Mai</a>,
+        Author
+    </h4>
+
+    <p>Daniel is a DevOps Partner Engineer at Dgraph Labs helping
+customers use Dgraph in production. Previously, he was responsible
+for 24/7 production operations and monitoring at a cloud security startup.
+In his free time (away from his dubbed duties as the office Hand of the King),
+he enjoys hanging out with friends and family, reading books,
+and cycling whenever the chance allows, which is pretty often given Bay Area weather.</p>
+
+
+    
+        <nav class="author-tile__social">
+
+            
+                <a href="https://www.linkedin.com/in/maidaniel/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            
+
+            
+
+            
+                <a href="https://github.com/danielmai" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            
+
+        </nav>
+    
+
+</div>
+
+            
+        
+                <div class="tile author-tile">
+
+    <img src="https://blog.dgraph.io/images/people/zhenniwu.png" class="author-tile__photo">
+
+    <h4 class="author-tile__title">
+        <a href="https://blog.dgraph.io/authors/zhenni/">Zhenni Wu</a>,
+        Editor
+    </h4>
+
+    <p>Zhenni works on Developer Marketing at Dgraph Labs.
+She has a background in product marketing and developer relations.
+Previously, she was in charge of the developer marketing and developer
+relations for Baidu’s autonomous driving open source project.
+In her free time, she likes to cook, read, and travel.
+She is also a proud mom of a cute Sphynx cat called Buzz.</p>
+
+
+    
+        <nav class="author-tile__social">
+
+            
+                <a href="https://www.linkedin.com/in/zhenniwu/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            
+
+            
+
+            
+                <a href="https://github.com/zhenniwu" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            
+
+        </nav>
+    
+
+</div>
+
+            
+        
+
+    </aside>
+
+
+
+                        <div class="post__comments">
+
+    <div id="discourse-comments"></div>
+
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/dgraph-graphql-hits-ga\/"
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
+    
+
+</div>
+
+
+                        <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
+                    <div class="page-body__sidebar">
+
+                        
+
+
+
+
+<div class="post__related">
+
+    <h3>Related Posts</h3>
+
+    
+    <div class="post">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Sun, Apr 12, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/designing-graphql-schemas/">Designing GraphQL schemas</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
+
+</div>
+
+
+
+    	</div>
+
+    </div>
+    
+    <div class="post">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/microgravity.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Fri, Mar 20, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/dgraph-calendar-versioning/">Why there would be no Dgraph 2.0: Goodbye Semantic Versioning</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/leyla/">Leyla Galatin</a>
+        
+    
+
+</div>
+
+
+
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+                        
+<div class="post__tags">
+
+    <h3>Tags</h3>
+
+    <div>
+
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/graphql/">graphql</a>
+            
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/dgraph/">dgraph</a>
+            
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/release/">release</a>
+            
+        
+
+    </div>
+
+</div>
+
+
+
+                        <aside class="post__cta">
+
+    <h3>
+        Deploy Dgraph<br>
+        in Minutes
+    </h3>
+
+    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
+
+    <a href="https://dgraph.io/downloads" class="button button--secondary">
+        <span>Download</span>
+        <i class=" fas fa-arrow-right"></i>
+    </a>
+
+</aside>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-5 col-sm-4">
+        <div class="row">
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Products</h3>
+            <ul>
+              <li><a href="https://dgraph.io/graphql">GraphQL</a></li>
+              <li><a href="https://dgraph.io/enterprise">Enterprise</a></li>
+              <li><a href="https://dgraph.io/downloads">Downloads</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Learn</h3>
+            <ul>
+              <li><a href="https://dgraph.io/blog" target="_blank">Blog</a></li>
+              <li><a href="https://tour.dgraph.io" target="_blank">Interactive Tour</a></li>
+              <li><a href="https://discuss.dgraph.io" target="_blank">Forum</a></li>
+              <li><a href="https://slack.dgraph.io" target="_blank">Slack</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-5 col-sm-4">
+        <div class="row">
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Docs</h3>
+            <ul>
+              <li><a href="https://docs.dgraph.io" target="_blank">Dgraph Docs</a></li>
+              <li><a href="https://graphql.dgraph.io/docs/" target="_blank">GraphQL Docs</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6 page-footer__nav">
+            <h3 class="zeta">Company</h3>
+            <ul>
+              <li><a href="https://dgraph.io/about">Team</a></li>
+              <li><a href="https://dgraph.io/careers">Careers</a></li>
+              <li><a href="https://dgraph.io/contact">Contact</a></li>
+              <li><a href="https://dgraph.io/conduct">Conduct</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-lg-1 border-above-sm">
+        <div class="page-footer__cta"><a href="https://dgraph.io/downloads" title="Download" class="button button--secondary"><span>Download</span><i class="fas fa-arrow-right"></i></a></div>
+        <div class="page-footer__address">
+          <p>
+            655 Montgomery Street, 7th Floor<br>
+            San Francisco, CA 94111
+          </p>
+          <hr>
+          <p><a href="mailto:contact@dgraph.io">contact@dgraph.io</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="page-footer__social">
+      <ul>
+        <li><a href="https://twitter.com/dgraphlabs" target="_blank"><i class="fab fa-twitter"></i></a></li>
+        <li><a href="https://github.com/dgraph-io/dgraph" target="_blank"><i class="fab fa-github"></i></a></li>
+        <li><a href="https://www.youtube.com/channel/UCghE41LR8nkKFlR3IFTRO4w" target="_blank"><i class="fab fa-youtube"></i></a></li>
+        <li><a href="https://slack.dgraph.io" target="_blank"><i class="fab fa-slack"></i></a></li>
+        <li><a href="https://www.linkedin.com/company/dgraph-labs" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+    <div class="page-footer__copyright">
+      <p>
+        <Copyright>&copy; 2017-2020 Dgraph Labs, Inc.</Copyright>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://blog.dgraph.io//js/clipboard.min.js"></script>
+    <script
+      src='https://blog.dgraph.io//js/runnable.js?29f8ba4fb8d90804cf24ff53b70192ad'
+    ></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+
+
+
+
+<script>
+  window.Countly = window.Countly || {};
+  Countly.q = Countly.q || [];
+
+  Countly.q.push(['track_sessions']);
+  Countly.q.push(['track_pageview']);
+  (function() {
+  	var cly = document.createElement('script');
+  	cly.type = 'text/javascript';
+  	cly.async = true;
+  	cly.src = "https://dgraph.io/assets/js/unminified/stats/dgraph-stats.min.js";
+  	cly.onload = function() {
+      Countly.init({
+        app_key: "e93284ab5e5d21ef9eb16a94516b3c1c6eba1015",
+        url: "https://stats.dgraph.io",
+        force_post: true,
+      })
+  	};
+  	document.body.appendChild(cly);
+  })();
+</script>
+
+
+<script>
+$(document.links)
+  .filter(function() {
+    return this.hostname != window.location.hostname;
+  })
+  .attr("target", "_blank");
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/visibility.js/1.2.4/visibility.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+<link
+  href='https://blog.dgraph.io//css/heart.css?24a50879951b2391f04750723b4a012e'
+  rel="stylesheet">
+<link
+  href='https://blog.dgraph.io//css/github-engage.css?d60d80bf2b6a24350cdb5d834ab47e27'
+  rel="stylesheet">
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"
+  integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps="
+  crossorigin="anonymous"
+></script>
+<script
+  type="text/javascript"
+  src='https://blog.dgraph.io//js/custom.js?94f0c667422b8dac293e14c9c49872e3'
+></script>
+
+<script src="//unpkg.com/@dgraph-io/community"></script>
+
+
+</body>
+
+    <script src="https://blog.dgraph.io/js/footnotes.js"></script>
+
+</html>
+

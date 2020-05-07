@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>boltdb on Dgraph Blog</title>
@@ -18,7 +18,7 @@
       <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-lmdb-boltdb/</guid>
-      <description>If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</description>
+      <description>If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language.</description>
     </item>
     
   </channel>

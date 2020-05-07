@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/aman/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Thu, 08 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/aman/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Datetime Indexes in Dgraph</title>
+      <link>https://blog.dgraph.io/post/datetime-indexes-dgraph/</link>
+      <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/datetime-indexes-dgraph/</guid>
+      <description>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&amp;rsquo;s datetime datatype.</description>
+    </item>
+    
+  </channel>
+</rss>

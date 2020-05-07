@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>sql on Dgraph Blog</title>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 30 May 2019 00:08:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/</guid>
-      <description>Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from. In particular, we get asked a lot about how to migrate data from MySQL to Dgraph. In this article, we present a tool that makes this migration really easy: all a user needs to do is write a small 3 lines configuration file and type in 2 commands.</description>
+      <description>Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from.</description>
     </item>
     
   </channel>

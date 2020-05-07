@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/pawan/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 23 Jan 2017 18:07:44 +1100</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/pawan/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Neo4j vs Dgraph - The numbers speak for themselves</title>
+      <link>https://blog.dgraph.io/post/benchmark-neo4j/</link>
+      <pubDate>Mon, 23 Jan 2017 18:07:44 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/benchmark-neo4j/</guid>
+      <description>&lt;p&gt;As &lt;a href=&#34;https://github.com/dgraph-io/dgraph&#34; target=&#34;_blank&#34;&gt;Dgraph&lt;/a&gt;
+ is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the &lt;a href=&#34;http://db-engines.com/en/ranking/graph+dbms&#34;&gt;most popular graph database&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We have divided this post into five parts:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-loading-data&#34;&gt;Loading data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-querying&#34;&gt;Querying&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-issues-faced&#34;&gt;Issues faced&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-feature-comparison&#34;&gt;Dgraph vs Neo4j Feature Comparison&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ref-dgraph-principles&#34;&gt;Principles behind Dgraph&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>Dgraph hugo blog theme</title>
+      <link>https://blog.dgraph.io/post/hugo/</link>
+      <pubDate>Thu, 06 Oct 2016 16:56:08 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/hugo/</guid>
+      <description>We at Dgraph love Hugo and use it for our blog. It&amp;rsquo;s blazingly fast, supports Markdown is written in Go and is very easy to work with.</description>
+    </item>
+    
+    <item>
+      <title>Dgraph: JSON vs. Binary clients</title>
+      <link>https://blog.dgraph.io/post/protobuf/</link>
+      <pubDate>Mon, 12 Sep 2016 10:54:15 +0530</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/protobuf/</guid>
+      <description>&lt;p&gt;When I started building the initial version of the &lt;a href=&#34;https://github.com/dgraph-io/dgraphgoclient&#34;&gt;Dgraph Go client&lt;/a&gt;, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using &lt;a href=&#34;https://developers.google.com/protocol-buffers/&#34;&gt;Protocol Buffers&lt;/a&gt; which &lt;strong&gt;gave twice the speed and consumed two-third memory&lt;/strong&gt; compared to JSON according to our benchmarks.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Wisemonk: A slackbot to move discussions from Slack to Discourse</title>
+      <link>https://blog.dgraph.io/post/wisemonk/</link>
+      <pubDate>Wed, 15 Jun 2016 11:39:27 +1000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/wisemonk/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;Then there was the fact that we had so many channels and direct messages and group chats.
+It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
+&lt;em&gt;— &lt;a href=&#34;https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/&#34;&gt;Dave Teare, Curing Our Slack Addiction&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/jasonc/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 02 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/jasonc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Learn the basics of GraphQL&#43;-, now available on video</title>
+      <link>https://blog.dgraph.io/post/basics-graphql/</link>
+      <pubDate>Mon, 02 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/basics-graphql/</guid>
+      <description>Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below.</description>
+    </item>
+    
+  </channel>
+</rss>

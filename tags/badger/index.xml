@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>badger on Dgraph Blog</title>
@@ -18,8 +18,7 @@
       <pubDate>Thu, 12 Mar 2020 04:00:05 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/encryption-at-rest-dgraph-badger/</guid>
-      <description>We built &amp;ldquo;Encryption at Rest&amp;rdquo; in Badger v2. Encryption is complex, but important. With this blog post, we not only want to introduce this feature to our users, but also dive into the details of how we implemented encryption in Badger, so the reader can gain enough understanding about introducing AES encryption in their own systems.
-Background In 2008, Microsoft released Transparent Data Encryption (TDE) to provide Encryption at Rest to SQL server.</description>
+      <description>We built &amp;ldquo;Encryption at Rest&amp;rdquo; in Badger v2. Encryption is complex, but important. With this blog post, we not only want to introduce this feature to our users, but also dive into the details of how we implemented encryption in Badger, so the reader can gain enough understanding about introducing AES encryption in their own systems.</description>
     </item>
     
     <item>
@@ -28,9 +27,7 @@ Background In 2008, Microsoft released Transparent Data Encryption (TDE) to prov
       <pubDate>Mon, 18 Nov 2019 06:30:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/releasing-badger-v2/</guid>
-      <description>Dgraph is an open-source, transactional, distributed, native Graph database. Dgraph is optimized for high-performance reads and writes. It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.
-Much of Dgraph&amp;rsquo;s advanced performance capabilities come from Badger. Badger is the embedded key-value store that is responsible for storing all of Dgraph&amp;rsquo;s data.
-Badger itself is not distributed, Dgraph implements a layer on top of it to provide the distributed capabilities.</description>
+      <description>Dgraph is an open-source, transactional, distributed, native Graph database. Dgraph is optimized for high-performance reads and writes. It can serve queries and mutations with low latency and high throughput, even when they involve deep joins and traversals.</description>
     </item>
     
     <item>
@@ -52,8 +49,7 @@ week!&lt;/p&gt;</description>
       <pubDate>Thu, 27 Jun 2019 12:06:20 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/serialization-versioning/</guid>
-      <description>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.
-One of these pieces is BadgerDB, a key-value store written completely in Go following the ideas of RocksDB and LSM trees.</description>
+      <description>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases.</description>
     </item>
     
     <item>
@@ -62,8 +58,7 @@ One of these pieces is BadgerDB, a key-value store written completely in Go foll
       <pubDate>Thu, 24 Jan 2019 10:00:00 -0800</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-over-rocksdb-in-dgraph/</guid>
-      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API. Does it sounds like a tough problem? That&amp;rsquo;s because it is.
-This blog post is about Badger, the key-value database that makes it all happen under the hood, housing all Dgraph data, including Raft logs. Badger uses an LSM tree structure for holding keys.</description>
+      <description>At Dgraph, we&amp;rsquo;re building the most advanced graph database in the world. It does distributed transactions, low-latency arbitrary depth joins, traversals, provides synchronous replication and horizontal scalability &amp;mdash; with a simple GraphQL-like API.</description>
     </item>
     
     <item>
@@ -72,7 +67,7 @@ This blog post is about Badger, the key-value database that makes it all happen 
       <pubDate>Thu, 05 Oct 2017 13:30:16 +1100</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-txn/</guid>
-      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well. We wanted to create it for ourselves and the broader Go community. Go has been a language of choice for many databases, and providing a performant native Go key-value store seemed like a win for everyone.</description>
+      <description>When we started working on Badger, the aim was to keep things stupid simple. We needed to get rid of Cgo from Dgraph codebase, while also building something which can perform really well.</description>
     </item>
     
     <item>
@@ -81,7 +76,7 @@ This blog post is about Badger, the key-value database that makes it all happen 
       <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger-lmdb-boltdb/</guid>
-      <description>If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language. Even though it is not at v1.0 yet, we have already received a great response from the community. As of writing, Badger has 2350 stars on Github, and there have been lots of discussions online since the release announcement.</description>
+      <description>If you have been following us, you may know that we released Badger a few months ago. Badger is a simple, efficient, and persistent key-value store, written in a hipster language.</description>
     </item>
     
     <item>
@@ -90,8 +85,7 @@ This blog post is about Badger, the key-value database that makes it all happen 
       <pubDate>Sun, 14 May 2017 20:18:15 +1000</pubDate>
       
       <guid>https://blog.dgraph.io/post/badger/</guid>
-      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016. This design is highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both the sequential and the random performance of SSDs.
-We call it Badger. Based on benchmarks, Badger is at least 3.5x faster than RocksDB when doing random reads.</description>
+      <description>We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016.</description>
     </item>
     
   </channel>

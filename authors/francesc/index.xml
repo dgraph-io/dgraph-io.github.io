@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dgraph Blog</title>
+    <link>https://blog.dgraph.io/authors/francesc/</link>
+    <description>Recent content on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 17 Dec 2019 07:00:00 -0800</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/authors/francesc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Releasing Dgraph v1.1.1: upsert blocks, facets, and encryption at rest</title>
+      <link>https://blog.dgraph.io/post/release-v1.1.1/</link>
+      <pubDate>Tue, 17 Dec 2019 07:00:00 -0800</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/release-v1.1.1/</guid>
+      <description>It&amp;rsquo;s been a bit over three months since we released Dgraph v1.1.0 (see the announcement) but the wait and hard work were well worth it because today we announce that Dgraph v1.</description>
+    </item>
+    
+    <item>
+      <title>Dgraph Labs wants you!</title>
+      <link>https://blog.dgraph.io/post/hiring-19/</link>
+      <pubDate>Fri, 23 Aug 2019 08:00:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/hiring-19/</guid>
+      <description>We recently announced our successful Series A fundraise and, since then, many people have shown interest to join our team. We are very grateful to have so many people interested in joining our team!</description>
+    </item>
+    
+    <item>
+      <title>Releasing BadgerDB v1.6.0</title>
+      <link>https://blog.dgraph.io/post/badger-v1.6.0-release/</link>
+      <pubDate>Wed, 03 Jul 2019 11:00:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/badger-v1.6.0-release/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
+project and the community surrounding it have changed a lot, not many new
+releases have seen the light of the day.  Happily, this changes today, as we
+release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
+week!&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Semantic Versioning, Go Modules, and Databases</title>
+      <link>https://blog.dgraph.io/post/serialization-versioning/</link>
+      <pubDate>Thu, 27 Jun 2019 12:06:20 +1100</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/serialization-versioning/</guid>
+      <description>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases.</description>
+    </item>
+    
+  </channel>
+</rss>
