@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/access-control-in-dgraph/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/access-control-in-dgraph/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>How Access Control Works in Dgraph - Dgraph Blog</title>
-    <meta property='og:title' content="How Access Control Works in Dgraph - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>How Access Control Works in Dgraph - Dgraph Blog</title>
+  <meta property='og:title' content="How Access Control Works in Dgraph - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/access-control-in-dgraph/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/starshine-2.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/starshine-2.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/starshine-2.jpg" />
+  
   
 
-  <meta name="twitter:title" content="How Access Control Works in Dgraph"/>
-  <meta name="twitter:description" content="With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="How Access Control Works in Dgraph" />
+  <meta name="twitter:description"
+    content="With GDPR passing in the EU on April 14th, 2016, users on the Internet are demanding protection of their privacy and data from Internet companies." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=How%20Access%20Control%20Works%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2faccess-control-in-dgraph%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=How%20Access%20Control%20Works%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2faccess-control-in-dgraph%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/starshine-2.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/starshine-2.jpg">
 
                             <div class="post__header">
 
@@ -285,10 +375,8 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>With <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">GDPR</a> passing in the EU on April 14th, 2016, users on the Internet are demanding
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>With <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">GDPR</a> passing in the EU on April 14th, 2016, users on the Internet are demanding
 protection of their privacy and data from Internet companies. The regulation has profound
 implications. Many companies take the law and users&rsquo; demand seriously: they start encrypting data
 for traffic <em>within</em> their data centers, and employing strict control on who can access users&rsquo; data.
@@ -296,24 +384,21 @@ The Dgraph team takes full notice of that. Access control on the data stored in 
 important to our enterprise customers. <strong>This feature has been in-demand and we plan to release it
 in the upcoming Dgraph v1.1 as a proprietary feature.</strong> In this article, you will find some details
 about how Access Control List (ACL) works in Dgraph.</p>
-
 <h3 id="the-requirements">The requirements</h3>
-
 <p>We started the project by asking what are the features that we must support for
 access control to work both securely and seamlessly for our customers. After a
 few rounds of brainstorming and feedback, we settled on the following list:</p>
-
 <ul>
 <li>We should be able to create user accounts, e.g. Alice and Bob, and groups, e.g. devs and SREs.</li>
 <li>Each user can be assigned to multiple groups.</li>
 <li>Access control should be enforced on predicates, and each predicate should
 have 3 types of access:
-
 <ol>
 <li>Read: being able to query data under the predicate</li>
 <li>Write: being able to mutate data under the predicate</li>
 <li>Modify: being able to alter the schema of the predicate.</li>
-</ol></li>
+</ol>
+</li>
 <li>Access control should be granted on the granularity of groups. For example, we can grant Read
 access of the predicate <code>friend</code> to the group <code>dev</code>, and Read+Write access of the predicate <code>friend</code> to
 the group <code>sre</code>.</li>
@@ -325,23 +410,20 @@ misconfigured.</li>
 such a rule exists, predicates created later matching the regex should have access control
 enforced automatically.</li>
 <li>There should be a way to query:
-
 <ol>
 <li>All the groups of a given user</li>
 <li>All the users belonging to a given group</li>
 <li>All the predicates and the granted permissions associated with a given group.</li>
-</ol></li>
+</ol>
+</li>
 <li>There should be logging of all the access attempts, including who is trying to perform what
 operation on which predicate, and whether the access is accepted or denied.</li>
 </ul>
-
 <h3 id="how-acl-data-is-stored">How ACL data is stored</h3>
-
 <p>With the requirements settled, now let&rsquo;s dive into some details. The very first detailed
 design question is how to store the ACL data. We discussed several options each
 having their pros and cons. In the end we decided to pick the following approach:
-<img src="https://blog.dgraph.io/images/groups.png" alt="Predicates assigned to groups" /></p>
-
+<img src="https://blog.dgraph.io/images/groups.png" alt="Predicates assigned to groups"></p>
 <p>To make it easier for operators to turn on the ACL feature, we are storing the
 ACL rules inside Dgraph instead of relying upon an external system. The example
 demonstrates a cluster with a Zero group and a number of Alpha groups. The
@@ -350,56 +432,44 @@ belongs to and which group a predicate is assigned to. The Alpha groups
 host the actual user data, with each one hosting a portion of the whole data
 set. The whole dataset is divided into shards and in Dgraph sharding is based on
 predicates.</p>
-
 <p>To store the ACL data, we need a total of four predicates. And these four predicates
 are treated specially by group zero in the sense that they are always assigned
 to group 1. Other groups maintain a local in-memory cache of all the ACL
-rules and refresh it periodically by querying group 1<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>. Thus, every Alpha
+rules and refresh it periodically by querying group 1<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Thus, every Alpha
 server knows about the ACL rules, so each Alpha is capable to applying those
 rules to all the incoming requests, without having to make network calls.</p>
-
 <p>Now let&rsquo;s take a closer look at the four predicates:</p>
-
 <ul>
 <li><code>dgraph.xid</code> is for storing the name of a user or group</li>
 <li><code>dgraph.password</code> is for storing a user&rsquo;s hashed password</li>
-<li><code>dgraph.user.group</code> is for storing user &rarr; group mapping and uses a reverse index to retrieve group &rarr; users mapping.</li>
+<li><code>dgraph.user.group</code> is for storing user → group mapping and uses a reverse index to retrieve group → users mapping.</li>
 <li><code>dgraph.group.acl</code> is for storing all predicates assigned to a group (or regexps against which predicates will be matched), and the types of access allowed for
 the group, e.g. <code>(friend, Read), (name, Read+Write), (^user.*name$, Read+Write+Modify)</code>.</li>
 </ul>
-
 <figure>
     <img src="https://blog.dgraph.io/images/groot.jpg"/> <figcaption>
             <h4>I AM GROOT</h4>
         </figcaption>
 </figure>
 
-
 <p>These predicates are proposed by an Alpha server when it starts up if the ACL feature is turned on
 through command line options and created when they do not already exist in the cluster.
 Unlike a regular data predicate, they are not removed by the DropAll request.</p>
-
 <p>Also being created during an Alpha server start-up time is the root user account if it does not
 already exist, and we give it the nickname <code>groot</code> (graph root) along with a default password which
 can be changed using our command line tools explained below.</p>
-
 <h3 id="acl-clients">ACL clients</h3>
-
 <p>Now that the server side storage is ready, let&rsquo;s switch our attention to the client side.
 From the ACL perspective, there are two types of clients:</p>
-
 <ul>
 <li>The command line tools for changing and querying ACL data</li>
 <li>The clients used to access data protected by ACL rules, e.g. the
 <a href="https://github.com/dgraph-io/dgo">dgo</a> client written in Go, the <a href="https://github.com/dgraph-io/dgraph4j">dgraph4j</a> client in Java, the
 <a href="https://play.dgraph.io/">Ratel</a> web portal etc.</li>
 </ul>
-
 <h4 id="the-command-line-tools">The command line tools</h4>
-
 <p>The command line tools are available under a new <code>acl</code> subcommand within the
 Dgraph binary.</p>
-
 <ul>
 <li><code>dgraph acl add</code> is for creating a new user account or a new group</li>
 <li><code>dgraph acl del</code> is for deleting a user account or a group</li>
@@ -407,12 +477,9 @@ Dgraph binary.</p>
 <li><code>dgraph acl info</code> is for querying a user&rsquo;s groups, or a group&rsquo;s users, or predicate permissions granted
 to a group</li>
 </ul>
-
 <p>Concrete examples for turning on the ACL feature in a cluster and setting up ACL rules can be found
 at <a href="https://docs.dgraph.io/enterprise-features/#access-control-lists">our documentation page</a>.</p>
-
 <h4 id="client-libraries">Client Libraries</h4>
-
 <p>The second type of clients, e.g. dgo or dgraph4j, accesses data in Dgraph by
 executing transactions.  Each transaction can have a mix of <code>query</code> and <code>mutate</code>
 requests. Also a client can be used to <code>alter</code> the schema, e.g. changing a
@@ -422,7 +489,6 @@ operations for all predicates in the request are allowed. For example, for the
 query below to work, the current user must belong to one or more groups that
 collectively have been granted Read access to both the <code>name</code> and <code>friend</code>
 predicate.</p>
-
 <pre><code>{
   friends_of_alice(func: eq(name, &quot;Alice&quot;)) {
     name
@@ -432,23 +498,18 @@ predicate.</p>
   }
 }
 </code></pre>
-
 <h3 id="the-jwts">The JWTs</h3>
-
 <p><em>But wait a second!</em> How does an Alpha server know the
 query&rsquo;s current user or its groups?  The trick is that each request carries some
 metadata encoded as <a href="https://jwt.io/">JSON Web Token</a> that tells the Alpha server about the
 current user and the groups they belong to.</p>
-
 <figure>
     <img src="https://blog.dgraph.io/images/accessJWT.png"/> <figcaption>
             <h4>Access Token</h4>
         </figcaption>
 </figure>
 
-
 <h4 id="access-token">Access Token</h4>
-
 <p><strong>Here is how JWT works:</strong> Before running any transactions, the client, e.g. dgo
 needs to make a <code>Login</code> call to an Alpha server using a user name and password.
 When processing the <code>Login</code> request, the Alpha server 1) queries all of the
@@ -457,59 +518,43 @@ TTL, and 3) signs all that data with a secret key. The group list, expiration
 timestamp, and signature together form an access JWT which is sent back to the
 client. The client then remembers this JWT and attaches it to every subsequent
 request it sends to the cluster, e.g. the query request example we saw earlier.</p>
-
 <h4 id="refresh-token">Refresh Token</h4>
-
 <p>As explained above, JWTs contain the groups a logged-in user belongs to. This
 can cause a problem if this user is assigned a new group. Until the Access Token
 expires, a new JWT would not be issued to reflect that change.</p>
-
 <figure>
     <img src="https://blog.dgraph.io/images/refreshJWT.png"/> <figcaption>
             <h4>Refresh Token</h4>
         </figcaption>
 </figure>
 
-
 <p>Therefore, Access Token expiration is typically set to a short duration, like a
 few hours. But, this causes an issue with long running services, which would
 suddenly get their access denied after this token expires.</p>
-
 <p>When a <code>Login</code> happens, a refresh token is issued as well. This token
 is typically valid for a much longer duration, like a month. When access token
 expires and an unauthorized response is received from the server, Dgraph clients
 would automatically retry a login using the refresh token (if available). This would
 cause a new JWT to be issued with the updated groups.</p>
-
 <p>Notice that when an access JWT expiration causes an automatic login using the refresh JWT, not only
 does the access JWT get replaced, but the refresh JWT itself also gets renewed with a later
 expiration timestamp. Thus the same client can be used continually without an explicit call to
 Login again after it&rsquo;s initialized, thanks to the rolling JWTs.</p>
-
 <h3 id="logging">Logging</h3>
-
 <p>We log all of the <em>failed</em> access attempts in the main log files of Alpha servers, together with
 other types of events. All the log entries for ACL have a prefix <code>ACL-LOG</code>, so operators can run
 a simple grep and filter them out. Here is an example log entry:</p>
-
-<pre><code class="language-bash">    I0320 18:36:44.386417       1 access_ee.go:650] ACL-LOG Authorizing user &quot;alice&quot; with groups &quot;&quot; on predicates &quot;name,friend&quot; for &quot;Read&quot;, allowed:false
-</code></pre>
-
-<p>To reduce verbosity of logging, we send the <em>authorized</em> access attempts as <a href="https://opencensus.io/">OpenCensus</a> traces,
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">    I0320 18:36:44.386417       <span style="color:#099">1</span> access_ee.go:650<span style="color:#000;font-weight:bold">]</span> ACL-LOG Authorizing user <span style="color:#d14">&#34;alice&#34;</span> with groups <span style="color:#d14">&#34;&#34;</span> on predicates <span style="color:#d14">&#34;name,friend&#34;</span> <span style="color:#000;font-weight:bold">for</span> <span style="color:#d14">&#34;Read&#34;</span>, allowed:false
+</code></pre></div><p>To reduce verbosity of logging, we send the <em>authorized</em> access attempts as <a href="https://opencensus.io/">OpenCensus</a> traces,
 which can be further analyzed with <a href="https://www.jaegertracing.io/">Jaeger</a>. Below is a screenshot of the ACL log from the
 Jaeger UI:
-<img src="https://blog.dgraph.io/images/jaeger-acl-log.png" alt="ACL Log in Jaeger" /></p>
-
+<img src="https://blog.dgraph.io/images/jaeger-acl-log.png" alt="ACL Log in Jaeger"></p>
 <h3 id="show-case">Show case</h3>
-
 <p>Below is a quick demo of the ACL feature in action using the command line tool.
-<img src="https://blog.dgraph.io/images/acl-demo.gif" alt="ACL demo" /></p>
-
+<img src="https://blog.dgraph.io/images/acl-demo.gif" alt="ACL demo"></p>
 <h3 id="got-feedback">Got feedback?</h3>
-
 <p>That covers all the aspects of our first ACL release. We cannot wait to hear your feedback at
 <a href="https://discuss.dgraph.io/">our discussion forum.</a></p>
-
 
 
 <aside class="post__references">
@@ -517,17 +562,15 @@ Jaeger UI:
     <h4>References</h4><p>Top image: <a href="https://en.wikipedia.org/wiki/STARSHINE_(satellite)">On December 5th, 2001, STARSHINE-2 was launched from the Space Shuttle Endeavour on STS-108</a></p>
 </aside>
 
-<div class="footnotes">
-
-<hr />
-
+<section class="footnotes" role="doc-endnotes">
+<hr>
 <ol>
-<li id="fn:1">For now, each refresh retrieves the full set of ACL data. In the future, we&rsquo;ll switch to using a live stream of updates which is in the works.
- <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:1" role="doc-endnote">
+<p>For now, each refresh retrieves the full set of ACL data. In the future, we&rsquo;ll switch to using a live stream of updates which is in the works. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
 </ol>
-</div>
+</section>
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -594,24 +637,93 @@ LinkedIn.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
@@ -649,7 +761,7 @@ LinkedIn.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/microgravity.jpg">
@@ -687,12 +799,51 @@ LinkedIn.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/the-first-step.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Wed, Jan 8, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/introducing-getting-started-series/">What’s Next? Learn Dgraph with the Getting-Started Blog Series</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/prashant/">Prashant Shahi</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -722,31 +873,10 @@ LinkedIn.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -883,9 +1013,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

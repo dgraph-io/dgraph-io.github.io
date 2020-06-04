@@ -2,103 +2,188 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/recommendation2/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/recommendation2/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Build a Realtime Recommendation Engine: Part 2 - Dgraph Blog</title>
-    <meta property='og:title' content="Build a Realtime Recommendation Engine: Part 2 - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Build a Realtime Recommendation Engine: Part 2 - Dgraph Blog</title>
+  <meta property='og:title' content="Build a Realtime Recommendation Engine: Part 2 - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/recommendation2/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/falconlanded.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/falconlanded.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/falconlanded.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Build a Realtime Recommendation Engine: Part 2"/>
-  <meta name="twitter:description" content="This is part 2 of a two-part series on recommendations using Dgraph. Check our part 1 here.
-In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Build a Realtime Recommendation Engine: Part 2" />
+  <meta name="twitter:description"
+    content="This is part 2 of a two-part series on recommendations using Dgraph. Check our part 1 here.
+In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -224,20 +309,23 @@ In the last post, we looked at how many applications and web apps no longer pres
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -252,9 +340,10 @@ In the last post, we looked at how many applications and web apps no longer pres
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Build%20a%20Realtime%20Recommendation%20Engine%3a%20Part%202&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frecommendation2%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Build%20a%20Realtime%20Recommendation%20Engine%3a%20Part%202&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frecommendation2%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -262,7 +351,8 @@ In the last post, we looked at how many applications and web apps no longer pres
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/falconlanded.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/falconlanded.jpg">
 
                             <div class="post__header">
 
@@ -286,19 +376,12 @@ In the last post, we looked at how many applications and web apps no longer pres
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p><em>This is part 2 of a two-part series on recommendations using Dgraph.  Check our <a href="https://blog.dgraph.io/post/recommendation/">part 1 here</a>.</em></p>
-
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p><em>This is part 2 of a two-part series on recommendations using Dgraph.  Check our <a href="https://blog.dgraph.io/post/recommendation/">part 1 here</a>.</em></p>
 <p>In the last post, we looked at how many applications and web apps no longer present static data, but rather generate interesting recommendations to users.  There&rsquo;s a whole field of theory and practice in recommendation engines that we touched on, talking about <strong>content-based</strong> (based on properties of objects) and <strong>collaborative</strong> (based on similar users) filtering techniques based on a chapter from Stanford MOOC <a href="https://lagunita.stanford.edu/courses/course-v1:ComputerScience+MMDS+SelfPaced/about">Minning Massive Datasets</a>.</p>
-
 <p>We dug deeper into content-based filtering and showed how <em>Jaccard</em> distance and <em>Cosine</em> distance can be encoded directly in Dgraph queries using Dgraph&rsquo;s variables and math functions.</p>
-
 <p>This time we&rsquo;ll look into collaborative filtering and hybrid recommendations in Dgraph queries.  Then we&rsquo;ll look at how to build a real-time scalable recommendation engine for big graphs.</p>
-
 <p>To start with, we&rsquo;ll continue with our <a href="https://github.com/dgraph-io/benchmarks/tree/master/movielens/conv100k">movie data</a> from last time and then start looking at recommendations over Stack Exchange data.  We&rsquo;ll keep it small in this post and use <a href="https://lifehacks.stackexchange.com/">Lifehacks</a> data, but watch out for upcoming posts on loading all of Stack Overflow (2 Billion edges) into Dgraph and running the website and a recommendation engine with Dgraph as the backend.</p>
-
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
@@ -307,29 +390,19 @@ MathJax.Hub.Config({
 <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
-
 <h2 id="collaborative-filtering">Collaborative filtering</h2>
-
 <p>Content-based filtering measures the similarity of objects based on their properties.
 <strong>Rather than trying to find similar items, collaborative filtering works by finding similar users and then recommending items that similar users have rated highly.</strong>  In the movie example from <a href="https://blog.dgraph.io/post/recommendation/">part 1</a>, for a given user we first find the set of users that are similar, find movies those users rated highly and recommend some that our user hasn&rsquo;t seen.</p>
-
 <p><em>Let&rsquo;s say we are trying to recommend movies to Bob.</em> If Bob and Alice have rated a movie highly and they
 do this repeatedly for many movies, they are similar. The more movies they have in common this way,
 the more similar Bob and Alice are. Once we have more similar users like Alice, we need to find those movies that
 these users have rated highly. We then remove the movies that Bob has seen, leaving movies we should recommend to Bob.</p>
-
 <p>If we represent the movies that user $U_i$ and user $U_j$ have in common as</p>
-
 <p>$$M_{(u_i,u_j)}$$</p>
-
 <p>and write $R_{U_i}$ for a user&rsquo;s rating function, then we can represent a distance (or similarity) score between two users as an average of their scores for the movies they both rated.</p>
-
 <!--$$\frac{\sum{R_{U_i}(M_{(u_i,u_j)})} + \sum{R_{U_j}(M_{(u_i,u_j)})}}{|M_{(u_i,u_j)}|}$$-->
-
-<p><img src="https://blog.dgraph.io/images/collab_diff1.png" alt="collaborative distance 1" /></p>
-
+<p><img src="https://blog.dgraph.io/images/collab_diff1.png" alt="collaborative distance 1"></p>
 <p>This is how the query would look in Dgraph.</p>
-
 <pre><code>{
   var(func: uid(2)) {                             # 1
     a as math(1)
@@ -351,16 +424,12 @@ these users have rated highly. We then remove the movies that Bob has seen, leav
     name
   }
 }
-</code></pre>
-
-<p><em>Note that this query is slightly different from the
+</code></pre><p><em>Note that this query is slightly different from the
 formula in MOOC chapter, because although we can write cosine distance for content-based filtering
 directly in the query language, the language does not yet support cosine distance when it
 involves more than 1 traversal. However, this can be tackled by retrieving the subgraph from Dgraph,
 doing the computation and writing the similarity scores back to Dgraph for further processing.</em></p>
-
 <p>Let us look at what different parts of the query do.</p>
-
 <ol>
 <li>Start with a user whose id is 2 (our Bob)</li>
 <li>Get all the movies that this user has rated and their ratings</li>
@@ -371,9 +440,7 @@ doing the computation and writing the similarity scores back to Dgraph for furth
 <li>Normalize the rating as sum of all the ratings divided by number of ratings</li>
 <li>Get the top 10 movies based on the score calculated in the last step</li>
 </ol>
-
 <p>Output:</p>
-
 <pre><code>{
   &quot;Recommendation&quot;: [
     {
@@ -408,14 +475,9 @@ doing the computation and writing the similarity scores back to Dgraph for furth
     }
   ]
 }
-</code></pre>
-
-<h3 id="collaborative-filtering-only-with-high-scores">Collaborative filtering, only with high scores</h3>
-
+</code></pre><h3 id="collaborative-filtering-only-with-high-scores">Collaborative filtering, only with high scores</h3>
 <p><em>Let&rsquo;s make an improvement.</em> Consider the case when user A rated <code>movie-a</code> 1, user B rated <code>movie-a</code> 5, user A rated <code>movie-b</code> 3 and user C rated <code>movie-b</code> 3. Based on the average score for common movies, both user B and C will have a score of 3. But intuitively, we can say that user C is more similar to A than B. One way to avoid this would be by considering only the <em>good</em> ratings which we can define as &gt;= 3.</p>
-
 <p>So we can add a filter when we&rsquo;re getting the ratings as follows:</p>
-
 <pre><code># Collaborative filtering
 {
   var(func: uid(2)) {  # 1
@@ -438,10 +500,7 @@ doing the computation and writing the similarity scores back to Dgraph for furth
     name
   }
 }
-</code></pre>
-
-<p>Output:</p>
-
+</code></pre><p>Output:</p>
 <pre><code>{
   &quot;Recommendation&quot;: [
     {
@@ -476,11 +535,8 @@ doing the computation and writing the similarity scores back to Dgraph for furth
     }
   ]
 }
-</code></pre>
-
-<p>Let&rsquo;s try and test how well this is working.  We don&rsquo;t have any live users to test on, but one measure can be how well it predicts the known data.  <em>We removed the following 5 movies that user 2 rated as 5 and ran the query
+</code></pre><p>Let&rsquo;s try and test how well this is working.  We don&rsquo;t have any live users to test on, but one measure can be how well it predicts the known data.  <em>We removed the following 5 movies that user 2 rated as 5 and ran the query
 to predict the ratings.</em></p>
-
 <pre><code>        {
           &quot;_uid_&quot;: &quot;0x30e5d&quot;,
           &quot;name&quot;: &quot;Secrets &amp; Lies (1996)&quot;
@@ -501,10 +557,7 @@ to predict the ratings.</em></p>
           &quot;_uid_&quot;: &quot;0x30e7c&quot;,
           &quot;name&quot;: &quot;As Good As It Gets (1997)&quot;
         }
-</code></pre>
-
-<p>The predicted ratings are:</p>
-
+</code></pre><p>The predicted ratings are:</p>
 <pre><code>        {
           &quot;name&quot;: &quot;Secrets &amp; Lies (1996)&quot;,
           &quot;var(fscore)&quot;: 5
@@ -525,20 +578,12 @@ to predict the ratings.</em></p>
           &quot;name&quot;: &quot;As Good As It Gets (1997)&quot;,
           &quot;var(fscore)&quot;: 4.666667
         }
-</code></pre>
-
-<p>So 2 of the movies got 5 rating, one got 4.66, one 3.83, and one 3. <em>Not bad for a single query!</em></p>
-
+</code></pre><p>So 2 of the movies got 5 rating, one got 4.66, one 3.83, and one 3. <em>Not bad for a single query!</em></p>
 <h3 id="collaborative-filtering-with-penalty">Collaborative filtering, with penalty</h3>
-
 <p><em>Let&rsquo;s tweak it some more.</em>  If the ratings by two users vary too, much they might not be as similar. For example, taking a straight average, ratings of 3 and 3 by the two users look the same as 5 and 1.  So lets penalize each user by the difference in rating &mdash; as the rating difference grows the penalty increases.</p>
-
 <p>In the query below we multiply the average by:</p>
-
 <p>$$1 - {(\frac{sr-r}{5*a})}^2$$</p>
-
 <p>If the difference between ratings is small, the multiple will be closer to 1.  If the difference is larger, the multiple will be closer to 0, reducing the user&rsquo;s similarity.</p>
-
 <pre><code>{
   var(func: uid(2)) {  # 1
     a as math(1)
@@ -564,10 +609,7 @@ to predict the ratings.</em></p>
     name
   }
 }
-</code></pre>
-
-<p>Predicated ratings for the ones that were removed from the dataset are:</p>
-
+</code></pre><p>Predicated ratings for the ones that were removed from the dataset are:</p>
 <pre><code>        {
             &quot;name&quot;: &quot;Secrets &amp; Lies (1996)&quot;,
             &quot;var(fscore)&quot;: 5.0
@@ -588,23 +630,14 @@ to predict the ratings.</em></p>
             &quot;name&quot;: &quot;As Good As It Gets (1997)&quot;,
             &quot;var(fscore)&quot;: 4.666667
         },
-</code></pre>
-
-<p>The scores got closer to the removed actual scores, probably indicating that we removed some users from the similar users who didn&rsquo;t vote highly for this movie.  &ldquo;L.A. Confidential&rdquo; was a bit of an outlier, going back slightly, indicating that we removed some users who enjoyed this one.</p>
-
+</code></pre><p>The scores got closer to the removed actual scores, probably indicating that we removed some users from the similar users who didn&rsquo;t vote highly for this movie.  &lsquo;&lsquo;L.A. Confidential&rsquo;&rsquo; was a bit of an outlier, going back slightly, indicating that we removed some users who enjoyed this one.</p>
 <h2 id="hybrid-filtering">Hybrid filtering</h2>
-
 <p>Content-based filtering found similar movies, based on a given movie.  Collaborative filtering found similar users and gave a recommendation of movies the similar users rated highly.</p>
-
 <p><strong>Hybrid filtering is when we combine the collaborative and content-based approaches into a single recommendation algorithm.</strong></p>
-
 <p>For our hybrid filtering, we&rsquo;ll assign a score to each genre as the number of movies watched by user 2 in that genre. Then, after we&rsquo;ve found the similar users, we&rsquo;ll give a boost to the ratings of movies based on the genres that user 2 watches most.  That&rsquo;s collaborative filtering to get the similar users and the movies they enjoy, and then content-based filtering to help order those movies based on genres.</p>
-
 <p><strong>Warning</strong></p>
-
 <p>Query syntax and features has changed in v1.0 release.
- For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
-
+For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
 <pre><code>{
   var(func: uid(2)) {  # 1
     rated @groupby(genre) {
@@ -635,14 +668,9 @@ to predict the ratings.</em></p>
     name
   }
 }
-</code></pre>
-
-<p>This time, at step <code>#1</code> the query gets a count of how many times our user has rated movies in each genre using Dgraph&rsquo;s <code>groupby</code>, so <code>gc</code> will relate genres to number of movies rated in that genre.  Then, before calculating the score for each movie at step <code>#7</code>, the query gives each genre in the movie a score, step <code>6.1</code>, and sums a total score, step <code>6.2</code>.  At step <code>#7</code> each movie&rsquo;s average score is multiplied by $1+\frac{x}{100}$.</p>
-
+</code></pre><p>This time, at step <code>#1</code> the query gets a count of how many times our user has rated movies in each genre using Dgraph&rsquo;s <code>groupby</code>, so <code>gc</code> will relate genres to number of movies rated in that genre.  Then, before calculating the score for each movie at step <code>#7</code>, the query gives each genre in the movie a score, step <code>6.1</code>, and sums a total score, step <code>6.2</code>.  At step <code>#7</code> each movie&rsquo;s average score is multiplied by $1+\frac{x}{100}$.</p>
 <p>If a movie contains genres our user doesn&rsquo;t watch so much, $\frac{x}{100}$ will be small and the movie won&rsquo;t get much of a boost.  If it contains genres our user often rates movies of, then $x$ will be larger and thus $1+\frac{x}{100}$ will give a bigger bonus.</p>
-
 <p>Output:</p>
-
 <pre><code>{
     &quot;Recommendation&quot;: [
         {
@@ -687,54 +715,38 @@ to predict the ratings.</em></p>
         }
     ]
 }
-</code></pre>
-
-<p>With the collaborative filtering queries, the scores for the test movies were high, but so were many other movies that the similar users enjoyed.  The hybrid approach skews the result back more towards the genres that our user watches most. In the results, two of the 5-star rated movies (<code>Wings of the Dove, The (1997)</code> and <code>As Good As It Gets (1997)</code>) showed up in the top 10.</p>
-
+</code></pre><p>With the collaborative filtering queries, the scores for the test movies were high, but so were many other movies that the similar users enjoyed.  The hybrid approach skews the result back more towards the genres that our user watches most. In the results, two of the 5-star rated movies (<code>Wings of the Dove, The (1997)</code> and <code>As Good As It Gets (1997)</code>) showed up in the top 10.</p>
 <h2 id="scaling-recommendations">Scaling recommendations</h2>
-
 <p>If you look carefully at the last query, you can see that the graph size explodes very easily.
 Say you rated 50 movies and those movies were rated by 20000 other people on average, you touch 1M nodes every time
 you want to run this recommendation query.  If we are running many of these queries for different users or as the graph grows, this could get too much.</p>
-
 <p>So let&rsquo;s look at how we can make this efficient by storing intermediate results back. In general,
 people rate a movie less frequently than they view recommendations. Thus, the frequency of rating
 updates is less than the frequency of generating recommendations.  So if we can calculate the
 similarity scores only when a user rates a movie, and store it back to Dgraph; we can retrieve the
 recommended movies cheaply by using this stored similarity score between users.</p>
-
 <p>For this, we can run the first part of the query, which calculates the similar users and store the top scores in an edge connecting
 the users. Now, when we want to do recommendation, we can directly get the top similar users and then just have to do the 2nd part
 of the query which is getting the average ratings for the movies that these similar users rated.</p>
-
-<p><img src="https://blog.dgraph.io/images/newedge.png" alt="Edge creation with score" /></p>
-
+<p><img src="https://blog.dgraph.io/images/newedge.png" alt="Edge creation with score"></p>
 <p>Note that this would require some extra code in the application which creates these edges when an
 update happens but can make the recommendation query highly performant even for extremely large
 datasets.  Typically user similarity scores are generated as a batch process. With this approach, we
 can generate these scores incrementally, triggered by user actions; which would also improve the
 freshness of the recommendations.</p>
-
 <h2 id="stack-overflow">Stack Overflow</h2>
-
 <p>Now let&rsquo;s look at a different kind of dataset which has users, posts (questions, answers, comments),
 upvotes, downvotes, etc. This has around 450k triples in it and was obtained from Lifehacks Stack Exchange forum.</p>
-
 <p>Say we want to recommend what a user should read based on their upvotes. This is similar to the
 collaborative filtering we saw in the last section.</p>
-
 <ol>
 <li>Find similar users who have upvoted the same content.</li>
 <li>Then find the content similar users have upvoted but the given user has not interacted with.</li>
 <li>Then, to order the content we can see how many of the similar users have upvoted the content.</li>
 </ol>
-
 <p>First, let&rsquo;s take a look at the schema for a part of the data that is of interest to us.</p>
-
-<p><img src="https://blog.dgraph.io/images/soSchema.png" alt="Stack Overflow schema" /></p>
-
+<p><img src="https://blog.dgraph.io/images/soSchema.png" alt="Stack Overflow schema"></p>
 <p>The query to do collaborative filtering on this dataset is as follows:</p>
-
 <pre><code># Recommend similar questions to read based on upvote.
 {
   user as var(func: eq(DisplayName, &quot;Mooseman&quot;)) { # 1
@@ -765,10 +777,7 @@ collaborative filtering we saw in the last section.</p>
     }
   }
 }
-</code></pre>
-
-<p>Let&rsquo;s look at what the numbered lines in the query represent:</p>
-
+</code></pre><p>Let&rsquo;s look at what the numbered lines in the query represent:</p>
 <ol>
 <li>Start with a user whose name is <code>Mooseman</code></li>
 <li>Traverse the <code>~Author</code> edge which leads to the votes he has created</li>
@@ -780,9 +789,7 @@ collaborative filtering we saw in the last section.</p>
 <li>Get the posts which are of type question not seen by <code>Mooseman</code> and assign them a score which is the number of upvotes by these top (similar) users. This score is store in variable <code>fsc</code></li>
 <li>Use the score we calculated in <code>fsc</code> to get the top 10 questions</li>
 </ol>
-
 <p>Output:</p>
-
 <pre><code>{
   &quot;topQ&quot;: [
     {
@@ -857,22 +864,14 @@ collaborative filtering we saw in the last section.</p>
     }
   ]
 }
-</code></pre>
-
-<p>To make this recommendation scalable, we can create an edge between the most similar users
+</code></pre><p>To make this recommendation scalable, we can create an edge between the most similar users
 when an update (in this case, an upvote) happens. Then, when a user logs in, we can cheaply compute
 their recommendations using these edges directly.</p>
-
 <p><em>With that, we conclude this post.</em> In this post, we showed how collaborative filtering based on similar users can be encoded in Dgraph queries.  We showed a couple of approaches so you can get a flavour of the kind of flexibility Dgraph allows. We also combined content-based and collaborative approaches into a hybrid recommendation system that found similar users and then ranked movies with genres our user enjoyed.</p>
-
 <p>Content-based filtering can be useful when recommending to users who have rated few movies. This is how websites bootstrap recommendation when you join, for example, by asking for your 5 favourite movies and then showing movies that are similar to them. Then, as you start rating movies, a switch to collaborative filtering utilizes user similarity and starts to improve recommendations further.</p>
-
 <p>We can&rsquo;t tell you what metrics will work best in your case &mdash; that&rsquo;ll be based on your data and users and a fair amount of thinking and experimenting.  But what we&rsquo;ve done here is to show you how you can translate your ideas into reality using Dgraph. <em>Hope this gets you started on the path to adding a recommendation system in your application.</em></p>
-
 <h3 id="coming-up">Coming up</h3>
-
 <p>Watch out for an upcoming series of posts where we explore how typical web apps can benefit from Dgraph.  We&rsquo;ll show how we loaded all the data from the <a href="https://archive.org/details/stackexchange">Stack Overflow data dumps</a>, which is more than 2 billion edges, into Dgraph and run Stack Overflow with Dgraph as the sole backend DB.  We&rsquo;ll explore the tradeoffs that are made in doing this in SQL vs a graph database and we&rsquo;ll look at the recommendation engine we&rsquo;re building on top of all that Stack Overflow data.</p>
-
 
 
 <aside class="post__references">
@@ -881,7 +880,6 @@ their recommendations using these edges directly.</p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -989,24 +987,93 @@ He likes sport and hanging out with his family.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/falcon.png">
@@ -1044,7 +1111,7 @@ He likes sport and hanging out with his family.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/rover-cmux.jpg">
@@ -1082,39 +1149,57 @@ He likes sport and hanging out with his family.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/lander.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Tue, Jun 21, 2016
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/performance-throughput-latency/">Can it really scale?</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/ashwin/">Ashwin Ramesh</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
 
 
-                    </div>
-                </div>
+                
+
+
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1251,9 +1336,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

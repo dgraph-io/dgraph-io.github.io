@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/protobuf/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/protobuf/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Dgraph: JSON vs. Binary clients - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph: JSON vs. Binary clients - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Dgraph: JSON vs. Binary clients - Dgraph Blog</title>
+  <meta property='og:title' content="Dgraph: JSON vs. Binary clients - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/protobuf/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/geminiview.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/geminiview.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/geminiview.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Dgraph: JSON vs. Binary clients"/>
-  <meta name="twitter:description" content="When I started building the initial version of the Dgraph Go client, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using Protocol Buffers which gave twice the speed and consumed two-third memory compared to JSON according to our benchmarks."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Dgraph: JSON vs. Binary clients" />
+  <meta name="twitter:description"
+    content="When I started building the initial version of the Dgraph Go client, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using Protocol Buffers which gave twice the speed and consumed two-third memory compared to JSON according to our benchmarks." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Dgraph%3a%20JSON%20vs.%20Binary%20clients&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fprotobuf%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Dgraph%3a%20JSON%20vs.%20Binary%20clients&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fprotobuf%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/geminiview.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/geminiview.jpg">
 
                             <div class="post__header">
 
@@ -285,16 +375,12 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
                             <p>When I started building the initial version of the <a href="https://github.com/dgraph-io/dgraphgoclient">Dgraph Go client</a>, we were looking for a serialization format which was fast, easy to use and supported multiple language runtimes. We finally implemented our client using <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a> which <strong>gave twice the speed and consumed two-third memory</strong> compared to JSON according to our benchmarks.</p>
-
 <p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  v0.2 already supported serialization to JSON for the HTTP client. For our language specific drivers, we wanted something that would give us some performance improvement over JSON. Though we use <a href="https://google.github.io/flatbuffers/">Flatbuffers</a> for everything internally, they lacked support for encoding recursive data structures. Protocol buffers seemed the right choice because they worked with most of the <a href="https://github.com/google/protobuf#protobuf-runtime-installation">modern languages</a> and could encode recursive data structures efficiently.</p>
-
 <h2 id="how-to-use-protocol-buffers">How to use Protocol Buffers</h2>
-
 <p>To use protocol buffers, you define the message (data structures that form the basis of communication) in a <code>.proto</code> file and then compile it using the protocol buffer <a href="https://github.com/google/protobuf/releases">compiler</a>. For communication, we use <a href="http://www.grpc.io/">gRPC</a> which is an open-source RPC framework by Google. gRPC requires services to be defined in the same <code>.proto</code> file. Using gRPC allows us to communicate in binary format which is faster than retrieving JSON formatted results.</p>
-
 <pre><code>// The Node object which can have other children node and properties.
 
 message Node {
@@ -322,44 +408,29 @@ message Response {
 service Dgraph {
     rpc Query (Request) returns (Response) {}
 }
-</code></pre>
-
-<p>You can find the full <code>.proto</code> file <a href="https://github.com/dgraph-io/dgraph/blob/master/query/graph/graphresponse.proto">here</a>. The <code>.proto</code> file can be used to generate the corresponding Go code using the <code>protoc</code> compiler and the runtime library.</p>
-
+</code></pre><p>You can find the full <code>.proto</code> file <a href="https://github.com/dgraph-io/dgraph/blob/master/query/graph/graphresponse.proto">here</a>. The <code>.proto</code> file can be used to generate the corresponding Go code using the <code>protoc</code> compiler and the runtime library.</p>
 <h2 id="benchmarks">Benchmarks</h2>
-
 <p>In Go, you can easily measure how your algorithm does (in terms of time and space) by writing benchmarks. Go benchmarks are unique in that they&rsquo;d iterate over the test code <code>b.N</code> number of times, where <code>b.N</code> is adjusted until the benchmark function lasts long enough to be timed reliably.
 To test how our implementation was doing against our JSON implementation we wrote benchmarks for it. But first, let&rsquo;s understand what a benchmark is and how can we interpret its results.</p>
-
 <p>Let&rsquo;s write a simple function, which just adds integers to a list.</p>
-
 <pre><code>func addToList() {
     list := make([]int, 10)
     for i := 0; i &lt; 1000; i++ {
         list = append(list, i)
     }
 }
-</code></pre>
-
-<p>Here&rsquo;s benchmarking code:</p>
-
+</code></pre><p>Here&rsquo;s benchmarking code:</p>
 <pre><code>func BenchmarkAddToList(b *testing.B) {
     b.ReportAllocs()
     for i := 0; i &lt; b.N; i++ {
         addToList()
     }
 }
-</code></pre>
-
-<p>We can run the above benchmark using <code>go test -bench=.</code> Here, Go benchmark would repeatedly call the function with different values for <code>b.N</code> until it can be timed reliably.</p>
-
+</code></pre><p>We can run the above benchmark using <code>go test -bench=.</code> Here, Go benchmark would repeatedly call the function with different values for <code>b.N</code> until it can be timed reliably.</p>
 <pre><code>$ go test -bench=.
 
 BenchmarkAddToList-4  200000  8153 ns/op  22624 B/op  7 allocs/op
-</code></pre>
-
-<p>Here&rsquo;s what the output means:</p>
-
+</code></pre><p>Here&rsquo;s what the output means:</p>
 <ul>
 <li>200000 is the number of times the benchmark loop ran.</li>
 <li>8153 ns/op represents the time it took on average for an iteration of the loop to finish.</li>
@@ -367,19 +438,12 @@ BenchmarkAddToList-4  200000  8153 ns/op  22624 B/op  7 allocs/op
 <li>7 allocs/op is the number of distinct memory allocations per iteration.</li>
 <li>Note that we get B/op and allocs/op only if we call b.ReportAllocs() as part of the benchmark.</li>
 </ul>
-
 <p>If we change the line which initializes the slice to
 <code>list := make([]int, 0, 1000)</code> and run the benchmarks again, we get better results:</p>
-
 <pre><code>BenchmarkAddToList-4  1000000  1618 ns/op  0 B/op  0 allocs/op
-</code></pre>
-
-<p>The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&rsquo;t have to reallocate it when we append elements. Also the B/op reduced because the list is not initialized with 0 for all its elements.</p>
-
+</code></pre><p>The allocs/op reduced because we had already initialized the list with the appropriate size and the runtime doesn&rsquo;t have to reallocate it when we append elements. Also the B/op reduced because the list is not initialized with 0 for all its elements.</p>
 <h2 id="benchmarking-topb-against-tojson">Benchmarking ToPB against ToJSON</h2>
-
 <p>After implementing serialization using the protocol buffers, to get exact metrics we wrote benchmark tests for our ToJson and ToProtocolBuffer methods. These methods convert the internal SubGraph data structure to a byte array which is transferred over the network. Benchmark tests are an excellent way to compare different implementations or to measure if new code leads to any improvements.</p>
-
 <pre><code>// Benchmark test for ToProtocolBuffer method.
 
 func benchmarkToPB(file string, b *testing.B) {
@@ -441,45 +505,26 @@ func benchmarkToJson(file string, b *testing.B) {
         }
     }
 }
-</code></pre>
-
-<p>You can find the complete benchmark tests <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go">here</a>. There are some differences in the algorithm that converts the internal Subgraph structure to JSON/Protocol Buffers. You can have a look at the code responsible for this <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query.go">here</a>.</p>
-
+</code></pre><p>You can find the complete benchmark tests <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query_test.go">here</a>. There are some differences in the algorithm that converts the internal Subgraph structure to JSON/Protocol Buffers. You can have a look at the code responsible for this <a href="https://github.com/dgraph-io/dgraph/blob/master/query/query.go">here</a>.</p>
 <p>Using these benchmark tests we were able to improve our metrics by over 50% by switching over to <code>[]byte</code> from <code>{}interface</code> for <code>ObjectValue</code> as part of <a href="https://github.com/dgraph-io/dgraph/pull/86">this change</a>. Later when we shifted to Gogo Protobuf, we compared these benchmarks again with the previous ones to confirm improvement.</p>
-
 <h4 id="marshalling">Marshalling</h4>
-
 <p>This is how the final benchmark results compare for a query which returns 1000 entities in the result.</p>
-
 <pre><code>BenchmarkToJSON_1000_Director-2  500  2512808 ns/op  560427 B/op  9682 allocs/op
 BenchmarkToPB_1000_Director-2   2000  1338410 ns/op  196743 B/op  3052 allocs/op
-</code></pre>
-
-<p>The benchmarks show that ToPB method is almost <strong>2x faster</strong> than ToJSON as it takes much lesser nanoseconds per operation. The bytes allocated per operation show that ToPB <strong>allocates 65% less memory</strong> compared to ToJSON. You could find more information about those benchmarks and what we changed to get here in our <a href="https://github.com/dgraph-io/dgraph/blob/master/query/benchmark/README.txt">README</a>.</p>
-
+</code></pre><p>The benchmarks show that ToPB method is almost <strong>2x faster</strong> than ToJSON as it takes much lesser nanoseconds per operation. The bytes allocated per operation show that ToPB <strong>allocates 65% less memory</strong> compared to ToJSON. You could find more information about those benchmarks and what we changed to get here in our <a href="https://github.com/dgraph-io/dgraph/blob/master/query/benchmark/README.txt">README</a>.</p>
 <h4 id="unmarshalling">Unmarshalling</h4>
-
 <pre><code>BenchmarkToJSONUnmarshal_1000_Director-4  1000  1279297 ns/op  403746 B/op  5144 allocs/op
 BenchmarkToPBUnmarshal_1000_Director-4    3000   489585 ns/op  202256 B/op  5522 allocs/op
-</code></pre>
-
-<p>We can see that unmarshalling on the client would also be <strong>2.6x faster</strong> for protocol buffers compared to JSON. ToPB <strong>allocates 50% less memory</strong> compared to ToJSON.</p>
-
+</code></pre><p>We can see that unmarshalling on the client would also be <strong>2.6x faster</strong> for protocol buffers compared to JSON. ToPB <strong>allocates 50% less memory</strong> compared to ToJSON.</p>
 <h3 id="golang-protobuf-vs-gogo-protobuf">Golang protobuf vs. Gogo protobuf</h3>
-
 <p>If both your server and client are written in Go, then we recommend <a href="https://github.com/gogo/protobuf">Gogo Protobuf</a> instead of <a href="https://github.com/golang/protobuf">Golang Protobuf</a> as the runtime library. Gogo has <strong>2.3x faster marshaling while allocating 80% fewer bytes</strong> per operation and <strong>1.5x faster unmarshalling</strong> compared to Golang protobuf as shown in the benchmarks below.</p>
-
 <pre><code>BenchmarkToPBMarshal_1000_Director-4    3000  360545 ns/op 226504 B/op   22 allocs/op # Golang protobuf
 BenchmarkToPBMarshal_1000_Director-4    10000 156820 ns/op 49152 B/op     1 allocs/op # Gogo protobuf
 
 BenchmarkToPBUnmarshal_1000_Director-4  2000  733481 ns/op 200241 B/op 5523 allocs/op # Golang protobuf
 BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allocs/op # Gogo protobuf
-</code></pre>
-
-<p>Note that Gogo protobuf has support only for Go as of now. However, if you are using some other language, this isn&rsquo;t a problem. Gogo protobuf is backward compatible with Golang protobuf. Our Python and Java clients can still interact with the server (which does marshaling using Gogo), hence making Gogo a safe choice.</p>
-
+</code></pre><p>Note that Gogo protobuf has support only for Go as of now. However, if you are using some other language, this isn&rsquo;t a problem. Gogo protobuf is backward compatible with Golang protobuf. Our Python and Java clients can still interact with the server (which does marshaling using Gogo), hence making Gogo a safe choice.</p>
 <h2 id="recommendations">Recommendations</h2>
-
 <ul>
 <li>If you are interacting with the <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  from the browser directly with Javascript, we recommend that you use the more browser-friendly JSON.</li>
@@ -489,17 +534,14 @@ BenchmarkToPBUnmarshal_1000_Director-4  3000  487745 ns/op 202256 B/op 5522 allo
 <li>Overall, <strong>fastest way to query <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is via a Go client communicating over gRPC.</strong></li>
 </ul>
-
 <p>We would love to hear about your interaction with the <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  server.</p>
-
 
 
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="http://www.nasa.gov/image-feature/sept-14-1966-view-from-gemini-xi-850-miles-above-the-earth/">View From Gemini XI, 850 Miles Above the Earth</a></p>
 </aside>
-                        </div>
 
                         
     <aside class="post__authors">
@@ -559,7 +601,6 @@ him to Dgraph. In his free time, he likes to travel, do yoga, read and cook.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
-
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -630,24 +671,93 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/potw1652a.jpg">
@@ -685,7 +795,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/blackholestar.jpg">
@@ -723,39 +833,57 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/yoda.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Wed, Jun 15, 2016
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/wisemonk/">Wisemonk: A slackbot to move discussions from Slack to Discourse</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/pawan/">Pawan Rawal</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
 
 
-                    </div>
-                </div>
+                
+
+
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -892,9 +1020,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

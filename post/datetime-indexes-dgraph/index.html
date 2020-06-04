@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/datetime-indexes-dgraph/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/datetime-indexes-dgraph/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Datetime Indexes in Dgraph - Dgraph Blog</title>
-    <meta property='og:title' content="Datetime Indexes in Dgraph - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Datetime Indexes in Dgraph - Dgraph Blog</title>
+  <meta property='og:title' content="Datetime Indexes in Dgraph - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/datetime-indexes-dgraph/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/candle.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/candle.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/candle.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Datetime Indexes in Dgraph"/>
-  <meta name="twitter:description" content="I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&rsquo;s datetime datatype."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Datetime Indexes in Dgraph" />
+  <meta name="twitter:description"
+    content="I recently started working at Dgraph Labs in Bengaluru as a Software Engineer. One of the first issues that I worked on was related to the Dgraph&rsquo;s datetime datatype." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Datetime%20Indexes%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fdatetime-indexes-dgraph%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Datetime%20Indexes%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fdatetime-indexes-dgraph%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/candle.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/candle.jpg">
 
                             <div class="post__header">
 
@@ -285,25 +375,19 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer.
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer.
 One of the first issues that I worked on was related to the Dgraph&rsquo;s datetime
 datatype. This article covers how I discovered and resolved the issue. The article
 assumes a basic understanding of Dgraph, but you can learn everything you need in
 <a href="https://docs.dgraph.io">docs.dgraph.io</a>.</p>
-
 <h3 id="bug-discovery">Bug Discovery</h3>
-
 <p>While working on <a href="https://github.com/dgraph-io/flock">Flock</a>, I observed that
 timestamp comparisons were not working correctly in Dgraph when the data or query
 had timezone information in it. To see the issue, let&rsquo;s first quickly set up Dgraph
 using the commands below.</p>
-
 <p>The easiest way is to use <a href="https://docs.docker.com/compose/">Docker Compose</a>.
 Create a <code>docker-compose.yml</code> file with the contents below.</p>
-
 <pre><code>version: &quot;3.2&quot;
 services:
   zero:
@@ -321,29 +405,18 @@ services:
     ports:
       - 8000:8000
     command: dgraph-ratel
-</code></pre>
-
-<p>Next, from the folder containing the newly created file, run:</p>
-
+</code></pre><p>Next, from the folder containing the newly created file, run:</p>
 <pre><code>docker-compose up
-</code></pre>
-
-<p>We will use <a href="https://github.com/dgraph-io/ratel">Ratel</a> to showcase the issue.
+</code></pre><p>We will use <a href="https://github.com/dgraph-io/ratel">Ratel</a> to showcase the issue.
 Ratel allows you to run queries, mutations and manage the Dgraph cluster. To open
-Ratel, you can go to the URL <a href="http://localhost:8000/?latest">http://localhost:8000/?latest</a> in your browser after
+Ratel, you can go to the URL http://localhost:8000/?latest in your browser after
 running the commands above.</p>
-
 <p>Now, let&rsquo;s set up the schema. To set up the schema, you have to go to the <code>Schema</code>
 tab on the left navigation bar in Ratel, click on <code>Bulk Edit</code> and paste the following schema:</p>
-
 <pre><code>created_at : datetime @index(hour) .
-</code></pre>
-
-<p>Then, click on <code>Apply Schema</code>. This will create a new predicate <code>created_at</code> of type <code>datetime</code>.</p>
-
+</code></pre><p>Then, click on <code>Apply Schema</code>. This will create a new predicate <code>created_at</code> of type <code>datetime</code>.</p>
 <p>Now you can perform the following mutation to add data to Dgraph in the <code>Console</code> tab
 after choosing <code>Mutate</code> option. This will store two tweets with a creation time and author name.</p>
-
 <pre><code>{
     &quot;set&quot;: [
         {
@@ -358,22 +431,16 @@ after choosing <code>Mutate</code> option. This will store two tweets with a cre
         }
     ]
 }
-</code></pre>
-
-<p>Finally, run the following query to get all the tweets that were created after
+</code></pre><p>Finally, run the following query to get all the tweets that were created after
 <code>UTC March 28th, 3 PM</code>. You can run queries in the <code>Console</code> after selecting
 <code>Query</code> option:</p>
-
 <pre><code>{
   tweets(func: gt(created_at, &quot;2019-03-28T15:00:00+00:00&quot;)) {
     created_at
     uid
   }
 }
-</code></pre>
-
-<p>This is the response we get:</p>
-
+</code></pre><p>This is the response we get:</p>
 <pre><code>{
   &quot;extensions&quot;: { ... },
   &quot;data&quot;: {
@@ -385,12 +452,9 @@ after choosing <code>Mutate</code> option. This will store two tweets with a cre
     ]
   }
 }
-</code></pre>
-
-<p>The <code>created_at</code> timestamp for the both the users is as follows.
+</code></pre><p>The <code>created_at</code> timestamp for the both the users is as follows.
 For brevity, we will remove the date (<code>2019-03-28</code>) from timestamps
 in the rest of the article.</p>
-
 <table>
 <thead>
 <tr>
@@ -400,7 +464,6 @@ in the rest of the article.</p>
 <th align="center">Greater than query ts (15h +00:00)</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="center">user1</td>
@@ -408,7 +471,6 @@ in the rest of the article.</p>
 <td align="center">20h +00:00</td>
 <td align="center">True</td>
 </tr>
-
 <tr>
 <td align="center">user2</td>
 <td align="center">18h +01:00</td>
@@ -417,31 +479,25 @@ in the rest of the article.</p>
 </tr>
 </tbody>
 </table>
-
 <p>Even when the <code>created_at</code> timestamps for both the users are larger than the timestamp
 in the query, only <code>user2</code> shows up in the response of the query. Before I explain
 how we found and fixed the root cause of the issue, let me first explain how indexes
 work in Dgraph.</p>
-
 <h3 id="indexes-in-dgraph">Indexes in Dgraph</h3>
-
 <p>Along with JSON, Dgraph takes RDF data format as input which looks like
 <code>&lt;Subject&gt; &lt;Predicate&gt; &lt;Object&gt;</code> (<a href="https://docs.dgraph.io/mutations/#triples">SPO Triples</a>).
 The <code>Subject</code> is generally a <code>UID</code> value representing a node in the graph whereas
 the <code>Predicate</code> represents a relationship of the node with the <code>Object</code> value.
 Indexes are created on a given <code>Predicate</code> to quickly find nodes in the graph for
 the provided <code>Object</code> value.</p>
-
 <p>Dgraph indexes are stored in <a href="https://github.com/dgraph-io/badger">BadgerDB</a>, an embedded
 key-value store written purely in Go. For each object value, one or more tokens are
 generated based on the provided tokenizer. For example, in the case of a <code>hash</code> tokenizer,
 the tokenizer computes the hash of the <code>Object</code> value and returns it as a token.</p>
-
 <p>Once the tokens are generated, data is stored in badgerDB in the following format.
 Each key in badgerDB, is a combination of predicate and generated token, and the value
 is the list of UIDs that match the predicate and the token (the key). An example is shown
 below for <code>created_at</code> predicate:</p>
-
 <table>
 <thead>
 <tr>
@@ -449,26 +505,21 @@ below for <code>created_at</code> predicate:</p>
 <th align="center">value</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td align="center">&lt; created_at, Tokenizer-Tok1 &gt;</td>
 <td align="center">List(uid1, uid3)</td>
 </tr>
-
 <tr>
 <td align="center">&lt; created_at, Tokenizer-Tok2 &gt;</td>
 <td align="center">List(uid2)</td>
 </tr>
 </tbody>
 </table>
-
 <p>We prepend a unique <code>Tokenizer</code> identifier in the key (whether it&rsquo;s a hash tokenizer,
 int tokenizer, hour tokenizer etc.) to the token generated, as shown above, to be able
 to traverse through all the tokens belonging to only that particular tokenizer (index).</p>
-
 <h3 id="datetime-tokenizers">Datetime Tokenizers</h3>
-
 <p>For a datetime index, Dgraph provides tokenizers for <code>hour</code>, <code>day</code>, <code>month</code> and <code>year</code>
 granularity. Each key generated by the tokenizer can be treated as a time bucket of
 specified granularity, storing the UIDs with a date falling within that bucket.
@@ -477,9 +528,7 @@ each bucket reasonable. Choosing a lower granularity time index would wipe out t
 performance benefits of UID consolidation into time buckets (<em>think one entry per bucket</em>).
 On the other hand, choosing very high granularity would end up putting too many UIDs
 within the same bucket, which could also affect performance (<em>millions of entries per bucket</em>).</p>
-
 <h3 id="root-cause">Root Cause</h3>
-
 <p>In order to generate tokens for datetime datatype, we use the <code>Hour()</code>, <code>Day()</code>,
 <code>Month()</code> and <code>Year()</code> methods of the <code>time</code> package as you can see in the
 (<a href="https://github.com/dgraph-io/dgraph/blob/master/tok/tok.go">source code</a>).
@@ -488,40 +537,29 @@ timestamp. For example, for timestamp <code>14h +06:00</code>, the <code>Hour()<
 returns the value <code>14</code> and for timestamp <code>14h +00:00</code>, the <code>Hour()</code>
 method still returns the same value <code>14</code>. Due to this behavior, the index is not
 correctly built.</p>
-
 <p>In our example above, the data has two timestamps 1) <code>14h -06:00</code> and
 2) <code>18h +01:00</code> and we have created an <code>hour</code> index on the <code>created_at</code>
 predicate. The <code>hour</code> index <strong>incorrectly</strong> stores roughly the following information:</p>
-
 <pre><code>&lt;created_at, HourTokenizer-2019-03-28T14&gt; -&gt; List(0x01)
 &lt;created_at, HourTokenizer-2019-03-28T18&gt; -&gt; List(0x02)
-</code></pre>
-
-<p>The query is trying to find out all users having <code>created_at</code> timestamp bigger than
+</code></pre><p>The query is trying to find out all users having <code>created_at</code> timestamp bigger than
 <code>15h +00:00</code>. While processing the query, Dgraph computes the same
 <code>hour</code> tokenizer for this timestamp to be <code>2019-03-28T15</code>. Then, it scans through
 all the users in the index having the token bigger than <code>2019-03-28T15</code> and <em>only</em>
 returns the user with uid <code>0x02</code>.</p>
-
 <h3 id="fixing-the-bug">Fixing the Bug</h3>
-
-<p><img src="https://blog.dgraph.io/images/greenwich.jpg" alt="UTC" /></p>
-
+<p><img src="https://blog.dgraph.io/images/greenwich.jpg" alt="UTC"></p>
 <p>Once the issue was clear, the fix was pretty straight forward. Instead of building tokens
 directly on the given timestamp, we first convert the timestamp into <code>UTC()</code> timezone and
 then compute various tokens. This normalizes all timestamps into single timezone and the
 <code>Hour()</code>, <code>Day()</code>, <code>Month()</code> and <code>Year()</code> information can be correctly compared. The PR
 for this fix is available <a href="https://github.com/dgraph-io/dgraph/pull/3251">here</a>.
 Once this change is included, the index looks like this instead:</p>
-
 <pre><code>&lt;created_at, HourTokenizer-2019-03-28T17&gt; -&gt; List(0x01)
 &lt;created_at, HourTokenizer-2019-03-28T20&gt; -&gt; List(0x02)
-</code></pre>
-
-<p>The timestamp in the query now generates the token as <code>2019-03-28T15</code> and we see
+</code></pre><p>The timestamp in the query now generates the token as <code>2019-03-28T15</code> and we see
 both the users while scanning through the index. The correct response, therefore,
 looks like as follows:</p>
-
 <pre><code>{
   &quot;extensions&quot;: { ... },
   &quot;data&quot;: {
@@ -537,28 +575,21 @@ looks like as follows:</p>
     ]
   }
 }
-</code></pre>
-
-<p>You can see that both the users are included in this response.</p>
-
+</code></pre><p>You can see that both the users are included in this response.</p>
 <h3 id="conclusion">Conclusion</h3>
-
 <p>In this article, we discussed how indexes are implemented in Dgraph. I also showed
 how I discovered and resolved the issue with datetime indexes. While backporting it
 to v1.0 series would require change in data format on disk, the fix will be available
 in v1.1 which we plan to release end of this month. Stay tuned!</p>
 
 
-
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="https://images.nasa.gov/details-PIA13781.html">Standard Candle in the Wind</a></p>
-
 <p>Bottom image: <a href="http://www.visitgreenwich.org.uk/greenwich-meridian/">Greenwich Line at the Royal Observatory in Greenwich Park</a></p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -647,24 +678,93 @@ enjoys impromptu bicycle trips whenever he gets a chance.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
@@ -702,7 +802,7 @@ enjoys impromptu bicycle trips whenever he gets a chance.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/microgravity.jpg">
@@ -740,12 +840,51 @@ enjoys impromptu bicycle trips whenever he gets a chance.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/the-first-step.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Wed, Jan 8, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/introducing-getting-started-series/">What’s Next? Learn Dgraph with the Getting-Started Blog Series</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/prashant/">Prashant Shahi</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -780,31 +919,10 @@ enjoys impromptu bicycle trips whenever he gets a chance.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -941,9 +1059,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

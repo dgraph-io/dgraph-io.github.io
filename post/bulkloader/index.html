@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/bulkloader/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/bulkloader/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Loading close to 1M edges/sec into Dgraph - Dgraph Blog</title>
-    <meta property='og:title' content="Loading close to 1M edges/sec into Dgraph - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Loading close to 1M edges/sec into Dgraph - Dgraph Blog</title>
+  <meta property='og:title' content="Loading close to 1M edges/sec into Dgraph - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/bulkloader/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/cassini.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/cassini.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/cassini.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Loading close to 1M edges/sec into Dgraph"/>
-  <meta name="twitter:description" content="We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges!"/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Loading close to 1M edges/sec into Dgraph" />
+  <meta name="twitter:description"
+    content="We&rsquo;re seeing more and more users who want to load massive data sets into Dgraph. Many users want to load billions of edges, and some even want to load up to 50 billion edges!" />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Loading%20close%20to%201M%20edges%2fsec%20into%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbulkloader%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Loading%20close%20to%201M%20edges%2fsec%20into%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbulkloader%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/cassini.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/cassini.jpg">
 
                             <div class="post__header">
 
@@ -285,20 +375,16 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>We&rsquo;re seeing more and more users who want to load massive data sets into
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>We&rsquo;re seeing more and more users who want to load massive data sets into
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>. Many users want to load billions of edges, and some even want to load
 up to 50 billion edges! When we heard about the size of these datasets, we knew
 we needed to have a solid data loading story so that we could support the most
 extreme demands from our users.</p>
-
 <p><a href="https://blog.dgraph.io/post/scaling-dgraph/">In a previous blog post</a>, we
 discussed some of the challenges that we met on our journey towards loading
 massive datasets into <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>.  In this post, we will discuss an alternate
 approach that has yielded significantly faster loading times.</p>
-
 <p><strong>TL;DR:</strong> <em>We created a new tool called <a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> to populate Dgraph with
 an initial dataset.  It&rsquo;s highly performant and is able to load the entire
 <a href="https://archive.org/details/stackexchange">Stack Overflow dataset</a> in just
@@ -310,18 +396,14 @@ that we had a significant skew in the predicate distribution which slowed the
 load down (all the text for questions, answers and comments was on the same
 predicate). Better results can likely be achieved on datasets with a more even
 predicate distribution.</em></p>
-
 <h2 id="previous-approach">Previous approach</h2>
-
 <p>All of our previous approaches have involved writing batch mutations to a
 running <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instance. This is a convenient approach; we just have to
 iterate over the RDFs we want to load, batch them up, then send them to Dgraph.</p>
-
 <p>We were able to achieve over 50k edges per second, which is really good
 throughput for a live system. But doing so seemed insufficient when you&rsquo;re
 starting out with billions of edges and just want to bulk load them up into a
 new Dgraph instance.</p>
-
 <p>Our previous approaches at speeding up the loading process had a focus on
 performance improvements to Dgraph&rsquo;s mutation handling capabilities. We made
 great strides here, facing some tough challenges related to memory management
@@ -331,31 +413,24 @@ deal with crashes) and achieve consensus for consistency. We also needed to
 read the key to merge the new mutations coming in. Some of these keys
 (particularly index keys) were in such high demand that they&rsquo;d become
 stragglers for the entire bulk load operation.</p>
-
 <p>A key observation about loading massive datasets is that Dgraph does not have
 to be live while the loading happens. This is because loading large
 amounts of data is usually a step taken by users when migrating from another
 database technology stack (whether a graph database or otherwise).</p>
-
 <p>Because Dgraph doesn&rsquo;t have to be up and running while data is being loaded,
 this opens up lots of avenues for alternate (<strong>faster!</strong>) approaches.</p>
-
 <p>This is where Bulkloader comes in. It&rsquo;s a new program that performs the initial
 population of a <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instance. It runs very quickly and scales well on
 high-end hardware.</p>
-
 <h2 id="the-new-approach">The new approach</h2>
-
 <p><a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> utilises the map/shuffle/reduce paradigm. The diagram below shows
 the data flow through the system, from RDFs in files all the way to posting
-lists stored in <a href="https://github.com/dgraph-io/badger">Badger</a> (<a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&rsquo;s key-value store).</p>
-
-<p><img src="https://blog.dgraph.io/images/bulkloader_map_shuffle_reduce.png" alt="" /></p>
-
+lists stored in <a href="https://github.com/dgraph-io/badger">Badger</a> (<a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&lsquo;s key-value store).</p>
+<p><img src="https://blog.dgraph.io/images/bulkloader_map_shuffle_reduce.png" alt=""></p>
 <p>There&rsquo;s a lot going on here, so let&rsquo;s break it down:</p>
-
 <ul>
-<li><p>The map phase takes RDFs as its input. It creates the edges that will
+<li>
+<p>The map phase takes RDFs as its input. It creates the edges that will
 eventually become part of the final Dgraph instance. Each RDF can correspond
 to one or more edges. The additional edges are for indexing and reverse edge
 traversal. Each edge is output along with the key of the posting list it will
@@ -364,30 +439,30 @@ referred to as a <em>map entry</em>). Map entries are bundled up into reasonably
 batches (e.g. 100MB), sorted, then written out to disk in <em>map files</em>.
 Sorting is only <em>local</em> for each map file since edges can be split
 between the map files in arbitrary ways. The sorting is important, and critical
-to the speed of the shuffler.</p></li>
-
-<li><p>The shuffle phase combines all map files into a single globally sorted stream
+to the speed of the shuffler.</p>
+</li>
+<li>
+<p>The shuffle phase combines all map files into a single globally sorted stream
 of map entries. Because each map file is sorted internally, a min heap data
 structure can be used to quickly assemble the stream.  The stream is then
-broken up into batches that are passed on to the reduce phase.</p></li>
-
-<li><p>The reduce phase takes batches of sorted map entries from the shuffle phase.
+broken up into batches that are passed on to the reduce phase.</p>
+</li>
+<li>
+<p>The reduce phase takes batches of sorted map entries from the shuffle phase.
 It collects up groups of map entries with the same posting list key and then
 builds the corresponding posting list. To do this, the reducer iterates through
 the batch and generates a posting list whenever the posting list key changes.
-The posting lists are then written directly to <a href="https://github.com/dgraph-io/badger">Badger</a>, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&rsquo;s key-value
-store.</p></li>
+The posting lists are then written directly to <a href="https://github.com/dgraph-io/badger">Badger</a>, <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>&lsquo;s key-value
+store.</p>
+</li>
 </ul>
-
 <p>There are some additional complexities in the architecture that aren&rsquo;t shown in
 the diagram. These are all related to bottlenecks in the processing where all
 data must flow through a single point or exclusive access to a single resource
 is needed. The bottlenecks don&rsquo;t show themselves when running on regular
 quad-core machines but are must be removed in order to achieve full hardware
 utilization on high-end machines (e.g. machines with 64 cores).</p>
-
 <h3 id="sharded-uid-map">Sharded UID Map</h3>
-
 <p>The first bottleneck is in the map phase. As part of this phase, blank nodes
 must be mapped to 64-bit UIDs. The first time a particular blank node (a
 string) is seen, a new UID must be assigned. When that blank node is seen again
@@ -395,11 +470,9 @@ in a subsequent RDF, the same UID must be used. Since the input RDF files can
 be split up in any arbitrary way, the same blank node could be processed by two
 different mappers that are running concurrently. Because of this, the management
 of UID assignment must be shared between all mappers.</p>
-
 <p>The original design was to use a map (from <code>string</code> to <code>uint64</code>) protected by a
 mutex. With many concurrent mappers (e.g. 64), profiling showed large amounts
 of contention on the lock.</p>
-
 <p>We solved this problem by using a <em>sharded map</em>. The idea is to break the map
 into two levels. The first level is a fixed size array e.g. of length 256. A
 hash of the key determines which entry in the array to use.  Each array element
@@ -407,21 +480,16 @@ is a mutex and a regular hash map, which stores the final <code>string</code> to
 mapping (i.e. a single <em>shard</em> of the sharded map). Assuming the hash function
 gives a reasonable key distribution, access is spread out evenly among the
 different map shards, and contention is no longer a problem.</p>
-
-<p><img src="https://blog.dgraph.io/images/bulkloader_map.png" alt="" /></p>
-
+<p><img src="https://blog.dgraph.io/images/bulkloader_map.png" alt=""></p>
 <h3 id="more-shufflers">More Shufflers</h3>
-
 <p>Another bottleneck in the program is the shuffling. The architecture diagram
 above just shows a single shuffler for simplicity. This was the original
 design and showed up as a bottleneck when running on a machine with 64
 cores. All data has to flow through a single code path in a single thread in
 order to get a globally sorted stream of map entries.</p>
-
 <p>The reason we wanted a globally sorted stream was so that the reducer could
 quickly scan the stream and assemble posting lists from entries with the same
 posting list key.</p>
-
 <p>The solution was to split up the entire <a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> into shards, separated by
 predicates. Since edges with different predicates can never appear in the same
 posting list, this is safe to do. There are a separate set of map entry files
@@ -429,37 +497,26 @@ for each shard that can be picked up by multiple shufflers, 1 per shard. If
 there are more predicates than the requested number of shards, then multiple
 predicates are placed in each shard. Automatic predicate balancing results in
 shards that are as evenly sized as possible.</p>
-
-<p><img src="https://blog.dgraph.io/images/bulkloader_shards.png" alt="" /></p>
-
+<p><img src="https://blog.dgraph.io/images/bulkloader_shards.png" alt=""></p>
 <h3 id="multiple-badgers">Multiple Badgers</h3>
-
 <p>For big datasets, users typically want to split up the data among multiple
 servers. So splitting the output from multiple shufflers into multiple
 Badgers allows us to produce multiple shards of <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>; which a user can
 use to run a Dgraph cluster.</p>
-
 <p>This also significantly improves the reduce phase, because multiple Badgers are
 concurrently being written to. So many badgers!</p>
-
-<p><img src="https://blog.dgraph.io/images/many_badgers.jpg" alt="" /></p>
-
+<p><img src="https://blog.dgraph.io/images/many_badgers.jpg" alt=""></p>
 <h2 id="show-me-the-numbers">Show me the numbers</h2>
-
 <p>We used <a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> to load the entire <a href="https://archive.org/details/stackexchange">Stack Overflow
 dataset</a> in just over 1 hour.</p>
-
 <p>Machine details:</p>
-
 <ul>
 <li>i3.16xlarge AWS machine.</li>
 <li>64 cores.</li>
 <li>488GB RAM.</li>
 <li>NVMe SSD.</li>
 </ul>
-
 <p>Bulkloader performance:</p>
-
 <ul>
 <li>Total runtime: 1 hr and 4 min.</li>
 <li>RDF count: 1.950 billion.</li>
@@ -468,17 +525,13 @@ dataset</a> in just over 1 hour.</p>
 <li>Reduce phase speed: 1.525 million edges per second.</li>
 <li>Total speed: 0.818 million edges per second.</li>
 </ul>
-
 <p><a href="https://docs.dgraph.io/deploy/#dgraph-bulk-loader">Bulkloader</a> is super fast, and we recommend it as the way to do the initial
 data loading for new <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> instances.</p>
-
 <p>It is available from Dgraph v0.8.3 onwards.</p>
-
 <p>There are lots of different knobs and dials that can be tweaked to get maximum
 performance out of different hardware setups (look at the output when using the
 <code>--help</code> flag). You can have a look at the code for the bulkloader <a href="https://github.com/dgraph-io/dgraph/tree/master/cmd/dgraph-bulk-loader">here</a>.  Give it
 a go and be amazed!</p>
-
 
 
 <aside class="post__references">
@@ -488,7 +541,6 @@ Saturn.</a></p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -576,24 +628,93 @@ speed. In his spare time, he enjoys cycling and drone racing.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg">
@@ -631,7 +752,7 @@ speed. In his spare time, he enjoys cycling and drone racing.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/galileo-jupiter.jpg">
@@ -674,34 +795,14 @@ speed. In his spare time, he enjoys cycling and drone racing.</p>
 
 
 
-                        
+
+                
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -838,9 +939,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

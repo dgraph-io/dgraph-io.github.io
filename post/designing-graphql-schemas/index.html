@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/designing-graphql-schemas/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/designing-graphql-schemas/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Designing GraphQL schemas - Dgraph Blog</title>
-    <meta property='og:title' content="Designing GraphQL schemas - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Designing GraphQL schemas - Dgraph Blog</title>
+  <meta property='og:title' content="Designing GraphQL schemas - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/designing-graphql-schemas/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/graphql/cover-1.png">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/graphql/cover-1.png"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/graphql/cover-1.png" />
+  
   
 
-  <meta name="twitter:title" content="Designing GraphQL schemas"/>
-  <meta name="twitter:description" content="This post made it to top 10 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Designing GraphQL schemas" />
+  <meta name="twitter:description"
+    content="This post made it to top 10 on HackerNews front page. Do engage in discussion there and show us love by giving us a GitHub star." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Designing%20GraphQL%20schemas&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fdesigning-graphql-schemas%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Designing%20GraphQL%20schemas&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fdesigning-graphql-schemas%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
+                            <img
+                                src="https://blog.dgraph.io//images/graphql/cover-1.png">
 
                             <div class="post__header">
 
@@ -285,356 +375,249 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p><strong>This post made it to top 10 on HackerNews front page. Do engage in <a href="https://news.ycombinator.com/item?id=22921571">discussion
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p><strong>This post made it to top 10 on HackerNews front page. Do engage in <a href="https://news.ycombinator.com/item?id=22921571">discussion
 there</a> and show us love by giving
 us a <a href="https://github.com/dgraph-io/dgraph">GitHub star</a>.</strong></p>
-
 <p>GraphQL has taken the app development world by storm because of its immense benefits. GraphQL adoption by UI development teams has brought in a new wave of flexibility in API design, productivity across frontend-backend teams, intuitiveness in expressing UI data requirements, and accessibility to powerful tooling. These benefits are why many tech companies, including <a href="https://engineering.fb.com/core-data/graphql-a-data-query-language/">Facebook</a>, <a href="https://medium.com/airbnb-engineering/how-airbnb-is-moving-10x-faster-at-scale-with-graphql-and-apollo-aa4ec92d69e2">Airbnb</a>, <a href="https://medium.com/paypal-engineering/graphql-a-success-story-for-paypal-checkout-3482f724fb53">Paypal</a>, <a href="https://githubengineering.com/the-github-graphql-api/">GitHub</a>, and <a href="https://shopify.dev/concepts/graphql/benefits">Shopify</a>, are embracing GraphQL.</p>
-
 <p>Designing the GraphQL schema is often the first step in your app development journey using GraphQL. This guide presents an intuitive, straightforward process to design your GraphQL schemas, and modify them as your application UIs become increasingly complex.</p>
-
 <h2 id="graphql-schema">GraphQL Schema</h2>
-
 <p>Expressing the data requirements of your application in your GraphQL schema is easy for simple UIs. However, it can become more difficult as your UI becomes more extensive and more complex. A StackOverflow page or an Amazon product page are classic examples of complex application user interfaces.</p>
-
 <p>Most of the benefits offered by GraphQL are due to <strong>GraphQL Schemas</strong>. <em>Schemas enable automatic code generation, validation and parsing, introspection, and type safety for your APIs</em>. In many ways, schemas are like strong typing in programming languages, in that they can catch errors while a system is being constructed, as well as helping deal with errors at runtime.</p>
-
 <p>A GraphQL schema is a description of the data clients can request from a GraphQL API. It also defines the queries and mutation functions that the client can use to read and write data from the GraphQL server. In other words, you specify your client or application UI data requirements in your GraphQL schema.</p>
-
 <p><strong>Application Data</strong></p>
-
 <p>Consider a simple blogging application with two distinct app screens.</p>
-
 <ol>
 <li>The table of contents lists all the blog posts
-<img src="https://blog.dgraph.io/images/graphql/blog-feed.png" alt="blog-screen-1" /></li>
+<img src="https://blog.dgraph.io/images/graphql/blog-feed.png" alt="blog-screen-1"></li>
 <li>The content page displays a single blog post from the table of contents
-<img src="https://blog.dgraph.io/images/graphql/blog-view.png" alt="blog-screen-2" /></li>
+<img src="https://blog.dgraph.io/images/graphql/blog-view.png" alt="blog-screen-2"></li>
 </ol>
-
 <p>The application data requirement describes all the information your application UI expects to be served from the backend.</p>
-
 <p>The data requirements of the table of contents are:</p>
-
 <ul>
 <li>A list of titles of the blog posts</li>
 <li>The author names of the blog posts</li>
 </ul>
-
 <p>The data requirements of the content page are:</p>
-
 <ul>
 <li>The title of the blog post</li>
 <li>The content of the blog post</li>
 </ul>
-
 <p>Once you identify the data requirements, you can group different data entities.</p>
-
 <p>The title and content of the blog can be grouped under a <code>Blog post</code> entity. Similarly, the <code>Author name</code> or any other Author info can be grouped under the Author entity.</p>
-
 <p>The <em>Blog</em> post entity consists of</p>
-
 <ul>
-<li><p>A title</p></li>
-
-<li><p>The content of the post</p></li>
+<li>
+<p>A title</p>
+</li>
+<li>
+<p>The content of the post</p>
+</li>
 </ul>
-
 <p>The <em>Author</em> entity consists of</p>
-
 <ul>
 <li>The author names</li>
 </ul>
-
 <p>By making the <em>Author</em> a separate entity, you can associate more than one blog post with an author, and also add more information about an author (e.g., the email address, personal website, etc.) without having to change multiple blog posts.</p>
-
 <p>Data entities are generally related to each other. But how to represent the relationship between different data entities? Read on.</p>
-
 <h2 id="your-graphql-schema-is-a-graph">Your GraphQL schema is a graph</h2>
-
 <p>If you&rsquo;ve wondered why there is a <strong>Graph</strong> in <strong>GraphQL</strong>, here is the quote from <a href="https://graphql.org/">graphql.org</a>, the official GraphQL site:</p>
-
 <blockquote>
 <p>&ldquo;Graphs are powerful tools for modeling many real-world phenomena because they resemble our natural mental models and verbal descriptions of the underlying process. With GraphQL, you model your business domain as a graph by defining a schema; within your schema, you define different types of nodes and how they connect/relate to one another.&rdquo;</p>
 </blockquote>
-
 <p>In short, a <strong>GraphQL schema</strong> is a textual representation of your application&rsquo;s <strong>data graph</strong> and the <strong>operations</strong> on it. Your data graph defines the entities and the relationships between them. But to complete a schema, you usually need to add GraphQL <strong>operations</strong>. The GraphQL operations provide the information needed to generate and validate operations on the data graph.</p>
-
 <h2 id="application-data-graph">Application data graph</h2>
-
 <p>To describe the relationship between the two entities in the blog post application mentioned above:</p>
-
 <ul>
 <li>Each <em>Blog</em> post has an Author</li>
 <li>Each <em>Author</em> can have more than one blog post.</li>
 </ul>
-
 <p>Compared to the rows and columns used in traditional relational databases, graphs are a much easier and more intuitive model to represent data and their relationships. Here is the diagram of the graph model for the blog application:
-<img src="https://blog.dgraph.io/images/graphql/data-graph.png" alt="data-graph" /></p>
-
+<img src="https://blog.dgraph.io/images/graphql/data-graph.png" alt="data-graph"></p>
 <p>The graph represents the entities in application data as nodes in the graph, and their relationships are represented as edges. The title, content and author name are represented as properties of the node below the entity names.</p>
-
 <p>By convention, you capitalize entity names. Note that this diagram uses CamelCase (e.g., BlogPost, Author) for entity names, and camelCase for data fields and relationship names. This casing practice is not a requirement, and the GraphQL spec doesn&rsquo;t dictate any convention. This casing practice is widely followed because the same convention can be mapped to data structures representing the object types in your programming language.</p>
-
 <p>Also, the asterisk (*) near the arrowhead of the <em>hasBlog</em> means this is a one-to-many relationship. A single author can be associated with multiple blog posts, one blog post, or even no blog posts.</p>
-
 <p>The last step in designing the schema is to translate the application data graph into a GraphQL schema.</p>
-
 <h2 id="writing-the-graphql-schema">Writing the GraphQL schema</h2>
-
 <p>The <a href="https://spec.graphql.org/June2018/">GraphQL spec</a> defines a language called the <strong>Schema Definition Language (SDL)</strong> to write GraphQL schemas.</p>
-
 <p>You use the available types defined by SDL to compose your GraphQL schema. We cover four of the types in this article:</p>
-
 <ul>
 <li>Object type</li>
 <li>Scalar type</li>
 <li>Query type</li>
 <li>Mutation type</li>
 </ul>
-
 <p>You&rsquo;ll learn more about these types (and others) in upcoming articles.</p>
-
 <p>It can be challenging to represent types as GraphQL schema, especially with complex and extensive
 UIs. However, follow the four steps below to represent your types as a GraphQL schema like a pro.</p>
-
 <h3 id="step-1-represent-the-nodes-as-object-types">Step 1: Represent the nodes as object types</h3>
-
 <p>Based on the data graph of the blog post application above, it has two nodes representing
 two entities: <em>BlogPost</em> and <em>Author</em>. Both entities are represented as object types
 in the GraphQL schema.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-
-}
-
-type Author {
-
-}
-</code></pre>
-
-<h3 id="step-2-add-the-scalar-types-as-fields-to-the-object-types">Step 2: Add the scalar types as fields to the object types</h3>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><h3 id="step-2-add-the-scalar-types-as-fields-to-the-object-types">Step 2: Add the scalar types as fields to the object types</h3>
 <p>The built-in scalar types in GraphQL are <code>Int</code>, <code>Float</code>, <code>String</code>, <code>Boolean</code>, and <code>ID</code>. You can add scalar types as fields to the (previously defined) object types in the schema. These scalar types represent the <strong>properties</strong> of their corresponding entities.</p>
-
 <p>The data fields for the <code>BlogPost</code> entity are <code>title</code> and <code>content</code>, and both are type String. If a field is mandatory, specify this with an exclamation point (!).</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  title: String!
-  content: String!
-}
-</code></pre>
-
-<p>Similarly, add a property called <code>name</code> of type <code>String</code> to the <code>Author</code> object.</p>
-
-<pre><code class="language-graphql">type Author {
-  name: String!
-}
-</code></pre>
-
-<p>Defining a field as mandatory is a type modifier, which is not specified in the data graph. If a field is mandatory, that means that its value cannot be undefined or <code>null</code>. You can determine if a field is mandatory by figuring out if operations on the graph assume whether this field is defined. For example, a blog post needs a title and some content to be displayed correctly. If a BlogPost entity is created without defining both, an error would be thrown in the result.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, add a property called <code>name</code> of type <code>String</code> to the <code>Author</code> object.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Defining a field as mandatory is a type modifier, which is not specified in the data graph. If a field is mandatory, that means that its value cannot be undefined or <code>null</code>. You can determine if a field is mandatory by figuring out if operations on the graph assume whether this field is defined. For example, a blog post needs a title and some content to be displayed correctly. If a BlogPost entity is created without defining both, an error would be thrown in the result.</p>
 <h3 id="step-3-represent-the-relationships">Step 3: Represent the relationships</h3>
-
 <p>A relationship in a GraphQL schema is represented by adding an object type as a field inside another object. The edges that are connecting the nodes represent the relationships between the entities.</p>
-
 <p>In the graph above, the edge connecting a <code>BlogPost</code> node to an <code>Author</code> node is named <code>hasAuthor</code>. Add a field named <code>hasAuthor</code> of type <code>Author</code>, inside the <code>BlogPost</code> type to represent this relationship. Note that a blog post has to have an author, in addition to a title and content.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  title: String!
-  content: String!
-
-  # It's required that every blog post has an author
-  # Hence the exclamation (!) to mark it as required
-
-  hasAuthor: Author!
-}
-</code></pre>
-
-<p>Similarly, the edge connecting an Author node to its BlogPosts is named hasBlog. Add a field hasBlog of type BlogPost, inside the Author type to represent this relationship.</p>
-
-<pre><code class="language-graphql">type Author {
-  name: String!
-
-  # An author can have more than one blog post
-  # Hence representing this as an array [BlogPost]
-
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>The square brackets around <code>[BlogPost]</code> indicates that the <code>hasBlog</code> field is stored as an array. Because an author can be associated with 0, 1, or more blog posts, so the one-to-many relationship was indicated by the asterisk (*) in the data graph.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># It&#39;s required that every blog post has an author</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence the exclamation (!) to mark it as required</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, the edge connecting an Author node to its BlogPosts is named hasBlog. Add a field hasBlog of type BlogPost, inside the Author type to represent this relationship.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># An author can have more than one blog post</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence representing this as an array [BlogPost]</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>The square brackets around <code>[BlogPost]</code> indicates that the <code>hasBlog</code> field is stored as an array. Because an author can be associated with 0, 1, or more blog posts, so the one-to-many relationship was indicated by the asterisk (*) in the data graph.</p>
 <p>This schema represents the application data graph for our blog application.</p>
-
 <h2 id="the-last-step-define-queries-and-mutations">The Last Step: Define queries and mutations</h2>
-
 <p>While object types help you represent the data graph, they don&rsquo;t help you define the operations on it. To include the operations on the data graph, you need Query types and Mutation types. The <code>Query</code> types define the read operations, and the <code>Mutation</code> types define the write operations on the data graph. They define the type signatures of operations that are used by your application to read or write data.</p>
-
 <p>For example, to fetch all of the blogs with their tables of content, you need to define a field in the Query type that returns an array of blog posts, like this:</p>
-
-<pre><code class="language-graphql">type Query {
-  # Return all blog posts
-  # Satisfies the data requirement for the first page
-
-  getAllBlogs(): [BlogPost]
-}
-
-type BlogPost {
-  title: String!
-  content: String!
-
-  # It's required that every blog post has an author
-  # Hence the exclamation (!) to mark it as required
-
-  hasAuthor: Author!
-}
-
-type Author {
-  name: String!
-
-  # An author can have more than one blog post
-  # hence representing this as an array [blogpost]
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>Next, you need an operation to fetch a specific blog post. To enable this operation, you need to associate a unique ID with every blog post. The ID of a blog post is used to fetch the blog content for the second application screen.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Return all blog posts</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Satisfies the data requirement for the first page</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getAllBlogs():<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># It&#39;s required that every blog post has an author</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence the exclamation (!) to mark it as required</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># An author can have more than one blog post</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># hence representing this as an array [blogpost]</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Next, you need an operation to fetch a specific blog post. To enable this operation, you need to associate a unique ID with every blog post. The ID of a blog post is used to fetch the blog content for the second application screen.</p>
 <p>ID is a scalar type in GraphQL that represents a unique identifier and is added as a field to the BlogPost and Author object type to uniquely identify each Author and their BlogPosts.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  id: ID!
-  title: String!
-  content: String!
-
-  # It's required that every blog post has an author
-  # Hence the exclamation (!) to mark it as required
-
-  hasAuthor: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-
-  # An author can have more than one blog post
-  # hence representing this as an array [blogpost]
-
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>Now, you can extend the <code>Query</code> type in the schema by adding a <code>getBlogPost</code> field; this field can fetch a blog post with its unique ID.</p>
-
-<pre><code class="language-graphql">type Query {
-  # Return all blog posts
-  # Satisfies the data requirement for the first page
-
-  getAllBlogs(): [BlogPost]
-
-  # Returns a single blog post given it's ID.
-
-  getBlogPost(id: ID!): BlogPost
-}
-</code></pre>
-
-<p>Similarly, you can add fields to the <code>Mutation</code> type to create new objects. For example, here is a Mutation field to create new blog posts:</p>
-
-<pre><code class="language-graphql">type Mutation {
-  addBlogPost(title: String!, content: String!, authorID: ID!): BlogPost
-}
-</code></pre>
-
-<p>Voila! You have successfully created the GraphQL schema for your simple blog application:</p>
-
-<pre><code class="language-graphql">type Query {
-  getAllBlogs(): [BlogPost]
-  getBlogPost(id: ID!): BlogPost
-}
-
-type Mutation {
-  addBlogPost(title: String!, content: String!, authorID: ID!): BlogPost!
-}
-
-type BlogPost {
-  id: ID!
-  title: String!
-  content: String!
-  hasAuthor: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>For most of the common read-write operations, you can define CRUD functions named for your types. In the blog post application case, you could name them as <code>addAuthor</code>, <code>queryAuthor</code>, <code>UpdateAuthor</code>, and <code>DeleteAuthor</code>. You can add more <code>Query</code> and <code>Mutation</code> functions later to your GraphQL schema for handling custom logic that is more complicated than the basic CRUD operations.</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># It&#39;s required that every blog post has an author</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Hence the exclamation (!) to mark it as required</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># An author can have more than one blog post</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># hence representing this as an array [blogpost]</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Now, you can extend the <code>Query</code> type in the schema by adding a <code>getBlogPost</code> field; this field can fetch a blog post with its unique ID.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Return all blog posts</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Satisfies the data requirement for the first page</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getAllBlogs():<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#998;font-style:italic"># Returns a single blog post given it&#39;s ID.</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getBlogPost(id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, you can add fields to the <code>Mutation</code> type to create new objects. For example, here is a Mutation field to create new blog posts:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Mutation</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>addBlogPost(title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>authorID:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Voila! You have successfully created the GraphQL schema for your simple blog application:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Query</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getAllBlogs():<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>getBlogPost(id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Mutation</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>addBlogPost(title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!,<span style="color:#bbb"> </span>authorID:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!):<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>For most of the common read-write operations, you can define CRUD functions named for your types. In the blog post application case, you could name them as <code>addAuthor</code>, <code>queryAuthor</code>, <code>UpdateAuthor</code>, and <code>DeleteAuthor</code>. You can add more <code>Query</code> and <code>Mutation</code> functions later to your GraphQL schema for handling custom logic that is more complicated than the basic CRUD operations.</p>
 <p>GraphQL schema defines the signature of your GraphQL API, but it&rsquo;s not yet functional.</p>
-
 <p>To make it functional, you still need to run a GraphQL web server, write server-side code, and use a database to store and retrieve the data.</p>
-
 <p>Next, let&rsquo;s dive into how to use <a href="https://dgraph.io/graphql">Dgraph GraphQL</a> to obtain production-grade, scalable GraphQL APIs in a couple of simple steps - with only the GraphQL object types from your schema.</p>
-
 <p><strong>What is Dgraph GraphQL?</strong></p>
-
 <p><a href="https://dgraph.io/">Dgraph</a> is an open-source, distributed, transactional, native GraphQL database. Last week, we released the GA version of <a href="https://github.com/dgraph-io/dgraph/releases/tag/v20.03.0">Dgraph 20.03.00</a>. It comes with GraphQL out of the box.</p>
-
 <p>To get started with Dgraph GraphQL is extremely simple. Just compose a GraphQL schema containing types to represent the data requirements of your application and submit it to Dgraphs HTTP endpoint. No need to initiate the database. No schema mapping or layering.</p>
-
 <p>Dgraph takes those types, prepares graph storage for them, and auto-generates a production-ready, scalable CRUD Graph API with Queries and Mutations instantly.</p>
-
 <p>All of these in only two steps, without having to write any server-side code or having to run your GraphQL server.</p>
-
 <p><strong>Step 1: Run Dgraph GraphQL</strong></p>
-
 <p>Use Dgraph standalone image to run Dgraph for a quick start.</p>
-
-<pre><code class="language-sh">docker run -it -p 8080:8080 -p 9080:9080 -p 8000:8000 dgraph/standalone:v20.03.0
-</code></pre>
-
-<p><strong>Step 2: Submit your schema to Dgraph GraphQL</strong></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">docker run -it -p 8080:8080 -p 9080:9080 -p 8000:8000 dgraph/standalone:v20.03.0
+</code></pre></div><p><strong>Step 2: Submit your schema to Dgraph GraphQL</strong></p>
 <p>Save the GraphQL schema with your GraphQL types in a file, we&rsquo;re calling it schema.graphql. Don&rsquo;t bother adding the Query and Mutations types, Dgraph GraphQL auto-generates it for you.</p>
-
-<pre><code class="language-graphql">type BlogPost {
-  id: ID!
-  title: String!
-  content: String!
-  hasAuthor: Author!
-}
-
-type Author {
-  id: ID!
-  name: String!
-  hasBlog: [BlogPost]
-}
-</code></pre>
-
-<p>Upload the schema to Dgraph GraphQL HTTP endpoint</p>
-
-<pre><code class="language-sh">curl -X POST localhost:8080/admin/schema -d '@schema.graphql'
-</code></pre>
-
-<p>That&rsquo;s it! You now have a production-ready, scalable GraphQL API!</p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql"><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">BlogPost</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>title:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>content:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasAuthor:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span>!<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#000;font-weight:bold">type</span><span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">Author</span><span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>id:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">ID</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>name:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">String</span>!<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>hasBlog:<span style="color:#bbb"> </span>[<span style="color:#458;font-weight:bold">BlogPost</span>]<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Upload the schema to Dgraph GraphQL HTTP endpoint</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">curl -X POST localhost:8080/admin/schema -d <span style="color:#d14">&#39;@schema.graphql&#39;</span>
+</code></pre></div><p>That&rsquo;s it! You now have a production-ready, scalable GraphQL API!</p>
 <p>Point your favorite GraphQL client to <a href="http://localhost:8080/graphql">http://localhost:8080/graphql</a> and start using it!</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>In this blog post, you learned an intuitive approach to design your GraphQL schema and some of the GraphQL types defined by the Schema Definition Language (SDL).</p>
-
 <p>In the upcoming articles, we will show you how to compose a GraphQL schema and obtain functional GraphQL API for more complex UIs.</p>
-
 <p>Subscribe to our email list so you will receive the article directly in your inbox. Until then, keep building smarter apps!</p>
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -725,24 +708,93 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
@@ -780,7 +832,7 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/tutorials/8/cover.jpg">
@@ -818,12 +870,51 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/tutorials/7/cover.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Fri, Jan 17, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/tutorial-7-getting-started/">Getting started with Dgraph tutorials series - 7: Give your users powerful search results with fuzzy search on graph</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -858,31 +949,10 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1019,9 +1089,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/serialization-versioning/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/serialization-versioning/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Semantic Versioning, Go Modules, and Databases - Dgraph Blog</title>
-    <meta property='og:title' content="Semantic Versioning, Go Modules, and Databases - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Semantic Versioning, Go Modules, and Databases - Dgraph Blog</title>
+  <meta property='og:title' content="Semantic Versioning, Go Modules, and Databases - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/serialization-versioning/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/badger-evolution.png">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/badger-evolution.png"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/badger-evolution.png" />
+  
   
 
-  <meta name="twitter:title" content="Semantic Versioning, Go Modules, and Databases"/>
-  <meta name="twitter:description" content="A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Semantic Versioning, Go Modules, and Databases" />
+  <meta name="twitter:description"
+    content="A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Semantic%20Versioning%2c%20Go%20Modules%2c%20and%20Databases&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fserialization-versioning%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Semantic%20Versioning%2c%20Go%20Modules%2c%20and%20Databases&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fserialization-versioning%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/badger-evolution.png">
+                            <img
+                                src="https://blog.dgraph.io//images/badger-evolution.png">
 
                             <div class="post__header">
 
@@ -285,98 +375,67 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.</p>
-
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>A little bit over a month I joined Dgraph Labs, a really cool tiny startup based (mostly) in San Francisco and Bangalore building what we believe is the next generation of Graph Databases. Marketing spiel aside, I joined because the company is coming up with some really cool tech that benefits more than Graph Database users since all the pieces of the stack are open-sourced on github.com/dgraph-io.</p>
 <p>One of these pieces is <a href="https://github.com/dgraph-io/badger">BadgerDB</a>, a key-value store written completely in Go following the ideas of RocksDB and LSM trees. BadgerDB has many users (e.g. <a href="https://github.com/ipfs/go-ipfs">go-ipfs</a>, <a href="https://github.com/emitter-io/emitter">emitter</a>, <a href="https://github.com/go-ego/riot">riot</a>, and <a href="https://github.com/dgraph-io/badger/#other-projects-using-badger">many more</a>) but one of the most important one is indeed our database server <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>. Now, this is important because we care about our community of users: they always are the main stakeholder we keep in mind. In our case, though, our biggest user is ourselves so our own engineers become also clients that we need to delight.</p>
-
 <p>This post is a report on how we got ourselves into a situation in which Go Modules were simply not good enough for us, and how in the process of understanding why we figured out that our issue might be probably with Semantic Versioning itself.</p>
-
 <h3 id="how-we-got-ourselves-in-this-situation">How we got ourselves in this situation</h3>
-
 <p>For reasons that are not relevant to this post, BadgerDB has not had a release in over a year. This does not mean that BadgerDB has not changed over this time, it indeed has changed a lot, but we have not really cut a release or tagged a version and published it as something people should be using.</p>
-
 <p>This had to change and I, as VP of Product, was responsible for getting us back to a regular release pace which would allow us to release new features quickly while avoiding any impact on our current users. With that in mind, I started reviewing the changes since our last release and the ones that were coming up in the near future.</p>
-
 <p>We had two different kinds of backward-incompatible changes: API changes and data format changes. API changes had already been committed to <code>master</code> and many of our users (including Dgraph itself) were already using this new API not fully compatible with the previous release <code>v1.5.3</code>. The data changes had not landed yet, but they were necessary for the next release of Dgraph and therefore imminent.</p>
-
 <p>Following Semantic Versioning principles, I decided we should release the following versions after <code>v1.5.3</code>:</p>
-
 <ul>
 <li><code>v2.0.0</code> which would include all of the API breaking changes. This version would support all of those already using <code>master</code>, which includes Dgraph 1.0.</li>
 <li><code>v2.1.0</code> which would include also the data format changes. This version’s API would be backward-compatible with <code>v2.0.0</code> but files written with <code>v2.0.0</code> would not be readable from <code>v2.1.0</code> and vice-versa.</li>
 </ul>
-
 <h3 id="why-go-modules-makes-it-hard-for-us">Why Go Modules makes it hard for us</h3>
-
 <p>This felt like the right solution from a Semantic Versioning point of view, so I announced the plan and got started with the release process. Then Go Modules, which we planned on supporting, appeared and interrupted the whole process because it caused us to force upon our users a new import path for BadgerDB <code>v2.0.0</code>. The import path would be <code>”github.com/dgraph-io/badger/v2&quot;</code>, note that <code>v2</code> at the end. This would mean that for our users already on <code>master</code>, adopting <code>v2.0.0</code> would require changing every single import statement instead of simply marking on their dependency manager that they were now using <code>v2.0.0</code>.</p>
-
 <p>This seemed to be a roadblock and I <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662">wrote about</a> why we were deciding to postpone adding support for Go Modules on Badger until a point where our concerns had been addressed.</p>
-
 <p>My complaint was and still is that forcing users to include the major version of a package in their import path is unnecessary. I do understand the benefits of having different import paths for different versions, but there are also many drawbacks to this decision so it should be up to package publishers to make it rather than the Go team.</p>
-
 <p>I kept thinking about how to get out of this thorny situation since releasing a version 2 of our library without support for Go modules would put us in a situation where adopting Go modules would become almost impossible. We would have to support two different import paths for v2, one for those using Go modules and one for the rest. The other option was, of course, to hope the Go team would change the design of Go Modules making the import path rewrite an optional step … but I’m a realistic person and it seemed that boat (probably) left port long ago.</p>
-
 <h3 id="semantic-versioning-should-not-only-about-apis">Semantic Versioning should not only about APIs</h3>
-
 <p>At some point, I was discussing with Manish (the CEO of Dgraph Labs) about my plans and concerns and he came out with an interesting point: is Semantic Versioning necessarily about APIs? If you visit semver.org you will see that, indeed, all of the changes they take into account are those impacting the API of a library, but what about the other ways a library can break?</p>
-
 <p>In our case, there are two different change kinds: API changes and serialization changes. They both are backward-incompatible but the cost of fixing one vastly outweighs the other.</p>
-
 <p>Migrating to a new API, in our case, is a pretty straight forward change. Some functions might have changed arguments or maybe even replaced byfor a completely new API. These changes, no matter how tedious, are pretty straightforward to fix especially in a strongly typed statically compiled language like Go.</p>
-
 <p>Migrating to a new serialization format, though, can be much time and cost consuming as it requires transforming your whole dataset, often measured in TB, from the previous version into the new one. This takes time, and while the process is ongoing you might need still be serving traffic so the migration strategies become much more advanced than a simple code deployment.</p>
-
 <p>So in our case, it turns out that the major breakage we have is not API changes, but serialization format changes! So … what if we adapted Semantic Versioning to take that into account?</p>
-
 <p>Our modified version of Semantic Versioning is called Serialization Versioning. You can find a full description of the reasoning and details of the naming schema in <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662/7?u=mrjn">here</a> and <a href="https://medium.com/@francesc/serialization-versioning-the-semantic-versioning-for-databases-eea5aece0355">here</a>, but let me summarize it here too.</p>
-
 <p>Given a version number MAJOR.MINOR.PATCH, increment the:</p>
-
 <ol>
 <li>MAJOR version when you make changes that require a transformation of the dataset before it can be used again.</li>
 <li>MINOR version when old datasets are still readable but the API might have changed in backward-compatible or incompatible ways.</li>
 <li>PATCH version when you make backward-compatible bug fixes.</li>
 </ol>
-
 <p>Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.</p>
-
 <h3 id="how-we-get-out-of-this-situation">How we get out of this situation</h3>
-
 <p>Taking into account this new way of interpreting Semantic Versioning, our release plan became quite different and in so adapted to what Go Modules requires in a much more natural way!</p>
-
 <p>My original plan was to release v2.0.0 containing all of the API breaking changes, followed by v2.1.0 containing the serialization format changes. This had three main drawbacks:</p>
-
 <ul>
-<li><p>The most expensive upgrade seemed like the easiest one. Migrating from v1.5.3 to v2.0.0 is actually quite straight forward and it can be done in a single Pull Request, but migrating from v2.0.0 to v2.1.0 can mean weeks or more of engineering efforts to migrate your dataset without causing any downtime.</p></li>
-
-<li><p>Following Go Modules advice, the new versions of Badger needed to have <code>v2</code> at the end of their import path. This meant that our users already using the newer API from master would have to rewrite their import paths for no real benefit.</p></li>
-
-<li><p>It also felt like releasing v2 and v3 at the same time would be confusing to our users and would somehow imply that the release pace had been accelerated unnecessarily. This is why v2.1.0 felt like a better option to follow v2.0.0 even though they were clearly incompatible.</p></li>
+<li>
+<p>The most expensive upgrade seemed like the easiest one. Migrating from v1.5.3 to v2.0.0 is actually quite straight forward and it can be done in a single Pull Request, but migrating from v2.0.0 to v2.1.0 can mean weeks or more of engineering efforts to migrate your dataset without causing any downtime.</p>
+</li>
+<li>
+<p>Following Go Modules advice, the new versions of Badger needed to have <code>v2</code> at the end of their import path. This meant that our users already using the newer API from master would have to rewrite their import paths for no real benefit.</p>
+</li>
+<li>
+<p>It also felt like releasing v2 and v3 at the same time would be confusing to our users and would somehow imply that the release pace had been accelerated unnecessarily. This is why v2.1.0 felt like a better option to follow v2.0.0 even though they were clearly incompatible.</p>
+</li>
 </ul>
-
 <p>These three issues actually disappear once we consider our versioning focus to be on serialization formats rather than APIs. Our plan is now to release these two versions:</p>
-
 <ul>
-<li><p><code>v1.6.0</code> includes all the API changes but no serialization one. A system using <code>v1.5.3</code> for months can simply migrate its code to <code>v1.6.0</code> and start benefiting from the newest features without having to worry about a data migration strategy. Once it compiles, it works.</p></li>
-
-<li><p><code>v2.0.0</code> has actually the same API as <code>v1.6.0</code> but a completely different serialization format. Migrating from <code>v1.6.0</code> to <code>v2.0.0</code> is an endeavor that should be considered carefully.</p></li>
+<li>
+<p><code>v1.6.0</code> includes all the API changes but no serialization one. A system using <code>v1.5.3</code> for months can simply migrate its code to <code>v1.6.0</code> and start benefiting from the newest features without having to worry about a data migration strategy. Once it compiles, it works.</p>
+</li>
+<li>
+<p><code>v2.0.0</code> has actually the same API as <code>v1.6.0</code> but a completely different serialization format. Migrating from <code>v1.6.0</code> to <code>v2.0.0</code> is an endeavor that should be considered carefully.</p>
+</li>
 </ul>
-
 <p>So the cost of the changes is again aligned with the MAJOR, MINOR, PATCH schema, which solves our first concern. But what about the second concern? Since <code>v1.6.0</code> corresponds to our current <code>master</code>, our users depending on <code>master</code> can migrate to using <code>v1.6.0</code> without any hiccups - no need to rewrite any import path either since this is <em>still</em> a <code>v1.x</code> version.</p>
-
 <p>And as part of the migration to <code>v2</code>, we can now force our users to adopt the new import paths, since it actually has a very clear benefit and it is part of a much larger migration process. The clear benefit, at least from our point of view, is that having two different import paths for these two versions will allow us to write a tool that will migrate files from <code>v1</code> formatting to <code>v2</code>, which would have been otherwise impossible if both versions used the same import path, as <code>v2.0.0</code> and <code>v2.1.0</code> would have in our original plan.</p>
-
 <h3 id="in-conclusion">In conclusion</h3>
-
 <p>Releasing Open Source Software is hard and finding a solution that meets everyone’s needs is almost impossible. That said, Go Modules does provide a really good solution to 99% of the use cases - maybe 100% if instead of blaming Go Modules for our issues you simply point at Semantic Versioning not being the right way to version Database libraries.</p>
-
 <p>I wanted to thank everyone in the Go community that participated in this conversation, especially Andrew Gerrand and Russ Cox which took their time to participate in our <a href="https://discuss.dgraph.io/t/go-modules-on-badger-and-dgraph/4662">discuss.dgraph.io</a> post where I originally shared my plans.</p>
-
 <p><em>Oh, by the way,</em> Dgraph is writing some really cool Go code to solve distributed systems problems … and yes, we’re hiring! Hit me up if you’re interested in joining us as a Software Engineer, Developer Advocate, Technical Writer, or Product Manager roles. Either in SF or Bangalore.</p>
-
 
 
 <aside class="post__references">
@@ -385,7 +444,6 @@
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -476,24 +534,93 @@ team.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/milky_way.jpg">
@@ -531,7 +658,7 @@ team.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/badger2.jpg">
@@ -569,12 +696,51 @@ team.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/ristretto-3.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Thu, Sep 19, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/">Introducing Ristretto: A High-Performance Go Cache</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karl/">Karl McGuire</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -599,31 +765,10 @@ team.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -760,9 +905,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

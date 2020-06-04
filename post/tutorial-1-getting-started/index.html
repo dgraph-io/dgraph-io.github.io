@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/tutorial-1-getting-started/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/tutorial-1-getting-started/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Dgraph tutorials series - 1: Getting started - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph tutorials series - 1: Getting started - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Dgraph tutorials series - 1: Getting started - Dgraph Blog</title>
+  <meta property='og:title' content="Dgraph tutorials series - 1: Getting started - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/tutorial-1-getting-started/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/tutorials/1/kepler.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/tutorials/1/kepler.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/tutorials/1/kepler.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Dgraph tutorials series - 1: Getting started"/>
-  <meta name="twitter:description" content="Welcome to getting started with Dgraph. Dgraph is an open-source, transactional, distributed, native Graph Database. Here is the first episode of the tutorial series on using Dgraph."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Dgraph tutorials series - 1: Getting started" />
+  <meta name="twitter:description"
+    content="Welcome to getting started with Dgraph. Dgraph is an open-source, transactional, distributed, native Graph Database. Here is the first episode of the tutorial series on using Dgraph." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Dgraph%20tutorials%20series%20-%201%3a%20Getting%20started&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2ftutorial-1-getting-started%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Dgraph%20tutorials%20series%20-%201%3a%20Getting%20started&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2ftutorial-1-getting-started%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/tutorials/1/kepler.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/tutorials/1/kepler.jpg">
 
                             <div class="post__header">
 
@@ -285,237 +375,163 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>Welcome to getting started with Dgraph.
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>Welcome to getting started with Dgraph.
 <a href="https://dgraph.io">Dgraph</a> is an open-source, transactional, distributed, native Graph Database.
 Here is the first episode of the tutorial series on using Dgraph.</p>
-
 <p>In this tutorial, we&rsquo;ll learn how to build the following graph on Dgraph,</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-1.JPG" alt="The simple graph" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-1.JPG" alt="The simple graph"></p>
 <p>In the process, we&rsquo;ll learn about:</p>
-
 <ul>
 <li>Running Dgraph using the <code>dgraph/standalone</code> docker image.</li>
-<li>Running the following basic operations using Dgraph&rsquo;s UI Ratel,
-
-<ul>
+<li>Running the following basic operations using Dgraph&rsquo;s UI Ratel,</li>
 <li>Creating a node.</li>
 <li>Creating an edge between two nodes.</li>
 <li>Querying for the nodes.</li>
-</ul></li>
 </ul>
-
 <p>Here&rsquo;s the complimentary video for this blog post. It&rsquo;ll walk you through the steps of this getting started episode.</p>
 
-
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/u73ovhDCPQQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/u73ovhDCPQQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <h2 id="running-dgraph">Running Dgraph</h2>
-
 <p>Running the <code>dgraph/standalone</code> docker image is the quickest way to get started with Dgraph.
 This standalone image is meant for quickstart purposes only.
 It is not recommended for production environments.</p>
-
 <p>Ensure that <a href="https://docs.docker.com/install/">Docker</a> is installed and running on your machine.</p>
-
 <p>Now, it&rsquo;s just a matter of running the following command, and you have Dgraph up and running.</p>
-
-<pre><code class="language-sh">docker run --rm -it -p 8000:8000 -p 8080:8080 -p 9080:9080 dgraph/standalone:latest
-</code></pre>
-
-<h3 id="nodes-and-edges">Nodes and Edges</h3>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">docker run --rm -it -p 8000:8000 -p 8080:8080 -p 9080:9080 dgraph/standalone:latest
+</code></pre></div><h3 id="nodes-and-edges">Nodes and Edges</h3>
 <p>In this section, we&rsquo;ll build a simple graph with two nodes and an edge connecting them.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-1.JPG" alt="The simple graph" />
+<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-1.JPG" alt="The simple graph">
 In a Graph Database, concepts or entities are represented as nodes.
 May it be a sale, a transaction, a place, or a person, all these entities are
 represented as nodes in a Graph Database.</p>
-
 <p>An edge represents the relationship between two nodes.
 The two nodes in the above graph represent people: <code>Karthic</code> and <code>Jessica</code>.
 You can also see that these nodes have two associated properties: <code>name</code> and <code>age</code>.
 These properties of the nodes are called <code>predicates</code> in Dgraph.</p>
-
 <p>Karthic follows Jessica. The <code>follows</code> edge between them represents their relationship.
 The edge connecting two nodes is also called a <code>predicate</code> in Dgraph,
 although this one points to another node rather than a string or an integer.</p>
-
 <p>The <code>dgraph/standalone</code> image setup comes with the useful Dgraph UI called Ratel.
 Just visit <a href="http://localhost:8000">http://localhost:8000</a> from your browser, and you will be able to access it.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-2.png" alt="ratel-1" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-2.png" alt="ratel-1"></p>
 <p>We&rsquo;ll be using the latest stable release of Ratel.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-3.png" alt="ratel-2" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/gs-3.png" alt="ratel-2"></p>
 <h3 id="mutations-using-ratel">Mutations using Ratel</h3>
-
 <p>The create, update, and delete operations in Dgraph are called mutations.</p>
-
 <p>Ratel makes it easier to run queries and mutations.
 We&rsquo;ll be exploring more of its features all along with the tutorial series.</p>
-
 <p>Let&rsquo;s go to the Mutate tab and paste the following mutation into the text area.
 <em>Do not execute it just yet!</em></p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;name&quot;: &quot;Karthic&quot;,
-      &quot;age&quot;: 28
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Karthic&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">28</span>
     },
     {
-      &quot;name&quot;: &quot;Jessica&quot;,
-      &quot;age&quot;: 31
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Jessica&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">31</span>
     }
   ]
 }
-</code></pre>
-
-<p>The query above creates two nodes, one corresponding to each of the JSON values associated with <code>&quot;set&quot;</code>.
+</code></pre></div><p>The query above creates two nodes, one corresponding to each of the JSON values associated with <code>&quot;set&quot;</code>.
 However, it doesn&rsquo;t create an edge between these nodes.</p>
-
 <p>A small modification to the mutation will fix it, so it creates an edge in between them.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;name&quot;: &quot;Karthic&quot;,
-      &quot;age&quot;: 28,
-      &quot;follows&quot;: {
-        &quot;name&quot;: &quot;Jessica&quot;,
-        &quot;age&quot;: 31
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Karthic&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">28</span>,
+      <span style="color:#000080">&#34;follows&#34;</span>: {
+        <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Jessica&#34;</span>,
+        <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">31</span>
       }
     }
   ]
 }
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/explain-query.JPG" alt="explain mutation" /></p>
-
+</code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/1/explain-query.JPG" alt="explain mutation"></p>
 <p>Let&rsquo;s execute this mutation. Click Run and boom!</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/mutate-example.gif" alt="Query-gif" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/mutate-example.gif" alt="Query-gif"></p>
 <p>You can see in the response that two UIDs (Universal IDentifiers) have been created.
 The two values in the <code>&quot;uids&quot;</code> field of the response correspond
 to the two nodes created for &ldquo;Karthic&rdquo; and &ldquo;Jessica&rdquo;.</p>
-
 <h3 id="querying-using-the-has-function">Querying using the has function</h3>
-
 <p>Now, let&rsquo;s run a query to visualize the nodes which we just created.
 We&rsquo;ll be using Dgraph&rsquo;s <code>has</code> function.
 The expression <code>has(name)</code> returns all the nodes with a predicate <code>name</code> associated with them.</p>
-
-<pre><code class="language-sh">{
-  people(func: has(name)) {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#000;font-weight:bold">{</span>
+  people<span style="color:#000;font-weight:bold">(</span>func: has<span style="color:#000;font-weight:bold">(</span>name<span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
     name
     age
-  }
-}
-</code></pre>
-
-<p>Go to the <code>Query</code> tab this time and type in the query above.
+  <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>Go to the <code>Query</code> tab this time and type in the query above.
 Then, click <code>Run</code> on the top right of the screen.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/query-1.png" alt="query-1" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/query-1.png" alt="query-1"></p>
 <p>Ratel renders a graph visualization of the result.</p>
-
 <p>Just click on any of them, notice that the nodes are assigned UIDs,
 matching the ones, we saw in the mutation&rsquo;s response.</p>
-
 <p>You can also view the JSON results in the JSON tab on the right.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/query-2.png" alt="query-2" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/query-2.png" alt="query-2"></p>
 <h4 id="understanding-the-query">Understanding the query</h4>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/1/explain-query-2.JPG" alt="Illustration with explanation" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/1/explain-query-2.JPG" alt="Illustration with explanation"></p>
 <p>The first part of the query is the user-defined function name.
 In our query, we have named it as <code>people</code>. However, you could use any other name.</p>
-
 <p>The <code>func</code> parameter has to be associated with a built-in function of Dgraph.
 Dgraph offers a variety of built-in functions. The <code>has</code> function is one of them.
 Check out the <a href="https://docs.dgraph.io/query-language">query language guide</a> to know more about other built-in functions in Dgraph.</p>
-
 <p>The inner fields of the query are similar to the column names in a SQL select statement or to a GraphQL query!</p>
-
 <p>You can easily specify which predicates you want to get back.</p>
-
-<pre><code class="language-graphql">{
-  people(func: has(name)) {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>people(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(name))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Similarly, you can use the <code>has</code> function to find all nodes with the <code>age</code> predicate.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#000;font-weight:bold">{</span>
+  people<span style="color:#000;font-weight:bold">(</span>func: has<span style="color:#000;font-weight:bold">(</span>age<span style="color:#000;font-weight:bold">))</span> <span style="color:#000;font-weight:bold">{</span>
     name
-  }
-}
-</code></pre>
-
-<p>Similarly, you can use the <code>has</code> function to find all nodes with the <code>age</code> predicate.</p>
-
-<pre><code class="language-sh">{
-  people(func: has(age)) {
-    name
-  }
-}
-</code></pre>
-
-<h3 id="flexible-schema">Flexible schema</h3>
-
+  <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><h3 id="flexible-schema">Flexible schema</h3>
 <p>Dgraph doesn&rsquo;t enforce a structure or a schema. Instead, you can start entering
 your data immediately and add constraints as needed.</p>
-
 <p>Let&rsquo;s look at this mutation.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;: [
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>: [
     {
-      &quot;name&quot;: &quot;Balaji&quot;,
-      &quot;age&quot;: 23,
-      &quot;country&quot;: &quot;India&quot;
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Balaji&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">23</span>,
+      <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;India&#34;</span>
     },
     {
-      &quot;name&quot;: &quot;Daniel&quot;,
-      &quot;age&quot;: 25,
-      &quot;city&quot;: &quot;San Diego&quot;
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Daniel&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">25</span>,
+      <span style="color:#000080">&#34;city&#34;</span>: <span style="color:#d14">&#34;San Diego&#34;</span>
     }
   ]
 }
-</code></pre>
-
-<p>We are creating two nodes, while the first node has predicates <code>name</code>, <code>age</code>, and <code>country</code>,
+</code></pre></div><p>We are creating two nodes, while the first node has predicates <code>name</code>, <code>age</code>, and <code>country</code>,
 the second one has <code>name</code>, <code>age</code>, and <code>city</code>.</p>
-
 <p>Schemas are not needed initially. Dgraph creates
 new predicates as they appear in your mutations.
 This flexibility can be beneficial, but if you prefer to force your
 mutations to follow a given schema there are options available that
 we will explore in an upcoming episode.</p>
-
 <h3 id="wrapping-up">Wrapping up</h3>
-
 <p>In this tutorial, we learned the basics of Dgraph, including how to
 run the database, add new nodes and predicates, and query them
 back.</p>
-
 <p>Before we wrap, here are some quick bits about the next tutorial.
 Did you know that the nodes can also be fetched given their UID?
 They also can be used to create an edge between existing nodes!</p>
-
 <p>Sounds interesting?</p>
-
 <p>See you all soon in the next tutorial. Till then, happy Graphing!</p>
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -606,24 +622,93 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
@@ -661,7 +746,7 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/tutorials/8/cover.jpg">
@@ -699,12 +784,51 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/tutorials/7/cover.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Fri, Jan 17, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/tutorial-7-getting-started/">Getting started with Dgraph tutorials series - 7: Give your users powerful search results with fuzzy search on graph</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -729,31 +853,10 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -890,9 +993,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/tutorial-2-getting-started/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/tutorial-2-getting-started/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Dgraph tutorials series - 2: UID operations, updating nodes, and traversals - Dgraph Blog</title>
-    <meta property='og:title' content="Dgraph tutorials series - 2: UID operations, updating nodes, and traversals - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Dgraph tutorials series - 2: UID operations, updating nodes, and traversals - Dgraph Blog</title>
+  <meta property='og:title' content="Dgraph tutorials series - 2: UID operations, updating nodes, and traversals - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/tutorial-2-getting-started/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/tutorials/2/banner.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/tutorials/2/banner.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/tutorials/2/banner.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Dgraph tutorials series - 2: UID operations, updating nodes, and traversals"/>
-  <meta name="twitter:description" content="Welcome to the second episode of getting started with Dgraph. In the last episode of the tutorial, we learned some of the basics of Dgraph."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Dgraph tutorials series - 2: UID operations, updating nodes, and traversals" />
+  <meta name="twitter:description"
+    content="Welcome to the second episode of getting started with Dgraph. In the last episode of the tutorial, we learned some of the basics of Dgraph." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Dgraph%20tutorials%20series%20-%202%3a%20UID%20operations%2c%20updating%20nodes%2c%20and%20traversals&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2ftutorial-2-getting-started%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Dgraph%20tutorials%20series%20-%202%3a%20UID%20operations%2c%20updating%20nodes%2c%20and%20traversals&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2ftutorial-2-getting-started%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/tutorials/2/banner.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/tutorials/2/banner.jpg">
 
                             <div class="post__header">
 
@@ -285,368 +375,259 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>Welcome to the second episode of getting started with Dgraph.
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>Welcome to the second episode of getting started with Dgraph.
 In the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">last episode</a> of the tutorial, we learned some of the basics of Dgraph.
 Including how to run the database, add new nodes and predicates, and query them back.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/graph-1.jpg" alt="Graph" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/2/graph-1.jpg" alt="Graph"></p>
 <p>In this episode, we&rsquo;ll build the above Graph and learn more about operations using the UID (Universal Identifier) of the nodes.
 Specifically, we&rsquo;ll learn about:</p>
-
 <ul>
 <li>Querying and updating nodes, deleting predicates using their UIDs.</li>
 <li>Adding an edge between existing nodes.</li>
 <li>Adding a new predicate to an existing node.</li>
 <li>Traversing the Graph.</li>
 </ul>
-
 <p>Here&rsquo;s the complimentary video for this blog post. It&rsquo;ll walk you through the steps of this getting started episode.</p>
 
-
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="//www.youtube.com/embed/8TKD-FFBVgE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="https://www.youtube.com/embed/8TKD-FFBVgE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <p>First, let&rsquo;s create our Graph.</p>
-
 <p>Go to Ratel&rsquo;s mutate tab, paste the mutation below in the text area, and click Run.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;:[
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>:[
     {
-      &quot;name&quot;: &quot;Michael&quot;,
-      &quot;age&quot;: 40,
-      &quot;follows&quot;: {
-        &quot;name&quot;: &quot;Pawan&quot;,
-        &quot;age&quot;: 28,
-        &quot;follows&quot;:{
-          &quot;name&quot;: &quot;Leyla&quot;,
-          &quot;age&quot;: 31
+      <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Michael&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">40</span>,
+      <span style="color:#000080">&#34;follows&#34;</span>: {
+        <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Pawan&#34;</span>,
+        <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">28</span>,
+        <span style="color:#000080">&#34;follows&#34;</span>:{
+          <span style="color:#000080">&#34;name&#34;</span>: <span style="color:#d14">&#34;Leyla&#34;</span>,
+          <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">31</span>
         }
       }
     }
   ]
 }
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/a-add-data.gif" alt="mutation-1" /></p>
-
+</code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/2/a-add-data.gif" alt="mutation-1"></p>
 <h2 id="query-using-uids">Query using UIDs</h2>
-
 <p>The UID of the nodes can be used to query them back.
 The built-in function uid takes a list of UIDs as a variadic argument, so you can pass one (e.g. uid(0x1)) or as many as you need (e.g. uid(0x1, 0x2)).</p>
-
 <p>It returns the same UIDs that were passed as input, no matter whether they exist in the database or not.
 But the predicates asked will be returned only if both the UIDs and their predicates exist.</p>
-
 <p>Let&rsquo;s see the <code>uid</code> function in action.</p>
-
 <p>First, let&rsquo;s copy the UID of the node created for <code>Michael</code>.</p>
-
 <p>Go to the query tab, type in the query below, and click Run.</p>
-
-<pre><code class="language-graphql">{
-  people(func: has(name)) {
-    uid
-    name
-    age
-  }
-}
-</code></pre>
-
-<p>Now, from the result, copy the UID of Michael&rsquo;s node.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/b-get-uid-1.png" alt="get-uid" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>people(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">has</span>(name))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>uid<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Now, from the result, copy the UID of Michael&rsquo;s node.</p>
+<p><img src="https://blog.dgraph.io/images/tutorials/2/b-get-uid-1.png" alt="get-uid"></p>
 <p>In the query below, replace the placeholder <code>MICHAELS_UID</code> with the UID you just copied, and run the query.</p>
-
-<pre><code class="language-graphql">{
-    find_using_uid(func: uid(MICHAELS_UID)){
-        uid
-        name
-        age
-    }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/c-query-uid.png" alt="get_node_from_uid" />
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>find_using_uid(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID)){<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>uid<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/2/c-query-uid.png" alt="get_node_from_uid">
 <em>Note: <code>MICHAELS_UID</code> appears as <code>0x8</code> in the images. The UID you get on your machine might have a different value.</em></p>
-
 <p>You can see that the <code>uid</code> function returns the node matching the UID for Michael&rsquo;s node.</p>
-
 <p>Refer to the <a href="https://blog.dgraph.io/post/tutorial-1-getting-started/">last episode</a> if you have questions related to the structure of the query in general.</p>
-
 <h2 id="updating-predicates">Updating predicates</h2>
-
 <p>You can also update one or more predicates of a node using its UID.</p>
-
 <p>Michael recently celebrated his 41st birthday. Let&rsquo;s update his age to 41.</p>
-
 <p>Go to the mutate tab and execute the mutation.
 Again, don&rsquo;t forget to replace the placeholder <code>MICHAELS_UID</code> with the actual UID of the node for <code>Michael</code>.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;:[
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>:[
     {
-      &quot;uid&quot;: &quot;MICHAELS_UID&quot;,
-      &quot;age&quot;: 41
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;MICHAELS_UID&#34;</span>,
+      <span style="color:#000080">&#34;age&#34;</span>: <span style="color:#099">41</span>
     }
   ]
 }
-</code></pre>
-
-<p>We had earlier used <code>set</code> to create new nodes.
+</code></pre></div><p>We had earlier used <code>set</code> to create new nodes.
 But on using the UID of an existing node, it updates its predicates, instead of creating a new node.</p>
-
 <p>You can see that Michael&rsquo;s age is updated to 41.</p>
-
-<pre><code class="language-graphql">{
-    find_using_uid(func: uid(MICHAELS_UID)){
-        name
-        age
-    }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/d-update-check.png" alt="update check" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>find_using_uid(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID)){<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/2/d-update-check.png" alt="update check"></p>
 <p>Similarly, you can also add new predicates to an existing node.
 Since the predicate <code>country</code> doesn&rsquo;t exist for the node for <code>Michael</code>, it creates a new one.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;:[
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>:[
     {
-      &quot;uid&quot;: &quot;MICHAELS_UID&quot;,
-      &quot;country&quot;: &quot;Australia&quot;
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;MICHAELS_UID&#34;</span>,
+      <span style="color:#000080">&#34;country&#34;</span>: <span style="color:#d14">&#34;Australia&#34;</span>
     }
   ]
 }
-</code></pre>
-
-<h2 id="adding-an-edge-between-existing-nodes">Adding an edge between existing nodes</h2>
-
+</code></pre></div><h2 id="adding-an-edge-between-existing-nodes">Adding an edge between existing nodes</h2>
 <p>You can also add an edge between existing nodes using their UIDs.</p>
-
 <p>Let&rsquo;s say, <code>Leyla</code> starts to follow <code>Michael</code>.</p>
-
 <p>We know that this relationship between them has to represented by creating the <code>follows</code> edge between them.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/graph-2.jpg" alt="Graph" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/2/graph-2.jpg" alt="Graph"></p>
 <p>First, let&rsquo;s copy the UIDs of nodes for <code>Leyla</code> and <code>Michael</code> from Ratel.</p>
-
 <p>Now, replace the placeholders <code>LEYLAS_UID</code> and <code>MICHAELS_UID</code> with the ones you copied, and execute the mutation.</p>
-
-<pre><code class="language-json">{
-  &quot;set&quot;:[
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+  <span style="color:#000080">&#34;set&#34;</span>:[
     {
-      &quot;uid&quot;: &quot;LEYLAS_UID&quot;,
-      &quot;follows&quot;: {
-        &quot;uid&quot;: &quot;MICHAELS_UID&quot;
+      <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;LEYLAS_UID&#34;</span>,
+      <span style="color:#000080">&#34;follows&#34;</span>: {
+        <span style="color:#000080">&#34;uid&#34;</span>: <span style="color:#d14">&#34;MICHAELS_UID&#34;</span>
       }
     }
   ]
 }
-</code></pre>
-
-<h2 id="traversing-the-edges">Traversing the edges</h2>
-
+</code></pre></div><h2 id="traversing-the-edges">Traversing the edges</h2>
 <p>Graph databases offer many distinct capabilities. <code>Traversals</code> are among them.</p>
-
 <p>Traversals answer questions or queries related to the relationship between the nodes.
 Hence, queries like, <code>who does Michael follow?</code>
 are answered by traversing the <code>follows</code> relationship.</p>
-
 <p>Let&rsquo;s run a traversal query and then understand it in detail.</p>
-
-<pre><code class="language-graphql">{
-    find_follower(func: uid(MICHAELS_UID)){
-        name
-        age
-        follows {
-          name
-          age
-        }
-    }
-}
-</code></pre>
-
-<p>Here&rsquo;s the result.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/e-traversal.png" alt="traversal-result" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID)){<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Here&rsquo;s the result.</p>
+<p><img src="https://blog.dgraph.io/images/tutorials/2/e-traversal.png" alt="traversal-result"></p>
 <p>The query has three parts:</p>
-
 <ul>
 <li><strong>Selecting the root nodes.</strong></li>
 </ul>
-
 <p>First, you need to select one or more nodes as the starting point for traversals.
 These are called the root nodes.
 In the query above, we use the <code>uid()</code> function to select the node created for <code>Michael</code> as the root node.</p>
-
 <ul>
 <li><strong>Choosing the edge to be traversed</strong></li>
 </ul>
-
 <p>You need to specify the edge to be traversed, starting from the selected root nodes.
 And then, the traversal, travels along these edges, from one end to the nodes at the other end.</p>
-
 <p>In our query, we chose to traverse the <code>follows</code> edge starting from the node for <code>Michael</code>.
 The traversal returns all the nodes connected to the node for <code>Michael</code> via the <code>follows</code> edge.</p>
-
 <ul>
 <li><strong>Specify the predicates to get back</strong></li>
 </ul>
-
 <p>Since Michael follows only one person, the traversal returns just one node.
 These are <code>level-2</code> nodes. The root nodes constitute the nodes for <code>level-1</code>.
 Again, we need to specify which predicates you want to get back from <code>level-2</code> nodes.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/j-explain.JPG" alt="get_node_from_uid" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/2/j-explain.JPG" alt="get_node_from_uid"></p>
 <p>You can extend the query to make use of <code>level-2</code> nodes and traverse the Graph further and deeper.
 Let&rsquo;s explore that in the next section.</p>
-
 <h4 id="multi-level-traversals">Multi-level traversals</h4>
-
 <p>The first level of traversal returns people followed by Michael.
 The next level of traversal further returns the people they in-turn follow.</p>
-
 <p>This pattern can be repeated multiple times to achieve multi-level traversals.
 The depth of the query increases by one as we traverse each level of the Graph.
 That&rsquo;s when we say that the query is deep!</p>
-
-<pre><code class="language-graphql">{
-  find_follower(func: uid(MICHAELS_UID)) {
-    name
-    age
-    follows {
-      name
-      age
-      follows {
-        name
-        age
-      }
-    }
-  }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/f-level-3-traverse.png" alt="level-3-query" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/2/f-level-3-traverse.png" alt="level-3-query"></p>
 <p>Here is one more example from the extention of the last query.</p>
-
-<pre><code class="language-graphql">{
-  find_follower(func: uid(MICHAELS_UID)) {
-    name
-    age
-    follows {
-      name
-      age
-      follows {
-        name
-        age
-        follows {
-          name
-          age
-        }
-      }
-    }
-  }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/g-level-4-traversal.png" alt="level 3" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID))<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>follows<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/2/g-level-4-traversal.png" alt="level 3"></p>
 <p>This query is really long! The query is four levels deep.
 In other words, the depth of the query is four.
 If you ask, isn&rsquo;t there an in-built function that makes multi-level deep queries or traversals easy?</p>
-
 <p>The answer is Yes!
 That&rsquo;s what the <code>recurse()</code> function does.
 Let&rsquo;s explore that in our next section.</p>
-
 <h4 id="recursive-traversals">Recursive traversals</h4>
-
 <p>Recursive queries makes it easier to perform multi-level deep traversals.
 They let you easily traverse a subset of the Graph.</p>
-
 <p>With the following recursive query, we achieve the same result as our last query.
 But, with a much better querying experience.</p>
-
-<pre><code class="language-graphql">{
-  find_follower(func: uid(MICHAELS_UID)) @recurse(depth: 4) {
-    name
-    age
-    follows
-  }
-}
-</code></pre>
-
-<p>In the query above, the <code>recurse</code> function traverses the graph starting from the node for <code>Michael</code>.
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>find_follower(func:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">uid</span>(MICHAELS_UID))<span style="color:#bbb"> </span><span style="color:#3c5d5d;font-weight:bold">@recurse</span>(depth:<span style="color:#bbb"> </span><span style="color:#458;font-weight:bold">4</span>)<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>name<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>age<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>follows<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>In the query above, the <code>recurse</code> function traverses the graph starting from the node for <code>Michael</code>.
 You can choose any other node to be the starting point.
 The depth parameter specifies the maximum depth the traversal query should consider.</p>
-
 <p>Let&rsquo;s run the recursive traversal query after replacing the placeholder with the UID of node for Michael.</p>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/h-recursive-traversal.png" alt="recurse" /></p>
-
+<p><img src="https://blog.dgraph.io/images/tutorials/2/h-recursive-traversal.png" alt="recurse"></p>
 <p><a href="https://docs.dgraph.io/query-language/#recurse-query">Check out the docs</a> for detailed instructions on using the <code>recurse</code> directive.</p>
-
 <h4 id="edges-have-directions">Edges have directions</h4>
-
 <p>Edges in Dgraph have directions.</p>
-
 <p>For instance, the <code>follows</code> edge emerging from the node for <code>Michael</code>, points at the node for <code>Pawan</code>.
 They have a notion of direction.</p>
-
 <p>Traversing along the direction of an edge is natural to Dgraph.
 We&rsquo;ll learn about traversing edges in reverse direction in our future episodes.</p>
-
 <h2 id="deleting-a-predicate">Deleting a predicate</h2>
-
 <p>Predicates of a node can be deleted using the <code>delete</code> mutation.
 Here&rsquo;s the syntax of the delete mutation to delete any predicate of a node,</p>
-
-<pre><code class="language-graphql">{
-    delete {
-        &lt;UID&gt; &lt;predicate_name&gt; * .
-    }
-}
-</code></pre>
-
-<p>Using the mutation syntax above, let&rsquo;s compose a delete mutation.
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>delete<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>UID<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>predicate_name<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p>Using the mutation syntax above, let&rsquo;s compose a delete mutation.
 Let&rsquo;s delete the <code>age</code> predicate of the node for <code>Michael</code>.</p>
-
-<pre><code class="language-graphql">{
-  delete {
-    &lt;MICHAELS_UID&gt; &lt;age&gt; * .
-  }
-}
-</code></pre>
-
-<p><img src="https://blog.dgraph.io/images/tutorials/2/i-delete.png" alt="recurse" /></p>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-graphql" data-lang="graphql">{<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>delete<span style="color:#bbb"> </span>{<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>MICHAELS_UID<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">&lt;</span>age<span style="color:#a61717;background-color:#e3d2d2">&gt;</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">*</span><span style="color:#bbb"> </span><span style="color:#a61717;background-color:#e3d2d2">.</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>}<span style="color:#bbb">
+</span><span style="color:#bbb"></span>}<span style="color:#bbb">
+</span></code></pre></div><p><img src="https://blog.dgraph.io/images/tutorials/2/i-delete.png" alt="recurse"></p>
 <h2 id="wrapping-up">Wrapping up</h2>
-
 <p>In this tutorial, we learned about the CRUD operations using UIDs.
 We also learned about <code>recurse()</code> function.</p>
-
 <p>Before we wrap, here&rsquo;s a sneak peek into our next tutorial.</p>
-
 <p>Did you know that you could search predicates based on their value?</p>
-
 <p>Sounds interesting?</p>
-
 <p>See you all soon in the next tutorial. Till then, happy Graphing!</p>
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -737,24 +718,93 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
@@ -792,7 +842,7 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/tutorials/8/cover.jpg">
@@ -830,12 +880,51 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/tutorials/7/cover.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Fri, Jan 17, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/tutorial-7-getting-started/">Getting started with Dgraph tutorials series - 7: Give your users powerful search results with fuzzy search on graph</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -860,31 +949,10 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1021,9 +1089,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

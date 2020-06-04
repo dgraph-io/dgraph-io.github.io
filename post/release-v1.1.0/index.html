@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/release-v1.1.0/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/release-v1.1.0/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Releasing Dgraph v1.1.0 - Dgraph Blog</title>
-    <meta property='og:title' content="Releasing Dgraph v1.1.0 - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Releasing Dgraph v1.1.0 - Dgraph Blog</title>
+  <meta property='og:title' content="Releasing Dgraph v1.1.0 - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/release-v1.1.0/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/release-v1.1.0.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/release-v1.1.0.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/release-v1.1.0.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Releasing Dgraph v1.1.0"/>
-  <meta name="twitter:description" content="Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Releasing Dgraph v1.1.0" />
+  <meta name="twitter:description"
+    content="Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Releasing%20Dgraph%20v1.1.0&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frelease-v1.1.0%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Releasing%20Dgraph%20v1.1.0&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2frelease-v1.1.0%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/release-v1.1.0.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/release-v1.1.0.jpg">
 
                             <div class="post__header">
 
@@ -285,174 +375,118 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness.
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>Dgraph is an open-source, transactional, distributed, native graph database. Ever since the internet explosion, the data not just has been growing in size, but also in its complexity and connectedness.
 Dgraph is built as an effort to enable and simplify the development of scalable cloud applications that could continue to thrive even when the data is highly connected and involved.</p>
-
 <p>Set on this path, embracing open source all along the way, the first <a href="https://blog.dgraph.io/post/releasing-v1.0/">production-ready, major release v1.0.0</a> happened
 in December 2017. Since then, the feedback from the community and customers has prominently shaped the evolution of the product. Thanks to all of you!</p>
-
 <p>Also, along the way, we have hit a few major milestones.
 <a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">Raising Series A funding</a> and
 <a href="https://blog.dgraph.io/post/10k-github-stars/">Reaching 10K starts</a> tops the list.</p>
-
 <p>Dgraph&rsquo;s new release <a href="https://github.com/dgraph-io/dgraph/releases/tag/v1.1.0">v1.1.0 is here</a>.
 The new version ships with a plethora of significant changes and new features. In this post, we will
 cover the most important ones, but you can find all the details in the
 <a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#110---2019-09-03">changelog</a>.</p>
-
 <h2 id="breaking-changes">Breaking changes</h2>
-
 <p>Before we go over the new features, let&rsquo;s cover the changes that could break your current code.
 We have only four breaking changes, so you might probably want to have a quick look at them.</p>
-
-<h4 id="1-removal-of-predicate-keyword">1. Removal of _predicate_ keyword</h4>
-
+<h4 id="1-removal-of-_predicate_-keyword">1. Removal of _predicate_ keyword</h4>
 <p>Due to long-standing performance and transactional concerns around
 <code>_predicate_</code>, the keyword has been removed in this release.</p>
-
 <p>We are working on providing an alternative mechanism to support our users while writing their
 queries. If you have specific needs or suggestions regarding this feature, please let us know
 by filing an issue on <a href="https://github.com/dgraph-io/dgraph">GitHub</a>.</p>
-
-<h4 id="2-change-in-behavior-of-in-delete-operations">2. Change in behavior of * in delete operations</h4>
-
+<h4 id="2-change-in-behavior-of--in-delete-operations">2. Change in behavior of * in delete operations</h4>
 <p>The delete operation with <code>*</code> only deletes the predicates which are part of the types associated with a given node.
 For instance, let&rsquo;s imagine we have a node
 with UID <code>0x1</code> of type <code>Person</code>.</p>
-
 <pre><code>type Person {
     name: string
     age: int
 }
-</code></pre>
-
-<p>To this node of type <code>Person</code>, we associate an extra predicate <code>salary</code> of type <code>int</code>.
+</code></pre><p>To this node of type <code>Person</code>, we associate an extra predicate <code>salary</code> of type <code>int</code>.
 Running a delete operation with wildcards would delete the <code>name</code> and <code>age</code> predicates, but not the <code>salary</code> predicate.</p>
-
 <pre><code>delete {
     &lt;0x1&gt; * * .
 }
-</code></pre>
-
-<p>As a logical consequence, running a delete operation with <code>*</code> on a node with no types would not delete anything.
+</code></pre><p>As a logical consequence, running a delete operation with <code>*</code> on a node with no types would not delete anything.
 This change is tied to the removal of  <code>_predicate_</code> mentioned above.</p>
-
 <h4 id="3-predicates-of-type-uid-lists-are-now-explicit">3. Predicates of type UID lists are now explicit</h4>
-
 <p>Before this release, it was not possible to say that a predicate could have a single UID value.
 This was caused by <code>foo: uid .</code> being interpreted as a predicate foo of type list of
 UIDs.</p>
-
 <p>In the new release, to indicate that a predicate has a list of UIDs associated with it you
 will need to use <code>[uid]</code>, as <code>uid</code> now means the value is a single UID.</p>
-
 <h4 id="4-http-header-changes">4. HTTP header changes</h4>
-
 <p>We have dropped support for the HTTP headers <code>X-Dgraph-CommitNow</code> and <code>X-Dgraph-MutationType</code>.
 Instead of <code>X-Dgraph-MutationType</code>, we now use the standard HTTP header <code>Content-Type</code>,
 and <code>X-Dgraph-CommitNow</code> is now a query parameter in the URL <code>commitNow=true</code>.</p>
-
 <p>This should only affect applications that are directly using Dgraph&rsquo;s REST endpoints.
 If you are using a client library, these changes should be fully transparent.</p>
-
 <h2 id="new-features">New Features</h2>
-
 <p>Now that we have covered the breaking changes, it&rsquo;s time to go over the exciting new features which
 are coming with v1.1.0.</p>
-
 <h4 id="a-new-type-system">A new type system</h4>
-
 <p>Starting with version 1.1.0, Dgraph provides support for types.
 Types allow grouping of nodes into sets describing the data associated with them.</p>
-
 <p>The type system follows the GraphQL syntax for defining the types.
 The fields in the types correspond to existing predicates in the schema, where their indexes are also defined.</p>
-
-<pre><code class="language-sh">type Student {
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#0086b3">type</span> Student <span style="color:#000;font-weight:bold">{</span>
   name: string
   dob: datetime
   home_address: string
   year: int
-}
-</code></pre>
-
-<p>This type system is an early release and, among other features, doesn&rsquo;t support required
+<span style="color:#000;font-weight:bold">}</span>
+</code></pre></div><p>This type system is an early release and, among other features, doesn&rsquo;t support required
 (aka non-nullable) fields. Defining a field of type <code>string!</code> is supported but it will be considered
 exactly as <code>string</code> for now.</p>
-
 <p>Once a type has been defined, nodes can be given associated with the <code>dgraph.type</code> predicate.
 The new <code>type</code> function can be used in queries and filters to find the corresponding nodes.
 Here are the docs to learn more about the
 <a href="https://docs.dgraph.io/master/query-language/#type-system">type system in Dgraph</a>.</p>
-
 <h4 id="upsert-blocks">Upsert blocks</h4>
-
 <p>Dgraph doesn&rsquo;t have the concept of primary key. The upsert primitive is necessary to guarantee the uniqueness of the value for a predicate (like the <code>email</code> of a user),</p>
-
 <p>Previously to this release, upsert was a two-step operation:</p>
-
 <ol>
 <li>First, send a query to find whether a user exists with a given email.</li>
 <li>Then, if no user was found with that email, use a mutation to create it.</li>
 </ol>
-
 <p>With the new upsert block feature, upserts can be performed in one step. This simplifies the usage of client libraries to build applications, improves the performance by reducing the network calls, and enhances the developer experience around upserts.</p>
-
 <p>Here is the <a href="https://github.com/dgraph-io/flock/commit/b77b366c66c2805eabaf7828bd08ece68705a7c5">commit</a> on our flock project (a twitter clone build on Dgraph using Go) which illustrates the simplicity the new upsert block brings into application development on Dgraph.</p>
-
 <p><a href="https://docs.dgraph.io/master/mutations/#upsert-block">Here are the docs</a> to learn how to use upsert blocks.</p>
-
 <h2 id="enterprise-features">Enterprise features</h2>
-
 <h4 id="binary-backups">Binary Backups</h4>
-
 <p>Binary backups are part of Dgraph&rsquo;s <a href="https://docs.dgraph.io/master/enterprise-features">enterprise features</a>.
 Backup can be stored directly on your on-premise or cloud storage systems and then they can
 be used to restore a new Dgraph cluster to the previous state.</p>
-
 <p>You can learn more about Binary Backups reading the
 <a href="https://docs.dgraph.io/master/enterprise-features/#binary-backups">Binary Backup documentation page</a>.</p>
-
 <h4 id="access-control-lists">Access Control Lists</h4>
-
 <p>Access Control Lists (ACL) provide access protection to your data stored in Dgraph.
 When the ACL feature is turned on, a client must authenticate with a username and password
 before executing any transactions and is only allowed to access the data permitted by the ACL rules.</p>
-
 <p>Check out the <a href="https://docs.dgraph.io/master/enterprise-features/#access-control-lists">docs</a>
 to learn more about ACLs.</p>
-
 <h2 id="ready-to-migrate">Ready to migrate?</h2>
-
 <p>If you are convinced that v1.1.0 is the future and you are ready to migrate, make sure you follow
 these steps.</p>
-
 <p>First, export the data from your current Dgraph cluster following the
 <a href="https://docs.dgraph.io/deploy/#export-database">database export documentation</a>.
 Make sure you keep this data somewhere safe, you will need it soon.</p>
-
 <p>Then, install v1.1.0 and either follow the <a href="https://docs.dgraph.io/deploy/#bulk-loader">bulk loader</a>
 documentation to import all the data back into the database before it starts serving traffic,
 or start your new cluster and use <a href="https://docs.dgraph.io/deploy/#live-loader">live loader</a>.</p>
-
 <p>Please, note that the UIDs will change during the export/import process, so any queries or mutations
 using explicit UIDs will fail. We recommend using <code>upsert</code> mutations instead.
 In future versions, UIDs will be preserved during the import/export process.</p>
-
 <h3 id="in-conclusion">In conclusion</h3>
-
 <p>We went through the highlights of the release including the new features and four breaking changes.
 To know more about all the changes, bug-fixes, and enhancements this release is shipped with,
 read the <a href="https://github.com/dgraph-io/dgraph/blob/master/CHANGELOG.md#changelog">changelog</a>.</p>
-
 <p>This release is the result of years of evolution driven by the feedback from the community and our
 customers. We&rsquo;d like to take this opportunity to thank you all again for helping us make Dgraph even
 better with every release.</p>
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -543,24 +577,93 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
@@ -598,7 +701,7 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
@@ -636,12 +739,51 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/tutorials/8/cover.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Tue, Jan 28, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/tutorial-8-getting-started/">Getting started with Dgraph-8: Easily build location-aware apps using our native geolocation features</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -666,31 +808,10 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -827,9 +948,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

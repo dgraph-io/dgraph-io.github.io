@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/sql-vs-dgraph/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/sql-vs-dgraph/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Running Stack Overflow on Dgraph - Dgraph Blog</title>
-    <meta property='og:title' content="Running Stack Overflow on Dgraph - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Running Stack Overflow on Dgraph - Dgraph Blog</title>
+  <meta property='og:title' content="Running Stack Overflow on Dgraph - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/sql-vs-dgraph/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/reddragonmars.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/reddragonmars.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/reddragonmars.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Running Stack Overflow on Dgraph"/>
-  <meta name="twitter:description" content="We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Running Stack Overflow on Dgraph" />
+  <meta name="twitter:description"
+    content="We have been taught, conditioned, trained to use SQL all our lives as engineers. It was there in schools, there when we went to college." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Running%20Stack%20Overflow%20on%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fsql-vs-dgraph%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Running%20Stack%20Overflow%20on%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fsql-vs-dgraph%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/reddragonmars.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/reddragonmars.jpg">
 
                             <div class="post__header">
 
@@ -285,62 +375,48 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>We have been taught, conditioned, trained to use SQL all our lives as engineers.
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>We have been taught, conditioned, trained to use SQL all our lives as engineers.
 It was there in schools, there when we went to college. It was being used at the
 company that we joined. It was such a common interview question that it no
 longer is. We don&rsquo;t have just one, but an array of SQL databases to choose from.
 MySQL was released 22 years ago, in 1995 (youngest engineer at Dgraph was born the
 same year). PostgreSQL was released one year later. In contrast, MariaDB was
 released in 2009.</p>
-
 <p>What&rsquo;s amazing about SQL is its sheer simplicity. <em>Select something where
 something, order by something, limit by some number.</em> This query probably
 represents most DB queries run on the planet. You can achieve the same thing
 with a single bash command over CSV files. <em>I joke that SQL DBs are a sort of
 glorified CSV file servers.</em></p>
-
 <p>But, that&rsquo;s also where lies its weakness. Its sheer simplicity. <strong>Because SQL
 does fewer things, application developers need to write more logic.</strong></p>
-
 <h3 id="the-alternative">The alternative</h3>
-
 <p><strong>Dgraph does joins.</strong> Being a graph database, join is a <em>first-class</em> citizen
 in Dgraph. It&rsquo;s optimized for expanding, intersecting and combining results from
 multiple entity types <em>very fast</em>. In fact, the internal mechanisms are exactly
 how search engines work.</p>
-
 <p><strong>Dgraph does recursions.</strong> Recursion is essentially an edge traversal.
 Traversing edges is very integral to Dgraph. Expanding out from a node is an
 O(1) time complexity operation, a look up in hash map, or a single
 read from disk.</p>
-
 <p><strong>Dgraph supports flexible schema.</strong> Dgraph separates storage layer from schema
 layer. A developer can choose how much schema enforcement they want. Modifying
 data types do not require data rewrite; and because (the equivalent of)
 <em>tables</em> are sparse in a graph database, one does not need to fit everything
 into predefined columns, or deal with <code>NULL</code>s.</p>
-
 <h3 id="stack-overflow">Stack Overflow</h3>
-
 <p>To put something concrete up for discussion, we&rsquo;ll see how data gets arranged in
 SQL and compare that with how it would be arranged in Dgraph. Folks at Stack
 Exchange generously provide <a href="https://archive.org/details/stackexchange">dumps of their
 data</a>, and <a href="https://ia800500.us.archive.org/22/items/stackexchange/readme.txt">the
 schema</a> that
 they use run the site over SQL.</p>
-
 <p>We&rsquo;ll pick the schema that they use to store and
 serve the data that millions of developers browse through every day, and compare
 that against how it would be if Dgraph were the underlying database instead of
 SQL.</p>
-
 <p><strong>Let&rsquo;s start with the User schema,</strong> and see how SQL would compare with Dgraph.</p>
-
 <p><strong>User</strong></p>
-
 <table>
 <thead>
 <tr>
@@ -348,78 +424,62 @@ SQL.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>Reputation</td>
 <td>Reputation</td>
 </tr>
-
 <tr>
 <td>CreationDate</td>
 <td>CreationDate</td>
 </tr>
-
 <tr>
 <td>DisplayName</td>
 <td>DisplayName</td>
 </tr>
-
 <tr>
 <td>LastAccessDate</td>
 <td>LastAccessDate</td>
 </tr>
-
 <tr>
 <td>Location</td>
 <td>Location</td>
 </tr>
-
 <tr>
 <td>AboutMe</td>
 <td>AboutMe</td>
 </tr>
-
 <tr>
 <td>Age</td>
 <td>Age</td>
 </tr>
-
 <tr>
 <td>Views</td>
 <td>Views</td>
 </tr>
-
 <tr>
 <td>UpVotes</td>
 <td></td>
 </tr>
-
 <tr>
 <td>DownVotes</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-
 <p>Here we have user&rsquo;s reputation, creation date, display name, last access date,
 location, about, age (<em>not date of birth?</em>) and views (not tracking every single
 page access, just a counter). All those are base data, i.e. new and unique data
 that we must store.</p>
-
 <p>Then, the table has counts of upvotes and downvotes. But, those are being stored
 elsewhere in <code>Vote</code> table. These fields here are pre-computed counts to avoid
 doing joins with <code>Vote</code> table when querying for a user.</p>
-
 <p>Dgraph doesn&rsquo;t need to store these. It can do counts and sorts on them via
 queries efficiently.</p>
-
 <p><strong>Let&rsquo;s look at the Versioning and Post table,</strong> where most of the action happens.
 These tables store the questions, answers, tags, ownership, and authorship
 information.</p>
-
 <p><strong>Versioning</strong></p>
-
 <table>
 <thead>
 <tr>
@@ -427,37 +487,30 @@ information.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>TypeId</td>
 <td>Type</td>
 </tr>
-
 <tr>
 <td>PostId</td>
 <td>Post (point to Post)</td>
 </tr>
-
 <tr>
 <td>CreationDate</td>
 <td>CreationDate</td>
 </tr>
-
 <tr>
 <td>Author</td>
 <td>Author</td>
 </tr>
-
 <tr>
 <td>Text</td>
 <td>Text</td>
 </tr>
 </tbody>
 </table>
-
 <p><strong>Post</strong></p>
-
 <table>
 <thead>
 <tr>
@@ -465,89 +518,72 @@ information.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>TypeId</td>
 <td>Type</td>
 </tr>
-
 <tr>
 <td>ParentId</td>
 <td>Has.Answer</td>
 </tr>
-
 <tr>
 <td>AcceptedAnswerId</td>
 <td>Chosen.Answer</td>
 </tr>
-
 <tr>
 <td>Title (duplicate of versioning)</td>
 <td>Title (point to Version)</td>
 </tr>
-
 <tr>
 <td>Body  (duplicate of versioning)</td>
 <td>Body  (point to Version)</td>
 </tr>
-
 <tr>
 <td>Tags  (duplicate of versioning)</td>
 <td>Tags  (point to Version)</td>
 </tr>
-
 <tr>
 <td>OwnerUserId</td>
 <td>Owner (point to User)</td>
 </tr>
-
 <tr>
 <td>Score</td>
 <td>Score</td>
 </tr>
-
 <tr>
 <td>LastEditorUserId</td>
 <td></td>
 </tr>
-
 <tr>
 <td>LastEditDate</td>
 <td></td>
 </tr>
-
 <tr>
 <td>LastActivityDate</td>
 <td></td>
 </tr>
-
 <tr>
 <td>CommentCount</td>
 <td></td>
 </tr>
-
 <tr>
 <td>AnswerCount</td>
 <td></td>
 </tr>
-
 <tr>
 <td>FavoriteCount</td>
 <td></td>
 </tr>
-
 <tr>
 <td>CreationDate</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-
 <p>Version table is pretty straightforward. It stores type, post id, creation date,
 author, and text. Instead of storing ids, Dgraph creates a relationship
 from Version to Post.</p>
-
 <p>Post table is the interesting one, and <em>shows how much data duplication needed
 to happen to avoid joins.</em> We have the text of title, body, and tags from the latest
 version stored in this table. In fact, the latest version isn&rsquo;t even written.
@@ -555,23 +591,18 @@ Version only gets created when a user modifies the title, body or tags. And
 because of this requirement to proxy for Version table, Post table stores last
 editor, last edit date, which would become the author and creation date
 respectively when moved to Version table.</p>
-
 <p>All these fields are unnecessary in Dgraph. Dgraph can directly store an edge to
 the Version node which contains the text of title and body. We chose to store
 tags differently. For each tag, we create a node and create an edge between the
 post and the tag. This allows us to run aggregations over tags, and find the
 most popular and most related tags easily.</p>
-
 <p>Then, we have pre-computed counts of comments, answers, and favorites. Dgraph can
 generate all this at query time efficiently; using them to do sorting as well.
 So, they don&rsquo;t need to be pre-computed in Dgraph.</p>
-
 <p>CreationDate and LastActivityDate are both redundant information, that can be
 deduced by doing recursion. They form good candidates for optimization later on,
 but are not needed and hence are not present in Dgraph.</p>
-
 <p><strong>Comment, Vote</strong></p>
-
 <table>
 <thead>
 <tr>
@@ -579,81 +610,60 @@ but are not needed and hence are not present in Dgraph.</p>
 <th>Dgraph</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>PostId (Vote/Comment -&gt; Post)</td>
 <td>(New edge from Post -&gt; Vote/Comment)</td>
 </tr>
-
 <tr>
 <td>Timestamp</td>
 <td>Timestamp</td>
 </tr>
-
 <tr>
 <td>Author</td>
 <td>Author</td>
 </tr>
-
 <tr>
 <td>VoteType (for Vote)</td>
 <td>Score (for both Vote and Comment)</td>
 </tr>
-
 <tr>
 <td>Text     (for Comment)</td>
 <td>Text  (for Comment)</td>
 </tr>
 </tbody>
 </table>
-
 <p><strong>Finally, we have the comment and vote tables.</strong> Because SQL doesn&rsquo;t store
 lists of things in a single row, you must create another table and point it back
 to the original row.  A post contains comments. But in SQL, it&rsquo;s the reverse. A
 comment table row points to the post.  This is such a common hack that it&rsquo;s no
 longer considered one.</p>
-
 <p>In Dgraph, a Post has an edge to the vote or comment, not the other way round.</p>
-
 <p><strong>This is how the final Dgraph schema looks.</strong> It&rsquo;s a lot simpler than SQL.</p>
-
-<p><img src="https://blog.dgraph.io/images/schema.png" alt="Dgraph Schema" /></p>
-
+<p><img src="https://blog.dgraph.io/images/schema.png" alt="Dgraph Schema"></p>
 <p><em>In fact, SQL schema complexity increases rapidly as the relationships among
 data increase.</em> Each relationship would inadvertently require joins, which would
 then need to be avoided by duplicating more information across tables. All this
 adds a significant amount of application logic to deal with.</p>
-
 <p><strong>Conversely, in a graph database like Dgraph, schema is a pretty close
 representation of your mind map.</strong></p>
-
 <h3 id="queries">Queries</h3>
-
 <p>In the previous section, we saw that Dgraph schema is a lot simpler than the
 equivalent SQL schema. In this section, we&rsquo;ll see why that is the case, and how
 Dgraph&rsquo;s GraphQL inspired query language makes it easy to render various
 Stack Overflow (referred to as SO) components.</p>
-
 <p><em>Disclaimer: While reading the queries, note that these queries are just our
 approximations of how SO works. We don&rsquo;t work there, and thence, certain things
 like ranking formulas are just put together to represent the power of the query
 language. It&rsquo;s not what SO uses.</em></p>
-
 <p><strong>Let&rsquo;s start with the home page.</strong> We want to render 100 questions, and
 all the associated meta information that SO shows.</p>
-
 <p><strong>Warning</strong></p>
-
 <p>Query syntax and features has changed in v1.0 release.
- For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
-
+For the latest syntax and features, visit <a href="https://docs.dgraph.io">link to docs</a>.</p>
 <p><strong>Question Div</strong></p>
-
 <p>This is the corresponding query fragment to retrieve the data to render one question div.</p>
-
-<p><img src="https://blog.dgraph.io/images/homepage-question.png" alt="Home page question" /></p>
-
+<p><img src="https://blog.dgraph.io/images/homepage-question.png" alt="Home page question"></p>
 <pre><code>_uid_  # Unique identifier
 
 UpvoteCount: count(Upvote)      # Counts the number of Upvote edges.
@@ -684,23 +694,15 @@ Has.Answer(orderdesc: Timestamp, first: 1) {  # Picks the most recent answer.
     _uid_
   }
 }
-</code></pre>
-
-<p>Now that we have the question fragment let&rsquo;s see how to retrieve a list of
+</code></pre><p>Now that we have the question fragment let&rsquo;s see how to retrieve a list of
 questions depending upon the various tabs that SO shows.</p>
-
 <p><strong>Latest 100 questions</strong></p>
-
 <pre><code># All nodes of type question, in descending order by Timestamp, limit by 100.
 questions(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 100) {
   ${questionFragment}
 }
-</code></pre>
-
-<p><strong>Top 100 hot questions</strong></p>
-
-<p><img src="https://blog.dgraph.io/images/homepage-hot-questions.png" alt="Home page hot questions" /></p>
-
+</code></pre><p><strong>Top 100 hot questions</strong></p>
+<p><img src="https://blog.dgraph.io/images/homepage-hot-questions.png" alt="Home page hot questions"></p>
 <pre><code># Get the latest 1000 questions.
 var(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 1000) {
   Has.Answer {            # Get their answers
@@ -721,14 +723,9 @@ var(func: eq(Type, &quot;Question&quot;), orderdesc: Timestamp, first: 1000) {
 questions(id: var(score), orderdesc: var(score), first: 100) {
   ${questionFragment}
 }
-</code></pre>
-
-<p><strong>Top Tags</strong></p>
-
-<p><img src="https://blog.dgraph.io/images/homepage-toptags.png" alt="Top tags" /></p>
-
+</code></pre><p><strong>Top Tags</strong></p>
+<p><img src="https://blog.dgraph.io/images/homepage-toptags.png" alt="Top tags"></p>
 <p>To get the most frequently used tags, we can run this query.</p>
-
 <pre><code>t as var(func: eq(Type, &quot;Tag&quot;)) {  # Retrieve all tags. Assign it to variable t.
   c as count(~Tag)  # For each tag, count the number of incoming edges.
                     # This gives us the number of times each tag is used.
@@ -742,25 +739,18 @@ topTags(id: var(t), orderdesc: var(c), first: 10) {
   QuestionCount: var(c)  # Reusing variable c, retrieve the number of times tag is used.
       # Note that only questions have tags. Hence we use QuestionCount alias.
 }
-</code></pre>
-
-<p>Depending upon the number of tags, this query might be a tad slow. The most
+</code></pre><p>Depending upon the number of tags, this query might be a tad slow. The most
 popular tags don&rsquo;t change that often. So, this is a good candidate for caching
 in application. But, even so, the amount of application code that needs to go in
 to generate the list of most popular tags is very little (run the query, cache
 the results).</p>
-
-<p><img src="https://blog.dgraph.io/images/question.png" alt="Question" /></p>
-
+<p><img src="https://blog.dgraph.io/images/question.png" alt="Question"></p>
 <p><strong>Now let&rsquo;s see how to render the question page.</strong> This is one complex page, with
 many components, touching almost all the tables in SQL. We&rsquo;ll see how we can get
 all the information in a single query to Dgraph.</p>
-
 <p>Before we dig into the question query, let&rsquo;s create a bunch of reusable
 fragments.</p>
-
 <p><strong>Version Fragment</strong></p>
-
 <pre><code>Author {       # Retrieve Author node.
   DisplayName  # Retrieve their display name, reputation, and identifier.
   Reputation
@@ -769,10 +759,7 @@ fragments.</p>
 Type  # Retrieve type, text and timestamp of Version.
 Text
 Timestamp
-</code></pre>
-
-<p><strong>Comment Fragment</strong></p>
-
+</code></pre><p><strong>Comment Fragment</strong></p>
 <pre><code>_uid_
 Author {       # Retrive Author node.
   _uid_        # Retrieve their display name and identifier.
@@ -781,10 +768,7 @@ Author {       # Retrive Author node.
 Text  # Retrieve Text, Score and Timestamp of Comment (no versioning here).
 Score
 Timestamp
-</code></pre>
-
-<p><strong>Answer Fragment</strong></p>
-
+</code></pre><p><strong>Answer Fragment</strong></p>
 <pre><code># Answer is represented as a Post node.
 _uid_
 
@@ -815,10 +799,7 @@ History: ~Post(orderdesc: Timestamp, first: 1) {
 Comment {             # Get the Comment nodes.
   ${CommentFragment}  # Retrieve further details per Comment using fragment above.
 }
-</code></pre>
-
-<p><strong>Question</strong></p>
-
+</code></pre><p><strong>Question</strong></p>
 <pre><code>{
   var (id: ${questionUID}) {  # Retrieve the question node.
     Has.Answer {              # Retrieve the answers.
@@ -880,20 +861,13 @@ Comment {             # Get the Comment nodes.
     }
   }
 }
-</code></pre>
-
-<p>If the query above looks complex, don&rsquo;t worry about it. Just read the comments, and get a sense for how we retrieve each piece of data that we need to render on the page. SO question page as mentioned before is pretty complex requiring recursions to retrieve all details of questions, comments, votes, owner, last editor. Similarly, we need answers, their comments, votes, owner, last editor. On top of that, we can sort the answers displayed by a score generated from vote counts. We can even limit the number of comments displayed if required.</p>
-
+</code></pre><p>If the query above looks complex, don&rsquo;t worry about it. Just read the comments, and get a sense for how we retrieve each piece of data that we need to render on the page. SO question page as mentioned before is pretty complex requiring recursions to retrieve all details of questions, comments, votes, owner, last editor. Similarly, we need answers, their comments, votes, owner, last editor. On top of that, we can sort the answers displayed by a score generated from vote counts. We can even limit the number of comments displayed if required.</p>
 <p>With SQL DB, all of this logic would have needed to be baked into the application. But, with Dgraph, the query language is so powerful that it can all be generated right within the database: doing recursions, computing counts, putting them to generate scores and then sort by these scores. This cuts down heavily on the application code, letting a developer focus on the feature set and the best way to render the data. And <strong>that&rsquo;s powerful!</strong></p>
-
 <p><strong>Full Text Search</strong></p>
-
 <p>Dgraph also supports regular expression and full-text search in many languages.
 You can create an index on string edges, to achieve this. In this case, we
 created a full-text index on the <code>Text</code> edge.</p>
-
 <p><code>Text: string @index(fulltext) .</code> line from schema.txt.</p>
-
 <pre><code>{
   var(func: anyoftext(Text, &quot;${searchQuery}&quot;)) @cascade {
   # All Version nodes which have any of the text in search query.
@@ -948,45 +922,34 @@ created a full-text index on the <code>Text</code> edge.</p>
     Timestamp
   }
 }
-</code></pre>
-
-<h3 id="summary">Summary</h3>
-
+</code></pre><h3 id="summary">Summary</h3>
 <p>In this post, we showed you how a SQL schema compares against the equivalent
 schema in Dgraph, basing our analysis on Stack Overflow data. We then picked
 pages from Stack Overflow and showed you queries to retrieve all the data
 necessary to render those pages.</p>
-
 <p>As you can see, Dgraph schema is significantly simpler than SQL, utilizing zero
 or little schema hacks, pre-computation or duplication of data. Also,
 Dgraph query language is way more powerful than SQL, handling most of the
 complexity of recursive data retrieval, ranking and sorting within the database,
 allowing the application to focus solely on the feature set and rendering of
 data.</p>
-
 <p>Dgraph being a graph database provides sparsely populated fields and easy schema
 manipulation, which allows developers to modify data types as they iterate over
 their application, removing the need to do complex <em>upgrades</em> of the entire system.</p>
-
 <p>Not only that, Dgraph makes it a lot faster for developers to iterate.
 Modifying Dgraph queries is a lot cheaper operation for a developer,
 than modifying the backend code; and Dgraph provides a nice UI to allow for
 this.</p>
-
 <p>Finally, Dgraph supports regular expressions, term matching, full-text search
 and equality matching for string types. All Dgraph edges are unidirectional, but
 Dgraph allows you to specify creating reverses automatically, to aid in data
 retrieval. It also supports indexing various other data types, like int, float,
 datetime, etc.; very useful to build applications today.</p>
-
 <p>Overall, this post sheds light on why we think a graph database like Dgraph is a
 better choice for developers today. It simplifies the data model,
 significantly cuts down on the backend code, and allows faster iteration.</p>
-
 <h3 id="links">Links</h3>
-
 <p>All the data generation, querying and rendering code is located at <a href="https://github.com/dgraph-io/graphoverflow">Dgraph&rsquo;s Graph Overflow repository</a>. Dgraph query language spec is <a href="https://docs.dgraph.io/query-language/">located here</a>. Graph overflow site is still a work in progress, and we&rsquo;ll put it up at dgraph.io soon.</p>
-
 
 
 <aside class="post__references">
@@ -995,7 +958,6 @@ significantly cuts down on the backend code, and allows faster iteration.</p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -1012,7 +974,6 @@ significantly cuts down on the backend code, and allows faster iteration.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
-
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -1083,24 +1044,93 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/spacex-nasa-may2020.jpg">
@@ -1138,7 +1168,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/dgraph-graphql-sticker.jpg">
@@ -1176,39 +1206,57 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/moonshot.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Wed, Jul 31, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">How Dgraph Labs Raised Series A</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/mrjn/">Manish Rai Jain</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
 
 
-                    </div>
-                </div>
+                
+
+
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1345,9 +1393,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

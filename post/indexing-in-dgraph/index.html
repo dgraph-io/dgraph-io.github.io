@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/indexing-in-dgraph/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/indexing-in-dgraph/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Optimizing Indexing in Dgraph - Dgraph Blog</title>
-    <meta property='og:title' content="Optimizing Indexing in Dgraph - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Optimizing Indexing in Dgraph - Dgraph Blog</title>
+  <meta property='og:title' content="Optimizing Indexing in Dgraph - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/indexing-in-dgraph/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/iss.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/iss.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/iss.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Optimizing Indexing in Dgraph"/>
-  <meta name="twitter:description" content="One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Optimizing Indexing in Dgraph" />
+  <meta name="twitter:description"
+    content="One of the cornerstones of Dgraph is that it allows a flexible schema, which can be modified in a live system, without any downtime." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Optimizing%20Indexing%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2findexing-in-dgraph%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Optimizing%20Indexing%20in%20Dgraph&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2findexing-in-dgraph%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/iss.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/iss.jpg">
 
                             <div class="post__header">
 
@@ -285,14 +375,11 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>One of the cornerstones of Dgraph is that it allows a <em>flexible</em> schema, which
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>One of the cornerstones of Dgraph is that it allows a <em>flexible</em> schema, which
 can be modified in a live system, without any downtime. This involves changing
 data types and adding or removing indices with a single <code>ALTER</code> command to match
 the needs of an application developer.</p>
-
 <p>Dgraph supports indexing natively, which means common use cases around full-text
 search, regular expressions, date matching, geolocation queries, etc. can all be
 executed within Dgraph, while maintaining transactional guarantees. That is,
@@ -301,17 +388,13 @@ updated and available to be queried. Indices are important to provide access to
 various <a href="https://docs.dgraph.io/query-language/#functions">functions</a> that Dgraph supports.  Users can specify the types of
 indices they want to build along with their schema.  For example, take a look at
 the following schema:</p>
-
 <pre><code>name: string @index(term, exact) .
 post: string @index(fulltext) .
-</code></pre>
-
-<p>The schema specifies two predicates. The <code>name</code> predicate has indices to check
+</code></pre><p>The schema specifies two predicates. The <code>name</code> predicate has indices to check
 for equality and for terms in a name.  The <code>post</code> predicate on the other hand
 generates an index that understands full text and is capable of checking for
 related word (e.g a search for the word think would return posts with the word
 thinking).</p>
-
 <p>To build indices, Dgraph exposes a simple <a href="https://github.com/dgraph-io/dgraph/blob/7fa6c17568e475ac209f4f04cd3ac011a1b4677a/tok/tok.go#L56-L80">interface</a>, called <code>Tokenizer</code>.
 Every tokenizer has a unique name and identifier, supports a certain type of
 data (int, float, string, date, geo, etc.), and is sortable and/or lossy. That
@@ -320,15 +403,12 @@ answers if the output from the tokenizer can be used to run inequality functions
 above case, <code>exact</code> index tokenizer is sortable, and not lossy. <code>term</code>
 tokenizer is not sortable and is lossy. Dgraph internally uses these to
 determine how to best execute various queries.</p>
-
 <p>Dgraph currently supports 13 tokenizers in total, including <code>trigram</code> for
 regular expressions and <code>geo</code> for geolocation indexing. It also
 allows users to further extend this list by creating their own <a href="https://docs.dgraph.io/query-language#indexing-with-custom-tokenizers">custom</a> tokenizers
 and attaching them to Dgraph process via Go plugins. You can see the available
 tokenizers and the functions they support <a href="https://docs.dgraph.io/query-language#indexing">here</a>.</p>
-
 <h3 id="problem">Problem</h3>
-
 <p>Previously, when the schema was updated, Dgraph searched if the list of
 tokenizers (i.e <code>term</code>, <code>fulltext</code>) had changed and regenerated the entire index
 if that was the case.  A tokenizer refers to a strategy that is used to generate
@@ -337,7 +417,6 @@ was added, the <code>exact</code> tokenizer would generate a single token with
 value <code>Barack Obama</code> while the term tokenizer would generate two tokens
 (<code>Barack</code> and <code>Obama</code>).  These tokens are used to generate a key that links
 the token to the node containing the original data.</p>
-
 <p>Rebuilding the entire index meant that Dgraph was performing a lot of extra work
 in cases where only a portion of the previous tokenizers were added or removed.
 As part of our continuous efforts to improve Dgraph, starting with upcoming
@@ -345,192 +424,173 @@ version 1.0.12, only the parts of the predicate index that need to be modified
 are affected by schema updates. Along the way, we have refactored the reindexing
 logic to make it follow better coding practices and a more strict separation of
 concerns.</p>
-
 <p>This blog entry will explore some of the strategies we used to clean up the code
 and eventually support partial reindexing.</p>
-
 <h3 id="indexing-showcase">Indexing showcase</h3>
-
 <p>First let&rsquo;s add two new predicates, <code>name</code> and <code>inner_thoughts</code>. Let&rsquo;s index <code>inner_thoughts</code> with the <code>fulltext</code> tokenizer.</p>
-
-<p><img src="https://blog.dgraph.io/images/reindexing_1.gif" alt="Step 1" /></p>
-
+<p><img src="https://blog.dgraph.io/images/reindexing_1.gif" alt="Step 1"></p>
 <p>Let&rsquo;s add a new node named &ldquo;Honey Badger&rdquo; and add its thoughts to the database.
 Afterwards, we can query its thoughts using the <code>fulltext</code> capabilities.
 For example, a search for &ldquo;getting&rdquo; will return this node because the words &ldquo;get&rdquo; and &ldquo;got&rdquo; appear inside the values of <code>inner_thoughts</code>.</p>
-
-<p><img src="https://blog.dgraph.io/images/reindexing_2.gif" alt="Step 2" /></p>
-
+<p><img src="https://blog.dgraph.io/images/reindexing_2.gif" alt="Step 2"></p>
 <p>Let&rsquo;s delete some of the indices.
 Afterwards, the previous query does not work anymore because it requires the <code>fulltext</code> index to function properly.</p>
-
-<p><img src="https://blog.dgraph.io/images/reindexing_3.gif" alt="Step 3" /></p>
-
+<p><img src="https://blog.dgraph.io/images/reindexing_3.gif" alt="Step 3"></p>
 <p>From the logs, we can observe that only the indices that changed were touched by the reindexing process.</p>
-
-<pre><code class="language-text">Logs for adding schema (set fulltext on inner_thoughts and exact, term on name):
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Logs for adding schema (set fulltext on inner_thoughts and exact, term on name):
 
 I0128 19:33:13.908820       1 index.go:700] Deleting index for attr inner_thoughts and tokenizers []
 I0128 19:33:13.908853       1 index.go:718] Rebuilding index for attr inner_thoughts and tokenizers [fulltext]
-I0128 19:33:13.908958       1 mutation.go:146] Done schema update predicate:&quot;inner_thoughts&quot; value_type:STRING directive:INDEX tokenizer:&quot;fulltext&quot; list:true
+I0128 19:33:13.908958       1 mutation.go:146] Done schema update predicate:&#34;inner_thoughts&#34; value_type:STRING directive:INDEX tokenizer:&#34;fulltext&#34; list:true
 I0128 19:33:13.912481       1 index.go:700] Deleting index for attr name and tokenizers []
 I0128 19:33:13.912511       1 index.go:718] Rebuilding index for attr name and tokenizers [exact term]
-I0128 19:33:13.912672       1 mutation.go:146] Done schema update predicate:&quot;name&quot; value_type:STRING directive:INDEX tokenizer:&quot;exact&quot; tokenizer:&quot;term&quot;
+I0128 19:33:13.912672       1 mutation.go:146] Done schema update predicate:&#34;name&#34; value_type:STRING directive:INDEX tokenizer:&#34;exact&#34; tokenizer:&#34;term&#34;
 
 ...
 
 Logs for modifying schema (deleted fulltext on inner_thoughts and exact on name):
 
 I0128 19:33:40.578193       1 index.go:700] Deleting index for attr inner_thoughts and tokenizers [fulltext]
-I0128 19:33:40.578261       1 mutation.go:146] Done schema update predicate:&quot;inner_thoughts&quot; value_type:STRING list:true
+I0128 19:33:40.578261       1 mutation.go:146] Done schema update predicate:&#34;inner_thoughts&#34; value_type:STRING list:true
 I0128 19:33:40.581631       1 index.go:700] Deleting index for attr name and tokenizers [term]
-I0128 19:33:40.581695       1 mutation.go:146] Done schema update predicate:&quot;name&quot; value_type:STRING directive:INDEX tokenizer:&quot;exact&quot;
-</code></pre>
-
-<h3 id="overview-of-the-previous-code">Overview of the previous code</h3>
-
+I0128 19:33:40.581695       1 mutation.go:146] Done schema update predicate:&#34;name&#34; value_type:STRING directive:INDEX tokenizer:&#34;exact&#34;
+</code></pre></div><h3 id="overview-of-the-previous-code">Overview of the previous code</h3>
 <p>Previously, reindexing logic was split among three files.</p>
-
 <ul>
-<li><p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/mutation.go">worker/mutation.go</a>:
+<li>
+<p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/mutation.go">worker/mutation.go</a>:
 This file decided whether the reindexing needed to happen by comparing the old and new schema updates.
-The logic was different depending on whether the schema previously existed, further complicating things.</p></li>
-
-<li><p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/index.go">worker/index.go</a>:
+The logic was different depending on whether the schema previously existed, further complicating things.</p>
+</li>
+<li>
+<p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/worker/index.go">worker/index.go</a>:
 This file contained the reindexing functions that were called by <code>worker/mutation.go</code>.
-These functions in turn were just very light wrappers around the functions in the <code>postings</code> package that do most of the work.</p></li>
-
-<li><p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/posting/index.go">posting/index.go</a>:
-This file contained the main logic to delete and rebuild the indices.</p></li>
+These functions in turn were just very light wrappers around the functions in the <code>postings</code> package that do most of the work.</p>
+</li>
+<li>
+<p><a href="https://github.com/dgraph-io/dgraph/blob/2033183190db7bc445d300cb5b9ea829d1c58cea/posting/index.go">posting/index.go</a>:
+This file contained the main logic to delete and rebuild the indices.</p>
+</li>
 </ul>
-
 <h3 id="refactoring">Refactoring</h3>
-
 <p>Before I embarked on the main task of supporting partial reindexing, I refactored the existing logic.
 Out of the gate, there were several avenues to simplify the logic.</p>
-
 <ul>
-<li><p><code>worker/index.go</code> could be removed entirely.
-The file was little more than a wrapper around other functions and obfuscated the logic without offering a compelling argument to keep using it.</p></li>
-
-<li><p><code>posting/index.go</code> had multiple entry points to delete and rebuild each type of index (i.e reverse or count indices).
-Instead, there should only be one exported function which decides which of these other functions should be called.</p></li>
-
-<li><p><code>worker/mutation.go</code> had different logic for new predicates than for predicates that existed already, even though a lot of this logic was replicated.
+<li>
+<p><code>worker/index.go</code> could be removed entirely.
+The file was little more than a wrapper around other functions and obfuscated the logic without offering a compelling argument to keep using it.</p>
+</li>
+<li>
+<p><code>posting/index.go</code> had multiple entry points to delete and rebuild each type of index (i.e reverse or count indices).
+Instead, there should only be one exported function which decides which of these other functions should be called.</p>
+</li>
+<li>
+<p><code>worker/mutation.go</code> had different logic for new predicates than for predicates that existed already, even though a lot of this logic was replicated.
 This file was also tasked with comparing the old and new schemas and deciding whether each type of index needs to be rebuilt.
-However, this is something that could be easily be done in <code>posting/index.go</code>, which would hide a lot of complexity from the <code>worker</code> package.</p></li>
+However, this is something that could be easily be done in <code>posting/index.go</code>, which would hide a lot of complexity from the <code>worker</code> package.</p>
+</li>
 </ul>
-
 <p>The basic idea behind the refactor was to let <code>worker/mutation.go</code> simply compile a list of the required information to perform the rebuild and move most of the logic to <code>posting/index.go</code>.</p>
-
 <p>I settled on the following struct:</p>
-
-<pre><code class="language-go">type IndexRebuild struct {
-	Attr          string // Predicate name.
-	StartTs       uint64 // Start timestamp of the current transaction.
-	OldSchema     *pb.SchemaUpdate
-	CurrentSchema *pb.SchemaUpdate
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">type</span> IndexRebuild <span style="color:#000;font-weight:bold">struct</span> {
+	Attr          <span style="color:#458;font-weight:bold">string</span> <span style="color:#998;font-style:italic">// Predicate name.
+</span><span style="color:#998;font-style:italic"></span>	StartTs       <span style="color:#458;font-weight:bold">uint64</span> <span style="color:#998;font-style:italic">// Start timestamp of the current transaction.
+</span><span style="color:#998;font-style:italic"></span>	OldSchema     <span style="color:#000;font-weight:bold">*</span>pb.SchemaUpdate
+	CurrentSchema <span style="color:#000;font-weight:bold">*</span>pb.SchemaUpdate
 }
-</code></pre>
-
-<p>This struct has a single method called <code>Run</code> that executes the entire reindexing process, which allowed me to get rid of the file <code>worker/index.go</code>.
+</code></pre></div><p>This struct has a single method called <code>Run</code> that executes the entire reindexing process, which allowed me to get rid of the file <code>worker/index.go</code>.
 The functions that rebuild each type of index are called by <code>Run</code>, thus preventing the caller from being exposed to unnecessary details.</p>
-
 <p>Each of these functions, figures out what operation (i.e. no-op, delete index, or rebuild index) needs to be performed.
 These functions share a similar pattern, expressed here in pseudo-code.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">type</span> indexOp <span style="color:#458;font-weight:bold">int</span>
 
-<pre><code class="language-go">type indexOp int
+<span style="color:#000;font-weight:bold">const</span> (
+	indexNoop    indexOp = <span style="color:#000;font-weight:bold">iota</span> <span style="color:#998;font-style:italic">// Index should be left alone.
+</span><span style="color:#998;font-style:italic"></span>	indexDelete          = <span style="color:#000;font-weight:bold">iota</span> <span style="color:#998;font-style:italic">// Index should be deleted.
+</span><span style="color:#998;font-style:italic"></span>	indexRebuild         = <span style="color:#000;font-weight:bold">iota</span> <span style="color:#998;font-style:italic">// Index should be deleted and rebuilt.
+</span><span style="color:#998;font-style:italic"></span>)
 
-const (
-	indexNoop    indexOp = iota // Index should be left alone.
-	indexDelete          = iota // Index should be deleted.
-	indexRebuild         = iota // Index should be deleted and rebuilt.
-)
+<span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">performRebuildOfSomeIndexType</span>(rb <span style="color:#000;font-weight:bold">*</span>IndexRebuild) err {
+	op <span style="color:#000;font-weight:bold">:=</span> rb.<span style="color:#900;font-weight:bold">needsIndexRebuildOfThisType</span>()
 
-func performRebuildOfSomeIndexType(rb *IndexRebuild) err {
-	op := rb.needsIndexRebuildOfThisType()
-
-	// Nothing to do so just return
-	if op == indexNoop {
-		return nil
+	<span style="color:#998;font-style:italic">// Nothing to do so just return
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> op <span style="color:#000;font-weight:bold">==</span> indexNoop {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
 	}
 
-	// Logic to delete the index goes here
-
-	// In this case the index only needs to be deleted. For example, in the case
-	// a predicate is deleted entirely.
-	if op == indexDelete {
-		return nil
+	<span style="color:#998;font-style:italic">// Logic to delete the index goes here
+</span><span style="color:#998;font-style:italic"></span>
+	<span style="color:#998;font-style:italic">// In this case the index only needs to be deleted. For example, in the case
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#998;font-style:italic">// a predicate is deleted entirely.
+</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">if</span> op <span style="color:#000;font-weight:bold">==</span> indexDelete {
+		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
 	}
 
-	// Logic to rebuild the index goes here
-}
-</code></pre>
-
-<p><code>indexOp</code> is central to how I was able to get rid of the duplicate logic.
+	<span style="color:#998;font-style:italic">// Logic to rebuild the index goes here
+</span><span style="color:#998;font-style:italic"></span>}
+</code></pre></div><p><code>indexOp</code> is central to how I was able to get rid of the duplicate logic.
 In the refactored code, a value of <code>indexRebuild</code> is returned when the schema is new or when the index needs to be rebuilt.
 Thus, both cases can be handled by the same logic.
 <code>indexNoop</code> and <code>indexDelete</code> do not cause the code to go into separate methods or large branches but rather cause the function to exit early depending on the circumstances.</p>
-
 <h3 id="implementing-partial-reindexing">Implementing partial reindexing</h3>
-
 <p>At this point I had cleaned up the code, but functionally Dgraph worked just as
 before.  The function that adds the index tokens is called <code>addIndexMutations</code>
 and is located inside <code>posting/index.go</code>.  At this point the function generated
 the new index using the complete list of tokenizers from the schema. So in order
 to support partial reindexing I did the following.</p>
-
 <ul>
-<li><p><code>needsIndexRebuild</code> was changed to not just an operation but a list of
+<li>
+<p><code>needsIndexRebuild</code> was changed to not just an operation but a list of
 tokenizers whose tokens need to be deleted and a list of tokenizers whose
 tokens need to be rebuilt.
 These lists are computed by calculating the difference between the set of
-current and previous tokenizers.</p></li>
-
-<li><p>The function that deletes the existing index was modified so that it accepts the name of a tokenizer.
+current and previous tokenizers.</p>
+</li>
+<li>
+<p>The function that deletes the existing index was modified so that it accepts the name of a tokenizer.
 This new function only deletes the entries that were previously added by that
 tokenizer.  Deletion happens by calling that function over all the tokenizers
-marked for deletion.</p></li>
-
-<li><p><code>addIndexMutations</code> was changed to receive a list of tokenizers as a new argument (or rather, a new field in the struct passed to the function).
-Only these tokenizers will be used to generate the tokens that need to be added to the index.</p></li>
+marked for deletion.</p>
+</li>
+<li>
+<p><code>addIndexMutations</code> was changed to receive a list of tokenizers as a new argument (or rather, a new field in the struct passed to the function).
+Only these tokenizers will be used to generate the tokens that need to be added to the index.</p>
+</li>
 </ul>
-
 <h3 id="lessons-learned">Lessons learned</h3>
-
 <ul>
-<li><p><strong>Interfaces should be as small as possible</strong>: Previously, the <code>worker</code>
+<li>
+<p><strong>Interfaces should be as small as possible</strong>: Previously, the <code>worker</code>
 package was exposed to a lot of the internal details of the logic inside the
 <code>postings</code> package.
 The split not only caused the code to be more difficult to understand but it
 made the code brittle since changes inside of <code>posting</code> required changes to
 other packages.  After refactoring, the changes to support partial reindexing
 were completely transparent to other packages to the point I did not have to
-modify <code>worker/mutations.go</code> at all.</p></li>
-
-<li><p><strong>Structs are your friends</strong>: Functions arguments and return values can
+modify <code>worker/mutations.go</code> at all.</p>
+</li>
+<li>
+<p><strong>Structs are your friends</strong>: Functions arguments and return values can
 quickly get out of hand. The more arguments or return values a function has the
 more brittle it becomes during refactorings.  Structs are a great way to reduce
 the number of arguments or return values by allowing us to aggregate related
 values under a single value.  We give up a little safety since the compiler will
 not know which of the struct&rsquo;s members are required to be passed or returned.
-However, the flexibility is worth the extra error-checking code.</p></li>
-
-<li><p><strong>Refactoring pays off</strong>: As mentioned above, investing time in simplifying
+However, the flexibility is worth the extra error-checking code.</p>
+</li>
+<li>
+<p><strong>Refactoring pays off</strong>: As mentioned above, investing time in simplifying
 the code eventually helped me implement partial reindexing a great deal. I could
 have tackled this task without refactoring, but I would only have made it more
-difficult for myself and for future contributors.</p></li>
+difficult for myself and for future contributors.</p>
+</li>
 </ul>
-
 <h3 id="conclusion">Conclusion</h3>
-
 <p>As we strive to improve the performance of Dgraph, it is also important that we
 manage and reduce the complexity of the code and follow best practices to the
 best of our ability.  Not only does that make our jobs easier, but it makes our
 codebase more welcoming to newcomers.</p>
-
 <p>As always, we welcome contributions and pull requests from the community.</p>
-
 
 
 <aside class="post__references">
@@ -539,7 +599,6 @@ codebase more welcoming to newcomers.</p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -605,24 +664,93 @@ received B.S and M.Eng degrees in Computer Science from MIT.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/ristretto-3.jpg">
@@ -660,7 +788,7 @@ received B.S and M.Eng degrees in Computer Science from MIT.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/candle.jpg">
@@ -698,12 +826,51 @@ received B.S and M.Eng degrees in Computer Science from MIT.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/badger-evolution.png">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Thu, Jun 27, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/serialization-versioning/">Semantic Versioning, Go Modules, and Databases</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/francesc/">Francesc Campoy</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -733,31 +900,10 @@ received B.S and M.Eng degrees in Computer Science from MIT.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -894,9 +1040,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

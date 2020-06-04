@@ -2,102 +2,187 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/badger/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/badger/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Introducing Badger: A fast key-value store written purely in Go - Dgraph Blog</title>
-    <meta property='og:title' content="Introducing Badger: A fast key-value store written purely in Go - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Introducing Badger: A fast key-value store written purely in Go - Dgraph Blog</title>
+  <meta property='og:title' content="Introducing Badger: A fast key-value store written purely in Go - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/badger/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/juno.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/juno.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/juno.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Introducing Badger: A fast key-value store written purely in Go"/>
-  <meta name="twitter:description" content="We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Introducing Badger: A fast key-value store written purely in Go" />
+  <meta name="twitter:description"
+    content="We have built an efficient and persistent log structured merge (LSM) tree based key-value store, purely in Go language. It is based upon WiscKey paper included in USENIX FAST 2016." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -223,20 +308,23 @@
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -251,9 +339,10 @@
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Introducing%20Badger%3a%20A%20fast%20key-value%20store%20written%20purely%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Introducing%20Badger%3a%20A%20fast%20key-value%20store%20written%20purely%20in%20Go&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -261,7 +350,8 @@
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/juno.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/juno.jpg">
 
                             <div class="post__header">
 
@@ -285,115 +375,87 @@
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p>We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p>We have built an efficient and persistent log structured merge (LSM) tree based key-value store,
 purely in Go language.  It is based upon <a href="https://www.usenix.org/system/files/conference/fast16/fast16-papers-lu.pdf">WiscKey paper included in USENIX FAST
 2016</a>. This design is
 highly SSD-optimized and separates keys from values to minimize I/O amplification; leveraging both
 the sequential and the random performance of SSDs.</p>
-
 <p><strong>We call it <a href="https://github.com/dgraph-io/badger">Badger</a>.</strong> Based on benchmarks, <a href="https://github.com/dgraph-io/badger">Badger</a> is at least <strong>3.5x faster than RocksDB</strong> when
 doing random reads.  For value sizes between 128B to 16KB, data loading is 0.86x - 14x faster
 compared to RocksDB, with <a href="https://github.com/dgraph-io/badger">Badger</a> gaining significant ground as value size increases. On the flip
 side, <a href="https://github.com/dgraph-io/badger">Badger</a> is currently slower for range key-value iteration, but that has a lot of room for
 optimization.</p>
-
 <h2 id="background-and-motivation">Background and Motivation</h2>
-
 <h3 id="word-about-rocksdb">Word about RocksDB</h3>
-
 <p>RocksDB is the most popular and probably the most efficient key-value store in the market. It originated
 in Google as SSTable which formed the basis for Bigtable, then got released as LevelDB. Facebook
 then improved LevelDB to add concurrency and optimizations for SSDs and released that as
 RocksDB. Work on RocksDB has been continuously going on for many years now, and it&rsquo;s used in
 production at Facebook and many other companies.</p>
-
 <p>So naturally, if you need a key-value store, you&rsquo;d gravitate towards RocksDB. It&rsquo;s a
 solid piece of technology, and it works. The biggest issue with using RocksDB is that it is written in <code>C++</code>;
 requiring the use of Cgo to be called via Go.</p>
-
 <h3 id="cgo-the-necessary-evil">Cgo: The necessary evil</h3>
-
 <p>At Dgraph, we have been using RocksDB via Cgo since we started. And we&rsquo;ve faced many issues over
 time due to this dependency. <a href="https://dave.cheney.net/2016/01/18/cgo-is-not-go">Cgo is not Go</a>, but
 when there are better libraries in C++ than Go, Cgo is a necessary evil.</p>
-
 <p>The problem is, Go CPU profiler doesn&rsquo;t see beyond Cgo calls. Go memory profiler takes it one step
 further. Forget about giving you memory usage breakdown in Cgo space, Go memory profiler fails to
 even notice the presence of Cgo code. Any memory used by Cgo would not even make it to the memory
 profiler. Other tools like Go race detector, don&rsquo;t work either.</p>
-
 <p>Cgo has caused us <code>pthread_create</code> issues in Go1.4, and then again in Go1.5, due to a bug
 regression. Lightweight goroutines become expensive pthreads when Cgo is involved, and we had to
 modify how we were writing data to RocksDB to avoid assigning too many goroutines.</p>
-
 <p>Cgo has caused us memory leaks. Who owns and manages memory when making calls is just not clear.
 Go, and C are at the opposite spectrums. <strong>One doesn&rsquo;t let you free memory, the other
 requires it.</strong> So, you make a Go call, but then forget to <code>Free()</code>, and nothing breaks. <em>Except much later.</em></p>
-
 <p>Cgo has given us a unmaintainable code. Cgo makes code ugly. The Cgo layer between RocksDB was the one piece of code no one in the team wanted to touch.</p>
-
 <p>Surely, we fixed the memory leaks in our API usage over time. In fact, I <em>think</em> we have fixed them
 all by now, but I can&rsquo;t be sure. Go memory profiler would never tell you. And every time someone
 complains about Dgraph taking up more memory or crashing due to OOM, it makes me nervous that this
 is a memory leak issue.</p>
-
 <h3 id="huge-undertaking">Huge undertaking</h3>
-
 <p>Everyone I told about our woes with Cgo, told me that we should just work on fixing those issues.
 Writing a key-value store which can provide the same performance as RocksDB is a huge undertaking, not
 worth our effort. Even my team wasn&rsquo;t sure. I had my doubts as well.</p>
-
 <p>I have great respect for any piece of technology which has been iterated upon by the smartest
 engineers on the face of the planet for years. RocksDB is that. And if I was writing Dgraph in C++,
 I&rsquo;d happily use it.</p>
-
 <blockquote>
 <p>But, I just hate ugly code.</p>
 </blockquote>
-
 <p>And I hate recurring bugs. No amount of effort would have ensured that we would no longer have any
 more issues with using RocksDB via Cgo. I wanted a clean slate, and my profiler tools back. Building
 a key-value store in Go from scratch was the only way to achieve it.</p>
-
 <p>I looked around. The existing key-value stores written in Go didn&rsquo;t even come close to RocksDB&rsquo;s
 performance. And that&rsquo;s a deal breaker. <strong>You don&rsquo;t trade performance for cleanliness. You demand
 both.</strong></p>
-
 <p>So, I decided we will replace our dependency on RocksDB, but given this isn&rsquo;t a priority for Dgraph,
 none of the team members should work on it. This would be a side project that only I will
 undertake. I started reading up about B+ and LSM trees, recent improvements to their design, and
 came across WiscKey paper. It had great promising ideas. I decided to spend a month away from core
 Dgraph, building <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
-
 <p><em>That&rsquo;s not how it went.</em> I couldn&rsquo;t spend a month away from Dgraph. Between all the founder duties,
 I couldn&rsquo;t fully dedicate time to coding either.  <a href="https://github.com/dgraph-io/badger">Badger</a> developed during my spurts of coding
 activity, and one of the team members&rsquo; part-time contributions. Work started end January, and now I
 think it&rsquo;s in a good state to be trialed by the Go community.</p>
-
 <h2 id="lsm-trees">LSM trees</h2>
-
 <p>Before we delve into <a href="https://github.com/dgraph-io/badger">Badger</a>, let&rsquo;s understand key-value store
 designs. They play an important role in data-intensive applications including databases. Key-value
 stores allow efficient updates, point lookups and range queries.</p>
-
 <p>There are two popular types of implementations: Log-structured merge (LSM) tree based, and B+ tree
 based. The main advantage LSM trees have is that all the foreground writes happen in memory, and all
 background writes maintain sequential access patterns. Thus they achieve a very high write
 throughput. On the other hand, small updates on B+-trees involve repeated random disk writes, and
 hence are unable to maintain high throughput write workload<sup>1</sup>.</p>
-
 <p>To deliver high write performance, LSM-trees batch key-value pairs and write them sequentially.
 Then, to enable efficient lookups, LSM-trees continuously read, sort and write key-value pairs in
 the background. This is known as a <code>compaction</code>. LSM-trees do this over many levels, each level
 holding a factor more data than the previous, typically <code>size of Li+1 = 10 x size of Li</code>.</p>
-
 <p>Within a single
 level, the key-values get written into files of fixed size, in a sorted order. Except level zero,
 all other levels have zero overlaps between keys stored in files at the same level.</p>
-
 <p>Each level has a maximum capacity. As a level <code>Li</code> fills up, its data gets merged with data from
 lower level <code>Li+1</code> and files in <code>Li</code> deleted to make space for more incoming data. As data flows
 from level zero to level one, two, and so on, the same data is re-written multiple times throughout
@@ -401,121 +463,91 @@ its lifetime. Each key update causes many writes until data eventually settles.
 This constitutes <em>write amplification</em>. For a 7 level LSM tree, with 10x size increase factor, this
 can be 60; 10 for each transition from L1-&gt;L2, L2-&gt;L3, and so on, ignoring L0 due to special
 handling.</p>
-
 <p>Conversely, to read a key from LSM tree, all the levels need to be checked. If present in multiple
 levels, the version of key at level closer to zero is picked (this version is more up to date).
 Thus, a single key lookup causes many reads over files, this constitutes <em>read amplification</em>. WiscKey
 paper estimates this to be 336 for a 1-KB key-value pair.</p>
-
 <p>LSMs were designed around hard drives. In HDDs, random I/Os are over 100x slower than sequential
 ones. Thus, running compactions to continually sort keys and enable efficient lookups is an
 excellent trade-off.</p>
-
-<p><img src="https://blog.dgraph.io/images/nvme-ssd-960pro.jpg" alt="NVMe SSD Samsung 960 pro" /></p>
-
+<p><img src="https://blog.dgraph.io/images/nvme-ssd-960pro.jpg" alt="NVMe SSD Samsung 960 pro"></p>
 <p>However, SSDs are fundamentally different from HDDs. The difference between their sequential and
 random reads are not nearly as large as HDDs. In fact, top of the line SSDs like <a href="http://www.anandtech.com/show/10754/samsung-960-pro-ssd-review">Samsung 960
 Pro</a> can provide 440K random read
 operations per second, with 4KB block size. Thus, an LSM-tree that performs a large number of
 sequential writes to reduce later random reads is wasting bandwidth needlessly.</p>
-
 <h2 id="badger">Badger</h2>
-
 <p><strong><a href="https://github.com/dgraph-io/badger">Badger</a> is a simple, efficient, and persistent key-value store.</strong>  Inspired by the simplicity of
 LevelDB, it provides <code>Get</code>, <code>Set</code>, <code>Delete</code>, and <code>Iterate</code> functions. On top of it, it adds
 <code>CompareAndSet</code> and <code>CompareAndDelete</code> atomic operations (<a href="https://godoc.org/github.com/dgraph-io/badger">see GoDoc</a>). It does not aim to be a database and hence
 does not provide transactions, versioning or snapshots.  Those things can be easily built on top of
 <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
-
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> separates keys from values. The keys are stored in LSM tree, while the values are stored in a
 write-ahead log called the <em>value log</em>. Keys tend to be smaller than values. Thus this set up produces
 much smaller LSM trees. When required, the values are directly read from the log stored on SSD,
 utilizing its vastly superior random read performance.</p>
-
 <h3 id="guiding-principles">Guiding principles</h3>
-
 <p>These are the guiding principles that decide the design, what goes in and what doesn&rsquo;t in Badger.</p>
-
 <ul>
 <li>Write it purely in Go language.</li>
 <li>Use the latest research to build the fastest key-value store.</li>
 <li>Keep it simple, stupid.</li>
 <li>SSD-centric design.</li>
 </ul>
-
 <h3 id="key-value-separation">Key-Value separation</h3>
-
 <p>The major performance cost of LSM-trees is the compaction process. During compactions, multiple
 files are read into memory, sorted, and written back. Sorting is essential for efficient retrieval,
 for both key lookups and range iterations. With sorting, the key lookups would only require accessing at most one file per level (excluding level zero, where we&rsquo;d need to check all the files).
 Iterations would result in sequential access to multiple files.</p>
-
 <p>Each file is of fixed size, to enhance caching. Values tend to be larger than keys. When you store
 values along with the keys, the amount of data that needs to be compacted grows significantly.</p>
-
 <p>In <a href="https://github.com/dgraph-io/badger">Badger</a>, only a pointer to the value in the value log is stored alongside the key. <a href="https://github.com/dgraph-io/badger">Badger</a> employs
 <em>delta encoding</em> for keys to reduce the effective size even further. Assuming 16 bytes per key
 and 16 bytes per value pointer, <strong>a single 64MB file can store two million key-value pairs.</strong></p>
-
 <h3 id="write-amplification">Write Amplification</h3>
-
 <p>Thus, the LSM tree generated by <a href="https://github.com/dgraph-io/badger">Badger</a> is much smaller than
 that of RocksDB. This smaller LSM-tree reduces the number of levels, and hence number of compactions
 required to achieve stability. Also, values are not moved along with keys, because they&rsquo;re elsewhere
-in value log. Assuming 1KB value and 16 byte keys, the effective write amplification per level is <code>(10*16 +
-1024)/(16 + 1024) ~ 1.14</code>, a much smaller fraction.</p>
-
+in value log. Assuming 1KB value and 16 byte keys, the effective write amplification per level is <code>(10*16 + 1024)/(16 + 1024) ~ 1.14</code>, a much smaller fraction.</p>
 <p>You can see the performance gains of this approach compared to RocksDB as the value size increases;
 where loading data to <a href="https://github.com/dgraph-io/badger">Badger</a> takes factors less time (see Benchmarks below).</p>
-
 <h3 id="read-amplification">Read Amplification</h3>
-
 <p>As mentioned above, the size of LSM tree generated by <a href="https://github.com/dgraph-io/badger">Badger</a> is much smaller. Each file at each
 level stores lots more keys than typical LSM trees. Thus, for the same amount of data, fewer levels
 get filled up. A typical key lookup requires reading all files in level zero, and one file per level
 from level one and onwards. With <a href="https://github.com/dgraph-io/badger">Badger</a>, filling fewer levels means, fewer files need to be read to
 lookup a key. Once key (along with value pointer) is fetched, the value can be fetched by doing
 random read in value log stored on SSD.</p>
-
-<p>Furthermore, during benchmarking, we found that <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM
+<p>Furthermore, during benchmarking, we found that <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM
 tree is so small, it can easily fit in RAM. For 1KB values and 75 million 22 byte keys, the raw size
-of the entire dataset is 72 GB. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree size for
+of the entire dataset is 72 GB. <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM tree size for
 this setup is a mere 1.7G, which can easily fit into RAM.  This is what causes
-<a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s random key lookup performance to be at least 3.5x
-faster, and <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-only iteration to be blazingly
+<a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s random key lookup performance to be at least 3.5x
+faster, and <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s key-only iteration to be blazingly
 faster than RocksDB.</p>
-
 <h3 id="crash-resilience">Crash resilience</h3>
-
 <p>LSM trees write all the updates in memory first in memtables. Once they fill up, memtables get
 swapped over to immutable memtables, which eventually get written out to files in level zero on
 disk.</p>
-
 <p>In the case of a crash, all the recent updates still in memory tables would be lost.
 Key-value stores deal with this issue, by first writing all the updates in a write-ahead log. <a href="https://github.com/dgraph-io/badger">Badger</a>
 has a write-ahead log, it&rsquo;s called value log.</p>
-
 <p>Just like a typical write-ahead log, before any update is applied to LSM tree, it gets written to
 value log first. In the case of a crash, <a href="https://github.com/dgraph-io/badger">Badger</a> would iterate over the recent updates in value log, and
 apply them back to the LSM tree.</p>
-
 <p>Instead of iterating over the entire value log, <a href="https://github.com/dgraph-io/badger">Badger</a> puts a pointer to the latest value in each
 memtable. Effectively, the latest memtable which made its way to disk would have a value pointer,
 before which all the updates have already made their way to disk. Thus, we can replay from this
 pointer onwards, and reapply all the updates to LSM tree to get all our updates back.</p>
-
 <h3 id="overall-size">Overall size</h3>
-
-<p>RocksDB applies block compression to reduce the size of LSM tree. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree is much smaller in
+<p>RocksDB applies block compression to reduce the size of LSM tree. <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM tree is much smaller in
 comparison and can be stored in RAM entirely, so it doesn&rsquo;t need to do any compression on the tree. However,
 the size of value log can grow quite quickly.  Each update is a new entry in the value log, and
 therefore multiple updates for the same key take up space multiple times.</p>
-
 <p>To deal with this, <a href="https://github.com/dgraph-io/badger">Badger</a> does two things. It allows compressing values in value log. Instead of
 compressing multiple key-values together, we only compress each key-value individually. This
 provides the best possible random read performance. The client can set it so compression is
 only done if the key-value size is over an adjustable threshold, set by default to 1KB.</p>
-
 <p>Secondly, <a href="https://github.com/dgraph-io/badger">Badger</a> runs value garbage collection. This runs periodically and samples a 100MB size of a
 randomly selected value log file. It checks if at least a significant chunk of it should be
 discarded, due to newer updates in later logs. If so, the valid key-value pairs would be appended to
@@ -523,18 +555,13 @@ the log, the older file discarded, and the value pointers updated in the LSM tre
 this adds more work for LSM tree; so shouldn&rsquo;t be run when loading a huge data set. More work is
 required to only trigger this garbage collection to run during periods of little client
 activity.</p>
-
 <h3 id="hardware-costs">Hardware Costs</h3>
-
 <p>But, given the fact that SSDs are getting cheaper and cheaper, using extra space in SSD is
 almost nothing compared to having to store and serve a major chunk of LSM tree from memory. Consider this:</p>
-
-<p>For 1KB values, 75 million 16 byte keys, RocksDB&rsquo;s LSM tree is 50GB in size. <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s value log is
+<p>For 1KB values, 75 million 16 byte keys, RocksDB&rsquo;s LSM tree is 50GB in size. <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s value log is
 74GB (without value compression), and LSM tree is 1.7GB. Extrapolating it three times, we get 225 million
 keys, RocksDB size of 150GB and <a href="https://github.com/dgraph-io/badger">Badger</a> size of 222GB value log, and 5.1GB LSM tree.</p>
-
 <p>Using Amazon AWS US East (Ohio) datacenter:</p>
-
 <ul>
 <li>To achieve a random read performance equivalent of <a href="https://github.com/dgraph-io/badger">Badger</a> (at least 3.5x faster), RocksDB would need to
 be run on an <code>r3.4xlarge</code> instance, which provides 122 GB of RAM for <code>$1.33</code> per hour; so most of its
@@ -545,20 +572,15 @@ LSM tree can fit into memory.</li>
 <li>Going 1-year term all upfront payment, this is $6182 for RocksDB v/s $870 for <a href="https://github.com/dgraph-io/badger">Badger</a>, still 7.1x
 cheaper. <strong>That&rsquo;s a whopping 86% saving.</strong></li>
 </ul>
-
 <h2 id="benchmarks">Benchmarks</h2>
-
 <h3 id="setup">Setup</h3>
-
 <p>We rented a storage optimized <a href="https://aws.amazon.com/ec2/instance-types/">i3.large
 instance</a> from Amazon AWS, which provides 450GB NVMe
 SSD storage, 2 virtual cores along with 15.25GB RAM. This instance provides local SSD, which we
 tested via <a href="https://linux.die.net/man/1/fio"><code>fio</code></a> to sustain close to 100K random read IOPS for 4KB
 block sizes.</p>
-
 <p>The data sets were chosen to generate sizes too big to fit entirely in RAM, in either RocksDB
 or <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
-
 <table>
 <thead>
 <tr>
@@ -567,20 +589,17 @@ or <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
 <th>Raw data size</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>128B</td>
 <td>250M</td>
 <td>35GB</td>
 </tr>
-
 <tr>
 <td>1024B</td>
 <td>75M</td>
 <td>73GB</td>
 </tr>
-
 <tr>
 <td>16KB</td>
 <td>5M</td>
@@ -588,118 +607,90 @@ or <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
 </tr>
 </tbody>
 </table>
-
 <p>We then loaded data one by one, first in RocksDB then in <a href="https://github.com/dgraph-io/badger">Badger</a>, never running the loaders
 concurrently. This gave us the data loading times and output sizes. For random <code>Get</code> and <code>Iterate</code>,
 we used Go benchmark tests and ran them for 3 minutes, going down to 1 minute for 16KB values.</p>
-
 <p>All the code for benchmarking is available <a href="https://github.com/dgraph-io/badger-bench">in this
 repo</a>. All the commands ran and
 their measurements recorded are available in <a href="https://github.com/dgraph-io/badger-bench/blob/master/BENCH-rocks.txt">this log
 file</a>. The
 charts and their data is <a href="https://docs.google.com/a/dgraph.io/spreadsheets/d/1x8LUw_85g8Jo9jFtbAwuXrLm_DB1SOG8QCTSjXj8Hk0/edit?usp=sharing">viewable
 here</a>.</p>
-
 <h3 id="results">Results</h3>
-
 <p>In the following benchmarks, we measured 4 things:</p>
-
 <ul>
 <li>Data loading performance</li>
 <li>Output size</li>
 <li>Random key lookup performance (<code>Get</code>)</li>
 <li>Sorted range iteration performance (<code>Iterate</code>)</li>
 </ul>
-
 <p>All the 4 measurements are visualized in the following charts.
-<img src="https://blog.dgraph.io/images/badger-benchmarks.png" alt="[Badger](https://github.com/dgraph-io/badger) benchmarks" /></p>
-
-<p><strong>Data loading performance:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-value separation design shows huge performance gains as
+<img src="https://blog.dgraph.io/images/badger-benchmarks.png" alt="Badger benchmarks"></p>
+<p><strong>Data loading performance:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s key-value separation design shows huge performance gains as
 value sizes increase. For value sizes of 1KB and 16KB, <a href="https://github.com/dgraph-io/badger">Badger</a> achieves 4.5x and 11.7x more
 throughput than RocksDB. For smaller values, like 16 bytes not shown here, <a href="https://github.com/dgraph-io/badger">Badger</a> can be 2-3x
 slower, due to slower compactions (see further work).</p>
-
 <p><strong>Store size:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a> generates much smaller LSM tree, but a larger value size log. The size of
-<a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM tree is proportional only to the number of keys, not values. Thus, <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s LSM
+<a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM tree is proportional only to the number of keys, not values. Thus, <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s LSM
 tree decreases in size as we progress from 128B to 16KB. In all three scenarios, <a href="https://github.com/dgraph-io/badger">Badger</a> produced an
 LSM tree which could fit entirely in RAM of the target server.</p>
-
-<p><strong>Random read latency:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s <code>Get</code> latency is only 18% to 27% of RocksDB&rsquo;s <code>Get</code>
-latency. <strong>In our opinion, this is the biggest win of this design.</strong> This happens because <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s
+<p><strong>Random read latency:</strong> <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s <code>Get</code> latency is only 18% to 27% of RocksDB&rsquo;s <code>Get</code>
+latency. <strong>In our opinion, this is the biggest win of this design.</strong> This happens because <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s
 entire LSM tree can fit into RAM, significantly decreasing the amount of time it takes to find the
 right tables, check their bloom filters, pick the right blocks and retrieve the key. Value retrieval is then
 a single SSD <code>file.pread</code> away.</p>
-
 <p>In contrast, RocksDB can&rsquo;t fit the entire tree in memory. Even assuming it can keep the table index
 and bloom filters in memory, it would need to fetch the entire blocks from disk, decompress them,
-then do key-value retrieval (<a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s smaller LSM tree avoids
+then do key-value retrieval (<a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s smaller LSM tree avoids
 the need for compression). This obviously takes longer, and given lack of data access locality,
 caching isn&rsquo;t as effective.</p>
-
-<p><strong>Range iteration latency:</strong>  <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s range iteration is
+<p><strong>Range iteration latency:</strong>  <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s range iteration is
 significantly slower than RocksDB&rsquo;s range iteration, when values are also retrieved from SSD. <em>We
 didn&rsquo;t expect this, and still don&rsquo;t quite understand it.</em> We expected some slowdown due to the need
 to do IOPS on SSD, while RocksDB does purely serial reads. But, given the 100K IOPS <code>i3.large</code>
 instance is capable of, we didn&rsquo;t even come close to using that bandwidth, despite pre-fetching.
 This needs further work and investigation.</p>
-
-<p>On the other end of the spectrum, <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s key-only iteration is blazingly faster than RocksDB or key-value
+<p>On the other end of the spectrum, <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s key-only iteration is blazingly faster than RocksDB or key-value
 iteration (latency is shown by the almost invisible red bar). This is quite useful in certain use
 cases we have at Dgraph, where we iterate over the keys, run filters and only retrieve values for a
 much smaller subset of keys.</p>
-
 <h2 id="further-work">Further work</h2>
-
 <h3 id="speed-of-range-iteration">Speed of range iteration</h3>
-
 <p>While <a href="https://github.com/dgraph-io/badger">Badger</a> can do key-only iteration blazingly fast, things slow down when it
 also needs to do value lookups. Theoretically, this shouldn&rsquo;t be the case. Amazon&rsquo;s i3.large disk
 optimized instance can do 100,000 4KB block random reads per second. Based on this, we should be
 able to iterate 100K key-value pairs per second, in other terms six million key-value pairs per minute.</p>
-
-<p>However, <a href="https://github.com/dgraph-io/badger">Badger</a>&rsquo;s current implementation doesn&rsquo;t produce SSD
+<p>However, <a href="https://github.com/dgraph-io/badger">Badger</a>&lsquo;s current implementation doesn&rsquo;t produce SSD
 random read requests even close to this limit, and the key-value iteration suffers as a result.
 There&rsquo;s a lot of room for optimization in this space.</p>
-
 <h3 id="speed-of-compactions">Speed of compactions</h3>
-
 <p><a href="https://github.com/dgraph-io/badger">Badger</a> is currently slower when it comes to running
 compactions compared to RocksDB. Due to this, for a dataset purely containing smaller values, it is
 slower to load data to <a href="https://github.com/dgraph-io/badger">Badger</a>. This needs more optimization.</p>
-
 <h3 id="lsm-tree-compression">LSM tree compression</h3>
-
 <p>Again in a dataset purely containing smaller values, the size of LSM tree would be significantly
 larger than RocksDB because <a href="https://github.com/dgraph-io/badger">Badger</a> doesn&rsquo;t run compression on LSM tree. This should be easy to add
 on if needed, and would make a great first-time contributor project.</p>
-
 <h3 id="b-tree-approach">B+ tree approach</h3>
-
 <p><sup>1</sup> Recent improvements to SSDs might make B+-trees a viable option.
 Since WiscKey paper was written, SSDs have made huge gains in random write performance. A new
 interesting direction would be to combine the value log approach, and keep only keys and value
 pointers in the B+-tree. This would trade LSM tree read-sort-merge sequential write compactions with
 many random writes per key update and might achieve the same write throughput as LSM for a much
 simpler design.</p>
-
 <h2 id="conclusion">Conclusion</h2>
-
 <p>We have built an efficient key-value store, which can compete in performance against top of the line
 key-value stores in market. It is currently rough around the edges, but provides a solid platform
 for any industrial application, be it data storage or building another database.</p>
-
 <p>We will be replacing Dgraph&rsquo;s dependency on RocksDB soon with
 <a href="https://github.com/dgraph-io/badger">Badger</a>; making our builds easier, faster, making Dgraph
 cross-platform and paving the way for embeddable Dgraph. The biggest win of using
 <a href="https://github.com/dgraph-io/badger">Badger</a> is <strong>a performant Go native key-value store.</strong> The
 nice side-effects are <strong>~4 times faster <code>Get</code> and a potential 86% reduction in AWS bills,</strong> due to
 less reliance on RAM and more reliance on ever faster and cheaper SSDs.</p>
-
 <p>So try out <a href="https://github.com/dgraph-io/badger">Badger</a> in your project, and let us know your experience.</p>
-
 <p><em>P.S. Special thanks to <a href="https://research.google.com/pubs/SanjayGhemawat.html">Sanjay Ghemawat</a> and
 <a href="http://pages.cs.wisc.edu/~ll/">Lanyue Lu</a> for responding to my questions about design choices.</em></p>
-
 
 
 <aside class="post__references">
@@ -710,7 +701,6 @@ speed of 265,00 kmph relative to Earth.</p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -727,7 +717,6 @@ speed of 265,00 kmph relative to Earth.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
-
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -798,24 +787,93 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
@@ -853,7 +911,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/milky_way.jpg">
@@ -891,12 +949,51 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/badger2.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Mon, Nov 18, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/releasing-badger-v2/">Releasing BadgerDB v2.0</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -926,31 +1023,10 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1087,9 +1163,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

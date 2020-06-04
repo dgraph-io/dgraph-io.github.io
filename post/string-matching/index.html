@@ -2,104 +2,189 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/string-matching/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/string-matching/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>String matching in Dgraph v0.7.5 - Dgraph Blog</title>
-    <meta property='og:title' content="String matching in Dgraph v0.7.5 - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>String matching in Dgraph v0.7.5 - Dgraph Blog</title>
+  <meta property='og:title' content="String matching in Dgraph v0.7.5 - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/string-matching/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/splitting-dunes.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/splitting-dunes.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/splitting-dunes.jpg" />
+  
   
 
-  <meta name="twitter:title" content="String matching in Dgraph v0.7.5"/>
-  <meta name="twitter:description" content="The recent release of Dgraph is packed with new features and improvements.
+  <meta name="twitter:title" content="String matching in Dgraph v0.7.5" />
+  <meta name="twitter:description"
+    content="The recent release of Dgraph is packed with new features and improvements.
 Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
-All of these changes make Dgraph an excellent tool for working with multilingual applications."/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+All of these changes make Dgraph an excellent tool for working with multilingual applications." />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -225,20 +310,23 @@ All of these changes make Dgraph an excellent tool for working with multilingual
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -253,9 +341,10 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=String%20matching%20in%20Dgraph%20v0.7.5&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fstring-matching%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=String%20matching%20in%20Dgraph%20v0.7.5&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fstring-matching%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -263,7 +352,8 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/splitting-dunes.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/splitting-dunes.jpg">
 
                             <div class="post__header">
 
@@ -287,103 +377,71 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 
                         </div>
 
-                        <div class="post__content inner-content">
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
                             <p>The recent release of Dgraph is packed with new features and improvements.
 Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
 All of these changes make Dgraph an excellent tool for working with multilingual applications.</p>
-
 <h3 id="values-in-many-languages">Values in Many Languages</h3>
-
 <p>We&rsquo;re working hard to keep the query language easy to use and clean.
 Dgraph, in v0.7.5, adopted and extended the language tag syntax from the RDF N-Quads standard.
 It is intuitive, well-known, and was partially supported in previous versions (during data loading).</p>
-
 <p>Let&rsquo;s start from the beginning - the data.
 Dgraph uses RDF N-Quads for data loading and backup.
 String literals in N-Quads may be followed by the <code>@</code> sign and language tag, e.g. <code>&quot;badger&quot;@en</code> or <code>&quot;Dachs&quot;@de</code>.
 Multiple such literals may be used as a value for a single entity/attribute pair.</p>
-
 <p>When querying for a predicate with multiple values, the user is able to use the <code>@lang</code> notation known from RDF N-Quads.
 Many languages can be specified in a list of preference, e.g. <code>@en:de</code> denotes that preferred language is English, but if such a value is not present, a value in German should be returned.</p>
-
 <p>Language can also be specified in functions, which is important especially for full text search.</p>
-
 <h3 id="example-data">Example Data</h3>
-
 <p>The dataset used in all examples is the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz">Freebase film data</a>.
 As this post is string-oriented, queries are focused on movie titles in multiple languages, and no other information is retrieved.
 As we don&rsquo;t have information about type of <code>name</code>, we use filtering to select only the movie titles, and to limit the number of results a bit - <code>@filter(gt(count(genre), 1))</code>.</p>
-
 <p>The schema for <code>name</code> field is very simple - it defines 3 types of indexes:</p>
-
 <pre><code>curl localhost:8080/query -XPOST -d $'
 mutation {
   schema {
     name: string @index(term, fulltext, exact) .
   }
 }' | python -m json.tool | less
-</code></pre>
-
-<p><code>term</code> index is used for term matching with the <code>allofterms</code> and <code>anyofterms</code> functions.
+</code></pre><p><code>term</code> index is used for term matching with the <code>allofterms</code> and <code>anyofterms</code> functions.
 Note that it was the only string index available in previous releases of Dgraph.</p>
-
 <p><code>fulltext</code> index uses matching with language specific stemming and stopwords.
 One thing worth noting is, that values indexed with <code>fulltext</code> are processed according to their&rsquo;s language (if they are tagged). If values are untagged, English is used as a default language.</p>
-
 <p><code>exact</code> index is used for regular expression matching.</p>
-
 <h3 id="full-text-search-fts">Full Text Search (FTS)</h3>
-
 <h5 id="very-short-introduction-to-natural-language-processing-nlp">Very Short Introduction to Natural Language Processing (NLP)</h5>
-
 <p>By definition (from <a href="https://en.wikipedia.org/wiki/Full-text_search">Wikipedia</a>):</p>
-
-<pre><code class="language-html">In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
-</code></pre>
-
-<p>This may sound trivial, but it&rsquo;s not.
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
+</code></pre></div><p>This may sound trivial, but it&rsquo;s not.
 Searching for exact form of the word is not always satisfying for the user.
 For example, nouns can be singular or plural, verbs have grammatical tenses, etc., and the user may be interested in all values related to the word in any inflected or derived form.</p>
-
 <p>The simple but powerful idea is to find a method, that can transform all the forms of a word to some common base.
 This process is called <strong>stemming</strong>.
 For many natural languages (including English) stemmers may be implemented using a set of well known grammatical rules.
 There are also languages (like Polish) where a dictionary based approach is required (i.e. inflected form -&gt; stem mapping).</p>
-
 <p>Only for languages with well known grammatical rules are stemmers are widely available.</p>
-
 <p>Another problem with search are the words that are common, like <code>the</code>, <code>is</code>, or <code>at</code>.
 In most cases, searching for them gives an enormous amount of results which are useless.
 Those words are called <strong>stop words</strong>.
 Again, stop words are language specific.
 The common method of handling those words is just to remove them from the search.</p>
-
-<h5 id="dgraph-fts-nlp-processing">Dgraph FTS/NLP Processing</h5>
-
+<h5 id="dgraph-ftsnlp-processing">Dgraph FTS/NLP Processing</h5>
 <p>The following steps are applied to both data (while indexing), and the query pattern:</p>
-
 <ol>
 <li>Tokenization - text is divided into words.</li>
 <li>Normalization - all letters are transformed to lowercase. <a href="http://unicode.org/reports/tr15/">Unicode Normalization</a> is applied.</li>
 <li>Stop words are removed.</li>
 <li>Stemming is applied.</li>
 </ol>
-
 <p>Since stop words contain inflected forms, they are removed before stemming.</p>
-
 <h5 id="full-text-search-functions">Full Text Search Functions</h5>
-
 <p>There are two new functions that provide basic support for full text search:</p>
-
 <ol>
 <li><code>alloftext</code> - searches for values that contain all the specified words (using NLP).</li>
 <li><code>anyoftext</code> - searches for values that contain one or more of the specified tokens (using NLP).</li>
 </ol>
-
 <h5 id="examples">Examples</h5>
-
 <p>Let&rsquo;s query for <code>white or maybe black</code>, using the term matching function <code>allofterms</code>.</p>
-
 <p>
 
 <div class="runnable" data-checksum="a2c60948e744862d6b1a13236ada9dd9" data-initial="{
@@ -555,7 +613,6 @@ The query gives no results.
 It may be worth trying less strict match with <code>alloftext</code> function:</p>
 
 
-
 <div class="runnable" data-checksum="5d5001b78c162fe12067167cabc9bab5" data-initial="{
   movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
     name@en
@@ -721,13 +778,10 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>Query returns 59 results.
 This example shows that removing a stop word may help in some cases.</p>
-
 <p>In context of NLP, English is quite easy - there are no diacritics, and inflection is rather simple.
 So let&rsquo;s try similar query in German:</p>
-
 
 
 <div class="runnable" data-checksum="ae14be08ee0c46175f71b7918ee1dcd0" data-initial="{
@@ -895,11 +949,8 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>Again, the query doesn&rsquo;t return any results.</p>
-
 <p>Now let&rsquo;s try the NLP-enabled version of this query:</p>
-
 
 
 <div class="runnable" data-checksum="3ae8ed3ca59fc7f3927a4ca09377ab47" data-initial="{
@@ -1067,19 +1118,14 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>This returns 4 results.</p>
-
 <p>It&rsquo;s worth noting the inflected forms of <code>schwarz</code> - <code>schwarzes</code> and <code>Schwartze</code>.
 Also the <code>Wei\u00dfer</code> is interesting - <code>\u00df</code> is the escaped Unicode value of <a href="https://en.wikipedia.org/wiki/%C3%9F">grapheme <code>ß</code></a>.
 <code>weiss</code> matched <code>Weißer</code> - the form is inflected, and grapheme equivalency is preserved.
 Like in the English example, the stop word (<code>oder</code>) is ignored.</p>
-
 <h5 id="gotchas">Gotchas</h5>
-
 <p>In some cases, natural language processing can lead to surprising results.
 Let&rsquo;s search for the answer to the famous question: <code>To be, or not to be?</code>:</p>
-
 
 
 <div class="runnable" data-checksum="aadb70fa6d64fde240a20a76965babec" data-initial="{
@@ -1235,9 +1281,7 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>The query gives no results, while the term matching query:</p>
-
 
 
 <div class="runnable" data-checksum="dd1fdb51dcb706bd6314b6e67b0d9118" data-initial="{
@@ -1393,18 +1437,12 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>gives two results:</p>
-
 <p>What happened? <code>To be, or not to be?</code> consists of stop words only.
 After FTS/NLP processing, there are no movies that match the query.</p>
-
 <h3 id="regular-expressions-regexp">Regular Expressions (regexp)</h3>
-
 <p>Regular expressions are extremely useful for creating sophisticated matchers.</p>
-
 <p>For example, all titles starting with a word containing <code>night</code> but not <code>knight</code> may be matched using following query:</p>
-
 
 
 <div class="runnable" data-checksum="23ed524490f96aec36c54a4a839190a0" data-initial="{
@@ -1572,24 +1610,18 @@ public class DgraphMain {
   </div>
 </div>
 
-
 <p>There are 502 results in the test dataset.</p>
-
 <h3 id="summary">Summary</h3>
-
 <p>Dgraph supports extensive, and useful methods of string matching.</p>
-
 <p>Natural language processing, employed for full text search, may be the best choice for lookup based on users input.
 If more strict matching is required, term matching should give good results.
 And to get the most precise results of complicated text searches, regular expressions can be used.</p>
-
 
 
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="https://www.nasa.gov/image-feature/jpl/pia21572/the-splitting-of-the-dunes">The Splitting of the Dunes</a></p>
 </aside>
-                        </div>
 
                         
     <aside class="post__authors">
@@ -1605,7 +1637,6 @@ And to get the most precise results of complicated text searches, regular expres
     <p>Tomasz gained experience in diverse projects including real time embedded
 software, banking backend and distributed systems. He wanted to work on database
 system implementation since high school.</p>
-
 <p>Programming is his greatest passion but he also likes trekking, skiing, cross
 country cycling and photography.</p>
 
@@ -1680,48 +1711,96 @@ country cycling and photography.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
 
 
-                        
 
 
-                        <aside class="post__cta">
 
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
+                
 
 
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1858,9 +1937,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

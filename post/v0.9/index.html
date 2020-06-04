@@ -2,103 +2,188 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/v0.9/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/v0.9/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Releasing distributed transactions in v0.9 - Dgraph Blog</title>
-    <meta property='og:title' content="Releasing distributed transactions in v0.9 - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Releasing distributed transactions in v0.9 - Dgraph Blog</title>
+  <meta property='og:title' content="Releasing distributed transactions in v0.9 - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/v0.9/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg" />
+  
   
 
-  <meta name="twitter:title" content="Releasing distributed transactions in v0.9"/>
-  <meta name="twitter:description" content="It all started with a Github issue.
-At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!"/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+  <meta name="twitter:title" content="Releasing distributed transactions in v0.9" />
+  <meta name="twitter:description"
+    content="It all started with a Github issue.
+At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting January 2017, has been based what our community (that&rsquo;s you!" />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -224,20 +309,23 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -252,9 +340,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Releasing%20distributed%20transactions%20in%20v0.9&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fv0.9%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Releasing%20distributed%20transactions%20in%20v0.9&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fv0.9%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -262,7 +351,8 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg">
+                            <img
+                                src="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg">
 
                             <div class="post__header">
 
@@ -286,26 +376,20 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 
                         </div>
 
-                        <div class="post__content inner-content">
-                            
-
-<p><strong>It all started with a Github issue.</strong></p>
-
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                            <p><strong>It all started with a Github issue.</strong></p>
 <p>At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built starting
 January 2017, has been based what our community (<em>that&rsquo;s you!</em>) told us.  The
 biggest contribution that we get from our community, is in the form of feedback.
 We&rsquo;ll forgo any code contribution for quality feedback based on real-world
 usage.</p>
-
 <p>Since the beginning of Dgraph, transactions were road mapped as a post v1.0
 feature.  Dgraph is a distributed and synchronously replicated system. Adding
 transactions in such a system is a hard challenge; something that we felt
 wasn&rsquo;t worth the complexity to tackle early on.</p>
-
 <p>That changed when <a href="https://twitter.com/gniemeyer">Gustavo Niemeyer</a> filed <a href="https://github.com/dgraph-io/dgraph/issues/1445">this issue</a>. In
 this issue, he made a very convincing case for supporting transactions sooner
 rather than later.</p>
-
 <blockquote>
 <p>So, coming back to Dgraph, if the idea is indeed to position it as a general
 alternative for existing databases as I&rsquo;ve watched in one of your videos,
@@ -316,16 +400,13 @@ uses data, even more when even basic details about a record are recorded as
 multiple individual terms. This would make the situation even worse than with
 MongoDB. &ndash;Gustavo</p>
 </blockquote>
-
 <p>The arguments made by Gustavo were intriguing enough for us to look seriously
 in that direction. Once we started looking, evidence was everywhere.  People
 have been complaining about lack of transactions in MongoDB. Bigtable author
 and Google Fellow, Jeff Dean, considered not implementing transactions in Bigtable
 his <a href="http://highscalability.com/blog/2016/3/16/jeff-dean-on-large-scale-deep-learning-at-google.html">&ldquo;biggest mistake as an engineer&rdquo;</a>.</p>
-
 <p>It was clear that transactions were something that we should implement right
 away.</p>
-
 <p>So that&rsquo;s what we did. We used what we call the <strong>Blitzkrieg approach</strong>.
 Explaining it can be a blog post of its own, but the general idea is that a
 single or a very small set of engineers work initially to make changes deep into
@@ -333,15 +414,12 @@ the core, which would break most things minus the core (possibly one package).
 And then the rest of the team helps fix up the outer shells level by level. We
 use this technique regularly to implement major design changes at a lightning
 speed.</p>
-
 <p>The entire work from the reporting of the <a href="https://github.com/dgraph-io/dgraph/issues/1445">issue</a> (Sep 13) to implementing
 <a href="https://blog.dgraph.io/post/badger-txn/">transactions in Badger</a> (Oct 5), to releasing <a href="https://github.com/dgraph-io/dgraph/releases/tag/v0.9.0">v0.9 with
 transactions</a> (on Nov 14), was done <strong>within a time span of two
 months.</strong></p>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Wow.. that&#39;s an amazing turnaround time for that level of complexity. Thank you! <a href="https://t.co/niILz03jw0">https://t.co/niILz03jw0</a></p>&mdash; Gustavo Niemeyer (@gniemeyer) <a href="https://twitter.com/gniemeyer/status/930459384131538944?ref_src=twsrc%5Etfw">November 14, 2017</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 
 <p><em>In this blog post, we won&rsquo;t go into the details of how Dgraph&rsquo;s transactions
 work. There&rsquo;s a lot of interesting bits there, due to the uniqueness of this
@@ -349,207 +427,177 @@ challenge; so the team decided that a blog post won&rsquo;t do justice to what h
 gone into building this amazingly distributed graph database over the past two
 years. Instead, we plan to write a technical paper about Dgraph&rsquo;s unique design.
 Watch for that in the coming months!</em></p>
-
 <p>So, instead of how it works, this blog post focuses on how to use transactions
 to build your application.</p>
-
 <h2 id="the-transaction-model">The transaction model</h2>
-
 <p>Transactions come along with a new model for how to interact with Dgraph.
 Previously, it has just been single queries and data mutations on their own.
 Now all queries and mutations are performed as part of a transaction.</p>
-
 <p><strong>Dgraph can perform read-modify-write transactions,</strong> the typical lifecycle
 being:</p>
-
 <ol>
-<li><p>Create a transaction. Go client: <code>client.NewTxn()</code>.</p></li>
-
-<li><p>Execute a series of queries and mutations. Go client: <code>txn.Mutate(...)</code> and
-<code>txn.Query(...)</code>.</p></li>
-
-<li><p>Finally, commit or abort the transaction. Go client: <code>txn.Commit()</code> and
-<code>txn.Abort()</code>.</p></li>
+<li>
+<p>Create a transaction. Go client: <code>client.NewTxn()</code>.</p>
+</li>
+<li>
+<p>Execute a series of queries and mutations. Go client: <code>txn.Mutate(...)</code> and
+<code>txn.Query(...)</code>.</p>
+</li>
+<li>
+<p>Finally, commit or abort the transaction. Go client: <code>txn.Commit()</code> and
+<code>txn.Abort()</code>.</p>
+</li>
 </ol>
-
 <p>If two concurrently running transactions write to the same data, then one of the
 commits will fail. It&rsquo;s up to the user to retry.</p>
-
 <h2 id="why-are-transactions-important">Why are transactions important?</h2>
-
 <p>Database transactions are important for any app that needs to update its state
 based upon its previous state in a consistent manner or has operations that
 need to apply in atomic units.</p>
-
 <p>That covers a lot of different things. Just to name a few:</p>
-
 <ul>
-<li><p>Marking inventory in an online shop as sold. You wouldn&rsquo;t want to sell the
-last remaining item to two customers.</p></li>
-
-<li><p>Paying out bets on an online poker site. It&rsquo;s important to ensure the same
-win isn&rsquo;t paid twice.</p></li>
-
-<li><p>Inventory management for a warehouse. Restocking an item twice without seeing
-the new quantity could result in twice as much held stock as intended.</p></li>
-
-<li><p>Financial transactions. When transferring money, it&rsquo;s important that credits
-and debts on two accounts are either both applied or not applied at all.</p></li>
+<li>
+<p>Marking inventory in an online shop as sold. You wouldn&rsquo;t want to sell the
+last remaining item to two customers.</p>
+</li>
+<li>
+<p>Paying out bets on an online poker site. It&rsquo;s important to ensure the same
+win isn&rsquo;t paid twice.</p>
+</li>
+<li>
+<p>Inventory management for a warehouse. Restocking an item twice without seeing
+the new quantity could result in twice as much held stock as intended.</p>
+</li>
+<li>
+<p>Financial transactions. When transferring money, it&rsquo;s important that credits
+and debts on two accounts are either both applied or not applied at all.</p>
+</li>
 </ul>
-
 <p>Dgraph v0.9 introduces <strong>distributed ACID transactions with synchronous
 replication</strong>. What this means is that transactions work across multiple servers
 each holding a part of the graph, providing <a href="https://en.wikipedia.org/wiki/ACID">ACID</a> guarantees.</p>
-
 <p>Increasing throughput is still just a matter of bringing up additional dgraph
 instances. There is no need to worry about seeing a previous database state when
 querying a replica.  From the point of view of a single client, once a
 transaction is committed its changes are guaranteed to be visible in all future
 transactions.  These guarantees help simplify application code significantly
 while providing a high level of scalability and crash resilience.</p>
-
 <h2 id="client-libraries">Client Libraries</h2>
-
 <p>Dgraph exposes its API via gRPC and HTTP. <em>However&hellip;</em></p>
-
 <p>Transactions require some bookkeeping and state management on the client side.
 Because of this, it&rsquo;s strongly recommended to use a client library to interact
 with dgraph.</p>
-
 <p>At the time of writing, official <a href="https://docs.dgraph.io/clients/#go">Go</a>, <a href="https://docs.dgraph.io/clients/#java">Java</a> and a
 community-driven <a href="https://github.com/calummoore/dgraph-node">Javascript</a> clients are available.</p>
-
 <p>Client libraries for other languages can be implemented on top of the gRPC or
 HTTP APIs. The best way to approach this is to read the documentation about how
 to use the <a href="https://docs.dgraph.io/clients/#raw-http">raw HTTP API</a> and look at the implementations for other
 existing clients.</p>
-
 <p>The examples in this blog post will use the Go client.</p>
-
 <h4 id="a-simple-login-system">A simple login system</h4>
-
 <p>Prior to v0.9.0 dgraph had an upsert feature which is now removed. Upsert
 atomically searches and retrieves or creates and retrieves depending on whether
 an entity exists or not.</p>
-
 <p>With transactions, an explicit upsert feature is no longer required. This is
 because upsert style operations can be performed atomically within a transaction.</p>
-
 <p>So how is this done?</p>
-
 <p>In this example, we model a simple login system, where a user has to provide an
 email address and password in order to gain access to the system.</p>
-
 <p>If the user already exists, then the password must match. If the user <em>doesn&rsquo;t</em>
 yet exist, then their password should be stored for later logins.</p>
-
 <p>It&rsquo;s important to do all of this in a transaction. If it&rsquo;s not, then the same
 account might inadvertently be created twice.</p>
-
 <p>Error checking and JSON marshalling/unmarshalling have been omitted for
 brevity:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#998;font-style:italic">// Create a new transaction. The deferred call to Discard
+</span><span style="color:#998;font-style:italic">// ensures that server-side resources are cleaned up.
+</span><span style="color:#998;font-style:italic"></span>txn <span style="color:#000;font-weight:bold">:=</span> client.<span style="color:#900;font-weight:bold">NewTxn</span>()
+<span style="color:#000;font-weight:bold">defer</span> txn.<span style="color:#900;font-weight:bold">Discard</span>(ctx)
 
-<pre><code class="language-go">// Create a new transaction. The deferred call to Discard
-// ensures that server-side resources are cleaned up.
-txn := client.NewTxn()
-defer txn.Discard(ctx)
+<span style="color:#998;font-style:italic">// Create and execute a query to looks up an email and checks if the password
+</span><span style="color:#998;font-style:italic"></span>matches.
+q <span style="color:#000;font-weight:bold">:=</span> fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">`
+</span><span style="color:#d14">    {
+</span><span style="color:#d14">        login_attempt(func: eq(email, %q)) {
+</span><span style="color:#d14">            checkpwd(pass, %q)
+</span><span style="color:#d14">        }
+</span><span style="color:#d14">    }
+</span><span style="color:#d14">`</span>, email, pass)
+resp, err <span style="color:#000;font-weight:bold">:=</span> txn.<span style="color:#900;font-weight:bold">Query</span>(ctx, q)
 
-// Create and execute a query to looks up an email and checks if the password
-matches.
-q := fmt.Sprintf(`
-    {
-        login_attempt(func: eq(email, %q)) {
-            checkpwd(pass, %q)
-        }
-    }
-`, email, pass)
-resp, err := txn.Query(ctx, q)
-
-// Unmarshal the response into a struct. It will be empty if the email couldn't
-// be found. Otherwise it will contain a bool to indicate if the password matched.
-var login struct {
-    Account []struct {
-        Pass []struct {
-            CheckPwd bool `json:&quot;checkpwd&quot;`
-        } `json:&quot;pass&quot;`
-    } `json:&quot;login_attempt&quot;`
+<span style="color:#998;font-style:italic">// Unmarshal the response into a struct. It will be empty if the email couldn&#39;t
+</span><span style="color:#998;font-style:italic">// be found. Otherwise it will contain a bool to indicate if the password matched.
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">var</span> login <span style="color:#000;font-weight:bold">struct</span> {
+    Account []<span style="color:#000;font-weight:bold">struct</span> {
+        Pass []<span style="color:#000;font-weight:bold">struct</span> {
+            CheckPwd <span style="color:#458;font-weight:bold">bool</span> <span style="color:#d14">`json:&#34;checkpwd&#34;`</span>
+        } <span style="color:#d14">`json:&#34;pass&#34;`</span>
+    } <span style="color:#d14">`json:&#34;login_attempt&#34;`</span>
 }
-err = json.Unmarshal(resp.GetJson(), &amp;login)
+err = json.<span style="color:#900;font-weight:bold">Unmarshal</span>(resp.<span style="color:#900;font-weight:bold">GetJson</span>(), <span style="color:#000;font-weight:bold">&amp;</span>login)
 
-// Now perform the upsert logic.
-if len(login.Account) == 0 {
-    fmt.Println(&quot;Account doesn't exist! Creating new account.&quot;)
-    mu := &amp;protos.Mutation{
-        SetJson: []byte(fmt.Sprintf(`{ &quot;email&quot;: %q, &quot;pass&quot;: %q }`, email, pass)),
+<span style="color:#998;font-style:italic">// Now perform the upsert logic.
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(login.Account) <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span> {
+    fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Account doesn&#39;t exist! Creating new account.&#34;</span>)
+    mu <span style="color:#000;font-weight:bold">:=</span> <span style="color:#000;font-weight:bold">&amp;</span>protos.Mutation{
+        SetJson: []<span style="color:#0086b3">byte</span>(fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">`{ &#34;email&#34;: %q, &#34;pass&#34;: %q }`</span>, email, pass)),
     }
-    _, err = txn.Mutate(ctx, mu)
-    // Commit the mutation, making it visible outside of the transaction.
-    err = txn.Commit(ctx)
-} else if login.Account[0].Pass[0].CheckPwd {
-    fmt.Println(&quot;Login successful!&quot;)
-} else {
-    fmt.Println(&quot;Wrong email or password.&quot;)
+    _, err = txn.<span style="color:#900;font-weight:bold">Mutate</span>(ctx, mu)
+    <span style="color:#998;font-style:italic">// Commit the mutation, making it visible outside of the transaction.
+</span><span style="color:#998;font-style:italic"></span>    err = txn.<span style="color:#900;font-weight:bold">Commit</span>(ctx)
+} <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> login.Account[<span style="color:#099">0</span>].Pass[<span style="color:#099">0</span>].CheckPwd {
+    fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Login successful!&#34;</span>)
+} <span style="color:#000;font-weight:bold">else</span> {
+    fmt.<span style="color:#900;font-weight:bold">Println</span>(<span style="color:#d14">&#34;Wrong email or password.&#34;</span>)
 }
-</code></pre>
-
-<h4 id="bank-account-transfers">Bank Account Transfers</h4>
-
+</code></pre></div><h4 id="bank-account-transfers">Bank Account Transfers</h4>
 <p>The classical example for database transactions is to transfer money between
 two bank accounts. In this example, we have a set of bank accounts, each
 represented by a node in the graph. Each node is known by a uid and has its
 balance represented by a <code>bal</code> predicate.</p>
-
 <p>This example was extracted from a tool we used when testing the correctness of
 our transaction implementation. The full source is <a href="https://github.com/dgraph-io/dgraph/blob/master/contrib/integration/bank/main.go">here</a>.</p>
-
 <p>Given the uid of two accounts, we want to transfer money from one account to
 the other, i.e. reduce one balance and increase the other by the same amount.</p>
-
 <p>It&rsquo;s important that this is done in a transaction; if it isn&rsquo;t, then two
 transfers happening concurrently could result in the net balance of all
 accounts changing. It could also result in double spending.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">txn <span style="color:#000;font-weight:bold">:=</span> s.dg.<span style="color:#900;font-weight:bold">NewTxn</span>()
+<span style="color:#000;font-weight:bold">defer</span> txn.<span style="color:#900;font-weight:bold">Discard</span>(ctx)
 
-<pre><code class="language-go">txn := s.dg.NewTxn()
-defer txn.Discard(ctx)
-
-// Get current balances for the two accounts.
-q := fmt.Sprintf(`{both(func: uid(%s, %s)) { uid, bal }}`, from, to)
-resp, err := txn.Query(ctx, q)
-type Accounts struct {
-    Both []Account `json:&quot;both&quot;`
+<span style="color:#998;font-style:italic">// Get current balances for the two accounts.
+</span><span style="color:#998;font-style:italic"></span>q <span style="color:#000;font-weight:bold">:=</span> fmt.<span style="color:#900;font-weight:bold">Sprintf</span>(<span style="color:#d14">`{both(func: uid(%s, %s)) { uid, bal }}`</span>, from, to)
+resp, err <span style="color:#000;font-weight:bold">:=</span> txn.<span style="color:#900;font-weight:bold">Query</span>(ctx, q)
+<span style="color:#000;font-weight:bold">type</span> Accounts <span style="color:#000;font-weight:bold">struct</span> {
+    Both []Account <span style="color:#d14">`json:&#34;both&#34;`</span>
 }
-var a Accounts
-err := json.Unmarshal(resp.Json, &amp;a)
+<span style="color:#000;font-weight:bold">var</span> a Accounts
+err <span style="color:#000;font-weight:bold">:=</span> json.<span style="color:#900;font-weight:bold">Unmarshal</span>(resp.Json, <span style="color:#000;font-weight:bold">&amp;</span>a)
 
-// Perform the transfer.
-a.Both[0].Bal += 5
-a.Both[1].Bal -= 5
-if a.Both[0].Bal &lt; 0 || a.Both[1].Bal &lt; 0 {
-    // Abandon the transaction if there are insufficient funds.
-    return
+<span style="color:#998;font-style:italic">// Perform the transfer.
+</span><span style="color:#998;font-style:italic"></span>a.Both[<span style="color:#099">0</span>].Bal <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099">5</span>
+a.Both[<span style="color:#099">1</span>].Bal <span style="color:#000;font-weight:bold">-=</span> <span style="color:#099">5</span>
+<span style="color:#000;font-weight:bold">if</span> a.Both[<span style="color:#099">0</span>].Bal &lt; <span style="color:#099">0</span> <span style="color:#000;font-weight:bold">||</span> a.Both[<span style="color:#099">1</span>].Bal &lt; <span style="color:#099">0</span> {
+    <span style="color:#998;font-style:italic">// Abandon the transaction if there are insufficient funds.
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">return</span>
 }
 
-// Write back to dgraph.
-var mu protos.Mutation
-data, err := json.Marshal(a.Both)
+<span style="color:#998;font-style:italic">// Write back to dgraph.
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">var</span> mu protos.Mutation
+data, err <span style="color:#000;font-weight:bold">:=</span> json.<span style="color:#900;font-weight:bold">Marshal</span>(a.Both)
 mu.SetJson = data
-_, err = txn.Mutate(ctx, &amp;mu)
-err = txn.Commit(ctx)
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
+_, err = txn.<span style="color:#900;font-weight:bold">Mutate</span>(ctx, <span style="color:#000;font-weight:bold">&amp;</span>mu)
+err = txn.<span style="color:#900;font-weight:bold">Commit</span>(ctx)
+</code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>It has historically been difficult to implement transactions in NoSQL
 technologies. Notably, MongoDB has been
 <a href="https://jira.mongodb.org/browse/SERVER-11500">working</a> on a
 <a href="https://jira.mongodb.org/browse/SERVER-11508">solution</a> for a
 <a href="https://jira.mongodb.org/browse/SERVER-2804">while</a>.</p>
-
 <p>So implementing transactions with synchronous replication is a massive
 milestone for Dgraph. With this complex but valuable feature, our community
 will be able to build apps on top of dgraph without having to worry about
 tricky data integrity issues!</p>
-
 
 
 <aside class="post__references">
@@ -558,7 +606,6 @@ tricky data integrity issues!</p>
 </aside>
 
 
-                        </div>
 
                         
     <aside class="post__authors">
@@ -617,7 +664,6 @@ speed. In his spare time, he enjoys cycling and drone racing.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
-
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -688,24 +734,93 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/cassini.jpg">
@@ -743,7 +858,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/galileo-jupiter.jpg">
@@ -786,34 +901,14 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
 
-                        
+
+                
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -950,9 +1045,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

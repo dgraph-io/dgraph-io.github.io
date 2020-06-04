@@ -2,106 +2,191 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <link rel="canonical" href="https://blog.dgraph.io/post/badger-v1.6.0-release/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+  <link rel="canonical" href="https://blog.dgraph.io/post/badger-v1.6.0-release/" />
 
 
-    <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
-    <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
-    <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
-    <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://dgraph.io/assets/images/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://dgraph.io/assets/images/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://dgraph.io/assets/images/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://dgraph.io/assets/images/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://dgraph.io/assets/images/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://dgraph.io/assets/images/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://dgraph.io/assets/images/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://dgraph.io/assets/images/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"
+    href="https://dgraph.io/assets/images/favicons/android-icon-192x192.png">
+  <link rel="manifest" href="https://dgraph.io/assets/images/favicons/manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://dgraph.io/assets/images/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://dgraph.io/assets/images/favicons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://dgraph.io/assets/images/faviconsfavicon-16x16.png">
+  <link rel="shortcut icon" href="https://dgraph.io/assets/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="https://dgraph.io/assets/images/faviconsms-icon-144x144.png">
+  <meta name="msapplication-config" content="https://dgraph.io/assets/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-    <title>Releasing BadgerDB v1.6.0 - Dgraph Blog</title>
-    <meta property='og:title' content="Releasing BadgerDB v1.6.0 - Dgraph Blog">
-    <meta property="og:type" content="article">
+  <title>Releasing BadgerDB v1.6.0 - Dgraph Blog</title>
+  <meta property='og:title' content="Releasing BadgerDB v1.6.0 - Dgraph Blog">
+  <meta property="og:type" content="article">
   
 
   <meta property="og:url" content="https://blog.dgraph.io/post/badger-v1.6.0-release/">
   
+  
   <meta property="og:image" content="https://blog.dgraph.io//images/landing-soyuz.png">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js" integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+    integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css" rel="stylesheet"
+    integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"
+    integrity="sha256-sNPiigbfSkqUzMc5rgrdztLnneCMAp6W9wetJUZu9Zw=" crossorigin="anonymous"></script>
   <link
     href='https://blog.dgraph.io//css/runnable.css?7bbf71b4888bc97241e85bc7326a12fe'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
+  
   <link
     href='https://blog.dgraph.io//css/runnable-custom.css?74110b504a7b8a6e92a95279cfa96032'
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&display=swap" />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
 
-  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
-
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js" integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css" integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
-  
+  <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.js"
+    integrity="sha256-x3BtPVERvw1ozPlwivuFLZoViFCeAAs1Gt6SxEedmo8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.css"
+    integrity="sha256-7sZe9dsqyNZC9Mk+WPRB7nVvPPPXyorzm2QKqlgXC4k=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js"
+    integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js"
+    integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
+  
+
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js"
+    integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
+  <script>
+
+    $(".subscribe-box").hide();
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 220) {
+        $(".subscribe-box").fadeIn("slow");
+      }
+      else {
+        $(".subscribe-box").fadeOut("fast");
+      }
+    });
+   
+    
+    
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 180) {
+        $("#page-header").addClass("bg-white");
+      }
+      else {
+        $("#page-header").removeClass("bg-white");
+      }
+    });
+
+    $(document).scroll(function () {
+      checkOffset();
+    });
+
+   
+    function checkOffset() {
+      var x = $(".container").offset();
+        var leftPosition = x.left + 90;
+      if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
+        >= $('.bottom-section').offset().top - 10){
+        $('.subscribe-box').addClass('footer-before');
+        $('.footer-before').css('left',  -leftPosition  );
+        }
+      if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
+        $('.subscribe-box').removeClass('footer-before');
+        $('.subscribe-box').css('left',  '15px' );
+      }
+         
+    }
+    $(document).ready(function () {
+      $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
+      $('.wrapper').after($('.page-search__results'))
+
+      $(".subscribe-box-mobi .click-btn").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $(".subscribe-box .close").click(function () {
+        $(".subscribe-box").toggleClass("open");
+        $(".subscribe-box-mobi").toggleClass('hide');
+      });
+      $('.nav-icon').click(function() {
+	    $('.page-nav').toggleClass('shownav');
+	    $(this).toggleClass('active');
+  });
+  var $nav = document.querySelector('.page-nav > ul');
+	var $navItems = document.querySelectorAll('.page-nav > ul > li');
+	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
+  var $subnav = document.querySelectorAll('.page-nav > ul > li > ul');
+  $($navItemHeading).click(function(e) {
+	    $($navItems).removeClass('active');
+	    $(this).parent().toggleClass('active');
+	});
+  $('.nav-icon[target="_blank"]').removeAttr('target');
+  var x = $(".container").offset();
+  var leftPosition = x.left;
+    });
+  </script>
 
   
   
-    
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="https://blog.dgraph.io//images/landing-soyuz.png"/>
-    
+  
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/landing-soyuz.png" />
+  
   
 
-  <meta name="twitter:title" content="Releasing BadgerDB v1.6.0"/>
-  <meta name="twitter:description" content="It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
+  <meta name="twitter:title" content="Releasing BadgerDB v1.6.0" />
+  <meta name="twitter:description"
+    content="It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
-week!"/>
-  <meta name="twitter:site" content="@dgraphlabs"/>
+week!" />
+  
+  <meta name="twitter:site" content="@dgraphlabs" />
 
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
 
@@ -227,20 +312,23 @@ week!"/>
     <section class="page-body">
         <div class="page-body__content">
             <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-10 ">
 
-                <div class="page-search">
-	<div class="page-search__toggle" onClick="toggleVisibility()">
-		<i class="fas fa-search"></i>
-		<i class="fas fa-times"></i>
-	</div>
+                        <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
 </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row justify-content-center">
 
-          
-
-            <div class="row">
-
-                <div class="col-12 col-md-8">
-                    <div class="page-body__content post">
+                <div class="col-10 ">
+                    <div class="">
 
                         <div class="post__meta">
 
@@ -255,9 +343,10 @@ week!"/>
 
                             <div class="post__share">
                                 
-                                    <a href="https://twitter.com/share?text=Releasing%20BadgerDB%20v1.6.0&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-v1.6.0-release%2f&amp;via=dgraphlabs" target="_blank">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
+                                <a href="https://twitter.com/share?text=Releasing%20BadgerDB%20v1.6.0&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fbadger-v1.6.0-release%2f&amp;via=dgraphlabs"
+                                    target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
                                 
                             </div>
 
@@ -265,7 +354,8 @@ week!"/>
 
                         <div class="post__cover">
 
-                            <img src="https://blog.dgraph.io//images/landing-soyuz.png">
+                            <img
+                                src="https://blog.dgraph.io//images/landing-soyuz.png">
 
                             <div class="post__header">
 
@@ -289,58 +379,45 @@ week!"/>
 
                         </div>
 
-                        <div class="post__content inner-content">
+                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
                             <p>It&rsquo;s been almost a years since BadgerDB v1.5.0 was released. While both the
 project and the community surrounding it have changed a lot, not many new
 releases have seen the light of the day.  Happily, this changes today, as we
 release BadgerDB v1.6.0 and announce our plans for BadgerDB v2 coming out next
 week!</p>
-
-<h3 id="badgerdb-v1-6-0">BadgerDB v1.6.0</h3>
-
+<h3 id="badgerdb-v160">BadgerDB v1.6.0</h3>
 <p>The API of BadgerDB has changed slowly over the last year and, while we tried to
 keep backward incompatible changes to a minimum, some features were deprecated
 and replaced by improved solutions supported by the community.</p>
-
 <p>So <strong>please note that v1.6.0 is not fully backward compatible with v1.5.0.</strong> The
 changes you&rsquo;ll need to perform to migrate from v1.5 to v1.6 are pretty minimal
 and only at API level. From a data storage point of view, both versions are
 completely compatible and a database created with v1.5 can be read and managed
 without any hiccups with v1.6.</p>
-
 <h3 id="new-features">New Features</h3>
-
 <p>Let&rsquo;s see which are the most important features that have been added since 1.5.
 For a detailed list of the changes to the Badger API, you can read the
 <a href="https://github.com/dgraph-io/badger/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
-
 <h4 id="faster-writes-with-writebatch">Faster writes with WriteBatch</h4>
-
 <p>Most users write to Badger in a serial loop, one transaction per iteration.
 Badger is built with the idea of high write throughput with many transactions
 happening concurrently.  Writing to Badger one transaction at a time is not
 always the most performant way. That&rsquo;s why we introduced a new API which will
 help you batching writes to Badger: WriteBatch.</p>
-
 <p>WriteBatch would automatically batch up multiple serial writes into one
 transaction, send it to be executed asynchronously and continue picking up more
 writes.</p>
-
 <p>In <a href="https://discuss.dgraph.io/t/badgerdb-v1-5-5-and-v2-0-0-rc1-are-now-released/4645/2">our benchmarks</a>, the new API allowed us to write keys at a
 speed almost 7 times faster than what we can do with a single write per
 transaction. Your own numbers might vary, but we do expect this new API to be of
 great help for those looking to squeeze that extra performance from Badger.</p>
-
-<h4 id="write-at-1-6-gbps-with-streamwriter">Write at 1.6 Gbps with StreamWriter</h4>
-
+<h4 id="write-at-16-gbps-with-streamwriter">Write at 1.6 Gbps with StreamWriter</h4>
 <p>While <code>WriteBatch</code> will help pretty much in every situation where blind writes
 need to be done as quickly as possible. But, for some more specific use cases we
 have come up with an even faster solution: StreamWriter.</p>
-
 <p>StreamWriter was designed to be the complementary API to Stream, and can be used
 to bootstrap new instances of Badger or stream it over the network. In Dgraph,
 if a server loses data or falls behind, we send a snapshot over using this API.</p>
-
 <p>StreamWriter can write multiple streams, as long as each stream contains sorted
 keys and the streams are non-overlapping. <em>The output from badger.Stream
 framework provides that guarantee.</em> StreamWriter works by avoiding LSM tree
@@ -348,98 +425,70 @@ compactions, instead building SSTables and arranging them directly in the many
 levels of the tree.  This can write almost as fast as disk allows. Our
 <a href="https://github.com/dgraph-io/badger/commit/1725096e24a2bbf932d14808e57d78d296753606">experiments</a> show writes at a rate of 200MBps, writing over 1 billion
 keys in around 3m20s.</p>
-
 <p>This code demonstrates how to copy a dataset onto a new database with
 <code>Stream</code> and <code>StreamWriter</code>.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#000;font-weight:bold">func</span> <span style="color:#900;font-weight:bold">streamCopy</span>(dest, orig <span style="color:#000;font-weight:bold">*</span>badger.DB) <span style="color:#458;font-weight:bold">error</span> {
+    sw <span style="color:#000;font-weight:bold">:=</span> dest.<span style="color:#900;font-weight:bold">NewStreamWriter</span>()
+    <span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> sw.<span style="color:#900;font-weight:bold">Prepare</span>(); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+        <span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">Wrap</span>(err, <span style="color:#d14">&#34;could not prepare stream writer&#34;</span>)
 
-<pre><code class="language-go">func streamCopy(dest, orig *badger.DB) error {
-    sw := dest.NewStreamWriter()
-    if err := sw.Prepare(); err != nil {
-        return errors.Wrap(err, &quot;could not prepare stream writer&quot;)
-
-    s := orig.NewStream()
+    s <span style="color:#000;font-weight:bold">:=</span> orig.<span style="color:#900;font-weight:bold">NewStream</span>()
     s.Send = sw.Write
 
-    if err := s.Orchestrate(context.Background()); err != nil {
-        return errors.Wrap(err, &quot;could not orchestrate writes&quot;)
+    <span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> s.<span style="color:#900;font-weight:bold">Orchestrate</span>(context.<span style="color:#900;font-weight:bold">Background</span>()); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+        <span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">Wrap</span>(err, <span style="color:#d14">&#34;could not orchestrate writes&#34;</span>)
 
-    if err := sw.Flush(); err != nil {
-        return errors.Wrap(err, &quot;could not flush stream writer&quot;)
+    <span style="color:#000;font-weight:bold">if</span> err <span style="color:#000;font-weight:bold">:=</span> sw.<span style="color:#900;font-weight:bold">Flush</span>(); err <span style="color:#000;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">nil</span> {
+        <span style="color:#000;font-weight:bold">return</span> errors.<span style="color:#900;font-weight:bold">Wrap</span>(err, <span style="color:#d14">&#34;could not flush stream writer&#34;</span>)
 
-    return nil
+    <span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">nil</span>
 }
-</code></pre>
-
-<p><code>StreamWriter</code> can be used without <code>Stream</code> itself, but make sure you read the
+</code></pre></div><p><code>StreamWriter</code> can be used without <code>Stream</code> itself, but make sure you read the
 documentation and understand the constraints on how <code>Write</code> should be called.</p>
-
 <h4 id="be-notified-of-changes-in-the-db-with-subscribe">Be notified of changes in the DB with Subscribe</h4>
-
 <p>Once you&rsquo;ve opened a BadgerDB you can easily set up a subscription so every time
 a key changes a function of your choice will be called. You can choose what
 specific key ranges you&rsquo;d like to observe, or simply give an empty prefix to
 subscribe to all key changes.</p>
-
 <p>For a complete example of the functionality, check out <a href="http://godoc.org/github.com/dgraph-io/badger/#DB.Subscribe">this
 example</a> in the
 documentation.</p>
-
 <h4 id="new-options-api">New Options API</h4>
-
 <p>In the search of more intuitive APIs, we decided to provide a new way of
 creating the <code>badger.Options</code> passed to <code>badger.Open</code> and others.</p>
-
 <p>We made <code>DefaultOptions</code> a function that receives the path where the database is
 stored as a parameter. Once you got those default options, you can modify
 specific bits by using the also new builder API.</p>
-
 <p>So for instance, the code needed to open a Badger DB in read-only mode in
 previous versions was:</p>
-
-<pre><code class="language-go">opts := badger.Options
-opts.Dir = &quot;/tmp/db&quot;
-opts.ValueDir = &quot;tmp/db&quot;
-opts.ReadOnly = true
-db, err := badger.Open(opts)
-</code></pre>
-
-<p>With the new builder API, the code becomes less verbose.</p>
-
-<pre><code class="language-go">db, err := badger.Open(badger.DefaultOpts(&quot;/tmp/db&quot;).WithReadOnly(true))
-</code></pre>
-
-<h4 id="new-entry-api">New Entry API</h4>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">opts <span style="color:#000;font-weight:bold">:=</span> badger.Options
+opts.Dir = <span style="color:#d14">&#34;/tmp/db&#34;</span>
+opts.ValueDir = <span style="color:#d14">&#34;tmp/db&#34;</span>
+opts.ReadOnly = <span style="color:#000;font-weight:bold">true</span>
+db, err <span style="color:#000;font-weight:bold">:=</span> badger.<span style="color:#900;font-weight:bold">Open</span>(opts)
+</code></pre></div><p>With the new builder API, the code becomes less verbose.</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">db, err <span style="color:#000;font-weight:bold">:=</span> badger.<span style="color:#900;font-weight:bold">Open</span>(badger.<span style="color:#900;font-weight:bold">DefaultOpts</span>(<span style="color:#d14">&#34;/tmp/db&#34;</span>).<span style="color:#900;font-weight:bold">WithReadOnly</span>(<span style="color:#000;font-weight:bold">true</span>))
+</code></pre></div><h4 id="new-entry-api">New Entry API</h4>
 <p>Similarly to Options, we&rsquo;ve removed some methods in <code>badger.Txn</code> and replaced
 them by a new builder API on <code>badger.Entry</code>. The methods <code>SetWithDiscard</code>,
 <code>SetWithmeta</code>, and <code>SetWithTTL</code> have been removed. New <code>badger.Entry</code>
 methods <code>WithDiscard</code>, <code>WithMeta</code>, and <code>WithTTL</code> provide the same functionality
 and can be used with the <code>badger.Txn.SetEntry</code>.</p>
-
 <p>The benefit of this approach is that it allows all the permutations of <code>SetWith</code>
 without having to introduce an API covering each.</p>
-
 <p>For instance, in previous versions, the code to set a transaction with TTL of 1
 second was the following:</p>
-
-<pre><code class="language-go">    err := db.Update(func(txn *badger.Txn) error {
-        return txn.SetWithTTL(key, value, 1*time.Second)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    err <span style="color:#000;font-weight:bold">:=</span> db.<span style="color:#900;font-weight:bold">Update</span>(<span style="color:#000;font-weight:bold">func</span>(txn <span style="color:#000;font-weight:bold">*</span>badger.Txn) <span style="color:#458;font-weight:bold">error</span> {
+        <span style="color:#000;font-weight:bold">return</span> txn.<span style="color:#900;font-weight:bold">SetWithTTL</span>(key, value, <span style="color:#099">1</span><span style="color:#000;font-weight:bold">*</span>time.Second)
     })
-</code></pre>
-
-<p>With the builder API on Entry, you would now write the following:</p>
-
-<pre><code class="language-go">    db.Update(func(txn *badger.Txn) error {
-        return txn.SetEntry(badger.NewEntry(key, value).WithTTL(1 * time.Second))
+</code></pre></div><p>With the builder API on Entry, you would now write the following:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    db.<span style="color:#900;font-weight:bold">Update</span>(<span style="color:#000;font-weight:bold">func</span>(txn <span style="color:#000;font-weight:bold">*</span>badger.Txn) <span style="color:#458;font-weight:bold">error</span> {
+        <span style="color:#000;font-weight:bold">return</span> txn.<span style="color:#900;font-weight:bold">SetEntry</span>(badger.<span style="color:#900;font-weight:bold">NewEntry</span>(key, value).<span style="color:#900;font-weight:bold">WithTTL</span>(<span style="color:#099">1</span> <span style="color:#000;font-weight:bold">*</span> time.Second))
     })
-</code></pre>
-
-<p>This change also makes it possible to set both TTL and Meta, which wasn&rsquo;t the
+</code></pre></div><p>This change also makes it possible to set both TTL and Meta, which wasn&rsquo;t the
 case before, as shown in issues <a href="https://github.com/dgraph-io/badger/issues/774">#774</a>
 and <a href="https://github.com/dgraph-io/badger/issues/332">#332</a>.</p>
-
 <h3 id="thanks">Thanks!</h3>
-
 <p>BadgerDB is an open source project and as such, we depend on your
 contributions. So we wanted to take a minute to thank all of our contributors.
 No matter whether you contributed code, documentation, reported issues, or
@@ -447,12 +496,10 @@ simply starred the project on GitHub, you made the project better and we thank
 you all for that!</p>
 
 
-
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="https://www.flickr.com/photos/nasahqphoto/39641281455/in/album-72157693123365554/">Expedition 54 Soyuz MS-06 Landing by NASA</a></p>
 </aside>
-                        </div>
 
                         
     <aside class="post__authors">
@@ -543,24 +590,93 @@ team.</p>
     </div>
   </div>
 </div>
+                    </div>
+
+                    
+                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
+                        <p>Create you own success story.</p>
+                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
+                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
+                        </div>
 
                     </div>
+                    <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to <br/>your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+<div class="subscribe-box-mobi">
+    <div class="d-flex align-items-center justify-content-center  flex-column">
+        <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github py-3"></i></a>
+        <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack py-3"></i></a>
+        <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments py-3"></i></a>
+        <div class="click-btn"><i class="fa fa-envelope-o py-3"></i></div>
+
+    </div>
+
+</div>
+
+
+
+
+            </div>
+
+
+                    
                 </div>
-
-                <div class="col-12 col-md-4 col-lg-3 offset-lg-1">
-                    <div class="page-body__sidebar">
-
-                        
+            </div>
+           
 
 
+        </div>
+        </div>
+    </section>
+    <div class='bottom-section'>
+        <div class="container">
+            <div class="page-body__related-content mb-4">
+
+                
 
 
-<div class="post__related">
 
-    <h3>Related Posts</h3>
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
 
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
@@ -598,7 +714,7 @@ team.</p>
 
     </div>
     
-    <div class="post">
+    <div class="post col-sm-4">
 
         <div class="post__image">
     <img src="https://blog.dgraph.io//images/milky_way.jpg">
@@ -636,12 +752,51 @@ team.</p>
 
     </div>
     
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/release-v1.1.1.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Tue, Dec 17, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/release-v1.1.1/">Releasing Dgraph v1.1.1: upsert blocks, facets, and encryption at rest</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/francesc/">Francesc Campoy</a>
+        
+    
 
 </div>
 
 
 
-                        
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+
+                
 <div class="post__tags">
 
     <h3>Tags</h3>
@@ -666,31 +821,10 @@ team.</p>
 
 
 
-                        <aside class="post__cta">
-
-    <h3>
-        Deploy Dgraph<br>
-        in Minutes
-    </h3>
-
-    <p>Dgraph does more than just simplify your workload. Discover what makes Dgraph GraphQL the best option for the job.</p>
-
-    <a href="https://dgraph.io/downloads" class="button button--secondary">
-        <span>Download</span>
-        <i class=" fas fa-arrow-right"></i>
-    </a>
-
-</aside>
-
-
-                    </div>
-                </div>
 
             </div>
         </div>
-    </section>
-
-    <footer class="page-footer">
+        <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -827,9 +961,13 @@ $(document.links)
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
 
+
+    </div>
+
+
+
 </body>
 
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>graphql on Dgraph Blog</title>
@@ -46,7 +46,7 @@ The conference was exciting, and it had a great line up of talks.</description>
       <pubDate>Tue, 29 Oct 2019 02:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/building-native-graphql-database-dgraph/</guid>
-      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;rdquo;
+      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;quot;
  That&amp;rsquo;s my standard opening statement whenever talking about Dgraph&amp;rsquo;s choice of the query language.</description>
     </item>
     
