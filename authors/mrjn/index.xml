@@ -208,7 +208,7 @@ To keep our latency of communication low, we use a new form of serialization lib
     </item>
     
     <item>
-      <title>Hello, World!</title>
+      <title>Introducing Dgraph</title>
       <link>https://blog.dgraph.io/post/hello-world/</link>
       <pubDate>Mon, 18 Apr 2016 14:37:08 +1000</pubDate>
       
