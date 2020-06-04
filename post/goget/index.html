@@ -57,7 +57,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -75,7 +75,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -220,7 +221,18 @@
 
 
     <section class="page-body">
-        <div class="container">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="page-search">
+	<div class="page-search__toggle" onClick="toggleVisibility()">
+		<i class="fas fa-search"></i>
+		<i class="fas fa-times"></i>
+	</div>
+</div>
+
+          
+
             <div class="row">
 
                 <div class="col-12 col-md-8">
@@ -273,42 +285,56 @@
 
                         </div>
 
-                        <div class="post__content">
+                        <div class="post__content inner-content">
                             <p>Thank you Go community for all the love that you showered on Badger. Within 8 hours of announcing
 <a href="https://github.com/dgraph-io/badger">Badger</a>, the blog post <a href="https://news.ycombinator.com/item?id=14335931">made it to the first
 page</a> of Hacker News. And within three days, the
 Github repo received 1250 stars, having crossed 1500 by the time of this post. We have already
 merged <a href="https://github.com/dgraph-io/badger/graphs/contributors">contributions</a> and received
 <a href="https://github.com/dgraph-io/badger/issues">feedback</a> that we need to work on.</p>
+
 <p>All this goes to show how much people enjoy Go native libraries. They
-make things easier. Any tool, library or system written in Go can now just run <code>go get github.com/dgraph-io/badger</code>, and they have a fast, efficient key-value store to use.</p>
+make things easier. Any tool, library or system written in Go can now just run <code>go get
+github.com/dgraph-io/badger</code>, and they have a fast, efficient key-value store to use.</p>
+
 <p>Dgraph users have been asking us about embeddable and go gettable Dgraph for a while. After
 hearing from many different users independently, I decided to <a href="https://github.com/dgraph-io/dgraph/issues/673">create a Github
 issue</a> to track it.</p>
+
 <p>We had two dependencies on Cgo which prevented <code>go get</code>able Dgraph in the past:</p>
+
 <ol>
 <li>ICU library to do tokenization and full-text search.</li>
 <li>RocksDB as the key-value store.</li>
 </ol>
+
 <p>Back in Q1 2017, we got rid of C based ICU library and switched to using parts of Bleve. Bleve simplified our code base, at the cost of losing <a href="http://www.blevesearch.com/">CJK support</a>. But, we thought that&rsquo;s a trade-off we can live with for the time being.</p>
+
 <p>The second step of replacing RocksDB was a lot harder, and a lot more interesting journey,
 culminating in the release of Badger.</p>
+
 <p>Today, we <a href="https://github.com/dgraph-io/dgraph/commit/ed048d5d59248875c55ff5fbf14025e67f1a164c">pushed a
 change</a> to
 Dgraph master branch to switch to Badger. That single change resulted in 450K deleted lines and made Dgraph
 <code>go get</code>able. <strong>This is an exciting day for the Dgraph team, as it simplifies our lives as
 developers hugely.</strong></p>
+
 <p>Not only would we have simpler, faster builds and releases; we&rsquo;d also have profiles going all the way down to
 the disk, and all the way out to the RAM. Every aspect of Dgraph system can now be tweaked for
 performance. No hard language boundaries, and that&rsquo;s powerful.</p>
+
 <blockquote>
 <p>I adore changes which delete more code than they add, while also gaining simplicity and functionality. This change is one of those.</p>
 </blockquote>
-<p><img src="https://blog.dgraph.io/images/remove-badger-pr.png" alt="Dgraph PR to replace Badger">
-<a href="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5"><img src="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5.png" alt="asciicast"></a></p>
+
+<p><img src="https://blog.dgraph.io/images/remove-badger-pr.png" alt="Dgraph PR to replace Badger" />
+<a href="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5"><img src="https://asciinema.org/a/1867dtpl8qp2hy0igtok7vgy5.png" alt="asciicast" /></a></p>
+
 <p><strong>Happy go getting!</strong> It needs a bit more work before Dgraph can be embedded in your Go code, but
 that is coming soon to master. It would be part of the v0.8 release.</p>
+
 <p><em>Disclaimer: Dgraph in master branch contains latest changes and isn&rsquo;t thoroughly tested. Use it at your own risk.</em></p>
+
 
 
 <aside class="post__references">
@@ -334,6 +360,7 @@ that is coming soon to master. It would be part of the v0.8 release.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
+
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -424,7 +451,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     <div class="post">
 
         <div class="post__image">
-    <img src="https://blog.dgraph.io//images/dgraph-graphql-sticker.jpg">
+    <img src="https://blog.dgraph.io//images/spacex-nasa-may2020.jpg">
 </div>
 
 
@@ -433,14 +460,14 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     		<div class="post__date">
 
     
-        Tue, Oct 29, 2019
+        Thu, Jun 4, 2020
     
     
 </div>
 
 
     		<h4 class="post__title">
-    			<a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/">Building a Native GraphQL Database: Challenges, Learnings and Future</a>
+    			<a href="https://blog.dgraph.io/post/solving-jepsen-with-opencensus/">How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey</a>
     		</h4>
 
     		
@@ -462,7 +489,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     <div class="post">
 
         <div class="post__image">
-    <img src="https://blog.dgraph.io//images/moonshot.jpg">
+    <img src="https://blog.dgraph.io//images/dgraph-graphql-sticker.jpg">
 </div>
 
 
@@ -471,14 +498,14 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     		<div class="post__date">
 
     
-        Wed, Jul 31, 2019
+        Tue, Oct 29, 2019
     
     
 </div>
 
 
     		<h4 class="post__title">
-    			<a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">How Dgraph Labs Raised Series A</a>
+    			<a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/">Building a Native GraphQL Database: Challenges, Learnings and Future</a>
     		</h4>
 
     		

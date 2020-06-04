@@ -57,7 +57,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -75,7 +75,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -220,7 +221,18 @@
 
 
     <section class="page-body">
-        <div class="container">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="page-search">
+	<div class="page-search__toggle" onClick="toggleVisibility()">
+		<i class="fas fa-search"></i>
+		<i class="fas fa-times"></i>
+	</div>
+</div>
+
+          
+
             <div class="row">
 
                 <div class="col-12 col-md-8">
@@ -273,19 +285,25 @@
 
                         </div>
 
-                        <div class="post__content">
-                            <p>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer.
+                        <div class="post__content inner-content">
+                            
+
+<p>I recently started working at Dgraph Labs in Bengaluru as a Software Engineer.
 One of the first issues that I worked on was related to the Dgraph&rsquo;s datetime
 datatype. This article covers how I discovered and resolved the issue. The article
 assumes a basic understanding of Dgraph, but you can learn everything you need in
 <a href="https://docs.dgraph.io">docs.dgraph.io</a>.</p>
+
 <h3 id="bug-discovery">Bug Discovery</h3>
+
 <p>While working on <a href="https://github.com/dgraph-io/flock">Flock</a>, I observed that
 timestamp comparisons were not working correctly in Dgraph when the data or query
 had timezone information in it. To see the issue, let&rsquo;s first quickly set up Dgraph
 using the commands below.</p>
+
 <p>The easiest way is to use <a href="https://docs.docker.com/compose/">Docker Compose</a>.
 Create a <code>docker-compose.yml</code> file with the contents below.</p>
+
 <pre><code>version: &quot;3.2&quot;
 services:
   zero:
@@ -303,18 +321,29 @@ services:
     ports:
       - 8000:8000
     command: dgraph-ratel
-</code></pre><p>Next, from the folder containing the newly created file, run:</p>
+</code></pre>
+
+<p>Next, from the folder containing the newly created file, run:</p>
+
 <pre><code>docker-compose up
-</code></pre><p>We will use <a href="https://github.com/dgraph-io/ratel">Ratel</a> to showcase the issue.
+</code></pre>
+
+<p>We will use <a href="https://github.com/dgraph-io/ratel">Ratel</a> to showcase the issue.
 Ratel allows you to run queries, mutations and manage the Dgraph cluster. To open
-Ratel, you can go to the URL http://localhost:8000/?latest in your browser after
+Ratel, you can go to the URL <a href="http://localhost:8000/?latest">http://localhost:8000/?latest</a> in your browser after
 running the commands above.</p>
+
 <p>Now, let&rsquo;s set up the schema. To set up the schema, you have to go to the <code>Schema</code>
 tab on the left navigation bar in Ratel, click on <code>Bulk Edit</code> and paste the following schema:</p>
+
 <pre><code>created_at : datetime @index(hour) .
-</code></pre><p>Then, click on <code>Apply Schema</code>. This will create a new predicate <code>created_at</code> of type <code>datetime</code>.</p>
+</code></pre>
+
+<p>Then, click on <code>Apply Schema</code>. This will create a new predicate <code>created_at</code> of type <code>datetime</code>.</p>
+
 <p>Now you can perform the following mutation to add data to Dgraph in the <code>Console</code> tab
 after choosing <code>Mutate</code> option. This will store two tweets with a creation time and author name.</p>
+
 <pre><code>{
     &quot;set&quot;: [
         {
@@ -329,16 +358,22 @@ after choosing <code>Mutate</code> option. This will store two tweets with a cre
         }
     ]
 }
-</code></pre><p>Finally, run the following query to get all the tweets that were created after
+</code></pre>
+
+<p>Finally, run the following query to get all the tweets that were created after
 <code>UTC March 28th, 3 PM</code>. You can run queries in the <code>Console</code> after selecting
 <code>Query</code> option:</p>
+
 <pre><code>{
   tweets(func: gt(created_at, &quot;2019-03-28T15:00:00+00:00&quot;)) {
     created_at
     uid
   }
 }
-</code></pre><p>This is the response we get:</p>
+</code></pre>
+
+<p>This is the response we get:</p>
+
 <pre><code>{
   &quot;extensions&quot;: { ... },
   &quot;data&quot;: {
@@ -350,9 +385,12 @@ after choosing <code>Mutate</code> option. This will store two tweets with a cre
     ]
   }
 }
-</code></pre><p>The <code>created_at</code> timestamp for the both the users is as follows.
+</code></pre>
+
+<p>The <code>created_at</code> timestamp for the both the users is as follows.
 For brevity, we will remove the date (<code>2019-03-28</code>) from timestamps
 in the rest of the article.</p>
+
 <table>
 <thead>
 <tr>
@@ -362,6 +400,7 @@ in the rest of the article.</p>
 <th align="center">Greater than query ts (15h +00:00)</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td align="center">user1</td>
@@ -369,6 +408,7 @@ in the rest of the article.</p>
 <td align="center">20h +00:00</td>
 <td align="center">True</td>
 </tr>
+
 <tr>
 <td align="center">user2</td>
 <td align="center">18h +01:00</td>
@@ -377,25 +417,31 @@ in the rest of the article.</p>
 </tr>
 </tbody>
 </table>
+
 <p>Even when the <code>created_at</code> timestamps for both the users are larger than the timestamp
 in the query, only <code>user2</code> shows up in the response of the query. Before I explain
 how we found and fixed the root cause of the issue, let me first explain how indexes
 work in Dgraph.</p>
+
 <h3 id="indexes-in-dgraph">Indexes in Dgraph</h3>
+
 <p>Along with JSON, Dgraph takes RDF data format as input which looks like
 <code>&lt;Subject&gt; &lt;Predicate&gt; &lt;Object&gt;</code> (<a href="https://docs.dgraph.io/mutations/#triples">SPO Triples</a>).
 The <code>Subject</code> is generally a <code>UID</code> value representing a node in the graph whereas
 the <code>Predicate</code> represents a relationship of the node with the <code>Object</code> value.
 Indexes are created on a given <code>Predicate</code> to quickly find nodes in the graph for
 the provided <code>Object</code> value.</p>
+
 <p>Dgraph indexes are stored in <a href="https://github.com/dgraph-io/badger">BadgerDB</a>, an embedded
 key-value store written purely in Go. For each object value, one or more tokens are
 generated based on the provided tokenizer. For example, in the case of a <code>hash</code> tokenizer,
 the tokenizer computes the hash of the <code>Object</code> value and returns it as a token.</p>
+
 <p>Once the tokens are generated, data is stored in badgerDB in the following format.
 Each key in badgerDB, is a combination of predicate and generated token, and the value
 is the list of UIDs that match the predicate and the token (the key). An example is shown
 below for <code>created_at</code> predicate:</p>
+
 <table>
 <thead>
 <tr>
@@ -403,21 +449,26 @@ below for <code>created_at</code> predicate:</p>
 <th align="center">value</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td align="center">&lt; created_at, Tokenizer-Tok1 &gt;</td>
 <td align="center">List(uid1, uid3)</td>
 </tr>
+
 <tr>
 <td align="center">&lt; created_at, Tokenizer-Tok2 &gt;</td>
 <td align="center">List(uid2)</td>
 </tr>
 </tbody>
 </table>
+
 <p>We prepend a unique <code>Tokenizer</code> identifier in the key (whether it&rsquo;s a hash tokenizer,
 int tokenizer, hour tokenizer etc.) to the token generated, as shown above, to be able
 to traverse through all the tokens belonging to only that particular tokenizer (index).</p>
+
 <h3 id="datetime-tokenizers">Datetime Tokenizers</h3>
+
 <p>For a datetime index, Dgraph provides tokenizers for <code>hour</code>, <code>day</code>, <code>month</code> and <code>year</code>
 granularity. Each key generated by the tokenizer can be treated as a time bucket of
 specified granularity, storing the UIDs with a date falling within that bucket.
@@ -426,7 +477,9 @@ each bucket reasonable. Choosing a lower granularity time index would wipe out t
 performance benefits of UID consolidation into time buckets (<em>think one entry per bucket</em>).
 On the other hand, choosing very high granularity would end up putting too many UIDs
 within the same bucket, which could also affect performance (<em>millions of entries per bucket</em>).</p>
+
 <h3 id="root-cause">Root Cause</h3>
+
 <p>In order to generate tokens for datetime datatype, we use the <code>Hour()</code>, <code>Day()</code>,
 <code>Month()</code> and <code>Year()</code> methods of the <code>time</code> package as you can see in the
 (<a href="https://github.com/dgraph-io/dgraph/blob/master/tok/tok.go">source code</a>).
@@ -435,29 +488,40 @@ timestamp. For example, for timestamp <code>14h +06:00</code>, the <code>Hour()<
 returns the value <code>14</code> and for timestamp <code>14h +00:00</code>, the <code>Hour()</code>
 method still returns the same value <code>14</code>. Due to this behavior, the index is not
 correctly built.</p>
+
 <p>In our example above, the data has two timestamps 1) <code>14h -06:00</code> and
 2) <code>18h +01:00</code> and we have created an <code>hour</code> index on the <code>created_at</code>
 predicate. The <code>hour</code> index <strong>incorrectly</strong> stores roughly the following information:</p>
+
 <pre><code>&lt;created_at, HourTokenizer-2019-03-28T14&gt; -&gt; List(0x01)
 &lt;created_at, HourTokenizer-2019-03-28T18&gt; -&gt; List(0x02)
-</code></pre><p>The query is trying to find out all users having <code>created_at</code> timestamp bigger than
+</code></pre>
+
+<p>The query is trying to find out all users having <code>created_at</code> timestamp bigger than
 <code>15h +00:00</code>. While processing the query, Dgraph computes the same
 <code>hour</code> tokenizer for this timestamp to be <code>2019-03-28T15</code>. Then, it scans through
 all the users in the index having the token bigger than <code>2019-03-28T15</code> and <em>only</em>
 returns the user with uid <code>0x02</code>.</p>
+
 <h3 id="fixing-the-bug">Fixing the Bug</h3>
-<p><img src="https://blog.dgraph.io/images/greenwich.jpg" alt="UTC"></p>
+
+<p><img src="https://blog.dgraph.io/images/greenwich.jpg" alt="UTC" /></p>
+
 <p>Once the issue was clear, the fix was pretty straight forward. Instead of building tokens
 directly on the given timestamp, we first convert the timestamp into <code>UTC()</code> timezone and
 then compute various tokens. This normalizes all timestamps into single timezone and the
 <code>Hour()</code>, <code>Day()</code>, <code>Month()</code> and <code>Year()</code> information can be correctly compared. The PR
 for this fix is available <a href="https://github.com/dgraph-io/dgraph/pull/3251">here</a>.
 Once this change is included, the index looks like this instead:</p>
+
 <pre><code>&lt;created_at, HourTokenizer-2019-03-28T17&gt; -&gt; List(0x01)
 &lt;created_at, HourTokenizer-2019-03-28T20&gt; -&gt; List(0x02)
-</code></pre><p>The timestamp in the query now generates the token as <code>2019-03-28T15</code> and we see
+</code></pre>
+
+<p>The timestamp in the query now generates the token as <code>2019-03-28T15</code> and we see
 both the users while scanning through the index. The correct response, therefore,
 looks like as follows:</p>
+
 <pre><code>{
   &quot;extensions&quot;: { ... },
   &quot;data&quot;: {
@@ -473,17 +537,23 @@ looks like as follows:</p>
     ]
   }
 }
-</code></pre><p>You can see that both the users are included in this response.</p>
+</code></pre>
+
+<p>You can see that both the users are included in this response.</p>
+
 <h3 id="conclusion">Conclusion</h3>
+
 <p>In this article, we discussed how indexes are implemented in Dgraph. I also showed
 how I discovered and resolved the issue with datetime indexes. While backporting it
 to v1.0 series would require change in data format on disk, the fix will be available
 in v1.1 which we plan to release end of this month. Stay tuned!</p>
 
 
+
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="https://images.nasa.gov/details-PIA13781.html">Standard Candle in the Wind</a></p>
+
 <p>Bottom image: <a href="http://www.visitgreenwich.org.uk/greenwich-meridian/">Greenwich Line at the Royal Observatory in Greenwich Park</a></p>
 </aside>
 

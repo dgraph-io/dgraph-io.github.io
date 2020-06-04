@@ -57,7 +57,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -75,7 +75,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -220,7 +221,18 @@
 
 
     <section class="page-body">
-        <div class="container">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="page-search">
+	<div class="page-search__toggle" onClick="toggleVisibility()">
+		<i class="fas fa-search"></i>
+		<i class="fas fa-times"></i>
+	</div>
+</div>
+
+          
+
             <div class="row">
 
                 <div class="col-12 col-md-8">
@@ -273,9 +285,11 @@
 
                         </div>
 
-                        <div class="post__content">
+                        <div class="post__content inner-content">
                             <p>Dgraph has its own custom query language based on GraphQL, called GraphQL+-. You can learn about the basics of GraphQL+- in our latest screencast that introduces you to writing queries in it, which can be found right below. The screencast will explore the content in the <a href="https://tour.dgraph.io/basic/1/">interactive tour it compliments</a>, but in further depth. You can also <a href="https://www.youtube.com/channel/UCghE41LR8nkKFlR3IFTRO4w?sub_confirmation=1">subscribe to our YouTube channel</a> if you would like to be posted when we release new videos.</p>
+
 <p>The screencast will cover topics such as:</p>
+
 <ul>
 <li>Querying data</li>
 <li>Basic schema</li>
@@ -286,11 +300,14 @@
 <li>Directives like <code>@cascade</code> and <code>@normalize</code></li>
 </ul>
 
+
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/VM7METe3N3Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+  <iframe src="//www.youtube.com/embed/VM7METe3N3Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
+
 <p>If you’re hungry to learn more about Dgraph, you can check out the other tours here at <a href="https://tour.dgraph.io/">https://tour.dgraph.io/</a> or find the full documentation at <a href="https://docs.dgraph.io/">https://docs.dgraph.io/</a>.</p>
+
 
 
 <aside class="post__references">

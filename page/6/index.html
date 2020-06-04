@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 
 <head>
-	<meta name="generator" content="Hugo 0.68.3" />
+	<meta name="generator" content="Hugo 0.57.2" />
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
@@ -62,7 +62,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -80,7 +80,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -239,6 +240,59 @@
                 <div class="post-grid">
 
                     
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/spacex-stages.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Wed, Jul 19, 2017
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/signal-and-wait/">Orchestrating signal and wait in Go</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/mrjn/">Manish Rai Jain</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			<p>One of the common use case in Go is to start a few goroutines to do some
+work. These goroutines block listening in on a channel, waiting for more work to
+arrive. At some point, you want to signal these goroutines to stop accepting
+more work and exit, so you can cleanly shut down the program.</p>
+		</div>
+
+		
+
+
+	</div>
+
+</article>
+
+                        </div>
 
                     
 
@@ -660,7 +714,9 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 		<div class="post__summary">
 			<p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>.</p>
+
 <p>We have divided this post into five parts:</p>
+
 <ol>
 <li><a href="#ref-loading-data">Loading data</a></li>
 <li><a href="#ref-querying">Querying</a></li>
@@ -693,59 +749,6 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 
 </div>
 
-
-
-	</div>
-
-</article>
-
-                        </div>
-
-                    
-
-                        <div class="post-grid__item">
-                            <article class="post">
-
-	<div class="post__image">
-    <img src="https://blog.dgraph.io//images/routeplan.jpg">
-</div>
-
-
-	<div class="post__header">
-
-		<div class="post__date">
-
-    
-        Thu, Jan 5, 2017
-    
-    
-</div>
-
-
-		<h3 class="post__title">
-			<a href="https://blog.dgraph.io/post/v0.7-release/">Releasing Dgraph v0.7.1</a>
-		</h3>
-
-		
-<div class="post__byline">
-
-    
-            by <a href="https://blog.dgraph.io/authors/mrjn/">Manish Rai Jain</a>
-        
-    
-
-</div>
-
-
-
-		<div class="post__summary">
-			<p><a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- team is super excited to present v0.7.1 of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
-. This version is the biggest step we&rsquo;ve taken towards our production aim of v1.0.
-We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> in our <a href="https://github.com/dgraph-io/dgraph/issues/1">product roadmap</a>, including replication and high-availability using RAFT protocol, indexing, filtering, sorting, geospatial queries, and backups.</p>
-		</div>
-
-		
 
 
 	</div>
@@ -805,6 +808,12 @@ We&rsquo;ve implemented <strong>90% of all the features we had planned</strong> 
         
             <a class="pagination__item" href="https://blog.dgraph.io/page/7/">
                 <span>7</span>
+            </a>
+        
+    
+        
+            <a class="pagination__item" href="https://blog.dgraph.io/page/8/">
+                <span>8</span>
             </a>
         
     

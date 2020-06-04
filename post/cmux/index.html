@@ -57,7 +57,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -75,7 +75,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -221,7 +222,18 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 
 
     <section class="page-body">
-        <div class="container">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="page-search">
+	<div class="page-search__toggle" onClick="toggleVisibility()">
+		<i class="fas fa-search"></i>
+		<i class="fas fa-times"></i>
+	</div>
+</div>
+
+          
+
             <div class="row">
 
                 <div class="col-12 col-md-8">
@@ -274,15 +286,20 @@ In this post, I&rsquo;m going to brief about how to run multiple services via th
 
                         </div>
 
-                        <div class="post__content">
+                        <div class="post__content inner-content">
                             <p>Ever faced the problem of having multiple ports in an application, one for each service?
 In this post, I&rsquo;m going to brief about how to run multiple services via the same listener port.</p>
+
 <p>At <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 , we used to have one port to serve HTTP requests, one for gRPC and one more for internal communication among the servers.
 But now we just use one port for all the outside facing services and one for internal server communications.</p>
+
 <p><a href="https://github.com/soheilhy/cmux">Cmux</a> is a connection multiplexing library for Go. It allows you to differentiate services based on the payload. Hence, you can serve HTTP, HTTPS, gRPC, etc on the same port. For complete information on the protocols supported, refer to their <a href="https://godoc.org/github.com/soheilhy/cmux">godoc</a>.</p>
+
 <p>Let us jump into the three simple steps with some code sample and get this working in a jiffy.</p>
+
 <p>First setup the different services as you would usually do. In our case we setup a gRPC service and an HTTP handler function.</p>
+
 <pre><code>// Setup gRPC server.
 type grpcServer struct{}
 
@@ -301,8 +318,11 @@ func queryHandler(w http.ResponseWriter, r *http.Request) {
   .
 
 }
-</code></pre><p>Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
+</code></pre>
+
+<p>Second, write separate functions to start each service using a net.Listener object as if it is the only service using that listener.
 Later we&rsquo;ll multiplex a single TCP listener into multiple listeners.</p>
+
 <pre><code>// Wrapper functions to start serving different services.
 
 func serveGRPC(l net.Listener) {
@@ -318,10 +338,13 @@ func serveHTTP(l net.Listener) {
     log.Fatalf(&quot;While serving http request: %v&quot;, err)
   }
 }
-</code></pre><p>Third, create a listener object and multiplex it using a cmux matcher.
+</code></pre>
+
+<p>Third, create a listener object and multiplex it using a cmux matcher.
 It&rsquo;ll read the header bytes of exchanges and figure out which service to trigger by giving us a new sub-listener (We just call it that, though it&rsquo;s actually just net.Listener) for every match.
 We then call the services that we wrote earlier with these corresponding sub-listeners.
 Look at the following code sample to get a better hang of the above-mentioned steps.</p>
+
 <pre><code>func setupServer() {
   go worker.RunServer(*workerPort) // For internal communication.
 
@@ -365,8 +388,12 @@ Look at the following code sample to get a better hang of the above-mentioned st
     log.Fatal(err)
   }
 }
-</code></pre><p>So, there we have it. A single port to cater to many services that you might be using.</p>
+</code></pre>
+
+<p>So, there we have it. A single port to cater to many services that you might be using.</p>
+
 <p>Hope you had fun with this post and learnt something new. Thanks for reading and do let us know your thoughts and how it works out for you.</p>
+
 
 
 <aside class="post__references">

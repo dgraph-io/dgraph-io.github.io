@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>opencensus on Dgraph Blog</title>
+    <link>https://blog.dgraph.io/tags/opencensus/</link>
+    <description>Recent content in opencensus on Dgraph Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
+    <lastBuildDate>Thu, 04 Jun 2020 04:50:00 -0700</lastBuildDate>
+    
+	<atom:link href="https://blog.dgraph.io/tags/opencensus/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey</title>
+      <link>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</link>
+      <pubDate>Thu, 04 Jun 2020 04:50:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</guid>
+      <description>Software is only as strong as the engineer writing it. This post is dedicated to all the engineers who put relentless efforts in writing and debugging systems to make them stable and reliable for others to use.</description>
+    </item>
+    
+  </channel>
+</rss>

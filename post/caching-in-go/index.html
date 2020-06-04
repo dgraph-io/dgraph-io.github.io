@@ -57,7 +57,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -75,7 +75,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -90,7 +91,7 @@
 
   <meta name="twitter:title" content="The State of Caching in Go"/>
   <meta name="twitter:description" content="Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
- This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News."/>
+This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News."/>
   <meta name="twitter:site" content="@dgraphlabs"/>
 
   
@@ -221,7 +222,18 @@
 
 
     <section class="page-body">
-        <div class="container">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="page-search">
+	<div class="page-search__toggle" onClick="toggleVisibility()">
+		<i class="fas fa-search"></i>
+		<i class="fas fa-times"></i>
+	</div>
+</div>
+
+          
+
             <div class="row">
 
                 <div class="col-12 col-md-8">
@@ -274,46 +286,59 @@
 
                         </div>
 
-                        <div class="post__content">
-                            <p><em><strong>Since writing this post, we have built <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>: A High Performance Go
+                        <div class="post__content inner-content">
+                            
+
+<p><strong><em>Since writing this post, we have built <a href="https://github.com/dgraph-io/ristretto">Ristretto</a>: A High Performance Go
 cache. Read all about it
-<a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache">here</a>.</strong></em></p>
-<hr>
+<a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache">here</a>.</em></strong></p>
+
+<hr />
+
 <p><strong>This post made it to the top of Golang <a href="https://www.reddit.com/r/golang/comments/az99sl/the_state_of_caching_in_go_dgraph_blog/">subreddit</a> and is trending #2 on the
 front page of <a href="https://news.ycombinator.com/item?id=19344624">Hacker News</a>. Do engage in discussion there and show us love
 by giving us a <a href="https://github.com/dgraph-io/dgraph">GitHub star</a>.</strong></p>
+
 <p>Every database system requires a smart cache. That is, a cache that keeps the most
 frequently or recently accessed items and has a configurable memory utilization limit.</p>
+
 <p>Being a graph database, Dgraph can access thousands&mdash;even millions&mdash;of
 keys per query, depending upon the number of intermediate results. Accessing
 these via our key-value DB, <a href="https://github.com/dgraph-io/badger">Badger</a>, results in disk seeks, which is something
 we want to reduce for performance reasons.</p>
+
 <p>Typical access patterns follow a <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipfian</a> distribution. <strong>The most
 frequently accessed keys are accessed exponentially more times than others.</strong> We
 see this in Dgraph as well.</p>
+
 <p>We have been extremely happy with our choice of using the Go language to build
 Dgraph. A lot can be said about why Go makes a great language to write back-end
 code in, but that is a post in itself. We would not swap out Go for any
 other existing language. Although Go is great, the Go ecosystem is
 still lacking.</p>
+
 <p>My general complaints around Go stem from the lack of a library ecosystem around the
 language. Go is mature in the sense that it is stable and has delivered upon the
 <a href="https://eli.thegreenplace.net/2018/go-hits-the-concurrency-nail-right-on-the-head/">core</a> <a href="https://talks.golang.org/2012/splash.article">promise</a> of fast compilation, execution,
 and utilization of machine cores really well. However, for a language built
 around concurrency, it still lacks an ecosystem of performant, concurrent
 libraries which can scale well to the number of cores. A concurrent list or map
-<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> is largely left as an exercise to the end-user&mdash;which would be just fine
+<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> is largely left as an exercise to the end-user&mdash;which would be just fine
 if this was a serially-executing language&mdash;but feels like a glaring omission
 when everything is built around concurrency.</p>
+
 <p>In particular, Go lacks a concurrent <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU">LRU</a> (or <a href="https://en.wikipedia.org/wiki/Least_frequently_used">LFU</a>) cache which can scale well
 enough to be a process-global cache. In this blog post, I will take you through
 the various attempts at workarounds that are typically advocated, including some
 which we have executed and learnt from within Dgraph. Aman will then present the
 design, performance and hit ratio comparison for the existing popular cache
 implementations in the Go ecosystem.</p>
+
 <p>I&rsquo;ll start by listing the requirements for the cache, the various
 approaches we can take to implement the cache, and how they fail to achieve them.</p>
+
 <h3 id="requirements-for-the-cache">Requirements for the cache</h3>
+
 <ol>
 <li>Concurrent.</li>
 <li>Memory-bounded (limit to configurable max memory usage).</li>
@@ -321,96 +346,122 @@ approaches we can take to implement the cache, and how they fail to achieve them
 <li>Scale well under non-random key access distribution (e.g. Zipf).</li>
 <li>High cache hit ratio</li>
 </ol>
-<h4 id="use-go-map-with-syncmutex">Use Go map with sync.Mutex</h4>
+
+<h4 id="use-go-map-with-sync-mutex">Use Go map with sync.Mutex</h4>
+
 <p>Using a Go map with a sync.Mutex (or sync.RWMutex) is the most commonly
 advocated approach to caching. This does result in all the goroutines blocking
 upon one lock, which can lead to contention. This also fails to keep a tab on
 the amount of memory usage. So, it does not work as a memory bounded cache in
 itself.</p>
+
 <blockquote>
 <p>Fails on requirements 2-4.</p>
 </blockquote>
+
 <h4 id="use-lock-striping-with-go-maps">Use lock striping with Go maps</h4>
+
 <p>This is the same concept as above, but splits keys using a fingerprint into many
 smaller Go map shards protected by mutex locks (see <a href="https://netjs.blogspot.com/2016/05/lock-striping-in-java-concurrency.html">here</a>). Many
 developers incorrectly believe lock striping to be a great way to avoid
 contention, particularly when setting the number of shards to exceed the number
 of threads in the program (&gt; GOMAXPROCS).</p>
+
 <p>In our initial attempts at building a simplified memory-bounded cache, we built
 this as well. To allow for releasing memory back to the OS, we would
 periodically pick a random shard and delete its map, allowing it to refill. This
 was a crude but simple technique which performed better than an LRU cache
 (explained below) but had many downsides.</p>
+
 <p>One, Go is slow to release memory back to the OS but fast to request it. As
 soon as the shard was emptied, goroutines trying to access the keys in that
 shard would start allocating memory while the previous memory was still not
 released back fully, causing a spike in memory usage and a rapid OOM crash.</p>
+
 <p>Also, what we failed to realize at the time was that the access patterns are
 bounded by Zipf&rsquo;s law. The most frequently accessed keys are still under a few
 locks, thus becoming the cause of contention for all goroutines. The performance
 of this approach does not scale well with the number of cores.</p>
+
 <blockquote>
 <p>Fails on requirements 2,4.</p>
 </blockquote>
+
 <h4 id="lru-cache">LRU cache</h4>
+
 <p>Go has a basic LRU cache implementation as part of <a href="https://github.com/golang/groupcache/tree/master/lru">groupcache</a>. After
 our failed attempt with lock striping with map shards, we modified this LRU
 cache by introducing locks and making it concurrent. While this cache did
 solve the immediate issues around memory spikes caused by frequently and
 consistent memory releases, we realized it would introduce contention.</p>
+
 <p>This cache is also sized by the number of entries, not the amount of
 memory they are consuming. Trying to estimate the memory usage of a complex
 data structure on the heap in Go is prohibitively expensive and almost impossible
 to get right, something we realized after trying in vain using multiple
 mechanisms. This got particularly hard because our data structures were changing
 after being placed in the cache (something that we plan to avoid going forward).</p>
+
 <p>But, we did not comprehend how much contention that cache could cause. After
 having this cache for over a year, we realized that the contention around this
 cache was so significant, that removing it caused our queries to
 <a href="https://github.com/dgraph-io/dgraph/commit/b9990f4619b64615c2c18bb7627d198b4397109c">speed up</a> 10x!</p>
+
 <p>In this implementation, every read is a write which updates the
 relative positioning of the element in the recency linked list. Thus, all
 accesses wait on a single mutex lock. In addition, the critical section of LRU
 is slower than a map and does a lot of pointer dereferences, maintaining a map and
 a doubly-linked list (see <a href="https://github.com/golang/groupcache/blob/5b532d6fd5efaf7fa130d4e859a2fde0fc3a9e1b/lru/lru.go#L32-L33">code</a>).  Despite our efforts around lazy
 eviction, it still suffered from severe contention.</p>
+
 <blockquote>
 <p>Fails on requirement 3-4.</p>
 </blockquote>
+
 <h4 id="striped-lru-cache">Striped LRU cache</h4>
+
 <p>We did not bother trying this. From our experiments with striped map shards, we
 know it would only be an incremental improvement and would not scale well.
 <em>(Though, for the purpose of benchmarking caches for this article, we implemented
 a striped LRU cache as described below.)</em></p>
+
 <blockquote>
 <p>Would fail on requirement 4.</p>
 </blockquote>
+
 <h3 id="popular-cache-implementations">Popular Cache Implementations</h3>
+
 <p>Many other approaches aim at reducing the GC time spent on the map shards.
 GC time increases as the number of entries in the map increase. Reduction is
 achieved by allocating fewer, larger byte slices and storing many cache entries
 in each slice.  This is an effective approach&mdash;we use this in Badger in
 multiple places (Skiplist, Table builder, etc.). Some of the popular caches in
 Go use this technique.</p>
+
 <h4 id="bigcache">BigCache</h4>
+
 <p><a href="https://github.com/allegro/bigcache">BigCache</a> divides the data into shards based on the hash of the key. Each shard
 contains a map and a ring buffer. Whenever a new element is set, it appends the
 element in the ring buffer of the corresponding shard and the offset into the
 buffer is stored in the map. If the same element is set more than once, the
 previous entries in the buffer are marked invalid. If the buffer is too small,
 it is expanded until the maximum capacity is reached.</p>
+
 <p>Each map key is a uint32 hash and the value is a uint32 pointer to the offset in
 the buffer where the value is stored along with metadata information. If there are
 hash collisions, BigCache ignores the previous key and stores the current one
 into the map. Allocating fewer, larger buffers up front and using a
 <code>map[uint32]uint32</code> is a great way to avoid paying the cost of GC sweeps.</p>
+
 <h4 id="freecache">FreeCache</h4>
+
 <p><a href="https://github.com/coocood/freecache">FreeCache</a> divides the cache into 256 segments. Each segment contains 256 slots
 and a ring buffer to store the data. When a new key is added to the cache,
 a segment id is identified using the lower eight bits of the hash of the key. Further,
 a slot is chosen using LSB 9-16 of the hash of the key. Dividing data
 into slots helps in reducing the search space while looking for a key in the
 cache.</p>
+
 <p>The data is then appended into the ring buffer and offset is stored into a sorted
 array. If a ring buffer doesn&rsquo;t have enough space, eviction is performed in the
 segment from the beginning of the ring buffer using a modified LRU policy. An
@@ -418,39 +469,56 @@ entry is deleted from the ring buffer if the last access time for the entry is
 smaller than the average access time of the segment. To find an entry in a cache
 on Get, a binary search is performed in the sorted array in the corresponding
 slot.</p>
+
 <h4 id="groupcache">GroupCache</h4>
+
 <p><a href="https://github.com/golang/groupcache/tree/master/lru">GroupCache</a> implements an exact LRU eviction policy using a linked list
 and a Go map. For a fair comparison, we implemented a sharding logic with
 256 shards on top of GroupCache.</p>
+
 <h3 id="performance-comparison">Performance Comparison</h3>
+
 <p>To compare performance of various caches, we generated a Zipf-distributed
 workload and ran benchmarks using an <a href="https://cloud.google.com/compute/docs/machine-types">n1-highcpu-32</a> machine. The chart below
 compares performance of the three cache libraries for a read-only workload.</p>
+
 <h4 id="read-only">Read-Only</h4>
-<p><img src="https://blog.dgraph.io/images/cache_read_workload.svg" alt="Read-Only Performance Benchmark"></p>
+
+<p><img src="https://blog.dgraph.io/images/cache_read_workload.svg" alt="Read-Only Performance Benchmark" /></p>
+
 <p>We can see that BigCache reads scales well given that reads
 are lock-free. FreeCache and GroupCache reads are not lock-free and don&rsquo;t
 scale after a point (20 concurrent accesses).
 (higher value is better on y axis)</p>
+
 <h4 id="write-only">Write-Only</h4>
-<p><img src="https://blog.dgraph.io/images/cache_write_workload.svg" alt="Write-Only Performance Benchmark"></p>
+
+<p><img src="https://blog.dgraph.io/images/cache_write_workload.svg" alt="Write-Only Performance Benchmark" /></p>
+
 <p>For a write-only workload, all the libraries seem to perform similarly. Though,
 FreeCache performs slightly better than the other two.</p>
+
 <h4 id="read-write-25-writes-75-reads">Read-Write (25% writes, 75% reads)</h4>
-<p><img src="https://blog.dgraph.io/images/cache_mixed_workload.svg" alt="Read-Write Performance Benchmark"></p>
+
+<p><img src="https://blog.dgraph.io/images/cache_mixed_workload.svg" alt="Read-Write Performance Benchmark" /></p>
+
 <p>For a mixed workload containing 25% writes and 75% reads, while BigCache is the
 only library that clearly seems to scale well, the hit ratios are bad for a Zipf
 workload, as explained in the next section.</p>
+
 <h4 id="hit-ratio-comparison">Hit Ratio Comparison</h4>
+
 <p>Hit Ratio for the three caches are shown below. FreeCache does pretty close to
 LRU policy implemented by GroupCache. BigCache, however, doesn&rsquo;t do well for a
 Zipf-distributed workload for following reasons:</p>
+
 <ul>
 <li>BigCache doesn&rsquo;t utilize the buffer efficiently and may end up storing
 multiple entries for the same key in the buffer.</li>
 <li>BigCache doesn&rsquo;t update entries on access (read), hence, resulting in
 eviction of recently accessed keys.</li>
 </ul>
+
 <table>
 <thead>
 <tr>
@@ -461,6 +529,7 @@ eviction of recently accessed keys.</li>
 <th align="center">10000000</th>
 </tr>
 </thead>
+
 <tbody>
 <tr>
 <td align="center">BigCache</td>
@@ -469,6 +538,7 @@ eviction of recently accessed keys.</li>
 <td align="center">52%</td>
 <td align="center">55%</td>
 </tr>
+
 <tr>
 <td align="center">FreeCache</td>
 <td align="center">-</td>
@@ -476,6 +546,7 @@ eviction of recently accessed keys.</li>
 <td align="center">55%</td>
 <td align="center">90%</td>
 </tr>
+
 <tr>
 <td align="center">GroupCache</td>
 <td align="center">29%</td>
@@ -485,34 +556,44 @@ eviction of recently accessed keys.</li>
 </tr>
 </tbody>
 </table>
+
 <p>So, we can conclude that none of the cache libraries meet all the requirements.</p>
+
 <blockquote>
 <p>GroupCache and FreeCache fails on requirement 4 whereas BigCache fails
 on requirement 5.</p>
 </blockquote>
+
 <h3 id="so-what-are-we-left-with">So, what are we left with?</h3>
+
 <p><em>Well, nothing really.</em> We are not aware of a smart memory-bounded cache in Go
 that can meet the entire list of requirements. If you know of one, do let us
 know in the comments.</p>
+
 <p>Meanwhile, we came across <a href="https://github.com/ben-manes/caffeine">Caffeine</a>, a Java library used by Cassandra,
 Finagle and other database systems. It uses <a href="https://arxiv.org/abs/1512.00727">TinyLFU</a>, a highly efficient
 cache admission policy and uses various techniques to scale and <a href="https://docs.google.com/presentation/d/1NlDxyXsUG1qlVHMl4vsUUBQfAJ2c2NsFPNPr2qymIBs/edit?usp=sharing">perform
 well</a> as the number of threads and cores grow, while providing a close to
 optimal hit ratio. You can read more about how it works in <a href="http://highscalability.com/blog/2016/1/25/design-of-a-modern-cache.html">this article</a>.</p>
+
 <p>Caffeine meets all the five requirements I mentioned at the beginning, so <strong>we
 are looking into building a Go equivalent of Caffeine,</strong> something which can
 serve our needs and potentially fill the gap of a concurrent, performant,
 memory-bounded cache in the Go language. Let us know if you&rsquo;d like to
 contribute or if you have something similar built already!</p>
+
 <h3 id="acknowledgment">Acknowledgment</h3>
+
 <p>We want to thank <a href="https://github.com/ben-manes">Benjamin Manes</a> for helping us replicate
 performance benchmarks from <a href="https://github.com/ben-manes/caffeine">Caffeine</a> into Go (code available
 <a href="https://github.com/dgraph-io/benchmarks/tree/master/cachebench">here</a>).  We also would like to thank <a href="https://github.com/dgryski">Damian Gryski</a> for
 providing us with base framework to benchmark cache hit ratios (available
 <a href="https://github.com/dgryski/trifles/tree/master/cachetest">here</a>), which we also modified to work for our needs. He readily
 accepted our changes into his GitHub repository.</p>
+
 <p>Thanks for reading this post. If you liked this post, show us some love and give
 us <a href="https://github.com/dgraph-io/dgraph">a star on GitHub</a>.</p>
+
 
 
 <aside class="post__references">
@@ -522,18 +603,19 @@ doppio</a>
 in Chiang Mai.</p>
 </aside>
 
-<section class="footnotes" role="doc-endnotes">
-<hr>
+<div class="footnotes">
+
+<hr />
+
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>Use of sync.Map is discouraged by the Go team for various reasons. One of
-them is that it does not reduce in size, despite deleting elements in the map.
-So, for practical purposes, I&rsquo;m going to disregard sync.Map as a
-first-class data structure. Most users would fill the need with a mutex
-lock on top of Go native data structures. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
+<li id="fn:1"><p>Use of sync.Map is discouraged by the Go team for various reasons. One of
+  them is that it does not reduce in size, despite deleting elements in the map.
+  So, for practical purposes, I&rsquo;m going to disregard sync.Map as a
+  first-class data structure. Most users would fill the need with a mutex
+  lock on top of Go native data structures.</p>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
 </ol>
-</section>
+</div>
 
                         </div>
 
@@ -552,6 +634,7 @@ lock on top of Go native data structures. <a href="#fnref:1" class="footnote-bac
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
+
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 

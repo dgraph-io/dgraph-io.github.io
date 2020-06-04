@@ -57,7 +57,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?05042020-3" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06042020-8" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet"/>
 
@@ -75,7 +75,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/addon/edit/closebrackets.min.js" integrity="sha256-qhu2a7DSpQaammMaLw1iruxBpxmgdw8mdQaQWQUokcY=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/javascript/javascript.min.js" integrity="sha256-7Bdg/UdDMmHDPafpQDYZNPCEbnRP7eAvu+2hEoqRCXs=" crossorigin="anonymous"></script>
   
-
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/algoliasearch@3/dist/algoliasearch.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.0.0/dist/instantsearch.production.min.js" integrity="sha256-6S7q0JJs/Kx4kb/fv0oMjS855QTz5Rc2hh9AkIUjUsk=" crossorigin="anonymous"></script>
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
@@ -223,7 +224,18 @@ more work and exit, so you can cleanly shut down the program."/>
 
 
     <section class="page-body">
-        <div class="container">
+        <div class="page-body__content">
+            <div class="container">
+
+                <div class="page-search">
+	<div class="page-search__toggle" onClick="toggleVisibility()">
+		<i class="fas fa-search"></i>
+		<i class="fas fa-times"></i>
+	</div>
+</div>
+
+          
+
             <div class="row">
 
                 <div class="col-12 col-md-8">
@@ -276,12 +288,14 @@ more work and exit, so you can cleanly shut down the program."/>
 
                         </div>
 
-                        <div class="post__content">
+                        <div class="post__content inner-content">
                             <p>One of the common use case in Go is to start a few goroutines to do some
 work. These goroutines block listening in on a channel, waiting for more work to
 arrive. At some point, you want to signal these goroutines to stop accepting
 more work and exit, so you can cleanly shut down the program.</p>
+
 <p>This is how the code might look:</p>
+
 <pre><code>func doWork(chanWork chan *work) {
   for w := range chanWork {
     do(w)
@@ -300,11 +314,15 @@ func main() {
   // All work is done, now stop.
   close(chanWork)
 }
-</code></pre><p>This code looks reasonable, <strong>with one caveat.</strong> Once you close the chanWork
+</code></pre>
+
+<p>This code looks reasonable, <strong>with one caveat.</strong> Once you close the chanWork
 channel, the main exits immediately. Closing the channel only acts as a
 signal. You want the program to wait as well.</p>
+
 <p>Using <code>sync.WaitGroup</code> allows the goroutines to cleanly exit before exiting the main
 program, like so:</p>
+
 <pre><code>func doWork(chanWork chan *work, wg *sync.WaitGroup) {
   defer wg.Done()
   ...
@@ -327,10 +345,14 @@ func main() {
   // Now wait.
   wg.Wait()
 }
-</code></pre><p>For a Go programmer, this is pretty basic so far. And that&rsquo;s because we had
+</code></pre>
+
+<p>For a Go programmer, this is pretty basic so far. And that&rsquo;s because we had
 access to the channel, which controls when the goroutine should exit.</p>
+
 <p>What happens in case we don&rsquo;t have access to this channel? For, e.g., if we want to run
 some execution periodically, we&rsquo;ll have this situation:</p>
+
 <pre><code>func doWorkPeriodically(wg *sync.WaitGroup) {
   defer wg.Done()
   timeChan := time.Tick(time.Second)
@@ -339,8 +361,11 @@ some execution periodically, we&rsquo;ll have this situation:</p>
     do()  // some work
   }
 }
-</code></pre><p>In this case, we need a way to signal the goroutine to stop doing the work.
+</code></pre>
+
+<p>In this case, we need a way to signal the goroutine to stop doing the work.
 Say we use a signal channel like so:</p>
+
 <pre><code>func doWorkPeriodically(wg *sync.WaitGroup, signal chan struct{}) {
   defer wg.Done()
   timeChan := time.Tick(time.Second)
@@ -363,16 +388,22 @@ func main() {
   signal &lt;- struct{}{}  // To signal the goroutine to stop.
   wg.Wait() // Wait for goroutine to exit.
 }
-</code></pre><p>This code above would indicate to the goroutine to stop doing the work. And also
+</code></pre>
+
+<p>This code above would indicate to the goroutine to stop doing the work. And also
 wait for it so <code>main</code> can exit cleanly.</p>
+
 <p>All nice and good so far. Now, <strong>what if we have multiple different such goroutines, and
 we need to signal and wait on them in some order.</strong> For, e.g., we might have a
-pipeline of sorts, with multiple stages, each dependent on the previous <code>A -&gt; B -&gt; C</code>. In this case, we need to signal and wait on <code>A</code>, before we do that for
+pipeline of sorts, with multiple stages, each dependent on the previous <code>A -&gt; B
+-&gt; C</code>. In this case, we need to signal and wait on <code>A</code>, before we do that for
 <code>B</code> and then <code>C</code>.</p>
+
 <p>With the above code, this would be cumbersome. You&rsquo;d need multiple signal
 channels, one for each stage; and similarly, multiple waits, one for each stage.
 Would be nice to encapsulate this in a class. That&rsquo;s what we have done in
 <a href="https://github.com/dgraph-io/badger">Badger</a>.</p>
+
 <pre><code>type LevelCloser struct {
     Name    string
     running int32
@@ -412,7 +443,10 @@ func (lc *LevelCloser) Done() {
 func (lc *LevelCloser) Wait() {
     lc.waiting.Wait()
 }
-</code></pre><p>It&rsquo;s a simple class with some basic APIs. The way you&rsquo;d use it is like this:</p>
+</code></pre>
+
+<p>It&rsquo;s a simple class with some basic APIs. The way you&rsquo;d use it is like this:</p>
+
 <pre><code>func doWorkPeriodically(lc *LevelCloser) {
   defer lc.Done()
   timeChan := time.Tick(time.Second)
@@ -440,8 +474,11 @@ func main() {
   lc.Signal()
   lc.Wait()
 }
-</code></pre><p>Finally, to make it work for multiple stages, dependent or not, we wrap it up
+</code></pre>
+
+<p>Finally, to make it work for multiple stages, dependent or not, we wrap it up
 into one <code>Closer</code> class.</p>
+
 <pre><code>type Closer struct {
     sync.RWMutex
     levels map[string]*LevelCloser
@@ -480,10 +517,13 @@ func (c *Closer) Get(name string) *LevelCloser {
     }
     return lc
 }
-</code></pre><p>Using this wrapper class, you can just create one <code>Closer</code> object, and use that
+</code></pre>
+
+<p>Using this wrapper class, you can just create one <code>Closer</code> object, and use that
 to create and maintain all <code>LevelCloser</code>s. This way, you can retrieve, and signal all
 the <code>LevelCloser</code>s individually in order, or just have <code>Closer</code> signal all of
 them, and then wait for all of them.</p>
+
 <pre><code>func (c *Closer) SignalAll() {
     c.RLock()
     defer c.RUnlock()
@@ -501,7 +541,10 @@ func (c *Closer) WaitForAll() {
         l.Wait()
     }
 }
-</code></pre><p>This is how you&rsquo;d use this class:</p>
+</code></pre>
+
+<p>This is how you&rsquo;d use this class:</p>
+
 <pre><code>func stageA(lc *LevelCloser) {
   defer lc.Done()
   for {
@@ -533,10 +576,13 @@ func main() {
   closer.SignalAll()
   closer.WaitAll()
 }
-</code></pre><p>This class is being used by <a href="https://github.com/dgraph-io/badger">Badger</a>, and
+</code></pre>
+
+<p>This class is being used by <a href="https://github.com/dgraph-io/badger">Badger</a>, and
 it significantly simplifies the various asynchronous activities going on
 internally. We can ensure that our writes are all committed before in-memory
 tables are flushed, before we close value log, and so on.</p>
+
 <p>You can see the entire <a href="https://github.com/dgraph-io/badger/blob/master/y/y.go#L67-L170">code
 here</a>. The code
 is under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license, so
@@ -545,9 +591,11 @@ feel free to copy the code and use it in your project. You can see the class in
 for <code>closer.Register</code> and <code>closer.Get</code> to track how we create multiple such
 <code>LevelCloser</code>s and use them to maintain a strict opening and closing order
 between the various stages.</p>
+
 <p>Hope you found this useful! Check out other posts to see how
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> and
 <a href="https://github.com/dgraph-io/badger">Badger</a> can add value to your projects.</p>
+
 
 
 <aside class="post__references">
@@ -571,6 +619,7 @@ between the various stages.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
+
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -661,7 +710,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     <div class="post">
 
         <div class="post__image">
-    <img src="https://blog.dgraph.io//images/dgraph-graphql-sticker.jpg">
+    <img src="https://blog.dgraph.io//images/spacex-nasa-may2020.jpg">
 </div>
 
 
@@ -670,14 +719,14 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     		<div class="post__date">
 
     
-        Tue, Oct 29, 2019
+        Thu, Jun 4, 2020
     
     
 </div>
 
 
     		<h4 class="post__title">
-    			<a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/">Building a Native GraphQL Database: Challenges, Learnings and Future</a>
+    			<a href="https://blog.dgraph.io/post/solving-jepsen-with-opencensus/">How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey</a>
     		</h4>
 
     		
@@ -699,7 +748,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     <div class="post">
 
         <div class="post__image">
-    <img src="https://blog.dgraph.io//images/moonshot.jpg">
+    <img src="https://blog.dgraph.io//images/dgraph-graphql-sticker.jpg">
 </div>
 
 
@@ -708,14 +757,14 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     		<div class="post__date">
 
     
-        Wed, Jul 31, 2019
+        Tue, Oct 29, 2019
     
     
 </div>
 
 
     		<h4 class="post__title">
-    			<a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">How Dgraph Labs Raised Series A</a>
+    			<a href="https://blog.dgraph.io/post/building-native-graphql-database-dgraph/">Building a Native GraphQL Database: Challenges, Learnings and Future</a>
     		</h4>
 
     		

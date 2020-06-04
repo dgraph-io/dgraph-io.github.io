@@ -1,6 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://blog.dgraph.io/authors/mrjn/</loc>
+    <lastmod>2020-06-04T04:50:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/</loc>
+    <lastmod>2020-06-04T04:50:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</loc>
+    <lastmod>2020-06-04T04:50:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/jepsen/</loc>
+    <lastmod>2020-06-04T04:50:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/opencensus/</loc>
+    <lastmod>2020-06-04T04:50:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/</loc>
+    <lastmod>2020-06-04T04:50:00-07:00</lastmod>
+  </url>
   
   <url>
     <loc>https://blog.dgraph.io/authors/dmai/</loc>
@@ -13,22 +43,12 @@
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/</loc>
-    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/post/dgraph-graphql-hits-ga/</loc>
     <lastmod>2020-05-03T19:45:00-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.dgraph.io/tags/graphql/</loc>
-    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/post/</loc>
     <lastmod>2020-05-03T19:45:00-07:00</lastmod>
   </url>
   
@@ -155,11 +175,6 @@
   <url>
     <loc>https://blog.dgraph.io/post/tutorial-3-getting-started/</loc>
     <lastmod>2019-10-30T06:30:00-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/authors/mrjn/</loc>
-    <lastmod>2019-10-29T02:13:13-07:00</lastmod>
   </url>
   
   <url>
