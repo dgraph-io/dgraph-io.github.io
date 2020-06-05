@@ -61,7 +61,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -97,8 +97,8 @@
 
     $(".subscribe-box").hide();
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 220) {
-        $(".subscribe-box").fadeIn("slow");
+      if ($(window).scrollTop() > 400) {
+        $(".subscribe-box").fadeIn("fast");
       }
       else {
         $(".subscribe-box").fadeOut("fast");
@@ -123,7 +123,7 @@
    
     function checkOffset() {
       var x = $(".container").offset();
-        var leftPosition = x.left + 90;
+        var leftPosition = x.left + 75;
       if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
         >= $('.bottom-section').offset().top - 10){
         $('.subscribe-box').addClass('footer-before');
@@ -131,7 +131,7 @@
         }
       if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
         $('.subscribe-box').removeClass('footer-before');
-        $('.subscribe-box').css('left',  '15px' );
+        $('.subscribe-box').css('left',  '30px' );
       }
          
     }
@@ -160,8 +160,7 @@
 	    $(this).parent().toggleClass('active');
 	});
   $('.nav-icon[target="_blank"]').removeAttr('target');
-  var x = $(".container").offset();
-  var leftPosition = x.left;
+  
     });
   </script>
 
@@ -185,13 +184,18 @@ All of these changes make Dgraph an excellent tool for working with multilingual
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
-
-    <header id="page-header" class="page-header">
+   <header id="page-header" class="page-header">
 	<div class="page-logo">
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+		<a href="javascript:;" class="nav-icon" >
+			<div class="hamburger">
+				<div class="line line-1"></div>
+				<div class="line line-2"></div>
+				<div class="line line-3"></div>
+			</div>
 		</a>
 	</div>
 	<nav class="page-nav">
@@ -214,6 +218,16 @@ All of these changes make Dgraph an excellent tool for working with multilingual
                 <li>
                     <a href="https://dgraph.io/downloads" data-label="Downloads">
                         <span>Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/badger" data-label="Badger">
+                        <span>Badger</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/compare-features" data-label="Compare Features">
+                        <span>Compare Features</span>
                     </a>
                 </li>
             </ul>
@@ -241,6 +255,11 @@ All of these changes make Dgraph an excellent tool for working with multilingual
                 <li>
                     <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
                         <span>Slack</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/paper" target="_blank" data-label="Paper">
+                        <span>Paper</span>
                     </a>
                 </li>
             </ul>
@@ -305,32 +324,25 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 </header>
 
 
-
-
-    <section class="page-body">
-        <div class="page-body__content">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-10 ">
-
-                        <div class="page-search form-group has-search">
+   <section class="page-body">
+      <div class="page-body__content">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-10 ">
+                  <div class="page-search form-group has-search">
 	<span class="fas fa-search form-control-feedback"></span>
 	
 </div>
-                     </div>
-                </div>
+               </div>
             </div>
-        </div>
-        
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-10 ">
-                    <div class="">
-
-                        <div class="post__meta">
-
-                            <div class="post__date">
+         </div>
+      </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-10 ">
+               <div class="">
+                  <div class="post__meta">
+                     <div class="post__date">
 
     
         Mon, Apr 10, 2017
@@ -338,30 +350,23 @@ All of these changes make Dgraph an excellent tool for working with multilingual
     
 </div>
 
-
-                            <div class="post__share">
-                                
-                                <a href="https://twitter.com/share?text=String%20matching%20in%20Dgraph%20v0.7.5&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fstring-matching%2f&amp;via=dgraphlabs"
-                                    target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                
-                            </div>
-
-                        </div>
-
-                        <div class="post__cover">
-
-                            <img
-                                src="https://blog.dgraph.io//images/splitting-dunes.jpg">
-
-                            <div class="post__header">
-
-                                <h1 class="post__title">
-                                    String matching in Dgraph v0.7.5
-                                </h1>
-
-                                
+                     <div class="post__share">
+                        
+                        <a href="https://twitter.com/share?text=String%20matching%20in%20Dgraph%20v0.7.5&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fstring-matching%2f&amp;via=dgraphlabs"
+                           target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        </a>
+                        
+                     </div>
+                  </div>
+                  <div class="post__cover">
+                     <img
+                        src="https://blog.dgraph.io//images/splitting-dunes.jpg">
+                     <div class="post__header">
+                        <h1 class="post__title">
+                           String matching in Dgraph v0.7.5
+                        </h1>
+                        
 <div class="post__byline">
 
     
@@ -372,76 +377,106 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 </div>
 
 
-
-                            </div>
-
-                        </div>
-
-                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
-                            <p>The recent release of Dgraph is packed with new features and improvements.
+                     </div>
+                  </div>
+                  <div
+                     class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                     <p>The recent release of Dgraph is packed with new features and improvements.
 Many of them are related to strings - full text search (with support for 15 languages!) and regular expression matching have been added, and handling of string values in multiple languages was greatly improved.
 All of these changes make Dgraph an excellent tool for working with multilingual applications.</p>
+
 <h3 id="values-in-many-languages">Values in Many Languages</h3>
+
 <p>We&rsquo;re working hard to keep the query language easy to use and clean.
 Dgraph, in v0.7.5, adopted and extended the language tag syntax from the RDF N-Quads standard.
 It is intuitive, well-known, and was partially supported in previous versions (during data loading).</p>
+
 <p>Let&rsquo;s start from the beginning - the data.
 Dgraph uses RDF N-Quads for data loading and backup.
 String literals in N-Quads may be followed by the <code>@</code> sign and language tag, e.g. <code>&quot;badger&quot;@en</code> or <code>&quot;Dachs&quot;@de</code>.
 Multiple such literals may be used as a value for a single entity/attribute pair.</p>
+
 <p>When querying for a predicate with multiple values, the user is able to use the <code>@lang</code> notation known from RDF N-Quads.
 Many languages can be specified in a list of preference, e.g. <code>@en:de</code> denotes that preferred language is English, but if such a value is not present, a value in German should be returned.</p>
+
 <p>Language can also be specified in functions, which is important especially for full text search.</p>
+
 <h3 id="example-data">Example Data</h3>
+
 <p>The dataset used in all examples is the <a href="https://github.com/dgraph-io/benchmarks/blob/master/data/21million.rdf.gz">Freebase film data</a>.
 As this post is string-oriented, queries are focused on movie titles in multiple languages, and no other information is retrieved.
 As we don&rsquo;t have information about type of <code>name</code>, we use filtering to select only the movie titles, and to limit the number of results a bit - <code>@filter(gt(count(genre), 1))</code>.</p>
+
 <p>The schema for <code>name</code> field is very simple - it defines 3 types of indexes:</p>
+
 <pre><code>curl localhost:8080/query -XPOST -d $'
 mutation {
   schema {
     name: string @index(term, fulltext, exact) .
   }
 }' | python -m json.tool | less
-</code></pre><p><code>term</code> index is used for term matching with the <code>allofterms</code> and <code>anyofterms</code> functions.
+</code></pre>
+
+<p><code>term</code> index is used for term matching with the <code>allofterms</code> and <code>anyofterms</code> functions.
 Note that it was the only string index available in previous releases of Dgraph.</p>
+
 <p><code>fulltext</code> index uses matching with language specific stemming and stopwords.
 One thing worth noting is, that values indexed with <code>fulltext</code> are processed according to their&rsquo;s language (if they are tagged). If values are untagged, English is used as a default language.</p>
+
 <p><code>exact</code> index is used for regular expression matching.</p>
+
 <h3 id="full-text-search-fts">Full Text Search (FTS)</h3>
+
 <h5 id="very-short-introduction-to-natural-language-processing-nlp">Very Short Introduction to Natural Language Processing (NLP)</h5>
+
 <p>By definition (from <a href="https://en.wikipedia.org/wiki/Full-text_search">Wikipedia</a>):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
-</code></pre></div><p>This may sound trivial, but it&rsquo;s not.
+
+<pre><code class="language-html">In a full-text search, a search engine examines all of the words in every stored document as it tries to match search criteria (for example, text specified by a user).
+</code></pre>
+
+<p>This may sound trivial, but it&rsquo;s not.
 Searching for exact form of the word is not always satisfying for the user.
 For example, nouns can be singular or plural, verbs have grammatical tenses, etc., and the user may be interested in all values related to the word in any inflected or derived form.</p>
+
 <p>The simple but powerful idea is to find a method, that can transform all the forms of a word to some common base.
 This process is called <strong>stemming</strong>.
 For many natural languages (including English) stemmers may be implemented using a set of well known grammatical rules.
 There are also languages (like Polish) where a dictionary based approach is required (i.e. inflected form -&gt; stem mapping).</p>
+
 <p>Only for languages with well known grammatical rules are stemmers are widely available.</p>
+
 <p>Another problem with search are the words that are common, like <code>the</code>, <code>is</code>, or <code>at</code>.
 In most cases, searching for them gives an enormous amount of results which are useless.
 Those words are called <strong>stop words</strong>.
 Again, stop words are language specific.
 The common method of handling those words is just to remove them from the search.</p>
-<h5 id="dgraph-ftsnlp-processing">Dgraph FTS/NLP Processing</h5>
+
+<h5 id="dgraph-fts-nlp-processing">Dgraph FTS/NLP Processing</h5>
+
 <p>The following steps are applied to both data (while indexing), and the query pattern:</p>
+
 <ol>
 <li>Tokenization - text is divided into words.</li>
 <li>Normalization - all letters are transformed to lowercase. <a href="http://unicode.org/reports/tr15/">Unicode Normalization</a> is applied.</li>
 <li>Stop words are removed.</li>
 <li>Stemming is applied.</li>
 </ol>
+
 <p>Since stop words contain inflected forms, they are removed before stemming.</p>
+
 <h5 id="full-text-search-functions">Full Text Search Functions</h5>
+
 <p>There are two new functions that provide basic support for full text search:</p>
+
 <ol>
 <li><code>alloftext</code> - searches for values that contain all the specified words (using NLP).</li>
 <li><code>anyoftext</code> - searches for values that contain one or more of the specified tokens (using NLP).</li>
 </ol>
+
 <h5 id="examples">Examples</h5>
+
 <p>Let&rsquo;s query for <code>white or maybe black</code>, using the term matching function <code>allofterms</code>.</p>
+
 <p>
 
 <div class="runnable" data-checksum="a2c60948e744862d6b1a13236ada9dd9" data-initial="{
@@ -613,6 +648,7 @@ The query gives no results.
 It may be worth trying less strict match with <code>alloftext</code> function:</p>
 
 
+
 <div class="runnable" data-checksum="5d5001b78c162fe12067167cabc9bab5" data-initial="{
   movie(func:alloftext(name@en, &#34;white or maybe black&#34;)) @filter(gt(count(genre), 1)) {
     name@en
@@ -778,10 +814,13 @@ public class DgraphMain {
   </div>
 </div>
 
+
 <p>Query returns 59 results.
 This example shows that removing a stop word may help in some cases.</p>
+
 <p>In context of NLP, English is quite easy - there are no diacritics, and inflection is rather simple.
 So let&rsquo;s try similar query in German:</p>
+
 
 
 <div class="runnable" data-checksum="ae14be08ee0c46175f71b7918ee1dcd0" data-initial="{
@@ -949,8 +988,11 @@ public class DgraphMain {
   </div>
 </div>
 
+
 <p>Again, the query doesn&rsquo;t return any results.</p>
+
 <p>Now let&rsquo;s try the NLP-enabled version of this query:</p>
+
 
 
 <div class="runnable" data-checksum="3ae8ed3ca59fc7f3927a4ca09377ab47" data-initial="{
@@ -1118,14 +1160,19 @@ public class DgraphMain {
   </div>
 </div>
 
+
 <p>This returns 4 results.</p>
+
 <p>It&rsquo;s worth noting the inflected forms of <code>schwarz</code> - <code>schwarzes</code> and <code>Schwartze</code>.
 Also the <code>Wei\u00dfer</code> is interesting - <code>\u00df</code> is the escaped Unicode value of <a href="https://en.wikipedia.org/wiki/%C3%9F">grapheme <code>ß</code></a>.
 <code>weiss</code> matched <code>Weißer</code> - the form is inflected, and grapheme equivalency is preserved.
 Like in the English example, the stop word (<code>oder</code>) is ignored.</p>
+
 <h5 id="gotchas">Gotchas</h5>
+
 <p>In some cases, natural language processing can lead to surprising results.
 Let&rsquo;s search for the answer to the famous question: <code>To be, or not to be?</code>:</p>
+
 
 
 <div class="runnable" data-checksum="aadb70fa6d64fde240a20a76965babec" data-initial="{
@@ -1281,7 +1328,9 @@ public class DgraphMain {
   </div>
 </div>
 
+
 <p>The query gives no results, while the term matching query:</p>
+
 
 
 <div class="runnable" data-checksum="dd1fdb51dcb706bd6314b6e67b0d9118" data-initial="{
@@ -1437,12 +1486,18 @@ public class DgraphMain {
   </div>
 </div>
 
+
 <p>gives two results:</p>
+
 <p>What happened? <code>To be, or not to be?</code> consists of stop words only.
 After FTS/NLP processing, there are no movies that match the query.</p>
+
 <h3 id="regular-expressions-regexp">Regular Expressions (regexp)</h3>
+
 <p>Regular expressions are extremely useful for creating sophisticated matchers.</p>
+
 <p>For example, all titles starting with a word containing <code>night</code> but not <code>knight</code> may be matched using following query:</p>
+
 
 
 <div class="runnable" data-checksum="23ed524490f96aec36c54a4a839190a0" data-initial="{
@@ -1610,20 +1665,24 @@ public class DgraphMain {
   </div>
 </div>
 
+
 <p>There are 502 results in the test dataset.</p>
+
 <h3 id="summary">Summary</h3>
+
 <p>Dgraph supports extensive, and useful methods of string matching.</p>
+
 <p>Natural language processing, employed for full text search, may be the best choice for lookup based on users input.
 If more strict matching is required, term matching should give good results.
 And to get the most precise results of complicated text searches, regular expressions can be used.</p>
+
 
 
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="https://www.nasa.gov/image-feature/jpl/pia21572/the-splitting-of-the-dunes">The Splitting of the Dunes</a></p>
 </aside>
-
-                        
+                     
     <aside class="post__authors">
                 <div class="tile author-tile">
 
@@ -1637,6 +1696,7 @@ And to get the most precise results of complicated text searches, regular expres
     <p>Tomasz gained experience in diverse projects including real time embedded
 software, banking backend and distributed systems. He wanted to work on database
 system implementation since high school.</p>
+
 <p>Programming is his greatest passion but he also likes trekking, skiing, cross
 country cycling and photography.</p>
 
@@ -1673,57 +1733,7 @@ country cycling and photography.</p>
     </aside>
 
 
-
-                        <div class="post__comments">
-
-    <div id="discourse-comments"></div>
-
-    
-    <script type="text/javascript">
-        DiscourseEmbed = {
-            discourseUrl: "https:\/\/discuss.dgraph.io\/",
-            topicId:  1700 
-            };
-        (function() {
-            var d = document.createElement("script");
-            d.type = "text/javascript";
-            d.async = true;
-            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
-            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
-    
-
-</div>
-
-
-                        <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <a href="#" data-dismiss="modal" class="modal-close-btn">
-    Close
-  </a>
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
-                    </div>
-
-                    
-                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
-                        <p>Create you own success story.</p>
-                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
-                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
-                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
-                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                    </div>
-                    <div class="  text-center subscribe-box">
+                     <div class="  text-center subscribe-box">
     
 
     <h3>Get blog post to <br/>your inbox</h3>
@@ -1767,40 +1777,82 @@ country cycling and photography.</p>
 
 </div>
 
-
-
-
+                  </div>
+               </div>
             </div>
+         </div>
+      </div>
+      </div>
+   </section>
+   <div class='bottom-section'>
+      <div class="container">
+         <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+            <div class="post__comments">
 
+    <div id="discourse-comments"></div>
 
-                    
-                </div>
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            topicId:  1700 
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
+    
+
+</div>
+
+            <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="mx-auto" style="max-width:860px">
+
+         <div
+            class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80  xs-mt-80 lg-ml-80 lg-mr-80 md-ml-50 md-mr-50 xs-ml-30 xs-mr-30 " >
+            <p>Create you own success story.</p>
+            <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+            <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+               <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get
+               Started</span> <i class="fas fa-arrow-right"></i></a>
+               <a class="button  button--outline" target="_blank"
+                  href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i
+                  class="fas fa-arrow-right"></i></a>
             </div>
-           
-
-
         </div>
-        </div>
-    </section>
-    <div class='bottom-section'>
-        <div class="container">
-            <div class="page-body__related-content mb-4">
 
-                
+         </div>
+         <div class="page-body__related-content mb-4">
+            
 
 
 
 
 
 
+            
 
-                
-
-
-
-            </div>
-        </div>
-        <footer class="page-footer">
+         </div>
+      </div>
+      <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1936,14 +1988,8 @@ $(document.links)
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
-
-
-    </div>
-
-
-
+   </div>
 </body>
-
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>

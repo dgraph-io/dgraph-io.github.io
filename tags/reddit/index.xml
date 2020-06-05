@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>reddit on Dgraph Blog</title>
@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2020, Dgraph Labs, Inc. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 19 Sep 2019 23:13:13 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2020 04:50:00 -0700</lastBuildDate>
     
 	<atom:link href="https://blog.dgraph.io/tags/reddit/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey</title>
+      <link>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</link>
+      <pubDate>Thu, 04 Jun 2020 04:50:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</guid>
+      <description>This post made it to the front page of Go Reddit for over 24hrs. Do engage in discussion there and show us your love by giving Dgraph a GitHub Star.</description>
+    </item>
     
     <item>
       <title>Introducing Ristretto: A High-Performance Go Cache</title>
@@ -28,7 +37,7 @@
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
- This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News.</description>
+This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News.</description>
     </item>
     
   </channel>

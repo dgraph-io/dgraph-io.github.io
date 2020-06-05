@@ -61,7 +61,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -97,8 +97,8 @@
 
     $(".subscribe-box").hide();
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 220) {
-        $(".subscribe-box").fadeIn("slow");
+      if ($(window).scrollTop() > 400) {
+        $(".subscribe-box").fadeIn("fast");
       }
       else {
         $(".subscribe-box").fadeOut("fast");
@@ -123,7 +123,7 @@
    
     function checkOffset() {
       var x = $(".container").offset();
-        var leftPosition = x.left + 90;
+        var leftPosition = x.left + 75;
       if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
         >= $('.bottom-section').offset().top - 10){
         $('.subscribe-box').addClass('footer-before');
@@ -131,7 +131,7 @@
         }
       if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
         $('.subscribe-box').removeClass('footer-before');
-        $('.subscribe-box').css('left',  '15px' );
+        $('.subscribe-box').css('left',  '30px' );
       }
          
     }
@@ -160,8 +160,7 @@
 	    $(this).parent().toggleClass('active');
 	});
   $('.nav-icon[target="_blank"]').removeAttr('target');
-  var x = $(".container").offset();
-  var leftPosition = x.left;
+  
     });
   </script>
 
@@ -175,7 +174,7 @@
 
   <meta name="twitter:title" content="How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey" />
   <meta name="twitter:description"
-    content="Software is only as strong as the engineer writing it. This post is dedicated to all the engineers who put relentless efforts in writing and debugging systems to make them stable and reliable for others to use." />
+    content="This post made it to the front page of Go Reddit for over 24hrs. Do engage in discussion there and show us your love by giving Dgraph a GitHub Star." />
   
   <meta name="twitter:site" content="@dgraphlabs" />
 
@@ -183,13 +182,18 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
-
-    <header id="page-header" class="page-header">
+   <header id="page-header" class="page-header">
 	<div class="page-logo">
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+		<a href="javascript:;" class="nav-icon" >
+			<div class="hamburger">
+				<div class="line line-1"></div>
+				<div class="line line-2"></div>
+				<div class="line line-3"></div>
+			</div>
 		</a>
 	</div>
 	<nav class="page-nav">
@@ -212,6 +216,16 @@
                 <li>
                     <a href="https://dgraph.io/downloads" data-label="Downloads">
                         <span>Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/badger" data-label="Badger">
+                        <span>Badger</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/compare-features" data-label="Compare Features">
+                        <span>Compare Features</span>
                     </a>
                 </li>
             </ul>
@@ -239,6 +253,11 @@
                 <li>
                     <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
                         <span>Slack</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/paper" target="_blank" data-label="Paper">
+                        <span>Paper</span>
                     </a>
                 </li>
             </ul>
@@ -303,32 +322,25 @@
 </header>
 
 
-
-
-    <section class="page-body">
-        <div class="page-body__content">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-10 ">
-
-                        <div class="page-search form-group has-search">
+   <section class="page-body">
+      <div class="page-body__content">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-10 ">
+                  <div class="page-search form-group has-search">
 	<span class="fas fa-search form-control-feedback"></span>
 	
 </div>
-                     </div>
-                </div>
+               </div>
             </div>
-        </div>
-        
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-10 ">
-                    <div class="">
-
-                        <div class="post__meta">
-
-                            <div class="post__date">
+         </div>
+      </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-10 ">
+               <div class="">
+                  <div class="post__meta">
+                     <div class="post__date">
 
     
         Thu, Jun 4, 2020
@@ -336,30 +348,23 @@
     
 </div>
 
-
-                            <div class="post__share">
-                                
-                                <a href="https://twitter.com/share?text=How%20I%20solved%20Jepsen%20with%20OpenCensus%20Distributed%20Tracing%3a%20A%20personal%20journey&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fsolving-jepsen-with-opencensus%2f&amp;via=dgraphlabs"
-                                    target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                
-                            </div>
-
-                        </div>
-
-                        <div class="post__cover">
-
-                            <img
-                                src="https://blog.dgraph.io//images/spacex-nasa-may2020.jpg">
-
-                            <div class="post__header">
-
-                                <h1 class="post__title">
-                                    How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey
-                                </h1>
-
-                                
+                     <div class="post__share">
+                        
+                        <a href="https://twitter.com/share?text=How%20I%20solved%20Jepsen%20with%20OpenCensus%20Distributed%20Tracing%3a%20A%20personal%20journey&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fsolving-jepsen-with-opencensus%2f&amp;via=dgraphlabs"
+                           target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        </a>
+                        
+                     </div>
+                  </div>
+                  <div class="post__cover">
+                     <img
+                        src="https://blog.dgraph.io//images/spacex-nasa-may2020.jpg">
+                     <div class="post__header">
+                        <h1 class="post__title">
+                           How I solved Jepsen with OpenCensus Distributed Tracing: A personal journey
+                        </h1>
+                        
 <div class="post__byline">
 
     
@@ -370,39 +375,54 @@
 </div>
 
 
+                     </div>
+                  </div>
+                  <div
+                     class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                     
 
-                            </div>
+<p><em>This post made it to the front page of <a href="https://www.reddit.com/r/golang/comments/gwgaf6/how_i_solved_jepsen_with_opencensus_distributed/">Go Reddit</a> for over 24hrs. Do
+engage in discussion there and show us your love by giving Dgraph a <a href="https://github.com/dgraph-io/dgraph">GitHub
+Star</a>.</em></p>
 
-                        </div>
-
-                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
-                            <p><em>Software is only as strong as the engineer writing it. This post is dedicated
+<blockquote>
+<p>Software is only as strong as the engineer writing it. This post is dedicated
 to all the engineers who put relentless efforts in writing and debugging
-systems to make them stable and reliable for others to use.</em></p>
+systems to make them stable and reliable for others to use.</p>
+</blockquote>
+
 <p><strong>The year was 2018.</strong> It was 9 pm. I started my day at 8 am. This particular
 Jepsen test was unforgiving. I could not figure out why this Jepsen test would
 continue to fail. Just the day before, this test had passed 16 out of 16 times.</p>
+
 <p>Jepsen produces randomness and chaos. This entails the test can pass sometimes but
 that doesn&rsquo;t mean there is no bug. Though if it fails even once, that proves the
 presence of a bug. A more definitive way of ascertaining a fix is to loop the
 test repeatedly. 16 pass out of 16 run was a pretty encouraging score.</p>
+
 <p><strong>Today, however, that test was failing consistently.</strong></p>
+
 <p>I was tired and alone in a small rented office in San Francisco&rsquo;s financial
 district. This was not the typical glass-walled office you see in WeWork ads.
 This was Regus, with thick walls with a wood door. <em>The office space made you
 feel isolated</em> &ndash; you could sit in it a whole day without seeing anyone else.</p>
+
 <p>Some months before, I had created a branch called <a href="https://github.com/dgraph-io/dgraph/pull/2420">f*ck-the-bank</a>, with a
 possible fix for the issue revealed by this test. The name came out of
 frustration with the Jepsen test called the <code>bank test</code>.</p>
+
 <h2 id="jepsen-and-its-nemesis">Jepsen and its nemesis</h2>
+
 <p><a href="http://jepsen.io/">Jepsen</a> is a framework for distributed systems verification with fault
 injection. Jepsen test is a Clojure program that uses the Jepsen library to set
 up a distributed system, run a bunch of operations against that system, and
 verify that the history of those operations makes sense.</p>
+
 <p>Jepsen has been used by many <a href="http://jepsen.io/analyses/mongodb-4.2.6">distributed</a> <a href="http://jepsen.io/analyses/tidb-2.1.7">transactional</a>
 <a href="http://jepsen.io/analyses/etcd-3.4.3">databases</a> to verify their consistency guarantees in not only healthy
 clusters, but also across a bunch of failure condition nemesis like process
 crashes, network partitions, clock skews, and so on.</p>
+
 <p><strong><a href="https://dgraph.io/blog/post/hello-world/">Dgraph</a> is the first graph database to have been Jepsen
 tested.</strong> In fact, for a seed-stage company (at the time), it was
 quite remarkable to have engaged Kyle Kingsbury a.k.a <a href="https://aphyr.com/about">Aphyr</a>, an industry
@@ -410,139 +430,179 @@ veteran to help find issues with the newly built distributed transaction
 system in Dgraph. The process identified 23 issues, out of which we were able to
 <a href="http://jepsen.io/analyses/dgraph-1-0-2">resolve 19</a> by the time the collaboration ended. The last four,
 however, were very challenging. <em>The most complex of them was the bank test.</em></p>
+
 <h3 id="the-bank-test">The Bank Test</h3>
+
 <p>The bank test begins with a fixed amount ($100) of money in a single account
 and proceeds to randomly transfer money between accounts. Transfers proceed by
 reading two random accounts by key and writing back new amounts for those
 accounts. Concurrently, clients read all accounts to observe the total state of
 the system. The total of all account balances should remain constant throughout
 this entire test.</p>
+
 <p><strong>The bank test is then coupled with various nemeses</strong> that kill processes, move
 shards around, and introduces network partitions and clock skews.</p>
+
 <p>If there was a weakness in the transactional integrity and data consistency of
 the database, this test would surely find it. <em>And it did for Dgraph.</em></p>
+
 <h2 id="that-evening-in-2018">That Evening in 2018</h2>
+
 <p>I had put everything into fixing these test failures over the previous few
-months. The code left behind by the team was a mess: patch over patch was added
-to fix individual issues as were encountered by each engineer, without
-challenging the overall design in place.</p>
+months. The code was a mess: patch over patch was added to fix individual issues
+as were encountered by the engineers, without challenging the overall design in
+place.</p>
+
 <p>I had first tried to understand the reasoning behind all that mess and simplify
 it. But later realized it was all based on older assumptions, no longer true.
 No one had challenged the underlying assumptions with the evolved understanding
 of the transactional system. By re-architecting the design, the code could be
 hugely simplified. So, <strong>I had rewritten the whole thing from scratch over the
 past few months.</strong></p>
+
 <p>The rewritten, simplified codebase did fix a variety of Jepsen issues. The last
 major stronghold was the bank test.</p>
+
 <p>That evening, after the 16th re-run of the test passed, I was ecstatic. My last
 fix must have solved the issue. To confirm, I set it up to be run overnight. I
 left late, excited about the possibility of finally having solved the bug caught
 by the bank test. My home was a 10 min walk from the office. By the time I
 reached home, my wife and daughter were fast asleep. I re-heated the dinner left
 on the kitchen counter for me and got to bed.</p>
+
 <p>The next morning I woke up early, picked up a cup of <a href="https://en.wikipedia.org/wiki/Ristretto">ristretto</a> from the <a href="https://bluestonelane.com/cafes/financial-district-227-front-st/">coffee
 shop</a> on the way, and rushed to the office. It was 8 am. I eagerly logged
 into my desktop to see the result of the tests which I had run overnight. Turns
 out, the first run itself had failed. <em>It did not bother continuing beyond the
 first half an hour.</em></p>
+
 <p>By 9 pm, I had thrown everything I had at fixing the test. Exhausted and
 demotivated, I realized <strong>I still did not have a solution.</strong> This test had truly
 sucked the life out of me.</p>
+
 <h2 id="black-boxes-and-lanterns">Black boxes and Lanterns</h2>
+
 <p>Jepsen is an incredible testing framework. However, it is essentially black-box
 testing. While it does produce logs of the actions it takes, it is very
 hard to correlate each of those actions with what went on inside the system.</p>
+
 <p>Looking at Jepsen or Dgraph logs wasn&rsquo;t sufficient to debug the problem. <strong>It
 was at best guesswork.</strong> Moreover, Jepsen being written in Clojure made it even
 harder to tweak the codebase to introduce more visibility. Clojure developers
 are hard to come by (now that our team has grown to over 30 engineers, we finally
 have one person who can speak Clojure).</p>
+
 <p>Back at Google, I had heard about Distributed Tracing. <a href="https://research.google/pubs/pub36356/">Dapper</a> as it was
 called, helped provide more information about the behavior of complex
 distributed systems. It helped figure out latency and other issues seen by a
 request being processed by multiple servers.</p>
+
 <p>I had never used Dapper myself. My team, in charge of building a real-time
 incremental <a href="https://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html">indexing system</a> for the entire web, was doing local
 tracing, i.e. tracing specific to a single server. Because we were running
 thousands of servers, even the rarest trace could be found by just doing a
 real-time crawl of the live running requests <code>/rpcz</code> on those servers.</p>
+
 <p><strong>Dgraph was doing a similar thing.</strong> We were using
 <a href="https://godoc.org/golang.org/x/net/trace">golang.org/x/net/trace</a> which would give us machine local traces, but
 not track a single request across servers. While local tracing was useful to
 understand generally what was going on in the system, the disassociation with
 the query caused them to be ineffective in understanding why a particular
 transaction misbehaved.</p>
+
 <p>I knew about an open-source distributed tracing framework and felt it could be
 useful to integrate that into Dgraph. But, that task was in the ever-growing long
 list of backburner items. We had new customers, big Fortune 500 companies
 knocking at our door, and I had little time to spare on ideas with unproven
 utility.</p>
+
 <p><strong>But by 9 pm, it was clear that shooting in the dark can only take you so
 far.</strong> If I had to continue making progress with Jepsen test failures, I needed
 a better way to shed light on what was going on with each transaction request.
 <em>I needed a lantern.</em> I needed that tracing framework.</p>
+
 <h2 id="opencensus">OpenCensus</h2>
+
 <p><a href="https://opencensus.io/">OpenCensus</a> (now merged to form <a href="https://opentelemetry.io/">OpenTelemetry</a>) is a set of libraries
 which allow you to collect distributed traces, then transfer the data to a
 backend in real-time.</p>
+
 <p>OpenCensus works by having a unique request-id. This id is maintained even if
 the request goes over the network. In Go, this is done by encoding this id in
 context, which gets passed along by Grpc. Multiple servers involved in handling
 parts of this request would all send their portion of the execution trace
 to the common backend. This backend would then <em>stitch-up</em> the various parts to
 show you a trace of the entire request execution across all servers.</p>
+
 <p>Each of these requests has multiple spans. Each span can be annotated with
 useful information to help you debug what was going on.</p>
+
 <p>I replaced most of the <code>net/trace</code> tracing with OpenCensus spans in
 <a href="https://github.com/dgraph-io/dgraph/commit/9e7fa05638c8b7af3954e4985b04795c0c69b426">9e7fa0</a>. In particular, I added annotations so we can search any trace by a
 transaction start timestamp.</p>
-<p><img src="https://blog.dgraph.io/images/jaeger1.png" alt="Showing Dgraph trace in Jaeger"></p>
+
+<p><img src="https://blog.dgraph.io/images/jaeger1.png" alt="Showing Dgraph trace in Jaeger" /></p>
+
 <p><br /></p>
+
 <p>The above shows a request trace from Jepsen to Dgraph in <a href="https://github.com/jaegertracing/jaeger#multiple-storage-backends">Jaeger</a>.  It is our
 favorite distributed tracing system to look at these traces. In fact, Jaeger
 recently introduced <a href="https://dgraph.io/blog/post/badger/">Badger</a> support, which makes us love and recommend
 it even more.</p>
+
 <h2 id="fixed-bank-time-to-bask-in-the-glory-of-victory">Fixed Bank: Time to bask in the glory of victory!</h2>
+
 <blockquote>
 <p>Got it. Fixed it. Squashed it. Done with it. Tamed it. &mdash; <a href="https://github.com/dgraph-io/dgraph/commit/3b6d81">3b6d81</a></p>
 </blockquote>
+
 <p>Within a week of first OpenCensus integration, I was able to identify the cause
 of bank test failure. It happened during a network partition. As I note
 in my <a href="https://github.com/dgraph-io/dgraph/commit/3b6d81">commit</a> message.</p>
+
 <blockquote>
 <p>Open Census and Dgraph debug dissect were instrumental in determining the cause of
 this violation. The tell-tale sign was noticing a /Commit timeout of one of the
 penultimate commits, to the violating commit.</p>
 </blockquote>
+
 <p>The cause of the violation (<em>might be hard to follow, feel free to skip</em>), as
 explained in the commit message, or slightly better explained by Aphyr in his
 new <a href="http://jepsen.io/analyses/dgraph-1.1.1">report</a>, section 3.3 is as follows:</p>
+
 <blockquote>
 <p>When a Zero leader received a commit request for a transaction T, it assigned a
 timestamp to that commit. If Zero was unable to communicate with its Raft peers,
 and a new Zero node became the leader, that new leader would begin allocating
 timestamps at a significantly higher number. Alphas interacting with the new
 Zero leader would advance their max-applied timestamps to match.</p>
+
 <p>Then assume the original Zero leader rejoined the cluster as a follower, and
 retried its commit proposal—this time, succeeding. Because this new proposal
 kept the original transaction timestamps, two problems could occur:</p>
+
 <p>A read R executed after the new leader advanced the clock, but before T’s commit
 was retried, could fail to observe T &ndash; even though T would go on to commit in the
 logical past of R. In essence, this allowed temporary “holes” in the timeline of
 transactions.</p>
+
 <p>When an Alpha node applied a write w for key k, it would first check k’s last
 written timestamp, and ignore w if it was lower. If w was a write from the
 logical past, w might be rejected &ndash; but other writes from the same transaction
 might succeed, so long as they hadn’t been written recently. This allowed Dgraph
 to partially apply transactions.</p>
 </blockquote>
-<p><img src="https://blog.dgraph.io/images/jaeger2.png" alt="Disallow Forwarding to Zero leader"></p>
+
+<p><img src="https://blog.dgraph.io/images/jaeger2.png" alt="Disallow Forwarding to Zero leader" /></p>
+
 <p>This was a complex find. But using OpenCensus as a lantern to light every
 path that a distributed transaction took helped determine the cause quickly.</p>
-<p><strong>The fix was to disallow a Zero<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> raft follower from forwarding proposals to the
+
+<p><strong>The fix was to disallow a Zero<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> raft follower from forwarding proposals to the
 leader.</strong>  So, only Zero leader can propose to raft. That way, if a leader steps
 down, while in a loop to get a quorum on a proposal, that proposal would fail &ndash;
 which is the intended behavior here to avoid a transactional guarantee failure.</p>
+
 <p><strong>Why run proposals in a loop, you ask?</strong> Why not give up on the first failure?
 The <a href="https://github.com/etcd-io/etcd/tree/master/raft">raft</a> library that Dgraph is using can drop proposals without returning
 errors or any other identifiable indications. So, if after having sent a
@@ -550,22 +610,29 @@ proposal, you don&rsquo;t see it come back in the committed log after some durat
 you have to retry. However, the messages can also be delayed due to high
 activity. So, Dgraph does exponential backoff retries, until the proposal is
 finally seen at the other end.</p>
+
 <h2 id="a-bank-test-with-moves">A Bank test with Moves</h2>
+
 <p>Dgraph allows automatic shard migrations to balance data load across servers.
 This is infrequent as you can imagine. However, Jepsen specifically targeted
 this feature by moving shards as fast as possible to introduce transactional
 violations.</p>
+
 <p><a href="https://github.com/dgraph-io/dgraph/issues/2321">Issue 2321</a> captures the bug detected. <strong>With OpenCensus, the reason became
 clear.</strong> I saw that an Alpha server serves a request for data in a shard S, even
 after S had been moved to another server.</p>
+
 <p><a href="https://dgraph.io/paper">In Dgraph</a>, Zero holds the source of truth of membership information
 about which Alpha server serves which data and transmits that over to all the
 Alphas in the cluster. In this case, there was a race condition between the
 shard movement and the Alpha server <em>getting to know about it</em> from Zero. So,
 an Alpha server after having done the move could end up serving a request,
 thinking that it is still serving that shard.</p>
+
 <p>Aphyr explains this in his new <a href="http://jepsen.io/analyses/dgraph-1.1.1">report</a> in section 5.1:</p>
-<p><em>In more general terms, tablet migrations were error-prone because changing
+
+<blockquote>
+<p>In more general terms, tablet migrations were error-prone because changing
 distributed state is just plain hard. Dgraph relies on Raft for state changes
 within a group, and Raft is a solid algorithm with mature implementations that
 handle failure well. Dgraph coordinates transactions between Raft groups by
@@ -575,65 +642,88 @@ stable, everyone’s requests go to the right groups, and Raft handles it from
 there. When the mapping changes, nodes might be out of date: Dgraph doesn’t, for
 performance reasons, use a consensus protocol for tablet mappings. Instead,
 nodes asynchronously discover mapping changes via side channels, which makes
-agreement trickier.</em></p>
+agreement trickier.</p>
+</blockquote>
+
 <h2 id="a-gift-that-keeps-on-giving">A Gift that keeps on giving</h2>
+
 <p>Both of the above fixes were from late 2018 to early 2019. OpenCensus
 integration helped identify these complex issues, which no amount of guessing
 permutation would have achieved.</p>
+
 <p>OpenCensus benefits didn&rsquo;t stop there. Even more recently as Mar 2020, we
 <a href="https://github.com/dgraph-io/dgraph/commit/c44e7e1825b7950c8ccca627eb18719d98770b27">fixed</a> a two-year-old bug in our codebase, causing <code>nil</code> responses to
 be returned for data under very specific scenarios.</p>
+
 <p>Beyond helping us identify and fix bugs, anytime our clients experience query
 latency issues, an important step in our debugging process is to ask them for
 the query trace. It reveals so many things about exactly what happened with that
 query, any steps which were becoming the bottleneck and can tell what was going
 on in the system which lets us pinpoint the issue quickly.</p>
+
 <p>OpenCensus has come the closest to becoming an advantage in debugging
 <a href="https://github.com/dgraph-io/dgraph">Dgraph</a>. Despite being introduced just to help solve Jepsen issues,
 distributed tracing has become a central part of Dgraph&rsquo;s debugging workflow.</p>
+
 <h2 id="what-does-jepsen-prove-really">What does Jepsen prove really?</h2>
+
 <p>As Aphyr would put it, failure of detecting the presence of bugs is not the
 same as not have bugs.</p>
+
 <blockquote>
 <p>We cannot prove correctness, only suggest that a system is less likely to fail
 because we have not, so far, observed a problem. &mdash; <a href="https://jepsen.io/ethics">https://jepsen.io/ethics</a></p>
 </blockquote>
+
 <p><em>I concur wholeheartedly.</em></p>
+
 <p>I would add, however, that not being able to hit bugs under extreme tests like the
 kinds Jepsen produces, does inspire confidence in the stability of the software.
 <strong>And ultimately, adding quality tests is the best you can do to improve your
 software.</strong></p>
+
 <h2 id="where-are-we-now">Where are we now?</h2>
+
 <p>Aphyr recently <a href="http://jepsen.io/analyses/dgraph-1.1.1">completed</a> another round of testing on Dgraph, and
 found that <strong>Dgraph resolved all issues from the earlier <a href="http://jepsen.io/analyses/dgraph-1-0-2">2018
 report</a>,</strong>
 but went on to find some issues related to tablet moves.</p>
+
 <p>Just to address those issues: In Dgraph, tablet moves are infrequent. Jepsen
 tests cause moves at a rapid, <em>unnatural,</em> pace.  This is completely expected
 considering Jepsen&rsquo;s job is to identify if the system breaks in extreme
 scenarios, but the chances of them affecting a Dgraph user is rare. So,
 while we need to investigate and fix these issues, their priority is low
 considering all the <a href="https://github.com/dgraph-io/dgraph/issues/4724">other things</a> that we&rsquo;re working on.</p>
+
 <p>But I do no doubt that when we do get to them, <strong>OpenCensus would let us
 identify the issues and fix them quickly.</strong></p>
+
 <h2 id="in-retrospect">In Retrospect</h2>
+
 <blockquote>
 <p>That&rsquo;s the hard thing about hard things &mdash; there is no formula for dealing
 with them. - Ben Horowitz</p>
 </blockquote>
+
 <p>2018 was hard. Working from 8 am to 9 pm is hard. Building a distributed graph
 database is hard. Making it have distributed transactions is hard.  Having those
 pass Jepsen is hard.  <strong>But, that&rsquo;s why you pick up hard things to build &mdash;
 precisely because they are hard.</strong></p>
+
 <p>All the efforts that went into <a href="https://github.com/dgraph-io/dgraph">Dgraph</a> in 2018 have brought it to a
 place where we can confidently stand behind Dgraph&rsquo;s consistency guarantees. So,
 when you are exhausted, demotivated and alone, keep pushing!</p>
+
 <p><br /></p>
+
 <p><em>P.S. I&rsquo;d like to thank <a href="https://twitter.com/odeke_et">Emmanuel</a> for helping integrate OpenCensus
 with Dgraph, to <a href="https://aphyr.com/about">Kyle</a> for integrating Jepsen tests with Dgraph, to
 <a href="https://twitter.com/meatcomputer">Kit</a> for integrating OpenCensus with Jepsen, and to all Dgraph
 <a href="https://github.com/dgraph-io/dgraph/graphs/contributors">contributors</a> in helping build this amazing software.</em></p>
-<hr>
+
+<hr />
+
 
 
 <aside class="post__references">
@@ -641,19 +731,19 @@ with Dgraph, to <a href="https://aphyr.com/about">Kyle</a> for integrating Jepse
     <h4>References</h4><p><a href="https://www.nasa.gov/image-feature/demo-2-launch-setting-forth-on-a-historic-journey">Top image</a>: A SpaceX Falcon 9 rocket carrying the company&rsquo;s Crew Dragon spacecraft is launched from Launch Complex 39A on NASA’s SpaceX Demo-2 mission to the International Space Station.</p>
 </aside>
 
-<section class="footnotes" role="doc-endnotes">
-<hr>
+<div class="footnotes">
+
+<hr />
+
 <ol>
-<li id="fn:1" role="doc-endnote">
-<p>If you are curious about Dgraph&rsquo;s architecture, you can read
-<a href="https://dgraph.io/paper">this paper</a>, which goes into details of the internal workings of
-Dgraph. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
+<li id="fn:1"><p>If you are curious about Dgraph&rsquo;s architecture, you can read
+ <a href="https://dgraph.io/paper">this paper</a>, which goes into details of the internal workings of
+  Dgraph.</p>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
 </ol>
-</section>
+</div>
 
-
-                        
+                     
     <aside class="post__authors">
                 <div class="tile author-tile">
 
@@ -668,6 +758,7 @@ Dgraph. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
+
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -700,57 +791,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     </aside>
 
 
-
-                        <div class="post__comments">
-
-    <div id="discourse-comments"></div>
-
-    
-    <script type="text/javascript">
-        DiscourseEmbed = {
-            discourseUrl: "https:\/\/discuss.dgraph.io\/",
-            discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/solving-jepsen-with-opencensus\/"
-            };
-        (function() {
-            var d = document.createElement("script");
-            d.type = "text/javascript";
-            d.async = true;
-            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
-            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
-    
-
-</div>
-
-
-                        <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <a href="#" data-dismiss="modal" class="modal-close-btn">
-    Close
-  </a>
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
-                    </div>
-
-                    
-                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
-                        <p>Create you own success story.</p>
-                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
-                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
-                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
-                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                    </div>
-                    <div class="  text-center subscribe-box">
+                     <div class="  text-center subscribe-box">
     
 
     <h3>Get blog post to <br/>your inbox</h3>
@@ -794,39 +835,168 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 </div>
 
-
-
-
+                  </div>
+               </div>
             </div>
+         </div>
+      </div>
+      </div>
+   </section>
+   <div class='bottom-section'>
+      <div class="container">
+         <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+            <div class="post__comments">
 
+    <div id="discourse-comments"></div>
 
-                    
-                </div>
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/solving-jepsen-with-opencensus\/"
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
+    
+
+</div>
+
+            <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="mx-auto" style="max-width:860px">
+
+         <div
+            class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80  xs-mt-80 lg-ml-80 lg-mr-80 md-ml-50 md-mr-50 xs-ml-30 xs-mr-30 " >
+            <p>Create you own success story.</p>
+            <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+            <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+               <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get
+               Started</span> <i class="fas fa-arrow-right"></i></a>
+               <a class="button  button--outline" target="_blank"
+                  href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i
+                  class="fas fa-arrow-right"></i></a>
             </div>
-           
-
-
         </div>
-        </div>
-    </section>
-    <div class='bottom-section'>
-        <div class="container">
-            <div class="page-body__related-content mb-4">
 
-                
+         </div>
+         <div class="page-body__related-content mb-4">
+            
 
 
 
 
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-content-center mt-4">
+
+
+    
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/ristretto-3.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Thu, Sep 19, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/">Introducing Ristretto: A High-Performance Go Cache</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karl/">Karl McGuire</a>
+        
+    
+
+</div>
 
 
 
-                
+    	</div>
+
+    </div>
+    
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/ristretto.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Thu, Mar 7, 2019
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/caching-in-go/">The State of Caching in Go</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/mrjn/">Manish Rai Jain</a>
+        
+    
+
+</div>
+
+
+
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+            
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             
@@ -839,17 +1009,20 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
                 <a href="https://blog.dgraph.io/tags/opencensus/">opencensus</a>
             
         
+            
+            
+                <a href="https://blog.dgraph.io/tags/reddit/">reddit</a>
+            
+        
 
     </div>
 
 </div>
 
 
-
-
-            </div>
-        </div>
-        <footer class="page-footer">
+         </div>
+      </div>
+      <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -985,14 +1158,8 @@ $(document.links)
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
-
-
-    </div>
-
-
-
+   </div>
 </body>
-
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>jepsen on Dgraph Blog</title>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 04 Jun 2020 04:50:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</guid>
-      <description>Software is only as strong as the engineer writing it. This post is dedicated to all the engineers who put relentless efforts in writing and debugging systems to make them stable and reliable for others to use.</description>
+      <description>This post made it to the front page of Go Reddit for over 24hrs. Do engage in discussion there and show us your love by giving Dgraph a GitHub Star.</description>
     </item>
     
   </channel>

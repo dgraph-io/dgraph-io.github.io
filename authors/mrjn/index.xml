@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dgraph Blog</title>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 04 Jun 2020 04:50:00 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/solving-jepsen-with-opencensus/</guid>
-      <description>Software is only as strong as the engineer writing it. This post is dedicated to all the engineers who put relentless efforts in writing and debugging systems to make them stable and reliable for others to use.</description>
+      <description>This post made it to the front page of Go Reddit for over 24hrs. Do engage in discussion there and show us your love by giving Dgraph a GitHub Star.</description>
     </item>
     
     <item>
@@ -27,7 +27,7 @@
       <pubDate>Tue, 29 Oct 2019 02:13:13 -0700</pubDate>
       
       <guid>https://blog.dgraph.io/post/building-native-graphql-database-dgraph/</guid>
-      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;quot;
+      <description>&amp;ldquo;GraphQL is not a Graph DB query language &amp;mdash; it&amp;rsquo;s a replacement for REST APIs.&amp;rdquo;
  That&amp;rsquo;s my standard opening statement whenever talking about Dgraph&amp;rsquo;s choice of the query language.</description>
     </item>
     
@@ -47,7 +47,7 @@
       
       <guid>https://blog.dgraph.io/post/caching-in-go/</guid>
       <description>Since writing this post, we have built Ristretto: A High Performance Go cache. Read all about it here.
- This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News.</description>
+This post made it to the top of Golang subreddit and is trending #2 on the front page of Hacker News.</description>
     </item>
     
     <item>
@@ -190,6 +190,7 @@ We&amp;rsquo;ve implemented &lt;strong&gt;90% of all the features we had planned
       
       <guid>https://blog.dgraph.io/post/gru/</guid>
       <description>&lt;p&gt;Candidate &lt;strong&gt;REJECTED&lt;/strong&gt;.&lt;/p&gt;
+
 &lt;p&gt;4 out of 5 interviewers had liked the candidate. I was one of the 4. He had received either above or very close to 3.0, which is a good score. The interviewer who didn&amp;rsquo;t like the candidate had been at Google since early 2004. And he didn&amp;rsquo;t like the candidate&amp;rsquo;s joke question about whether he was very rich because he joined before Google went IPO. &lt;em&gt;I guess he wasn&amp;rsquo;t.&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     

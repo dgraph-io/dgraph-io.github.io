@@ -61,7 +61,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -97,8 +97,8 @@
 
     $(".subscribe-box").hide();
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 220) {
-        $(".subscribe-box").fadeIn("slow");
+      if ($(window).scrollTop() > 400) {
+        $(".subscribe-box").fadeIn("fast");
       }
       else {
         $(".subscribe-box").fadeOut("fast");
@@ -123,7 +123,7 @@
    
     function checkOffset() {
       var x = $(".container").offset();
-        var leftPosition = x.left + 90;
+        var leftPosition = x.left + 75;
       if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
         >= $('.bottom-section').offset().top - 10){
         $('.subscribe-box').addClass('footer-before');
@@ -131,7 +131,7 @@
         }
       if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
         $('.subscribe-box').removeClass('footer-before');
-        $('.subscribe-box').css('left',  '15px' );
+        $('.subscribe-box').css('left',  '30px' );
       }
          
     }
@@ -160,8 +160,7 @@
 	    $(this).parent().toggleClass('active');
 	});
   $('.nav-icon[target="_blank"]').removeAttr('target');
-  var x = $(".container").offset();
-  var leftPosition = x.left;
+  
     });
   </script>
 
@@ -183,13 +182,18 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
-
-    <header id="page-header" class="page-header">
+   <header id="page-header" class="page-header">
 	<div class="page-logo">
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+		<a href="javascript:;" class="nav-icon" >
+			<div class="hamburger">
+				<div class="line line-1"></div>
+				<div class="line line-2"></div>
+				<div class="line line-3"></div>
+			</div>
 		</a>
 	</div>
 	<nav class="page-nav">
@@ -212,6 +216,16 @@
                 <li>
                     <a href="https://dgraph.io/downloads" data-label="Downloads">
                         <span>Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/badger" data-label="Badger">
+                        <span>Badger</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/compare-features" data-label="Compare Features">
+                        <span>Compare Features</span>
                     </a>
                 </li>
             </ul>
@@ -239,6 +253,11 @@
                 <li>
                     <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
                         <span>Slack</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/paper" target="_blank" data-label="Paper">
+                        <span>Paper</span>
                     </a>
                 </li>
             </ul>
@@ -303,32 +322,25 @@
 </header>
 
 
-
-
-    <section class="page-body">
-        <div class="page-body__content">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-10 ">
-
-                        <div class="page-search form-group has-search">
+   <section class="page-body">
+      <div class="page-body__content">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-10 ">
+                  <div class="page-search form-group has-search">
 	<span class="fas fa-search form-control-feedback"></span>
 	
 </div>
-                     </div>
-                </div>
+               </div>
             </div>
-        </div>
-        
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-10 ">
-                    <div class="">
-
-                        <div class="post__meta">
-
-                            <div class="post__date">
+         </div>
+      </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-10 ">
+               <div class="">
+                  <div class="post__meta">
+                     <div class="post__date">
 
     
         Wed, Jan 8, 2020
@@ -336,30 +348,23 @@
     
 </div>
 
-
-                            <div class="post__share">
-                                
-                                <a href="https://twitter.com/share?text=What%e2%80%99s%20Next%3f%20Learn%20Dgraph%20with%20the%20Getting-Started%20Blog%20Series&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fintroducing-getting-started-series%2f&amp;via=dgraphlabs"
-                                    target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                
-                            </div>
-
-                        </div>
-
-                        <div class="post__cover">
-
-                            <img
-                                src="https://blog.dgraph.io//images/the-first-step.jpg">
-
-                            <div class="post__header">
-
-                                <h1 class="post__title">
-                                    What’s Next? Learn Dgraph with the Getting-Started Blog Series
-                                </h1>
-
-                                
+                     <div class="post__share">
+                        
+                        <a href="https://twitter.com/share?text=What%e2%80%99s%20Next%3f%20Learn%20Dgraph%20with%20the%20Getting-Started%20Blog%20Series&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fintroducing-getting-started-series%2f&amp;via=dgraphlabs"
+                           target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        </a>
+                        
+                     </div>
+                  </div>
+                  <div class="post__cover">
+                     <img
+                        src="https://blog.dgraph.io//images/the-first-step.jpg">
+                     <div class="post__header">
+                        <h1 class="post__title">
+                           What’s Next? Learn Dgraph with the Getting-Started Blog Series
+                        </h1>
+                        
 <div class="post__byline">
 
     
@@ -370,55 +375,82 @@
 </div>
 
 
+                     </div>
+                  </div>
+                  <div
+                     class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                     
 
-                            </div>
-
-                        </div>
-
-                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
-                            <p>We are excited to announce that the <a href="https://docs.dgraph.io/master/get-started/">&ldquo;Get Started with Dgraph&rdquo;</a>
+<p>We are excited to announce that the <a href="https://docs.dgraph.io/master/get-started/">&ldquo;Get Started with Dgraph&rdquo;</a>
 of our <a href="https://docs.dgraph.io">documentation site</a> now includes the episodes from <a href="https://twitter.com/dgraphlabs/status/1201516730880671745">our getting started blog series</a>.</p>
+
 <p>This blog series consists of various tutorials that are helpful for both beginners and intermediates to get started with <strong>Dgraph</strong> and to understand the product functionalities better.</p>
+
 <p>At the time of writing, we’ve published six tutorial episodes, and you can find all of them on the docs. We will add new episodes as they&rsquo;re available.</p>
+
 <p>In this announcement post, we’d like to give you a quick look at the available episodes and feel free to dive in further if any of them interests you.</p>
+
 <h2 id="brief-overview-of-the-tutorials">Brief Overview of the Tutorials</h2>
-<h3 id="tutorial-1---introduction">Tutorial #1 - Introduction</h3>
+
+<h3 id="tutorial-1-introduction">Tutorial #1 - Introduction</h3>
+
 <p>The <a href="https://docs.dgraph.io/master/tutorial-1/">first tutorial</a> introduces you to
 <strong>Dgraph</strong> and its basic concepts. These include running <strong>Dgraph</strong> using docker, concepts like
 nodes and edges, <strong>ratel</strong> UI, and <strong>graphql+-</strong> query.</p>
-<p><img src="https://blog.dgraph.io/images/tutorials/1/explain-query-2.JPG" alt="Explanation of a graphql+- query"></p>
-<h3 id="tutorial-2---basic-operations">Tutorial #2 - Basic Operations</h3>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/1/explain-query-2.JPG" alt="Explanation of a graphql+- query" /></p>
+
+<h3 id="tutorial-2-basic-operations">Tutorial #2 - Basic Operations</h3>
+
 <p>The <a href="https://docs.dgraph.io/master/tutorial-2/">second tutorial</a> takes you through the
 CRUD operations using node UIDs. We also learn about adding and traversing the edges.</p>
-<p><img src="https://blog.dgraph.io/images/tutorials/2/j-explain.JPG" alt="Traversing the edge"></p>
-<h3 id="tutorial-3---basic-types-and-operations-on-them">Tutorial #3 - Basic Types and Operations on them</h3>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/2/j-explain.JPG" alt="Traversing the edge" /></p>
+
+<h3 id="tutorial-3-basic-types-and-operations-on-them">Tutorial #3 - Basic Types and Operations on them</h3>
+
 <p>The <a href="https://docs.dgraph.io/master/tutorial-3/">third tutorial</a> is about basic types in Dgraph
 and the various operations that you can use. These operations include indexing, filtering, querying for predicates, and return reverse edge traversing.</p>
-<p><img src="https://blog.dgraph.io/images/tutorials/3/r-reverse-1.png" alt="Basic Types in a schema"></p>
-<h3 id="tutorial-4---multi-language-strings">Tutorial #4 - Multi-Language Strings</h3>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/3/r-reverse-1.png" alt="Basic Types in a schema" /></p>
+
+<h3 id="tutorial-4-multi-language-strings">Tutorial #4 - Multi-Language Strings</h3>
+
 <p>The <a href="https://docs.dgraph.io/master/tutorial-4/">fourth tutorial</a> is about language tags and using them to build multi-lingual apps on Dgraph.</p>
-<p><img src="https://blog.dgraph.io/images/tutorials/4/e-update-lang.png" alt="language string"></p>
-<h3 id="tutorial-5---string-indices-and-modeling-tweet-graph">Tutorial #5 - String Indices and Modeling Tweet Graph</h3>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/4/e-update-lang.png" alt="language string" /></p>
+
+<h3 id="tutorial-5-string-indices-and-modeling-tweet-graph">Tutorial #5 - String Indices and Modeling Tweet Graph</h3>
+
 <p>The <a href="https://docs.dgraph.io/master/tutorial-5/">fifth tutorial</a> is about modeling and searching
 a social graph like facebook or twitter on <strong>Dgraph</strong>. In this tutorial, we model tweets in
 <strong>Dgraph</strong> and find your favorite tweets using string querying and search capabilities.</p>
+
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Test tweet for the fifth episode of getting started series with <a href="https://twitter.com/dgraphlabs?ref_src=twsrc%5Etfw">@dgraphlabs</a>.<br>Wait for the video of the fourth one by <a href="https://twitter.com/francesc?ref_src=twsrc%5Etfw">@francesc</a> the coming Wednesday! <a href="https://twitter.com/hashtag/GraphDB?src=hash&amp;ref_src=twsrc%5Etfw">#GraphDB</a> <a href="https://twitter.com/hashtag/GraphQL?src=hash&amp;ref_src=twsrc%5Etfw">#GraphQL</a></p>&mdash; Karthic Rao (@hackintoshrao) <a href="https://twitter.com/hackintoshrao/status/1194740206177402880?ref_src=twsrc%5Etfw">November 13, 2019</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-<p><img src="https://blog.dgraph.io/images/tutorials/5/c-tweet-model.jpg" alt="A sample Tweet"></p>
-<h3 id="tutorial-6---advanced-text-search-on-social-graphs">Tutorial #6 - Advanced Text Search on Social Graphs</h3>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/5/c-tweet-model.jpg" alt="A sample Tweet" /></p>
+
+<h3 id="tutorial-6-advanced-text-search-on-social-graphs">Tutorial #6 - Advanced Text Search on Social Graphs</h3>
+
 <p>The <a href="https://docs.dgraph.io/master/tutorial-6/">sixth tutorial</a> is about full-text search and
 regular expression search on social graphs built in the <a href="https://docs.dgraph.io/master/tutorial-5/">fifth tutorial</a>.</p>
-<p><img src="https://blog.dgraph.io/images/tutorials/6/b-full-text-query-1.png" alt="Full-text search"></p>
-<p><img src="https://blog.dgraph.io/images/tutorials/6/regex-query-3.png" alt="Regular Expression search"></p>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/6/b-full-text-query-1.png" alt="Full-text search" /></p>
+
+<p><img src="https://blog.dgraph.io/images/tutorials/6/regex-query-3.png" alt="Regular Expression search" /></p>
+
 <h2 id="closing-notes">Closing Notes</h2>
+
 <p>With the introduction of the tutorial series to the documentation site, we want to bring you a more comprehensive “get-started” experience with <strong>Dgraph</strong>. Moreover, the tutorial contents will be actively maintained and kept up to date with the latest version of  <strong>Dgraph</strong>.</p>
+
 <p>But if you prefer the older version of the “Get started with Dgraph” page, you can still access it from the notice text that is on the top of the current version page or from
 <a href="https://docs.dgraph.io/master/get-started-old/">here</a>.</p>
+
 <p>We will release more tutorials of the getting started series in the future, so stay tuned. Till then, happy Graphing!</p>
 
-
-                        
+                     
     <aside class="post__authors">
                 <div class="tile author-tile">
 
@@ -467,57 +499,7 @@ listen to acoustic music, play guitar, and contribute to Wikipedia.</p>
     </aside>
 
 
-
-                        <div class="post__comments">
-
-    <div id="discourse-comments"></div>
-
-    
-    <script type="text/javascript">
-        DiscourseEmbed = {
-            discourseUrl: "https:\/\/discuss.dgraph.io\/",
-            topicId:  5777 
-            };
-        (function() {
-            var d = document.createElement("script");
-            d.type = "text/javascript";
-            d.async = true;
-            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
-            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
-    
-
-</div>
-
-
-                        <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <a href="#" data-dismiss="modal" class="modal-close-btn">
-    Close
-  </a>
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
-                    </div>
-
-                    
-                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
-                        <p>Create you own success story.</p>
-                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
-                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
-                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
-                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                    </div>
-                    <div class="  text-center subscribe-box">
+                     <div class="  text-center subscribe-box">
     
 
     <h3>Get blog post to <br/>your inbox</h3>
@@ -561,26 +543,71 @@ listen to acoustic music, play guitar, and contribute to Wikipedia.</p>
 
 </div>
 
-
-
-
+                  </div>
+               </div>
             </div>
+         </div>
+      </div>
+      </div>
+   </section>
+   <div class='bottom-section'>
+      <div class="container">
+         <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+            <div class="post__comments">
 
+    <div id="discourse-comments"></div>
 
-                    
-                </div>
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            topicId:  5777 
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
+    
+
+</div>
+
+            <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="mx-auto" style="max-width:860px">
+
+         <div
+            class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80  xs-mt-80 lg-ml-80 lg-mr-80 md-ml-50 md-mr-50 xs-ml-30 xs-mr-30 " >
+            <p>Create you own success story.</p>
+            <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+            <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+               <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get
+               Started</span> <i class="fas fa-arrow-right"></i></a>
+               <a class="button  button--outline" target="_blank"
+                  href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i
+                  class="fas fa-arrow-right"></i></a>
             </div>
-           
-
-
         </div>
-        </div>
-    </section>
-    <div class='bottom-section'>
-        <div class="container">
-            <div class="page-body__related-content mb-4">
 
-                
+         </div>
+         <div class="page-body__related-content mb-4">
+            
 
 
 
@@ -710,13 +737,12 @@ listen to acoustic music, play guitar, and contribute to Wikipedia.</p>
 
 
 
-
-                
+            
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             
@@ -740,11 +766,9 @@ listen to acoustic music, play guitar, and contribute to Wikipedia.</p>
 </div>
 
 
-
-
-            </div>
-        </div>
-        <footer class="page-footer">
+         </div>
+      </div>
+      <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -880,14 +904,8 @@ $(document.links)
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
-
-
-    </div>
-
-
-
+   </div>
 </body>
-
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>

@@ -62,7 +62,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -98,8 +98,8 @@
 
     $(".subscribe-box").hide();
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 220) {
-        $(".subscribe-box").fadeIn("slow");
+      if ($(window).scrollTop() > 400) {
+        $(".subscribe-box").fadeIn("fast");
       }
       else {
         $(".subscribe-box").fadeOut("fast");
@@ -124,7 +124,7 @@
    
     function checkOffset() {
       var x = $(".container").offset();
-        var leftPosition = x.left + 90;
+        var leftPosition = x.left + 75;
       if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
         >= $('.bottom-section').offset().top - 10){
         $('.subscribe-box').addClass('footer-before');
@@ -132,7 +132,7 @@
         }
       if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
         $('.subscribe-box').removeClass('footer-before');
-        $('.subscribe-box').css('left',  '15px' );
+        $('.subscribe-box').css('left',  '30px' );
       }
          
     }
@@ -161,8 +161,7 @@
 	    $(this).parent().toggleClass('active');
 	});
   $('.nav-icon[target="_blank"]').removeAttr('target');
-  var x = $(".container").offset();
-  var leftPosition = x.left;
+  
     });
   </script>
 
@@ -190,6 +189,13 @@
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
 		</a>
+		<a href="javascript:;" class="nav-icon" >
+			<div class="hamburger">
+				<div class="line line-1"></div>
+				<div class="line line-2"></div>
+				<div class="line line-3"></div>
+			</div>
+		</a>
 	</div>
 	<nav class="page-nav">
     <ul>
@@ -211,6 +217,16 @@
                 <li>
                     <a href="https://dgraph.io/downloads" data-label="Downloads">
                         <span>Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/badger" data-label="Badger">
+                        <span>Badger</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/compare-features" data-label="Compare Features">
+                        <span>Compare Features</span>
                     </a>
                 </li>
             </ul>
@@ -238,6 +254,11 @@
                 <li>
                     <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
                         <span>Slack</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/paper" target="_blank" data-label="Paper">
+                        <span>Paper</span>
                     </a>
                 </li>
             </ul>
@@ -300,7 +321,6 @@
 </div>
 
 </header>
-
 
 
 
@@ -367,9 +387,9 @@
 		
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             
@@ -444,9 +464,9 @@
 		
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             
@@ -527,9 +547,9 @@ The conference was exciting, and it had a great line up of talks.
 		
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             
@@ -593,16 +613,16 @@ The conference was exciting, and it had a great line up of talks.
 
 
 		<div class="post__summary">
-			&ldquo;GraphQL is not a Graph DB query language &mdash; it&rsquo;s a replacement for REST APIs.&quot;
+			&ldquo;GraphQL is not a Graph DB query language &mdash; it&rsquo;s a replacement for REST APIs.&rdquo;
  That&rsquo;s my standard opening statement whenever talking about Dgraph&rsquo;s choice of the query language.
 		</div>
 
 		
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             
@@ -667,9 +687,9 @@ The conference was exciting, and it had a great line up of talks.
 		
 <div class="post__tags">
 
-    <h3>Tags</h3>
+    <h3 class="text-center">Tags</h3>
 
-    <div>
+    <div class="tag-inner">
 
         
             

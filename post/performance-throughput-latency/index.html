@@ -61,7 +61,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -97,8 +97,8 @@
 
     $(".subscribe-box").hide();
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 220) {
-        $(".subscribe-box").fadeIn("slow");
+      if ($(window).scrollTop() > 400) {
+        $(".subscribe-box").fadeIn("fast");
       }
       else {
         $(".subscribe-box").fadeOut("fast");
@@ -123,7 +123,7 @@
    
     function checkOffset() {
       var x = $(".container").offset();
-        var leftPosition = x.left + 90;
+        var leftPosition = x.left + 75;
       if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
         >= $('.bottom-section').offset().top - 10){
         $('.subscribe-box').addClass('footer-before');
@@ -131,7 +131,7 @@
         }
       if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
         $('.subscribe-box').removeClass('footer-before');
-        $('.subscribe-box').css('left',  '15px' );
+        $('.subscribe-box').css('left',  '30px' );
       }
          
     }
@@ -160,8 +160,7 @@
 	    $(this).parent().toggleClass('active');
 	});
   $('.nav-icon[target="_blank"]').removeAttr('target');
-  var x = $(".container").offset();
-  var leftPosition = x.left;
+  
     });
   </script>
 
@@ -184,13 +183,18 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
-
-    <header id="page-header" class="page-header">
+   <header id="page-header" class="page-header">
 	<div class="page-logo">
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+		<a href="javascript:;" class="nav-icon" >
+			<div class="hamburger">
+				<div class="line line-1"></div>
+				<div class="line line-2"></div>
+				<div class="line line-3"></div>
+			</div>
 		</a>
 	</div>
 	<nav class="page-nav">
@@ -213,6 +217,16 @@
                 <li>
                     <a href="https://dgraph.io/downloads" data-label="Downloads">
                         <span>Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/badger" data-label="Badger">
+                        <span>Badger</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/compare-features" data-label="Compare Features">
+                        <span>Compare Features</span>
                     </a>
                 </li>
             </ul>
@@ -240,6 +254,11 @@
                 <li>
                     <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
                         <span>Slack</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/paper" target="_blank" data-label="Paper">
+                        <span>Paper</span>
                     </a>
                 </li>
             </ul>
@@ -304,32 +323,25 @@
 </header>
 
 
-
-
-    <section class="page-body">
-        <div class="page-body__content">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-10 ">
-
-                        <div class="page-search form-group has-search">
+   <section class="page-body">
+      <div class="page-body__content">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-10 ">
+                  <div class="page-search form-group has-search">
 	<span class="fas fa-search form-control-feedback"></span>
 	
 </div>
-                     </div>
-                </div>
+               </div>
             </div>
-        </div>
-        
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-10 ">
-                    <div class="">
-
-                        <div class="post__meta">
-
-                            <div class="post__date">
+         </div>
+      </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-10 ">
+               <div class="">
+                  <div class="post__meta">
+                     <div class="post__date">
 
     
         Tue, Jun 21, 2016
@@ -337,30 +349,23 @@
     
 </div>
 
-
-                            <div class="post__share">
-                                
-                                <a href="https://twitter.com/share?text=Can%20it%20really%20scale%3f&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&amp;via=dgraphlabs"
-                                    target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                
-                            </div>
-
-                        </div>
-
-                        <div class="post__cover">
-
-                            <img
-                                src="https://blog.dgraph.io//images/lander.jpg">
-
-                            <div class="post__header">
-
-                                <h1 class="post__title">
-                                    Can it really scale?
-                                </h1>
-
-                                
+                     <div class="post__share">
+                        
+                        <a href="https://twitter.com/share?text=Can%20it%20really%20scale%3f&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fperformance-throughput-latency%2f&amp;via=dgraphlabs"
+                           target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        </a>
+                        
+                     </div>
+                  </div>
+                  <div class="post__cover">
+                     <img
+                        src="https://blog.dgraph.io//images/lander.jpg">
+                     <div class="post__header">
+                        <h1 class="post__title">
+                           Can it really scale?
+                        </h1>
+                        
 <div class="post__byline">
 
     
@@ -371,28 +376,32 @@
 </div>
 
 
-
-                            </div>
-
-                        </div>
-
-                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
-                            <p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
+                     </div>
+                  </div>
+                  <div
+                     class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                     <p>In this post, we’ll look at how <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  performs on varying the number of nodes in the cluster, specs of the machine and load on the server to answer the ultimate question: <em>Can it really scale?</em></p>
+
 <h2 id="the-dataset">The Dataset</h2>
+
 <p><a href="https://en.wikipedia.org/wiki/Freebase">Freebase</a> is an online collection of structured data which includes contributions from many sources including individual and user-generated contributions.
 Currently, it has <a href="https://developers.google.com/freebase/">1.9 Billion RDF N-Triples</a> worth 250GB of uncompressed data.
 On top of that, this dataset is over 95% accurate with a complex and rich real world schema.
 It is an ideal data set to test the performance of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
 .
 We decided not to use the entire data set as it wasn&rsquo;t necessary for our goal here.</p>
+
 <p>Given our love for movies, we narrowed it down to the film data.
 We ran some scripts and filtered in the movie data only.
 All the data and scripts are present in <a href="https://github.com/dgraph-io/benchmarks/tree/master/data">our benchmarks repository</a>.
 There are two million nodes, which represent directors, actors, films and all the other objects in the database.
 Moreover, 21 million edges (including 4M edges for names) are representing the relationships between actors, films, directors and all the other nodes in the database.</p>
-<hr>
+
+<hr />
+
 <p>Some interesting information about this data:</p>
+
 <pre><code># film.film --{film.film.starring}--&gt; [mediator] --{film.performance.actor}--&gt; film.actor
 # Film --&gt; Mediator
 $ zgrep &quot;&lt;film.film.starring&gt;&quot; rdf-films.gz | wc -l
@@ -429,119 +438,164 @@ $ zcat langnames.gz | awk '{print $1}' | uniq | sort | uniq | wc -l
 # Total number of countries.
 $ zgrep &quot;&lt;film.film.country&gt;&quot; rdf-films.gz | awk '{print $3}' | uniq | sort | uniq | wc -l
 304
-</code></pre><hr>
+</code></pre>
+
+<hr />
+
 <p>This data set contains information about ~480K actors, ~100K directors and ~240K films.
 Some example of entries in the dataset are :</p>
+
 <pre><code>&lt;m.0102j2vq&gt; &lt;film.actor.film&gt; &lt;m.011kyqsq&gt; .
 &lt;m.0102xz6t&gt; &lt;film.performance.film&gt; &lt;m.0kv00q&gt; .
 &lt;m.050llt&gt; &lt;type.object.name&gt; “Aishwarya Rai Bachchan”@hr .
 &lt;m.0bxtg&gt; &lt;type.object.name&gt; “Tom Hanks”@es .
-</code></pre><h2 id="terminology">Terminology</h2>
+</code></pre>
+
+<h2 id="terminology">Terminology</h2>
+
 <ul>
 <li>Throughput: Number of queries served by the server per second and received by the client</li>
 <li>Latency: Difference between the time when the server received the request and the time it finished processing the request</li>
 <li>95 percentile latency: The worst case latency which 95 percentage of users that query the database face</li>
 <li>50 percentile latency: The worst case latency which half the users that query the database face</li>
 </ul>
+
 <h2 id="setup">Setup</h2>
+
 <p>All the testing was done on GCE instances. Each machine had 30GB of SSD and at least 7.5 GB of RAM. The number of cores varied depending on the experiments performed.</p>
+
 <p>The tests were run for 1-minute intervals during which all the parallel connections made requests to the database.
 This was repeated ten times and throughput, mean latency, 95th percentile latency, 50th percentile latency were measured.
 Note that for user-facing systems, measuring percentile latency is better than mean latency as the average can be skewed by outliers.</p>
+
 <p>In a multi-node cluster set up, the queries were distributed among each node in a round-robin fashion.
 Note that no single machine contains all the data to answer these queries, in a multi-node cluster.
 They still have to communicate with each other to respond to the queries.</p>
+
 <h2 id="variables">Variables</h2>
+
 <p>The parameters that were varied were:</p>
+
 <ol>
 <li>A number of parallel connections to the database. In Go, this equated to the number of goroutines a client would have. Each goroutine would run in an infinite loop, querying the database via a blocking function.</li>
 <li>Number of cores per server</li>
 <li>Number of servers in the cluster</li>
 </ol>
+
 <p>This gave us an idea of what to expect from the system and would help in predicting the configuration required to handle a given load.</p>
+
 <h2 id="queries">Queries</h2>
+
 <p>We ran broadly 2 categories of queries.</p>
+
 <ul>
-<li>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</li>
-</ul>
+<li><p>For each actor (478,936 actors), get their name, the films they acted in, and those films&rsquo; names.</p>
+
 <pre><code>{
-  me ( _xid_ : XID ) {
+me ( _xid_ : XID ) {
+type.object.name.en
+film.actor.film {
+  film.performance.film {
     type.object.name.en
-    film.actor.film {
-      film.performance.film {
-        type.object.name.en
-      }
-    }
   }
 }
-</code></pre><ul>
-<li>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</li>
-</ul>
+}
+}
+</code></pre></li>
+
+<li><p>For each director (90,063 directors), get their name, the films they directed, and names of all the genres of those films.</p>
+
 <pre><code>{
-  me ( _xid_ : XID ) {
+me ( _xid_ : XID ) {
+type.object.name.en
+film.director.film {
+  film.film.genre {
     type.object.name.en
-    film.director.film {
-      film.film.genre {
-        type.object.name.en
-      }
-    }
   }
 }
-</code></pre><p>During each iteration, either an actor or a director category was chosen randomly.
+}
+}
+</code></pre></li>
+</ul>
+
+<p>During each iteration, either an actor or a director category was chosen randomly.
 Furthermore, for that category, an actor or director was chosen randomly; their <code>XID</code> filled in in the query template.</p>
+
 <h2 id="performance">Performance</h2>
+
 <p>Let us look at some graphs obtained by varying the machine specs and the number of nodes in the cluster under different loads.</p>
+
 <h3 id="vary-the-number-of-cores-in-a-single-instance">Vary the number of cores in a single instance</h3>
-<p><img src="https://blog.dgraph.io/images/cores_thru.jpg" alt="Throughput on varying number of cores"></p>
-<p><img src="https://blog.dgraph.io/images/cores_lat_50.jpg" alt="50 percentile latency on varying number of cores"></p>
-<p><img src="https://blog.dgraph.io/images/cores_lat_95.jpg" alt="95 percentile latency on varying number of cores"></p>
-<p><img src="https://blog.dgraph.io/images/cores_lat_mean.jpg" alt="mean latency on varying number of cores"></p>
+
+<p><img src="https://blog.dgraph.io/images/cores_thru.jpg" alt="Throughput on varying number of cores" /></p>
+
+<p><img src="https://blog.dgraph.io/images/cores_lat_50.jpg" alt="50 percentile latency on varying number of cores" /></p>
+
+<p><img src="https://blog.dgraph.io/images/cores_lat_95.jpg" alt="95 percentile latency on varying number of cores" /></p>
+
+<p><img src="https://blog.dgraph.io/images/cores_lat_mean.jpg" alt="mean latency on varying number of cores" /></p>
+
 <ul>
 <li>With the same number of cores, when we increase the number of connections, i.e. load on the system, the throughput as well as the latency increase.</li>
 <li>Throughput increases till some point and then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
 <li>As expected, the latency increases almost linearly with the number of connections.</li>
 <li>When we increase the number of cores, the latency decreases and the throughput increases.</li>
 </ul>
+
 <h3 id="vary-number-of-instances">Vary number of instances</h3>
-<p><img src="https://blog.dgraph.io/images/topo_thru.jpg" alt="Throughput on varying number of instances"></p>
-<p><img src="https://blog.dgraph.io/images/dist_lat_50.jpg" alt="50 percentile latency on varying number of instances"></p>
-<p><img src="https://blog.dgraph.io/images/dist_lat_95.jpg" alt="95 percentile latency on varying number of instances"></p>
-<p><img src="https://blog.dgraph.io/images/dist_lat_mean.jpg" alt="mean latency on varying number of instances"></p>
+
+<p><img src="https://blog.dgraph.io/images/topo_thru.jpg" alt="Throughput on varying number of instances" /></p>
+
+<p><img src="https://blog.dgraph.io/images/dist_lat_50.jpg" alt="50 percentile latency on varying number of instances" /></p>
+
+<p><img src="https://blog.dgraph.io/images/dist_lat_95.jpg" alt="95 percentile latency on varying number of instances" /></p>
+
+<p><img src="https://blog.dgraph.io/images/dist_lat_mean.jpg" alt="mean latency on varying number of instances" /></p>
+
 <ul>
 <li>When we increase the number of parallel connections, the throughput increases, but then flattens out. This is the point where the computational capacity is being utilized almost fully.</li>
 <li>The latency increases almost linearly with the number of connections.</li>
 <li>Latency in the case of a single instance is observed to be the equal to (or a bit lower than) that of distributed configurations as the former doesn’t require any network calls. However, as the number of requests/load increase, the cumulative computational power comes into play and overshadows the latency incurred due to network calls. Hence, the latency reduces in the distributed version under higher loads.</li>
 <li>On comparing across the one, two and five node clusters, we can see that the latency, as well as the throughput, are better for configurations with a higher number of nodes, i.e., when there is more computational capacity at disposal. The throughput increases as we have greater computational power and can handle more queries.</li>
 </ul>
+
 <h2 id="conclusion">Conclusion</h2>
+
 <p>From the above experiments, we can see a relationship between the throughput, latency and the overall computational power of the cluster.
 The graphs show that the throughput increases as the computational power increases.
 Which can be achieved either by increasing the number of cores on each server or the number of nodes in the cluster.</p>
+
 <p>The latency increases as the amount of load on the database increases.
 However, the rate of the increase differs based on how much computational power we have available.</p>
+
 <p>This experiment also shows that there is a limit on how much computational power a single node can have, and once we reach that limit, scaling horizontally is the right option.
 Not only that, but it also proves that scaling horizontally improves the performance.
 Hence, having more replicas, distributing the dataset optimally across machines are some factors which help in improving the throughput and reducing the latency that the users face.</p>
+
 <p>Based on this experiment, our recommendation for running <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  would be:</p>
+
 <ul>
 <li>Use as many cores as possible</li>
 <li>Have the servers geographically close-by so that network latency is reduced</li>
 <li>Distribute the data among servers and query them in a round-robin fashion for greater throughput</li>
 </ul>
+
 <p>These might seem pretty obvious recommendations for a distributed system, but <strong>this experiment proves that the underlying design of <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
  is scalable.</strong></p>
+
 <p>Hope this helps you get a sense of what sort of performance you could expect out of Dgraph!</p>
+
 <p><em>This post is derived from my report for B.tech Project on “A Distributed Implementation of the Graph Database System, Dgraph”.
 The full report is <a href="https://www.dropbox.com/s/7h4ytak39r2pdun/Ashwin_Thesis.pdf?dl=0">available for download here</a>.</em></p>
+
 
 
 <aside class="post__references">
 
     <h4>References</h4><p>Top image: <a href="http://mars.nasa.gov/images/PIA14840.jpg">Mars Rover Landing via Nasa</a></p>
 </aside>
-
-                        
+                     
     <aside class="post__authors">
                 <div class="tile author-tile">
 
@@ -598,6 +652,7 @@ adventurous. Loves travelling to new places and trying out new food.</p>
 systems right out of college, working on real time web indexing systems at
 Google. He then lead various projects to consolidate and serve Knowledge Graph
 right behind web search.</p>
+
 <p>Implementing GTD and Zero Waste practices, Manish is into efficient and
 minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
@@ -630,57 +685,7 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
     </aside>
 
 
-
-                        <div class="post__comments">
-
-    <div id="discourse-comments"></div>
-
-    
-    <script type="text/javascript">
-        DiscourseEmbed = {
-            discourseUrl: "https:\/\/discuss.dgraph.io\/",
-            topicId:  475 
-            };
-        (function() {
-            var d = document.createElement("script");
-            d.type = "text/javascript";
-            d.async = true;
-            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
-            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
-    
-
-</div>
-
-
-                        <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <a href="#" data-dismiss="modal" class="modal-close-btn">
-    Close
-  </a>
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
-                    </div>
-
-                    
-                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
-                        <p>Create you own success story.</p>
-                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
-                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
-                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
-                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                    </div>
-                    <div class="  text-center subscribe-box">
+                     <div class="  text-center subscribe-box">
     
 
     <h3>Get blog post to <br/>your inbox</h3>
@@ -724,26 +729,71 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 </div>
 
-
-
-
+                  </div>
+               </div>
             </div>
+         </div>
+      </div>
+      </div>
+   </section>
+   <div class='bottom-section'>
+      <div class="container">
+         <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+            <div class="post__comments">
 
+    <div id="discourse-comments"></div>
 
-                    
-                </div>
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            topicId:  475 
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
+    
+
+</div>
+
+            <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="mx-auto" style="max-width:860px">
+
+         <div
+            class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80  xs-mt-80 lg-ml-80 lg-mr-80 md-ml-50 md-mr-50 xs-ml-30 xs-mr-30 " >
+            <p>Create you own success story.</p>
+            <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+            <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+               <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get
+               Started</span> <i class="fas fa-arrow-right"></i></a>
+               <a class="button  button--outline" target="_blank"
+                  href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i
+                  class="fas fa-arrow-right"></i></a>
             </div>
-           
-
-
         </div>
-        </div>
-    </section>
-    <div class='bottom-section'>
-        <div class="container">
-            <div class="page-body__related-content mb-4">
 
-                
+         </div>
+         <div class="page-body__related-content mb-4">
+            
 
 
 
@@ -873,14 +923,11 @@ minimalist living. He loves cycling, swimming and ultra light travelling.</p>
 
 
 
+            
 
-                
-
-
-
-            </div>
-        </div>
-        <footer class="page-footer">
+         </div>
+      </div>
+      <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -1016,14 +1063,8 @@ $(document.links)
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
-
-
-    </div>
-
-
-
+   </div>
 </body>
-
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>

@@ -61,7 +61,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06042020-12" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -97,8 +97,8 @@
 
     $(".subscribe-box").hide();
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 220) {
-        $(".subscribe-box").fadeIn("slow");
+      if ($(window).scrollTop() > 400) {
+        $(".subscribe-box").fadeIn("fast");
       }
       else {
         $(".subscribe-box").fadeOut("fast");
@@ -123,7 +123,7 @@
    
     function checkOffset() {
       var x = $(".container").offset();
-        var leftPosition = x.left + 90;
+        var leftPosition = x.left + 75;
       if ($('.subscribe-box').offset().top + $('.subscribe-box').height()
         >= $('.bottom-section').offset().top - 10){
         $('.subscribe-box').addClass('footer-before');
@@ -131,7 +131,7 @@
         }
       if ($(document).scrollTop() + window.innerHeight < $('.bottom-section').offset().top){
         $('.subscribe-box').removeClass('footer-before');
-        $('.subscribe-box').css('left',  '15px' );
+        $('.subscribe-box').css('left',  '30px' );
       }
          
     }
@@ -160,8 +160,7 @@
 	    $(this).parent().toggleClass('active');
 	});
   $('.nav-icon[target="_blank"]').removeAttr('target');
-  var x = $(".container").offset();
-  var leftPosition = x.left;
+  
     });
   </script>
 
@@ -183,13 +182,18 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
 <body class="blog-single has-lightning" data-gr-c-s-loaded="true">
-
-    <header id="page-header" class="page-header">
+   <header id="page-header" class="page-header">
 	<div class="page-logo">
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
+		</a>
+		<a href="javascript:;" class="nav-icon" >
+			<div class="hamburger">
+				<div class="line line-1"></div>
+				<div class="line line-2"></div>
+				<div class="line line-3"></div>
+			</div>
 		</a>
 	</div>
 	<nav class="page-nav">
@@ -212,6 +216,16 @@
                 <li>
                     <a href="https://dgraph.io/downloads" data-label="Downloads">
                         <span>Downloads</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/badger" data-label="Badger">
+                        <span>Badger</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/compare-features" data-label="Compare Features">
+                        <span>Compare Features</span>
                     </a>
                 </li>
             </ul>
@@ -239,6 +253,11 @@
                 <li>
                     <a href="https://slack.dgraph.io" target="_blank" data-label="Slack">
                         <span>Slack</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://dgraph.io/paper" target="_blank" data-label="Paper">
+                        <span>Paper</span>
                     </a>
                 </li>
             </ul>
@@ -303,32 +322,25 @@
 </header>
 
 
-
-
-    <section class="page-body">
-        <div class="page-body__content">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-10 ">
-
-                        <div class="page-search form-group has-search">
+   <section class="page-body">
+      <div class="page-body__content">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-10 ">
+                  <div class="page-search form-group has-search">
 	<span class="fas fa-search form-control-feedback"></span>
 	
 </div>
-                     </div>
-                </div>
+               </div>
             </div>
-        </div>
-        
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-10 ">
-                    <div class="">
-
-                        <div class="post__meta">
-
-                            <div class="post__date">
+         </div>
+      </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-10 ">
+               <div class="">
+                  <div class="post__meta">
+                     <div class="post__date">
 
     
         Fri, Aug 23, 2019
@@ -336,30 +348,23 @@
     
 </div>
 
-
-                            <div class="post__share">
-                                
-                                <a href="https://twitter.com/share?text=Dgraph%20Labs%20wants%20you%21&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fhiring-19%2f&amp;via=dgraphlabs"
-                                    target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                
-                            </div>
-
-                        </div>
-
-                        <div class="post__cover">
-
-                            <img
-                                src="https://blog.dgraph.io//images/hiring-19.png">
-
-                            <div class="post__header">
-
-                                <h1 class="post__title">
-                                    Dgraph Labs wants you!
-                                </h1>
-
-                                
+                     <div class="post__share">
+                        
+                        <a href="https://twitter.com/share?text=Dgraph%20Labs%20wants%20you%21&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fhiring-19%2f&amp;via=dgraphlabs"
+                           target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        </a>
+                        
+                     </div>
+                  </div>
+                  <div class="post__cover">
+                     <img
+                        src="https://blog.dgraph.io//images/hiring-19.png">
+                     <div class="post__header">
+                        <h1 class="post__title">
+                           Dgraph Labs wants you!
+                        </h1>
+                        
 <div class="post__byline">
 
     
@@ -370,19 +375,19 @@
 </div>
 
 
-
-                            </div>
-
-                        </div>
-
-                        <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
-                            <p>We recently announced our
+                     </div>
+                  </div>
+                  <div
+                     class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+                     <p>We recently announced our
 <a href="https://blog.dgraph.io/post/how-dgraph-labs-raised-series-a/">successful Series A fundraise</a>
 and, since then, many people have shown interest to join our team.
 We are very grateful to have so many people interested in joining our team!</p>
+
 <p>We also realized that the job openings were neither really up to date nor
 covered all of the roles that we are looking for. This is why we decided to
 spend some time rewriting them and the result is these six new job openings!</p>
+
 <ul>
 <li><a href="https://hire.withgoogle.com/public/jobs/dgraphio/view/P_AAAAAAGAACmCXrx-6h4ejU">Quality Assurance Engineer</a></li>
 <li><a href="https://hire.withgoogle.com/public/jobs/dgraphio/view/P_AAAAAAGAACmH3H2m6CuPlG">Developer Advocate</a></li>
@@ -391,27 +396,31 @@ spend some time rewriting them and the result is these six new job openings!</p>
 <li><a href="https://hire.withgoogle.com/public/jobs/dgraphio/view/P_AAAAAAGAACmLUb2o5ISqMy">Technical Project Manager</a></li>
 <li><a href="https://hire.withgoogle.com/public/jobs/dgraphio/view/P_AAAAAAGAACmOU1tDPZ-4RD">SRE Lead Engineer</a></li>
 </ul>
+
 <p>The interview process varies slightly from position to position, but most have the
 following steps:</p>
+
 <ol>
 <li>A phone screening to check whether the candidate is a good match for the position they applied to.</li>
 <li>An online/in-person coding quiz. This is only for engineering positions, including DevRel.</li>
 <li>A series of online interviews to allow you to show us on which skills you shine.</li>
 </ol>
+
 <p>For non-remote candidates, some of the steps above might be done in one of our offices.
 All of these positions are available in both of our offices in San Francisco
 and Bengaluru. We also accept remote candidates if
 they are senior enough and/or have had demonstrable experience as a member of
 a remote team.</p>
+
 <p>Do not hesitate to apply, even if you do not fit exactly the description of the roles.
 We are looking to grow our team and the job descriptions are simply non-exhaustive
 guidelines of the kind of people we&rsquo;re looking for.</p>
+
 <p>If you&rsquo;re interested in joining, please fill the form at the bottom of the offer,
 or if you have any questions or suggestions you can get in touch with us at
 <a href="mailto:contact@dgraph.io">contact@dgraph.io</a>.</p>
 
-
-                        
+                     
     <aside class="post__authors">
                 <div class="tile author-tile">
 
@@ -462,57 +471,7 @@ team.</p>
     </aside>
 
 
-
-                        <div class="post__comments">
-
-    <div id="discourse-comments"></div>
-
-    
-    <script type="text/javascript">
-        DiscourseEmbed = {
-            discourseUrl: "https:\/\/discuss.dgraph.io\/",
-            topicId:  4949 
-            };
-        (function() {
-            var d = document.createElement("script");
-            d.type = "text/javascript";
-            d.async = true;
-            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
-            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
-    
-
-</div>
-
-
-                        <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <a href="#" data-dismiss="modal" class="modal-close-btn">
-    Close
-  </a>
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-
-      </div>
-    </div>
-  </div>
-</div>
-                    </div>
-
-                    
-                    <div class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80 md-ml-80 md-mr-80">
-                        <p>Create you own success story.</p>
-                        <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
-                        <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
-                            <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get Started</span> <i class="fas fa-arrow-right"></i></a>
-                            <a class="button  button--outline" target="_blank" href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i class="fas fa-arrow-right"></i></a>
-                        </div>
-
-                    </div>
-                    <div class="  text-center subscribe-box">
+                     <div class="  text-center subscribe-box">
     
 
     <h3>Get blog post to <br/>your inbox</h3>
@@ -556,26 +515,71 @@ team.</p>
 
 </div>
 
-
-
-
+                  </div>
+               </div>
             </div>
+         </div>
+      </div>
+      </div>
+   </section>
+   <div class='bottom-section'>
+      <div class="container">
+         <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-50 md-pr-50 xs-pl-30 xs-pr-30 clearfix">
+            <div class="post__comments">
 
+    <div id="discourse-comments"></div>
 
-                    
-                </div>
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            topicId:  4949 
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
+    
+
+</div>
+
+            <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="mx-auto" style="max-width:860px">
+
+         <div
+            class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80 own-success-story xs-mb-80  xs-mt-80 lg-ml-80 lg-mr-80 md-ml-50 md-mr-50 xs-ml-30 xs-mr-30 " >
+            <p>Create you own success story.</p>
+            <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+            <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+               <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get
+               Started</span> <i class="fas fa-arrow-right"></i></a>
+               <a class="button  button--outline" target="_blank"
+                  href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i
+                  class="fas fa-arrow-right"></i></a>
             </div>
-           
-
-
         </div>
-        </div>
-    </section>
-    <div class='bottom-section'>
-        <div class="container">
-            <div class="page-body__related-content mb-4">
 
-                
+         </div>
+         <div class="page-body__related-content mb-4">
+            
 
 
 
@@ -705,14 +709,11 @@ team.</p>
 
 
 
+            
 
-                
-
-
-
-            </div>
-        </div>
-        <footer class="page-footer">
+         </div>
+      </div>
+      <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -848,14 +849,8 @@ $(document.links)
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
-
-
-    </div>
-
-
-
+   </div>
 </body>
-
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
