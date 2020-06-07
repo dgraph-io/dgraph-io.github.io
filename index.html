@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06062020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -99,6 +99,7 @@
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
   <script>
 
+
     $(".subscribe-box").hide();
     $(window).scroll(function () {
       if ($(window).scrollTop() > 400) {
@@ -119,10 +120,12 @@
         $("#page-header").removeClass("bg-white");
       }
     });
+   
 
     $(document).scroll(function () {
       checkOffset();
     });
+    
 
    
     function checkOffset() {
@@ -140,21 +143,23 @@
          
     }
     $(document).ready(function () {
+      
+      
       $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
       $('.wrapper').after($('.page-search__results'))
 
-      $(".subscribe-box-mobi .click-btn").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
-      $(".subscribe-box .close").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
+      
+      
+      
+      
+      
+      
+      
+      
       $('.nav-icon').click(function() {
-	    $('.page-nav').toggleClass('shownav');
-	    $(this).toggleClass('active');
-  });
+  	    $('.page-nav').toggleClass('shownav');
+  	    $(this).toggleClass('active');
+    });
   var $nav = document.querySelector('.page-nav > ul');
 	var $navItems = document.querySelectorAll('.page-nav > ul > li');
 	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
@@ -386,11 +391,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -415,6 +420,10 @@
 
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -423,6 +432,82 @@
 
                         
                     
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/cannibal%20galaxy.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Mon, Jun 1, 2020
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/dgraph-graphql-schema-crud-from-bill-kennedy/">&#34;Dgraph, GraphQL, Schemas, and CRUD Summary&#34; from Bill Kennedy</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/zhenni/">Zhenni Wu</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			After learning that Dgraph has native support for GraphQL, Bill Kennedy switched gears and re-wrote his original Dgraph tutorial to show how to use Dgraph with the native GraphQL support.
+		</div>
+
+		
+<div class="post__tags mt-4">
+
+    <h3 class="">Tags</h3>
+
+    <div class="">
+
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/dgraph/">dgraph</a>
+            
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/graphql/">graphql</a>
+            
+        
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+	</div>
+
+</article>
+
+                        </div>
 
                     
 
@@ -466,11 +551,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -492,6 +577,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -543,11 +632,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -574,6 +663,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -625,11 +718,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -646,6 +739,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -697,11 +794,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -718,6 +815,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -770,11 +871,11 @@ In the previous episode, we learned about building a twitter-like user-search fe
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -791,6 +892,10 @@ In the previous episode, we learned about building a twitter-like user-search fe
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -842,11 +947,11 @@ In the previous episode, we learned about building a twitter-like user-search fe
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -863,6 +968,10 @@ In the previous episode, we learned about building a twitter-like user-search fe
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -914,11 +1023,11 @@ In the previous episode, we learned about building a twitter-like user-search fe
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -940,6 +1049,10 @@ In the previous episode, we learned about building a twitter-like user-search fe
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -991,11 +1104,11 @@ In the previous episode, we learned about building a twitter-like user-search fe
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -1015,76 +1128,7 @@ In the previous episode, we learned about building a twitter-like user-search fe
 
 
 
-	</div>
 
-</article>
-
-                        </div>
-
-                    
-
-                        <div class="post-grid__item">
-                            <article class="post">
-
-	<div class="post__image">
-    <img src="https://blog.dgraph.io//images/tutorials/6/cover.jpg">
-</div>
-
-
-	<div class="post__header">
-
-		<div class="post__date">
-
-    
-        Wed, Dec 11, 2019
-    
-    
-</div>
-
-
-		<h3 class="post__title">
-			<a href="https://blog.dgraph.io/post/tutorial-6-getting-started/">Getting started with Dgraph tutorials series - 6: Advanced text search on social graphs </a>
-		</h3>
-
-		
-<div class="post__byline">
-
-    
-            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
-        
-    
-
-</div>
-
-
-
-		<div class="post__summary">
-			Welcome to the sixth episode of getting started with Dgraph.
-In the previous episode, we learned about building social graphs in Dgraph, by modeling tweets as an example.
-		</div>
-
-		
-<div class="post__tags">
-
-    <h3 class="text-center">Tags</h3>
-
-    <div class="tag-inner">
-
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/tutorial/">tutorial</a>
-            
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/devrel/">devrel</a>
-            
-        
-
-    </div>
-
-</div>
 
 
 

@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06062020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -99,6 +99,7 @@
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
   <script>
 
+
     $(".subscribe-box").hide();
     $(window).scroll(function () {
       if ($(window).scrollTop() > 400) {
@@ -119,10 +120,12 @@
         $("#page-header").removeClass("bg-white");
       }
     });
+   
 
     $(document).scroll(function () {
       checkOffset();
     });
+    
 
    
     function checkOffset() {
@@ -140,21 +143,23 @@
          
     }
     $(document).ready(function () {
+      
+      
       $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
       $('.wrapper').after($('.page-search__results'))
 
-      $(".subscribe-box-mobi .click-btn").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
-      $(".subscribe-box .close").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
+      
+      
+      
+      
+      
+      
+      
+      
       $('.nav-icon').click(function() {
-	    $('.page-nav').toggleClass('shownav');
-	    $(this).toggleClass('active');
-  });
+  	    $('.page-nav').toggleClass('shownav');
+  	    $(this).toggleClass('active');
+    });
   var $nav = document.querySelector('.page-nav > ul');
 	var $navItems = document.querySelectorAll('.page-nav > ul > li');
 	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
@@ -351,6 +356,60 @@
                             <article class="post">
 
 	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/graphoverflow-node-cover.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Wed, Aug 2, 2017
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/building-graphoverflow/">Building a Stack Overflow Clone with Dgraph, and React</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/sung/">Sung Won Cho</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			<p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p>
+		</div>
+
+		
+
+
+
+
+
+
+	</div>
+
+</article>
+
+                        </div>
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
     <img src="https://blog.dgraph.io//images/spacex-stages.jpg">
 </div>
 
@@ -390,6 +449,10 @@ more work and exit, so you can cleanly shut down the program.</p>
 		</div>
 
 		
+
+
+
+
 
 
 	</div>
@@ -440,6 +503,10 @@ more work and exit, so you can cleanly shut down the program.</p>
 		</div>
 
 		
+
+
+
+
 
 
 	</div>
@@ -493,6 +560,10 @@ In the last post, we looked at how many applications and web apps no longer pres
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -541,6 +612,10 @@ In the last post, we looked at how many applications and web apps no longer pres
 		</div>
 
 		
+
+
+
+
 
 
 	</div>
@@ -593,6 +668,10 @@ In the last post, we looked at how many applications and web apps no longer pres
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -641,11 +720,11 @@ In the last post, we looked at how many applications and web apps no longer pres
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -667,6 +746,10 @@ In the last post, we looked at how many applications and web apps no longer pres
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -722,6 +805,10 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -772,86 +859,7 @@ All of these changes make Dgraph an excellent tool for working with multilingual
 		
 
 
-	</div>
 
-</article>
-
-                        </div>
-
-                    
-
-                        <div class="post-grid__item">
-                            <article class="post">
-
-	<div class="post__image">
-    <img src="https://blog.dgraph.io//images/potw1652a.jpg">
-</div>
-
-
-	<div class="post__header">
-
-		<div class="post__date">
-
-    
-        Mon, Jan 23, 2017
-    
-    
-</div>
-
-
-		<h3 class="post__title">
-			<a href="https://blog.dgraph.io/post/benchmark-neo4j/">Neo4j vs Dgraph - The numbers speak for themselves</a>
-		</h3>
-
-		
-<div class="post__byline">
-
-    
-            by <a href="https://blog.dgraph.io/authors/pawan/">Pawan Rawal</a>
-        
-    
-
-</div>
-
-
-
-		<div class="post__summary">
-			<p>As <a href="https://github.com/dgraph-io/dgraph" target="_blank">Dgraph</a>
- is nearing its v0.8 release, we wanted to spend some time comparing it against Neo4j, which is the <a href="http://db-engines.com/en/ranking/graph+dbms">most popular graph database</a>.</p>
-
-<p>We have divided this post into five parts:</p>
-
-<ol>
-<li><a href="#ref-loading-data">Loading data</a></li>
-<li><a href="#ref-querying">Querying</a></li>
-<li><a href="#ref-issues-faced">Issues faced</a></li>
-<li><a href="#ref-feature-comparison">Dgraph vs Neo4j Feature Comparison</a></li>
-<li><a href="#ref-dgraph-principles">Principles behind Dgraph</a></li>
-</ol>
-		</div>
-
-		
-<div class="post__tags">
-
-    <h3 class="text-center">Tags</h3>
-
-    <div class="tag-inner">
-
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/benchmark/">benchmark</a>
-            
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/neo4j/">neo4j</a>
-            
-        
-
-    </div>
-
-</div>
 
 
 

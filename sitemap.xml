@@ -38,22 +38,32 @@
   </url>
   
   <url>
+    <loc>https://blog.dgraph.io/authors/zhenni/</loc>
+    <lastmod>2020-06-01T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/post/dgraph-graphql-schema-crud-from-bill-kennedy/</loc>
+    <lastmod>2020-06-01T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
+    <lastmod>2020-06-01T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.dgraph.io/tags/graphql/</loc>
+    <lastmod>2020-06-01T19:45:00-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blog.dgraph.io/authors/dmai/</loc>
     <lastmod>2020-05-03T19:45:00-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.dgraph.io/tags/dgraph/</loc>
-    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.dgraph.io/post/dgraph-graphql-hits-ga/</loc>
-    <lastmod>2020-05-03T19:45:00-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/tags/graphql/</loc>
     <lastmod>2020-05-03T19:45:00-07:00</lastmod>
   </url>
   
@@ -618,10 +628,6 @@
   
   <url>
     <loc>https://blog.dgraph.io/authors/michael/</loc>
-  </url>
-  
-  <url>
-    <loc>https://blog.dgraph.io/authors/zhenni/</loc>
   </url>
   
 </urlset>

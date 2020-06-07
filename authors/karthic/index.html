@@ -62,7 +62,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06062020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -96,6 +96,7 @@
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
   <script>
 
+
     $(".subscribe-box").hide();
     $(window).scroll(function () {
       if ($(window).scrollTop() > 400) {
@@ -116,10 +117,12 @@
         $("#page-header").removeClass("bg-white");
       }
     });
+   
 
     $(document).scroll(function () {
       checkOffset();
     });
+    
 
    
     function checkOffset() {
@@ -137,21 +140,23 @@
          
     }
     $(document).ready(function () {
+      
+      
       $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
       $('.wrapper').after($('.page-search__results'))
 
-      $(".subscribe-box-mobi .click-btn").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
-      $(".subscribe-box .close").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
+      
+      
+      
+      
+      
+      
+      
+      
       $('.nav-icon').click(function() {
-	    $('.page-nav').toggleClass('shownav');
-	    $(this).toggleClass('active');
-  });
+  	    $('.page-nav').toggleClass('shownav');
+  	    $(this).toggleClass('active');
+    });
   var $nav = document.querySelector('.page-nav > ul');
 	var $navItems = document.querySelectorAll('.page-nav > ul > li');
 	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
@@ -424,11 +429,11 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -455,6 +460,10 @@ reading, at the gym, meditating, practicing music, or on motorcycle trips.</p>
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -507,11 +516,11 @@ In the previous episode, we learned about building a twitter-like user-search fe
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -528,6 +537,10 @@ In the previous episode, we learned about building a twitter-like user-search fe
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -579,11 +592,11 @@ In the previous episode, we learned about building a twitter-like user-search fe
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -600,6 +613,10 @@ In the previous episode, we learned about building a twitter-like user-search fe
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -652,11 +669,11 @@ In the previous episode, we learned about building social graphs in Dgraph, by m
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -673,6 +690,10 @@ In the previous episode, we learned about building social graphs in Dgraph, by m
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -725,11 +746,11 @@ The conference was exciting, and it had a great line up of talks.
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -746,6 +767,10 @@ The conference was exciting, and it had a great line up of talks.
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -797,11 +822,11 @@ The conference was exciting, and it had a great line up of talks.
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -818,6 +843,10 @@ The conference was exciting, and it had a great line up of talks.
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -869,11 +898,11 @@ The conference was exciting, and it had a great line up of talks.
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -890,6 +919,10 @@ The conference was exciting, and it had a great line up of talks.
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -942,11 +975,11 @@ In the previous episode, we learned about Datatypes, Indexing, Filtering, and Re
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -963,6 +996,10 @@ In the previous episode, we learned about Datatypes, Indexing, Filtering, and Re
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -1014,11 +1051,11 @@ In the previous episode, we learned about Datatypes, Indexing, Filtering, and Re
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -1035,6 +1072,10 @@ In the previous episode, we learned about Datatypes, Indexing, Filtering, and Re
     </div>
 
 </div>
+
+
+
+
 
 
 

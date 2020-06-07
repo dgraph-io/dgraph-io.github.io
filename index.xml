@@ -22,6 +22,15 @@
     </item>
     
     <item>
+      <title>&#34;Dgraph, GraphQL, Schemas, and CRUD Summary&#34; from Bill Kennedy</title>
+      <link>https://blog.dgraph.io/post/dgraph-graphql-schema-crud-from-bill-kennedy/</link>
+      <pubDate>Mon, 01 Jun 2020 19:45:00 -0700</pubDate>
+      
+      <guid>https://blog.dgraph.io/post/dgraph-graphql-schema-crud-from-bill-kennedy/</guid>
+      <description>After learning that Dgraph has native support for GraphQL, Bill Kennedy switched gears and re-wrote his original Dgraph tutorial to show how to use Dgraph with the native GraphQL support.</description>
+    </item>
+    
+    <item>
       <title>Dgraph GraphQL hits GA with v20.03.1</title>
       <link>https://blog.dgraph.io/post/dgraph-graphql-hits-ga/</link>
       <pubDate>Sun, 03 May 2020 19:45:00 -0700</pubDate>

@@ -1,12 +1,10 @@
-
-
 <!DOCTYPE html>
 
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-  <link rel="canonical" href="https://blog.dgraph.io/authors/karl/" />
+  <link rel="canonical" href="https://blog.dgraph.io/post/dgraph-graphql-schema-crud-from-bill-kennedy/" />
 
 
   <link rel="apple-touch-icon" sizes="57x57" href="https://dgraph.io/assets/images/favicons/apple-icon-57x57.png">
@@ -32,14 +30,15 @@
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="https://blog.dgraph.io//index.xml">
   
-  <title> - Dgraph Blog</title>
-  <meta property='og:title' content=" - Dgraph Blog">
+  <title>&#34;Dgraph, GraphQL, Schemas, and CRUD Summary&#34; from Bill Kennedy - Dgraph Blog</title>
+  <meta property='og:title' content="&#34;Dgraph, GraphQL, Schemas, and CRUD Summary&#34; from Bill Kennedy - Dgraph Blog">
   <meta property="og:type" content="article">
   
 
-  <meta property="og:url" content="https://blog.dgraph.io/authors/karl/">
+  <meta property="og:url" content="https://blog.dgraph.io/post/dgraph-graphql-schema-crud-from-bill-kennedy/">
   
   
+  <meta property="og:image" content="https://blog.dgraph.io//images/cannibal galaxy.jpg">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
     integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
@@ -172,13 +171,15 @@
 
   
   
+  
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://blog.dgraph.io//images/diggy-lg.png" />
+  <meta name="twitter:image" content="https://blog.dgraph.io//images/cannibal galaxy.jpg" />
+  
   
 
-  <meta name="twitter:title" content="" />
+  <meta name="twitter:title" content="&#34;Dgraph, GraphQL, Schemas, and CRUD Summary&#34; from Bill Kennedy" />
   <meta name="twitter:description"
-    content="Engineering stories of building the world&#39;s best graph database Dgraph" />
+    content="After learning that Dgraph has native support for GraphQL, Bill Kennedy switched gears and re-wrote his original Dgraph tutorial to show how to use Dgraph with the native GraphQL support." />
   
   <meta name="twitter:site" content="@dgraphlabs" />
 
@@ -186,10 +187,8 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-666192333"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'AW-666192333');</script>
 </head>
-
-<body class="blog" data-gr-c-s-loaded="true">
-
-    <header id="page-header" class="page-header">
+<body class="blog-single has-lightning" data-gr-c-s-loaded="true">
+   <header id="page-header" class="page-header">
 	<div class="page-logo">
 		<a href="https://dgraph.io/">
 			<img src="https://dgraph.io/assets/images/logo.svg">
@@ -328,100 +327,80 @@
 </header>
 
 
-
-    <section class="page-intro no-border">
-        <div class="container">
-
-            <div class="author">
-
-                <img src="https://blog.dgraph.io/images/people/karl.jpg" class="author__photo">
-
-                <div class="author__content">
-
-                    <h1 class="author__title">
-                        Karl McGuire
-                    </h1>
-
-                    <p>Karl McGuire is a Performance Engineer at Dgraph and a CS student at UNC
-Charlotte. He&rsquo;s interested in Unix, Plan 9, Go, and the future of distributed
-computing. When he&rsquo;s not typing or reading, he&rsquo;s at the gym.</p>
-
-
-                    
-                        <nav class="author__social">
-
-                            
-                                <a href="https://www.linkedin.com/in/karlmcguire/" target="_blank">
-                                    <i class="fab fa-linkedin"></i>
-                                </a>
-                            
-
-                            
-
-                            
-                                <a href="https://github.com/karlmcguire" target="_blank">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                            
-
-                        </nav>
-                    
-
-                </div>
-
+   <section class="page-body">
+      <div class="page-body__content">
+         <div class="container">
+            <div class="row justify-content-center">
+               <div class="col-xl-10  col-lg-11">
+                  <div class="page-search form-group has-search">
+	<span class="fas fa-search form-control-feedback"></span>
+	
+</div>
+               </div>
             </div>
-        </div>
-    </section>
-
-
-    <section class="page-body">
-        <div class="page-body__content">
-            <div class="container">
-
-                <div class="post-grid">
-
-                    
-
-                        <div class="post-grid__item">
-                            <article class="post">
-
-	<div class="post__image">
-    <img src="https://blog.dgraph.io//images/ristretto-3.jpg">
-</div>
-
-
-	<div class="post__header">
-
-		<div class="post__date">
+         </div>
+      </div>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-11">
+               <div class="">
+                  <div class="post__meta">
+                     <div class="post__date">
 
     
-        Thu, Sep 19, 2019
+        Mon, Jun 1, 2020
     
     
 </div>
 
-
-		<h3 class="post__title">
-			<a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/">Introducing Ristretto: A High-Performance Go Cache</a>
-		</h3>
-
-		
+                     <div class="post__share">
+                        
+                        <a href="https://twitter.com/share?text=%22Dgraph%2c%20GraphQL%2c%20Schemas%2c%20and%20CRUD%20Summary%22%20from%20Bill%20Kennedy&amp;url=https%3a%2f%2fblog.dgraph.io%2fpost%2fdgraph-graphql-schema-crud-from-bill-kennedy%2f&amp;via=dgraphlabs"
+                           target="_blank">
+                        <i class="fab fa-twitter"></i>
+                        </a>
+                        
+                     </div>
+                  </div>
+                  <div class="post__cover">
+                     <img
+                        src="https://blog.dgraph.io//images/cannibal%20galaxy.jpg">
+                     <div class="post__header">
+                        <h1 class="post__title">
+                           &#34;Dgraph, GraphQL, Schemas, and CRUD Summary&#34; from Bill Kennedy
+                        </h1>
+                        
 <div class="post__byline">
 
     
-            by <a href="https://blog.dgraph.io/authors/karl/">Karl McGuire</a>
+            by <a href="https://blog.dgraph.io/authors/zhenni/">Zhenni Wu</a>
         
     
 
 </div>
 
 
+                     </div>
+                  </div>
+                  <div
+                     class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-30 md-pr-30  clearfix">
+                     <p>After learning that Dgraph has native support for <a href="https://graphql.org/">GraphQL</a>, Bill Kennedy switched gears and re-wrote his original Dgraph <a href="https://www.ardanlabs.com/blog/2020/04/getting-started-with-dgraph-and-graphql+-.html">tutorial</a> to show how to use Dgraph with the native GraphQL support. Bill uses the same schema but now uses the GraphQL based CRUD API provided by Dgraph to run mutations and queries.</p>
 
-		<div class="post__summary">
-			This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News.
-		</div>
+<p>Getting Dgraph up and running with GraphQL is straightforward, and there’s a lot you can achieve with Dgraph and GraphQL. Follow Bill’s blog at Ardan Labs to read about his experiments and try Dgraph GraphQL for yourself.</p>
 
-		
+<p>Read the full post <a href="https://www.ardanlabs.com/blog/2020/05/dgraph-graphql-schemas-crud.html">here</a>.</p>
+
+<hr />
+
+
+
+<aside class="post__references">
+
+    <h4>References</h4><p>Top image: <a href="https://www.nasa.gov/image-feature/goddard/2020/hubble-captures-a-cannibal-galaxy">ESA/Hubble &amp; NASA, D. Leonard</a></p>
+</aside>
+
+
+                     
 <div class="post__tags mt-4">
 
     <h3 class="">Tags</h3>
@@ -431,22 +410,12 @@ computing. When he&rsquo;s not typing or reading, he&rsquo;s at the gym.</p>
         
             
             
-                <a href="https://blog.dgraph.io/tags/cache/">cache</a>
+                <a href="https://blog.dgraph.io/tags/dgraph/">dgraph</a>
             
         
             
             
-                <a href="https://blog.dgraph.io/tags/go/">go</a>
-            
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/hacker-news/">hacker news</a>
-            
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/reddit/">reddit</a>
+                <a href="https://blog.dgraph.io/tags/graphql/">graphql</a>
             
         
 
@@ -459,38 +428,302 @@ computing. When he&rsquo;s not typing or reading, he&rsquo;s at the gym.</p>
 
 
 
+                     
+    <aside class="post__authors">
+                <div class="tile author-tile">
 
-	</div>
+    <img src="https://blog.dgraph.io/images/people/zhenniwu.png" class="author-tile__photo">
 
-</article>
+    <h4 class="author-tile__title">
+        <a href="https://blog.dgraph.io/authors/zhenni/">Zhenni Wu</a>,
+        Author
+    </h4>
 
-                        </div>
+    <p>Zhenni works on Developer Marketing at Dgraph Labs.
+She has a background in product marketing and developer relations.
+Previously, she was in charge of the developer marketing and developer
+relations for Baidu’s autonomous driving open source project.
+In her free time, she likes to cook, read, and travel.
+She is also a proud mom of a cute Sphynx cat called Buzz.</p>
 
-                    
-                </div>
-
-                <div class="pagination">
 
     
+        <nav class="author-tile__social">
 
+            
+                <a href="https://www.linkedin.com/in/zhenniwu/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            
+
+            
+
+            
+                <a href="https://github.com/zhenniwu" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            
+
+        </nav>
     
+
+</div>
+
+            
         
-            <a class="pagination__item pagination__active" href="https://blog.dgraph.io/authors/karl/page/1/">
-                <span>1</span>
-            </a>
-        
+
+    </aside>
+
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+   </section>
+   <div class='bottom-section'>
+      <div class="container">
+         <div class="post__content inner-content lg-pl-80 lg-pr-80 md-pl-30 md-pr-30  clearfix">
+            <div class="post__comments">
+
+    <div id="discourse-comments"></div>
+
+    
+    <script type="text/javascript">
+        DiscourseEmbed = {
+            discourseUrl: "https:\/\/discuss.dgraph.io\/",
+            discourseEmbedUrl: "https:\/\/blog.dgraph.io\/post\/dgraph-graphql-schema-crud-from-bill-kennedy\/"
+            };
+        (function() {
+            var d = document.createElement("script");
+            d.type = "text/javascript";
+            d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + "javascripts/embed.js";
+            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(d);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments on <a href="https://discuss.dgraph.io/">discuss</a>.</noscript>
     
 
+</div>
+
+            <div class="modal fade" id="runnable-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <a href="#" data-dismiss="modal" class="modal-close-btn">
+    Close
+  </a>
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+         <div class="d-flex flex-column flex-sm-row">
+            <div class="mx-auto xs-mt-80 sm-mb-80 d-block d-xl-none" style="max-width:860px">
+               <h3 class="d-block d-sm-none text-center">Get blog post to your inbox</h3>
+               
+<div class=" mobi-subscribe-box container">
+    
+    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-cnete mobi-wrap">
+        <div class="d-flex align-items-center justify-content-center share-btn">
+            <div class="wrap"><a href="https://github.com/dgraph-io/dgraph" target="_blank" class="pr-3"><i class="fa fa-github  "></i></a></div>
+            <div class="wrap"><a href="https://slack.dgraph.io/" target="_blank" class="pr-3"><i class="fa fa-slack "></i></a></div>
+            <div class="wrap"><a href="https://discuss.dgraph.io/" target="_blank" class="pr-3"><i class="fa fa-comments  "></i></a></div>
+        </div>
+    </div>
+</div>
+            </div>
+            <div class="  text-center subscribe-box">
+    
+
+    <h3>Get blog post to your inbox</h3>
+    
+
+<div id="mc_embed_signup">
+<form action="https://dgraph.us17.list-manage.com/subscribe/post?u=f6c6a28bb40d10e26b88fff1c&amp;id=e85c448cac" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+	
+<div class="mc-field-group">
+	
+	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your Email">
+</div>
+	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+	</div>    
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f6c6a28bb40d10e26b88fff1c_e85c448cac" tabindex="-1" value=""></div>
+    <div class="clear"><button type="submit"  name="subscribe" id="mc-embedded-subscribe" class="button button--secondary mt-2"><span>Subscribe</span><i class="fas fa-arrow-right"></i></button></div>
+    </div>
+</form>
+</div>
+<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<div class="d-flex align-items-center justify-content-center mt-4">
+    <a href="https://github.com/dgraph-io/dgraph" target="_blank" ><i class="fa fa-github px-3"></i></a>
+    <a href="https://slack.dgraph.io/" target="_blank"  ><i class="fa fa-slack px-3"></i></a>
+    <a href="https://discuss.dgraph.io/" target="_blank"  ><i class="fa fa-comments px-3"></i></a>
+</div>
+<div class="close position-absolute d-block d-lg-none"><i class="fa fa-close"></i></div>
+
+</div>
+
+
+
+         </div>
+        <div class="mx-auto" style="max-width:860px">
+
+         <div
+            class=" bg-gray xs-pt-60 xs-pb-60 round text-center md-pl-80 md-pr-80   own-success-story xs-mb-80  xs-mt-80 lg-ml-80 lg-mr-80 md-ml-30 md-mr-30 xs-ml-15 xs-mr-15 " >
+            <p>Create you own success story.</p>
+            <h2 class="font-medium">Interpret, store, distribute and execute GraphQL with the best.</h2>
+            <div class="xs-mt-50 d-flex align-items-center justify-content-center flex-column flex-md-row">
+               <a href="https://dgraph.io/downloads" class="button button--primary mr-0 mr-md-3"><span>Get
+               Started</span> <i class="fas fa-arrow-right"></i></a>
+               <a class="button  button--outline mt-3 mt-md-0" target="_blank"
+                  href="https://github.com/dgraph-io/dgraph"><span>View<span> on Github</span></span><i
+                  class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+         </div>
+         <div class="page-body__related-content mb-4 container">
+            
+
+
+
+
+<h3 class=" font-22 pb-4">But wait, there’s more...</h3>
+
+<div class=" row justify-flex-start mt-4">
+
+
+    
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/Jupiter%20North.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Sun, May 3, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/dgraph-graphql-hits-ga/">Dgraph GraphQL hits GA with v20.03.1</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/dmai/">Daniel Mai</a>
+        
     
 
 </div>
 
 
-            </div>
-        </div>
-    </section>
 
-    <footer class="page-footer">
+    	</div>
+
+    </div>
+    
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/graphql/cover-1.png">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Sun, Apr 12, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/designing-graphql-schemas/">Designing GraphQL schemas</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karthic/">Karthic Rao</a>
+        
+    
+
+</div>
+
+
+
+    	</div>
+
+    </div>
+    
+    <div class="post col-sm-4">
+
+        <div class="post__image">
+    <img src="https://blog.dgraph.io//images/microgravity.jpg">
+</div>
+
+
+    	<div class="post__header">
+
+    		<div class="post__date">
+
+    
+        Fri, Mar 20, 2020
+    
+    
+</div>
+
+
+    		<h4 class="post__title">
+    			<a href="https://blog.dgraph.io/post/dgraph-calendar-versioning/">Why there would be no Dgraph 2.0: Goodbye Semantic Versioning</a>
+    		</h4>
+
+    		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/leyla/">Leyla Galatin</a>
+        
+    
+
+</div>
+
+
+
+    	</div>
+
+    </div>
+    
+
+</div>
+
+
+
+            
+         </div>
+      </div>
+      <footer class="page-footer">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-5 col-sm-4">
@@ -626,10 +859,8 @@ $(document.links)
 
 <script src="//unpkg.com/@dgraph-io/community"></script>
 
-
+   </div>
 </body>
-
     <script src="https://blog.dgraph.io/js/footnotes.js"></script>
 
 </html>
-

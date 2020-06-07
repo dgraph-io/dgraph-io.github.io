@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06062020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -99,6 +99,7 @@
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
   <script>
 
+
     $(".subscribe-box").hide();
     $(window).scroll(function () {
       if ($(window).scrollTop() > 400) {
@@ -119,10 +120,12 @@
         $("#page-header").removeClass("bg-white");
       }
     });
+   
 
     $(document).scroll(function () {
       checkOffset();
     });
+    
 
    
     function checkOffset() {
@@ -140,21 +143,23 @@
          
     }
     $(document).ready(function () {
+      
+      
       $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
       $('.wrapper').after($('.page-search__results'))
 
-      $(".subscribe-box-mobi .click-btn").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
-      $(".subscribe-box .close").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
+      
+      
+      
+      
+      
+      
+      
+      
       $('.nav-icon').click(function() {
-	    $('.page-nav').toggleClass('shownav');
-	    $(this).toggleClass('active');
-  });
+  	    $('.page-nav').toggleClass('shownav');
+  	    $(this).toggleClass('active');
+    });
   var $nav = document.querySelector('.page-nav > ul');
 	var $navItems = document.querySelectorAll('.page-nav > ul > li');
 	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
@@ -351,6 +356,61 @@
                             <article class="post">
 
 	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/Neptune_Earth.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Fri, Dec 1, 2017
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/neptune/">Open Source Alternative to Amazon Neptune</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/mrjn/">Manish Rai Jain</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			Amazon just announced their new graph database service, called Amazon Neptune. As per a TechCrunch article,
+ Amazon Neptune has been optimized to handle billions of relationships and run queries within milliseconds.
+		</div>
+
+		
+
+
+
+
+
+
+	</div>
+
+</article>
+
+                        </div>
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
     <img src="https://blog.dgraph.io//images/when_neutron_stars_collide.jpg">
 </div>
 
@@ -388,6 +448,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		</div>
 
 		
+
+
+
+
 
 
 	</div>
@@ -440,6 +504,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -488,11 +556,11 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -509,6 +577,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -560,11 +632,11 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -576,6 +648,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -629,6 +705,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -677,11 +757,11 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -698,6 +778,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -751,6 +835,10 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -801,54 +889,8 @@ At Dgraph, we really care about user feedback. Most of what we&rsquo;ve built st
 		
 
 
-	</div>
-
-</article>
-
-                        </div>
-
-                    
-
-                        <div class="post-grid__item">
-                            <article class="post">
-
-	<div class="post__image">
-    <img src="https://blog.dgraph.io//images/graphoverflow-node-cover.jpg">
-</div>
 
 
-	<div class="post__header">
-
-		<div class="post__date">
-
-    
-        Wed, Aug 2, 2017
-    
-    
-</div>
-
-
-		<h3 class="post__title">
-			<a href="https://blog.dgraph.io/post/building-graphoverflow/">Building a Stack Overflow Clone with Dgraph, and React</a>
-		</h3>
-
-		
-<div class="post__byline">
-
-    
-            by <a href="https://blog.dgraph.io/authors/sung/">Sung Won Cho</a>
-        
-    
-
-</div>
-
-
-
-		<div class="post__summary">
-			<p>I have recently built a Stack Overflow clone with Dgraph and React. I was delightfully surprised by the pleasant developer experience and the performance of my application. In this post, I would like to tell the story of how I built <em>Graphoverflow</em> and share the best practices I learned for using Dgraph to build a modern web application.</p>
-		</div>
-
-		
 
 
 	</div>

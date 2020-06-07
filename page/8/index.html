@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06062020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -99,6 +99,7 @@
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
   <script>
 
+
     $(".subscribe-box").hide();
     $(window).scroll(function () {
       if ($(window).scrollTop() > 400) {
@@ -119,10 +120,12 @@
         $("#page-header").removeClass("bg-white");
       }
     });
+   
 
     $(document).scroll(function () {
       checkOffset();
     });
+    
 
    
     function checkOffset() {
@@ -140,21 +143,23 @@
          
     }
     $(document).ready(function () {
+      
+      
       $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
       $('.wrapper').after($('.page-search__results'))
 
-      $(".subscribe-box-mobi .click-btn").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
-      $(".subscribe-box .close").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
+      
+      
+      
+      
+      
+      
+      
+      
       $('.nav-icon').click(function() {
-	    $('.page-nav').toggleClass('shownav');
-	    $(this).toggleClass('active');
-  });
+  	    $('.page-nav').toggleClass('shownav');
+  	    $(this).toggleClass('active');
+    });
   var $nav = document.querySelector('.page-nav > ul');
 	var $navItems = document.querySelectorAll('.page-nav > ul > li');
 	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
@@ -351,6 +356,64 @@
                             <article class="post">
 
 	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/yoda.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Wed, Jun 15, 2016
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/wisemonk/">Wisemonk: A slackbot to move discussions from Slack to Discourse</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/pawan/">Pawan Rawal</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			<blockquote>
+<p>Then there was the fact that we had so many channels and direct messages and group chats.
+It multiplexed my brain and left me in a constant state of anxiety, feeling that I needed to always be on guard.
+<em>— <a href="https://blog.agilebits.com/2016/04/19/curing-our-slack-addiction/">Dave Teare, Curing Our Slack Addiction</a></em></p>
+</blockquote>
+		</div>
+
+		
+
+
+
+
+
+
+	</div>
+
+</article>
+
+                        </div>
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
     <img src="https://blog.dgraph.io//images/default.jpg">
 </div>
 
@@ -388,6 +451,10 @@
 		</div>
 
 		
+
+
+
+
 
 
 	</div>

@@ -65,7 +65,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
-  <link href="https://dgraph.io/assets/css/style.min.css?06052020-1" rel="stylesheet" type="text/css" />
+  <link href="https://dgraph.io/assets/css/style.min.css?06062020-1" rel="stylesheet" type="text/css" />
 
   <link href="https://dgraph.io/assets/css/font-awesome/css/all.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital@1&display=swap" rel="stylesheet">
@@ -99,6 +99,7 @@
   <script src="https://blog.dgraph.io//js/search.js?04292020"></script>
   <script>
 
+
     $(".subscribe-box").hide();
     $(window).scroll(function () {
       if ($(window).scrollTop() > 400) {
@@ -119,10 +120,12 @@
         $("#page-header").removeClass("bg-white");
       }
     });
+   
 
     $(document).scroll(function () {
       checkOffset();
     });
+    
 
    
     function checkOffset() {
@@ -140,21 +143,23 @@
          
     }
     $(document).ready(function () {
+      
+      
       $( ".page-search" ).wrapInner( "<div class='wrapper'></div>")
       $('.wrapper').after($('.page-search__results'))
 
-      $(".subscribe-box-mobi .click-btn").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
-      $(".subscribe-box .close").click(function () {
-        $(".subscribe-box").toggleClass("open");
-        $(".subscribe-box-mobi").toggleClass('hide');
-      });
+      
+      
+      
+      
+      
+      
+      
+      
       $('.nav-icon').click(function() {
-	    $('.page-nav').toggleClass('shownav');
-	    $(this).toggleClass('active');
-  });
+  	    $('.page-nav').toggleClass('shownav');
+  	    $(this).toggleClass('active');
+    });
   var $nav = document.querySelector('.page-nav > ul');
 	var $navItems = document.querySelectorAll('.page-nav > ul > li');
 	var $navItemHeading = document.querySelectorAll('.page-nav > ul > li > div');
@@ -351,6 +356,92 @@
                             <article class="post">
 
 	<div class="post__image">
+    <img src="https://blog.dgraph.io//images/ristretto-3.jpg">
+</div>
+
+
+	<div class="post__header">
+
+		<div class="post__date">
+
+    
+        Thu, Sep 19, 2019
+    
+    
+</div>
+
+
+		<h3 class="post__title">
+			<a href="https://blog.dgraph.io/post/introducing-ristretto-high-perf-go-cache/">Introducing Ristretto: A High-Performance Go Cache</a>
+		</h3>
+
+		
+<div class="post__byline">
+
+    
+            by <a href="https://blog.dgraph.io/authors/karl/">Karl McGuire</a>
+        
+    
+
+</div>
+
+
+
+		<div class="post__summary">
+			This post made it to the top of Golang subreddit and is trending in top 10 on the front page of Hacker News.
+		</div>
+
+		
+<div class="post__tags mt-4">
+
+    <h3 class="">Tags</h3>
+
+    <div class="">
+
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/cache/">cache</a>
+            
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/go/">go</a>
+            
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/hacker-news/">hacker news</a>
+            
+        
+            
+            
+                <a href="https://blog.dgraph.io/tags/reddit/">reddit</a>
+            
+        
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+	</div>
+
+</article>
+
+                        </div>
+
+                    
+
+                        <div class="post-grid__item">
+                            <article class="post">
+
+	<div class="post__image">
     <img src="https://blog.dgraph.io//images/release-v1.1.0.jpg">
 </div>
 
@@ -387,11 +478,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -408,6 +499,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -461,6 +556,10 @@
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -509,11 +608,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -535,6 +634,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -586,11 +689,11 @@
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -617,6 +720,10 @@
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -670,6 +777,10 @@
 		
 
 
+
+
+
+
 	</div>
 
 </article>
@@ -719,11 +830,11 @@ This wouldn&rsquo;t have happened without all of you, so we want to thank the aw
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -745,6 +856,10 @@ This wouldn&rsquo;t have happened without all of you, so we want to thank the aw
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -800,11 +915,11 @@ week!</p>
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -821,6 +936,10 @@ week!</p>
     </div>
 
 </div>
+
+
+
+
 
 
 
@@ -872,11 +991,11 @@ week!</p>
 		</div>
 
 		
-<div class="post__tags">
+<div class="post__tags mt-4">
 
-    <h3 class="text-center">Tags</h3>
+    <h3 class="">Tags</h3>
 
-    <div class="tag-inner">
+    <div class="">
 
         
             
@@ -896,80 +1015,7 @@ week!</p>
 
 
 
-	</div>
 
-</article>
-
-                        </div>
-
-                    
-
-                        <div class="post-grid__item">
-                            <article class="post">
-
-	<div class="post__image">
-    <img src="https://blog.dgraph.io//images/migration.jpg">
-</div>
-
-
-	<div class="post__header">
-
-		<div class="post__date">
-
-    
-        Thu, May 30, 2019
-    
-    
-</div>
-
-
-		<h3 class="post__title">
-			<a href="https://blog.dgraph.io/post/migrating-from-sql-to-dgraph/">Migrating data from SQL to Dgraph</a>
-		</h3>
-
-		
-<div class="post__byline">
-
-    
-            by <a href="https://blog.dgraph.io/authors/lucas/">Lucas Wang</a>
-        
-    
-
-</div>
-
-
-
-		<div class="post__summary">
-			Dgraph is rapidly gaining reputation as an easy to use database to build apps upon. Many new users of Dgraph have existing relational databases that they want to migrate from.
-		</div>
-
-		
-<div class="post__tags">
-
-    <h3 class="text-center">Tags</h3>
-
-    <div class="tag-inner">
-
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/dgraph/">dgraph</a>
-            
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/sql/">sql</a>
-            
-        
-            
-            
-                <a href="https://blog.dgraph.io/tags/migration/">migration</a>
-            
-        
-
-    </div>
-
-</div>
 
 
 
